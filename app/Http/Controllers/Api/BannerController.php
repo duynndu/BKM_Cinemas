@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Traits\HandleImage;
 use Illuminate\Http\Request;

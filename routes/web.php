@@ -1,14 +1,7 @@
 <?php
 
-use App\Constants\PermissionConstant;
-use App\Constants\RoleConstant;
-use App\Mail\MyEmail;
-use App\Mail\OrderShipped;
-use App\Models\User;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +13,19 @@ use Spatie\Permission\Models\Role;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// Fake login as user with ID 1
-$user = User::find(1);
-auth()->login($user);
 
 Route::get('/', function () {
-//    $user = User::with(['roles.permissions'])->find(1);
-    $user = auth()->user();
-    return response()->json($user->hasAnyRole(RoleConstant::SUPPER_ADMIN));
+    return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';

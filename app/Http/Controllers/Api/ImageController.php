@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Middleware\DelayResponseMiddleware;
 use App\Models\Image;
 use Illuminate\Http\Request;
