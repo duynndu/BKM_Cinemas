@@ -16,6 +16,7 @@
         "alpinejs": "^3.4.2",
         "autoprefixer": "^10.4.2",
         "axios": "^1.6.4",
+        "daisyui": "^4.12.10",
         "laravel-vite-plugin": "^1.0.0",
         "postcss": "^8.4.31",
         "react": "^18.2.0",
@@ -27,6 +28,7 @@
     "dependencies": {
         "@ant-design/icons": "^5.4.0",
         "dayjs": "^1.11.12",
+        "flowbite": "^2.5.1",
         "rc-menu": "^9.14.1",
         "rc-picker": "^4.6.11",
         "recoil": "^0.7.7",
