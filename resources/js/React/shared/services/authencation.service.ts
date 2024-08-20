@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getRecoil, setRecoil } from 'recoil-nexus';
-import environment from '@/environment';
-import { tokenSelectorState, userState } from '@/state';
+import environment from '@/React/environment';
+import { tokenSelectorState, userState } from '@/React/state';
 import { IUser } from '../interfaces/user.interface';
 
 export const logout = () => {
