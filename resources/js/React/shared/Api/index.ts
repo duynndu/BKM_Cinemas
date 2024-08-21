@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { getRecoil, setRecoil } from 'recoil-nexus';
 import environment from '../../environment';
-import { RefreshTokenAction, logout } from '../services/authencation.service';
-import { tokenSelectorState, userState } from '@/state';
-import { IUser } from '@/Shared/interfaces/user.interface';
+import { RefreshTokenAction, logout } from '@/React/shared/services/authencation.service';
+import { tokenSelectorState, userState } from '@/React/state';
+import { IUser } from '@/React/shared/interfaces/user.interface';
 
 const ApiBase = axios.create({
   baseURL: environment.baseUrl,

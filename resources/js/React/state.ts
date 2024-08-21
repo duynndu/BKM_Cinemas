@@ -1,8 +1,8 @@
 import { atom, selector } from 'recoil';
 import dayjs, { Dayjs } from 'dayjs';
-import { StorageConstant } from '@/Shared/define/storage.constant';
-import { IUser } from '@/Shared/interfaces/user.interface';
-import { setStorageByKey } from '@/Shared/utils/storage';
+import { StorageConstant } from '@/React/shared/define/storage.constant';
+import { IUser } from '@/React/shared/interfaces/user.interface';
+import { setStorageByKey } from '@/React/shared/utils/storage';
 
 export const userState = atom<IUser | undefined>({
   key: StorageConstant.USER,

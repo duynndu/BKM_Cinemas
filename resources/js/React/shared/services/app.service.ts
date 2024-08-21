@@ -1,4 +1,4 @@
-import ApiBase from '@/Shared/Api';
+import ApiBase from '../Api';
 
 class AppService {
   private static instance: any;

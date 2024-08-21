@@ -1,10 +1,10 @@
 import { useState, PropsWithChildren, ReactNode } from 'react';
-import ApplicationLogo from '@/Shared/Components/ApplicationLogo';
-import Dropdown from '@/Shared/Components/Dropdown';
-import NavLink from '@/Shared/Components/NavLink';
-import ResponsiveNavLink from '@/Shared/Components/ResponsiveNavLink';
+import ApplicationLogo from '@/React/shared/Components/ApplicationLogo';
+import Dropdown from '@/React/shared/Components/Dropdown';
+import NavLink from '@/React/shared/Components/NavLink';
+import ResponsiveNavLink from '@/React/shared/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
-import { User } from '@/types';
+import { User } from '../types';
 
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
