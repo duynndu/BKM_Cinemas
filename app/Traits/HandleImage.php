@@ -25,6 +25,7 @@ trait HandleImage
         $instance->images()->create([
             'url' => $url,
         ]);
+
         return response()->json(['url' => $url], 201);
     }
 
