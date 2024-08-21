@@ -1,7 +1,7 @@
-import { userState } from '@/state';
+import { userState } from '@/React/state';
 import { RecoilState, RecoilValueReadOnly } from 'recoil';
 import { setRecoil } from 'recoil-nexus';
-import { StorageConstant } from '../define/storage.constant';
+import { StorageConstant } from '@/React/shared/define/storage.constant';
 
 export const mappingStorageRecoil = async () => {
   try {
