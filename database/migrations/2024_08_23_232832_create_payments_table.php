@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->id();
-            $table->string('path');
-            $table->nullableMorphs('imageable'); // Add this line
+        Schema::create('payments', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('description');
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('payments');
     }
 };
