@@ -15,12 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable, HasRoles;
-    protected $fillable = [
-        'name',
-        'phone',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     protected $hidden = [
         'password',
@@ -49,5 +44,20 @@ class User extends Authenticatable implements JWTSubject
     public function RefreshTokens(): HasMany
     {
         return $this->hasMany(RefreshToken::class);
+    }
+
+    public function movieDiscounts()
+    {
+        return $this->hasMany(MovieDiscount::class);
+    }
+
+    public function discounts()
+    {
+        return $this->belongsToMany(Discount::class, 'movie_discounts');
+    }
+
+    public function keys()
+    {
+        return $this->hasMany(Key::class);
     }
 }
