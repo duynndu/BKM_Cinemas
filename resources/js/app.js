@@ -1,7 +1,7 @@
-import './bootstrap';
+import "./bootstrap.ts";
 
-import Alpine from 'alpinejs';
-import 'flowbite';
+import Alpine from "alpinejs";
+import "flowbite";
 
 window.Alpine = Alpine;
 
