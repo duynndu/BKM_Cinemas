@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->id();
-            $table->string('path');
-            $table->nullableMorphs('imageable'); // Add this line
+        Schema::create('keys', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('slug');
+            $table->tinyInteger('type');
+            $table->bigInteger('key_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
+
+//            $table->foreign('key_id')->references('id')->on('users');
         });
     }
 
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('keys');
     }
 };
