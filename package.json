@@ -27,9 +27,11 @@
     },
     "dependencies": {
         "@ant-design/icons": "^5.4.0",
+        "@types/jquery": "^3.5.30",
         "dayjs": "^1.11.12",
         "flowbite": "^2.5.1",
         "flowbite-react": "^0.10.1",
+        "jquery": "^3.7.1",
         "rc-menu": "^9.14.1",
         "rc-picker": "^4.6.11",
         "recoil": "^0.7.7",
