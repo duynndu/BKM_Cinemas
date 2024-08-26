@@ -16,18 +16,16 @@
 <div class="max-w-7xl mx-auto">
     <div class="input-group">
    <span class="input-group-btn">
-     <a id="lfm" data-input="thumbnail" data-preview="preview" class="btn btn-primary">
+     <a id="lfm" data-input="images" data-preview="preview" class="btn btn-outline btn-sm btn-primary">
        <i class="fa fa-picture-o"></i> Choose
      </a>
    </span>
-        <input id="thumbnail" type="text" name="filepath">
+    <input id="images" type="text" name="images">
     </div>
     <div id="preview" class="flex gap-2"></div>
 </div>
 </body>
 <script type="module">
-    // import '/vendor/laravel-filemanager/js/stand-alone-button.js'
-
-    const fileManager = new FileManager($('#lfm'))
+    const fileManager = new FileManager($('#lfm'));
 </script>
 </html>

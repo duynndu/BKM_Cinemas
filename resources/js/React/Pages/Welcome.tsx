@@ -1,15 +1,15 @@
-import { Head, router } from '@inertiajs/react';
-import { PageProps } from '../types';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectFade, Navigation, Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { useEffect } from 'react';
+import { Head, router } from "@inertiajs/react";
+import { PageProps } from "../../types";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectFade, Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { useEffect } from "react";
 
 export default function Welcome({
-  auth
+  auth,
 }: PageProps<{
   laravelVersion: string;
   phpVersion: string;
@@ -30,7 +30,7 @@ export default function Welcome({
               {auth.user ? (
                 <ul className="flex items-center">
                   <li>
-                    <a href={route('dashboard')} className="px-4 py-2">
+                    <a href={route("dashboard")} className="px-4 py-2">
                       Dashboard
                     </a>
                   </li>
@@ -38,12 +38,12 @@ export default function Welcome({
               ) : (
                 <ul className="flex items-center">
                   <li>
-                    <a href={route('login')} className="px-4 py-2">
+                    <a href={route("login")} className="px-4 py-2">
                       Đăng nhập
                     </a>
                   </li>
                   <li>
-                    <a href={route('register')} className="px-4 py-2">
+                    <a href={route("register")} className="px-4 py-2">
                       Đăng ký
                     </a>
                   </li>
@@ -54,20 +54,22 @@ export default function Welcome({
         </header>
         <div className="p-4 md:p-6 lg:p-8 bg-gray-100">
           <div className="flex flex-col justify-center items-center h-screen">
-            <h1 className="text-3xl font-bold mb-4">Chào mừng đến với Laravel và React</h1>
+            <h1 className="text-3xl font-bold mb-4">
+              Chào mừng đến với Laravel và React
+            </h1>
             <Swiper
               spaceBetween={30}
-              effect={'fade'}
+              effect={"fade"}
               navigation={true}
               pagination={{
-                clickable: true
+                clickable: true,
               }}
               autoplay={{
-                delay: 2000
+                delay: 2000,
               }}
               modules={[EffectFade, Navigation, Pagination, Autoplay]}
               className="mySwiper w-full"
-              style={{ height: '500px' }}
+              style={{ height: "500px" }}
             >
               {Array.from({ length: 10 }).map((_, index) => (
                 <SwiperSlide key={index} className="swiper-slide">
