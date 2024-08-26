@@ -57,7 +57,7 @@ Author: Webstrot
 <!--main js file start-->
 <script src="{{ asset('movie/js/jquery_min.js') }}"></script>
 <script src="{{ asset('movie/js/modernizr.js') }}"></script>
-<script src="{{ asset('movie/js/bootstrap.js') }}"></script>
+<script src="{{ asset('movie/js/bootstrap.ts') }}"></script>
 <script src="{{ asset('movie/js/owl.carousel.js') }}"></script>
 <script src="{{ asset('movie/js/jquery.dlmenu.js') }}"></script>
 <script src="{{ asset('movie/js/jquery.sticky.js') }}"></script>
