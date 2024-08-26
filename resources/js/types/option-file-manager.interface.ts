@@ -1,9 +1,9 @@
-import { IMediaFileManager as IMedia } from "@/interfaces/media-file-manager.interface";
+import { IMediaFileManager as IMedia } from "@/types/media-file-manager.interface";
 
 export interface IOptionFileManager {
-  prefix: string;
-  input: JQuery;
-  preview: JQuery;
+  prefix?: string;
+  input?: JQuery;
+  preview?: JQuery;
   onChange: ({
     items,
     input,
