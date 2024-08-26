@@ -4,13 +4,17 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
-import $ from 'jquery';
+import axios from "axios";
+import $ from "jquery";
+import "./jquery-plugin/jquery.filemanager";
+import { FileManager } from "@/services/file-manager.service";
 
 window.axios = axios;
 window.$ = $;
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.FileManager = FileManager;
+
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
