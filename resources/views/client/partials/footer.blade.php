@@ -1,184 +1,136 @@
-<!-- prs patner slider Start -->
-<div class="prs_patner_main_section_wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="prs_heading_section_wrapper">
-                    <h2>Our Patner’s</h2>
+<div id="footer">
+    <div id="footer">
+        <div class="footer-wrap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="footer-title">Chăm sóc khách hàng</h4>
+                                <div class="footer-content">
+                                    <p><b>Hotline:</b> 0269 3838 999</p>
+                                    <p><b>Giờ làm việc:</b> 8h00-22h00 tất cả các ngày trong tuần</p>
+                                    <p><b>Email:</b> contact@touchcinema.com</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 connect-us">
+                                <h4 class="footer-title">Kết nối với chúng tôi</h4>
+                                <a href="https://www.facebook.com/touchcinema/" target="_blank">
+                                    <img src="images/icons/icon-fb.png" alt="Facebook" />
+                                </a>
+                                <a href="#">
+                                    <img src="images/icons/icon-ytb.png" alt="Youtube" />
+                                </a>
+                                <h4 class="footer-title m-t20">Ứng dụng</h4>
+                                <a href="https://itunes.apple.com/vn/app/touch-cinema/id1329661214?l=vi"
+                                   target="_blank">
+                                    <img src="images/icons/app-ios.png" alt="Appstore" />
+                                </a>
+                                <a href="https://play.google.com/store/apps/details?id=com.touchcinema.cinema"
+                                   target="_blank">
+                                    <img src="images/icons/app-android.png" alt="Google Play" />
+                                </a>
+                                <a href="https://m.touchcinema.com/" class="mobile_link">Phiên bản Mobile</a>
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12 text-right" style="margin-top:10px">
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-4 co-sm-12">
+                        <div class="clearfix"></div>
+                        <div class="row text-detail">
+                            <div class="col-md-6 col-sm-6">
+                                <a href="dieu-khoan-chung.html">Điều khoản chung</a>
+                                <a href="dieu-khoan-giao-dich.html">Điều khoản giao dịch</a>
+                                <a href="chinh-sach-thanh-toan.html">Chính sách thanh toán</a>
+                                <a href="chinh-sach-bao-mat-thong-tin-ca-nhan-khach-hang.html">Chính sách bảo
+                                    mật thông tin</a>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <a href="lien-he.html#hoi-dap">Câu hỏi thường gặp</a>
+                                <a href="khuyen-mai/huong-dan-dat-ve-online-tai-rap-touch-cinema.html">Hướng dẫn
+                                    đặt vé online</a>
+                                <a href="lien-he.html">Liên hệ</a>
+                                <a href="lien-he.html#tuyen-dung">Tuyển dụng</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="newsletter" data-toggle="modal" href='#modal-subscribe'>
+                                    <img src="images/icons/icon-email.png" alt="Email" />
+                                    Đăng kí nhận tin
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <a rel="nofollow" target="_blank"
+                                   href="http://online.gov.vn/CustomWebsiteDisplay.aspx?DocId=39894">
+                                    <img class="img-responsive" src="images/icons/dathongbao.png"
+                                         alt="Touchcinema - Đã thông báo bộ công thương" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="bg-left"></div>
+                <div class="bg-right"></div>
+            </div>
+        </div>
+        <div class="partner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<span class="item">
+									<img src="images/partner/partner-2.png" alt="partner" />
+								</span>
+                        <span class="item">
+									<img src="images/partner/partner-3.png" alt="partner" />
+								</span>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="prs_pn_slider_wraper">
-                    <div class="owl-carousel owl-theme">
-                        <div class="item">
-                            <div class="prs_pn_img_wrapper">
-                                <img src="images/content/p1.jpg" alt="patner_img">
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="prs_pn_img_wrapper">
-                                <img src="images/content/p2.jpg" alt="patner_img">
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="prs_pn_img_wrapper">
-                                <img src="images/content/p3.jpg" alt="patner_img">
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="prs_pn_img_wrapper">
-                                <img src="images/content/p4.jpg" alt="patner_img">
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="prs_pn_img_wrapper">
-                                <img src="images/content/p5.jpg" alt="patner_img">
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="prs_pn_img_wrapper">
-                                <img src="images/content/p6.jpg" alt="patner_img">
-                            </div>
-                        </div>
+        </div>
+        <div class="footer-wrap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="copyright">&copy2018 Touch Cinema </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-subscribe">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Đăng kí nhận tin</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="subscribe-msg" class="alert alert-danger hidden">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                        <p></p>
+                    </div>
+                    <div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-envelope-o"
+                                                                   aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" id="email-subscribe" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="center">
+                        <button type="button" class="btn btn-primary btn-subscribe">Đăng kí</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- prs patner slider End -->
-<!-- prs Newsletter Wrapper Start -->
-<div class="prs_newsletter_wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                <div class="prs_newsletter_text">
-                    <h3>Get update sign up now !</h3>
-                </div>
-            </div>
-            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                <div class="prs_newsletter_field">
-                    <input type="text" placeholder="Enter Your Email">
-                    <button type="submit">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- prs Newsletter Wrapper End -->
-<!-- prs footer Wrapper Start -->
-<div class="prs_footer_main_section_wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="prs_footer_cont1_wrapper prs_footer_cont1_wrapper_1">
-                    <h2>LANGUAGE MOVIES</h2>
-                    <ul>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">English movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Tamil movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Punjabi Movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Hindi movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Malyalam movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">English Action movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Hindi Action movie</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="prs_footer_cont1_wrapper prs_footer_cont1_wrapper_2">
-                    <h2>MOVIES by presenter</h2>
-                    <ul>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Action movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Romantic movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Adult movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Comedy movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Drama movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Musical movie</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">Classical movie</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="prs_footer_cont1_wrapper prs_footer_cont1_wrapper_3">
-                    <h2>BOOKING ONLINE</h2>
-                    <ul>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">www.example.com</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">www.hello.com</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">www.example.com</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">www.hello.com</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">www.example.com</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">www.hello.com</a>
-                        </li>
-                        <li><i class="fa fa-circle"></i> &nbsp;&nbsp;<a href="#">www.example.com</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="prs_footer_cont1_wrapper prs_footer_cont1_wrapper_4">
-                    <h2>App available on</h2>
-                    <p>Download App and Get Free Movie Ticket !</p>
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <img src="images/content/f1.jpg" alt="footer_img">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="images/content/f2.jpg" alt="footer_img">
-                            </a>
-                        </li>
-                    </ul>
-                    <h5><span>$50</span> Payback on App Download</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="prs_bottom_footer_wrapper"><a href="javascript:" id="return-to-top"><i class="flaticon-play-button"></i></a>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-                <div class="prs_bottom_footer_cont_wrapper">
-                    <p>Copyright 2022-23 <a href="#">Movie Pro</a> . All rights reserved - Design by <a href="#">Webstrot</a>
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
-                <div class="prs_footer_social_wrapper">
-                    <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-youtube-play"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- prs footer Wrapper End -->
