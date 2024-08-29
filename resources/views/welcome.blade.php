@@ -27,5 +27,15 @@
 </body>
 <script type="module">
     const fileManager = new FileManager($('#lfm'));
+    fileManager.preview = (item)=>{
+        return $(`
+      <div class="card-image relative w-50 h-50 bg-gray-100 rounded-md overflow-hidden border-2 rounded-2">
+        <img src="${item.thumb_url}" alt="" class="w-full h-full object-cover">
+        <div class="close-icon absolute top-2 right-2 text-gray-500 hover:text-gray-800">
+          <i class="fa-regular fa-trash-can"></i>
+        </div>
+      </div>
+    `);
+    }
 </script>
 </html>
