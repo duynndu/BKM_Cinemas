@@ -1,5 +1,6 @@
 import { IMediaFileManager as IMedia } from "@/types/media-file-manager.interface";
 import $ from "jquery";
+import axios from "axios";
 
 export class FileManager {
   itemsStore: IMedia[] = [];
@@ -20,7 +21,7 @@ export class FileManager {
     this.previewEl?.html("");
     this.itemsStore.forEach((item, i) => {
       this.previewEl?.append(
-        this.cardImage({ ...item, id: i }).on("click", ".close-icon", () =>
+        this.preview({ ...item, id: i }).on("click", ".close-icon", () =>
           this.deleteImage(item.id),
         ),
       );
@@ -29,7 +30,7 @@ export class FileManager {
       ?.val(this.itemsStore.map((item) => item.url).join(","))
       .trigger("change");
   }
-  cardImage(item: IMedia) {
+  preview(item: IMedia) {
     return $(`
       <div class="card-image relative w-24 h-24 bg-gray-100 rounded-md overflow-hidden border-2 rounded-2">
         <img src="${item.thumb_url}" alt="" class="w-full h-full object-cover">
