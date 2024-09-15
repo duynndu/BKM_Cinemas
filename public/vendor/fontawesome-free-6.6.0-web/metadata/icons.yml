@@ -9612,7 +9612,7 @@ clapperboard:
       - clapper board
       - director
       - film
-      - movie
+      - movie_2
       - record
   styles:
     - solid
@@ -10930,7 +10930,7 @@ compact-disc:
       - disk
       - dvd
       - media
-      - movie
+      - movie_2
       - music
       - optical
       - optical disk
@@ -16920,7 +16920,7 @@ file-video:
     terms:
       - document
       - m4v
-      - movie
+      - movie_2
       - mp4
       - play
   styles:
@@ -17091,7 +17091,7 @@ film:
       - film
       - film frames
       - frames
-      - movie
+      - movie_2
       - strip
       - video
   styles:
@@ -40045,7 +40045,7 @@ ticket:
       - admission
       - admission tickets
       - coupon
-      - movie
+      - movie_2
       - pass
       - support
       - ticket
@@ -40077,7 +40077,7 @@ ticket-simple:
     terms:
       - admission
       - coupon
-      - movie
+      - movie_2
       - pass
       - support
       - ticket
@@ -43419,7 +43419,7 @@ video:
     terms:
       - camera
       - film
-      - movie
+      - movie_2
       - record
       - video-camera
   styles:
