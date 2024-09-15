@@ -22,66 +22,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Disable foreign key checks to truncate tables
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-
-        // Truncate tables
-        User::truncate();
-        RefreshToken::truncate();
-        Role::truncate();
-        Permission::truncate();
-
-        // Enable foreign key checks again
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
-        // Create roles
-        $roles = [
-            // không cần liệt kê quyền vào đây vì mặc định sẽ được full
-            RoleConstant::SUPPER_ADMIN => [],
-            RoleConstant::ADMIN => [
-                PermissionConstant::VIEW_USER,
-                PermissionConstant::ADD_USER,
-                PermissionConstant::EDIT_USER,
-                PermissionConstant::DELETE_USER,
-            ],
-            RoleConstant::STAFF => [
-                PermissionConstant::VIEW_USER,
-                PermissionConstant::ADD_USER,
-                PermissionConstant::EDIT_USER,
-            ],
-            RoleConstant::USER => [
-                PermissionConstant::VIEW_USER,
-            ]
-        ];
-
-        // Create permissions
-        $permissions = [];
-        foreach ($roles as $roleName => $permissionNames) {
-            foreach ($permissionNames as $permissionName) {
-                $permissions[$permissionName] = Permission::firstOrCreate(['name' => $permissionName]);
-            }
+        $fileLayoutSeats = ['heart.json', 'seats.json'];
+        foreach ($fileLayoutSeats as $file) {
+            DB::table('seat_layouts')->insert([
+                'name' => $file,
+                'col_count' => 11,
+                'row_count' => 10,
+                'seats' => file_get_contents(storage_path('app/public/schemas/' . $file)),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
-
-        // Create roles and assign permissions
-        foreach ($roles as $roleName => $permissionNames) {
-            $role = Role::create(['name' => $roleName]);
-            if ($roleName == RoleConstant::SUPPER_ADMIN) {
-                $role->syncPermissions(Permission::all());
-            } else {
-                foreach ($permissionNames as $permissionName) {
-                    $role->givePermissionTo($permissions[$permissionName]);
-                }
-            }
-        }
-
-        // Create a user
-        $user = User::factory()->create([
-            'name' => 'Duynnz',
-            'email' => 'duynnz@gmail.com',
-            'phone' => '0968607305',
-            'password' => Hash::make('1111'),
-        ]);
-
-        // Assign role to user
-        $user->assignRole([RoleConstant::SUPPER_ADMIN]);
     }
 }

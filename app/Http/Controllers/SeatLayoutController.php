@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CinemaArea;
+use App\Models\SeatLayout;
 use Illuminate\Http\Request;
 
-class CinemaAreaController extends Controller
+class SeatLayoutController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class CinemaAreaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CinemaArea $cinemaArea)
+    public function show(SeatLayout $seatLayout)
     {
         //
     }
@@ -42,7 +42,7 @@ class CinemaAreaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CinemaArea $cinemaArea)
+    public function edit(SeatLayout $seatLayout)
     {
         //
     }
@@ -50,7 +50,7 @@ class CinemaAreaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CinemaArea $cinemaArea)
+    public function update(Request $request, SeatLayout $seatLayout)
     {
         //
     }
@@ -58,7 +58,7 @@ class CinemaAreaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CinemaArea $cinemaArea)
+    public function destroy(SeatLayout $seatLayout)
     {
         //
     }

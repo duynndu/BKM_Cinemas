@@ -16,8 +16,37 @@ export default {
       fontFamily: {
         sans: ["Figtree", ...defaultTheme.fontFamily.sans],
       },
+      gridTemplateColumns: gridTemplateColumns(30),
+      colors: {
+        "empty-seat": "#000000",
+        "standard-seat": "#FFFFFF",
+        "couple-seat": "#FFB6C1",
+        "vip-seat": "#FFD700",
+        "accessible-seat": "#32CD32",
+      },
     },
   },
 
+  safelist: [
+    "hidden",
+    {
+      pattern: /grid-cols-.*/,
+    },
+    {
+      pattern: /col-span-.*/,
+    },
+    {
+      pattern: /bg-.*/,
+    },
+  ],
+
   plugins: [forms, require("daisyui"), require("flowbite/plugin")],
 };
+
+function gridTemplateColumns(maxColumns) {
+  const columns = {};
+  for (let i = 13; i <= maxColumns; i++) {
+    columns[i] = `repeat(${i}, minmax(0, 1fr))`;
+  }
+  return columns;
+}
