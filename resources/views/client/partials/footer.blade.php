@@ -16,19 +16,19 @@
                             <div class="col-md-6 connect-us">
                                 <h4 class="footer-title">Kết nối với chúng tôi</h4>
                                 <a href="https://www.facebook.com/touchcinema/" target="_blank">
-                                    <img src="images/icons/icon-fb.png" alt="Facebook" />
+                                    <img src="{{ asset('movie/images/icons/icon-fb.png') }}" alt="Facebook" />
                                 </a>
                                 <a href="#">
-                                    <img src="images/icons/icon-ytb.png" alt="Youtube" />
+                                    <img src="{{ asset('movie/images/icons/icon-ytb.png') }}" alt="Youtube" />
                                 </a>
                                 <h4 class="footer-title m-t20">Ứng dụng</h4>
                                 <a href="https://itunes.apple.com/vn/app/touch-cinema/id1329661214?l=vi"
-                                   target="_blank">
-                                    <img src="images/icons/app-ios.png" alt="Appstore" />
+                                    target="_blank">
+                                    <img src="{{ asset('movie/images/icons/app-ios.png') }}" alt="Appstore" />
                                 </a>
                                 <a href="https://play.google.com/store/apps/details?id=com.touchcinema.cinema"
-                                   target="_blank">
-                                    <img src="images/icons/app-android.png" alt="Google Play" />
+                                    target="_blank">
+                                    <img src="{{ asset('movie/images/icons/app-android.png') }}" alt="Google Play" />
                                 </a>
                                 <a href="https://m.touchcinema.com/" class="mobile_link">Phiên bản Mobile</a>
 
@@ -63,15 +63,15 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 <div class="newsletter" data-toggle="modal" href='#modal-subscribe'>
-                                    <img src="images/icons/icon-email.png" alt="Email" />
+                                    <img src="{{ asset('movie/images/icons/icon-email.png') }}" alt="Email" />
                                     Đăng kí nhận tin
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <a rel="nofollow" target="_blank"
-                                   href="http://online.gov.vn/CustomWebsiteDisplay.aspx?DocId=39894">
-                                    <img class="img-responsive" src="images/icons/dathongbao.png"
-                                         alt="Touchcinema - Đã thông báo bộ công thương" />
+                                    href="http://online.gov.vn/CustomWebsiteDisplay.aspx?DocId=39894">
+                                    <img class="img-responsive" src="{{ asset('movie/images/icons/dathongbao.png') }}"
+                                        alt="Touchcinema - Đã thông báo bộ công thương" />
                                 </a>
                             </div>
                         </div>
@@ -86,12 +86,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<span class="item">
-									<img src="images/partner/partner-2.png" alt="partner" />
-								</span>
                         <span class="item">
-									<img src="images/partner/partner-3.png" alt="partner" />
-								</span>
+                            <img src="{{ asset('movie/images/partner/partner-2.png') }}" alt="partner" />
+                        </span>
+                        <span class="item">
+                            <img src="{{ asset('movie/images/partner/partner-3.png') }}" alt="partner" />
+                        </span>
                     </div>
                 </div>
             </div>
@@ -115,13 +115,11 @@
                 </div>
                 <div class="modal-body">
                     <div id="subscribe-msg" class="alert alert-danger hidden">
-                        <button type="button" class="close" data-dismiss="alert"
-                                aria-hidden="true">&times;</button>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <p></p>
                     </div>
                     <div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-envelope-o"
-                                                                   aria-hidden="true"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
                         <input type="text" class="form-control" id="email-subscribe" required>
                     </div>
                 </div>

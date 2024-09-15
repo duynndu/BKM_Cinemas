@@ -1,8 +1,33 @@
-@extends('client.pages.home')
+@extends('client.layouts.main')
 
 @section('title', 'Awesome Cinema - Rạp chiếu phim 3D công nghệ hàng đầu.')
 
 @section('css')
+    <style>
+        #main-slider .owl-nav>div.owl-prev {
+            left: -60px;
+            background-image: url({{ asset('movie/images/arrow-left.png') }});
+            background-position: left center;
+        }
+
+        #main-slider .owl-nav>div.owl-next {
+            right: -60px;
+            background-image: url({{ asset('movie/images/arrow-right.png') }});
+            background-position: right center;
+        }
+
+        .owl-carousel .owl-nav>div.owl-prev {
+            left: -5px;
+            background-image: url({{ asset('movie/images/arrow-left0f1f.png?d6b9ada742033c8eaa6b382f79d9b131') }});
+            background-position: left center
+        }
+
+        .owl-carousel .owl-nav>div.owl-next {
+            right: -5px;
+            background-image: url({{ asset('movie/images/arrow-rightf8de.png?c2934faa1b15a76a6bbece2fccff163b') }});
+            background-position: right center
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -10,27 +35,31 @@
         <div id="main-slider" class="owl-carousel">
             <div class="item">
                 <a href="phim/hai-muoi.html">
-                    <img width="1600" src="storage/slide-web/1920wx1080h-1724753436.jpg" alt="HM" />
+                    <img width="1600" src="{{ asset('movie/images/slide-web/1920wx1080h-1724753436.jpg') }}"
+                        alt="HM" />
                 </a>
             </div>
             <div class="item">
                 <a href="phim/lam-giau-voi-ma.html">
-                    <img width="1600" src="storage/slide-web/1920x1080-1724753497.jpg" alt="LGVM" />
+                    <img width="1600" src="{{ asset('movie/images/slide-web/1920x1080-1724753497.jpg') }}"
+                        alt="LGVM" />
                 </a>
             </div>
             <div class="item">
                 <a href="phim/chang-nu-phi-cong.html">
-                    <img width="1600" src="storage/slide-web/pilot-t13-1920x1080.jpg" alt="PL" />
+                    <img width="1600" src="{{ asset('movie/images/slide-web/pilot-t13-1920x1080.jpg') }}"
+                        alt="PL" />
                 </a>
             </div>
         </div>
     </section>
+
     <section id="home-movie">
         <div class="container">
             <ul class="nav nav-tabs">
                 <li class="nowshowing active">
                     <a data-toggle="tab" href="#nowshowing">
-                        <img src="images/icons/icon-ticket.png" alt="Phim đang chiếu" />
+                        <img src="{{ asset('movie/images/icons/icon-ticket.png') }}" alt="Phim đang chiếu" />
                         <span>Phim đang chiếu</span>
                     </a>
                     <span class="border"></span>
@@ -38,7 +67,7 @@
                 <li class="comingsoon">
                     <a data-toggle="tab" href="#comingsoon">
                         <span>Phim sắp chiếu</span>
-                        <img src="images/icons/icon-sap-chieu.png" alt="Phim đang chiếu" />
+                        <img src="{{ asset('movie/images/icons/icon-sap-chieu.png') }}" alt="Phim đang chiếu" />
                     </a>
                     <span class="border"></span>
                 </li>
@@ -51,18 +80,19 @@
                             <div class="poster">
                                 <a href="phim/lam-giau-voi-ma.html">
                                     <img class="img-responsive"
-                                         src="uploads/phim-2021/470x700-1724744783-poster.jpg"
-                                         alt="Làm Giàu Với Ma" />
+                                        src="{{ asset('movie/images/phim-2021/470x700-1724744783-poster.jpg') }}"
+                                        alt="Làm Giàu Với Ma" />
                                 </a>
                                 <div class="hot" style="top: -27px;width: 80px;height: 78px;">
-                                    <img src="images/icons/sneak.png">
+                                    <img src="{{ asset('movie/images/icons/sneak.png') }}">
                                 </div>
                                 <div class="info">
                                     <a href="phim/lam-giau-voi-ma.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/lam-giau-voi-ma.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> 113 phút</p>
                                     <p class="button category"><b>Thể loại:</b> Gia Đình, Hài Hước</p>
@@ -78,15 +108,16 @@
                             <div class="poster">
                                 <a href="phim/da-nu-bao-thu.html">
                                     <img class="img-responsive"
-                                         src="uploads/phim-2021/470wx700h-revolver-poster.jpg"
-                                         alt="Đả Nữ Báo Thù" />
+                                        src="{{ asset('movie/images/phim-2021/470wx700h-revolver-poster.jpg') }}"
+                                        alt="Đả Nữ Báo Thù" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/da-nu-bao-thu.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/da-nu-bao-thu.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
                                     <p class="button category"><b>Thể loại:</b> Hành Động, Hồi Hộp, Tội Phạm</p>
@@ -102,15 +133,16 @@
                             <div class="poster">
                                 <a href="phim/ma-da.html">
                                     <img class="img-responsive"
-                                         src="uploads/phim-2021/449707108-869141951908574-2288391577922390780-n-poster.jpg"
-                                         alt="Ma Da" />
+                                        src="{{ asset('movie/images/phim-2021/449707108-869141951908574-2288391577922390780-n-poster.jpg') }}"
+                                        alt="Ma Da" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/ma-da.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/ma-da.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> 95 phút</p>
                                     <p class="button category"><b>Thể loại:</b> Kinh Dị</p>
@@ -126,17 +158,18 @@
                             <div class="poster">
                                 <a href="phim/shin-cau-be-but-chi-nhat-ky-khung-long-cua-chung-minh.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/shin2024-poster-payoff-poster.jpg"
-                                         alt="Shin Cậu Bé Bút Chì: Nhật Ký Khủng Long Của Chúng Mình (Lồng Tiếng)" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/shin2024-poster-payoff-poster.jpg') }}"
+                                        alt="Shin Cậu Bé Bút Chì: Nhật Ký Khủng Long Của Chúng Mình (Lồng Tiếng)" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/shin-cau-be-but-chi-nhat-ky-khung-long-cua-chung-minh.html"
-                                       class="button detail">
+                                        class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/shin-cau-be-but-chi-nhat-ky-khung-long-cua-chung-minh.html#showtime"
-                                       class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        class="button ticket">
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> 105 phút</p>
                                     <p class="button category"><b>Thể loại:</b> Hoạt Hình, Gia Đình, Hài Hước,
@@ -153,16 +186,17 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/harold-va-cay-but-phep-thuat.html">
-                                    <img class="img-responsive" src="uploads/phim-2021/poster-harold-poster.jpg"
-                                         alt="Harold Và Cây Bút Phép Thuật (Lồng Tiếng)" />
+                                    <img class="img-responsive"
+                                        src="{{ asset('movie/images/phim-2021/poster-harold-poster.jpg') }}"
+                                        alt="Harold Và Cây Bút Phép Thuật (Lồng Tiếng)" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/harold-va-cay-but-phep-thuat.html" class="button detail">
                                         > Chi tiết
                                     </a>
-                                    <a href="phim/harold-va-cay-but-phep-thuat.html#showtime"
-                                       class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                    <a href="phim/harold-va-cay-but-phep-thuat.html#showtime" class="button ticket">
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> 90 phút</p>
                                     <p class="button category"><b>Thể loại:</b> Hài Hước, Phiêu Lưu</p>
@@ -179,15 +213,16 @@
                             <div class="poster">
                                 <a href="phim/quai-vat-khong-gian.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/rsz-romulus-instagram-payoff-poster-vietnam-poster.jpg"
-                                         alt="Quái Vật Không Gian" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/rsz-romulus-instagram-payoff-poster-vietnam-poster.jpg') }}"
+                                        alt="Quái Vật Không Gian" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/quai-vat-khong-gian.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/quai-vat-khong-gian.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> 118 phút</p>
                                     <p class="button category"><b>Thể loại:</b> Khoa Học Viễn Tưởng, Kinh Dị</p>
@@ -203,15 +238,16 @@
                             <div class="poster">
                                 <a href="phim/hai-muoi.html">
                                     <img class="img-responsive"
-                                         src="uploads/slider-app/hai-muoi-payoff-poster-khoi-chieu-30082024-poster.jpg"
-                                         alt="Hai Muối" />
+                                        src="{{ asset('movie/images/slider-app/hai-muoi-payoff-poster-khoi-chieu-30082024-poster.jpg') }}"
+                                        alt="Hai Muối" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/hai-muoi.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/hai-muoi.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> 118 phút</p>
                                     <p class="button category"><b>Thể loại:</b> Gia Đình, Tâm Lý</p>
@@ -227,15 +263,16 @@
                             <div class="poster">
                                 <a href="phim/chang-nu-phi-cong.html">
                                     <img class="img-responsive"
-                                         src="uploads/slider-app/pilot-t13-1080x1920-poster.jpg"
-                                         alt="Chàng Nữ Phi Công" />
+                                        src="{{ asset('movie/images/slider-app/pilot-t13-1080x1920-poster.jpg') }}"
+                                        alt="Chàng Nữ Phi Công" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/chang-nu-phi-cong.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/chang-nu-phi-cong.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> 110 phút</p>
                                     <p class="button category"><b>Thể loại:</b> Hài Hước</p>
@@ -255,15 +292,16 @@
                             <div class="poster">
                                 <a href="phim/ma-sieu-quay.html">
                                     <img class="img-responsive"
-                                         src="uploads/slider-app/beetlejuice-beetlejuice-914461307-large-poster.jpg"
-                                         alt="Ma Siêu Quậy" />
+                                        src="{{ asset('movie/images/slider-app/beetlejuice-beetlejuice-914461307-large-poster.jpg') }}"
+                                        alt="Ma Siêu Quậy" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/ma-sieu-quay.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/ma-sieu-quay.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hài Hước, Kinh Dị</p>
@@ -279,15 +317,16 @@
                             <div class="poster">
                                 <a href="phim/tham-kich-di-giao.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/media-images-2024-08-21-screenshot-2024-08-21-024927-134956-210824-53-poster.png"
-                                         alt="Thảm Kịch Dị Giáo" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/media-images-2024-08-21-screenshot-2024-08-21-024927-134956-210824-53-poster.png') }}"
+                                        alt="Thảm Kịch Dị Giáo" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/tham-kich-di-giao.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/tham-kich-di-giao.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Kinh Dị</p>
@@ -302,16 +341,16 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/the-crow-bao-thu.html">
-                                    <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/poster-the-crow-vn-poster.jpg"
-                                         alt="The Crow: Báo Thù" />
+                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/poster-the-crow-vn-poster.jpg') }}"
+                                        alt="The Crow: Báo Thù" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/the-crow-bao-thu.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/the-crow-bao-thu.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hành Động</p>
@@ -326,16 +365,16 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/khong-noi-dieu-du.html">
-                                    <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/sne-poster-470x700-poster.jpg"
-                                         alt="Không Nói Điều Dữ" />
+                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/sne-poster-470x700-poster.jpg') }}"
+                                        alt="Không Nói Điều Dữ" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/khong-noi-dieu-du.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/khong-noi-dieu-du.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Kinh Dị</p>
@@ -350,16 +389,16 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/chien-dia-tu-thi.html">
-                                    <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/ou-main-poster-poster.jpg"
-                                         alt="Chiến Địa Tử Thi" />
+                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/ou-main-poster-poster.jpg') }}"
+                                        alt="Chiến Địa Tử Thi" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/chien-dia-tu-thi.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/chien-dia-tu-thi.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Kinh Dị</p>
@@ -375,15 +414,16 @@
                             <div class="poster">
                                 <a href="phim/bao-thu-di-tim-chu.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/gracieandpedro-poster-d-c-vie-470x700-poster.jpg"
-                                         alt="Báo Thủ Đi Tìm Chủ" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/gracieandpedro-poster-d-c-vie-470x700-poster.jpg') }}"
+                                        alt="Báo Thủ Đi Tìm Chủ" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/bao-thu-di-tim-chu.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/bao-thu-di-tim-chu.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hoạt Hình</p>
@@ -399,15 +439,16 @@
                             <div class="poster">
                                 <a href="phim/transformers-one.html">
                                     <img class="img-responsive"
-                                         src="uploads/avatars/tf1-poster-1080x1920-poster.jpg"
-                                         alt="Transformers Một" />
+                                        src="{{ asset('movie/images/avatars/tf1-poster-1080x1920-poster.jpg') }}"
+                                        alt="Transformers Một" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/transformers-one.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/transformers-one.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hành Động, Phiêu Lưu</p>
@@ -423,15 +464,16 @@
                             <div class="poster">
                                 <a href="phim/soi-thu-doi-dau.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/wolfs-146396800-large-poster.jpg"
-                                         alt="&quot;Sói” Thủ Đối Đầu" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/wolfs-146396800-large-poster.jpg') }}"
+                                        alt="&quot;Sói” Thủ Đối Đầu" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/soi-thu-doi-dau.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/soi-thu-doi-dau.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hành Động</p>
@@ -447,14 +489,16 @@
                             <div class="poster">
                                 <a href="phim/con-cam.html">
                                     <img class="img-responsive"
-                                         src="uploads/slider-app/300wx450h-cam-1-poster.jpg" alt="Cám" />
+                                        src="{{ asset('movie/images/slider-app/300wx450h-cam-1-poster.jpg') }}"
+                                        alt="Cám" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/con-cam.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/con-cam.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Kinh Dị</p>
@@ -470,15 +514,16 @@
                             <div class="poster">
                                 <a href="phim/joker-dien-co-doi.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/mv5bnti0mjiwmdatywy1zc00mduylwi0mzmtzgnjodrln2y3zme2xkeyxkfqcgdeqxvymtm1njm2odg1-v1-fmjpg-ux1000-poster.jpg"
-                                         alt="Joker: Điên Có Đôi" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/mv5bnti0mjiwmdatywy1zc00mduylwi0mzmtzgnjodrln2y3zme2xkeyxkfqcgdeqxvymtm1njm2odg1-v1-fmjpg-ux1000-poster.jpg') }}"
+                                        alt="Joker: Điên Có Đôi" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/joker-dien-co-doi.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/joker-dien-co-doi.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Tâm Lý</p>
@@ -494,15 +539,16 @@
                             <div class="poster">
                                 <a href="phim/the-wild-robot.html">
                                     <img class="img-responsive"
-                                         src="uploads/slider-app/wrb-poster-470x700-poster.jpg"
-                                         alt="Robot Hoang Dã" />
+                                        src="{{ asset('movie/images/slider-app/wrb-poster-470x700-poster.jpg') }}"
+                                        alt="Robot Hoang Dã" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/the-wild-robot.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/the-wild-robot.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hoạt Hình</p>
@@ -518,15 +564,16 @@
                             <div class="poster">
                                 <a href="phim/co-dau-hao-mon.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/c-d-u-h-o-m-n-teaser-photo-final-poster.jpg"
-                                         alt="Cô Dâu Hào Môn" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/c-d-u-h-o-m-n-teaser-photo-final-poster.jpg') }}"
+                                        alt="Cô Dâu Hào Môn" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/co-dau-hao-mon.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/co-dau-hao-mon.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Tâm Lý</p>
@@ -542,15 +589,16 @@
                             <div class="poster">
                                 <a href="phim/cuoi-2.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/sm2-intl-dgtl-online-tsr-1sht-torn-ov-400x633-poster.jpg"
-                                         alt="Cười 2" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/sm2-intl-dgtl-online-tsr-1sht-torn-ov-400x633-poster.jpg') }}"
+                                        alt="Cười 2" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/cuoi-2.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/cuoi-2.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Kinh Dị</p>
@@ -566,15 +614,16 @@
                             <div class="poster">
                                 <a href="phim/venom-keo-cuoi.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/rsz-vnm3-intl-online-1080x1350-tsr-01-poster.jpg"
-                                         alt="Venom: Kèo Cuối" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/rsz-vnm3-intl-online-1080x1350-tsr-01-poster.jpg') }}"
+                                        alt="Venom: Kèo Cuối" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/venom-keo-cuoi.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/venom-keo-cuoi.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hành Động</p>
@@ -590,16 +639,16 @@
                             <div class="poster">
                                 <a href="phim/ngay-xua-co-mot-chuyen-tinh.html">
                                     <img class="img-responsive"
-                                         src="uploads/slider-app/nxcmct-500-1713252327863-poster.jpg"
-                                         alt="Ngày Xưa Có Một Chuyện Tình" />
+                                        src="{{ asset('movie/images/slider-app/nxcmct-500-1713252327863-poster.jpg') }}"
+                                        alt="Ngày Xưa Có Một Chuyện Tình" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/ngay-xua-co-mot-chuyen-tinh.html" class="button detail">
                                         > Chi tiết
                                     </a>
-                                    <a href="phim/ngay-xua-co-mot-chuyen-tinh.html#showtime"
-                                       class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                    <a href="phim/ngay-xua-co-mot-chuyen-tinh.html#showtime" class="button ticket">
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
@@ -616,15 +665,16 @@
                             <div class="poster">
                                 <a href="phim/red-one.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/mv5bmde3zje3ntetyzi0ny00ndq5lwewzdetnju5yzyxogewmjzhxkeyxkfqcgdeqxvymjgxmjgzmzq-at-v1-poster.jpg"
-                                         alt="Red One" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/mv5bmde3zje3ntetyzi0ny00ndq5lwewzdetnju5yzyxogewmjzhxkeyxkfqcgdeqxvymjgxmjgzmzq-at-v1-poster.jpg') }}"
+                                        alt="Red One" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/red-one.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/red-one.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hành Động</p>
@@ -640,15 +690,16 @@
                             <div class="poster">
                                 <a href="phim/linh-mieu.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/448664664-859197489565492-7700733573323176781-n-poster.jpg"
-                                         alt="Linh Miêu" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/448664664-859197489565492-7700733573323176781-n-poster.jpg') }}"
+                                        alt="Linh Miêu" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/linh-mieu.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/linh-mieu.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Kinh Dị</p>
@@ -663,15 +714,16 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/wicked.html">
-                                    <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/wicked-cgv-poster.jpg" alt="Wicked" />
+                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/wicked-cgv-poster.jpg') }}"
+                                        alt="Wicked" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/wicked.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/wicked.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
@@ -687,15 +739,16 @@
                             <div class="poster">
                                 <a href="phim/hanh-trinh-cua-moana-2.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/h-nh-tr-nh-c-a-moana-2-poster.jpg"
-                                         alt="Hành Trình Của Moana 2" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/h-nh-tr-nh-c-a-moana-2-poster.jpg') }}"
+                                        alt="Hành Trình Của Moana 2" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/hanh-trinh-cua-moana-2.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/hanh-trinh-cua-moana-2.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hoạt Hình</p>
@@ -711,17 +764,18 @@
                             <div class="poster">
                                 <a href="phim/chua-te-cua-nhung-chiec-nhan-cuoc-chien-cua-rohirrim.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/mv5byji1ntmznjgtyjfmos00yzfjltg3mtetmdgxztcwzte2ndm2xkeyxkfqcgdeqxvymtuynjc3ndq4-v1-poster.jpg"
-                                         alt="Chúa Tể Của Những Chiếc Nhẫn: Cuộc Chiến Của Rohirrim" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/mv5byji1ntmznjgtyjfmos00yzfjltg3mtetmdgxztcwzte2ndm2xkeyxkfqcgdeqxvymtuynjc3ndq4-v1-poster.jpg') }}"
+                                        alt="Chúa Tể Của Những Chiếc Nhẫn: Cuộc Chiến Của Rohirrim" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/chua-te-cua-nhung-chiec-nhan-cuoc-chien-cua-rohirrim.html"
-                                       class="button detail">
+                                        class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/chua-te-cua-nhung-chiec-nhan-cuoc-chien-cua-rohirrim.html#showtime"
-                                       class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        class="button ticket">
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Phiêu Lưu</p>
@@ -738,15 +792,16 @@
                             <div class="poster">
                                 <a href="phim/kraven-tho-san-thu-linh.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/kraventhehunterpostervn-poster.jpg"
-                                         alt="Kraven Thợ Săn Thủ Lĩnh" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/kraventhehunterpostervn-poster.jpg') }}"
+                                        alt="Kraven Thợ Săn Thủ Lĩnh" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/kraven-tho-san-thu-linh.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/kraven-tho-san-thu-linh.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> 100 phút</p>
                                     <p class="button category"><b>Thể loại:</b> Hành Động, Phiêu Lưu</p>
@@ -761,15 +816,17 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/vua-su-tu-mufasa.html">
-                                    <img class="img-responsive" src="uploads/slider-app/mufasa-poster.jpg"
-                                         alt="Vua Sư Tử: Mufasa" />
+                                    <img class="img-responsive"
+                                        src="{{ asset('movie/images/slider-app/mufasa-poster.jpg') }}"
+                                        alt="Vua Sư Tử: Mufasa" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/vua-su-tu-mufasa.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/vua-su-tu-mufasa.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hoạt Hình</p>
@@ -784,15 +841,16 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/nhim-sonic-3.html">
-                                    <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/rdoxrn0g21-poster.png" alt="Nhím Sonic 3" />
+                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/rdoxrn0g21-poster.png') }}"
+                                        alt="Nhím Sonic 3" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/nhim-sonic-3.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/nhim-sonic-3.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hoạt Hình</p>
@@ -807,16 +865,16 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/kinh-van-hoa.html">
-                                    <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/d-n-k-nh-v-n-hoa-1-poster.jpg"
-                                         alt="Kính Vạn Hoa" />
+                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/d-n-k-nh-v-n-hoa-1-poster.jpg') }}"
+                                        alt="Kính Vạn Hoa" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/kinh-van-hoa.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/kinh-van-hoa.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hài Hước</p>
@@ -832,15 +890,16 @@
                             <div class="poster">
                                 <a href="phim/nha-gia-tien.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/435259758-855491943284244-5448498450053626536-n-poster.jpg"
-                                         alt="Nhà Gia Tiên" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/435259758-855491943284244-5448498450053626536-n-poster.jpg') }}"
+                                        alt="Nhà Gia Tiên" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/nha-gia-tien.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/nha-gia-tien.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hài Hước</p>
@@ -856,15 +915,16 @@
                             <div class="poster">
                                 <a href="phim/mikey-17.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/y5rrebdzsggpkb2u52rxmqtybn0-poster.jpg"
-                                         alt="Mickey 17" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/y5rrebdzsggpkb2u52rxmqtybn0-poster.jpg') }}"
+                                        alt="Mickey 17" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/mikey-17.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/mikey-17.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> 100 phút</p>
                                     <p class="button category"><b>Thể loại:</b> Khoa Học Viễn Tưởng, Phiêu Lưu,
@@ -881,16 +941,16 @@
                             <div class="poster">
                                 <a href="phim/captain-america-the-gioi-moi.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/captain-america-teaserdebut-1sht-vie-poster.jpg"
-                                         alt="Captain America: Thế Giới Mới" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/captain-america-teaserdebut-1sht-vie-poster.jpg') }}"
+                                        alt="Captain America: Thế Giới Mới" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/captain-america-the-gioi-moi.html" class="button detail">
                                         > Chi tiết
                                     </a>
-                                    <a href="phim/captain-america-the-gioi-moi.html#showtime"
-                                       class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                    <a href="phim/captain-america-the-gioi-moi.html#showtime" class="button ticket">
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hành Động, Khoa Học Viễn Tưởng
@@ -908,15 +968,16 @@
                             <div class="poster">
                                 <a href="phim/nang-bach-tuyet.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/snow-white-teaser-vietnam-4x5-ig-2-poster.jpg"
-                                         alt="Nàng Bạch Tuyết" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/snow-white-teaser-vietnam-4x5-ig-2-poster.jpg') }}"
+                                        alt="Nàng Bạch Tuyết" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/nang-bach-tuyet.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/nang-bach-tuyet.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Phiêu Lưu</p>
@@ -931,17 +992,16 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/dia-dao-mat-troi-trong-bong-toi.html">
-                                    <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/dia-dao-fhsp-poster.jpg"
-                                         alt="Địa Đạo: Mặt Trời Trong Bóng Tối" />
+                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/dia-dao-fhsp-poster.jpg') }}"
+                                        alt="Địa Đạo: Mặt Trời Trong Bóng Tối" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/dia-dao-mat-troi-trong-bong-toi.html" class="button detail">
                                         > Chi tiết
                                     </a>
-                                    <a href="phim/dia-dao-mat-troi-trong-bong-toi.html#showtime"
-                                       class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                    <a href="phim/dia-dao-mat-troi-trong-bong-toi.html#showtime" class="button ticket">
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Tâm Lý</p>
@@ -958,15 +1018,16 @@
                             <div class="poster">
                                 <a href="phim/thunderbolts.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/mv5bmzdknzfhmdatnwvhnc00mdm5ltllyzktmwfkn2q0zwflywzkxkeyxkfqcgdeqxvyodk4otc3mty-at-v1-fmjpg-ux1000-poster.jpg"
-                                         alt="Thunderbolts" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/mv5bmzdknzfhmdatnwvhnc00mdm5ltllyzktmwfkn2q0zwflywzkxkeyxkfqcgdeqxvyodk4otc3mty-at-v1-fmjpg-ux1000-poster.jpg') }}"
+                                        alt="Thunderbolts" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/thunderbolts.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/thunderbolts.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hành Động</p>
@@ -982,17 +1043,17 @@
                             <div class="poster">
                                 <a href="phim/nhiem-vu-bat-kha-thi-nghiep-bao-phan-hai.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/mv5bzmrkmgfjywitnwzhzc00zdy5ltk0ztgtmdq0mde2n2mxndvlxkeyxkfqcgdeqxvymte1ndm4odk4-v1-fmjpg-ux1000-poster.jpg"
-                                         alt="Nhiệm Vụ Bất Khả Thi: Nghiệp Báo - Phần Hai" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/mv5bzmrkmgfjywitnwzhzc00zdy5ltk0ztgtmdq0mde2n2mxndvlxkeyxkfqcgdeqxvymte1ndm4odk4-v1-fmjpg-ux1000-poster.jpg') }}"
+                                        alt="Nhiệm Vụ Bất Khả Thi: Nghiệp Báo - Phần Hai" />
                                 </a>
                                 <div class="info">
-                                    <a href="phim/nhiem-vu-bat-kha-thi-nghiep-bao-phan-hai.html"
-                                       class="button detail">
+                                    <a href="phim/nhiem-vu-bat-kha-thi-nghiep-bao-phan-hai.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/nhiem-vu-bat-kha-thi-nghiep-bao-phan-hai.html#showtime"
-                                       class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        class="button ticket">
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hành Động</p>
@@ -1009,15 +1070,16 @@
                             <div class="poster">
                                 <a href="phim/lilo-stitch.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/mv5bmza5ndjiy2etywqxos00ztm3ltk4zdmtm2i3zdfjywu0nmyxxkeyxkfqcgc-at-v1-poster.jpg"
-                                         alt="Lilo &amp; Stitch" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/mv5bmza5ndjiy2etywqxos00ztm3ltk4zdmtm2i3zdfjywu0nmyxxkeyxkfqcgc-at-v1-poster.jpg') }}"
+                                        alt="Lilo &amp; Stitch" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/lilo-stitch.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/lilo-stitch.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hoạt Hình</p>
@@ -1032,15 +1094,16 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/zootopia-2.html">
-                                    <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/zootopia-2-poster.jpg" alt="Zootopia 2" />
+                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/zootopia-2-poster.jpg') }}"
+                                        alt="Zootopia 2" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/zootopia-2.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/zootopia-2.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hoạt Hình</p>
@@ -1056,15 +1119,16 @@
                             <div class="poster">
                                 <a href="phim/toy-story-5.html">
                                     <img class="img-responsive"
-                                         src="medias/hinh-phim-2021/mv5bm2mxmtnhntqtzgjkos00zwrklwizztctotaynwu3zwnhmtrkxkeyxkfqcgc-at-v1-fmjpg-ux1000-poster.jpg"
-                                         alt="Toy Story 5" />
+                                        src="{{ asset('movie/medias/hinh-phim-2021/mv5bm2mxmtnhntqtzgjkos00zwrklwizztctotaynwu3zwnhmtrkxkeyxkfqcgc-at-v1-fmjpg-ux1000-poster.jpg') }}"
+                                        alt="Toy Story 5" />
                                 </a>
                                 <div class="info">
                                     <a href="phim/toy-story-5.html" class="button detail">
                                         > Chi tiết
                                     </a>
                                     <a href="phim/toy-story-5.html#showtime" class="button ticket">
-                                        Mua vé <img src="images/icons/icon-dat-ve.png" alt="Mua vé" />
+                                        Mua vé <img src="{{ asset('movie/images/icons/icon-dat-ve.png') }}"
+                                            alt="Mua vé" />
                                     </a>
                                     <p class="button duration"><b>Thời lượng:</b> </p>
                                     <p class="button category"><b>Thể loại:</b> Hoạt Hình</p>
@@ -1081,6 +1145,7 @@
             </div>
         </div>
     </section>
+
     <section id="home-news">
         <div class="container">
             <div class="row">
@@ -1094,8 +1159,8 @@
                                 <div class="post-thumbnail">
                                     <a href="khuyen-mai/touchxyoungfest.html">
                                         <img class="img-responsive"
-                                             src="uploads/slide-web/1000x1000-1680826524-thumbnail.jpg"
-                                             alt="TOUCHxYOUNGFEST" />
+                                            src="{{ asset('movie/images/slide-web/1000x1000-1680826524-thumbnail.jpg') }}"
+                                            alt="TOUCHxYOUNGFEST" />
                                     </a>
                                 </div>
                                 <h3><a href="khuyen-mai/touchxyoungfest.html">TOUCHxYOUNGFEST</a></h3>
@@ -1104,8 +1169,8 @@
                                 <div class="post-thumbnail">
                                     <a href="khuyen-mai/xuan-nhu-y.html">
                                         <img class="img-responsive"
-                                             src="../m.touchcinema.com/uploads/phim-2021/32fa2219-8f2e-41b6-9033-7e4007c3c976-thumbnail.jpg"
-                                             alt="𝐗𝐮𝐚̂𝐧 𝐍𝐡𝐮̛ 𝐘́ - 𝐓𝐞̂́𝐭 𝐀𝐧 𝐊𝐡𝐚𝐧𝐠" />
+                                            src="{{ asset('movie/images/phim-2021/32fa2219-8f2e-41b6-9033-7e4007c3c976-thumbnail.jpg') }}"
+                                            alt="𝐗𝐮𝐚̂𝐧 𝐍𝐡𝐮̛ 𝐘́ - 𝐓𝐞̂́𝐭 𝐀𝐧 𝐊𝐡𝐚𝐧𝐠" />
                                     </a>
                                 </div>
                                 <h3><a href="khuyen-mai/xuan-nhu-y.html">𝐗𝐮𝐚̂𝐧 𝐍𝐡𝐮̛ 𝐘́ - 𝐓𝐞̂́𝐭 𝐀𝐧
@@ -1115,8 +1180,8 @@
                                 <div class="post-thumbnail">
                                     <a href="khuyen-mai/1010-deal-sieu-hoi-bap-rang-bo-10k.html">
                                         <img class="img-responsive"
-                                             src="uploads/slide-web/1000x1000-1-thumbnail.png"
-                                             alt="10.10 DEAL SIÊU HỜI BẮP RANG BƠ 10K" />
+                                            src="{{ asset('movie/images/slide-web/1000x1000-1-thumbnail.png') }}"
+                                            alt="10.10 DEAL SIÊU HỜI BẮP RANG BƠ 10K" />
                                     </a>
                                 </div>
                                 <h3><a href="khuyen-mai/1010-deal-sieu-hoi-bap-rang-bo-10k.html">10.10 DEAL SIÊU
@@ -1126,8 +1191,8 @@
                                 <div class="post-thumbnail">
                                     <a href="khuyen-mai/1010-touchxgrab-mua-1-tang-1-bap-rang-bo.html">
                                         <img class="img-responsive"
-                                             src="uploads/slide-web/1000x1000-1665158482-thumbnail.png"
-                                             alt="10.10 TOUCHxGRAB MUA 1 TẶNG 1 BẮP RANG BƠ" />
+                                            src="{{ asset('movie/images/slide-web/1000x1000-1665158482-thumbnail.png') }}"
+                                            alt="10.10 TOUCHxGRAB MUA 1 TẶNG 1 BẮP RANG BƠ" />
                                     </a>
                                 </div>
                                 <h3><a href="khuyen-mai/1010-touchxgrab-mua-1-tang-1-bap-rang-bo.html">10.10
@@ -1137,8 +1202,8 @@
                                 <div class="post-thumbnail">
                                     <a href="khuyen-mai/giam-20-hoa-don-khi-xem-dr-strange.html">
                                         <img class="img-responsive"
-                                             src="../m.touchcinema.com/uploads/phim-2021/d4bab0d4-b0b8-42e5-a0eb-35c98ec63dc9-thumbnail.jpg"
-                                             alt="GIẢM 20% HÓA ĐƠN KHI XEM DR. STRANGE" />
+                                            src="{{ asset('movie/images/phim-2021/d4bab0d4-b0b8-42e5-a0eb-35c98ec63dc9-thumbnail.jpg') }}"
+                                            alt="GIẢM 20% HÓA ĐƠN KHI XEM DR. STRANGE" />
                                     </a>
                                 </div>
                                 <h3><a href="khuyen-mai/giam-20-hoa-don-khi-xem-dr-strange.html">GIẢM 20% HÓA
@@ -1148,8 +1213,8 @@
                                 <div class="post-thumbnail">
                                     <a href="khuyen-mai/vong-quay-may-man.html">
                                         <img class="img-responsive"
-                                             src="uploads/slide-web/1000x1000-thumbnail.jpg"
-                                             alt="Vòng Quay May Mắn: 100% nhận quà tặng Voucher từ Touch Cinema!" />
+                                            src="{{ asset('movie/images/slide-web/1000x1000-thumbnail.jpg') }}"
+                                            alt="Vòng Quay May Mắn: 100% nhận quà tặng Voucher từ Touch Cinema!" />
                                     </a>
                                 </div>
                                 <h3><a href="khuyen-mai/vong-quay-may-man.html">Vòng Quay May Mắn: 100% nhận quà
@@ -1159,8 +1224,8 @@
                                 <div class="post-thumbnail">
                                     <a href="khuyen-mai/xuan-nham-dan-2022-li-xi-tha-ga-phuc-loc-day-nha.html">
                                         <img class="img-responsive"
-                                             src="uploads/phim-2021/li-xi-tha-ga-2022-thumbnail.jpg"
-                                             alt="🌼XUÂN NHÂM DẦN 2022: LÌ XÌ THẢ GA - PHÚC LỘC ĐẦY NHÀ" />
+                                            src="{{ asset('movie/images/phim-2021/li-xi-tha-ga-2022-thumbnail.jpg') }}"
+                                            alt="🌼XUÂN NHÂM DẦN 2022: LÌ XÌ THẢ GA - PHÚC LỘC ĐẦY NHÀ" />
                                     </a>
                                 </div>
                                 <h3><a href="khuyen-mai/xuan-nham-dan-2022-li-xi-tha-ga-phuc-loc-day-nha.html">🌼XUÂN
@@ -1170,8 +1235,8 @@
                                 <div class="post-thumbnail">
                                     <a href="khuyen-mai/mung-83-ca-nha-vui-ve-tang-ve-khu-vui-choi.html">
                                         <img class="img-responsive"
-                                             src="uploads/event2021/mung-83-2021-thumbnail.jpg"
-                                             alt="“MÙNG 8/3 – CẢ NHÀ VUI VẺ” – TẶNG VÉ KHU VUI CHƠI" />
+                                            src="{{ asset('movie/images/event2021/mung-83-2021-thumbnail.jpg') }}"
+                                            alt="“MÙNG 8/3 – CẢ NHÀ VUI VẺ” – TẶNG VÉ KHU VUI CHƠI" />
                                     </a>
                                 </div>
                                 <h3><a href="khuyen-mai/mung-83-ca-nha-vui-ve-tang-ve-khu-vui-choi.html">“MÙNG
@@ -1199,8 +1264,8 @@
                                         <div class="post-thumbnail">
                                             <a href="danh-gia-phim/con-lac-ta-thuat.html">
                                                 <img class="img-responsive"
-                                                     src="uploads/phim-con-lac-ta-thuat/phim-con-lac-ta-thuat-thumbnail.jpg"
-                                                     alt="Review phim Con lắc tà thuật – The Hypnosis" />
+                                                    src="{{ asset('movie/images/phim-con-lac-ta-thuat/phim-con-lac-ta-thuat-thumbnail.jpg') }}"
+                                                    alt="Review phim Con lắc tà thuật – The Hypnosis" />
                                             </a>
                                         </div>
                                         <div class="post-detail">
@@ -1217,8 +1282,8 @@
                                         <div class="post-thumbnail">
                                             <a href="danh-gia-phim/seobok-nguoi-nhan-ban.html">
                                                 <img class="img-responsive"
-                                                     src="uploads/phim-nguoi-nhan-ban/phim-nguoi-nhan-ban-thumbnail.jpg"
-                                                     alt="Review phim Seobok (Người nhân bản) – Vì sao con người luôn sợ hãi trước cái chết?" />
+                                                    src="{{ asset('movie/images/phim-nguoi-nhan-ban/phim-nguoi-nhan-ban-thumbnail.jpg') }}"
+                                                    alt="Review phim Seobok (Người nhân bản) – Vì sao con người luôn sợ hãi trước cái chết?" />
                                             </a>
                                         </div>
                                         <div class="post-detail">
@@ -1238,13 +1303,12 @@
                                         <div class="post-thumbnail">
                                             <a href="danh-gia-phim/tham-tu-lung-danh-conan-vien-dan-do.html">
                                                 <img class="img-responsive"
-                                                     src="uploads/phim-tham-tu-lung-danh-conan-vien-dan-do/phim-tham-tu-lung-danh-conan-vien-dan-do-thumbnail.jpg"
-                                                     alt="Review phim Thám tử lừng danh Conan: Viên đạn đỏ - Hấp dẫn miễn chê" />
+                                                    src="{{ asset('movie/images/phim-tham-tu-lung-danh-conan-vien-dan-do/phim-tham-tu-lung-danh-conan-vien-dan-do-thumbnail.jpg') }}"
+                                                    alt="Review phim Thám tử lừng danh Conan: Viên đạn đỏ - Hấp dẫn miễn chê" />
                                             </a>
                                         </div>
                                         <div class="post-detail">
-                                            <h3><a
-                                                    href="danh-gia-phim/tham-tu-lung-danh-conan-vien-dan-do.html">Review
+                                            <h3><a href="danh-gia-phim/tham-tu-lung-danh-conan-vien-dan-do.html">Review
                                                     phim Thám tử lừng danh Conan: Viên đạn đỏ - Hấp dẫn miễn
                                                     chê</a></h3>
                                             <div class="description">Sự trở lại của anh ch&agrave;ng th&aacute;m
@@ -1258,8 +1322,8 @@
                                         <div class="post-thumbnail">
                                             <a href="danh-gia-phim/lat-mat-48h.html">
                                                 <img class="img-responsive"
-                                                     src="uploads/phim-lat-mat-48h/phim-lat-mat-48h-thumbnail.png"
-                                                     alt="Review phim Lật mặt: 48h  - Lý Hải &quot;đỉnh của chóp&quot; luôn" />
+                                                    src="{{ asset('movie/images/phim-lat-mat-48h/phim-lat-mat-48h-thumbnail.png') }}"
+                                                    alt="Review phim Lật mặt: 48h  - Lý Hải &quot;đỉnh của chóp&quot; luôn" />
                                             </a>
                                         </div>
                                         <div class="post-detail">
@@ -1278,8 +1342,8 @@
                                         <div class="post-thumbnail">
                                             <a href="danh-gia-phim/nao-minh-cung-mo.html">
                                                 <img class="img-responsive"
-                                                     src="uploads/phim-nao-minh-cung-mo/phim-nao-minh-cung-mo-thumbnail.png"
-                                                     alt="Review phim Nào mình cùng mơ – Vui vẻ, nhẹ nhàng" />
+                                                    src="{{ asset('movie/images/phim-nao-minh-cung-mo/phim-nao-minh-cung-mo-thumbnail.png') }}"
+                                                    alt="Review phim Nào mình cùng mơ – Vui vẻ, nhẹ nhàng" />
                                             </a>
                                         </div>
                                         <div class="post-detail">
@@ -1296,8 +1360,8 @@
                                         <div class="post-thumbnail">
                                             <a href="danh-gia-phim/kieu.html">
                                                 <img class="img-responsive"
-                                                     src="uploads/phim-kieu/phim-kieu-thumbnail.png"
-                                                     alt="Review phim Kiều – Có phải bị chê nhiều là không nên xem?" />
+                                                    src="{{ asset('movie/images/phim-kieu/phim-kieu-thumbnail.png') }}"
+                                                    alt="Review phim Kiều – Có phải bị chê nhiều là không nên xem?" />
                                             </a>
                                         </div>
                                         <div class="post-detail">
@@ -1316,8 +1380,8 @@
                                         <div class="post-thumbnail">
                                             <a href="danh-gia-phim/ban-tay-diet-quy.html">
                                                 <img class="img-responsive"
-                                                     src="uploads/phim-ban-tay-diet-quy/phim-ban-tay-diet-quy-thumbnail.png"
-                                                     alt="Review phim Bàn tay diệt quỷ - Gay cấn, ấn tượng và mê!" />
+                                                    src="{{ asset('movie/images/phim-ban-tay-diet-quy/phim-ban-tay-diet-quy-thumbnail.png') }}"
+                                                    alt="Review phim Bàn tay diệt quỷ - Gay cấn, ấn tượng và mê!" />
                                             </a>
                                         </div>
                                         <div class="post-detail">
@@ -1334,8 +1398,8 @@
                                         <div class="post-thumbnail">
                                             <a href="danh-gia-phim/mortal-kombat-cuoc-chien-sinh-tu.html">
                                                 <img class="img-responsive"
-                                                     src="uploads/phim-mortal-kombat-cuoc-chien-sinh-tu/phim-mortal-kombat-cuoc-chien-sinh-tu-1-thumbnail.png"
-                                                     alt="Review phim Mortal Kombat: Cuộc chiến sinh tử - Phù thủy James Wan chưa bao giờ khiến khán giả thất vọng" />
+                                                    src="{{ asset('movie/images/phim-mortal-kombat-cuoc-chien-sinh-tu/phim-mortal-kombat-cuoc-chien-sinh-tu-1-thumbnail.png') }}"
+                                                    alt="Review phim Mortal Kombat: Cuộc chiến sinh tử - Phù thủy James Wan chưa bao giờ khiến khán giả thất vọng" />
                                             </a>
                                         </div>
                                         <div class="post-detail">
@@ -1357,10 +1421,9 @@
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 sidebar">
                     <div class="facebook-box hidden-xs">
                         <div class="fb-page" data-width="390" data-adapt-container-width="true"
-                             data-hide-cover="false" data-href="https://www.facebook.com/touchcinema/"
-                             data-show-facepile="true" data-small-header="false">
-                            <blockquote cite="https://www.facebook.com/touchcinema"
-                                        class="fb-xfbml-parse-ignore">
+                            data-hide-cover="false" data-href="https://www.facebook.com/touchcinema/"
+                            data-show-facepile="true" data-small-header="false">
+                            <blockquote cite="https://www.facebook.com/touchcinema" class="fb-xfbml-parse-ignore">
                                 <a href="https://www.facebook.com/touchcinema">
                                     Touch Cinema
                                 </a>
@@ -1369,14 +1432,16 @@
                     </div>
                     <div class="widget-ticket ">
                         <h2>
-                            <img src="images/icons/icon-ticket.png" alt="Đặt vé" />
+                            <img src="{{ asset('movie/images/icons/icon-ticket.png') }}" alt="Đặt vé" />
                             <span>Đặt vé</span>
                             <div class="border"></div>
                         </h2>
                         <form>
                             <div class="close-modal">Đóng</div>
                             <div class="select-group">
-                                <span class="addon"><i class="fa fa-film"></i></span>
+                                <span class="addon">
+                                    <i class="fa fa-film"></i>
+                                </span>
                                 <select class="form-control" id="widget-movie">
                                     <option>Chọn Phim</option>
                                     <option value="973">Làm Giàu Với Ma</option>
@@ -1391,7 +1456,9 @@
                                 </select>
                             </div>
                             <div class="select-group">
-                                <span class="addon"><i class="fa fa-calendar-plus-o"></i></span>
+                                <span class="addon">
+                                    <i class="fa-solid fa-calendar-plus"></i>
+                                </span>
                                 <select class="form-control" id="widget-date">
                                     <option>Chọn Ngày</option>
                                 </select>
@@ -1406,7 +1473,7 @@
                                 <button type="button" class="btn btn-success widget-buy">Mua vé</button>
                             </div>
                             <div class="loading hidden">
-                                <img src="images/loader.gif" alt="Loading..." />
+                                <img src="{{ asset('movie/images/loader.gif') }}" alt="Loading..." />
                             </div>
                         </form>
                     </div>

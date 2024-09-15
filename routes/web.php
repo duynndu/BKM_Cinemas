@@ -16,5 +16,6 @@ Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 //    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 //});
 //
+
 //require __DIR__.'/auth.php';
 //require __DIR__.'/admin.php';
