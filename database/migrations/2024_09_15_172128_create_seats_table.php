@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng ghế
         Schema::create('seats', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->bigInteger('room_id');
             $table->string('seat_number');
-            $table->decimal('price', 10, 2)->default(0);
-            $table->tinyInteger('type')->default(1);
-            $table->tinyInteger('slot')->default(1);
-            $table->tinyInteger('visible')->default(1);
-            $table->json('merged_seats');
-            $table->integer('order')->default(null);
+            $table->decimal('price', 10, 2);
+            $table->tinyInteger('type')->default(1); // 1: Ghế đơn, 2: Ghế đôi, 3: Ghế vip
+            $table->tinyInteger('slot')->default(1); // 1: 1 chỗ ngồi (ghế đơn), 2: 2 chỗ ngồi (ghế đôi)
+            $table->tinyInteger('visible')->default(1); // 0: Ẩn, 1: Hiển thị
+            $table->json('merged_seats')->nullable(); // ['A01','A02',...]
+            $table->integer('order')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

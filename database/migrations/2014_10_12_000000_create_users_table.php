@@ -12,13 +12,21 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng người dùng
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->bigInteger('role_id'); // id vai trò tài khoản
+            $table->string('image')->nullable();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('gender');
             $table->string('email')->unique();
             $table->string('phone');
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->decimal('balance', 10, 2); // số dư tài khoản
+            $table->decimal('total_deposit', 10, 2); // Tổng số tiền đã nạp vào (Dự vào đây để set rank)
+            $table->tinyInteger('status')->default(1);  // 1: Đang hoạt động, 2: Bị khóa
             $table->rememberToken();
             $table->timestamps();
         });
