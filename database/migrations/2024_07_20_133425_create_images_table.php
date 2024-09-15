@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string('path');
-            $table->nullableMorphs('imageable'); // Add this line
+            $table->nullableMorphs('board');
             $table->timestamps();
         });
     }
