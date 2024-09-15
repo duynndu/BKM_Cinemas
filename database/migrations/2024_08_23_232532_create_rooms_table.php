@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->bigInteger('cinema_id')->unsigned();
-            $table->integer('max_seat');
-            $table->json('room_seats');
+            $table->bigInteger('cinema_id');
+            $table->string('room_name');
             $table->timestamps();
             $table->softDeletes();
 
-//            $table->foreign('cinema_id')->references('id')->on('cinemas');
+            // $table->foreign('cinema_id')->references('id')->on('cinemas');
+            // $table->foreign('seat_layout_id')->references('id')->on('seat_layouts');
         });
     }
 

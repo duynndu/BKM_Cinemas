@@ -6,15 +6,26 @@
 
 import axios from "axios";
 import $ from "jquery";
-import "./jquery-plugin/jquery.filemanager";
+import "./jquery-plugin/filemanager.plugin";
+import "./jquery-plugin/seatmanager.plugin";
 import { FileManager } from "@/services/file-manager.service";
+import Alpine from "alpinejs";
+import { utils } from "@/utils/common";
 
+// thư viện
 window.axios = axios;
 window.$ = $;
-
-window.FileManager = FileManager;
-
+window.Alpine = Alpine;
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+
+// custom
+window.FileManager = FileManager;
+window.utils = utils;
+
+
+
+Alpine.start();
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

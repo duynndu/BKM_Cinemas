@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('seat_layouts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description');
-            $table->tinyInteger('active')->default(1);
+            $table->integer('col_count')->default(11);
+            $table->integer('row_count')->default(10);
+            $table->string('image')->nullable();
+            $table->json('seats');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('seat_layouts');
     }
 };

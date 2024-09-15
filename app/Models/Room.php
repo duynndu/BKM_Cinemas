@@ -15,10 +15,4 @@ class Room extends Model
     protected $casts = [
         'room_seats' => 'json',
     ];
-
-
-    public function cinema()
-    {
-        return $this->belongsTo(Cinema::class);
-    }
 }

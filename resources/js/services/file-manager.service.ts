@@ -1,6 +1,5 @@
 import { IMediaFileManager as IMedia } from "@/types/media-file-manager.interface";
 import $ from "jquery";
-import axios from "axios";
 
 export class FileManager {
   itemsStore: IMedia[] = [];
