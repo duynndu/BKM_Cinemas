@@ -15,6 +15,6 @@ use App\Http\Controllers\Client\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
-Route::get('/', function () {
-    return view('welcome', ['seatLayouts' => SeatLayout::all()]);
-});
+//Route::get('/', function () {
+//    return view('welcome', ['seatLayouts' => SeatLayout::all()]);
+//});

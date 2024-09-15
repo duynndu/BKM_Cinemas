@@ -170,6 +170,7 @@
 <div id="fb-customer-chat" class="fb-customerchat"></div>
 
 </body>
+
 <!-- Scripts -->
 <script src="{{ asset('movie/js/statics/js/jquery.js') }}"></script>
 <script src="{{ asset('movie/js/jquery/jquery-3.7.1.min.js') }}"></script>

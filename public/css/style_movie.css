@@ -215,7 +215,6 @@ th {
     padding: 0
 }
 
-/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print {
 
     blockquote,
@@ -8667,7 +8666,7 @@ label:hover:before {
 }
 
 #footer {
-    background: url(images/footerd6d9.png?bbf2adb4265fea19776ea54e4b945ed0) #2c2d31;
+    background: url(images/footerd6d9.png) #2c2d31;
     background-size: cover;
     color: #aeaeae
 }
@@ -8702,7 +8701,7 @@ label:hover:before {
     height: 100%;
     top: 0;
     left: 0;
-    background-image: url(images/footer-left6e4b.png?15d1a2fc3181ab18aeeff731006b7500);
+    background-image: url(images/footer-left6e4b.png);
     background-repeat: no-repeat;
     background-position: bottom left
 }
@@ -8713,7 +8712,7 @@ label:hover:before {
     height: 100%;
     top: 0;
     left: 0;
-    background-image: url(images/footer-right7388.png?3e38aeef9f7e29618e1824530acdb3fa);
+    background-image: url(images/footer-right7388.png);
     background-repeat: no-repeat;
     background-position: bottom right
 }
@@ -8792,7 +8791,7 @@ label:hover:before {
 }
 
 #footer .footer-wrap .col-md-4 .newsletter {
-    background: url(images/newsletter8197.png?824b77ed739214de46f5781e85c9241d) no-repeat;
+    background: url(images/newsletter8197.png) no-repeat;
     background-size: 100% 100%;
     font-size: 12px;
     padding: 7px 7px 15px;
@@ -9134,7 +9133,7 @@ label:hover:before {
 
 #home-movie {
     background-color: #cf256f;
-    background-image: url(images/crissxcross0a86.png?3d36c210cb16211038aba3b3ff059ad2);
+    background-image: url(images/crissxcross0a86.png);
     margin-top: 64px
 }
 
@@ -9318,7 +9317,7 @@ label:hover:before {
 .related-movie .view-more a .arrow-down {
     background-color: #fff;
     opacity: .9;
-    background-image: url(images/arrow-down5d85.png?6efdd89563c841301c95ff89b20e70d1);
+    background-image: url(images/arrow-down5d85.png);
     background-position: center center;
     background-repeat: no-repeat;
     width: 50px;
@@ -9335,7 +9334,7 @@ label:hover:before {
 #home-news {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-image: url(images/bgfb00.jpg?638217beccf66fd8f226e693fc727165);
+    background-image: url(images/bgfb00.jpg);
     background-size: cover;
     background-repeat: no-repeat
 }
@@ -9347,7 +9346,7 @@ label:hover:before {
 }
 
 #home-news #carousel-post .post-arrow {
-    background-image: url(images/top841d.png?85b32495811ae22ca98fed716d03b54d);
+    background-image: url(images/top841d.png);
     background-size: 26px 27px;
     background-repeat: no-repeat;
     background-position: center center;
@@ -9389,6 +9388,30 @@ label:hover:before {
 .widget-ticket {
     position: relative;
     padding-bottom: 20px
+}
+
+#main-slider .owl-nav>div.owl-prev {
+    left: -60px;
+    background-image: url(images/arrow-left.png);
+    background-position: left center;
+}
+
+#main-slider .owl-nav>div.owl-next {
+    right: -60px;
+    background-image: url(images/arrow-right.png);
+    background-position: right center;
+}
+
+.owl-carousel .owl-nav>div.owl-prev {
+    left: -5px;
+    background-image: url(images/arrow-left0f1f.png);
+    background-position: left center
+}
+
+.owl-carousel .owl-nav>div.owl-next {
+    right: -5px;
+    background-image: url(images/arrow-rightf8de.png);
+    background-position: right center
 }
 
 .widget-ticket h2 {
@@ -9618,23 +9641,23 @@ label:hover:before {
 }
 
 #map .desc-inline .active {
-    background-image: url(images/seat_0684c.png?5b606cf363ac27486ff03f962184a3b3)
+    background-image: url(images/seat_0684c.png)
 }
 
 #map .desc-inline .selected {
-    background-image: url(images/seat_51f30.png?340eca598230d795e069a5c5ff1b205f)
+    background-image: url(images/seat_51f30.png)
 }
 
 #map .desc-inline .booking {
-    background-image: url(images/seat_38e44.png?a6daa64ae7d7477301d06404efd5fa41)
+    background-image: url(images/seat_38e44.png)
 }
 
 #map .desc-inline .booked {
-    background-image: url(images/seat_11496.png?5dbd8b6217fe25123297994224dd7ca9)
+    background-image: url(images/seat_11496.png)
 }
 
 #map .desc-inline .disable {
-    background-image: url(images/seat_88752.png?92c700c2099878f031af369d9bfd3d80)
+    background-image: url(images/seat_88752.png)
 }
 
 #map .map-wrap {
@@ -9663,34 +9686,34 @@ label:hover:before {
 }
 
 #map .maps .seat-29 {
-    background-image: url(images/seat_0684c.png?5b606cf363ac27486ff03f962184a3b3)
+    background-image: url(images/seat_0684c.png)
 }
 
 #map .maps .seat-30 {
-    background-image: url(images/30ec3e.png?2b52122ae73c3bf3ac24509d5b8557ee)
+    background-image: url(images/30ec3e.png)
 }
 
 #map .maps .selected {
-    background-image: url(images/seat_51f30.png?340eca598230d795e069a5c5ff1b205f)
+    background-image: url(images/seat_51f30.png)
 }
 
 #map .maps .seat-30.selected {
-    background-image: url(images/30-selected0be7.png?e3cc31d13d0731fcd990fd1842656b85)
+    background-image: url(images/30-selected0be7.png)
 }
 
 #map .maps .booking {
     cursor: not-allowed;
-    background-image: url(images/seat_38e44.png?a6daa64ae7d7477301d06404efd5fa41)
+    background-image: url(images/seat_38e44.png)
 }
 
 #map .maps .seat-30.booking {
     cursor: not-allowed;
-    background-image: url(images/30-booking429b.png?303afd0c40e606ed70f483288dfafce0)
+    background-image: url(images/30-booking429b.png)
 }
 
 #map .maps .booked {
     cursor: not-allowed;
-    background-image: url(images/seat_11496.png?5dbd8b6217fe25123297994224dd7ca9)
+    background-image: url(images/seat_11496.png)
 }
 
 #map .maps .booked .label {
@@ -9699,7 +9722,7 @@ label:hover:before {
 
 #map .maps .seat-30.booked {
     cursor: not-allowed;
-    background-image: url(images/30-booked4d6d.png?6052edd0b6ceb84985a5077eff194257)
+    background-image: url(images/30-booked4d6d.png)
 }
 
 #map table.combo tbody > tr > td,
@@ -9870,7 +9893,7 @@ label:hover:before {
 
 #page-movie .movie-content:before {
     top: 0;
-    background-image: url(images/content919b.png?e96c1610ce1577c19b20e7f7b1dfcc87);
+    background-image: url(images/content919b.png);
     background-position: top left;
     background-repeat: no-repeat;
     height: 99px;
@@ -9966,7 +9989,7 @@ label:hover:before {
 }
 
 #page-movie .movie-detail .movie-info .age_restricted {
-    background-image: url(images/age7b77.png?ed437e4954f2e325048864c3d83e2d1e);
+    background-image: url(images/age7b77.png);
     font-size: 35px;
     font-weight: 700;
     float: right;
@@ -10271,7 +10294,7 @@ label:hover:before {
     top: 0;
     width: 23px;
     height: 100%;
-    background-image: url(images/book-movie-bordera589.png?9dc5f97a98fc3ec6479a3c5d7f87dc37);
+    background-image: url(images/book-movie-bordera589.png);
     background-size: 100%;
     background-repeat: no-repeat
 }
@@ -10298,7 +10321,7 @@ label:hover:before {
     height: calc(100% - 80px);
     width: 1px;
     right: -1px;
-    background-image: url(images/borderb54e.png?2c95ff8f8af05875ed5db09e03bc2546);
+    background-image: url(images/borderb54e.png);
     z-index: 5
 }
 
@@ -10399,7 +10422,7 @@ label:hover:before {
 }
 
 .page-book .movie-info .movie-detail .info .ticket .icon-ticket {
-    background-image: url(images/icon-ticket74ea.png?83440c04ed53ac3a76898d7d08aaaecf);
+    background-image: url(images/icon-ticket74ea.png);
     background-repeat: no-repeat;
     background-position: center center;
     width: 50px;
@@ -10410,7 +10433,7 @@ label:hover:before {
 }
 
 .page-book .movie-info .movie-detail .info .ticket .icon-seat {
-    background-image: url(images/icon-seat001a.png?9fa7c34b1a589eed532287fc97d41298);
+    background-image: url(images/icon-seat001a.png);
     background-repeat: no-repeat;
     background-position: center center;
     width: 50px;
@@ -10427,7 +10450,7 @@ label:hover:before {
 }
 
 .page-book .movie-info .movie-detail .info .ticket .age_restricted {
-    background-image: url(images/age7b77.png?ed437e4954f2e325048864c3d83e2d1e);
+    background-image: url(images/age7b77.png);
     font-size: 25px;
     font-weight: 700;
     float: right;
@@ -10546,7 +10569,7 @@ label:hover:before {
     left: 0;
     width: 100%;
     height: 9px;
-    background-image: url(images/border-bottoma97e.png?ac81d14fbd4ddf4c6112a39f213cb350)
+    background-image: url(images/border-bottoma97e.png)
 }
 
 .page-book .seat-wrap .notice {
@@ -10715,7 +10738,7 @@ label:hover:before {
     left: -9px;
     width: 9px;
     height: 100%;
-    background-image: url(images/border-left23b5.png?2c3be5ac92f6a88a55d582b6e8ebab80);
+    background-image: url(images/border-left23b5.png);
     background-size: 100%;
     background-repeat: repeat-y
 }
@@ -10778,7 +10801,7 @@ label:hover:before {
     width: 100%;
     height: 0;
     padding-top: 45%;
-    background-image: url(images/contact6b01.jpg?ee797972013db53dedc7aa0928d8da1c);
+    background-image: url(images/contact6b01.jpg);
     background-size: 100% 100%
 }
 
@@ -10915,7 +10938,7 @@ label:hover:before {
 }
 
 .page-contact > .container .info {
-    background-image: url(images/contact-info509f.png?f276972dd7de0db401106af66cc77723);
+    background-image: url(images/contact-info509f.png);
     background-size: 100% 100%;
     padding: 20px;
     margin-top: -115px;
@@ -11020,19 +11043,19 @@ label:hover:before {
 
 .page-cinema-list .carousel .carousel-control .arrow-left {
     left: -5px;
-    background-image: url(images/arrow-left0f1f.png?d6b9ada742033c8eaa6b382f79d9b131);
+    background-image: url(images/arrow-left0f1f.png);
     background-position: left center
 }
 
 .page-cinema-list .carousel .carousel-control .arrow-right {
     right: -5px;
-    background-image: url(images/arrow-rightf8de.png?c2934faa1b15a76a6bbece2fccff163b);
+    background-image: url(images/arrow-rightf8de.png);
     background-position: right center
 }
 
 .page-cinema-list .nowshowing {
     background-color: #eb1689;
-    background-image: url(images/crissxcross0a86.png?3d36c210cb16211038aba3b3ff059ad2);
+    background-image: url(images/crissxcross0a86.png);
     padding-top: 30px
 }
 

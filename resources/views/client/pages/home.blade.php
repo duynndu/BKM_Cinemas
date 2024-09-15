@@ -1,33 +1,8 @@
 @extends('client.layouts.main')
 
-@section('title', 'Awesome Cinema - Rạp chiếu phim 3D công nghệ hàng đầu.')
+@section('title', 'BKM Cinemas - Rạp chiếu phim 3D công nghệ hàng đầu.')
 
 @section('css')
-    <style>
-        #main-slider .owl-nav>div.owl-prev {
-            left: -60px;
-            background-image: url({{ asset('movie/images/arrow-left.png') }});
-            background-position: left center;
-        }
-
-        #main-slider .owl-nav>div.owl-next {
-            right: -60px;
-            background-image: url({{ asset('movie/images/arrow-right.png') }});
-            background-position: right center;
-        }
-
-        .owl-carousel .owl-nav>div.owl-prev {
-            left: -5px;
-            background-image: url({{ asset('movie/images/arrow-left0f1f.png?d6b9ada742033c8eaa6b382f79d9b131') }});
-            background-position: left center
-        }
-
-        .owl-carousel .owl-nav>div.owl-next {
-            right: -5px;
-            background-image: url({{ asset('movie/images/arrow-rightf8de.png?c2934faa1b15a76a6bbece2fccff163b') }});
-            background-position: right center
-        }
-    </style>
 @endsection
 
 @section('content')
