@@ -45,19 +45,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(RefreshToken::class);
     }
-
-    public function movieDiscounts()
-    {
-        return $this->hasMany(MovieDiscount::class);
-    }
-
-    public function discounts()
-    {
-        return $this->belongsToMany(Discount::class, 'movie_discounts');
-    }
-
-    public function keys()
-    {
-        return $this->hasMany(Key::class);
-    }
 }

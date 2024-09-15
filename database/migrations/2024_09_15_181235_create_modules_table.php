@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('seat_layouts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->integer('col_count')->default(11);
-            $table->integer('row_count')->default(10);
-            $table->string('image')->nullable();
-            $table->json('seats');
+        // Bảng lưu những module của hệ thống
+        Schema::create('modules', function (Blueprint $table) {
+            $table->id();
+            $table->string('name'); // Ví dụ: Hệ thống, Giao diện, Sản phẩm, Tin tức,...
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('seat_layouts');
+        Schema::dropIfExists('modules');
     }
 };
