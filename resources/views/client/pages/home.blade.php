@@ -316,7 +316,8 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/the-crow-bao-thu.html">
-                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/poster-the-crow-vn-poster.jpg') }}"
+                                    <img class="img-responsive"
+                                        src="{{ asset('movie/medias/hinh-phim-2021/poster-the-crow-vn-poster.jpg') }}"
                                         alt="The Crow: Báo Thù" />
                                 </a>
                                 <div class="info">
@@ -340,7 +341,8 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/khong-noi-dieu-du.html">
-                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/sne-poster-470x700-poster.jpg') }}"
+                                    <img class="img-responsive"
+                                        src="{{ asset('movie/medias/hinh-phim-2021/sne-poster-470x700-poster.jpg') }}"
                                         alt="Không Nói Điều Dữ" />
                                 </a>
                                 <div class="info">
@@ -364,7 +366,8 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/chien-dia-tu-thi.html">
-                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/ou-main-poster-poster.jpg') }}"
+                                    <img class="img-responsive"
+                                        src="{{ asset('movie/medias/hinh-phim-2021/ou-main-poster-poster.jpg') }}"
                                         alt="Chiến Địa Tử Thi" />
                                 </a>
                                 <div class="info">
@@ -689,7 +692,8 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/wicked.html">
-                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/wicked-cgv-poster.jpg') }}"
+                                    <img class="img-responsive"
+                                        src="{{ asset('movie/medias/hinh-phim-2021/wicked-cgv-poster.jpg') }}"
                                         alt="Wicked" />
                                 </a>
                                 <div class="info">
@@ -816,7 +820,8 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/nhim-sonic-3.html">
-                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/rdoxrn0g21-poster.png') }}"
+                                    <img class="img-responsive"
+                                        src="{{ asset('movie/medias/hinh-phim-2021/rdoxrn0g21-poster.png') }}"
                                         alt="Nhím Sonic 3" />
                                 </a>
                                 <div class="info">
@@ -840,7 +845,8 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/kinh-van-hoa.html">
-                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/d-n-k-nh-v-n-hoa-1-poster.jpg') }}"
+                                    <img class="img-responsive"
+                                        src="{{ asset('movie/medias/hinh-phim-2021/d-n-k-nh-v-n-hoa-1-poster.jpg') }}"
                                         alt="Kính Vạn Hoa" />
                                 </a>
                                 <div class="info">
@@ -967,7 +973,8 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/dia-dao-mat-troi-trong-bong-toi.html">
-                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/dia-dao-fhsp-poster.jpg') }}"
+                                    <img class="img-responsive"
+                                        src="{{ asset('movie/medias/hinh-phim-2021/dia-dao-fhsp-poster.jpg') }}"
                                         alt="Địa Đạo: Mặt Trời Trong Bóng Tối" />
                                 </a>
                                 <div class="info">
@@ -1069,7 +1076,8 @@
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
                                 <a href="phim/zootopia-2.html">
-                                    <img class="img-responsive" src="{{ asset('movie/medias/hinh-phim-2021/zootopia-2-poster.jpg') }}"
+                                    <img class="img-responsive"
+                                        src="{{ asset('movie/medias/hinh-phim-2021/zootopia-2-poster.jpg') }}"
                                         alt="Zootopia 2" />
                                 </a>
                                 <div class="info">

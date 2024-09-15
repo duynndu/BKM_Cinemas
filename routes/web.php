@@ -15,6 +15,10 @@ use App\Http\Controllers\Client\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
-//Route::get('/', function () {
-//    return view('welcome', ['seatLayouts' => SeatLayout::all()]);
-//});
+Route::get('/phim', function () {
+   return view('client.pages.movie');
+});
+Route::get('/phim-chi-tiet', function () {
+   return view('client.pages.movie-detail');
+});
+
