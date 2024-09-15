@@ -11917,8 +11917,8 @@ body {
     font-weight: 500;
     color: #000;
     background-image: url(images/bg.jpg);
+    background-size: contain !important;
     background-position: top center;
-    background-repeat: no-repeat;
 }
 
 .page-post-detail .post-detail .post-content {
