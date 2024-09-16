@@ -48,11 +48,11 @@ $.fn.seatmanager = function (seatLayout: SeatLayout, onChange?: (data: any) => a
     class: "context-menu",
   });
   const rowLabels = $("<div>", {
-    class: "row-labels bg-[#1a202c] py-4",
+    class: "row-labels py-4",
   });
-  
+
   const seatTable = $("<div>", {
-    class: "seat-table grid gap-2 bg-[#1a202c] p-4",
+    class: "seat-table grid gap-2 p-4",
   });
   this.empty();
 
@@ -78,7 +78,7 @@ $.fn.seatmanager = function (seatLayout: SeatLayout, onChange?: (data: any) => a
 
     seats.forEach((seat, index) => {
       seatTable.append($('<div>', {
-        class: `draggable seat seat-lg col-span-${seat.slot} bg-${seat.type} ${!seat.visible ? 'hidden' : ''}`,
+        class: `draggable seat seat-lg col-span-${seat.slot} bg-${seat.type} ${!seat.visible ? 'hidden' : 'visible'}`,
         id: seat.seat_number,
         draggable: true,
         'data-slot': seat.slot,
@@ -117,7 +117,7 @@ $.fn.seatmanager = function (seatLayout: SeatLayout, onChange?: (data: any) => a
       const seat = {
         type: $(this).data('type'),
         slot: $(this).data('slot'),
-        sort: $(this).index(),
+        order: $(this).index(),
         visible: $(this).data('visible'),
         seat_number: $(this).data('seat-number'),
         merged_seats: $(this).data('merged-seats')
@@ -260,24 +260,40 @@ $.fn.seatmanager = function (seatLayout: SeatLayout, onChange?: (data: any) => a
     draggable.on('contextmenu', (e: any) => {
       e.preventDefault();
       contextElement = e.target;
-      showContextMenu(e.pageX, e.pageY);
+      showContextMenu(e.clientX, e.clientY);
     });
   }
 
   function showContextMenu(x: number, y: number) {
     const colIndex = $(contextElement).index() % col_count;
+    const rowIndex = Math.floor($(contextElement).index() / col_count);
+    let totalSlotUpToTarget = 0;
+    $(seatTable).children().slice(rowIndex * col_count, rowIndex * col_count + colIndex).each(function () {
+      if ($(this).data('visible')) {
+        totalSlotUpToTarget += $(this).data('slot');
+      }
+    });
+    totalSlotUpToTarget += $(contextElement).data('slot');
+    console.log(totalSlotUpToTarget);
+
     const slot = $(contextElement).data('slot');
     const type = $(contextElement).data('type');
-    const isFirstCol = colIndex === 0;
-    const isLastCol = colIndex === col_count - 1;
+    const isFirstCol = totalSlotUpToTarget === 1 || colIndex === 0;
+    const isLastCol = totalSlotUpToTarget === col_count || colIndex === col_count - 1;
+
+    const leftSeat = $(contextElement).prevAll(':visible').first();
+    const rightSeat = $(contextElement).nextAll(':visible').first();
+    const isLeftCoupleSeat = leftSeat.data('type') === SEAT_TYPE.COUPLE_SEAT;
+    const isRightCoupleSeat = rightSeat.data('type') === SEAT_TYPE.COUPLE_SEAT;
+
     const menuItems = [
-      !isFirstCol && {
+      !isFirstCol && !isLeftCoupleSeat && {
         action: () => mergeSeats('merge-left'),
         text: 'Hợp nhất bên trái',
         icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M5.854 4.146a.5.5 0 0 1 0 .708L2.707 8H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"/></svg>',
         color: '#FF0000'
       },
-      !isLastCol && {
+      !isLastCol && !isRightCoupleSeat && {
         action: () => mergeSeats('merge-right'),
         text: 'Hợp nhất bên phải',
         icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M10.146 4.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 9H1.5a.5.5 0 0 1 0-1h11.793L10.146 4.854a.5.5 0 0 1 0-.708z"/></svg>',
@@ -341,7 +357,7 @@ $.fn.seatmanager = function (seatLayout: SeatLayout, onChange?: (data: any) => a
         elMergeable = elMergeable.next();
       }
     }
-    if (elMergeable) {
+    if (elMergeable && elMergeable.data('type') !== SEAT_TYPE.COUPLE_SEAT) {
       const oldSlot = $(contextElement).data('slot');
       const newSlot = parseInt(oldSlot) + parseInt(elMergeable.data('slot'));
       $(contextElement).data('slot', newSlot).data('type', 'couple-seat');
@@ -351,37 +367,27 @@ $.fn.seatmanager = function (seatLayout: SeatLayout, onChange?: (data: any) => a
   }
 
   function convertToEmptySeat() {
-    const slots = parseInt($(contextElement).data('slot'));
     $(contextElement).data('slot', 1).data('type', 'empty-seat');
-    let nextElement = $(contextElement).next();
-    while (!nextElement.data('visible')) {
-      nextElement.data('visible', true).data('type', 'empty-seat').data('slot', 1);
-      nextElement = nextElement.next();
-    }
-    let prevElement = $(contextElement).prev();
-    while (!prevElement.data('visible')) {
-      console.log('cc');
-      prevElement.data('visible', true).data('type', 'empty-seat').data('slot', 1);
-      prevElement = prevElement.next();
-    }
+    $(contextElement).nextAll(':hidden').each(function () {
+      $(this).data('visible', true).data('type', 'empty-seat').data('slot', 1);
+    });
+    $(contextElement).prevAll(':hidden').each(function () {
+      $(this).data('visible', true).data('type', 'empty-seat').data('slot', 1);
+    });
   }
 
   function splitSeat() {
-    const slots = parseInt($(contextElement).data('slot'));
     $(contextElement).data('slot', 1);
     if ($(contextElement).hasClass('couple-seat')) {
       $(contextElement).data('slot', 1).data('type', 'standard-seat');
     }
-    let nextElement = $(contextElement).next();
-    while (!nextElement.data('visible')) {
-      nextElement.data('visible', 'show').data('slot', 1);
-      nextElement = nextElement.next();
-    }
-    let prevElement = $(contextElement).prev();
-    while (!prevElement.data('visible')) {
-      prevElement.data('visible', 'show').data('slot', 1);
-      prevElement = prevElement.next();
-    }
+
+    const mergedSeats = $(contextElement).data('merged-seats') || [];
+    mergedSeats.forEach((seatId: string) => {
+      $(`#${seatId}`).data('visible', true).data('slot', 1);
+    });
+
+    $(contextElement).data('merged-seats', []);
   }
 
   function convertTo(type: string) {

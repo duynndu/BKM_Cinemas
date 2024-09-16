@@ -42,6 +42,28 @@
             </li>
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">movie</i>
+                    <span class="nav-text">Quản lý phòng chiếu</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Phòng chiếu</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ route('rooms.index') }}">Danh sách</a></li>
+                            <li><a href="{{ route('rooms.create') }}">Thêm mới</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Sơ đồ ghế</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ route('seat-layouts.index') }}">Danh sách</a></li>
+                            <li><a href="{{ route('seat-layouts.create') }}">Thêm mới</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons"> widgets </i>
                     <span class="nav-text">Quản lý sản phẩm</span>
                 </a>
