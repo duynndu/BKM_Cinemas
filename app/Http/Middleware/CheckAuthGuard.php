@@ -11,12 +11,12 @@ class CheckAuthGuard
 {
     public function handle($request, Closure $next)
     {
-        if ($request->header('Accept') === 'application/json') {
-            Auth::shouldUse('api');
-        } else {
-            Auth::shouldUse('web');
-        }
-
+        // if ($request->header('Accept') === 'application/json') {
+        //     Auth::shouldUse('api');
+        // } else {
+        //     Auth::shouldUse('web');
+        // }
+        // Auth::shouldUse('web');
         return $next($request);
     }
 }

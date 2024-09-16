@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SeatLayout;
+use Illuminate\Support\Facades\Storage;
 
 class SeatLayoutController extends Controller
 {
@@ -13,8 +14,11 @@ class SeatLayoutController extends Controller
      */
     public function index()
     {
-        $seats = SeatLayout::all();
-        return response()->json($seats, 200);
+        $seatLayouts = SeatLayout::all()->map(function ($seatLayout) {
+            $seatLayout->image = Storage::url($seatLayout->image);
+            return $seatLayout;
+        });
+        return response()->json($seatLayouts, 200);
     }
 
     /**
@@ -24,7 +28,6 @@ class SeatLayoutController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            // 'room_id' => 'required|integer',
             'col_count' => 'required|integer',
             'row_count' => 'required|integer',
             'seats' => 'required|json',
@@ -33,7 +36,6 @@ class SeatLayoutController extends Controller
 
         $seatLayout = new SeatLayout();
         $seatLayout->name = $validatedData['name'];
-        // $seatLayout->room_id = $validatedData['room_id'];
         $seatLayout->col_count = $validatedData['col_count'];
         $seatLayout->row_count = $validatedData['row_count'];
         $seatLayout->seats = json_decode($validatedData['seats'], true);
@@ -42,9 +44,7 @@ class SeatLayoutController extends Controller
             $path = $request->file('image')->store('seat_layouts', 'public');
             $seatLayout->image = $path;
         }
-
         $seatLayout->save();
-
         return response()->json($seatLayout, 201);
     }
 
@@ -62,7 +62,29 @@ class SeatLayoutController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'col_count' => 'required|integer',
+            'row_count' => 'required|integer',
+            'seats' => 'required|json',
+            'image' => 'nullable|image',
+        ]);
+
+        $seatLayout = SeatLayout::findOrFail($id);
+        $seatLayout->name = $validatedData['name'];
+        $seatLayout->col_count = $validatedData['col_count'];
+        $seatLayout->row_count = $validatedData['row_count'];
+        $seatLayout->seats = json_decode($validatedData['seats'], true);
+
+        if ($request->hasFile('image')) {
+            if ($seatLayout->image) {
+                Storage::disk('public')->delete($seatLayout->image);
+            }
+            $path = $request->file('image')->store('seat_layouts', 'public');
+            $seatLayout->image = $path;
+        }
+        $seatLayout->save();
+        return response()->json($seatLayout, 200);
     }
 
     /**
@@ -70,6 +92,11 @@ class SeatLayoutController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $seatLayout = SeatLayout::findOrFail($id);
+        if ($seatLayout->image) {
+            Storage::disk('public')->delete($seatLayout->image);
+        }
+        $seatLayout->delete();
+        return response()->json(['message' => 'Thao tác thành công'], 200);
     }
 }
