@@ -1,0 +1,47 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite && chokidar '**/*.php' -c 'php artisan route:clear && php artisan route:cache'",
+        "build": "tsc && vite build"
+    },
+    "devDependencies": {
+        "@headlessui/react": "^1.4.2",
+        "@inertiajs/react": "^1.0.0",
+        "@tailwindcss/forms": "^0.5.2",
+        "@types/alpinejs": "^3.13.10",
+        "@types/dom-to-image": "^2.6.7",
+        "@types/node": "^18.13.0",
+        "@types/react": "^18.0.28",
+        "@types/react-dom": "^18.0.10",
+        "@vitejs/plugin-react": "^4.2.0",
+        "alpinejs": "^3.14.1",
+        "autoprefixer": "^10.4.2",
+        "axios": "^1.6.4",
+        "chokidar-cli": "^3.0.0",
+        "daisyui": "^4.12.10",
+        "laravel-vite-plugin": "^1.0.0",
+        "postcss": "^8.4.31",
+        "prettier": "3.3.3",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "tailwindcss": "^3.1.0",
+        "typescript": "^5.0.2",
+        "vite": "^5.4.2"
+    },
+    "dependencies": {
+        "@ant-design/icons": "^5.4.0",
+        "@types/jquery": "^3.5.30",
+        "dayjs": "^1.11.12",
+        "dom-to-image": "^2.6.0",
+        "flowbite": "^2.5.1",
+        "flowbite-react": "^0.10.1",
+        "jquery": "^3.7.1",
+        "rc-menu": "^9.14.1",
+        "rc-picker": "^4.6.11",
+        "recoil": "^0.7.7",
+        "recoil-nexus": "^0.5.1",
+        "swiper": "^11.1.9",
+        "vite-plugin-run": "^0.5.2"
+    }
+}
