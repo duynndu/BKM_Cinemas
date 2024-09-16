@@ -4,15 +4,17 @@
             <div class="collapse navbar-collapse justify-content-between">
                 <div class="header-left">
                     <div class="input-group search-area">
-                        <span class="input-group-text"><a href="javascript:void(0)">
+                        <span class="input-group-text">
+                            <a href="javascript:void(0)">
                                 <svg width="15" height="15" viewBox="0 0 18 18" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M17.5605 15.4395L13.7527 11.6317C14.5395 10.446 15 9.02625 15 7.5C15 3.3645 11.6355 0 7.5 0C3.3645 0 0 3.3645 0 7.5C0 11.6355 3.3645 15 7.5 15C9.02625 15 10.446 14.5395 11.6317 13.7527L15.4395 17.5605C16.0245 18.1462 16.9755 18.1462 17.5605 17.5605C18.1462 16.9747 18.1462 16.0252 17.5605 15.4395V15.4395ZM2.25 7.5C2.25 4.605 4.605 2.25 7.5 2.25C10.395 2.25 12.75 4.605 12.75 7.5C12.75 10.395 10.395 12.75 7.5 12.75C4.605 12.75 2.25 10.395 2.25 7.5V7.5Z"
                                         fill="#01A3FF"/>
                                 </svg>
-                            </a></span>
-                        <input type="text" class="form-control" placeholder="Search here...">
+                            </a>
+                        </span>
+                        <input type="text" class="form-control" placeholder="{{ __('language.admin.search') }}...">
                     </div>
                 </div>
                 <ul class="navbar-nav header-right">
@@ -20,29 +22,14 @@
                         <div class="search-coundry">
                             <select class="form-control custom-image-select-2 image-select mt-3 mt-sm-0">
                                 <option
-                                    data-thumbnail="https://finlab.dexignlab.com/cakephp/demo/images/svg/albania.svg"
-                                    data-content="<img src='https://finlab.dexignlab.com/cakephp/demo/images/svg/albania.svg'/> Dash Coin">
-                                    Albania
+                                    data-thumbnail="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_North_Vietnam_%281945%E2%80%931955%29.svg/230px-Flag_of_North_Vietnam_%281945%E2%80%931955%29.svg.png"
+                                    data-content="<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_North_Vietnam_%281945%E2%80%931955%29.svg/230px-Flag_of_North_Vietnam_%281945%E2%80%931955%29.svg.png'/> Dash Coin">
+                                    Việt Nam
                                 </option>
                                 <option
-                                    data-thumbnail="https://finlab.dexignlab.com/cakephp/demo/images/svg/algeria.svg"
-                                    data-content="<img src='https://finlab.dexignlab.com/cakephp/demo/images/svg/algeria.svg'/> Ripple">
-                                    Algeria
-                                </option>
-                                <option
-                                    data-thumbnail="https://finlab.dexignlab.com/cakephp/demo/images/svg/usflag.svg"
-                                    data-content="<img src='https://finlab.dexignlab.com/cakephp/demo/images/svg/usflag.svg'/> Ethereum">
-                                    Austria
-                                </option>
-                                <option
-                                    data-thumbnail="https://finlab.dexignlab.com/cakephp/demo/images/svg/usflag.svg"
-                                    data-content="<img src='https://finlab.dexignlab.com/cakephp/demo/images/svg/usflag.svg'/> Ethereum">
-                                    Austria
-                                </option>
-                                <option
-                                    data-thumbnail="https://finlab.dexignlab.com/cakephp/demo/images/svg/usflag.svg"
-                                    data-content="<img src='https://finlab.dexignlab.com/cakephp/demo/images/svg/usflag.svg'/> Ethereum">
-                                    Austria
+                                    data-thumbnail="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg"
+                                    data-content="<img src='https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg'/> Dash Coin">
+                                    English
                                 </option>
                             </select>
                         </div>
@@ -236,11 +223,11 @@
                                 <div class="header-info2 d-flex align-items-center">
                                     <div class="d-flex align-items-center sidebar-info">
                                         <div class="d-none d-md-block">
-                                            <h5 class="mb-0">Nella Vita</h5>
+                                            <h5 class="mb-0">Bộ phận kỹ thuật</h5>
                                             <p class="mb-0 text-end">Admin</p>
                                         </div>
                                     </div>
-                                    <img src="{{ asset('/images/user.jpg') }}" alt="">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXSjkWNYkyTK94NswJwN5f4kUJ7eQMn2GJ7w&s" alt="">
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
@@ -259,7 +246,7 @@
                                                 fill="var(--primary)" fill-rule="nonzero"/>
                                         </g>
                                     </svg>
-                                    <span class="ms-2">Profile </span>
+                                    <span class="ms-2">{{ __('language.admin.accounts.profile') }} </span>
                                 </a>
                                 <a href="chat.html" class="dropdown-item ai-icon ">
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -273,7 +260,7 @@
                                                 fill="var(--primary)"/>
                                         </g>
                                     </svg>
-                                    <span class="ms-2">Message </span>
+                                    <span class="ms-2">{{ __('language.admin.accounts.message') }} </span>
                                 </a>
                                 <a href="email-inbox.html" class="dropdown-item ai-icon ">
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -289,7 +276,7 @@
                                                     r="2.5"/>
                                         </g>
                                     </svg>
-                                    <span class="ms-2">Notification </span>
+                                    <span class="ms-2">{{ __('language.admin.accounts.notification') }} </span>
                                 </a>
                                 <a href="javascript:void(0);" class="dropdown-item ai-icon ">
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -306,7 +293,7 @@
                                                 fill="var(--primary)"/>
                                         </g>
                                     </svg>
-                                    <span class="ms-2">Settings </span>
+                                    <span class="ms-2">{{ __('language.admin.accounts.setting') }} </span>
                                 </a>
                                 <a href="page-login.html" class="dropdown-item ai-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
@@ -317,7 +304,7 @@
                                         <polyline points="16 17 21 12 16 7"></polyline>
                                         <line x1="21" y1="12" x2="9" y2="12"></line>
                                     </svg>
-                                    <span class="ms-2 text-danger">Logout </span>
+                                    <span class="ms-2 text-danger">{{ __('language.admin.accounts.logout') }} </span>
                                 </a>
                             </div>
                         </div>

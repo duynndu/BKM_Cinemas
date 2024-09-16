@@ -3,13 +3,13 @@
     <div class="custom-tab-1">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#notes">Notes</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#notes">{{ __('language.admin.note') }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#alerts">Alerts</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#alerts">{{ __('language.admin.notification') }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#chat">Chat</a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#chat">{{ __('language.admin.chat') }}</a>
             </li>
         </ul>
         <div class="tab-content">

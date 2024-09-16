@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', $title['index'] ?? null)
+@section('title', $title['index'] ?? 'Danh sách nội dung')
 
 @section('css')
 @endsection
@@ -13,135 +13,251 @@
                     <div class="col-xl-12">
                         <div class="page-titles">
                             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="{{ route('admin.dashboard') }}">Bảng điều khiển</a>
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">
-                                        Danh Sách {{ $title['index'] ?? null }}
-                                    </li>
-                                </ol>
+                                @include('admin.components.breadcrumbs', [
+                                    'title' => $title['index'] ?? '',
+                                    'breadcrumbs' => $breadcrumbs
+                                ])
                             </nav>
-
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Danh Sách {{ $title['index'] ?? null }}</h4>
-                        <div class="compose-btn">
-                            <a href="{{ route('admin.systems.create') }}">
-                                <button class="btn btn-secondary btn-sm light" fdprocessedid="5mkvtw">
-                                    + Thêm mới
-                                </button>
-                            </a>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="filter cm-content-box box-primary">
+                            <div class="content-title SlideToolHeader">
+                                <div class="cpa">
+                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>
+                                    {{ __('language.admin.systems.filter') }}
+                                </div>
+                            </div>
+                            <div class="cm-content-body form excerpt" style="">
+                                <form action="{{ route('admin.systems.index') }}" method="GET">
+                                    @if(request()->system_id > 0)
+                                        <input type="hidden" name="system_id" value="{{ request()->system_id }}">
+                                    @endif
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-3 col-sm-6">
+                                                <label class="form-label">{{ __('language.admin.systems.filterName') }}</label>
+                                                <input type="text" name="name" value="{{ request()->name ?? '' }}" class="form-control mb-xl-0 mb-3" id="exampleFormControlInput1"
+                                                       placeholder="{{ __('language.admin.systems.inputName') }}">
+                                            </div>
+                                            <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
+                                                <label class="form-label">{{ __('language.admin.systems.active') }}</label>
+                                                <select name="active" class="form-control">
+                                                    <option value="" {{ request()->active === null ? 'selected' : '' }}>-- {{ __('language.admin.systems.select') }} --</option>
+                                                    <option value="1" {{ request()->active == '1' ? 'selected' : '' }}>{{ __('language.admin.systems.show') }}</option>
+                                                    <option value="0" {{ request()->active == '0' ? 'selected' : '' }}>{{ __('language.admin.systems.hidden') }}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 col-sm-6 align-self-end">
+                                                <div>
+                                                    <button class="btn btn-primary me-2" title="{{ __('language.admin.systems.search') }}" type="submit">
+                                                        <i class="fa-sharp fa-solid fa-filter me-2"></i>
+                                                        {{ __('language.admin.systems.search') }}
+                                                    </button>
+                                                    <button class="btn btn-danger light" title="{{ __('language.admin.systems.removeValue') }}" type="reset">
+                                                        {{ __('language.admin.systems.removeValue') }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-responsive-md" id="data-table">
-                                <thead>
-                                    <tr>
-                                        <th style="width:80px;">#</th>
-                                        <th>Folder</th>
-                                        <th>Tên nội dung</th>
-                                        <th>Giá trị</th>
-                                        <th>Số thứ tự</th>
-                                        <th>Trạng thái</th>
-                                        <th>Hành động</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <strong class="text-black">1</strong>
-                                    </td>
-                                    <td>
-                                        <i class="nav-icon fas fa-file"></i>
-                                    </td>
-                                    <td>
-                                        <a href="">
-                                            Nội dung trang chủ
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Nội dung ở đây
-                                    </td>
-                                    <td>
-                                        <button class="toggle-active-btn btn btn-xs btn-success text-white" data-id="11"
-                                                data-status="1"
-                                                data-url="">
-                                            Hiển thị
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">{{ $title['index'] ?? __('language.admin.systems.list') }}</h4>
+                                <div class="compose-btn">
+                                    <a href="{{ route('admin.systems.create', request()->system_id > 0 ? 'system_id=' . request()->system_id : '') }}">
+                                        <button class="btn btn-secondary btn-sm light">
+                                            + {{ __('language.admin.systems.add') }}
                                         </button>
-                                    </td>
-                                    <td>
-                                        <button class="toggle-hot-btn btn btn-xs btn-success text-white" data-id="11"
-                                                data-status="1"
-                                                data-url="">
-                                            Nổi bật
-                                        </button>
-                                    </td>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    @if(isset($_GET['system_id']))
+                                        @if(!$systemBySystemId->isEmpty())
+                                            <table class="table table-responsive-md" id="data-table">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:80px;">#</th>
+                                                    <th>{{ __('language.admin.systems.folder') }}</th>
+                                                    <th>{{ __('language.admin.systems.nameSystem') }}</th>
+                                                    <th>{{ __('language.admin.systems.value') }}</th>
+                                                    <th>{{ __('language.admin.systems.order') }}</th>
+                                                    <th>{{ __('language.admin.systems.active') }}</th>
+                                                    <th>{{ __('language.admin.systems.action') }}</th>
+                                                </tr>
+                                                </thead>
 
-                                    <td>
-                                        <div>
-                                            <a href="" class="btn btn-primary shadow btn-xs sharp me-1">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
-                                            <a class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove"
-                                               data-type="DELETE" href="">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                                <tbody>
+                                                    @foreach($systemBySystemId as $key => $system)
+                                                    <tr>
+                                                        <td>
+                                                            <strong class="text-black">{{ $key + 1 }}</strong>
+                                                        </td>
+                                                        <td>
+                                                            @if ($system->childs->count() > 0)
+                                                                <i class="nav-icon fas fa-folder"></i>
+                                                            @else
+                                                                <i class="nav-icon fas fa-file"></i>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('admin.systems.index') . '?system_id=' . $system->id }}">
+                                                                <b>{{ $system->name }}</b>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            {{ $system->description }}
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" min="0" name="order"
+                                                                   value="{{ $system->order }}"
+                                                                   data-id="{{ $system->id }}"
+                                                                   data-url="{{ route('admin.systems.changeOrder') }}"
+                                                                   class="form-control changeOrder" style="width: 67px;">
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                class="toggle-active-btn btn btn-xs {{ $system->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                data-id="{{ $system->id }}"
+                                                                data-status="{{ $system->active }}"
+                                                                data-url="{{ route('admin.systems.changeActive') }}">
+                                                                {{ $system->active == 1 ? __('language.admin.systems.show') : __('language.admin.systems.hidden') }}
+                                                            </button>
+                                                        </td>
+
+                                                        <td>
+                                                            <div
+                                                                style="padding-right: 20px; display: flex; justify-content: end">
+                                                                <a href="{{ route('admin.systems.edit', $system->id) }}{{ request()->system_id > 0 ? '?system_id=' . request()->system_id : '' }}"
+                                                                   class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <form
+                                                                    action="{{ route('admin.systems.delete', $system->id) }}{{ request()->system_id > 0 ? '?system_id=' . request()->system_id : '' }}"
+                                                                    class="formDelete" method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button
+                                                                        class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                        data-type="DELETE" href="">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        @else
+                                            <div class="d-flex justify-content-center align-items-center p-5">
+                                                <div>
+                                                    <h3 class="text-center">{{ __('language.admin.systems.noData') }}</h3>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @else
+                                        @if(!$systemByType0->isEmpty())
+                                            <table class="table table-responsive-md" id="data-table">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:80px;">#</th>
+                                                    <th>{{ __('language.admin.systems.folder') }}</th>
+                                                    <th>{{ __('language.admin.systems.nameSystem') }}</th>
+                                                    <th>{{ __('language.admin.systems.value') }}</th>
+                                                    <th>{{ __('language.admin.systems.order') }}</th>
+                                                    <th>{{ __('language.admin.systems.active') }}</th>
+                                                    <th>{{ __('language.admin.systems.action') }}</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    @foreach($systemByType0 as $key => $system)
+                                                    <tr>
+                                                        <td>
+                                                            <strong class="text-black">{{ $key + 1 }}</strong>
+                                                        </td>
+                                                        <td>
+                                                            @if ($system->childs->count() > 0)
+                                                                <i class="nav-icon fas fa-folder"></i>
+                                                            @else
+                                                                <i class="nav-icon fas fa-file"></i>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('admin.systems.index') . '?system_id=' . $system->id }}">
+                                                                <b>{{ $system->name }}</b>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            {{ $system->description }}
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" min="0" name="order"
+                                                                   value="{{ $system->order }}"
+                                                                   data-id="{{ $system->id }}"
+                                                                   data-url="{{ route('admin.systems.changeOrder') }}"
+                                                                   class="form-control changeOrder" style="width: 67px;">
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                class="toggle-active-btn btn btn-xs {{ $system->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                data-id="{{ $system->id }}"
+                                                                data-status="{{ $system->active }}"
+                                                                data-url="{{ route('admin.systems.changeActive') }}">
+                                                                {{ $system->active == 1 ? __('language.admin.systems.show') : __('language.admin.systems.hidden') }}
+                                                            </button>
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="padding-right: 20px; display: flex; justify-content: end">
+                                                                <a href="{{ route('admin.systems.edit', $system->id) }}"
+                                                                   class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <form action="{{ route('admin.systems.delete', $system->id) }}"
+                                                                      class="formDelete" method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button
+                                                                        class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                        data-type="DELETE" href="">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        @else
+                                            <div class="d-flex justify-content-center align-items-center p-5">
+                                                <div>
+                                                    <h3 class="text-center">{{ request()->name ? __('language.admin.systems.noDataSearch') . request()->name : __('language.admin.systems.noData') }}</h3>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endif
+
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="text-center">
+                                            @if(!empty($_GET['system_id']))
+                                                {{ $systemBySystemId->links('pagination::bootstrap-4') }}
+                                            @else
+                                                {{ $systemByType0->links('pagination::bootstrap-4') }}
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong class="text-black">6</strong>
-                                    </td>
-                                    <td>
-                                        <i class="nav-icon fas fa-folder"></i>
-                                    </td>
-                                    <td>
-                                        <a href="">
-                                            Nội dung đầu trang
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Nội dung ở đây
-                                    </td>
-                                    <td>
-                                        <button class="toggle-active-btn btn btn-xs btn-success text-white" data-id="16"
-                                                data-status="1"
-                                                data-url="">
-                                            Hiển thị
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="toggle-hot-btn btn btn-xs btn-success text-white" data-id="16"
-                                                data-status="1"
-                                                data-url=""
-                                                fdprocessedid="dopdx9">
-                                            Nổi bật
-                                        </button>
-                                    </td>
-
-                                    <td>
-                                        <div>
-                                            <a href="" class="btn btn-primary shadow btn-xs sharp me-1">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
-                                            <a class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove"
-                                               data-type="DELETE"
-                                               href="">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div>
-                                <div class="text-center">
-
+                                    </div>
                                 </div>
                             </div>
                         </div>
