@@ -11640,7 +11640,7 @@ clapperboard:
       - clapper board
       - director
       - film
-      - movie_2
+      - movie
       - record
   unicode: e131
   voted: true
@@ -13214,7 +13214,7 @@ compact-disc:
       - disk
       - dvd
       - media
-      - movie_2
+      - movie
       - music
       - optical
       - optical disk
@@ -20559,7 +20559,7 @@ file-video:
     terms:
       - document
       - m4v
-      - movie_2
+      - movie
       - mp4
       - play
   unicode: f1c8
@@ -20765,7 +20765,7 @@ film:
       - film
       - film frames
       - frames
-      - movie_2
+      - movie
       - strip
       - video
   unicode: f008
@@ -38687,7 +38687,7 @@ product-hunt:
     pro:
       - family: classic
         style: brands
-  label: Product Hunt
+  label: Products Hunt
   search:
     terms: []
   unicode: f288
@@ -48809,7 +48809,7 @@ ticket:
       - admission
       - admission tickets
       - coupon
-      - movie_2
+      - movie
       - pass
       - support
       - ticket
@@ -48846,7 +48846,7 @@ ticket-simple:
     terms:
       - admission
       - coupon
-      - movie_2
+      - movie
       - pass
       - support
       - ticket
@@ -52869,7 +52869,7 @@ video:
     terms:
       - camera
       - film
-      - movie_2
+      - movie
       - record
       - video-camera
   unicode: f03d

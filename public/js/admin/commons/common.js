@@ -2,6 +2,14 @@ $(document).ready(function() {
     $('#name').on('input', function () {
         let name = $('#name').val().trim().toLowerCase();
 
+        var nameVaue = $('#name').val();
+
+        $('#title_seo').val(nameVaue);
+
+        $('#keyword_seo').val(nameVaue);
+
+        $('#description_seo').val(nameVaue);
+
         const vnAccents = [
             'à', 'á', 'ạ', 'ả', 'ã', 'â', 'ầ', 'ấ', 'ậ', 'ẩ', 'ẫ', 'ă', 'ằ', 'ắ', 'ặ', 'ẳ', 'ẵ',
             'è', 'é', 'ẹ', 'ẻ', 'ẽ', 'ê', 'ề', 'ế', 'ệ', 'ể', 'ễ',
@@ -44,5 +52,41 @@ $(document).ready(function() {
         name = name.replace(/\s+/g, '-');
 
         $('#slug').val(name);
+    });
+
+    $('.formDelete').on('submit', function (e) {
+        e.preventDefault();
+        const form = $(this);
+        Swal.fire({
+            title: 'Bạn chắc chắn muốn xóa?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Huỷ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.off('submit').submit();
+            }
+        });
+    });
+
+    $(".folder-layout-tab").on('click', function () {
+        $('.folder-layout-tab, .folder-structure ').toggleClass("grid");
+    });
+
+    // $('.filter-option-inner-inner').each(function() {
+    //     $(this).html('--Chọn--');
+    // });
+
+    $('#automatic-selection').on('change', function() {
+        var selectedLanguage = $("#automatic-selection option:selected").text();
+
+        if(selectedLanguage == '-- Chọn ngôn ngữ --') {
+            selectedLanguage = '';
+        }
+
+        $('#language_name').val(selectedLanguage);
     });
 })
