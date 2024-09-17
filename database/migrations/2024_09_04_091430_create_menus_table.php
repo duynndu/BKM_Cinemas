@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('parent_id')->nullable();
             $table->string('name');
             $table->string('slug')->nullable();
             $table->string('url')->nullable();
-            $table->bigInteger('parent_id')->nullable();
             $table->integer('order')->default(0);
+            $table->tinyInteger('type')->default(0); // Trang: 0, Danh mục bài viết: 1, Bài viết: 2, Danh mục sản phẩm: 3, Sản phẩm: 4;
             $table->timestamps();
             $table->softDeletes();
         });
