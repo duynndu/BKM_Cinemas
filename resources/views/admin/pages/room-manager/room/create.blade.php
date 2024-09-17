@@ -112,7 +112,7 @@
                             </div>
                             <div class="mt-3 d-flex justify-content-start gap-2">
                                 <button @click="onSubmit" class="btn btn-success">Tạo mới</button>
-                                <a href="" class="btn btn-warning">Trở về
+                                <a href="{{ route('admin.rooms.index') }}" class="btn btn-warning">Trở về
                                     trang
                                     danh
                                     sách

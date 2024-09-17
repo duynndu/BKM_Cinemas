@@ -18,7 +18,6 @@ return new class extends Migration
             $table->bigInteger('showtime_id'); // Thời điểm chiếu (khung giờ chiếu)
             $table->bigInteger('user_id'); // Người đặt vé
             $table->bigInteger('payment_id'); // id hình thức thanh toán
-            $table->timestamps('booking_time'); // Thời gian đặt vé
             $table->decimal('total_price', 10, 2); // Tổng tiền
             $table->timestamps();
             $table->softDeletes();

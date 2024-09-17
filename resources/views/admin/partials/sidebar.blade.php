@@ -83,15 +83,15 @@
                     <li>
                         <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Phòng chiếu</a>
                         <ul aria-expanded="false">
-                            <li><a href="{{ route('rooms.index') }}">Danh sách</a></li>
-                            <li><a href="{{ route('rooms.create') }}">Thêm mới</a></li>
+                            <li><a href="{{ route('admin.rooms.index') }}">Danh sách</a></li>
+                            <li><a href="{{ route('admin.rooms.create') }}">Thêm mới</a></li>
                         </ul>
                     </li>
                     <li>
                         <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Sơ đồ ghế</a>
                         <ul aria-expanded="false">
-                            <li><a href="{{ route('seat-layouts.index') }}">Danh sách</a></li>
-                            <li><a href="{{ route('seat-layouts.create') }}">Thêm mới</a></li>
+                            <li><a href="{{ route('admin.seat-layouts.index') }}">Danh sách</a></li>
+                            <li><a href="{{ route('admin.seat-layouts.create') }}">Thêm mới</a></li>
                         </ul>
                     </li>
                 </ul>

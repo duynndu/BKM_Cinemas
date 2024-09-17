@@ -18,7 +18,7 @@
                     <div class="card-header">
                         <h4 class="card-title">Danh Sách {{ $title['index'] ?? null }}</h4>
                         <div class="compose-btn">
-                            <a href="{{ route('rooms.create') }}">
+                            <a href="{{ route('admin.rooms.create') }}">
                                 <button class="btn btn-secondary btn-sm light" fdprocessedid="5mkvtw">
                                     + Thêm mới
                                 </button>
