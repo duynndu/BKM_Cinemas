@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('title');  // Tiêu đề thông báo
             $table->text('content')->nullable(); // Nội dung thông báo
             $table->string('type'); // Loại thông báo: Vd: Sự kiện, Hệ thống, Đặt vé,...
-            $table->timestamps('read_at'); // Thời điểm người dùng đọc thông báo (null nếu chưa đọc)
             $table->timestamps();
         });
     }
