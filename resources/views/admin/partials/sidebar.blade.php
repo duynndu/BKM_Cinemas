@@ -18,7 +18,7 @@
                 <ul aria-expanded="false">
                     <li>
                         <a class="has-arrow" href="javascript:void(0);"
-                           aria-expanded="false">{{ __('language.admin.systems.name') }}</a>
+                            aria-expanded="false">{{ __('language.admin.systems.name') }}</a>
                         <ul aria-expanded="false">
                             <li><a href="{{ route('admin.systems.index') }}">{{ __('language.admin.systems.listSidebar') }}</a>
                             </li>
@@ -27,20 +27,20 @@
                             </li>
                         </ul>
                     </li>
-{{--                    @foreach($systemsByType0 as $key => $system)--}}
-{{--                        <li>--}}
-{{--                            <a class="has-arrow" href="javascript:void(0);"--}}
-{{--                               aria-expanded="false">{{ $system->name ?? null }}</a>--}}
-{{--                            <ul aria-expanded="false">--}}
-{{--                                <li>--}}
-{{--                                    <a href="{{ route('admin.systems.index') . '?system_id=' . $system->id }}">{{ __('language.admin.systems.list') }}</a>--}}
-{{--                                </li>--}}
-{{--                                <li>--}}
-{{--                                    <a href="{{ route('admin.systems.create') . '?system_id=' . $system->id }}">{{ __('language.admin.systems.create') }}</a>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                        </li>--}}
-{{--                    @endforeach--}}
+                    {{-- @foreach($systemsByType0 as $key => $system)--}}
+                    {{-- <li>--}}
+                    {{-- <a class="has-arrow" href="javascript:void(0);"--}}
+                    {{-- aria-expanded="false">{{ $system->name ?? null }}</a>--}}
+                    {{-- <ul aria-expanded="false">--}}
+                    {{-- <li>--}}
+                    {{-- <a href="{{ route('admin.systems.index') . '?system_id=' . $system->id }}">{{ __('language.admin.systems.list') }}</a>--}}
+                    {{-- </li>--}}
+                    {{-- <li>--}}
+                    {{-- <a href="{{ route('admin.systems.create') . '?system_id=' . $system->id }}">{{ __('language.admin.systems.create') }}</a>--}}
+                    {{-- </li>--}}
+                    {{-- </ul>--}}
+                    {{-- </li>--}}
+                    {{-- @endforeach--}}
                 </ul>
             </li>
             <li>
@@ -71,6 +71,28 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.posts.index') }}" aria-expanded="false">{{ __('language.admin.posts.title') }}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">movie</i>
+                    <span class="nav-text">Quản lý phòng chiếu</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Phòng chiếu</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ route('rooms.index') }}">Danh sách</a></li>
+                            <li><a href="{{ route('rooms.create') }}">Thêm mới</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Sơ đồ ghế</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ route('seat-layouts.index') }}">Danh sách</a></li>
+                            <li><a href="{{ route('seat-layouts.create') }}">Thêm mới</a></li>
+                        </ul>
                     </li>
                 </ul>
             </li>

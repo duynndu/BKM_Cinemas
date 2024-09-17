@@ -2,16 +2,16 @@ import { AxiosInstance } from "axios";
 import { route as ziggyRoute } from "ziggy-js";
 import { IOptionFileManager as IOption } from "@/types/option-file-manager.interface";
 import { IMediaFileManager as IMedia } from "@/types/media-file-manager.interface";
-import { FileManager } from "@/services/file-manager.service";
 import Alpine from "alpinejs";
-import { utils } from "@/utils/common";
+import * as utils from "@/utils/common";
+import Services from "@/services";
 
 declare global {
   interface Window {
     axios: AxiosInstance;
     $: JQueryStatic;
     SetUrl: (items: IMedia[]) => any;
-    FileManager: typeof FileManager;
+    Services: typeof Services;
     Alpine: typeof Alpine;
     utils: typeof utils;
   }
