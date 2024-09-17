@@ -70,6 +70,7 @@
                                                                                 @foreach($pages as $page)
                                                                                     <div class="form-check">
                                                                                         <input data-id="{{ $page->id }}"
+                                                                                               data-type="0"
                                                                                                class="form-check-input"
                                                                                                type="checkbox">
                                                                                         <label class="form-check-label"
@@ -157,7 +158,9 @@
                                                                             @if(!$categoryPosts->isEmpty())
                                                                                 @foreach($categoryPosts as $cate)
                                                                                     <div class="form-check">
-                                                                                        <input data-id="{{ $cate->id }}" class="form-check-input"
+                                                                                        <input data-id="{{ $cate->id }}"
+                                                                                               data-type="1"
+                                                                                               class="form-check-input"
                                                                                                type="checkbox">
                                                                                         <label class="form-check-label"
                                                                                                for="flexCheckDefault">
@@ -244,7 +247,9 @@
                                                                             @if(!$posts->isEmpty())
                                                                                 @foreach($posts as $post)
                                                                                     <div class="form-check">
-                                                                                        <input data-id="{{ $post->id }}" class="form-check-input"
+                                                                                        <input data-id="{{ $post->id }}"
+                                                                                               data-type="2"
+                                                                                               class="form-check-input"
                                                                                                type="checkbox">
                                                                                         <label class="form-check-label"
                                                                                                for="flexCheckDefault">
@@ -331,7 +336,9 @@
                                                                             @if(!$categoryProducts->isEmpty())
                                                                                 @foreach($categoryProducts as $cate)
                                                                                     <div class="form-check">
-                                                                                        <input data-id="{{ $cate->id }}" class="form-check-input"
+                                                                                        <input data-id="{{ $cate->id }}"
+                                                                                               data-type="3"
+                                                                                               class="form-check-input"
                                                                                                type="checkbox">
                                                                                         <label class="form-check-label"
                                                                                                for="flexCheckDefault">
@@ -418,7 +425,9 @@
                                                                             @if(!$products->isEmpty())
                                                                                 @foreach($products as $product)
                                                                                     <div class="form-check">
-                                                                                        <input data-id="{{ $product->id }}" class="form-check-input"
+                                                                                        <input data-id="{{ $product->id }}"
+                                                                                               data-type="4"
+                                                                                               class="form-check-input"
                                                                                                type="checkbox">
                                                                                         <label class="form-check-label"
                                                                                                for="flexCheckDefault">
@@ -546,7 +555,7 @@
                                                                         <div class="move-media dd-handle">
                                                                             <i class="fa-solid fa-arrows-up-down-left-right"></i>
                                                                         </div>
-                                                                        <button class="accordion-button btnLabel collapsed" data-id="__id__" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne__id__" aria-expanded="true" aria-controls="collapseOne__id__">
+                                                                        <button class="accordion-button btnLabel collapsed" data-type="__type__" data-id="__id__" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne__id__" aria-expanded="true" aria-controls="collapseOne__id__">
                                                                             __name__
                                                                         </button>
                                                                     </div>
@@ -571,6 +580,9 @@
                                                                                         <input type="text" class="form-control url_menu" value="">
                                                                                     </div>
                                                                                 </div>
+
+                                                                                <input type="hidden" class="form-control type_menu" value="__type__">
+
                                                                                 <div class="d-flex align-items-center">
                                                                                     <a class="text-hover remove-menu-item remove" href="javascript:void(0);">{{  __('language.admin.interfaces.menus.deleteMenuItem')}}</a>
                                                                                     <span class="mx-2">|</span>
