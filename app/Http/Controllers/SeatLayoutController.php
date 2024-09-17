@@ -7,59 +7,44 @@ use Illuminate\Http\Request;
 
 class SeatLayoutController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $seat_layouts = SeatLayout::paginate(3);
+        return view('admin.pages.room-manager.seat-layout.index', compact('seat_layouts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.pages.room-manager.seat-layout.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // Logic to store the seat layout
+        // Example: SeatLayout::create($request->all());
+        return redirect()->route('seat-layouts.index')->with('message', 'Tạo sơ đồ ghế thành công');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(SeatLayout $seatLayout)
+    public function edit($id)
     {
-        //
+        $seat_layout = SeatLayout::find($id);
+        return view('admin.pages.room-manager.seat-layout.edit', [
+            'seat_layout' => $seat_layout
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(SeatLayout $seatLayout)
+    public function update(Request $request, $id)
     {
-        //
+        // Logic to update the seat layout
+        // Example: $seat_layout = SeatLayout::find($id);
+        // $seat_layout->update($request->all());
+        return redirect()->route('seat-layouts.index')->with('message', 'Cập nhật sơ đồ ghế thành công');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, SeatLayout $seatLayout)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(SeatLayout $seatLayout)
-    {
-        //
+        // Logic to delete the seat layout
+        // Example: SeatLayout::find($id)->delete();
+        return redirect()->route('seat-layouts.index')->with('message', 'Xóa sơ đồ ghế thành công');
     }
 }
