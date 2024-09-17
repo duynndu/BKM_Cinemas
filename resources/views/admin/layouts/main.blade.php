@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
-
 <head>
     <title>@yield('title')</title>
     <!-- Meta -->
@@ -97,7 +96,6 @@ Main wrapper start
     <!--**********************************
         Sidebar start
     ***********************************-->
-
     @include('admin.partials.sidebar')
     <!--**********************************
         Sidebar end

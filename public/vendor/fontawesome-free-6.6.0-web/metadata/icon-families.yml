@@ -11640,7 +11640,11 @@ clapperboard:
       - clapper board
       - director
       - film
+<<<<<<< HEAD
       - movie
+=======
+      - movie_2
+>>>>>>> 6058b8b5421e28855a5eecc090a2ce1e7b0a2563
       - record
   unicode: e131
   voted: true
@@ -13214,7 +13218,11 @@ compact-disc:
       - disk
       - dvd
       - media
+<<<<<<< HEAD
       - movie
+=======
+      - movie_2
+>>>>>>> 6058b8b5421e28855a5eecc090a2ce1e7b0a2563
       - music
       - optical
       - optical disk
@@ -20559,7 +20567,11 @@ file-video:
     terms:
       - document
       - m4v
+<<<<<<< HEAD
       - movie
+=======
+      - movie_2
+>>>>>>> 6058b8b5421e28855a5eecc090a2ce1e7b0a2563
       - mp4
       - play
   unicode: f1c8
@@ -20765,7 +20777,11 @@ film:
       - film
       - film frames
       - frames
+<<<<<<< HEAD
       - movie
+=======
+      - movie_2
+>>>>>>> 6058b8b5421e28855a5eecc090a2ce1e7b0a2563
       - strip
       - video
   unicode: f008
@@ -38687,7 +38703,11 @@ product-hunt:
     pro:
       - family: classic
         style: brands
+<<<<<<< HEAD
   label: Products Hunt
+=======
+  label: Product Hunt
+>>>>>>> 6058b8b5421e28855a5eecc090a2ce1e7b0a2563
   search:
     terms: []
   unicode: f288
@@ -48809,7 +48829,11 @@ ticket:
       - admission
       - admission tickets
       - coupon
+<<<<<<< HEAD
       - movie
+=======
+      - movie_2
+>>>>>>> 6058b8b5421e28855a5eecc090a2ce1e7b0a2563
       - pass
       - support
       - ticket
@@ -48846,7 +48870,11 @@ ticket-simple:
     terms:
       - admission
       - coupon
+<<<<<<< HEAD
       - movie
+=======
+      - movie_2
+>>>>>>> 6058b8b5421e28855a5eecc090a2ce1e7b0a2563
       - pass
       - support
       - ticket
@@ -52869,7 +52897,11 @@ video:
     terms:
       - camera
       - film
+<<<<<<< HEAD
       - movie
+=======
+      - movie_2
+>>>>>>> 6058b8b5421e28855a5eecc090a2ce1e7b0a2563
       - record
       - video-camera
   unicode: f03d
