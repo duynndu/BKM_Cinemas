@@ -7,7 +7,6 @@ use App\Http\Controllers\SeatLayoutController;
 use Illuminate\Support\Facades\Route;
 
 
-
 Route::group(['prefix' => 'filemanager', 'middleware' => ['web']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
@@ -20,6 +19,7 @@ Route::prefix('admin')->middleware(['web'])
         Route::get('/', function () {
             return view('admin.pages.dashboard');
         })->name('admin.dashboard');
+
         Route::prefix('room-manager')->group(function () {
             Route::get('rooms', function () {
                 return view('admin.pages.room-manager.room.index');

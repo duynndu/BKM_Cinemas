@@ -14,4 +14,3 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::resource('seats', SeatController::class);
 Route::resource('seat-layouts', SeatLayoutController::class);
-
