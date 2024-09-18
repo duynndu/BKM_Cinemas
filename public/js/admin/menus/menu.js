@@ -126,6 +126,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         var $button = $(this);
+
         var container = $button.closest('.filter'); // Lấy container bao quanh nút được bấm
 
         container.find('input:checkbox:checked').not('.checkbox_all').each(function() {
@@ -134,12 +135,14 @@ $(document).ready(function () {
 
             var checkbox = $(this);
             var itemName = $.trim(checkbox.next('label').text());
+            var type = checkbox.data('type');
             itemCounter++; // Tự động tăng itemCounter khi thêm mới mục
 
             // Tạo item mới từ template và thay thế id và name
             var newItem = $('#menu-item-template').html()
                 .replace(/__id__/g, itemCounter) // Thay thế id bằng itemCounter hiện tại
-                .replace(/__name__/g, itemName); // Thay thế tên bằng tên mục
+                .replace(/__name__/g, itemName)
+                .replace(/__type__/g, type); // Thay thế tên bằng tên mục
 
             // Thêm mục mới vào danh sách
             $('#menu-items').append(newItem);
