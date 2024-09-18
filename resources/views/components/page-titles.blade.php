@@ -5,11 +5,10 @@ $url = '';
 foreach ($segments as $index => $segment) {
 $url = $url . '/' . $segment;
 $titlesArray[] = [
-'title' => ucfirst(str_replace('-', ' ', $index !== 0 && isset($titles[$index - 1]) ? $titles[$index - 1] : $segment)),
-'link' => $index < count($segments) - 1 ? url($url) : ''
+    'title' => ucfirst(str_replace('-', ' ', $segment)),
+    'link' => $index < count($segments) - 1 ? url($url) : ''
   ];
-
-  }
+}
   @endphp
 
   <div class="col-xl-12">

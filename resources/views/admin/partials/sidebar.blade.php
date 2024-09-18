@@ -20,10 +20,10 @@
                         <a class="has-arrow" href="javascript:void(0);"
                             aria-expanded="false">{{ __('language.admin.systems.name') }}</a>
                         <ul aria-expanded="false">
-                            <li><a href="{{ route('admin.systems.index') }}">{{ __('language.admin.systems.listSidebar') }}</a>
+                            <li><a href="#">{{ __('language.admin.systems.listSidebar') }}</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.systems.create') }}">{{ __('language.admin.systems.createSidebar') }}</a>
+                                <a href="#">{{ __('language.admin.systems.createSidebar') }}</a>
                             </li>
                         </ul>
                     </li>
@@ -50,13 +50,13 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>
-                        <a href="{{ route('admin.menus.index') }}" aria-expanded="false">{{ __('language.admin.interfaces.menus.title') }}</a>
+                        <a href="#" aria-expanded="false">{{ __('language.admin.interfaces.menus.title') }}</a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.pages.index') }}" aria-expanded="false">{{ __('language.admin.interfaces.pages.title') }}</a>
+                        <a href="#" aria-expanded="false">{{ __('language.admin.interfaces.pages.title') }}</a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.blocks.index') }}" aria-expanded="false">{{ __('language.admin.interfaces.blocks.title') }}</a>
+                        <a href="#" aria-expanded="false">{{ __('language.admin.interfaces.blocks.title') }}</a>
                     </li>
                 </ul>
             </li>
@@ -67,10 +67,10 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>
-                        <a href="{{ route('admin.categoryPosts.index') }}" aria-expanded="false">{{ __('language.admin.categories.title') }}</a>
+                        <a href="#" aria-expanded="false">{{ __('language.admin.categories.title') }}</a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.posts.index') }}" aria-expanded="false">{{ __('language.admin.posts.title') }}</a>
+                        <a href="#" aria-expanded="false">{{ __('language.admin.posts.title') }}</a>
                     </li>
                 </ul>
             </li>
@@ -81,18 +81,10 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>
-                        <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Phòng chiếu</a>
-                        <ul aria-expanded="false">
-                            <li><a href="{{ route('rooms.index') }}">Danh sách</a></li>
-                            <li><a href="{{ route('rooms.create') }}">Thêm mới</a></li>
-                        </ul>
+                        <a href="{{ route('rooms.index') }}" aria-expanded="false">Phòng chiếu</a>
                     </li>
                     <li>
-                        <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Sơ đồ ghế</a>
-                        <ul aria-expanded="false">
-                            <li><a href="{{ route('seat-layouts.index') }}">Danh sách</a></li>
-                            <li><a href="{{ route('seat-layouts.create') }}">Thêm mới</a></li>
-                        </ul>
+                        <a href="{{ route('seat-layouts.index') }}" aria-expanded="false">Sơ đồ ghế</a>
                     </li>
                 </ul>
             </li>

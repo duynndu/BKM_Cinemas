@@ -1,6 +1,8 @@
 import { RoomService } from "@/services/room.service";
 import Alpine from "alpinejs";
 import { domToBlob, redirect } from "@/utils/common";
+import $ from "jquery";
+import "../jquery-plugin/seatmanager.plugin";
 
 Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
   formData: {
@@ -62,6 +64,7 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
     this.showModal = !this.showModal;
   },
   selectLayout(seatLayout: any) {
+    console.log(seatLayout.id);
     this.formData.id = seatLayout.id;
     this.formData.col_count = seatLayout.col_count;
     this.formData.row_count = seatLayout.row_count;

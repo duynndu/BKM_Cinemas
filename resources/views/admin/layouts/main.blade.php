@@ -181,7 +181,7 @@ Main wrapper start
 </div>
 <div class="sidebar-right">
     <div class="bg-overlay"></div>
-    <a class="sidebar-right-trigger wave-effect wave-effect-x" data-bs-toggle="tooltip" data-placement="right"
+    <a style="display: flex; align-items: center; justify-content: center;" class="sidebar-right-trigger wave-effect wave-effect-x" data-bs-toggle="tooltip" data-placement="right"
        data-original-title="Change Layout" href="javascript:void(0);"><span><i class="fa fa-cog fa-spin"></i></span></a><a
         class="sidebar-close-trigger" href="javascript:void(0);"><span><i class="la-times las"></i></span></a>
     <div class="sidebar-right-inner"><h4>Pick your style<a href="javascript:void(0);" onclick="deleteAllCookie()"
