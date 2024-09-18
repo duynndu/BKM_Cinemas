@@ -2,8 +2,7 @@
 
 namespace App\Services\Admin\Tags;
 
-use App\Repositories\Admin\Posts\Repository\TagRepository;
-use App\Repositories\Admin\Tags;
+use App\Repositories\Admin\Tags\Repository\TagRepository;
 
 class TagService
 {
