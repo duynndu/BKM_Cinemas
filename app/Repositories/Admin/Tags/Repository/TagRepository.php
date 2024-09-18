@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Admin\Posts\Repository;
+namespace App\Repositories\Admin\Tags\Repository;
 
 use App\Repositories\Admin\Tags\Interface\TagInterface;
 

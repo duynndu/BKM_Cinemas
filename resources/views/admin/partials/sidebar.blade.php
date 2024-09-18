@@ -81,10 +81,10 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>
-                        <a href="{{ route('rooms.index') }}" aria-expanded="false">Phòng chiếu</a>
+                        <a href="{{ route('admin.rooms.index') }}" aria-expanded="false">Phòng chiếu</a>
                     </li>
                     <li>
-                        <a href="{{ route('seat-layouts.index') }}" aria-expanded="false">Sơ đồ ghế</a>
+                        <a href="{{ route('admin.seat-layouts.index') }}" aria-expanded="false">Sơ đồ ghế</a>
                     </li>
                 </ul>
             </li>
