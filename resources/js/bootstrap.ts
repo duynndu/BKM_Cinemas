@@ -7,8 +7,6 @@
 import axios from "axios";
 import { route } from 'ziggy-js';
 import $ from "jquery";
-import "./jquery-plugin/filemanager.plugin";
-import "./jquery-plugin/seatmanager.plugin";
 import Alpine from "alpinejs";
 import * as utils from "@/utils/common";
 import Services from "./services";
@@ -17,7 +15,6 @@ import "./components";
 // thư viện
 window.axios = axios;
 window.route = route;
-window.$ = $;
 window.Alpine = Alpine;
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 

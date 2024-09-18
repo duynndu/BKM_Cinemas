@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite && chokidar '**/*.php' -c 'php artisan route:clear && php artisan route:cache'",
+        "dev": "vite && chokidar '**/*.php' -c 'php artisan optimize'",
         "build": "tsc && vite build"
     },
     "devDependencies": {

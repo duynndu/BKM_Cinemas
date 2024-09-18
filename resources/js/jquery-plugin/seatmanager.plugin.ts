@@ -48,11 +48,11 @@ $.fn.seatmanager = function (seatLayout: SeatLayout, onChange?: (data: any) => a
     class: "context-menu",
   });
   const rowLabels = $("<div>", {
-    class: "row-labels py-4",
+    class: "row-labels tw-py-4",
   });
 
   const seatTable = $("<div>", {
-    class: "seat-table grid gap-2 p-4",
+    class: "seat-table tw-grid tw-gap-2 tw-p-4 tw-rounded-xl",
   });
   this.empty();
 
@@ -64,7 +64,7 @@ $.fn.seatmanager = function (seatLayout: SeatLayout, onChange?: (data: any) => a
   });
 
   function generateSeats(seats: any[]) {
-    seatTable.empty().addClass(`grid-cols-${col_count}`);
+    seatTable.empty().addClass(`tw-grid-cols-${col_count}`);
     const labels = rowLabels.empty();
 
     const rows = seats.length / col_count;
@@ -78,7 +78,7 @@ $.fn.seatmanager = function (seatLayout: SeatLayout, onChange?: (data: any) => a
 
     seats.forEach((seat, index) => {
       seatTable.append($('<div>', {
-        class: `draggable seat seat-lg col-span-${seat.slot} bg-${seat.type} ${!seat.visible ? 'hidden' : 'visible'}`,
+        class: `draggable seat seat-lg tw-col-span-${seat.slot} tw-bg-${seat.type} ${!seat.visible ? 'tw-hidden' : 'tw-visible'}`,
         id: seat.seat_number,
         draggable: true,
         'data-slot': seat.slot,

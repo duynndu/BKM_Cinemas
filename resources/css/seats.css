@@ -129,3 +129,9 @@
   background-color: rgba(0, 94, 255, 0.3) !important;
   border: 2px dashed #ff0000 !important;
 }
+
+.sidebar-right-trigger{
+  display: flex!important;
+  justify-content: center!important;
+  align-items: center!important;
+}
