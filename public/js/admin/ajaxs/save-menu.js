@@ -7,12 +7,14 @@ $(document).ready(function () {
             let name = $(this).find('.title_url').val();
             let slug = $(this).find('.slug_menu').val();
             let url = $(this).find('.url_menu').val();
+            let type = $(this).find('.type_menu').val();
 
             menuItems.push({
                 id: id,
                 name: name,
                 slug: slug,
                 url: url,
+                type: type,
                 // Nếu có con, thu thập làm đệ quy
                 children: collectMenuChildren($(this))
             });
@@ -29,12 +31,14 @@ $(document).ready(function () {
             let name = $(this).find('.title_url').val();
             let slug = $(this).find('.slug_menu').val();
             let url = $(this).find('.url_menu').val();
+            let type = $(this).find('.type_menu').val();
 
             children.push({
                 id: id,
                 name: name,
                 slug: slug,
                 url: url,
+                type: type,
                 children: collectMenuChildren($(this))
             });
         });
@@ -85,6 +89,7 @@ $(document).ready(function () {
         let url = $(this).data('url');
 
         let image = $(this).data('image');
+
         let imageError = $(this).data('error');
 
         $.ajax({
