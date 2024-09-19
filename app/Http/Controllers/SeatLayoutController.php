@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SeatLayout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SeatLayoutController extends Controller
 {
@@ -38,13 +39,16 @@ class SeatLayoutController extends Controller
         // Logic to update the seat layout
         // Example: $seat_layout = SeatLayout::find($id);
         // $seat_layout->update($request->all());
-        return redirect()->route('seat-layouts.index')->with('message', 'Cập nhật sơ đồ ghế thành công');
+        // return redirect()->route('admin.seat-layouts.index')->with('message', 'Cập nhật sơ đồ ghế thành công');
     }
 
     public function destroy($id)
     {
-        // Logic to delete the seat layout
-        // Example: SeatLayout::find($id)->delete();
-        return redirect()->route('seat-layouts.index')->with('message', 'Xóa sơ đồ ghế thành công');
+        $seatLayout = SeatLayout::findOrFail($id);
+        if ($seatLayout->image) {
+            Storage::disk('public')->delete($seatLayout->image);
+        }
+        $seatLayout->delete();
+        return redirect()->route('admin.seat-layouts.index')->with('message', 'Xóa sơ đồ ghế thành công');
     }
 }

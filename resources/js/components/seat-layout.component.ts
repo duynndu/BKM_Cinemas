@@ -7,7 +7,7 @@ import "../jquery-plugin/seatmanager.plugin";
 Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
   formData: {
     id: null as any,
-    name: 'Test',
+    name: '',
     col_count: 11,
     row_count: 10,
     seats: [] as {
@@ -47,24 +47,19 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
     }
     try {
       if (seatLayoutId) {
-        RoomService.putSeatLayout(seatLayoutId, formData).then((response) => {
-          console.log('update success');
-        });
+        await RoomService.putSeatLayout(seatLayoutId, formData);
       } else {
-        RoomService.postSeatLayout(formData).then((response) => {
-          console.log('add success');
-        });
+        await RoomService.postSeatLayout(formData);
       }
-      redirect().route('seat-layouts.index');
+      redirect().route('admin.seat-layouts.index');
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
   toggleModal() {
     this.showModal = !this.showModal;
   },
   selectLayout(seatLayout: any) {
-    console.log(seatLayout.id);
     this.formData.id = seatLayout.id;
     this.formData.col_count = seatLayout.col_count;
     this.formData.row_count = seatLayout.row_count;
