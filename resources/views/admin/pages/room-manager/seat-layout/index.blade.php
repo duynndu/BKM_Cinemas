@@ -5,13 +5,9 @@
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 @endsection
-@vite(['resources/js/app.js', 'resources/css/app.css'])
 
 @section('content')
 <div class="container-fluid">
-  @if (session('message'))
-  <x-alert :message="session('message')" :type="session('type')" />
-  @endif
   <div class="row">
     <div class="col-xl-12">
       <div class="row">
@@ -23,7 +19,7 @@
         <div class="card-header">
           <h4 class="card-title">Danh Sách {{ $title['index'] ?? null }}</h4>
           <div class="compose-btn">
-            <a href="{{ route('seat-layouts.create') }}">
+            <a href="{{ route('admin.seat-layouts.create') }}">
               <button class="btn btn-secondary btn-sm light" fdprocessedid="5mkvtw">
                 + Thêm mới
               </button>
@@ -63,11 +59,11 @@
                   </td>
                   <td>
                     <div>
-                      <a href="{{ route('seat-layouts.edit', $seat_layout->id) }}"
+                      <a href="{{ route('admin.seat-layouts.edit', $seat_layout->id) }}"
                         class="btn btn-primary shadow btn-xs sharp me-1">
                         <i class="fa fa-pencil"></i>
                       </a>
-                      <x-destroy-button route="seat-layouts.destroy" id="{{ $seat_layout->id }}" />
+                      <x-destroy-button route="admin.seat-layouts.destroy" id="{{ $seat_layout->id }}" />
                     </div>
                   </td>
                 </tr>
