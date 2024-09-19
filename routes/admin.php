@@ -41,7 +41,7 @@ Route::prefix('admin')->middleware(['web'])
                     Route::post('/store', 'store')->name('store');
                     Route::get('/{id}/edit', 'edit')->name('edit');
                     Route::post('/{id}/update', 'update')->name('update');
-                    Route::delete('/{id}/delete', 'delete')->name('delete');
+                    Route::delete('{id}', 'destroy')->name('destroy');
                 });
         });
 

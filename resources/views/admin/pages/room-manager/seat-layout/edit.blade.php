@@ -13,7 +13,7 @@
       <div class="row">
         <x-page-titles />
       </div>
-      <form onsubmit="return false" x-data="SeatLayout({{ $seat_layout->id }})" method="post" action="" class="product-vali"
+      <form id="form-data" onsubmit="return false" x-data="SeatLayout({{ $seat_layout->id }})" method="post" action="" class="product-vali"
         enctype="multipart/form-data">
         <div class="row">
           <div class="col-xl-12">
@@ -53,7 +53,7 @@
         <div x-show="showModal"
           class="tw-fixed tw-inset-0 tw-z-50 tw-flex tw-items-center tw-justify-center tw-bg-black tw-bg-opacity-50" x-cloak>
           <div @click.outside="toggleModal()"
-            class="tw-bg-[#ffffff] tw-bg-opacity-90 tw-rounded-lg tw-shadow-lg tw-w-full tw-max-w-7xl tw-min-h-[500px] tw-p-6 tw-relative">
+            class="tw-bg-black tw-bg-opacity-60 tw-rounded-lg tw-shadow-lg tw-w-full tw-max-w-7xl tw-min-h-[500px] tw-p-6 tw-relative">
             <div class="tw-flex tw-justify-between tw-items-center tw-border-b tw-pb-3">
               <h5 class="tw-text-2xl tw-font-bold tw-text-black">Chọn từ sơ đồ ghế có sẵn</h5>
               <button type="button" @click="toggleModal()"
