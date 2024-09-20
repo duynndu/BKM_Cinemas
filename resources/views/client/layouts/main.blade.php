@@ -34,11 +34,13 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('client/movie/js/statics/plugins/owl-carousel/assets/owl.carousel.min.css') }}">
-    @vite(['resources/js/app.js'])
+    {{-- @vite(['resources/js/app.js']) --}}
+    <link rel="stylesheet" href="{{ asset('client/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/style_movie.css') }}">
     <!-- CSRF Token -->
-
     @yield('css')
+
+    
 </head>
 
 <body>
