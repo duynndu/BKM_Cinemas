@@ -3,6 +3,16 @@
 @section('title', 'BKM Cinemas - Rạp chiếu phim 3D công nghệ hàng đầu.')
 
 @section('css')
+    <style>
+        .read-more {
+            outline: none;
+            border: none;
+        }
+
+        .movie-content .content {
+            transition: linear 0.3s all;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -60,7 +70,7 @@
                     </p>
                     <div class="age_restricted"><span></span></div>
                     <div class="group-buton">
-                        <a href="javascript:;" id="dat-ve"><img
+                        <a href="#showtime" id="dat-ve"><img
                                 src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Đặt vé"> Đặt vé</a>
                     </div>
                 </div>
@@ -83,12 +93,30 @@
                                 cô trỗi dậy báo thù bằng đòn róc da mặt, biến cô thành sinh vật đáng sợ.</p>
                         </div>
                     </div>
-                    <a href="javascript:;" class="read-more">Xem thêm</a>
+                    <button class="read-more">Xem thêm</button>
                 </div>
+
                 <div class="showtime-section" id="showtime">
                     <h2>Lịch chiếu</h2>
+
+                    {{-- Không có lịch chiếu thì lên --}}
                     <div class="showtimes-message">
                         Hiện chưa có lịch chiếu cho phim này
+                    </div>
+
+                    {{-- Có lịch chiếu thì lên --}}
+                    <div class="showtime-date">Hôm nay, ngày 15/9</div>
+                    <div class="showtimes">
+                        <div>
+                            <a class="disabled">09:20</a>
+                            <a class="disabled">11:10</a>
+                            <a class="disabled">13:30</a>
+                            <a class="disabled">15:20</a>
+                            <a class="disabled">17:10</a>
+                            <a class="disabled">19:30</a>
+                            <a class="disabled">20:40</a>
+                            <a href="{{ url('dat-ve') }}" class="active">21:35</a>
+                        </div>
                     </div>
                 </div>
 
@@ -273,7 +301,8 @@
                                     allow="encrypted-media"
                                     src="https://www.facebook.com/v12.0/plugins/page.php?adapt_container_width=true&amp;app_id=1700069773628064&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Dfc178ab9ae80f1456%26domain%3Dtouchcinema.com%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Ftouchcinema.com%252Ff83aa433b838a0f00%26relation%3Dparent.parent&amp;container_width=0&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Ftouchcinema%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=false&amp;width=390"
                                     style="border: none; visibility: visible; width: 390px; height: 130px;"
-                                    class=""></iframe></span></div>
+                                    class=""></iframe></span>
+                        </div>
                     </div>
                     <div class="widget-ticket ">
                         <h2>
@@ -355,6 +384,29 @@
                             <div class="text">xem thêm</div>
                             <div class="arrow-down"></div>
                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- modal trailer --}}
+    <div class="modal fade in" id="modal-trailer" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" title="Đóng"
+                        aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="video-container">
+                        <iframe width="1519" height="526" src="https://www.youtube.com/embed/msCaQtp8e7w"
+                            title="NHẠC NGHE TRÊN XE - DẰM TRONG TIM REMIX 🎧 VIET DEEP 2024 - DEEP HOUSE CHILL 8X9X HOT TIKTOK HAY NHẤT"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                        </iframe>
                     </div>
                 </div>
             </div>

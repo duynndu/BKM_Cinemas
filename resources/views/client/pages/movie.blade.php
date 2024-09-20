@@ -33,17 +33,16 @@
                             <div class="col-md-3 col-sm-4 col-xs-6">
                                 <div class="movie" style="padding-top: 30px;">
                                     <div class="poster">
-                                        <a href="https://touchcinema.com/phim/khong-noi-dieu-du">
+                                        <a href="{{ url('phim-chi-tiet') }}">
                                             <img class="img-responsive"
                                                 src="https://touchcinema.com/uploads/slider-app/1200wx1800h-1-1726123853-poster.jpg"
                                                 alt="Không Nói Điều Dữ">
                                         </a>
                                         <div class="info">
-                                            <a href="https://touchcinema.com/phim/khong-noi-dieu-du" class="button detail">
+                                            <a href="{{ url('phim-chi-tiet') }}" class="button detail">
                                                 &gt; Chi tiết
                                             </a>
-                                            <a href="https://touchcinema.com/phim/khong-noi-dieu-du#showtime"
-                                                class="button ticket">
+                                            <a href="{{ url('phim-chi-tiet') }}#showtime" class="button ticket">
                                                 Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png"
                                                     alt="Mua vé">
                                             </a>
@@ -53,7 +52,7 @@
                                         </div>
                                     </div>
                                     <div class="detail">
-                                        <h2><a href="https://touchcinema.com/phim/khong-noi-dieu-du">Không Nói Điều Dữ</a>
+                                        <h2><a href="{{ url('phim-chi-tiet') }}">Không Nói Điều Dữ</a>
                                         </h2>
                                         <p class="release">Khởi chiếu 13/09/2024</p>
                                     </div>
@@ -70,16 +69,16 @@
                             <div class="col-md-3 col-sm-4 col-xs-6">
                                 <div class="movie" style="padding-top: 30px;">
                                     <div class="poster">
-                                        <a href="https://touchcinema.com/phim/con-cam">
+                                        <a href="{{ url('phim-chi-tiet') }}">
                                             <img class="img-responsive"
                                                 src="https://touchcinema.com/uploads/slider-app/300wx450h-cam-1-poster.jpg"
                                                 alt="Cám">
                                         </a>
                                         <div class="info">
-                                            <a href="https://touchcinema.com/phim/con-cam" class="button detail">
+                                            <a href="{{ url('phim-chi-tiet') }}" class="button detail">
                                                 &gt; Chi tiết
                                             </a>
-                                            <a href="https://touchcinema.com/phim/con-cam#showtime" class="button ticket">
+                                            <a href="{{ url('phim-chi-tiet') }}#showtime" class="button ticket">
                                                 Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png"
                                                     alt="Mua vé">
                                             </a>
@@ -102,6 +101,7 @@
             </div>
         </div>
     </section>
+
     <div class="widget-ticket  hidden ">
         <h2>
             <img src="images/icons/icon-ticket.png" alt="Đặt vé" />
@@ -145,6 +145,9 @@
             </div>
         </form>
     </div>
+
+
+ 
 
 @endsection
 

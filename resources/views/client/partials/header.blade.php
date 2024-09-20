@@ -1,27 +1,10 @@
-<style>
-    #header .primary-menu .top-button .account .register {
-        background-image: url({{ asset('movie/images/reg-bg094c.png') }});
-        background-size: 100% 100%;
-        float: right;
-        z-index: 3
-    }
-
-    #header .primary-menu .top-button .account .login {
-        background-image: url({{ asset('movie/images/login-bgd8e6.png') }});
-        background-size: 100% 100%;
-        float: right;
-        margin-left: -50px;
-        z-index: 4
-    }
-</style>
-
 <div id="header">
     <div class="container">
         <div class="logo">
             <h1>
                 <strong>Awesome Cinema - Rạp chiếu phim 3D công nghệ hàng đầu.</strong>
-                <a href="index.html"><img style="max-width: 100%" src="{{ asset('movie/images/touchcinema.png') }}"
-                                          alt="touchcinema" /></a>
+                <a href="{{ url("/") }}"><img style="max-width: 100%" src="{{ asset('movie/images/touchcinema.png') }}"
+                        alt="touchcinema" /></a>
             </h1>
         </div>
         <div class="primary-menu">
@@ -29,25 +12,27 @@
                 <div class="row">
                     <div class="col-md-8 col-sm-7">
                         <a class="buy-ticket" href="#"><img class="img-responsive"
-                                                            src="{{ asset('movie/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
-                        <a class="flags" href="#"><img class="img-responsive" src="{{ asset('movie/images/flags/vn.png') }}"
-                                                       alt="Ngôn ngữ" /></a>
+                                src="{{ asset('movie/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
+                        <a class="flags" href="#"><img class="img-responsive"
+                                src="{{ asset('movie/images/flags/vn.png') }}" alt="Ngôn ngữ" /></a>
                         <a class="hidden-lg btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
                         <form action="https://touchcinema.com/tim-kiem" class="form-search visible-lg">
                             <div class="input-group">
                                 <input class="form-control" name="k" value="" type="search"
-                                       placeholder="Tìm kiếm">
+                                    placeholder="Tìm kiếm">
                                 <button type="submit" class="submit"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
                     </div>
                     <div class="col-md-4 col-sm-5 account">
-                        <a href="login.html" class="login">
-                            <img src="{{ asset('movie/images/icons/so-da.png') }}" alt="Đăng nhập" class="img-responsive">
+                        <a href="login.html" class="login" style="background-image: url({{ asset('movie/images/login-bgd8e6.png') }});">
+                            <img src="{{ asset('movie/images/icons/so-da.png') }}" alt="Đăng nhập"
+                                class="img-responsive">
                             <span>Đăng nhập</span>
                         </a>
-                        <a href="register.html" class="register">
-                            <img src="{{ asset('movie/images/icons/bong-ngo.png') }}" alt="Đăng kí" class="img-responsive">
+                        <a href="register.html" class="register" style="background-image: url({{ asset('movie/images/reg-bg094c.png') }});">
+                            <img src="{{ asset('movie/images/icons/bong-ngo.png') }}" alt="Đăng kí"
+                                class="img-responsive">
                             <span>Đăng kí <b class="hh">thành viên</b></span>
                         </a>
                     </div>
@@ -58,7 +43,7 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-left">
                             <li class="active"><a href="index.html">Trang chủ</a></li>
-                            <li class=""><a href="phim.html">Phim</a></li>
+                            <li class=""><a href="{{ url('phim') }}">Phim</a></li>
                             <li class=""><a href="lich-chieu.html">Lịch chiếu</a></li>
                             <li class=""><a href="gia-ve.html">giá vé</a></li>
                             <li class=""><a href="thanh-vien.html">Thành viên</a></li>
@@ -67,7 +52,7 @@
                             <li class=""><a href="gioi-thieu.html">Giới thiệu</a></li>
                             <li class="dropdown ">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                                   aria-haspopup="true" aria-expanded="false">
+                                    aria-haspopup="true" aria-expanded="false">
                                     Dịch vụ</a>
                                 <ul class="dropdown-menu">
                                     <li>
@@ -165,7 +150,7 @@
                                 </div>
                             </li>
                         </ul>
-                    </div><!-- /.navbar-collapse -->
+                    </div>
                 </div>
             </nav>
         </div>

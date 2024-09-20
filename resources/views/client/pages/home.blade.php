@@ -53,7 +53,7 @@
                     <div class="owl-carousel" id="nowshowing-slider">
                         <div class="movie" style="padding-top: 30px;">
                             <div class="poster">
-                                <a href="phim/lam-giau-voi-ma.html">
+                                <a href="{{ url('/phim') }}">
                                     <img class="img-responsive"
                                         src="{{ asset('movie/images/phim-2021/470x700-1724744783-poster.jpg') }}"
                                         alt="Làm Giàu Với Ma" />
