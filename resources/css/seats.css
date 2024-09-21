@@ -1,16 +1,9 @@
-body {
-  background-color: #1a202c !important;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  height: 100vh;
-}
-
 .draggable {
   cursor: move;
 }
 
 .seat-table {
-  background-color: #1a202c!important;
+  background-color: #212130!important;
 }
 
 .seat {
@@ -39,7 +32,7 @@ body {
 
 .context-menu {
   display: none;
-  position: absolute;
+  position: fixed;
   background-color: #2d3748;
   color: #fff;
   border: 1px solid #4a5568;
@@ -136,4 +129,5 @@ body {
   background-color: rgba(0, 94, 255, 0.3) !important;
   border: 2px dashed #ff0000 !important;
 }
+
 

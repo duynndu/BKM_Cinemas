@@ -1,7 +1,7 @@
 import { IMediaFileManager as IMedia } from "@/types/media-file-manager.interface";
 import $ from "jquery";
 
-export class FileManager {
+export class FileManagerService {
   itemsStore: IMedia[] = [];
   inputEl?: JQuery;
   previewEl?: JQuery;

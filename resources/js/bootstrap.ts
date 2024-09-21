@@ -5,22 +5,55 @@
  */
 
 import axios from "axios";
+import { route } from 'ziggy-js';
 import $ from "jquery";
-import "./jquery-plugin/filemanager.plugin";
-import "./jquery-plugin/seatmanager.plugin";
-import { FileManager } from "@/services/file-manager.service";
 import Alpine from "alpinejs";
-import { utils } from "@/utils/common";
+import * as utils from "@/utils/common";
+import Services from "./services";
+import "./components";
 
 // thư viện
 window.axios = axios;
-window.$ = $;
+window.route = route;
 window.Alpine = Alpine;
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
+// Request interceptor
+window.axios.interceptors.request.use(
+  (config) => {
+    const data = new FormData();
+    
+    if (config.method === "delete" || config.method === "put" || config.method === "patch") {
+      config.headers['X-HTTP-Method-Override'] = config.method;
+      config.method = "POST";
+    }
+    data.append('_token', $('meta[name="csrf-token"]')?.attr('content') || '');
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor
+window.axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+
+    if (error.response && error.response.status === 401) {
+
+    }
+    return Promise.reject(error);
+  }
+);
+
+window.axios.defaults.baseURL = "/api";
+
 // custom
-window.FileManager = FileManager;
 window.utils = utils;
+window.Services = Services;
 
 
 
