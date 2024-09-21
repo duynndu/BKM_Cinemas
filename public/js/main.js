@@ -14,12 +14,12 @@ $('.my-select').selectpicker();
 
 jQuery(document).ready(function () {
     setTimeout(function () {
-        dlabSettingsOptions.version = 'dark';
+        dlabSettingsOptions.version = 'light';
         new dlabSettings(dlabSettingsOptions);
     }, 1000)
     jQuery(window).on('resize', function () {
-        dlabSettingsOptions.version = 'dark';
+        dlabSettingsOptions.version = 'light';
         new dlabSettings(dlabSettingsOptions);
-        jQuery('.dz-theme-mode').addClass('active');
+        // jQuery('.dz-theme-mode').addClass('active');
     });
 });
