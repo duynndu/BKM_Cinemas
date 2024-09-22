@@ -39,8 +39,6 @@
     <link rel="stylesheet" href="{{ asset('client/css/style_movie.css') }}">
     <!-- CSRF Token -->
     @yield('css')
-
-    
 </head>
 
 <body>

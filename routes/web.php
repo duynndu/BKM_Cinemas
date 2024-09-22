@@ -36,8 +36,6 @@ Route::get('/profile-history-ticket', function () {
    return view('client.pages.profile.history-ticket');
 });
 
-
-
 Route::get('/phim', function () {
    return view('client.pages.movie');
 });
