@@ -298,183 +298,183 @@
                             </div>
                             <!-- End Bài viết -->
 
-                            <!-- Danh mục Sản Phẩm -->
-                            <div class="filter cm-content-box box-primary border">
-                                <div class="content-title border-0 SlideToolHeader collapse">
-                                    <div class="cpa">
-                                        {{ __('language.admin.interfaces.menus.categoryProducts.title') }}
-                                    </div>
-                                    <div class="tools">
-                                        <a href="javascript:void(0);" class="handle collapse"><i
-                                                class="fa-solid fa-chevron-up"></i></a>
-                                    </div>
-                                </div>
-                                <div class="cm-content-body form excerpt border-top" style="display: none;">
-                                    <div class="col-xl-12">
-                                        <div class="card dz-card">
-                                            <div class="card-header flex-wrap border-0" id="default-tab">
-                                                <h4 class="card-title"></h4>
-                                            </div>
-                                            <div class="tab-content" id="myTabContent">
-                                                <div class="tab-pane fade show active" id="DefaultTab" role="tabpanel"
-                                                     aria-labelledby="home-tab">
-                                                    <div class="card-body pt-0">
-                                                        <!-- Nav tabs -->
-                                                        <div class="default-tab">
-                                                            <ul class="nav nav-tabs" role="tablist">
-                                                                <li class="nav-item" role="presentation">
-                                                                    <a class="nav-link tab-menus active"
-                                                                       data-bs-toggle="tab"
-                                                                       href="#post"
-                                                                       aria-selected="false" role="tab" tabindex="-1">
-                                                                        <i class="fa-solid fa-fire"></i>
-                                                                        {{ __('language.admin.interfaces.menus.categoryProducts.list') }}</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="tab-content tab-menus-border">
-                                                                <div class="tab-pane fade active show" id="post"
-                                                                     role="tabpanel">
-                                                                    <div style="padding: 1rem 1rem 0 1rem">
-                                                                        <div class="menu-tabs">
-                                                                            @if(!$categoryProducts->isEmpty())
-                                                                                @foreach($categoryProducts as $cate)
-                                                                                    <div class="form-check">
-                                                                                        <input data-id="{{ $cate->id }}"
-                                                                                               data-type="3"
-                                                                                               class="form-check-input"
-                                                                                               type="checkbox">
-                                                                                        <label class="form-check-label"
-                                                                                               for="flexCheckDefault">
-                                                                                            {{ $cate->name }}
-                                                                                        </label>
-                                                                                    </div>
-                                                                                @endforeach
-                                                                            @else
-                                                                                <div class="d-flex justify-content-center align-items-center p-3">
-                                                                                    <p>{{ __('language.admin.interfaces.menus.categoryProducts.notFound') }}</p>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+{{--                            <!-- Danh mục Sản Phẩm -->--}}
+{{--                            <div class="filter cm-content-box box-primary border">--}}
+{{--                                <div class="content-title border-0 SlideToolHeader collapse">--}}
+{{--                                    <div class="cpa">--}}
+{{--                                        {{ __('language.admin.interfaces.menus.categoryProducts.title') }}--}}
+{{--                                    </div>--}}
+{{--                                    <div class="tools">--}}
+{{--                                        <a href="javascript:void(0);" class="handle collapse"><i--}}
+{{--                                                class="fa-solid fa-chevron-up"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="cm-content-body form excerpt border-top" style="display: none;">--}}
+{{--                                    <div class="col-xl-12">--}}
+{{--                                        <div class="card dz-card">--}}
+{{--                                            <div class="card-header flex-wrap border-0" id="default-tab">--}}
+{{--                                                <h4 class="card-title"></h4>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="tab-content" id="myTabContent">--}}
+{{--                                                <div class="tab-pane fade show active" id="DefaultTab" role="tabpanel"--}}
+{{--                                                     aria-labelledby="home-tab">--}}
+{{--                                                    <div class="card-body pt-0">--}}
+{{--                                                        <!-- Nav tabs -->--}}
+{{--                                                        <div class="default-tab">--}}
+{{--                                                            <ul class="nav nav-tabs" role="tablist">--}}
+{{--                                                                <li class="nav-item" role="presentation">--}}
+{{--                                                                    <a class="nav-link tab-menus active"--}}
+{{--                                                                       data-bs-toggle="tab"--}}
+{{--                                                                       href="#post"--}}
+{{--                                                                       aria-selected="false" role="tab" tabindex="-1">--}}
+{{--                                                                        <i class="fa-solid fa-fire"></i>--}}
+{{--                                                                        {{ __('language.admin.interfaces.menus.categoryProducts.list') }}</a>--}}
+{{--                                                                </li>--}}
+{{--                                                            </ul>--}}
+{{--                                                            <div class="tab-content tab-menus-border">--}}
+{{--                                                                <div class="tab-pane fade active show" id="post"--}}
+{{--                                                                     role="tabpanel">--}}
+{{--                                                                    <div style="padding: 1rem 1rem 0 1rem">--}}
+{{--                                                                        <div class="menu-tabs">--}}
+{{--                                                                            @if(!$categoryProducts->isEmpty())--}}
+{{--                                                                                @foreach($categoryProducts as $cate)--}}
+{{--                                                                                    <div class="form-check">--}}
+{{--                                                                                        <input data-id="{{ $cate->id }}"--}}
+{{--                                                                                               data-type="3"--}}
+{{--                                                                                               class="form-check-input"--}}
+{{--                                                                                               type="checkbox">--}}
+{{--                                                                                        <label class="form-check-label"--}}
+{{--                                                                                               for="flexCheckDefault">--}}
+{{--                                                                                            {{ $cate->name }}--}}
+{{--                                                                                        </label>--}}
+{{--                                                                                    </div>--}}
+{{--                                                                                @endforeach--}}
+{{--                                                                            @else--}}
+{{--                                                                                <div class="d-flex justify-content-center align-items-center p-3">--}}
+{{--                                                                                    <p>{{ __('language.admin.interfaces.menus.categoryProducts.notFound') }}</p>--}}
+{{--                                                                                </div>--}}
+{{--                                                                            @endif--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
 
-                                                        <div style="padding: 1rem 0 0 1rem">
-                                                            <div class="row">
-                                                                <div class="col-6">
-                                                                    <div class="form-check custom-checkbox mb-3">
-                                                                        <input type="checkbox" class="form-check-input checkbox_all" required="">
-                                                                        <label class="form-check-label"
-                                                                               for="customCheckBox1">{{ __('language.admin.interfaces.menus.categoryProducts.checkAll') }}</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="custom-checkbox mb-3 text-end">
-                                                                        <button class="btn btn-sm btn-outline-primary btn-add-menu">
-                                                                            {{ __('language.admin.interfaces.menus.categoryProducts.add') }}
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Danh mục Sản Phẩm -->
+{{--                                                        <div style="padding: 1rem 0 0 1rem">--}}
+{{--                                                            <div class="row">--}}
+{{--                                                                <div class="col-6">--}}
+{{--                                                                    <div class="form-check custom-checkbox mb-3">--}}
+{{--                                                                        <input type="checkbox" class="form-check-input checkbox_all" required="">--}}
+{{--                                                                        <label class="form-check-label"--}}
+{{--                                                                               for="customCheckBox1">{{ __('language.admin.interfaces.menus.categoryProducts.checkAll') }}</label>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="col-6">--}}
+{{--                                                                    <div class="custom-checkbox mb-3 text-end">--}}
+{{--                                                                        <button class="btn btn-sm btn-outline-primary btn-add-menu">--}}
+{{--                                                                            {{ __('language.admin.interfaces.menus.categoryProducts.add') }}--}}
+{{--                                                                        </button>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!-- End Danh mục Sản Phẩm -->--}}
 
-                            <!-- Sản Phẩm -->
-                            <div class="filter cm-content-box box-primary border">
-                                <div class="content-title border-0 SlideToolHeader collapse">
-                                    <div class="cpa">
-                                        {{ __('language.admin.interfaces.menus.products.title') }}
-                                    </div>
-                                    <div class="tools">
-                                        <a href="javascript:void(0);" class="handle collapse"><i
-                                                class="fa-solid fa-chevron-up"></i></a>
-                                    </div>
-                                </div>
-                                <div class="cm-content-body form excerpt border-top" style="display: none;">
-                                    <div class="col-xl-12">
-                                        <div class="card dz-card">
-                                            <div class="card-header flex-wrap border-0" id="default-tab">
-                                                <h4 class="card-title"></h4>
-                                            </div>
-                                            <div class="tab-content" id="myTabContent">
-                                                <div class="tab-pane fade show active" id="DefaultTab" role="tabpanel"
-                                                     aria-labelledby="home-tab">
-                                                    <div class="card-body pt-0">
-                                                        <!-- Nav tabs -->
-                                                        <div class="default-tab">
-                                                            <ul class="nav nav-tabs" role="tablist">
-                                                                <li class="nav-item" role="presentation">
-                                                                    <a class="nav-link tab-menus active"
-                                                                       data-bs-toggle="tab"
-                                                                       href="#post"
-                                                                       aria-selected="false" role="tab" tabindex="-1">
-                                                                        <i class="fa-solid fa-fire"></i>
-                                                                        {{ __('language.admin.interfaces.menus.products.list') }}</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="tab-content tab-menus-border">
-                                                                <div class="tab-pane fade active show" id="post"
-                                                                     role="tabpanel">
-                                                                    <div style="padding: 1rem 1rem 0 1rem">
-                                                                        <div class="menu-tabs">
-                                                                            @if(!$products->isEmpty())
-                                                                                @foreach($products as $product)
-                                                                                    <div class="form-check">
-                                                                                        <input data-id="{{ $product->id }}"
-                                                                                               data-type="4"
-                                                                                               class="form-check-input"
-                                                                                               type="checkbox">
-                                                                                        <label class="form-check-label"
-                                                                                               for="flexCheckDefault">
-                                                                                            {{ $product->name }}
-                                                                                        </label>
-                                                                                    </div>
-                                                                                @endforeach
-                                                                            @else
-                                                                                <div class="d-flex justify-content-center align-items-center p-3">
-                                                                                    <p>{{ __('language.admin.interfaces.menus.products.notFound') }}</p>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+{{--                            <!-- Sản Phẩm -->--}}
+{{--                            <div class="filter cm-content-box box-primary border">--}}
+{{--                                <div class="content-title border-0 SlideToolHeader collapse">--}}
+{{--                                    <div class="cpa">--}}
+{{--                                        {{ __('language.admin.interfaces.menus.products.title') }}--}}
+{{--                                    </div>--}}
+{{--                                    <div class="tools">--}}
+{{--                                        <a href="javascript:void(0);" class="handle collapse"><i--}}
+{{--                                                class="fa-solid fa-chevron-up"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="cm-content-body form excerpt border-top" style="display: none;">--}}
+{{--                                    <div class="col-xl-12">--}}
+{{--                                        <div class="card dz-card">--}}
+{{--                                            <div class="card-header flex-wrap border-0" id="default-tab">--}}
+{{--                                                <h4 class="card-title"></h4>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="tab-content" id="myTabContent">--}}
+{{--                                                <div class="tab-pane fade show active" id="DefaultTab" role="tabpanel"--}}
+{{--                                                     aria-labelledby="home-tab">--}}
+{{--                                                    <div class="card-body pt-0">--}}
+{{--                                                        <!-- Nav tabs -->--}}
+{{--                                                        <div class="default-tab">--}}
+{{--                                                            <ul class="nav nav-tabs" role="tablist">--}}
+{{--                                                                <li class="nav-item" role="presentation">--}}
+{{--                                                                    <a class="nav-link tab-menus active"--}}
+{{--                                                                       data-bs-toggle="tab"--}}
+{{--                                                                       href="#post"--}}
+{{--                                                                       aria-selected="false" role="tab" tabindex="-1">--}}
+{{--                                                                        <i class="fa-solid fa-fire"></i>--}}
+{{--                                                                        {{ __('language.admin.interfaces.menus.products.list') }}</a>--}}
+{{--                                                                </li>--}}
+{{--                                                            </ul>--}}
+{{--                                                            <div class="tab-content tab-menus-border">--}}
+{{--                                                                <div class="tab-pane fade active show" id="post"--}}
+{{--                                                                     role="tabpanel">--}}
+{{--                                                                    <div style="padding: 1rem 1rem 0 1rem">--}}
+{{--                                                                        <div class="menu-tabs">--}}
+{{--                                                                            @if(!$products->isEmpty())--}}
+{{--                                                                                @foreach($products as $product)--}}
+{{--                                                                                    <div class="form-check">--}}
+{{--                                                                                        <input data-id="{{ $product->id }}"--}}
+{{--                                                                                               data-type="4"--}}
+{{--                                                                                               class="form-check-input"--}}
+{{--                                                                                               type="checkbox">--}}
+{{--                                                                                        <label class="form-check-label"--}}
+{{--                                                                                               for="flexCheckDefault">--}}
+{{--                                                                                            {{ $product->name }}--}}
+{{--                                                                                        </label>--}}
+{{--                                                                                    </div>--}}
+{{--                                                                                @endforeach--}}
+{{--                                                                            @else--}}
+{{--                                                                                <div class="d-flex justify-content-center align-items-center p-3">--}}
+{{--                                                                                    <p>{{ __('language.admin.interfaces.menus.products.notFound') }}</p>--}}
+{{--                                                                                </div>--}}
+{{--                                                                            @endif--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
 
-                                                        <div style="padding: 1rem 0 0 1rem">
-                                                            <div class="row">
-                                                                <div class="col-6">
-                                                                    <div class="form-check custom-checkbox mb-3">
-                                                                        <input type="checkbox" class="form-check-input checkbox_all" required="">
-                                                                        <label class="form-check-label"
-                                                                               for="customCheckBox1">{{ __('language.admin.interfaces.menus.products.checkAll') }}</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="custom-checkbox mb-3 text-end">
-                                                                        <button class="btn btn-sm btn-outline-primary btn-add-menu">
-                                                                            {{ __('language.admin.interfaces.menus.products.add') }}
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Sản Phẩm -->
+{{--                                                        <div style="padding: 1rem 0 0 1rem">--}}
+{{--                                                            <div class="row">--}}
+{{--                                                                <div class="col-6">--}}
+{{--                                                                    <div class="form-check custom-checkbox mb-3">--}}
+{{--                                                                        <input type="checkbox" class="form-check-input checkbox_all" required="">--}}
+{{--                                                                        <label class="form-check-label"--}}
+{{--                                                                               for="customCheckBox1">{{ __('language.admin.interfaces.menus.products.checkAll') }}</label>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="col-6">--}}
+{{--                                                                    <div class="custom-checkbox mb-3 text-end">--}}
+{{--                                                                        <button class="btn btn-sm btn-outline-primary btn-add-menu">--}}
+{{--                                                                            {{ __('language.admin.interfaces.menus.products.add') }}--}}
+{{--                                                                        </button>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!-- End Sản Phẩm -->--}}
                         </div>
                     </div>
                 </div>
