@@ -629,7 +629,7 @@
                                                 <div class="quick-content">
                                                     <img src="{{ $post->avatar ?? '' }}" class="avatar me-2" alt="">
                                                     <div class="user-name">
-                                                        <h6 class="mb-0">{{ $post->getTranslated('name') }}</h6>
+                                                        <h6 class="mb-0">{{ $post->name }}</h6>
                                                     </div>
                                                 </div>
                                                 <div class="count">

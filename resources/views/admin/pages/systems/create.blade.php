@@ -123,24 +123,23 @@
                                             <div class="col-6">
                                                 <div class="p-3">
                                                     <label
-                                                        class="form-label">{{ __('language.admin.systems.language') }}</label><br>
-                                                    <select class="form-control" multiple name="language_id[]"
-                                                        id="language">
-                                                        <option value=" " disabled>--
-                                                            {{ __('language.admin.systems.select') }} --</option>
-                                                        @if (!empty($languages))
-                                                            @foreach ($languages as $language)
-                                                                <option @selected(in_array($language->id, old('language_id', [])))
-                                                                    value="{{ $language->id }}">{{ $language->name }}
-                                                                </option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                    @error('language_id')
-                                                        <div class="mt-2">
-                                                            <span class="text-red">{{ $message }}</span>
+                                                        class="form-label">{{ __('language.admin.systems.active') }}</label><br>
+                                                    <div class="row mt-2">
+                                                        <div class="col-sm-6">
+                                                            <input class="form-check-input" type="radio" id="active"
+                                                                   name="active" value="1" checked>
+                                                            <label class="form-check-label" for="active">
+                                                                {{ __('language.admin.systems.show') }}
+                                                            </label>
                                                         </div>
-                                                    @enderror
+                                                        <div class="col-sm-6">
+                                                            <input class="form-check-input" value="0" type="radio"
+                                                                   id="active" name="active">
+                                                            <label class="form-check-label" for="active">
+                                                                {{ __('language.admin.systems.hidden') }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -154,30 +153,6 @@
                                                             <span class="text-red">{{ $message }}</span>
                                                         </div>
                                                     @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-8">
-                                                <div class="card-body">
-                                                    <label
-                                                        class="form-label">{{ __('language.admin.systems.active') }}</label><br>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <input class="form-check-input" type="radio" id="active"
-                                                                name="active" value="1" checked>
-                                                            <label class="form-check-label" for="active">
-                                                                {{ __('language.admin.systems.show') }}
-                                                            </label>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <input class="form-check-input" value="0" type="radio"
-                                                                id="active" name="active">
-                                                            <label class="form-check-label" for="active">
-                                                                {{ __('language.admin.systems.hidden') }}
-                                                            </label>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
