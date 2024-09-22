@@ -165,8 +165,8 @@
                                                     <td>
                                                         <strong class="text-black">{{ $key + 1 }}</strong>
                                                     </td>
-                                                    <td>
-                                                        <b>
+                                                    <td style="max-width: 155px !important;">
+                                                        <b class="text-style">
                                                             {{ $post->name }}
                                                         </b>
                                                     </td>

@@ -96,6 +96,7 @@
                                                                     <div class="form-check custom-checkbox mb-3">
                                                                         <input type="checkbox" class="form-check-input checkbox_all" required="">
                                                                         <label class="form-check-label"
+                                                                               style="text-overflow: ellipsis; white-space: nowrap; display: inline-block; overflow: hidden; width: 300px;"
                                                                                for="customCheckBox1">{{ __('language.admin.interfaces.menus.pages.checkAll') }}</label>
                                                                     </div>
                                                                 </div>
@@ -163,6 +164,7 @@
                                                                                                class="form-check-input"
                                                                                                type="checkbox">
                                                                                         <label class="form-check-label"
+                                                                                               style="text-overflow: ellipsis; white-space: nowrap; display: inline-block; overflow: hidden; width: 300px;"
                                                                                                for="flexCheckDefault">
                                                                                             {{ $cate->name }}
                                                                                         </label>
@@ -252,6 +254,7 @@
                                                                                                class="form-check-input"
                                                                                                type="checkbox">
                                                                                         <label class="form-check-label"
+                                                                                               style="text-overflow: ellipsis; white-space: nowrap; display: inline-block; overflow: hidden; width: 300px;"
                                                                                                for="flexCheckDefault">
                                                                                             {{ $post->name }}
                                                                                         </label>
@@ -504,7 +507,7 @@
                                                                                     <div class="move-media dd-handle">
                                                                                         <i class="fa-solid fa-arrows-up-down-left-right"></i>
                                                                                     </div>
-                                                                                    <button class="accordion-button btnLabel collapsed" data-id="{{ $menu->id }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{ $menu->id }}" aria-expanded="true" aria-controls="collapseOne__id__">
+                                                                                    <button class="accordion-button btnLabel collapsed" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: inline-block;" data-id="{{ $menu->id }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{ $menu->id }}" aria-expanded="true" aria-controls="collapseOne__id__">
                                                                                         {{ $menu->name ?? '' }}
                                                                                     </button>
                                                                                 </div>
@@ -529,6 +532,11 @@
                                                                                                     <input type="text" class="form-control url_menu" value="{{ $menu->url ?? '' }}">
                                                                                                 </div>
                                                                                             </div>
+
+                                                                                            <input type="hidden" class="form-control record_id" value="{{ $menu->record_id ?? '' }}">
+
+                                                                                            <input type="hidden" class="form-control type_menu" value="{{ $menu->type ?? '' }}">
+
                                                                                             <div class="d-flex align-items-center">
                                                                                                 <a class="text-hover remove-menu-item remove" href="javascript:void(0);">{{  __('language.admin.interfaces.menus.deleteMenuItem')}}</a>
                                                                                                 <span class="mx-2">|</span>
@@ -555,7 +563,7 @@
                                                                         <div class="move-media dd-handle">
                                                                             <i class="fa-solid fa-arrows-up-down-left-right"></i>
                                                                         </div>
-                                                                        <button class="accordion-button btnLabel collapsed" data-type="__type__" data-id="__id__" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne__id__" aria-expanded="true" aria-controls="collapseOne__id__">
+                                                                        <button class="accordion-button btnLabel collapsed" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: inline-block;" data-type="__type__" data-id="__id__" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne__id__" aria-expanded="true" aria-controls="collapseOne__id__">
                                                                             __name__
                                                                         </button>
                                                                     </div>
@@ -580,6 +588,8 @@
                                                                                         <input type="text" class="form-control url_menu" value="">
                                                                                     </div>
                                                                                 </div>
+
+                                                                                <input type="hidden" class="form-control record_id" value="__recordId__">
 
                                                                                 <input type="hidden" class="form-control type_menu" value="__type__">
 

@@ -31,6 +31,11 @@
                                     <input type="text" class="form-control url_menu" value="{{ $child->url ?? '' }}">
                                 </div>
                             </div>
+
+                            <input type="hidden" class="form-control record_id" value="{{ $child->record_id ?? '' }}">
+
+                            <input type="hidden" class="form-control type_menu" value="{{ $child->type ?? '' }}">
+
                             <div class="d-flex align-items-center">
                                 <a class="text-hover remove-menu-item remove" href="javascript:void(0);">{{  __('language.admin.interfaces.menus.deleteMenuItem')}}</a>
                                 <span class="mx-2">|</span>

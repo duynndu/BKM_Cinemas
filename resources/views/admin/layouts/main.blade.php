@@ -47,12 +47,22 @@
     <link rel="stylesheet" href="{{ asset('css/style_image.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/monaco-editor-0.51.0/package/min/vs/editor/editor.main.css') }}">
     @yield('css')
-    @routes
 </head>
 
 <body>
 
-
+<!--*******************
+Preloader start
+********************-->
+{{--<div id="preloader">--}}
+{{--    <div class="lds-ripple">--}}
+{{--        <div></div>--}}
+{{--        <div></div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+<!--*******************
+    Preloader end
+********************-->
 
 <!--**********************************
 Main wrapper start
@@ -170,7 +180,7 @@ Main wrapper start
 </div>
 <div class="sidebar-right">
     <div class="bg-overlay"></div>
-    <a style="display: flex; align-items: center; justify-content: center;" class="sidebar-right-trigger wave-effect wave-effect-x" data-bs-toggle="tooltip" data-placement="right"
+    <a class="sidebar-right-trigger wave-effect wave-effect-x" data-bs-toggle="tooltip" data-placement="right"
        data-original-title="Change Layout" href="javascript:void(0);"><span><i class="fa fa-cog fa-spin"></i></span></a><a
         class="sidebar-close-trigger" href="javascript:void(0);"><span><i class="la-times las"></i></span></a>
     <div class="sidebar-right-inner"><h4>Pick your style<a href="javascript:void(0);" onclick="deleteAllCookie()"

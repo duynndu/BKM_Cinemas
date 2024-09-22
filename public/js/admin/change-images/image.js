@@ -43,7 +43,7 @@ function attachFileInputListener(fileInput) {
                     let container = $('#variantContainer');
                     let newBox = $('<div>').addClass('variantColor d-flex align-items-center').html(`
                         <div class="mb-3 w-25 file-input-wrapper" style="margin-right: 18px; width: 110px !important;">
-                            <input type="file" multiple name="relatedPhotos[]" class="form-control">
+                            <input type="file" accept=".png, .jpg, .jpeg" multiple name="relatedPhotos[]" class="form-control">
                             <div class="custom-button" style="display: none;"><i class="nav-icon fas fa-upload"></i></div>
                             <img src="${e.target.result}" alt="Preview Image" style="display: block;">
                             <button class="remove-button" type="button" style="display: flex;">&times;</button>
@@ -85,7 +85,7 @@ $('#addAnhLienQuan').on('click', function () {
     let container = $('#variantContainer');
     let newBox = $('<div>').addClass('variantColor d-flex align-items-center').html(`
         <div class="mb-3 w-25 file-input-wrapper" style="margin-right: 18px; width: 110px !important;">
-            <input type="file" multiple name="relatedPhotos[]" class="form-control">
+            <input type="file" accept=".png, .jpg, .jpeg" multiple name="relatedPhotos[]" class="form-control">
             <div class="custom-button"><i class="nav-icon fas fa-upload"></i></div>
             <img src="#" alt="Preview Image" style="display: none;">
             <button class="remove-button" type="button" style="display: flex;">&times;</button>
