@@ -26,7 +26,7 @@
                             <div class="content-title SlideToolHeader">
                                 <div class="cpa">
                                     <i class="fa-sharp fa-solid fa-filter me-2"></i>
-                                    {{ __('language.admin.tags.filter') }}
+                                    {{ __('language.admin.tags.filterName') }}
                                 </div>
                             </div>
                             <div class="col-12">
@@ -43,7 +43,7 @@
                                                             placeholder="{{ __('language.admin.tags.inputFilterName') }}">
                                                     </div>
                                                     <div class="col-xl-4  col-sm-4 mb-3 mb-xl-0">
-                                                        <label class="form-label">{{ __('language.admin.categoryPosts.filterName') }}</label>
+                                                        <label class="form-label">{{ __('language.admin.tags.active') }}</label>
                                                         <select name="fill_action" class="form-control">
                                                             <option value="">--{{ __('language.admin.tags.select') }}--</option>
                                                             <option @selected(request()->fill_action == 'active') value="active">{{ __('language.admin.tags.filters.tagShow') }}</option>
