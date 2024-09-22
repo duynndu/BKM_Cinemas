@@ -10,7 +10,12 @@ class BlockContent extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'block_contents';
+    protected $table = 'block_content';
 
     protected $guarded = [];
+
+    public function block()
+    {
+        return $this->belongsTo(Block::class);
+    }
 }

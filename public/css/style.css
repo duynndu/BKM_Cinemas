@@ -127,6 +127,14 @@
     --bs-tertiary-bg: #f3f3f3;
 }
 
+.text-style {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 240px;
+}
+
 .gradient_one {
     background-image: linear-gradient(
         to right,

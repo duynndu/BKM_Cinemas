@@ -148,7 +148,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <div class="p-3">
-                                                    <label class="form-label">{{ __('language.admin.systems.select') }}</label><br>
+                                                    <label class="form-label">{{ __('language.admin.systems.order') }}</label><br>
                                                     <input class="form-control" value="{{ $system->order ?? 0 }}"
                                                         type="number" min="0" id="order" name="order">
                                                     @error('order')
@@ -162,14 +162,14 @@
                                         <div class="row">
                                             <div class="col-8">
                                                 <div class="card-body">
-                                                    <label class="form-label">{{ __('language.admin.systems.order') }}</label><br>
+                                                    <label class="form-label">{{ __('language.admin.systems.active') }}</label><br>
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <input class="form-check-input" type="radio" id="active"
                                                                 name="active" value="1"
                                                                 {{ $system->active == 1 ? 'checked' : '' }}>
                                                             <label class="form-check-label" for="active">
-                                                                {{ __('language.admin.systems.active') }}
+                                                                {{ __('language.admin.systems.show') }}
                                                             </label>
                                                         </div>
                                                         <div class="col-sm-6">
@@ -177,7 +177,7 @@
                                                                 id="active" name="active"
                                                                 {{ $system->active == 0 ? 'checked' : '' }}>
                                                             <label class="form-check-label" for="active">
-                                                                {{ __('language.admin.systems.show') }}
+                                                                {{ __('language.admin.systems.hidden') }}
                                                             </label>
                                                         </div>
                                                     </div>

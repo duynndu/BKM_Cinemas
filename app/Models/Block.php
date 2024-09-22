@@ -13,4 +13,14 @@ class Block extends Model
     protected $table = 'blocks';
 
     protected $guarded = [];
+
+    public function blockType()
+    {
+        return $this->belongsTo(BlockType::class, 'block_type_id', 'id');
+    }
+
+    public function blockContents()
+    {
+        return $this->hasMany(BlockContent::class, 'block_id', 'id');
+    }
 }
