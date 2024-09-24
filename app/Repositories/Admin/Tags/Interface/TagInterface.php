@@ -4,15 +4,11 @@ namespace App\Repositories\Admin\Tags\Interface;
 
 interface TagInterface
 {
-    public function createPost($data);
-
-    public function updatePost($data, $id);
-
-    public function getPostById($id);
-
-    public function createRelatedPhotoPost($record, $data);
-
-    public function getImageRelatedPhotoById($id);
-
+    public function listTags();
+    public function getAlltags($request);
+    public function store($data);
+    public function tagsSelected($id);
+    public function getTagById($id);
+    public function updateTag($data, $id);
     public function delete($id);
 }

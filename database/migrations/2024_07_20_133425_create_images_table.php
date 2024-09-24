@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('path');
             $table->nullableMorphs('board');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

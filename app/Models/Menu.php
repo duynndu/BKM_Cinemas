@@ -13,4 +13,24 @@ class Menu extends Model
     protected $table = 'menus';
 
     protected $guarded = [];
+
+    public function parent()
+    {
+        return $this->belongsTo(Menu::class, 'parent_id');
+    }
+
+    public function childs()
+    {
+        return $this->hasMany(Menu::class, 'parent_id');
+    }
+
+    public function childrenRecursive()
+    {
+        return $this->childs()->with('childrenRecursive');
+    }
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class, 'record_id');
+    }
 }

@@ -8,6 +8,7 @@ $(document).ready(function () {
             let slug = $(this).find('.slug_menu').val();
             let url = $(this).find('.url_menu').val();
             let type = $(this).find('.type_menu').val();
+            let recordId = $(this).find('.record_id').val();
 
             menuItems.push({
                 id: id,
@@ -15,6 +16,7 @@ $(document).ready(function () {
                 slug: slug,
                 url: url,
                 type: type,
+                record_id: recordId,
                 // Nếu có con, thu thập làm đệ quy
                 children: collectMenuChildren($(this))
             });
@@ -32,6 +34,7 @@ $(document).ready(function () {
             let slug = $(this).find('.slug_menu').val();
             let url = $(this).find('.url_menu').val();
             let type = $(this).find('.type_menu').val();
+            let recordId = $(this).find('.record_id').val();
 
             children.push({
                 id: id,
@@ -39,6 +42,7 @@ $(document).ready(function () {
                 slug: slug,
                 url: url,
                 type: type,
+                record_id: recordId,
                 children: collectMenuChildren($(this))
             });
         });

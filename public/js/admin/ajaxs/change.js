@@ -72,7 +72,51 @@ $(document).ready(function () {
         });
     }
 
-// Event handler for toggling active status
+    function changePosition(input) {
+        var url = input.data("url");
+        var itemId = input.data("id");
+        var position = input.val();
+        var positionOld = input.data('value');
+
+        var csrfToken = $('meta[name="csrf-token"]').attr("content");
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                id: itemId,
+                position: position,
+                _token: csrfToken,
+            },
+            success: function (response) {
+                if(response.status) {
+                    Swal.fire({
+                        title: "Vị trí đã được thay đổi",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    });
+                } else {
+                    Swal.fire({
+                        title: `Vị trí số '${position}' này đã tồn tại!`,
+                        text: "Vui lòng chọn vị trí khác để hiển thị",
+                        icon: "error",
+                        confirmButtonText: "OK",
+                    });
+
+                    input.val(positionOld);
+                }
+            },
+            error: function(error) {
+                Swal.fire({
+                    title: "Đã xảy ra lỗi!",
+                    text: "Vui lòng liên hệ với bộ phận kỹ thuật.",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+            }
+        });
+    }
+
+    // Event handler for toggling active status
     $(".toggle-active-btn").click(function () {
         toggleStatus($(this), "active");
     });
@@ -84,5 +128,8 @@ $(document).ready(function () {
 
     $(".changeOrder").change(function () {
         changeOrder($(this));
+    })
+    $(".changePosition").change(function () {
+        changePosition($(this));
     })
 });

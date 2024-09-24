@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\BlockController;
-use App\Http\Controllers\Admin\BlockTypeController;
+use App\Http\Controllers\Admin\Blocks\BlockController;
+use App\Http\Controllers\Admin\Blocks\BlockTypeController;
 use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController;
@@ -24,7 +24,7 @@ Route::prefix('admin')->middleware(['web'])
     ->name('admin.')
     ->group(function () {
 
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
         Route::prefix('room-manager')->group(function () {
             Route::prefix('rooms')
@@ -60,7 +60,6 @@ Route::prefix('admin')->middleware(['web'])
                     Route::delete('{seatType}', 'destroy')->name('destroy');
                 });
         });
-
 
         Route::prefix('systems')
             ->controller(SystemController::class)
@@ -145,6 +144,7 @@ Route::prefix('admin')->middleware(['web'])
                 Route::post('/change-order', 'changeOrder')->name('changeOrder');
                 Route::post('/change-hot', 'changeHot')->name('changeHot');
                 Route::post('/change-active', 'changeActive')->name('changeActive');
+                Route::delete('/destroyImage/{id}', 'destroyImage')->name('destroyImage');
                 Route::post('/removeAvatarImage', 'removeAvatarImage')->name('removeAvatarImage');
             });
 
@@ -160,6 +160,7 @@ Route::prefix('admin')->middleware(['web'])
                 Route::post('/change-order', 'changeOrder')->name('changeOrder');
                 Route::post('/change-hot', 'changeHot')->name('changeHot');
                 Route::post('/change-active', 'changeActive')->name('changeActive');
+                Route::post('/change-position', 'changePosition')->name('changePosition');
                 Route::post('/removeAvatarImage', 'removeAvatarImage')->name('removeAvatarImage');
             });
 
