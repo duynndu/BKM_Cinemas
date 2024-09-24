@@ -6,131 +6,73 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <x-page-titles />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="row">
+                <div class="col-xl-12">
+                    <x-page-titles />
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Danh Sách {{ $title['index'] ?? null }}</h4>
+                    <div class="compose-btn">
+                        <a href="{{ route('admin.rooms.create') }}">
+                            <button class="btn btn-secondary btn-sm light" fdprocessedid="5mkvtw">
+                                + Thêm mới
+                            </button>
+                        </a>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Danh Sách {{ $title['index'] ?? null }}</h4>
-                        <div class="compose-btn">
-                            <a href="{{ route('admin.rooms.create') }}">
-                                <button class="btn btn-secondary btn-sm light" fdprocessedid="5mkvtw">
-                                    + Thêm mới
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-responsive-md" id="data-table">
-                                <thead>
-                                    <tr>
-                                        <th style="width:80px;">#</th>
-                                        <th>Folder</th>
-                                        <th>Tên nội dung</th>
-                                        <th>Giá trị</th>
-                                        <th>Số thứ tự</th>
-                                        <th>Trạng thái</th>
-                                        <th>Hành động</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-responsive-md" id="data-table">
+                            <thead>
                                 <tr>
+                                    <th style="width:80px;">#</th>
+                                    <th>Tên phòng</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Giá cơ bản</th>
+                                    <th>Số cột</th>
+                                    <th>Số hàng</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fs-4">
+                                @foreach($rooms as $index => $room)
+                                <tr>
+                                    <td><strong class="text-black">{{ $index + 1 }}</strong></td>
                                     <td>
-                                        <strong class="text-black">1</strong>
-                                    </td>
-                                    <td>
-                                        <i class="nav-icon fas fa-file"></i>
-                                    </td>
-                                    <td>
-                                        <a href="">
-                                            Nội dung trang chủ
+                                        <a class="fw-bolder " href="{{ route('admin.rooms.edit', $room->id) }}">
+                                            {{ $room->room_name }}
                                         </a>
                                     </td>
                                     <td>
-                                        Nội dung ở đây
+                                        @if($room->image)
+                                        <img width="100" src="{{ Storage::url($room->image) }}" alt="{{ $room->room_name }}">
+                                        @else
+                                        Không có hình ảnh
+                                        @endif
                                     </td>
-                                    <td>
-                                        <button class="toggle-active-btn btn btn-xs btn-success text-white" data-id="11"
-                                                data-status="1"
-                                                data-url="">
-                                            Hiển thị
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="toggle-hot-btn btn btn-xs btn-success text-white" data-id="11"
-                                                data-status="1"
-                                                data-url="">
-                                            Nổi bật
-                                        </button>
-                                    </td>
-
+                                    <td>{{ number_format($room->base_price, 0, ',', '.') }} VNĐ</td>
+                                    <td>{{ $room->col_count }}</td>
+                                    <td>{{ $room->row_count }}</td>
                                     <td>
                                         <div>
-                                            <a href="" class="btn btn-primary shadow btn-xs sharp me-1">
+                                            <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
-                                            <a class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove"
-                                               data-type="DELETE" href="">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                            <x-destroy-button route="admin.rooms.destroy" id="{{ $room->id }}" />
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td><strong class="text-black">6</strong>
-                                    </td>
-                                    <td>
-                                        <i class="nav-icon fas fa-folder"></i>
-                                    </td>
-                                    <td>
-                                        <a href="">
-                                            Nội dung đầu trang
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Nội dung ở đây
-                                    </td>
-                                    <td>
-                                        <button class="toggle-active-btn btn btn-xs btn-success text-white" data-id="16"
-                                                data-status="1"
-                                                data-url="">
-                                            Hiển thị
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="toggle-hot-btn btn btn-xs btn-success text-white" data-id="16"
-                                                data-status="1"
-                                                data-url=""
-                                                fdprocessedid="dopdx9">
-                                            Nổi bật
-                                        </button>
-                                    </td>
-
-                                    <td>
-                                        <div>
-                                            <a href="" class="btn btn-primary shadow btn-xs sharp me-1">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
-                                            <a class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove"
-                                               data-type="DELETE"
-                                               href="">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div>
-                                <div class="text-center">
-
-                                </div>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div>
+                            <div class="text-center">
+                                {{ $rooms->links('vendor.pagination.bootstrap-5') }}
                             </div>
                         </div>
                     </div>
@@ -138,6 +80,7 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('js')

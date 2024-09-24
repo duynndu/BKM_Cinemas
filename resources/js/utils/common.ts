@@ -88,3 +88,12 @@ export const redirect = (url?: string) => {
     }
   }
 }
+
+export const price = (price: number, currency: string = 'VND') => {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(price);
+}

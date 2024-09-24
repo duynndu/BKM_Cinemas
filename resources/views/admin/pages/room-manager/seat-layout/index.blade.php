@@ -41,29 +41,29 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($seat_layouts as $seat_layout)
+                @foreach($seatLayouts as $seatLayout)
                 <tr>
                   <td><strong class="text-black">{{ $loop->iteration }}</strong></td>
-                  <td>{{ $seat_layout->name }}</td>
+                  <td>{{ $seatLayout->name }}</td>
                   <td>
-                    @if($seat_layout->image)
-                    <img src="{{ asset('storage/' . $seat_layout->image) }}" alt="{{ $seat_layout->name }}" width="100">
+                    @if($seatLayout->image)
+                    <img src="{{ asset('storage/' . $seatLayout->image) }}" alt="{{ $seatLayout->name }}" width="100">
                     @else
                     Không có hình ảnh
                     @endif
                   </td>
-                  <td>{{ $seat_layout->col_count }}</td>
-                  <td>{{ $seat_layout->row_count }}</td>
+                  <td>{{ $seatLayout->col_count }}</td>
+                  <td>{{ $seatLayout->row_count }}</td>
                   <td>
-                    <i class="fa fa-chair"></i> {{ $seat_layout->col_count * $seat_layout->row_count }} ghế
+                    <i class="fa fa-chair"></i> {{ $seatLayout->col_count * $seatLayout->row_count }} ghế
                   </td>
                   <td>
                     <div>
-                      <a href="{{ route('admin.seat-layouts.edit', $seat_layout->id) }}"
+                      <a href="{{ route('admin.seat-layouts.edit', $seatLayout->id) }}"
                         class="btn btn-primary shadow btn-xs sharp me-1">
                         <i class="fa fa-pencil"></i>
                       </a>
-                      <x-destroy-button route="admin.seat-layouts.destroy" id="{{ $seat_layout->id }}" />
+                      <x-destroy-button route="admin.seat-layouts.destroy" id="{{ $seatLayout->id }}" />
                     </div>
                   </td>
                 </tr>
@@ -72,7 +72,7 @@
             </table>
             <div>
               <div class="text-center">
-                {{ $seat_layouts->links('vendor.pagination.bootstrap-5') }}
+                {{ $seatLayouts->links('vendor.pagination.bootstrap-5') }}
               </div>
             </div>
           </div>
