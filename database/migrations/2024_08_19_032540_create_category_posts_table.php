@@ -19,10 +19,8 @@ return new class extends Migration
             $table->string('description', 500)->nullable();
             $table->text('content')->nullable();
             $table->integer('order')->default(0);
+            $table->integer('position')->default(0);
             $table->bigInteger('parent_id')->default(0);
-            $table->string('title_seo')->nullable();
-            $table->string('description_seo')->nullable();
-            $table->string('keyword_seo')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
