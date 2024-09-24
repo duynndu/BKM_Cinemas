@@ -86,6 +86,9 @@
                     <li>
                         <a href="{{ route('admin.seat-layouts.index') }}" aria-expanded="false">Sơ đồ ghế</a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.seat-types.index') }}" aria-expanded="false">Loại ghế</a>
+                    </li>
                 </ul>
             </li>
             <li>

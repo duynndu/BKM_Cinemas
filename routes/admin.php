@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\SystemController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\SeatLayoutController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\SeatTypeController;
 
 
 Route::group(['prefix' => 'filemanager', 'middleware' => ['web']], function () {
@@ -25,13 +27,16 @@ Route::prefix('admin')->middleware(['web'])
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::prefix('room-manager')->group(function () {
-            Route::get('rooms', function () {
-                return view('admin.pages.room-manager.room.index');
-            })->name('rooms.index');
-
-            Route::get('rooms/create', function () {
-                return view('admin.pages.room-manager.room.create');
-            })->name('rooms.create');
+            Route::prefix('rooms')
+                ->controller(RoomController::class)
+                ->name('rooms.')->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/create', 'create')->name('create');
+                    Route::post('/store', 'store')->name('store');
+                    Route::get('/{room}/edit', 'edit')->name('edit');
+                    Route::post('/{room}/update', 'update')->name('update');
+                    Route::delete('/{room}', 'destroy')->name('destroy');
+                });
 
             Route::prefix('seat-layouts')
                 ->controller(SeatLayoutController::class)
@@ -39,9 +44,20 @@ Route::prefix('admin')->middleware(['web'])
                     Route::get('/', 'index')->name('index');
                     Route::get('/create', 'create')->name('create');
                     Route::post('/store', 'store')->name('store');
-                    Route::get('/{id}/edit', 'edit')->name('edit');
-                    Route::post('/{id}/update', 'update')->name('update');
-                    Route::delete('{id}', 'destroy')->name('destroy');
+                    Route::get('/{seatLayout}/edit', 'edit')->name('edit');
+                    Route::post('/{seatLayout}/update', 'update')->name('update');
+                    Route::delete('{seatLayout}', 'destroy')->name('destroy');
+                });
+
+            Route::prefix('seat-types')
+                ->controller(SeatTypeController::class)
+                ->name('seat-types.')->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/create', 'create')->name('create');
+                    Route::post('/store', 'store')->name('store');
+                    Route::get('/{seatType}/edit', 'edit')->name('edit');
+                    Route::post('/{seatType}/update', 'update')->name('update');
+                    Route::delete('{seatType}', 'destroy')->name('destroy');
                 });
         });
 
