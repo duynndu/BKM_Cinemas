@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 class RoomController extends Controller
 {
     /**
@@ -12,7 +12,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.pages.room-manager.room.index', [
+            'rooms' => Room::paginate(3)
+        ]);
     }
 
     /**
@@ -20,7 +22,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.room-manager.room.create');
     }
 
     /**
@@ -44,7 +46,9 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        //
+        return view('admin.pages.room-manager.room.edit', [
+            'room' => $room->with('seats')->first()
+        ]);
     }
 
     /**
@@ -60,6 +64,10 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        if ($room->image) {
+            Storage::disk('public')->delete($room->image);
+        }
+        $room->delete();
+        return redirect()->route('rooms.index')->with('message', 'Xóa phòng thành công');
     }
 }

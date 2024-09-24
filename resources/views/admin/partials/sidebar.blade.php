@@ -80,6 +80,23 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">movie</i>
+                    <span class="nav-text">Quản lý phòng chiếu</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{{ route('admin.rooms.index') }}" aria-expanded="false">Phòng chiếu</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.seat-layouts.index') }}" aria-expanded="false">Sơ đồ ghế</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.seat-types.index') }}" aria-expanded="false">Loại ghế</a>
+                    </li>
+                </ul>
+            </li>
 {{--            <li>--}}
 {{--                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">--}}
 {{--                    <i class="material-icons">person</i>--}}

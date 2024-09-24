@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite && chokidar '**/*.php' -c 'php artisan optimize'",
+        "dev": "vite",
         "build": "tsc && vite build"
     },
     "devDependencies": {
@@ -33,7 +33,10 @@
     },
     "dependencies": {
         "@ant-design/icons": "^5.4.0",
+        "@colinaut/alpinejs-plugin-simple-validate": "^1.8.2",
+        "@ryangjchandler/alpine-tooltip": "^2.0.0",
         "@types/jquery": "^3.5.30",
+        "@types/yup": "^0.32.0",
         "dayjs": "^1.11.12",
         "dom-to-image": "^2.6.0",
         "flowbite": "^2.5.1",
@@ -46,6 +49,7 @@
         "recoil": "^0.7.7",
         "recoil-nexus": "^0.5.1",
         "swiper": "^11.1.9",
-        "vite-plugin-run": "^0.5.2"
+        "vite-plugin-run": "^0.5.2",
+        "yup": "^1.4.0"
     }
 }

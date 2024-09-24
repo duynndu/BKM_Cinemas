@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Seat;
+use App\Models\Cinema;
 
 class Room extends Model
 {
@@ -15,4 +17,15 @@ class Room extends Model
     protected $casts = [
         'room_seats' => 'json',
     ];
+
+
+    public function seats()
+    {
+        return $this->hasMany(Seat::class);
+    }
+
+    public function cinema()
+    {
+        return $this->belongsTo(Cinema::class);
+    }
 }
