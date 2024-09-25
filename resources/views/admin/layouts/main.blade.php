@@ -47,6 +47,7 @@
     <link rel="stylesheet" href="{{ asset('css/style_image.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/monaco-editor-0.51.0/package/min/vs/editor/editor.main.css') }}">
     @yield('css')
+    @routes
 </head>
 
 <body>
