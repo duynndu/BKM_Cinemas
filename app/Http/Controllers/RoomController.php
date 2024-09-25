@@ -47,7 +47,7 @@ class RoomController extends Controller
     public function edit(Room $room)
     {
         return view('admin.pages.room-manager.room.edit', [
-            'room' => $room->with('seats')->first()
+            'room' => $room->load('seats')
         ]);
     }
 

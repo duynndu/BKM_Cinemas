@@ -36,6 +36,7 @@ Alpine.data('RoomComponent', (roomId?: number) => ({
       await this.getRoomById(roomId);
     }
     this.renderSeatLayout();
+    this.renderSeatLayout();
   },
   async onSubmit() {
     try {
