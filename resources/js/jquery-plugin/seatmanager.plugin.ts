@@ -2,10 +2,10 @@ import $ from "jquery";
 import { SEAT_TYPE } from "@/define/seat-type";
 import { ISeatLayout } from "@/types/seat-layout.interface";
 import { price } from "@/utils/common";
-import { RoomService } from "@/services/room.service";
+import { ISeatType } from "@/types/seat-type.interface";
 
-$.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: any) => any) {
-  let { seats, col_count, row_count } = seatLayout;
+$.fn.seatmanager = async function (seatLayout: ISeatLayout & { base_price: any, seat_types: ISeatType[] }, onChange?: (data: any) => any) {
+  let { seats, col_count, row_count, base_price = 0, seat_types = [] } = seatLayout;
   if (!seats || seats.length === 0) {
     seats = [];
     for (let row = 0; row < row_count; row++) {
@@ -22,37 +22,8 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: an
       }
     }
   }
-  // const seatTypes = {
-  //   [SEAT_TYPE.EMPTY_SEAT]: {
-  //     text: "Xóa",
-  //     color: "#000000",
-  //     icon: "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'><path d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z'/><path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/></svg>"
-  //   },
-  //   [SEAT_TYPE.STANDARD_SEAT]: {
-  //     text: "Ghế mặc định",
-  //     color: "#FFFFFF",
-  //     icon: "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-person' viewBox='0 0 16 16'><path d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 14s-1 0-1-1 1-4 7-4 7 3 7 4-1 1-1 1H2z'/></svg>"
-  //   },
-  //   [SEAT_TYPE.COUPLE_SEAT]: {
-  //     text: "Ghế cặp",
-  //     color: "#FFB6C1",
-  //     icon: "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart' viewBox='0 0 16 16'><path d='M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.414-2.368 5.327-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01z'/></svg>"
-  //   },
-  //   [SEAT_TYPE.VIP_SEAT]: {
-  //     text: "Ghế VIP",
-  //     color: "#FFD700",
-  //     icon: "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-star' viewBox='0 0 16 16'><path d='M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.32-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.63.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z'/></svg>"
-  //   },
-  //   [SEAT_TYPE.ACCESSIBLE_SEAT]: {
-  //     text: "Ghế cho người khuyết tật",
-  //     color: "#32CD32",
-  //     icon: "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-person-wheelchair' viewBox='0 0 16 16'><path d='M12 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-.663 2.146a1.5 1.5 0 0 0-.47-2.115l-2.5-1.508a1.5 1.5 0 0 0-1.676.086l-2.329 1.75a.866.866 0 0 0 1.051 1.375L7.361 3.37l.922.71-2.038 2.445A4.73 4.73 0 0 0 2.628 7.67l1.064 1.065a3.25 3.25 0 0 1 4.574 4.574l1.064 1.063a4.73 4.73 0 0 0 1.09-3.998l1.043-.292-.187 2.991a.872.872 0 1 0 1.741.098l.206-4.121A1 1 0 0 0 12.224 8h-2.79zM3.023 9.48a3.25 3.25 0 0 0 4.496 4.496l1.077 1.077a4.75 4.75 0 0 1-6.65-6.65z'/></svg>"
-  //   }
-  // }
 
-  const seatTypes = await RoomService.getSeatTypesKeyByCode();
-  // console.log(seatTypes);
-
+  const seatTypes = seat_types;
   const contextMenu = $("<div>", {
     class: "context-menu",
   });
@@ -73,7 +44,8 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: an
   });
 
   function generateSeats(seats: any[]) {
-    seatTable.empty().addClass(`tw-grid-cols-${col_count}`);
+    seatTable.removeClass();
+    seatTable.empty().addClass(`seat-table tw-grid tw-gap-2 tw-p-4 tw-rounded-xl tw-grid-cols-${col_count}`);
     const labels = rowLabels.empty();
 
     const rows = seats.length / col_count;
@@ -84,8 +56,15 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: an
       }));
     }
 
-
     seats.forEach((seat, index) => {
+      let calculatorPrice = 0;
+      if (base_price !== 0) {
+        calculatorPrice = (parseFloat(base_price) + seatTypes[seat.type].bonus_price) * seat.slot
+      } else if (seat?.price) {
+        calculatorPrice = seat.price
+      } else {
+        calculatorPrice = seatTypes[seat.type].bonus_price * seat.slot
+      }
       seatTable.append($('<div>', {
         style: `background-color: ${seatTypes[seat.type].color}`,
         class: `draggable seat seat-lg tw-col-span-${seat.slot} tw-bg-${seat.type} ${!seat.visible ? 'tw-hidden' : 'tw-visible'}`,
@@ -96,7 +75,7 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: an
         'data-seat-number': seat.seat_number,
         'data-visible': seat.visible,
         'data-price': seat.price ?? 0,
-        'x-tooltip': `"${seat.seat_number} - ${price(seat.price ?? 0)}"`,
+        'x-tooltip': `"${seat.seat_number} - ${price(calculatorPrice)}"`,
       }));
       $(seatTable.children()[index]).data('merged-seats', seat.merged_seats ?? []);
     });
@@ -119,7 +98,7 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: an
     seatTable.children().each(function () {
       addEventListeners($(this));
     });
-    onChange?.({ seatTable, contextMenu, rowLabels, seats });
+    onChange?.({ seatTable, contextMenu, rowLabels, seats, col_count, row_count });
     return getSeatsFromDOM();
   }
 
@@ -289,7 +268,6 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: an
       }
     });
     totalSlotUpToTarget += $(contextElement).data('slot');
-    console.log(totalSlotUpToTarget);
 
     const slot = $(contextElement).data('slot');
     const type = $(contextElement).data('type');
@@ -301,7 +279,30 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: an
     const isLeftCoupleSeat = leftSeat.data('type') === SEAT_TYPE.COUPLE_SEAT;
     const isRightCoupleSeat = rightSeat.data('type') === SEAT_TYPE.COUPLE_SEAT;
 
-    const menuItems = [
+    const menuItemsHeader = [
+      {
+        text: 'Thêm cột',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="#FF3737" width="800px" height="800px" viewBox="0 0 1920 1920"><path d="M120 180v1560c0 33 26.88 60 60 60h1020V120H180c-33.12 0-60 27-60 60Zm1620-60h-420v480h480V180c0-33-26.88-60-60-60Zm60 600h-480v480h480V720Zm-60 1080c33.12 0 60-27 60-60v-420h-480v480h420ZM180 1920c-99.24 0-180-80.76-180-180V180C0 80.76 80.76 0 180 0h1560c99.24 0 180 80.76 180 180v1560c0 99.24-80.76 180-180 180H180Zm596.484-510h-240v-330h-330V840h330V510h240v330h330v240h-330v330Z" fill-rule="evenodd"/><script xmlns=""/></svg>`,
+        action: () => addColumn(colIndex)
+      },
+      {
+        text: 'Xóa cột',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none"><path stroke="#FF3737" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h3M3 21h3m0 0h4a2 2 0 0 0 2-2V9M6 21V9m0-6h4a2 2 0 0 1 2 2v4M6 3v6M3 9h3m0 0h6m-9 6h9m3-6 3 3m0 0 3 3m-3-3 3-3m-3 3-3 3"/><script xmlns=""/></svg>',
+        action: () => removeColumn(colIndex)
+      },
+      {
+        text: 'Thêm hàng',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="#FF3737" width="800px" height="800px" viewBox="0 0 1920 1920"><path d="M1740 120H180c-33 0-60 26.88-60 60v1020h1680V180c0-33.12-27-60-60-60Zm60 1620v-420h-480v480h420c33 0 60-26.88 60-60Zm-600 60v-480H720v480h480Zm-1080-60c0 33.12 27 60 60 60h420v-480H120v420ZM0 180C0 80.76 80.76 0 180 0h1560c99.24 0 180 80.76 180 180v1560c0 99.24-80.76 180-180 180H180c-99.24 0-180-80.76-180-180V180Zm510 596.484v-240h330v-330h240v330h330v240h-330v330H840v-330H510Z" fill-rule="evenodd"/><script xmlns=""/></svg>',
+        action: () => addRow(rowIndex)
+      },
+      {
+        text: 'Xóa hàng',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none"><path stroke="#FF3737" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v3m18-3v3m0 0v4a2 2 0 0 1-2 2H9m12-6H9M3 6v4a2 2 0 0 0 2 2h4M3 6h6m0-3v3m0 0v6m6-9v9m-6 3 3 3m0 0 3 3m-3-3 3-3m-3 3-3 3"/><script xmlns=""/></svg>',
+        action: () => removeRow(rowIndex)
+      }
+    ]
+
+    const menuItemsBody = [
       !isFirstCol && !isLeftCoupleSeat && {
         action: () => mergeSeats('merge-left'),
         text: 'Hợp nhất bên trái',
@@ -334,13 +335,13 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: an
           .filter(type => type !== 'empty-seat' && type !== 'couple-seat')
           .map(type => ({
             action: () => convertTo(type),
-            text: seatTypes[type as keyof typeof seatTypes].text,
-            icon: seatTypes[type as keyof typeof seatTypes].icon,
-            color: seatTypes[type as keyof typeof seatTypes].color
+            text: (seatTypes[type as keyof typeof seatTypes] as ISeatType).text,
+            icon: (seatTypes[type as keyof typeof seatTypes] as ISeatType).icon,
+            color: (seatTypes[type as keyof typeof seatTypes] as ISeatType).color
           }))
       }
     ].filter(item => item);
-    createContextMenu(menuItems);
+    createContextMenu(menuItemsBody, menuItemsHeader);
 
     contextMenu.css({
       left: `${x}px`,
@@ -409,8 +410,33 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: an
     $(contextElement).data('type', type);
   }
 
-  function createContextMenu(menuItems: any[]) {
+  function createContextMenu(menuItems: any[], menuItemsHeader: any[]) {
     contextMenu.empty();
+
+    const menuHeader = $('<div>', {
+      class: 'context-menu__header tw-grid tw-grid-cols-4'
+    });
+    menuHeader.css('border-bottom', '1px solid #202327');
+    menuItemsHeader.forEach((item: any) => {
+      const menuItem = $('<div>', {
+        class: 'context-menu__item',
+        title: item.text,
+        click: function () {
+          if (item.action) {
+            item.action();
+            seats = getSeatsFromDOM();
+            seats = generateSeats(seats);
+            hideContextMenu();
+          }
+        },
+      });
+      const icon = $(item.icon).css({
+        'margin-right': '0'
+      });
+      menuItem.append(icon);
+      menuHeader.append(menuItem);
+    });
+    contextMenu.append(menuHeader);
     menuItems.forEach((item: any) => {
       const menuItem = $('<div>', {
         class: 'context-menu__item',
@@ -450,4 +476,73 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout, onChange?: (data: an
       contextMenu.append(menuItem);
     });
   }
-};
+
+  function addRow(position: number) {
+    console.log(position);
+
+    row_count++;
+    for (let col = 0; col < col_count; col++) {
+      seats?.splice(position * col_count + col, 0, {
+        type: SEAT_TYPE.STANDARD_SEAT,
+        slot: 1,
+        visible: true,
+        seat_number: `${String.fromCharCode(65 + position)}${(col + 1).toString().padStart(2, '0')}`,
+        merged_seats: [],
+        order: position * col_count + col,
+        price: 0
+      });
+    }
+    generateSeats(seats ?? []);
+  }
+
+  function addColumn(position: number) {
+    for (let row = 0; row < row_count; row++) {
+      const seat = seats?.[row * col_count + position];
+      if (seat && seat.type === SEAT_TYPE.COUPLE_SEAT || !seat?.visible) {
+        //@ts-ignore
+        toastr.warning('Vui lòng xóa ghế cặp trước');
+        return;
+      }
+    }
+    col_count++;
+    for (let row = 0; row < row_count; row++) {
+      seats?.splice(row * col_count + position, 0, {
+        type: SEAT_TYPE.STANDARD_SEAT,
+        slot: 1,
+        visible: true,
+        seat_number: `${String.fromCharCode(65 + row)}${(position + 1).toString().padStart(2, '0')}`,
+        merged_seats: [],
+        order: row * col_count + position,
+        price: 0
+      });
+    }
+    generateSeats(seats ?? []);
+  }
+
+  function removeRow(position: number) {
+    if (position < 0 || position >= row_count) return;
+    seats?.splice(position * col_count, col_count);
+    row_count--;
+    generateSeats(seats ?? []);
+  }
+
+
+  function removeColumn(position: number) {
+    for (let row = 0; row < row_count; row++) {
+      const seat = seats?.[row * col_count + position];
+      if (seat && seat.type === SEAT_TYPE.COUPLE_SEAT || !seat?.visible) {
+        //@ts-ignore
+        toastr.warning('Vui lòng xóa ghế cặp trước');
+        return;
+      }
+    }
+
+    if (position < 0 || position >= col_count) return;
+    for (let row = row_count - 1; row >= 0; row--) {
+      seats?.splice(row * col_count + position, 1);
+    }
+    col_count--;
+    generateSeats(seats ?? []);
+  }
+
+}
