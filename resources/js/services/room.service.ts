@@ -18,7 +18,7 @@ export class RoomService {
     return response.data;
   }
 
-  static async putSeatLayout(id: number, data: ISeatType) {
+  static async putSeatLayout(id: number, data: FormData) {
     const response = await window.axios.put(`/seat-layouts/${id}`, data, {
       headers: {
         'Content-Type': 'multipart/form-data'
