@@ -36,7 +36,7 @@ class RoomController extends Controller
             'seats' => 'required|json',
         ]);
 
-        $seatType = SeatType::all()->keyBy('name');
+        $seatType = SeatType::all()->keyBy('code');
         $room = new Room();
         $room->room_name  = $validatedData['room_name'];
         $room->base_price = $validatedData['base_price'];
@@ -111,7 +111,7 @@ class RoomController extends Controller
         $room->save();
 
         if (isset($validatedData['seats'])) {
-            $seatType = SeatType::all()->keyBy('name');
+            $seatType = SeatType::all()->keyBy('code');
             $room->seats()->delete();
 
             foreach ($seats as $seat) {

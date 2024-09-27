@@ -5,15 +5,16 @@ import $ from "jquery";
 import "../jquery-plugin/seatmanager.plugin";
 import { IRoom } from "@/types/room.interface";
 import * as yup from 'yup';
+import { ISeatType } from "@/types/seat-type.interface";
 
 const roomSchema = yup.object().shape({
   room_name: yup.string().required('Tên phòng là bắt buộc'),
   col_count: yup.number()
-  .typeError('Số cột phải là một số và không được để trống')
-  .min(1, 'Số cột phải lớn hơn hoặc bằng 1'),
+    .typeError('Số cột phải là một số và không được để trống')
+    .min(1, 'Số cột phải lớn hơn hoặc bằng 1'),
   row_count: yup.number()
-  .typeError('Số cột phải là một số và không được để trống')
-  .min(1, 'Số hàng phải lớn hơn hoặc bằng 1'),
+    .typeError('Số cột phải là một số và không được để trống')
+    .min(1, 'Số hàng phải lớn hơn hoặc bằng 1'),
   base_price: yup.number().min(0, 'Giá cơ bản phải lớn hơn hoặc bằng 0').required('Giá cơ bản là bắt buộc'),
 });
 
@@ -30,7 +31,9 @@ Alpine.data('RoomComponent', (roomId?: number) => ({
   seatTable: null as JQuery<HTMLElement> | null,
   showModal: false,
   seatLayouts: null as any[] | null,
+  seatTypes: [] as ISeatType[],
   async init() {
+    this.seatTypes = await RoomService.getSeatTypesKeyByCode();
     this.seatLayouts = await RoomService.getSeatLayouts();
     if (roomId) {
       await this.getRoomById(roomId);
@@ -93,9 +96,17 @@ Alpine.data('RoomComponent', (roomId?: number) => ({
       col_count: this.formData.col_count,
       row_count: this.formData.row_count,
       seats: this.formData.seats,
+      seat_types: this.seatTypes,
+      base_price: this.formData.base_price,
     }, (data: any) => {
       this.formData.seats = data.seats;
       this.seatTable = data.seatTable;
+      if (!isNaN(data.col_count)) {
+        this.formData.col_count = data.col_count;
+      }
+      if (!isNaN(data.row_count)) {
+        this.formData.row_count = data.row_count;
+      }
     });
   }
 }));

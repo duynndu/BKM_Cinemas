@@ -41,7 +41,8 @@
 									</div>
 									<div class="mb-3">
 										<label class="me-sm-2 form-label mb-2">Giá ghế cơ bản</label>
-										<input type="text" x-model="formData.base_price" class="form-control"
+										<input type="text" x-model="formData.base_price" @input="renderSeatLayout;"
+											class=" form-control"
 											placeholder="Nhập giá ghế cơ bản">
 										<span class="text-danger" x-text="errors.base_price"></span>
 									</div>

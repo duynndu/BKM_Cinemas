@@ -12,6 +12,7 @@ class SeatType extends Model
 
     protected $casts = [
         'is_system' => 'boolean',
+        'bonus_price' => 'double',
     ];
 
     public function seats()
