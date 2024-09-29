@@ -2,47 +2,89 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
-use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $table = 'users';
+
     protected $guarded = [];
 
+    const TYPE_ADMIN = 'admin';        // Admin tổng
+
+    const TYPE_MEMBER = 'member';      // Thành viên
+
+    const TYPE_STAFF = 'staff'; // Nhân viên
+
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
+    public function isAdmin()
+    {
+        return $this->type === self::TYPE_ADMIN; // Admin tổng
+    }
+
+    public function isMember()
+    {
+        return $this->type === self::TYPE_MEMBER; // Thành viên
+    }
+
+    public function isStaff()
+    {
+        return $this->type === self::TYPE_STAFF; // Nhân viên
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    public function permissions()
+    {
+        return $this->role ? $this->role->permissions : collect(); // Trả về collection rỗng nếu không có role
+    }
+
     /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
+     * Kiểm tra xem người dùng có quyền cụ thể nào không
      */
-    public function getJWTIdentifier()
+    public function isAdminGuard()
     {
-        return $this->getKey();
+        // Chỉ cho phép admin và staff
+        return in_array($this->type, [
+            self::TYPE_ADMIN,
+            self::TYPE_STAFF,
+        ]);
     }
 
-    public function getJWTCustomClaims()
+    public function hasPermission($permissionValue)
     {
-        return [];
-    }
-
-    public function RefreshTokens(): HasMany
-    {
-        return $this->hasMany(RefreshToken::class);
+        return $this->role->permissions->contains('value', $permissionValue);
     }
 }
