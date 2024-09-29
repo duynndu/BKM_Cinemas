@@ -27,6 +27,7 @@ return [
         'password' => 'Mật khẩu',
         'remember' => 'Ghi nhớ đăng nhập',
         'room-manager' => 'Quản lý phòng chiếu',
+        'seat-layouts' => 'Quản lý sơ đồ ghế',
         'rooms' => 'Phòng chiếu',
         'add' => 'Thêm',
         'edit' => 'Cập nhật',
