@@ -46,16 +46,20 @@ Alpine.data('SeatTypeComponent', (seatTypeId?: number) => ({
       } else {
         await RoomService.postSeatType(this.formData);
       }
-      redirect().route('admin.seat-types.index');
-    } catch (error) {
+      toastr.success('Thao tác thành công');
+      setTimeout(() => {
+        redirect().route('admin.seat-types.index');
+      }, 500);
+    } catch (error: any) {
       console.error(error);
+      toastr.error(error.message);
     }
   },
   async getSeatTypeById() {
     if (seatTypeId) {
       const seatType = await RoomService.getSeatType(seatTypeId);
       this.formData = seatType;
-      
+
     }
   },
 }));
