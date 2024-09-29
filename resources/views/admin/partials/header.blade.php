@@ -18,31 +18,9 @@
                     </div>
                 </div>
                 <ul class="navbar-nav header-right">
-                    <li class="nav-item">
-                        <div class="search-coundry">
-                            <select class="form-control custom-image-select-2 image-select mt-3 mt-sm-0">
-                                <option
-                                    data-thumbnail="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_North_Vietnam_%281945%E2%80%931955%29.svg/230px-Flag_of_North_Vietnam_%281945%E2%80%931955%29.svg.png"
-                                    data-content="<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_North_Vietnam_%281945%E2%80%931955%29.svg/230px-Flag_of_North_Vietnam_%281945%E2%80%931955%29.svg.png'/> Dash Coin">
-                                    Việt Nam
-                                </option>
-                                <option
-                                    data-thumbnail="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg"
-                                    data-content="<img src='https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg'/> Dash Coin">
-                                    English
-                                </option>
-                            </select>
-                        </div>
-                    </li>
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link  nav-link  menu-wallet" href="javascript:void(0);">
                             <i class="material-icons"> widgets </i>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link bell dz-theme-mode" href="javascript:void(0);">
-                            <i id="icon-light" class="fas fa-sun"></i>
-                            <i id="icon-dark" class="fas fa-moon"></i>
                         </a>
                     </li>
                     <li class="nav-item dropdown notification_dropdown">
