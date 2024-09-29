@@ -15,18 +15,20 @@ return new class extends Migration
         // Bảng người dùng
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('role_id'); // id vai trò tài khoản
+            $table->bigInteger('role_id');
+            $table->string('name');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('image')->nullable();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('gender');
-            $table->string('email')->unique();
-            $table->string('phone');
-            $table->string('password');
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->date('date_birth')->nullable();
+            $table->string('gender')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->decimal('balance', 10, 2); // số dư tài khoản
-            $table->decimal('total_deposit', 10, 2); // Tổng số tiền đã nạp vào (Dự vào đây để set rank)
-            $table->tinyInteger('status')->default(1);  // 1: Đang hoạt động, 2: Bị khóa
+            $table->string('password');
+            $table->tinyInteger('status')->default(1);  // 1: Hoạt động, 0: Bị khóa
+            $table->string('type')->default(\App\Models\User::TYPE_MEMBER);
             $table->rememberToken();
             $table->timestamps();
         });
