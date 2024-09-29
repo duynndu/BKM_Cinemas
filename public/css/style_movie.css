@@ -8122,7 +8122,7 @@ label:hover:before {
 }
 
 #header .logo {
-    width: 100px;
+    width: 120px !important;
     position: absolute;
     float: left;
     padding-top: 15px;
