@@ -39595,7 +39595,6 @@ table.dataTable > tfoot > tr > th, table.dataTable > tfoot > tr > td {
 }
 
 .login-account .account-info-area {
-    background-color: var(--primary);
     border-radius: 2.5rem;
     display: flex;
     align-items: center;
@@ -39606,14 +39605,13 @@ table.dataTable > tfoot > tr > th, table.dataTable > tfoot > tr > td {
     min-height: 600px;
     background-repeat: no-repeat;
     background-size: cover;
-    background-blend-mode: luminosity;
 }
 
 .login-account .account-info-area:after {
     content: "";
     height: 100%;
     width: 100%;
-    background-color: var(--primary);
+    background-color: #2d2d2d;
     position: absolute;
     left: 0;
     top: 0;
@@ -39699,6 +39697,10 @@ table.dataTable > tfoot > tr > th, table.dataTable > tfoot > tr > td {
     margin-bottom: 1.4rem;
     margin-top: 0;
     color: #fff;
+    -webkit-text-stroke: 1px #ff974d;
+    background: linear-gradient(to right, #cb3ec0, #c57f48);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .login-account .account-info-area .login-content .title span {

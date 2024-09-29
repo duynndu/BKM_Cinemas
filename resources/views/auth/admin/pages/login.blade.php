@@ -8,10 +8,10 @@
 @section('content')
     <div class="row">
         <div class="col-lg-6 align-self-start">
-            <div class="account-info-area" style="background-image: url(../images/rainbow.gif)">
+            <div class="account-info-area" style="background-image: url({{ asset('images/logo.png') }})">
                 <div class="login-content">
                     <h1 class="title">{{ __('language.admin.bivaco') }}</h1>
-                    <p class="text">{{ __('language.admin.descriptionAuth') }}</p>
+                    <marquee class="text" behavior="scroll" direction="left" scrollamount="5">{{ __('language.admin.descriptionAuth') }}</marquee>
                 </div>
             </div>
         </div>
