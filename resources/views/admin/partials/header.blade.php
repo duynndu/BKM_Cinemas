@@ -223,11 +223,11 @@
                                 <div class="header-info2 d-flex align-items-center">
                                     <div class="d-flex align-items-center sidebar-info">
                                         <div class="d-none d-md-block">
-                                            <h5 class="mb-0">Bộ phận kỹ thuật</h5>
-                                            <p class="mb-0 text-end">Admin</p>
+                                            <h5 class="mb-0">{{ Auth::user()->name ?? '' }}</h5>
+                                            <p class="mb-0 text-end">{{ Auth::user()->role->name ?? '' }}</p>
                                         </div>
                                     </div>
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXSjkWNYkyTK94NswJwN5f4kUJ7eQMn2GJ7w&s" alt="">
+                                    <img src="{{ Auth::user()->image ?? asset('images/avatar/1.jpg') }}" alt="">
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
@@ -295,17 +295,21 @@
                                     </svg>
                                     <span class="ms-2">{{ __('language.admin.accounts.setting') }} </span>
                                 </a>
-                                <a href="page-login.html" class="dropdown-item ai-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                         viewBox="0 0 24 24"
-                                         fill="none" stroke="#fd5353" stroke-width="2" stroke-linecap="round"
-                                         stroke-linejoin="round">
-                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                                        <polyline points="16 17 21 12 16 7"></polyline>
-                                        <line x1="21" y1="12" x2="9" y2="12"></line>
-                                    </svg>
-                                    <span class="ms-2 text-danger">{{ __('language.admin.accounts.logout') }} </span>
-                                </a>
+                                <form action="{{ route('admin.logout') }}" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <button class="dropdown-item ai-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="#fd5353" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                            <polyline points="16 17 21 12 16 7"></polyline>
+                                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                                        </svg>
+                                        <span class="ms-2 text-danger">{{ __('language.admin.accounts.logout') }} </span>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </li>
