@@ -18030,22 +18030,21 @@ ul {
     }
 
     [data-sidebar-style="mini"][data-layout="vertical"] .dlabnav .metismenu > li.mm-active > a {
-        background: var(--rgba-primary-1);
+        background: linear-gradient(45deg, #ff27e7, #fb8146d1);
         color: #fff;
     }
 
     [data-sidebar-style="mini"][data-layout="vertical"] .dlabnav .metismenu > li.mm-active > a i {
-        color: var(--primary);
+        color: #ffffff;
     }
 
     [data-sidebar-style="mini"][data-layout="vertical"] .dlabnav .metismenu > li:hover > a {
-        background: var(--rgba-primary-1);
-        color: var(--primary);
-        position: unset;
+        background: linear-gradient(45deg, #ff27e7, #fb8146d1);
+        color: #fff;
     }
 
     [data-sidebar-style="mini"][data-layout="vertical"] .dlabnav .metismenu > li:hover > a i {
-        color: var(--primary);
+        color: #fff;
     }
 
     [data-sidebar-style="mini"][data-layout="vertical"] .dlabnav .metismenu > li:hover > ul {
