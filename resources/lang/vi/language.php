@@ -26,6 +26,8 @@ return [
         'email' => 'Email',
         'password' => 'Mật khẩu',
         'remember' => 'Ghi nhớ đăng nhập',
+        'room-manager' => 'Quản lý phòng chiếu',
+        'rooms' => 'Phòng chiếu',
         'add' => 'Thêm',
         'edit' => 'Cập nhật',
         'name' => 'Tên',
