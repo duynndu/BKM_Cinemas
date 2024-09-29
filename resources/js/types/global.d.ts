@@ -20,4 +20,5 @@ declare global {
     seatmanager(seatLayout: any, options: any): any;
   }
   var route: typeof ziggyRoute;
+  var toastr: Toastr;
 }

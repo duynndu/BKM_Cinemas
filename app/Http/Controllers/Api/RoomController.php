@@ -76,7 +76,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        return response()->json($room->with('seats')->first());
+        return response()->json($room->load('seats'));
     }
 
     /**
