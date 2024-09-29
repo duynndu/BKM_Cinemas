@@ -14,10 +14,8 @@ return new class extends Migration
         // Bảng lưu những module của hệ thống
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Ví dụ: Hệ thống, Giao diện, Sản phẩm, Tin tức,...
+            $table->string('name');   // Ví dụ: Hệ thống, Giao diện, Sản phẩm, Tin tức,...
             $table->text('description')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

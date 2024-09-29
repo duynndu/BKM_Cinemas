@@ -3,7 +3,7 @@
         <div class="logo">
             <h1>
                 <strong>Awesome Cinema - Rạp chiếu phim 3D công nghệ hàng đầu.</strong>
-                <a href="{{ url("/") }}"><img style="max-width: 100%" src="{{ asset('movie/images/touchcinema.png') }}"
+                <a href="{{ url("/") }}"><img style="max-width: 100%" src="{{ asset('images/logo.png') }}"
                         alt="touchcinema" /></a>
             </h1>
         </div>
