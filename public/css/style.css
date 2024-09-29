@@ -16992,16 +16992,18 @@ ul {
     fill: #8088a1;
 }
 
-.dlabnav .metismenu > li:hover > a, .dlabnav .metismenu > li:focus > a {
-    color: var(--primary);
-}
+/*.dlabnav .metismenu > li:hover > a, .dlabnav .metismenu > li:focus > a, .dlabnav .metismenu > li:hover > a > i {*/
+/*    background: linear-gradient(to right, #ff00eb, #ff7000);*/
+/*    -webkit-background-clip: text;*/
+/*    -webkit-text-fill-color: transparent;*/
+/*}*/
 
 .dlabnav .metismenu > li:hover > a g [fill], .dlabnav .metismenu > li:focus > a g [fill] {
     fill: var(--primary);
 }
 
-.dlabnav .metismenu>li.mm-active>a {
-    background: var(--primary);
+.dlabnav .metismenu>li.mm-active > a {
+    background: linear-gradient(45deg, #ff00f7d4, #ff4700bd);
     color: #fff;
     border-radius: 0.5rem;
 }
@@ -17039,7 +17041,9 @@ ul {
 .dlabnav .metismenu ul a:focus,
 .dlabnav .metismenu ul a.mm-active {
     text-decoration: none;
-    color: var(--primary);
+    background: linear-gradient(to right, #ff00eb, #ff7000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .dlabnav .metismenu ul a:before {
@@ -33613,7 +33617,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 }
 
 .page-titles .breadcrumb li.active {
-    color: var(--primary);
+    color: #ff00f7d4;
     font-size: 0.938rem;
 }
 
@@ -44896,5 +44900,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .form-check-input {
     border-color: #2e2e42;
 }
+
+
 
 /*# sourceMappingURL=style.css.map */
