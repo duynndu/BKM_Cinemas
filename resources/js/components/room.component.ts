@@ -67,9 +67,13 @@ Alpine.data('RoomComponent', (roomId?: number) => ({
       } else {
         await RoomService.postRoom(formData);
       }
-      redirect().route('admin.rooms.index');
-    } catch (error) {
+      toastr.success('Thao tác thành công');
+      setTimeout(() => {
+        redirect().route('admin.rooms.index');
+      }, 500);
+    } catch (error: any) {
       console.error(error);
+      toastr.error(error.message);
     }
   },
   async getRoomById(roomId: number) {

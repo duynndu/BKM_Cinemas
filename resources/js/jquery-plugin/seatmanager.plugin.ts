@@ -75,7 +75,7 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout & { base_price: any, 
         'data-seat-number': seat.seat_number,
         'data-visible': seat.visible,
         'data-price': seat.price ?? 0,
-        'x-tooltip': `"${seat.seat_number} - ${price(calculatorPrice)}"`,
+        ...(seat.type !== SEAT_TYPE.EMPTY_SEAT && { 'x-tooltip': `"${seat.seat_number} - ${price(calculatorPrice)}"` }),
       }));
       $(seatTable.children()[index]).data('merged-seats', seat.merged_seats ?? []);
     });
@@ -282,22 +282,22 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout & { base_price: any, 
     const menuItemsHeader = [
       {
         text: 'Thêm cột',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="#FF3737" width="800px" height="800px" viewBox="0 0 1920 1920"><path d="M120 180v1560c0 33 26.88 60 60 60h1020V120H180c-33.12 0-60 27-60 60Zm1620-60h-420v480h480V180c0-33-26.88-60-60-60Zm60 600h-480v480h480V720Zm-60 1080c33.12 0 60-27 60-60v-420h-480v480h420ZM180 1920c-99.24 0-180-80.76-180-180V180C0 80.76 80.76 0 180 0h1560c99.24 0 180 80.76 180 180v1560c0 99.24-80.76 180-180 180H180Zm596.484-510h-240v-330h-330V840h330V510h240v330h330v240h-330v330Z" fill-rule="evenodd"/><script xmlns=""/></svg>`,
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="#4567B7" width="800px" height="800px" viewBox="0 0 1920 1920"><path d="M120 180v1560c0 33 26.88 60 60 60h1020V120H180c-33.12 0-60 27-60 60Zm1620-60h-420v480h480V180c0-33-26.88-60-60-60Zm60 600h-480v480h480V720Zm-60 1080c33.12 0 60-27 60-60v-420h-480v480h420ZM180 1920c-99.24 0-180-80.76-180-180V180C0 80.76 80.76 0 180 0h1560c99.24 0 180 80.76 180 180v1560c0 99.24-80.76 180-180 180H180Zm596.484-510h-240v-330h-330V840h330V510h240v330h330v240h-330v330Z" fill-rule="evenodd"/><script xmlns=""/></svg>`,
         action: () => addColumn(colIndex)
       },
       {
         text: 'Xóa cột',
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none"><path stroke="#FF3737" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h3M3 21h3m0 0h4a2 2 0 0 0 2-2V9M6 21V9m0-6h4a2 2 0 0 1 2 2v4M6 3v6M3 9h3m0 0h6m-9 6h9m3-6 3 3m0 0 3 3m-3-3 3-3m-3 3-3 3"/><script xmlns=""/></svg>',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none"><path stroke="#E74C3C" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h3M3 21h3m0 0h4a2 2 0 0 0 2-2V9M6 21V9m0-6h4a2 2 0 0 1 2 2v4M6 3v6M3 9h3m0 0h6m-9 6h9m3-6 3 3m0 0 3 3m-3-3 3-3m-3 3-3 3"/><script xmlns=""/></svg>',
         action: () => removeColumn(colIndex)
       },
       {
         text: 'Thêm hàng',
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="#FF3737" width="800px" height="800px" viewBox="0 0 1920 1920"><path d="M1740 120H180c-33 0-60 26.88-60 60v1020h1680V180c0-33.12-27-60-60-60Zm60 1620v-420h-480v480h420c33 0 60-26.88 60-60Zm-600 60v-480H720v480h480Zm-1080-60c0 33.12 27 60 60 60h420v-480H120v420ZM0 180C0 80.76 80.76 0 180 0h1560c99.24 0 180 80.76 180 180v1560c0 99.24-80.76 180-180 180H180c-99.24 0-180-80.76-180-180V180Zm510 596.484v-240h330v-330h240v330h330v240h-330v330H840v-330H510Z" fill-rule="evenodd"/><script xmlns=""/></svg>',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="#4567B7" width="800px" height="800px" viewBox="0 0 1920 1920"><path d="M1740 120H180c-33 0-60 26.88-60 60v1020h1680V180c0-33.12-27-60-60-60Zm60 1620v-420h-480v480h420c33 0 60-26.88 60-60Zm-600 60v-480H720v480h480Zm-1080-60c0 33.12 27 60 60 60h420v-480H120v420ZM0 180C0 80.76 80.76 0 180 0h1560c99.24 0 180 80.76 180 180v1560c0 99.24-80.76 180-180 180H180c-99.24 0-180-80.76-180-180V180Zm510 596.484v-240h330v-330h240v330h330v240h-330v330H840v-330H510Z" fill-rule="evenodd"/><script xmlns=""/></svg>',
         action: () => addRow(rowIndex)
       },
       {
         text: 'Xóa hàng',
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none"><path stroke="#FF3737" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v3m18-3v3m0 0v4a2 2 0 0 1-2 2H9m12-6H9M3 6v4a2 2 0 0 0 2 2h4M3 6h6m0-3v3m0 0v6m6-9v9m-6 3 3 3m0 0 3 3m-3-3 3-3m-3 3-3 3"/><script xmlns=""/></svg>',
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none"><path stroke="#E74C3C" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v3m18-3v3m0 0v4a2 2 0 0 1-2 2H9m12-6H9M3 6v4a2 2 0 0 0 2 2h4M3 6h6m0-3v3m0 0v6m6-9v9m-6 3 3 3m0 0 3 3m-3-3 3-3m-3 3-3 3"/><script xmlns=""/></svg>',
         action: () => removeRow(rowIndex)
       }
     ]

@@ -70,9 +70,13 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
       } else {
         await RoomService.postSeatLayout(formData);
       }
-      redirect().route('admin.seat-layouts.index');
-    } catch (error) {
+      toastr.success('Thao tác thành công');
+      setTimeout(() => {
+        redirect().route('admin.seat-layouts.index');
+      }, 500);
+    } catch (error: any) {
       console.error(error);
+      toastr.error(error.message);
     }
   },
   toggleModal() {
