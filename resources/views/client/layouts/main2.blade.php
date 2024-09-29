@@ -175,7 +175,7 @@
                         if (data.status == 1) {
                             bootbox.confirm({
                                 message: `Số điện thoại / Email này đã có tài khoản thành viên.
-              Bạn cần phải <a href="https://touchcinema.com/login"><strong class="note-nologin">ĐĂNG NHẬP</strong></a> mua vé để hưởng ưu đãi và tích điểm.`,
+                                    Bạn cần phải <a href="https://touchcinema.com/login"><strong class="note-nologin">ĐĂNG NHẬP</strong></a> mua vé để hưởng ưu đãi và tích điểm.`,
                                 buttons: {
                                     confirm: {
                                         label: 'Đăng nhập',
