@@ -27,21 +27,22 @@
 									</div>
 									<div class="col-6 mb-3">
 										<label class="form-label mb-2">Số cột</label>
-										<input type="number" x-model="formData.col_count" @input="renderSeatLayout; formData.seats = []"
+										<input disabled type="number" x-model="formData.col_count" @input="renderSeatLayout; formData.seats = []"
 											@change="formData.seats = []" class="form-control"
 											placeholder="Nhập số cột">
 										<span class="text-danger" x-text="errors.col_count"></span>
 									</div>
 									<div class="col-6 mb-3">
 										<label class="form-label mb-2">Số hàng</label>
-										<input type="number" x-model="formData.row_count" @input="renderSeatLayout; formData.seats = []"
+										<input disabled type="number" x-model="formData.row_count" @input="renderSeatLayout; formData.seats = []"
 											@change="formData.seats = []" class="form-control"
 											placeholder="Nhập số hàng">
 										<span class="text-danger" x-text="errors.row_count"></span>
 									</div>
 									<div class="mb-3">
 										<label class="me-sm-2 form-label mb-2">Giá ghế cơ bản</label>
-										<input type="text" x-model="formData.base_price" class="form-control"
+										<input type="text" x-model="formData.base_price" @input="renderSeatLayout;"
+											class=" form-control"
 											placeholder="Nhập giá ghế cơ bản">
 										<span class="text-danger" x-text="errors.base_price"></span>
 									</div>

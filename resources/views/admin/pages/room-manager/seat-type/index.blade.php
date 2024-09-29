@@ -65,7 +65,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div @click="{{$seatType->is_system}} ? editSeatType($event) : ''">
+                                        <div @click="'{{$seatType->is_system}}' ? editSeatType($event) : ''">
                                             <a href="{{ route('admin.seat-types.edit', $seatType->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
