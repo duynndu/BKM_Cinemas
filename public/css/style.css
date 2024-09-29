@@ -16119,7 +16119,7 @@ ul {
 }
 
 .search-area .input-group-text svg path {
-    fill: var(--primary);
+    fill: #ff35c1;
 }
 
 .header-right {
