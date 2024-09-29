@@ -9,6 +9,8 @@ return [
     'admin' => [
         'slug' => 'Đường dẫn',
         'title' => 'Danh sách ',
+        'room-manager' => 'Quản lý phòng chiếu',
+        'rooms' => 'Phòng chiếu',
         'add' => 'Thêm',
         'edit' => 'Cập nhật',
         'name' => 'Tên',
