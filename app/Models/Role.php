@@ -12,4 +12,15 @@ class Role extends Model
     protected $table = 'roles';
 
     protected $guarded = [];
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'id', 'role_id');
+    }
+
+    // Mối quan hệ với Permission: nhiều-nhiều
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'role_permission', 'role_id', 'permission_id');
+    }
 }
