@@ -22,9 +22,12 @@ class User extends Authenticatable
 
     const TYPE_ADMIN = 'admin';        // Admin tổng
 
-    const TYPE_MEMBER = 'member';      // Thành viên
+    const TYPE_MANAGE = 'manage';      // Quản lý rạp
 
     const TYPE_STAFF = 'staff'; // Nhân viên
+
+    const TYPE_MEMBER = 'member';      // Thành viên
+
 
 
     /**
@@ -51,14 +54,19 @@ class User extends Authenticatable
         return $this->type === self::TYPE_ADMIN; // Admin tổng
     }
 
-    public function isMember()
+    public function isManage()
     {
-        return $this->type === self::TYPE_MEMBER; // Thành viên
+        return $this->type === self::TYPE_MANAGE; // Quản lý rạp
     }
 
     public function isStaff()
     {
         return $this->type === self::TYPE_STAFF; // Nhân viên
+    }
+
+    public function isMember()
+    {
+        return $this->type === self::TYPE_MEMBER; // Thành viên
     }
 
     public function role()
@@ -79,6 +87,7 @@ class User extends Authenticatable
         // Chỉ cho phép admin và staff
         return in_array($this->type, [
             self::TYPE_ADMIN,
+            self::TYPE_MANAGE,
             self::TYPE_STAFF,
         ]);
     }
