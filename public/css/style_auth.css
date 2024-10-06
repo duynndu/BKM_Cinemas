@@ -24,7 +24,7 @@
     top: 49%;
     left: -100%;
     width: 200%;
-    height: 45px;
+    height: 52px;
     background: linear-gradient(95deg, rgb(227 89 89 / 0%) 0%, rgb(255 255 255 / 42%) 50%, rgb(0 0 0 / 5%) 100%);
     transition: left 0.3s ease-in-out;
     transform: translateY(-48%);

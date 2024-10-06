@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Danh sách loại khối')
+@section('title', __('language.admin.interfaces.blockTypes.list'))
 
 @section('css')
 @endsection
@@ -24,6 +24,7 @@
                     @include('admin.components.sidebar-left-body', [
                         'pages' => $pages,
                         'blockTypes' => $blockTypes,
+                        'languages' => $languages,
                     ])
                 </div>
                 <!--/column-->
@@ -89,20 +90,26 @@
                                                     </svg>
                                                 </div>
                                                 <div class="dz-info">
-                                                    <a href="{{ route('admin.blockTypes.edit', $blockType->id) }}">
+                                                    <a @can('update', $blockType)
+                                                           href="{{ route('admin.blockTypes.edit', $blockType->id) }}"
+                                                        @endcan>
                                                         <h6 class="mb-0">{{ $blockType->name }}</h6>
                                                     </a>
                                                     <div class="mt-1 d-flex justify-content-center align-items-center">
-                                                        <a href="{{ route('admin.blockTypes.edit', $blockType->id) }}"
-                                                           class="text-hover">{{ __('language.admin.interfaces.blockTypes.quick_fix') }}</a>
-                                                        <form
-                                                            action="{{ route('admin.blockTypes.delete', $blockType->id) }}"
-                                                            class="formDelete" method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button
-                                                                class="text-hover bt-form btnDelete">{{ __('language.admin.interfaces.blockTypes.delete') }}</button>
-                                                        </form>
+                                                        @can('update', $blockType)
+                                                            <a href="{{ route('admin.blockTypes.edit', $blockType->id) }}"
+                                                               class="text-hover">{{ __('language.admin.interfaces.blockTypes.quick_fix') }}</a>
+                                                        @endcan
+                                                        @can('delete', $blockType)
+                                                            <form
+                                                                action="{{ route('admin.blockTypes.delete', $blockType->id) }}"
+                                                                class="formDelete" method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button
+                                                                    class="text-hover bt-form btnDelete">{{ __('language.admin.interfaces.blockTypes.delete') }}</button>
+                                                            </form>
+                                                        @endcan
                                                     </div>
                                                 </div>
                                             </div>
