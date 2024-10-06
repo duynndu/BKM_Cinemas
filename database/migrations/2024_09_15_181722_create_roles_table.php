@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('image')->nullable();
             $table->string('name'); // Ví dụ: (Admin Tổng, Bộ phận frontend, Bộ phận backend, Trưởng phòng, Nhân viên, Cộng tác viên,...)
+            $table->string('type'); // Ví dụ: (admin, frontend, backend, department_head, staff, member, management, administrative, staff)
             $table->text('description')->nullable();
             $table->timestamps();
         });
