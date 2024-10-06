@@ -80,7 +80,7 @@
     height: 100px;
 }
 
-.file-input-wrapper input[name="relatedPhotos[]"] {
+.file-input-wrapper .relatedPhotos {
     position: absolute;
     width: 87px;
     height: 88px;
@@ -173,4 +173,61 @@
 
 .removeImage i {
     font-size: 14px;
+}
+
+.box-delete-item {
+    position: relative;
+}
+
+.btn-delete-multiple_item {
+    /* position: absolute;
+    left: 30px;
+    bottom: -7px; */
+    padding: 7px;
+    margin-left: 20px;
+}
+
+.cart-google_preview {
+    margin-bottom: 0 !important;
+    padding: 0px 20px 20px 20px;
+}
+
+.google-preview {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.google__title {
+    margin-bottom: 0 !important;
+}
+
+.resultTitle_vi {
+    color: #1a0dab;
+    font-size: 18px !important;
+    min-height: 21px;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.resultUrl_vi {
+    color: #006621;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.google__description {
+    font-size: 16px;
+    color: #212529 !important
+}
+
+.error {
+    color: red;
+}
+
+.good {
+    color: green;
+}
+
+.warning {
+    color: orange;
 }

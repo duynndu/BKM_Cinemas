@@ -63,7 +63,9 @@
     <!--**********************************
         Chat box start
     ***********************************-->
+
     @include('admin.partials.chatbox')
+
     <!--**********************************
         Chat box End
     ***********************************-->
@@ -598,9 +600,11 @@
 
 <script src="{{ asset('js/admin/change-images/image.js') }}"></script>
 <script src="{{ asset('js/admin/ajaxs/change.js') }}"></script>
+<script src="{{ asset('js/admin/ajaxs/deteleMultipleChecked.js') }}"></script>
 <script src="{{ asset('js/admin/ajaxs/removeImage.js') }}"></script>
 <script src="{{ asset('js/admin/ajaxs/removeImageRelate.js') }}"></script>
 <script src="{{ asset('js/admin/commons/common.js') }}"></script>
+<script src="{{ asset('js/admin/commons/changeCheckbox.js') }}"></script>
 <script src="{{ asset('js/admin/commons/format-price.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 
