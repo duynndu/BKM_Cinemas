@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,13 +17,7 @@ class CheckLoginAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-
-            if ($user->role == 'member') {
-                return redirect()->route('admin.login');
-            }
-
+        if(Auth::check()) {
             return redirect()->back();
         }
 

@@ -14,11 +14,9 @@ return new class extends Migration
         // Bảng chức năng
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('module_id'); // id module
-            $table->string('name'); // Ví dụ: (Xem, Them, Sua, Xoa, Thay đổi, ...)
-            $table->text('description')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->bigInteger('module_id');
+            $table->string('name'); // Ví dụ: Create_product, Edit_product,...
+            $table->string('value')->nullable();
         });
     }
 

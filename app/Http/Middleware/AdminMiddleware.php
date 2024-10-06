@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +21,7 @@ class AdminMiddleware
             return redirect()->route('admin.login');
         }
 
-        $user = Auth::user();
-
-        if ($user->type == 'member') {
+        if (Auth::user()->type == User::TYPE_MEMBER) {
             return redirect()->route('error.notFound');
         }
 

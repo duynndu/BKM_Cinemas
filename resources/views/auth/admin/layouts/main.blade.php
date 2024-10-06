@@ -45,6 +45,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style_monaco.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style_image.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style_auth.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/monaco-editor-0.51.0/package/min/vs/editor/editor.main.css') }}">
     @yield('css')
 </head>
@@ -81,7 +82,6 @@
 <!-- Page level Js : Dashboard 2  -->
 <script src="{{ asset('js/custom.min.js') }}"></script>
 <script src="{{ asset('js/dlabnav-init.js') }}"></script>
-<script src="{{ asset('js/styleSwitcher.js') }}"></script>
 
 
 @yield('js')

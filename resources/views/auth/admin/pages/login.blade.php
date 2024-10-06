@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="text-center mb-4">
-                        <button type="submit" class="btn btn-primary btn-block">{{  __('language.admin.login')}}</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-login">{{  __('language.admin.login')}}</button>
                     </div>
                 </form>
             </div>
