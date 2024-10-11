@@ -4,14 +4,6 @@
 
 @section('css')
     <style>
-        .read-more {
-            outline: none;
-            border: none;
-        }
-
-        .movie-content .content {
-            transition: linear 0.3s all;
-        }
     </style>
 @endsection
 
@@ -511,8 +503,9 @@
                         <span class="price"><span id="totalPriceSeat">0</span> đ</span>
                     </div>
                     <div class="select combo">
-                        <a href="javascript:;" class="show-combo">
-                            <span class="glyphicon glyphicon-star tada animated infinite"></span>
+                        <a href="javascript:void(0);" class="show-combo">
+                            {{-- <span class="glyphicon glyphicon-star tada animated infinite"></span> --}}
+                            <i class="fa-regular fa-star fa-beat"></i>
                             Chọn Combo </a>
                         <span class="price"><span id="totalPriceCombo">0</span> đ</span>
                     </div>
