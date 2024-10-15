@@ -97,6 +97,23 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">Food</i>
+                    <span class="nav-text">Quản lý Food</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{{ route('admin.food-types.index') }}" aria-expanded="false">Loại Food</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.foods.index') }}" aria-expanded="false">Food</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.foods-combos.index') }}" aria-expanded="false">Combo</a>
+                    </li>
+                </ul>
+            </li>
 {{--            <li>--}}
 {{--                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">--}}
 {{--                    <i class="material-icons">person</i>--}}

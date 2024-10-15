@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Blocks\BlockController;
 use App\Http\Controllers\Admin\Blocks\BlockTypeController;
 use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Foods\FoodTypeController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PostController;
@@ -86,6 +87,45 @@ Route::prefix('admin')->middleware(['web'])
                         Route::delete('{seatType}', 'destroy')->name('destroy');
                     });
             });
+
+            Route::prefix('foods')
+                ->controller(SystemController::class)
+                ->name('foods.')->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/create', 'create')->name('create');
+                    Route::post('/store', 'store')->name('store');
+                    Route::get('/{id}/edit', 'edit')->name('edit');
+                    Route::post('/{id}/update', 'update')->name('update');
+                    Route::delete('/{id}/delete', 'delete')->name('delete');
+                    Route::post('/change-order', 'changeOrder')->name('changeOrder');
+                    Route::post('/change-active', 'changeActive')->name('changeActive');
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')->name('removeAvatarImage');
+                });
+            Route::prefix('food-types')
+                ->controller(FoodTypeController::class)
+                ->name('food-types.')->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/create', 'create')->name('create');
+                    Route::post('/store', 'store')->name('store');
+                    Route::get('/{id}/edit', 'edit')->name('edit');
+                    Route::post('/{id}/update', 'update')->name('update');
+                    Route::delete('/{id}/delete', 'delete')->name('delete');
+                    Route::post('/change-order', 'changeOrder')->name('changeOrder');
+                    Route::post('/change-active', 'changeActive')->name('changeActive');
+                });
+            Route::prefix('foods-combos')
+                ->controller(SystemController::class)
+                ->name('foods-combos.')->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/create', 'create')->name('create');
+                    Route::post('/store', 'store')->name('store');
+                    Route::get('/{id}/edit', 'edit')->name('edit');
+                    Route::post('/{id}/update', 'update')->name('update');
+                    Route::delete('/{id}/delete', 'delete')->name('delete');
+                    Route::post('/change-order', 'changeOrder')->name('changeOrder');
+                    Route::post('/change-active', 'changeActive')->name('changeActive');
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')->name('removeAvatarImage');
+                });
 
             Route::prefix('systems')
                 ->controller(SystemController::class)
