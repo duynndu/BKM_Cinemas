@@ -22,10 +22,7 @@ class PostController extends Controller
             $data = [
                 'post' => $post,
                 'postRelated' => $postRelated
-                // 'comments' => $comments, // Uncomment this line if you want to show comments in the post detail page.
-                // 'commentForm' => $commentForm // Uncomment this line if you want to show comment form in the post detail page.
-                // 'commentCount' => $commentCount // Uncomment this line if you want to show comment count in the post detail page.
-
+               
             ];
             return view('client.pages.post-detail', $data);
         } else {
