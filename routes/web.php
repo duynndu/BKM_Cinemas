@@ -1,8 +1,10 @@
 <?php
 
+use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\HomeController;
-use Jenssegers\Agent\Agent;
+use App\Http\Controllers\Client\PostController;
+use App\Http\Controllers\Client\CategoryPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,16 @@ $agent = new Agent();
 
 if ($agent->isDesktop()) {
 
+
    Route::get('/', [HomeController::class, 'index'])->name('home');
+   Route::get('/danh-muc/{slug}', [CategoryPostController::class, 'categoryPost'])->name('category.post');
+   Route::get('/tin-tuc/{slug}', [PostController::class, 'postDetail'])->name('post.detail');
+   
+
+
+
+
+
 
    Route::get('/login', function () {
       return view('client.pages.auth.login');
@@ -80,6 +91,4 @@ if ($agent->isDesktop()) {
    Route::get('/dat-ve/thanh-toan', function () {
       return view('client.pages.payment-verification-step2');
    });
-
-
 }
