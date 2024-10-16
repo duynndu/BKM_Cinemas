@@ -1,5 +1,4 @@
 <?php
-use App\Http\Controllers\Mobile\HomeController;
 use Illuminate\Support\Facades\Route;
 use Jenssegers\Agent\Agent;
 
