@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\admin\Blocks;
+namespace App\Services\Admin\Blocks;
 
 use App\Repositories\Admin\Blocks\Repository\BlockRepository;
 use Stichoza\GoogleTranslate\GoogleTranslate;
