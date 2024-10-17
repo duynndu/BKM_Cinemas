@@ -1,11 +1,6 @@
 @extends('client.layouts.main')
-
 @section('title', 'Khuyễn mãi')
-
 @section('css')
-    <style>
-    
-    </style>
     <link rel="stylesheet" href="https://touchcinema.com/statics/frontend/plugins/owl-carousel/assets/owl.carousel.min.css"
         type="text/css" media="all" />
 @endsection
@@ -14,75 +9,28 @@
     <div class="container page-post-detail">
         <div class="row">
             <div class="col-md-8 col-sm-8">
-                <div class="post-detail">
-                    <h1>Review phim Con lắc tà thuật – The Hypnosis</h1>
-                    <div class="pull-left">
-                        <div class="post-meta">
-                            Đăng lúc
-                            <a href="#">27/04/2021</a>
-                            bởi
-                            <a href="#">
-                                Garrix
-                            </a>
+                @if ($post)
+                    <div class="post-detail">
+                        <h1>{{ $post->name }}</h1>
+                        <div class="pull-left">
+                            <div class="post-meta">
+                                Đăng lúc
+                                <span>{{ $post->created_at->format('d/m/Y') }}</span>
+
+                                {{-- bởi --}}
+                                {{-- <a href="#">
+                                    Garrix
+                                </a> --}}
+                            </div>
                         </div>
+                        <div class="clearfix"></div>
+                        <div class="post-content">
+                            {!! $post->content !!}
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="clearfix"></div>
-                    <div class="post-content">
-                        <p style="text-align: justify;"><strong>Vài năm trở lại đây điện ảnh Hàn Quốc ngày càng cho ra đời
-                                nhiều bộ phim kinh dị chất lượng, và <a href="/phim/con-lac-ta-thuat" target="_blank"
-                                    rel="dofollow">Con lắc tà thuật – The Hypnosis</a> là tác phẩm mới nhất được ra rạp. Bộ
-                                phim đã nhận được rất nhiều lời khen ngợi từ khán giả Hàn cũng như Việt.</strong></p>
-                        <p><strong><img style="display: block; margin-left: auto; margin-right: auto;"
-                                    src="/storage/phim-con-lac-ta-thuat/phim-con-lac-ta-thuat.jpg"
-                                    alt="Sau nửa đầu phim hơi lộn xộn, nửa cuối phim được xử lý căng thẳng và hấp dẫn "></strong>
-                        </p>
-                        <h2 style="text-align: justify;">Đánh giá về nội dung phim</h2>
-                        <p style="text-align: justify;">Đầu tiên cần phải nói đến tựa đề phim, Con lắc tà thuật khiến người
-                            nghe liên tưởng đến những câu chuyện khởi nguồn từ con lắc. Tuy nhiên The Hypnosis lại có cốt
-                            truyện xoay quanh chủ đề thôi miên. Vậy nên tên phim bằng tiếng Việt có thể khiến nhiều người
-                            hiểu nhầm về chủ đề phim.</p>
-                        <p style="text-align: justify;">Nội dung chính của tác phẩm này kể về một nhóm bạn đang ở độ tuổi
-                            sinh viên. Trong đó nam chính là Do-huyn đang theo học chuyên ngành tiếng Anh tại một trường đại
-                            học. Trong một lần làm bài tập bộ môn tâm lý, Do-huyn đã được giáo sư Yeo giới thiệu làm quen
-                            với một người bạn đang phải điều trị tâm lý bằng biện pháp thôi miên sau một vụ tai nạn.</p>
-                        <p style="text-align: justify;">Qua đó, Do-huyn đã gặp được giáo sư Choi và trải nghiệm thử thuật
-                            thôi miên. Bản tính tò mò đã khiến Do-huyn và nhóm bạn thanh mai trúc mã của mình bắt đầu phải
-                            đối mặt với những ảo giác kỳ lạ, những nhân vật bí ẩn khiến cuộc sống của họ dần trở nên hỗn
-                            loạn.</p>
-                        <p style="text-align: justify;">Phần kịch bản nửa đầu phim chưa được xử lý tốt. Cách dẫn dắt câu
-                            chuyện có phần dài dòng và khó hiểu. Tuy nhiên nửa cuối về sau mọi thứ được xử lý tốt hơn, liên
-                            tiếp những tình huống bất ngờ xuất hiện khiến nhịp phim trở nên căng thẳng và hấp dẫn hơn.</p>
-                        <p style="text-align: justify;">Các yếu tố ma quỷ, hù dọa trong phim được đánh giá khá nhẹ nhàng.
-                            Chỉ có một số ít cảnh máu me khiến người xem phải rùng mình ớn lạnh. Tuy nhiên đối với những fan
-                            của thể loại kinh dị thì nhiêu đó vẫn chưa “xi nhê” gì. Còn đối với những bạn hơi nhát gan thì
-                            mọi thứ được xây dựng vừa đủ, không khiến người xem phải sợ hãi mỗi khi nghĩ lại.</p>
-                        <p style="text-align: justify;">Cuối cùng bộ phim muốn truyền đến khán giả thông điệp về cách giáo
-                            dục và quan tâm những đứa trẻ, đặc biệt là khi chúng bước vào độ tuổi dậy thì đầy nổi loạn. Trẻ
-                            em nếu không được quan tâm đúng cách có thể dẫn đến những hành vi gây tổn thương hoặc nguy hiểm
-                            đến tính mạng của người khác.</p>
-                        <h2 style="text-align: justify;">Đánh giá diễn viên và diễn xuất</h2>
-                        <p style="text-align: justify;">Dàn diễn viên của Con lắc tà thuật đều là những gương mặt còn khá lạ
-                            đối với nền điện ảnh xứ sở kim chi. Vậy nên về kỹ ăn diễn xuất được đánh giá ở mức độ khá. Họ
-                            đều hoàn thành tốt vai diễn của mình, nhưng vẫn có một chút gì đó khá mờ nhạt. Vì thế khó có thể
-                            tạo được ấn tượng với khán giả.</p>
-                        <p style="text-align: justify;">Ngoài ra, cũng do kịch bản phim chưa thực sự tập trung vào câu
-                            chuyện của nhân vật chính. Vì thế các nhân vật trong phim đều bình bình, chưa đủ sức để nổi bật
-                            hẳn khiến giới chuyên môn phải trầm trồ thánh phục.</p>
-                        <h2 style="text-align: justify;">Đánh giá về âm thanh và hình ảnh</h2>
-                        <p style="text-align: justify;">Mặc dù là một bộ phim kinh dị, nhưng yếu tố âm thanh và hình ảnh của
-                            bộ phim lại khá khiêm tốn. Chỉ có một vài cảnh ghê rợn và tận dụng khung hình tối để khắc họa
-                            tội ác của những đứa trẻ và cả người trưởng thành trong đêm tối.</p>
-                        <p style="text-align: justify;">Ngoài ra thì phần âm thanh cũng chưa được đầu tư đúng mực. Phim kinh
-                            dị không có những cảnh sử dụng yếu tốt jump-case nhiều. Điều này khiến fan của dòng phim kinh dị
-                            có một sự thất vọng không hề nhẹ. Nếu mà những cảnh hù dọa nặng đô hơn một chút thì tin chắc
-                            rằng bộ phim sẽ hấp dẫn hơn rất nhiều.</p>
-                        <p style="text-align: justify;">Con lắc tà thuật dù vẫn còn vướng phải một số hạt sạn. Nhưng đây là
-                            lựa chọn không tồi cho kỳ nghỉ lễ trong tuần này.</p>
-                        <p style="text-align: justify;">Bộ phim hiện đang được công chiếu tại Touch Cinema. Chúc các bạn có
-                            những giây phút giải trí vui vẻ. &nbsp;</p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+                @endif
+
                 <div class="box-comment">
                     <div class="fb-comments fb_iframe_widget fb_iframe_widget_fluid_desktop" colorscheme="light"
                         width="100%" data-href="https://touchcinema.com/danh-gia-phim/con-lac-ta-thuat" data-numposts="20"
@@ -194,110 +142,22 @@
         <div class="related-post">
             <h2>Tin liên quan</h2>
             <div class="row">
-                <div class="col-md-3 col-sm-4">
-                    <div class="poster">
-                        <a href="https://touchcinema.com/danh-gia-phim/seobok-nguoi-nhan-ban">
-                            <img class="img-responsive"
-                                src="https://touchcinema.com/uploads/phim-nguoi-nhan-ban/phim-nguoi-nhan-ban-thumbnail.jpg"
-                                alt="Review phim Seobok (Người nhân bản) – Vì sao con người luôn sợ hãi trước cái chết?">
-                        </a>
-                    </div>
-                    <h3>
-                        <a href="https://touchcinema.com/danh-gia-phim/seobok-nguoi-nhan-ban">Review phim Seobok (Người
-                            nhân bản) – Vì sao con người luôn sợ hãi trước cái chết?</a>
-                    </h3>
-                </div>
-                <div class="col-md-3 col-sm-4">
-                    <div class="poster">
-                        <a href="https://touchcinema.com/danh-gia-phim/tham-tu-lung-danh-conan-vien-dan-do">
-                            <img class="img-responsive"
-                                src="https://touchcinema.com/uploads/phim-tham-tu-lung-danh-conan-vien-dan-do/phim-tham-tu-lung-danh-conan-vien-dan-do-thumbnail.jpg"
-                                alt="Review phim Thám tử lừng danh Conan: Viên đạn đỏ - Hấp dẫn miễn chê">
-                        </a>
-                    </div>
-                    <h3>
-                        <a href="https://touchcinema.com/danh-gia-phim/tham-tu-lung-danh-conan-vien-dan-do">Review phim
-                            Thám tử lừng danh Conan: Viên đạn đỏ - Hấp dẫn miễn chê</a>
-                    </h3>
-                </div>
-                <div class="col-md-3 col-sm-4">
-                    <div class="poster">
-                        <a href="https://touchcinema.com/danh-gia-phim/lat-mat-48h">
-                            <img class="img-responsive"
-                                src="https://touchcinema.com/uploads/phim-lat-mat-48h/phim-lat-mat-48h-thumbnail.png"
-                                alt="Review phim Lật mặt: 48h  - Lý Hải &quot;đỉnh của chóp&quot; luôn">
-                        </a>
-                    </div>
-                    <h3>
-                        <a href="https://touchcinema.com/danh-gia-phim/lat-mat-48h">Review phim Lật mặt: 48h - Lý Hải "đỉnh
-                            của chóp" luôn</a>
-                    </h3>
-                </div>
-                <div class="col-md-3 col-sm-4">
-                    <div class="poster">
-                        <a href="https://touchcinema.com/danh-gia-phim/nao-minh-cung-mo">
-                            <img class="img-responsive"
-                                src="https://touchcinema.com/uploads/phim-nao-minh-cung-mo/phim-nao-minh-cung-mo-thumbnail.png"
-                                alt="Review phim Nào mình cùng mơ – Vui vẻ, nhẹ nhàng">
-                        </a>
-                    </div>
-                    <h3>
-                        <a href="https://touchcinema.com/danh-gia-phim/nao-minh-cung-mo">Review phim Nào mình cùng mơ – Vui
-                            vẻ, nhẹ nhàng</a>
-                    </h3>
-                </div>
-                <div class="col-md-3 col-sm-4">
-                    <div class="poster">
-                        <a href="https://touchcinema.com/danh-gia-phim/kieu">
-                            <img class="img-responsive"
-                                src="https://touchcinema.com/uploads/phim-kieu/phim-kieu-thumbnail.png"
-                                alt="Review phim Kiều – Có phải bị chê nhiều là không nên xem?">
-                        </a>
-                    </div>
-                    <h3>
-                        <a href="https://touchcinema.com/danh-gia-phim/kieu">Review phim Kiều – Có phải bị chê nhiều là
-                            không nên xem?</a>
-                    </h3>
-                </div>
-                <div class="col-md-3 col-sm-4">
-                    <div class="poster">
-                        <a href="https://touchcinema.com/danh-gia-phim/ban-tay-diet-quy">
-                            <img class="img-responsive"
-                                src="https://touchcinema.com/uploads/phim-ban-tay-diet-quy/phim-ban-tay-diet-quy-thumbnail.png"
-                                alt="Review phim Bàn tay diệt quỷ - Gay cấn, ấn tượng và mê!">
-                        </a>
-                    </div>
-                    <h3>
-                        <a href="https://touchcinema.com/danh-gia-phim/ban-tay-diet-quy">Review phim Bàn tay diệt quỷ - Gay
-                            cấn, ấn tượng và mê!</a>
-                    </h3>
-                </div>
-                <div class="col-md-3 col-sm-4">
-                    <div class="poster">
-                        <a href="https://touchcinema.com/danh-gia-phim/mortal-kombat-cuoc-chien-sinh-tu">
-                            <img class="img-responsive"
-                                src="https://touchcinema.com/uploads/phim-mortal-kombat-cuoc-chien-sinh-tu/phim-mortal-kombat-cuoc-chien-sinh-tu-1-thumbnail.png"
-                                alt="Review phim Mortal Kombat: Cuộc chiến sinh tử - Phù thủy James Wan chưa bao giờ khiến khán giả thất vọng">
-                        </a>
-                    </div>
-                    <h3>
-                        <a href="https://touchcinema.com/danh-gia-phim/mortal-kombat-cuoc-chien-sinh-tu">Review phim Mortal
-                            Kombat: Cuộc chiến sinh tử - Phù thủy James Wan chưa bao giờ khiến khán giả thất vọng</a>
-                    </h3>
-                </div>
-                <div class="col-md-3 col-sm-4">
-                    <div class="poster">
-                        <a href="https://touchcinema.com/danh-gia-phim/song-song">
-                            <img class="img-responsive"
-                                src="https://touchcinema.com/uploads/phim-song-song/phim-song-song-thumbnail.jpg"
-                                alt="Review phim Song Song – Một cánh én nhỏ làm “chao đảo” cả vài mùa xuân">
-                        </a>
-                    </div>
-                    <h3>
-                        <a href="https://touchcinema.com/danh-gia-phim/song-song">Review phim Song Song – Một cánh én nhỏ
-                            làm “chao đảo” cả vài mùa xuân</a>
-                    </h3>
-                </div>
+                @if (count($postRelated) > 0)
+                    @foreach ($postRelated as $item)
+                        <div class="col-md-3 col-sm-4">
+                            <div class="poster">
+                                <a href="{{ route('post.detail', $item->slug) }}">
+                                    <img class="img-responsive" src=" {{ asset($item->avatar) }}"
+                                        alt="{{ $item->name }}">
+                                </a>
+                            </div>
+                            <h3>
+                                <a href="{{ route('post.detail', $item->slug) }}">{{ $item->name }}</a>
+                            </h3>
+                        </div>
+                    @endforeach
+                @endif
+
             </div>
         </div>
     </div>

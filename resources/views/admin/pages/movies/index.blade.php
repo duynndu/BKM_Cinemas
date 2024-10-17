@@ -36,8 +36,8 @@
                                             <div class="col-xl-3 col-sm-6">
                                                 <label
                                                     class="form-label">{{ __('language.admin.movies.filterName') }}</label>
-                                                <input id="name" value="{{ request()->name }}" name="name" type="text"
-                                                    class="form-control mb-xl-0 mb-3"
+                                                <input id="name" value="{{ request()->name }}" name="name"
+                                                    type="text" class="form-control mb-xl-0 mb-3"
                                                     placeholder="{{ __('language.admin.movies.inputFilterName') }} / {{ __('language.admin.movies.content') }}">
                                             </div>
                                             <div class="col-xl-3  col-sm-4 mb-3 mb-xl-0">
@@ -105,8 +105,8 @@
                                                     <option value="">
                                                         --{{ __('language.admin.movies.select') }}--
                                                     </option>
-                                                  
-                                                   
+
+
                                                     <option @selected(request()->fill_action == 'hot') value="hot">
                                                         {{ __('language.admin.movies.filters.movieHot') }}
                                                     </option>
@@ -294,7 +294,11 @@
                                                         <td>
                                                             <div
                                                                 style="padding-right: 20px; display: flex; justify-content: end">
-
+                                                                <button data-bs-toggle="modal"
+                                                                    data-bs-target="#showModal_{{ $movie->id }}"
+                                                                    class="btn btn-success shadow btn-xs sharp me-1 show-order">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </button>
 
                                                                 {{-- @can('update', \App\Models\Post::class) --}}
                                                                 <a href="{{ route('admin.movies.edit', $movie->id) }}"
@@ -315,11 +319,7 @@
                                                                         <i class="fa fa-trash"></i>
                                                                     </button>
                                                                 </form>
-                                                                <button data-bs-toggle="modal"
-                                                                    data-bs-target="#showModal_{{ $movie->id }}"
-                                                                    class="btn btn-primary shadow btn-xs sharp me-1 show-order">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </button>
+
                                                                 {{-- @endcan --}}
                                                             </div>
                                                         </td>
@@ -412,14 +412,15 @@
                                                                                 </div>
 
                                                                             </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button"
-                                                                                    class="btn btn-secondary"
-                                                                                    data-bs-dismiss="modal">{{ __('language.admin.movies.close') }}</button>
-                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">{{ __('language.admin.movies.close') }}</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
 
                                                         </td>
                                                     </tr>
@@ -452,5 +453,5 @@
 @endsection
 
 @section('js')
- 
+    <script></script>
 @endsection

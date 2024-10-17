@@ -31,7 +31,7 @@ const mySwiper = new Swiper('.swiper-container', {
     loop: true,
     speed: 300,
     mousewheel: true,
-    slidesPerView: 7, // Hiển thị 5 ảnh cùng lúc
+    slidesPerView: 6, // Hiển thị 5 ảnh cùng lúc
     spaceBetween: 15, // Khoảng cách giữa các ảnh
 
     coverflowEffect: {
