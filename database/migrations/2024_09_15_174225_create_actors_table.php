@@ -16,9 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->date('birth_date')->nullable(); // Ngày sinh
-            $table->string('avatar')->nullable();
             $table->string('nationality')->nullable(); // Quốc tịch
-            $table->text('bio')->nullable(); // Tiểu sử diễn viên
             $table->timestamps();
             $table->softDeletes();
         });
