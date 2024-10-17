@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryPosts\CategoryPostRequest;
-use App\Models\CategoryPost;
-use App\Services\Admin\CategoryPosts\CategoryPostService;
+use App\Http\Requests\Genres\GenreRequest;
+use App\Models\Genre;
+use App\Services\Admin\Genres\GenreService;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class CategoryPostController extends Controller
+class GenreController extends Controller
 {
     use RemoveImageTrait;
-    Protected $categoryPostService;
+    Protected $genreService;
 
     public function __construct(
-        CategoryPostService $categoryPostService,
+        GenreService $genreService,
     ) {
-        $this->categoryPostService = $categoryPostService;
+        $this->genreService = $genreService;
     }
 
     public function index(Request $request)
@@ -37,25 +37,25 @@ class CategoryPostController extends Controller
             'parent_id' => $parentId ?? null
         ]);
 
-        $data = $this->categoryPostService->getAllCategoryPost($request);
+        $data = $this->genreService->getAllGenre($request);
 
-        return view('admin.pages.categoryPosts.index', compact('data'));
+        return view('admin.pages.genres.index', compact('data'));
     }
 
 
     public function create()
     {
-        $listCategoryPost = $this->categoryPostService->getListCategoryPost();
+        $listGenre = $this->genreService->getListGenre();
 
 
-        return view('admin.pages.categoryPosts.create', compact('listCategoryPost'));
+        return view('admin.pages.genres.create', compact('listGenre'));
     }
-    public function store(CategoryPostRequest $request)
+    public function store(GenreRequest $request)
     {
         try {
             DB::beginTransaction();
 
-            $this->categoryPostService->store($request);
+            $this->genreService->store($request);
 
             DB::commit();
 
@@ -63,13 +63,13 @@ class CategoryPostController extends Controller
 
             $parentId = session('parent_id', null);
 
-            $redirectUrl = route('admin.categoryPosts.index', [
+            $redirectUrl = route('admin.genres.index', [
                 'page' => $currentPage,
                 'parent_id' => $parentId
             ]);
 
             return redirect($redirectUrl)->with([
-                'status_succeed' => "Thêm mới danh mục thành công"
+                'status_succeed' => "Thêm mới thể loại thành công"
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -77,34 +77,34 @@ class CategoryPostController extends Controller
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
             return back()->with([
-                'status_failed' => 'Đã xảy ra lỗi khi thêm'
+                'status_failed' => 'Đã xảy ra lỗi khi thêm thể loại'
             ]);
         }
     }
 
     public function edit($id)
     {
-        $cate = $this->categoryPostService->getCategoryPostById($id);
+        $genreEdit = $this->genreService->getGenreById($id);
 
-        if (!$cate) {
-            return redirect()->route('admin.categoryPosts.index')->with([
-                'status_failed' => 'Không tìm thấy danh mục'
+        if (!$genreEdit) {
+            return redirect()->route('admin.genres.index')->with([
+                'status_failed' => 'Không tìm thấy thể loại'
             ]);
         }
 
-        $getListCategoryPostEdit = $this->categoryPostService->getListCategoryPostEdit($id);
+        $getListGenreEdit = $this->genreService->getListGenreEdit($id);
 
-        if ($getListCategoryPostEdit) {
-            return view('admin.pages.categoryPosts.edit', compact('cate', 'getListCategoryPostEdit'));
+        if ($getListGenreEdit) {
+            return view('admin.pages.genres.edit', compact('genreEdit', 'getListGenreEdit'));
         }
     }
 
-    public function update(CategoryPostRequest $request, $id)
+    public function update(GenreRequest $request, $id)
     {
         try {
             DB::beginTransaction();
 
-            $this->categoryPostService->update($request, $id);
+            $this->genreService->update($request, $id);
 
             DB::commit();
 
@@ -112,13 +112,13 @@ class CategoryPostController extends Controller
 
             $parentId = session('parent_id', null);
 
-            $redirectUrl = route('admin.categoryPosts.index', [
+            $redirectUrl = route('admin.genres.index', [
                 'page' => $currentPage,
                 'parent_id' => $parentId
             ]);
 
             return redirect($redirectUrl)->with([
-                'status_succeed' => 'Cập nhật danh mục thành công'
+                'status_succeed' => 'Cập nhật thể loại thành công'
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -135,7 +135,7 @@ class CategoryPostController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->categoryPostService->delete($id);
+            $this->genreService->delete($id);
 
             DB::commit();
 
@@ -143,13 +143,13 @@ class CategoryPostController extends Controller
 
             $parentId = session('parent_id', null);
 
-            $redirectUrl = route('admin.categoryPosts.index', [
+            $redirectUrl = route('admin.genres.index', [
                 'page' => $currentPage,
                 'parent_id' => $parentId
             ]);
 
             return redirect($redirectUrl)->with([
-                'status_succeed' => 'Xóa danh mục thành công'
+                'status_succeed' => 'Xóa thể loại thành công'
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -165,21 +165,21 @@ class CategoryPostController extends Controller
 
     public function removeAvatarImage(Request $request)
     {
-        $post = $this->removeImage($request, new CategoryPost, 'avatar', 'categoryPosts');
+        $post = $this->removeImage($request, new Genre, 'avatar', 'Genres');
 
         return response()->json(['avatar' => $post]);
     }
 
     public function changeOrder(Request $request)
     {
-        $this->categoryPostService->changeOrder($request);
+        $this->genreService->changeOrder($request);
 
         return response()->json(['newOrder' => $request->order]);
     }
 
     public function changePosition(Request $request)
     {
-        $result = $this->categoryPostService->changePosition($request);
+        $result = $this->genreService->changePosition($request);
 
         if(!$result) {
             return response()->json([
@@ -198,7 +198,7 @@ class CategoryPostController extends Controller
         if (empty($request->selectedIds)) {
             return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400); // Trả về mã lỗi 400
         }
-        $this->categoryPostService->deleteMultipleChecked($request);
+        $this->genreService->deleteMultipleChecked($request);
 
         return response()->json(['message' => 'Xóa thành công!']);
     }

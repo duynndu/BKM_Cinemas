@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // bảng trung gian giữa bảng phim và thể loại
-        Schema::create('movie_genre', function (Blueprint $table) {
+        // bảng trung gian giữa phim và diễn viên
+        Schema::create('movie_actors', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('movie_id');
-            $table->bigInteger('genre_id');
+            $table->bigInteger('actor_id');
+            $table->string('role')->nullable(); // Vai diễn của diễn viên trong phim
+            $table->integer('order'); // Thứ tự xuất hiện của diễn viên trong phim
             $table->timestamps();
             $table->softDeletes();
         });
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movie_genre');
+        Schema::dropIfExists('movie_actors');
     }
 };

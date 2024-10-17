@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Blocks\BlockController;
 use App\Http\Controllers\Admin\Blocks\BlockTypeController;
 use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\Members\ModuleController;
 use App\Http\Controllers\Admin\Members\PermissionController;
 use App\Http\Controllers\Admin\Members\RoleController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Admin\SeatLayoutController;
 use App\Http\Controllers\Admin\SeatTypeController;
 use App\Http\Controllers\Admin\SystemController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\MovieController;
 use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\Error\Admin\ErrorController;
 use Illuminate\Support\Facades\Route;
@@ -404,6 +406,81 @@ Route::prefix('admin')->middleware(['web'])
                         ->name('deleteItemMultipleChecked')
                         ->middleware('authorizeAction:deleteMultiple,App\Models\Tag');
                 });
+
+
+            Route::prefix('genres-movie')
+                ->controller(GenreController::class)
+                ->name('genres.')->group(function () {
+                    Route::get('/', 'index')
+                        ->name('index');
+
+                    Route::get('/create', 'create')
+                        ->name('create');
+
+                    Route::post('/store', 'store')
+                        ->name('store');
+
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit');
+
+                    Route::post('/{id}/update', 'update')
+                        ->name('update');
+
+                    Route::delete('/{id}/delete', 'delete')
+                        ->name('delete');
+
+                    Route::post('/change-order', 'changeOrder')
+                        ->name('changeOrder');
+
+                    Route::post('/change-position', 'changePosition')
+                        ->name('changePosition');
+
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')
+                        ->name('removeAvatarImage');
+                    Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                        ->name('deleteItemMultipleChecked');
+                });
+
+            Route::prefix('movie')
+                ->controller(MovieController::class)
+                ->name('movies.')->group(function () {
+                    Route::get('/', 'index')
+                        ->name('index');
+
+                    Route::get('/create', 'create')
+                        ->name('create');
+
+                    Route::post('/store', 'store')
+                        ->name('store');
+
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit');
+
+                    Route::post('/{id}/update', 'update')
+                        ->name('update');
+
+                    Route::delete('/{id}/delete', 'delete')
+                        ->name('delete');
+
+                    Route::post('/change-order', 'changeOrder')
+                        ->name('changeOrder');
+
+                    Route::post('/change-position', 'changePosition')
+                        ->name('changePosition');
+                    Route::post('/change-active', 'changeActive')
+                        ->name('changeActive');
+
+                    Route::post('/change-hot', 'changeHot')
+                        ->name('changeHot')
+                        ->middleware('authorizeAction:changeHot,App\Models\Post');
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')
+                        ->name('removeAvatarImage');
+                    Route::post('/removeBannerImage', 'removeBannerImage')
+                        ->name('removeBannerImage');
+                    Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                        ->name('deleteItemMultipleChecked');
+                });
+
 
             Route::prefix('users')
                 ->controller(UserController::class)

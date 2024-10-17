@@ -123,6 +123,21 @@
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">movie</i>
+                    <span class="nav-text">Quản lý thể loại</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{{ route('admin.genres.index') }}" aria-expanded="false">Thể loại phim</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.movies.index') }}" aria-expanded="false">Phim</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">movie</i>
                     <span class="nav-text">Quản lý phòng chiếu</span>
                 </a>
                 <ul aria-expanded="false">

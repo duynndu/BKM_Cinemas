@@ -16,8 +16,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->integer('order')->default(0);
-            $table->tinyInteger('active')->default(1);
+            $table->string('avatar')->nullable();
+            $table->string('description')->nullable();
+            $table->text('content')->nullable();
+            $table->bigInteger('order')->default(0);
+            $table->bigInteger('position')->default(0);
+            $table->bigInteger('parent_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

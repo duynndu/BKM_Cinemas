@@ -36,17 +36,19 @@
     <link rel="stylesheet" href="{{ asset('vendor/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/swiper/css/swiper-bundle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/swiper.min.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('vendor/toastr/css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free-6.6.0-web/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/nestable2/css/jquery.nestable.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/movies.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style_monaco.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style_image.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style_auth.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/monaco-editor-0.51.0/package/min/vs/editor/editor.main.css') }}">
+    
     @yield('css')
     @routes
 </head>
@@ -606,6 +608,7 @@
 <script src="{{ asset('js/admin/commons/common.js') }}"></script>
 <script src="{{ asset('js/admin/commons/changeCheckbox.js') }}"></script>
 <script src="{{ asset('js/admin/commons/format-price.js') }}"></script>
+<script src="{{ asset('js/plugins-init/swiper.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 
 @yield('js')
