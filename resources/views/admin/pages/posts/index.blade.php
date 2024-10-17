@@ -183,10 +183,7 @@
                                                     <th>{{ __('language.admin.posts.hot') }}</th>
                                                 @endcan
 
-                                                @can('changeStatus', \App\Models\Post::class)
-                                                    <th>{{ __('language.admin.posts.censorship') }}</th>
-                                                @endcan
-
+                                              
                                                 <th style="text-align: start">{{ __('language.admin.posts.category') }}</th>
                                                 @can('changeOrder', \App\Models\Post::class)
                                                     <th>{{ __('language.admin.posts.order') }}</th>
@@ -241,18 +238,6 @@
                                                                 data-status="{{ $post->hot }}"
                                                                 data-url="{{ route('admin.posts.changeHot') }}">
                                                                 {{ $post->hot == 1 ? __('language.admin.posts.hot') : __('language.admin.posts.noHot') }}
-                                                            </button>
-                                                        </td>
-                                                    @endcan
-
-                                                    @can('changeStatus', \App\Models\Post::class)
-                                                        <td>
-                                                            <button
-                                                                class="toggle-status-btn btn btn-xs {{ $post->status == 1 ? 'btn-success' : 'btn-warning' }} text-white"
-                                                                data-id="{{ $post->id }}"
-                                                                data-status="{{ $post->status }}"
-                                                                data-url="{{ route('admin.posts.changeStatus') }}">
-                                                                {{ $post->status == 1 ? __('language.admin.posts.approved') : __('language.admin.posts.notApproved') }}
                                                             </button>
                                                         </td>
                                                     @endcan

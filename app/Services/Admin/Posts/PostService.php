@@ -324,4 +324,16 @@ class PostService
     {
         return $this->postRepository->allFillter($request);
     }
+    public function deleteMultipleChecked($request)
+    {
+        if (count($request->selectedIds) > 0) {
+
+            foreach ($request->selectedIds as $id) {
+                $this->postRepository->delete($id);
+            }
+
+            return true;
+        }
+    }
+
 }

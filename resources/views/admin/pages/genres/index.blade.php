@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Danh sách danh mục bài viết')
+@section('title', 'Danh sách thể loại phim')
 
 @section('css')
 @endsection
@@ -25,32 +25,31 @@
                         <div class="filter cm-content-box box-primary">
                             <div class="content-title SlideToolHeader">
                                 <div class="cpa">
-                                    <i
-                                        class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('language.admin.categoryPosts.filter') }}
+                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('language.admin.genres.filter') }}
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="filter cm-content-box box-primary">
 
                                     <div class="cm-content-body form excerpt" style="">
-                                        <form action="{{ route('admin.categoryPosts.index') }}" method="GET">
+                                        <form action="{{ route('admin.genres.index') }}" method="GET">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-xl-3 col-sm-6">
                                                         <label
-                                                            class="form-label">{{ __('language.admin.categoryPosts.filterName') }}</label>
+                                                            class="form-label">{{ __('language.admin.genres.filterName') }}</label>
                                                         <input id="" value="{{ request()->name }}" name="name"
                                                             type="text" class="form-control mb-xl-0 mb-3"
-                                                            placeholder="{{ __('language.admin.categoryPosts.inputFilterName') }}">
+                                                            placeholder="{{ __('language.admin.genres.inputFilterName') }}">
                                                     </div>
                                                     <div class="col-xl-6 col-sm-6 align-self-end">
                                                         <div class="">
                                                             <button class="btn btn-primary me-2"
                                                                 title="Click here to Search" type="submit"><i
-                                                                    class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('language.admin.categoryPosts.search') }}
+                                                                    class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('language.admin.genres.search') }}
                                                             </button>
                                                             <button type="reset" class="btn btn-danger light"
-                                                                title="Click here to remove filter">{{ __('language.admin.categoryPosts.removeValue') }}</button>
+                                                                title="Click here to remove filter">{{ __('language.admin.genres.removeValue') }}</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -65,11 +64,11 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">{{ __('language.admin.categoryPosts.list') }}</h4>
+                                <h4 class="card-title">{{ __('language.admin.genres.list') }}</h4>
                                 <div class="compose-btn">
-                                    <a href="{{ route('admin.categoryPosts.create') }}">
+                                    <a href="{{ route('admin.genres.create') }}">
                                         <button class="btn btn-secondary btn-sm light">
-                                            + {{ __('language.admin.categoryPosts.add') }}
+                                            + {{ __('language.admin.genres.add') }}
                                         </button>
                                     </a>
                                 </div>
@@ -79,14 +78,13 @@
                                     <div class="table-responsive">
                                         <table class="table table-responsive-md" id="data-table">
                                             <input type="hidden" id="value-item-id" value="">
-
                                             <thead>
                                                 <tr>
                                                     <th>
                                                         <div class="box-delete-item">
                                                             <input type="checkbox" id="item-all-checked">
                                                                 <button
-                                                                    data-url="{{ route('admin.categoryPosts.deleteItemMultipleChecked') }}"
+                                                                    data-url="{{ route('admin.genres.deleteItemMultipleChecked') }}"
                                                                     id="btn-delete-all"
                                                                     class="btn btn-sm btn-danger btn-delete-multiple_item">
                                                                     <svg width="15" height="15"
@@ -99,21 +97,21 @@
                                                         </div>
                                                     </th>
                                                     <th style="width:80px;">#</th>
-                                                    <th>{{ __('language.admin.categoryPosts.folder') }}</th>
-                                                    <th>{{ __('language.admin.categoryPosts.filterName') }}</th>
-                                                    <th>{{ __('language.admin.categoryPosts.position') }}</th>
-                                                    <th>{{ __('language.admin.categoryPosts.order') }}</th>
-                                                    <th>{{ __('language.admin.categoryPosts.action') }}</th>
+                                                    <th>{{ __('language.admin.genres.folder') }}</th>
+                                                    <th>{{ __('language.admin.genres.filterName') }}</th>
+                                                    <th>{{ __('language.admin.genres.position') }}</th>
+                                                    <th>{{ __('language.admin.genres.order') }}</th>
+                                                    <th>{{ __('language.admin.genres.action') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($data as $key => $categoryPost)
+                                                @foreach ($data as $key => $genre)
                                                     <tr>
-                                                        <td><input type="checkbox" data-id="{{ $categoryPost->id }}"
+                                                        <td><input type="checkbox" data-id="{{ $genre->id }}"
                                                             class="item-checked"></td>
                                                         <td>{{ $key + 1 }}</td>
                                                         <td>
-                                                            @if ($categoryPost->childs->count() > 0)
+                                                            @if ($genre->childs->count() > 0)
                                                                 <i class="nav-icon fas fa-folder"></i>
                                                             @else
                                                                 <i class="nav-icon fas fa-file"></i>
@@ -122,36 +120,36 @@
                                                         <td>
                                                             <b>
                                                                 <a
-                                                                    href="{{ route('admin.categoryPosts.index') . '?parent_id=' . $categoryPost->id }}">
-                                                                    {{ $categoryPost->name }}
+                                                                    href="{{ route('admin.genres.index') . '?parent_id=' . $genre->id }}">
+                                                                    {{ $genre->name }}
                                                                 </a>
                                                             </b>
                                                         </td>
 
                                                         <td>
                                                             <input type="number" min="0" name="position"
-                                                                value="{{ $categoryPost->position }}"
-                                                                data-id="{{ $categoryPost->id }}"
-                                                                data-value="{{ $categoryPost->position }}"
-                                                                data-url="{{ route('admin.categoryPosts.changePosition') }}"
+                                                                value="{{ $genre->position }}"
+                                                                data-id="{{ $genre->id }}"
+                                                                data-value="{{ $genre->position }}"
+                                                                data-url="{{ route('admin.genres.changePosition') }}"
                                                                 class="form-control changePosition" style="width: 80px;">
                                                         </td>
                                                         <td>
                                                             <input type="number" min="0" name="order"
-                                                                value="{{ $categoryPost->order }}"
-                                                                data-id="{{ $categoryPost->id }}"
-                                                                data-url="{{ route('admin.categoryPosts.changeOrder') }}"
+                                                                value="{{ $genre->order }}"
+                                                                data-id="{{ $genre->id }}"
+                                                                data-url="{{ route('admin.genres.changeOrder') }}"
                                                                 class="form-control changeOrder" style="width: 67px;">
                                                         </td>
                                                         <td>
                                                             <div
                                                                 style="padding-right: 20px; display: flex; justify-content: end">
-                                                                <a href="{{ route('admin.categoryPosts.edit', $categoryPost->id) }}"
+                                                                <a href="{{ route('admin.genres.edit', $genre->id) }}"
                                                                     class="btn btn-primary shadow btn-xs sharp me-1">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
                                                                 <form
-                                                                    action="{{ route('admin.categoryPosts.delete', $categoryPost->id) }}"
+                                                                    action="{{ route('admin.genres.delete', $genre->id) }}"
                                                                     class="formDelete" method="post">
                                                                     @csrf
                                                                     @method('DELETE')
@@ -177,7 +175,7 @@
                                     <div class="d-flex justify-content-center align-items-center p-5">
                                         <div>
                                             <h3 class="text-center">
-                                                {{ request()->name ? __('language.admin.categoryPosts.noDataSearch') . request()->name : __('language.admin.categoryPosts.noData') }}
+                                                {{ request()->name ? __('language.admin.genres.noDataSearch') . request()->name : __('language.admin.genres.noData') }}
                                             </h3>
                                         </div>
                                     </div>

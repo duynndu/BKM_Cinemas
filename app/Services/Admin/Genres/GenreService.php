@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Services\Admin\CategoryPosts;
+namespace App\Services\Admin\Genres;
 
-use App\Repositories\Admin\CategoryPosts\Repository\CategoryPostRepository;
+use App\Repositories\Admin\Genres\Repository\GenreRepository;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 
-class CategoryPostService
+class GenreService
 {
     use StorageImageTrait;
-    protected $categoryPostRepository;
+    protected $genreRepository;
 
     public function __construct(
-        CategoryPostRepository $categoryPostRepository
+        GenreRepository $genreRepository
     ) {
-        $this->categoryPostRepository = $categoryPostRepository;
+        $this->genreRepository = $genreRepository;
     }
 
-    public function getAllCategoryPost($request)
+    public function getAllGenre($request)
     {
-        return $this->categoryPostRepository->getAllCategoryPost($request);
+        return $this->genreRepository->getAllGenre($request);
     }
 
     public function store($request)
@@ -34,38 +34,40 @@ class CategoryPostService
             'position' => $request->position ?? 0
         ];
 
-        $uploadData = $this->storageTraitUpload($request, 'avatar', 'public/categoryPosts');
-
+      
+     
+        $uploadData = $this->storageTraitUpload($request, 'avatar', 'public/genres');
         if ($uploadData) {
             $data['avatar'] = $uploadData['path'];
         }
 
-       $this->categoryPostRepository->createCategoryPost($data);
+       
+        $this->genreRepository->createGenre($data);
 
         return true;
     }
 
-    public function getCategoryPostById($id)
+    public function getGenreById($id)
     {
-        return $this->categoryPostRepository->getCategoryPostById($id);
+        return $this->genreRepository->getGenreById($id);
     }
 
     public function update($request, $id)
     {
-        $categoryPost = $this->categoryPostRepository->getCategoryPostById($id);
+        $genre = $this->genreRepository->getGenreById($id);
 
-        if (!$categoryPost) {
+        if (!$genre) {
             $redirectUrl = $request->parent_id ?
-                route('admin.categoryPosts.index') . '?parent_id=' . $request->parent_id :
-                route('admin.categoryPosts.index');
+                route('admin.Genres.index') . '?parent_id=' . $request->parent_id :
+                route('admin.Genres.index');
 
             return redirect($redirectUrl)->with([
-                'status_failed' => 'Không tìm thấy danh mục'
+                'status_failed' => 'Không tìm thấy thể loại'
             ]);
         }
 
         $data = [
-            'name' => $request->name,
+          'name' => $request->name,
             'slug' => $request->slug,
             'order' => $request->order ?? 0,
             'description' => $request->description,
@@ -75,40 +77,40 @@ class CategoryPostService
         ];
 
         if ($request->hasFile('avatar')) {
-            if ($categoryPost->avatar) {
-                $path = 'public/systems/' . basename($categoryPost->avatar);
+            if ($genre->avatar) {
+                $path = 'public/genres/' . basename($genre->avatar);
                 if (Storage::exists($path)) {
                     Storage::delete($path);
                 }
             }
 
-            $imageUploadData = $this->storageTraitUpload($request, 'avatar', 'public/categoryPosts');
+            $imageUploadData = $this->storageTraitUpload($request, 'avatar', 'public/genres');
             $data['avatar'] = $imageUploadData['path'];
         }
 
-        $this->categoryPostRepository->updateCategoryPost($data, $id);
+        $this->genreRepository->updateGenre($data, $id);
 
         return true;
     }
 
-    public function getListCategoryPost()
+    public function getListGenre()
     {
-        return $this->categoryPostRepository->getListCategoryPost();
+        return $this->genreRepository->getListGenre();
     }
 
-    public function getListCategoryPostEdit($id)
+    public function getListGenreEdit($id)
     {
-        return $this->categoryPostRepository->getListCategoryPostEdit($id);
+        return $this->genreRepository->getListGenreEdit($id);
     }
 
     public function delete($id)
     {
-        return $this->categoryPostRepository->delete($id);
+        return $this->genreRepository->delete($id);
     }
 
     public function changeOrder($request)
     {
-        $item = $this->categoryPostRepository->getCategoryPostById($request->id);
+        $item = $this->genreRepository->getGenreById($request->id);
 
         $item->update([
             'order' => $request->order
@@ -119,13 +121,13 @@ class CategoryPostService
 
     public function changePosition($request)
     {
-        $result = $this->categoryPostRepository->checkPosition($request->position);
+        $result = $this->genreRepository->checkPosition($request->position);
 
         if($result) {
             return false;
         }
 
-        $item = $this->categoryPostRepository->getCategoryPostById($request->id);
+        $item = $this->genreRepository->getGenreById($request->id);
 
         $item->update([
             'position' => $request->position
@@ -137,7 +139,7 @@ class CategoryPostService
     {
         if (count($request->selectedIds) > 0) {
             foreach ($request->selectedIds as $id) {
-                $this->categoryPostRepository->delete($id);
+                $this->genreRepository->delete($id);
             }
             return true;
         }

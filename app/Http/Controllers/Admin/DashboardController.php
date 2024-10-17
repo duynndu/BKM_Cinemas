@@ -19,6 +19,7 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
+       
         $data['posts'] = $this->dashboardService->posts();
 
         $data['top10PostLatest'] = $this->dashboardService->top10PostLatest();

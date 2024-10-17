@@ -9,6 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        // dd(\Hash::make('1'));
         return view('client.pages.home');
     }
 }
