@@ -12,7 +12,7 @@ class MovieRepository implements MovieInterface
     protected $movie;
     protected $movieGenre;
 
-    const PAGINATION = 1;
+    const PAGINATION = 10;
 
     public function __construct(
         Movie  $movie,
