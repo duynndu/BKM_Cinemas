@@ -12,4 +12,6 @@ class HomeController extends Controller
         // dd(\Hash::make('1'));
         return view('client.pages.home');
     }
+
+    
 }

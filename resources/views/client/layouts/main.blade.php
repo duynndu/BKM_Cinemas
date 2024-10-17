@@ -187,9 +187,6 @@
 <script src="{{ asset('movie/js/statics/js/showtime-widget.js') }}"></script>
 <script type="text/javascript" src="{{ asset('movie/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
 
-{{-- <script src="{{ asset('movie/js/statics/js/firebase-app.js') }}"></script> --}}
-{{-- <script src="{{ asset('movie/js/statics/js/firebase-messaging.js') }}"></script> --}}
-{{-- <script src="{{ asset('movie/js/statics/js/firebase-notification6aa7.js?20200915') }}"></script> --}}
 
 <script src="{{ asset('movie/commons/common.js') }}"></script>
 

@@ -123,7 +123,7 @@
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">movie</i>
-                    <span class="nav-text">Quản lý thể loại</span>
+                    <span class="nav-text">Phim</span>
                 </a>
                 <ul aria-expanded="false">
                     <li>
