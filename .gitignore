@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+!/public/storage/schemas
 /storage/*.key
 /vendor
 .env
@@ -17,4 +18,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/resources\js\ziggy.js
+/resources/js/ziggy.js
