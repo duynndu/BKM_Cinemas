@@ -1,33 +1,51 @@
 $(document).ready(function() {
-    var imagePreview = $('.imagePreview');
+    $(document).on('click', '.removeImage', function() {
+        let id = $(this).data('id');
+        let url = $(this).data('url');
+        let image = $(this).data('image');
+        let $this = $(this);
 
-    var removeImage = $('.removeImage');
+        let imagePreview = $this.closest('.avatar-preview').find('.imagePreview');
 
-    if(removeImage.length) {
-        removeImage.on('click', function() {
-
-            let id = $(this).data('id');
-            let url = $(this).data('url');
-            let image = $(this).data('image');
-
-            imagePreview.css('background-image', `url(${image})`);
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: {
-                    id: id,
-                    _token: $('meta[name="csrf-token"]').attr('content'),
-                },
-                success: function(data) {
-                    removeImage.hide();
-                },
-                error: function(data) {
-                    console.log(data);
-                }
-            });
+        Swal.fire({
+            title: 'Xác nhận xóa',
+            text: 'Bạn có chắc chắn muốn xóa hình ảnh này không?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Có',
+            cancelButtonText: 'Không'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        id: id,
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    success: function(data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công',
+                            text: 'Hình ảnh đã được xóa thành công.'
+                        }).then(() => {
+                            $(imagePreview).css('background-image', `url(${image})`);
+                            $this.hide();
+                        });
+                    },
+                    error: function(data) {
+                        // Hiển thị thông báo lỗi
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Có lỗi xảy ra. Vui lòng thử lại.'
+                        });
+                        console.log(data);
+                    }
+                });
+            }
         });
-    }
+    });
 
     $(".btnRemoveEditAjax").click(function() {
         var url = $(this).data('url');

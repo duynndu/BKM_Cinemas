@@ -4,14 +4,7 @@
 
 @section('css')
     <style>
-        .read-more {
-            outline: none;
-            border: none;
-        }
-
-        .movie-content .content {
-            transition: linear 0.3s all;
-        }
+        
     </style>
 @endsection
 
@@ -68,7 +61,7 @@
                             <span class="age_restricted_label">- </span>
                         </span>
                     </p>
-                    <div class="age_restricted"><span></span></div>
+                    <div class="age_restricted"><span>T18</span></div>
                     <div class="group-buton">
                         <a href="#showtime" id="dat-ve"><img
                                 src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Đặt vé"> Đặt vé</a>

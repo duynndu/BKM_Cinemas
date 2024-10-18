@@ -133,5 +133,14 @@ class CategoryPostService
 
         return $item;
     }
+    public function deleteMultipleChecked($request)
+    {
+        if (count($request->selectedIds) > 0) {
+            foreach ($request->selectedIds as $id) {
+                $this->categoryPostRepository->delete($id);
+            }
+            return true;
+        }
+    }
 
 }

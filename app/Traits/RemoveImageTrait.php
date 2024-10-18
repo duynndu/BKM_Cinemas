@@ -25,4 +25,16 @@ trait RemoveImageTrait
 
         return true;
     }
+
+    public function existImage($record, $colum, $folder)
+    {
+        if ($record->$colum) {
+            $path = 'public/' . $folder . '/' . basename($record->$colum);
+            if (Storage::exists($path)) {
+                Storage::delete($path);
+            }
+        }
+
+        return false;
+    }
 }

@@ -13,4 +13,12 @@ class Actor extends Model
     protected $table = 'actors';
 
     protected $guarded = [];
+    public function movie_actor()
+    {
+        return $this->hasMany(MovieActor::class, 'actor_id', 'id');
+    }
+    public function movies()
+    {
+        return $this->belongsToMany(Movie::class, 'movie_actor', 'actor_id');
+    }
 }
