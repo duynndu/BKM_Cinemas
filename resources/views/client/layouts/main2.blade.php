@@ -19,8 +19,6 @@
     <meta property="fb:pages" content="1853915061599035" />
     <meta name="google-site-verification" content="SxvPRCl-fvBTkk86cD376h47_B7wRg2KKYywKfqE9ic" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" type="image/png" href="https://touchcinema.com/favicon.png" />
-    <link rel="shortcut icon" type="image/png" href="https://touchcinema.com/favicon.png" />
     <meta name="robots" content="all">
     <meta name="DC.title" content="Rạp Chiếu Phim Touch Cinema" />
     <meta name="geo.region" content="VN" />
@@ -29,13 +27,17 @@
     <meta name="ICBM" content="13.975171, 108.014852" />
     <meta name="theme-color" content="#ea3b92" />
 
+    <link rel="shortcut icon" type="image/png" src="{{ asset('images/favicon.ico') }}" />
+
     <!-- CSRF Token -->
     <meta name="csrf_token" content="BXV7TW2mEar4PBN8BArnTk122Kc6ghxfnEGHC0fk">
     <!-- Latest compiled and minified CSS & JS -->
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet"
         href="{{ asset('client/movie/js/statics/plugins/owl-carousel/assets/owl.carousel.min.css') }}">
-    {{-- @vite(['resources/js/app.js']) --}}
     <link rel="stylesheet" href="{{ asset('client/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/ticket.css') }}">
     <!-- CSRF Token -->
@@ -55,14 +57,13 @@
                 @yield('content')
             </div>
         </div>
-       
+
         <div id="layer">
         </div>
     </div>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;subset=vietnamese"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;subset=vietnamese" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700&amp;subset=latin,latin-ext"
         rel="stylesheet">
     <style type="text/css">
@@ -175,8 +176,8 @@
                         } else {
                             if (data.status == 1) {
                                 bootbox.confirm({
-                                    message: `Số điện thoại / Email này đã có tài khoản thành viên. 
-              Bạn cần phải <a href="https://touchcinema.com/login"><strong class="note-nologin">ĐĂNG NHẬP</strong></a> mua vé để hưởng ưu đãi và tích điểm.`,
+                                    message: `Số điện thoại / Email này đã có tài khoản thành viên.
+                                    Bạn cần phải <a href="https://touchcinema.com/login"><strong class="note-nologin">ĐĂNG NHẬP</strong></a> mua vé để hưởng ưu đãi và tích điểm.`,
                                     buttons: {
                                         confirm: {
                                             label: 'Đăng nhập',

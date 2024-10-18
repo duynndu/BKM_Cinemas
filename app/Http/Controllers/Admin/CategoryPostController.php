@@ -193,4 +193,13 @@ class CategoryPostController extends Controller
             'newPosition' => $request->position,
         ]);
     }
+    public function deleteItemMultipleChecked(Request $request)
+    {
+        if (empty($request->selectedIds)) {
+            return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400); // Trả về mã lỗi 400
+        }
+        $this->categoryPostService->deleteMultipleChecked($request);
+
+        return response()->json(['message' => 'Xóa thành công!']);
+    }
 }

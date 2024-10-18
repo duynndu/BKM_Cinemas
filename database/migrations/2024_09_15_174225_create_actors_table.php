@@ -14,10 +14,9 @@ return new class extends Migration
         // bảng diễn viên
         Schema::create('actors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('birth_date'); // Ngày sinh
-            $table->string('nationality'); // Quốc tịch
-            $table->text('bio'); // Tiểu sử diễn viên
+            $table->string('name')->nullable();
+            $table->date('birth_date')->nullable(); // Ngày sinh
+            $table->string('nationality')->nullable(); // Quốc tịch
             $table->timestamps();
             $table->softDeletes();
         });

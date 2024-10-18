@@ -606,7 +606,7 @@
 
                                 </div>
                                 <div class="card-footer border-0" style="padding: 30px 0 0 0;">
-                                    <a href="" class="btn btn-primary w-100">{{ __('language.admin.dashboards.viewAll') }}</a>
+                                    <a href="" class="btn btn-primary w-100 btn-login">{{ __('language.admin.dashboards.viewAll') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -640,7 +640,7 @@
                                     @endif
                                 </div>
                                 <div class="card-footer border-0" style="padding: 30px 0 0 0;">
-                                    <a href="{{ route('admin.posts.index') }}" class="btn btn-primary w-100">{{ __('language.admin.dashboards.viewAll') }}</a>
+                                    <a href="{{ route('admin.posts.index') }}" class="btn btn-primary w-100 btn-login">{{ __('language.admin.dashboards.viewAll') }}</a>
                                 </div>
                             </div>
                         </div>

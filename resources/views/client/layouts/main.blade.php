@@ -18,7 +18,7 @@
         content="Rạp chiếu phim Touch Cinema với chất lượng âm thanh & hình ảnh đạt chuẩn quốc tế đầu tiên tại Pleiku, Gia Lai. Đặt vé ngay hôm nay để nhận được nhiều ưu đãi!" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" type="image/png" src="{{ asset('movie/images/icon-header.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
     <meta name="robots" content="all">
     <meta name="DC.title" content="Rạp Chiếu Phim Touch Cinema" />
     <meta name="geo.region" content="VN" />
@@ -27,16 +27,21 @@
     <meta name="ICBM" content="13.975171, 108.014852" />
     <meta name="theme-color" content="#ea3b92" />
 
-
     <link rel="stylesheet" href="{{ asset('libs/fontawesome-free-6.6.0-web/css/all.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;subset=vietnamese" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700&amp;subset=latin,latin-ext"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('client/movie/js/statics/plugins/owl-carousel/assets/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="{{ asset('movie/js/statics/plugins/owl-carousel/assets/owl.carousel.min.css') }}">
     {{-- @vite(['resources/js/app.js']) --}}
     <link rel="stylesheet" href="{{ asset('client/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/style_movie.css') }}">
+    <link rel="stylesheet" href="{{ asset('client/css/style_auth.css') }}">
+    <link rel="stylesheet" href="">
     <!-- CSRF Token -->
     @yield('css')
 </head>
@@ -182,9 +187,6 @@
 <script src="{{ asset('movie/js/statics/js/showtime-widget.js') }}"></script>
 <script type="text/javascript" src="{{ asset('movie/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
 
-{{-- <script src="{{ asset('movie/js/statics/js/firebase-app.js') }}"></script> --}}
-{{-- <script src="{{ asset('movie/js/statics/js/firebase-messaging.js') }}"></script> --}}
-{{-- <script src="{{ asset('movie/js/statics/js/firebase-notification6aa7.js?20200915') }}"></script> --}}
 
 <script src="{{ asset('movie/commons/common.js') }}"></script>
 

@@ -1,14 +1,65 @@
-$(document).ready(function() {
+$(document).ready(function () {
+    function checkSeoInputCharacterCount(inputSelector, feedbackSelector, minLength, maxLength, isRequired, isKeyword = false) {
+        $(inputSelector).on('input', function () {
+            let inputVal = $(this).val(); // Lấy giá trị và loại bỏ khoảng trắng thừa
+            let feedback = $(feedbackSelector);
+            let inputLength;
+            let unit;
+            let remainingUnits;
+
+            if (isKeyword) {
+                // Nếu là từ khóa, đếm số từ phân tách bằng dấu phẩy
+                let keywords = inputVal.split(',').filter(function (kw) {
+                    return kw.trim() !== ""; // Loại bỏ từ rỗng
+                });
+                inputLength = keywords.length;
+                unit = 'từ'; // Đổi đơn vị thành từ
+                remainingUnits = maxLength - inputLength;
+            } else {
+                // Đếm số ký tự cho các trường khác (tiêu đề và mô tả SEO)
+                inputLength = inputVal.length;
+                unit = 'ký tự'; // Đặt đơn vị là ký tự
+                remainingUnits = maxLength - inputLength;
+            }
+
+            // Kiểm tra điều kiện nhập dữ liệu
+            if (inputVal === "") {
+                feedback.text(maxLength + ' ' + unit + ' có thể nhập')
+                    .addClass('good').removeClass('error');
+            } else if (isKeyword && inputLength < minLength) {
+                // Nếu nhập ít hơn số lượng tối thiểu cho từ khóa
+                feedback.text('Tối thiểu cần ' + minLength + ' ' + unit + ' cho từ khóa')
+                    .addClass('error').removeClass('good');
+            } else if (!isKeyword && inputLength < minLength) {
+                // Nếu nhập ít hơn số lượng tối thiểu cho tiêu đề hoặc mô tả
+                feedback.text('Tối thiểu cần ' + minLength + ' ký tự, hiện tại: ' + inputLength + ' ký tự')
+                    .addClass('error').removeClass('good');
+            } else if (inputLength <= maxLength) {
+                feedback.text(remainingUnits + ' ' + unit + ' còn lại')
+                    .addClass('good').removeClass('error');
+            } else {
+                feedback.text('- ' + Math.abs(remainingUnits) + ' ' + unit + ' vượt quá giới hạn')
+                    .addClass('error').removeClass('good');
+            }
+        });
+
+        // Khi trang mới tải, kiểm tra và hiển thị số ký tự/từ tối đa
+        $(inputSelector).trigger('input');
+    }
+    // Gọi hàm kiểm tra cho tiêu đề SEO (10 - 70 ký tự)
+    checkSeoInputCharacterCount('#title_seo', '#titleSeo_feedback', 10, 70, true);
+
+    // Gọi hàm kiểm tra cho mô tả SEO (150 - 160 ký tự)
+    checkSeoInputCharacterCount('#description_seo', '#descriptionSeo_feedback',160, 160, true);
+
+    // Gọi hàm kiểm tra cho từ khóa SEO (2 đến 5 từ, phân cách bằng dấu phẩy)
+    checkSeoInputCharacterCount('#keyword_seo', '#keywordSeo_feedback', 2, 5, false, true); // isKeyword = true
+
+
     $('#name').on('input', function () {
         let name = $('#name').val().trim().toLowerCase();
 
-        var nameVaue = $('#name').val();
-
-        $('#title_seo').val(nameVaue);
-
-        $('#keyword_seo').val(nameVaue);
-
-        $('#description_seo').val(nameVaue);
+        var nameValue = $('#name').val();
 
         const vnAccents = [
             'à', 'á', 'ạ', 'ả', 'ã', 'â', 'ầ', 'ấ', 'ậ', 'ẩ', 'ẫ', 'ă', 'ằ', 'ắ', 'ặ', 'ẳ', 'ẵ',
@@ -52,6 +103,17 @@ $(document).ready(function() {
         name = name.replace(/\s+/g, '-');
 
         $('#slug').val(name);
+        $('#pathAlias').val(name);
+        $('#title_seo').val(nameValue);
+        $('#keyword_seo').val(nameValue);
+        $('#description_seo').val(nameValue);
+        $('#resultTitle_vi').val(nameValue);
+        $('#resultUrl_vi').val(name);
+
+        $('#resultDescription_vi').html(nameValue);
+        $('#title_seo').trigger('input');
+        $('#description_seo').trigger('input');
+        $('#keyword_seo').trigger('input');
     });
 
     $('.formDelete').on('submit', function (e) {
@@ -76,17 +138,69 @@ $(document).ready(function() {
         $('.folder-layout-tab, .folder-structure ').toggleClass("grid");
     });
 
-    // $('.filter-option-inner-inner').each(function() {
-    //     $(this).html('--Chọn--');
-    // });
-
-    $('#automatic-selection').on('change', function() {
+    $('#automatic-selection').on('change', function () {
         var selectedLanguage = $("#automatic-selection option:selected").text();
 
-        if(selectedLanguage == '-- Chọn ngôn ngữ --') {
+        if (selectedLanguage == '-- Chọn ngôn ngữ --') {
             selectedLanguage = '';
         }
 
         $('#language_name').val(selectedLanguage);
     });
+
+    // Thay đổi type password
+    $(".changeTypePassword").on("click", function() {
+        var passwordField = $("#password");
+        var icon = $("#toggleIcon");
+
+        // Toggle between text and password type for the input field
+        if (passwordField.attr("type") === "text") {
+            passwordField.attr("type", "password"); // Switch to password
+            icon.removeClass("fa-eye").addClass("fa-eye-slash"); // Change icon to eye-slash
+        } else {
+            passwordField.attr("type", "text"); // Switch to text
+            icon.removeClass("fa-eye-slash").addClass("fa-eye"); // Change icon to eye
+        }
+    });
+
+    $('.role_id').change(function() {
+        var selectedType = $(this).find('option:selected').data('type');
+
+        $('.type').val(selectedType);
+    });
+
+    function togglePasswordBox() {
+        const boxNewPassword = $('#box-new-password');
+        const inputNewPassword = $('.newPassword');
+
+        boxNewPassword.toggleClass('d-none');
+
+        // Clear input value when the box is hidden
+        if (boxNewPassword.hasClass('d-none')) {
+            inputNewPassword.val('');
+        }
+    }
+
+    // Event listener for both buttons: create new password and destroy
+    $('.createNewPassword, .destroyBoxNewPassword').on('click', function() {
+        togglePasswordBox();
+    });
 })
+
+var selectRoles = $('.selectRoles');
+
+if(selectRoles.val() === 'admin') {
+    $('.permissionBox').hide();
+}
+selectRoles.on('change', function() {
+
+    var permissionBox = $('.permissionBox');
+
+    var selectedValue = $(this).val();
+
+    if (selectedValue === 'admin') {
+        permissionBox.hide();
+    } else {
+        permissionBox.show();
+    }
+});

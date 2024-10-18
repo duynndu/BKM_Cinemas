@@ -3,18 +3,7 @@
 
 @section('css')
     <style type="text/css">
-        .ticket-login .menu li a:focus,
-        .ticket-login .menu li a:hover,
-        .ticket-login .menu li a {
-            background: none;
-            border: none;
-            padding: 0;
-            color: #000;
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 17px;
-            text-decoration: none;
-        }
+       
     </style>
 @endsection
 
