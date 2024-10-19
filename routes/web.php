@@ -28,10 +28,6 @@ if ($agent->isDesktop()) {
    
 
 
-
-
-
-
    Route::get('/login', function () {
       return view('client.pages.auth.login');
    });
