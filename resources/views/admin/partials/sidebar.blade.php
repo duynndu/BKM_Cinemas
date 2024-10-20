@@ -150,7 +150,7 @@
                         <a href="{{ route('admin.foods.index') }}" aria-expanded="false">Food</a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.foods-combos.index') }}" aria-expanded="false">Combo</a>
+                        <a href="{{ route('admin.food-combos.index') }}" aria-expanded="false">Combo</a>
                     </li>
                 </ul>
             </li>
