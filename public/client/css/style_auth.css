@@ -24,16 +24,30 @@
     top: 49%;
     left: -100%;
     width: 200%;
-    height: 45px;
+    height: 52px;
     background: linear-gradient(95deg, rgb(227 89 89 / 0%) 0%, rgb(255 255 255 / 42%) 50%, rgb(0 0 0 / 5%) 100%);
     transition: left 0.3s ease-in-out;
     transform: translateY(-48%);
 }
 
 .btn-login:hover {
-    background-color: #0056b3; /* Màu nền đổi khi hover */
+    background-color: #0056b3;
+    /* Màu nền đổi khi hover */
 }
 
 .btn-login:hover::before {
     left: 100%;
+}
+
+.ticket-login .menu li a:focus,
+.ticket-login .menu li a:hover,
+.ticket-login .menu li a {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 17px;
+    text-decoration: none;
 }

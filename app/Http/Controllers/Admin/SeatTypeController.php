@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\SeatType;
+use Illuminate\Http\Request;
 
 class SeatTypeController extends Controller
 {
@@ -30,7 +31,7 @@ class SeatTypeController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**

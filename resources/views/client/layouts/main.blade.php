@@ -32,10 +32,16 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700&amp;subset=latin,latin-ext"
         rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="{{ asset('movie/js/statics/plugins/owl-carousel/assets/owl.carousel.min.css') }}">
     {{-- @vite(['resources/js/app.js']) --}}
     <link rel="stylesheet" href="{{ asset('client/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/style_movie.css') }}">
+    <link rel="stylesheet" href="{{ asset('client/css/style_auth.css') }}">
+    <link rel="stylesheet" href="">
     <!-- CSRF Token -->
     @yield('css')
 </head>

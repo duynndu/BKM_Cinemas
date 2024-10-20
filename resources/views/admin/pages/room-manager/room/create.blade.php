@@ -42,55 +42,56 @@
 									</div>
 									<div class="mb-3">
 										<label class="me-sm-2 form-label mb-2">Giá ghế cơ bản</label>
-										<input type="text" x-model="formData.base_price" class="form-control"
+										<input type="text" x-model="formData.base_price" @input="renderSeatLayout;"
+											class="form-control"
 											placeholder="Nhập giá ghế cơ bản">
 										<span class="text-danger" x-text="errors.base_price"></span>
 									</div>
 									<div id="seatingArea" class="tw-inline-flex tw-items-center tw-mb-3 tw-text-white"></div>
-										<div class="mb-3">
-											<button type="button" @click="toggleModal()" class="btn btn-sm btn-primary">Chọn
-												từ sơ đồ ghế có sẵn</button>
-										</div>
-										<div class="tw-flex tw-justify-end">
-											<button @click="onSubmit" class="btn btn-md btn-success">Tạo mới</button>
-										</div>
+									<div class="mb-3">
+										<button type="button" @click="toggleModal()" class="btn btn-sm btn-primary">Chọn
+											từ sơ đồ ghế có sẵn</button>
+									</div>
+									<div class="tw-flex tw-justify-end">
+										<button @click="onSubmit" class="btn btn-md btn-success">Tạo mới</button>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div x-show="showModal"
-						class="tw-fixed tw-inset-0 tw-z-50 tw-flex tw-items-center tw-justify-center tw-bg-black tw-bg-opacity-50" x-cloak>
-						<div @click.outside="toggleModal()"
-							class="tw-bg-black tw-bg-opacity-60 tw-rounded-lg tw-shadow-lg tw-w-full tw-max-w-7xl tw-min-h-[500px] tw-p-6 tw-relative">
-							<div class="tw-flex tw-justify-between tw-items-center tw-border-b tw-pb-3">
-								<h5 class="tw-text-2xl tw-font-bold tw-text-black">Chọn sơ đồ ghế</h5>
-								<button type="button" @click="toggleModal()"
-									class="tw-text-white tw-text-2xl tw-bg-transparent">&times;</button>
-							</div>
-							<div
-								class="tw-mt-4 tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4 tw-overflow-y-auto tw-max-h-[400px]">
-								<template x-for="seatLayout in seatLayouts" :key="seatLayout.id">
-									<label @click="selectLayout(seatLayout)"
-										:class="{'tw-border-blue-500': formData.seat_layout_id === seatLayout.id, 'tw-border-2 tw-border-solid tw-p-2 tw-rounded-lg tw-shadow hover:tw-shadow-lg tw-transition-shadow tw-duration-300 tw-cursor-pointer tw-flex tw-flex-col': true}">
-										<img :src="seatLayout.image" :alt="seatLayout.name"
-											class="tw-w-full tw-h-auto tw-mb-1 tw-rounded">
-										<div class="tw-mt-auto">
-											<h3 class="tw-text-lg tw-font-semibold tw-text-black" x-text="seatLayout.name"></h3>
-											<p class="tw-m-0">Columns: <span x-text="seatLayout.col_count"></span>
-											</p>
-											<p class="tw-m-0">Rows: <span x-text="seatLayout.row_count"></span>
-											</p>
-										</div>
-									</label>
-								</template>
-							</div>
-							<div class="tw-flex tw-justify-end tw-p-4 tw-border-t tw-border-gray-200">
-								<button type="button" @click="toggleModal()"
-									class="tw-btn tw-btn-sm tw-btn-secondary hover:tw-bg-red-600 tw-transition tw-duration-300">Close</button>
-							</div>
+				</div>
+				<div x-show="showModal"
+					class="tw-fixed tw-inset-0 tw-z-50 tw-flex tw-items-center tw-justify-center tw-bg-black tw-bg-opacity-50" x-cloak>
+					<div @click.outside="toggleModal()"
+						class="tw-bg-black tw-bg-opacity-60 tw-rounded-lg tw-shadow-lg tw-w-full tw-max-w-7xl tw-min-h-[500px] tw-p-6 tw-relative">
+						<div class="tw-flex tw-justify-between tw-items-center tw-border-b tw-pb-3">
+							<h5 class="tw-text-2xl tw-font-bold tw-text-black">Chọn sơ đồ ghế</h5>
+							<button type="button" @click="toggleModal()"
+								class="tw-text-white tw-text-2xl tw-bg-transparent">&times;</button>
+						</div>
+						<div
+							class="tw-mt-4 tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-4 tw-overflow-y-auto tw-max-h-[400px]">
+							<template x-for="seatLayout in seatLayouts" :key="seatLayout.id">
+								<label @click="selectLayout(seatLayout)"
+									:class="{'tw-border-blue-500': formData.seat_layout_id === seatLayout.id, 'tw-border-2 tw-border-solid tw-p-2 tw-rounded-lg tw-shadow hover:tw-shadow-lg tw-transition-shadow tw-duration-300 tw-cursor-pointer tw-flex tw-flex-col': true}">
+									<img :src="seatLayout.image" :alt="seatLayout.name"
+										class="tw-w-full tw-h-auto tw-mb-1 tw-rounded">
+									<div class="tw-mt-auto">
+										<h3 class="tw-text-lg tw-font-semibold tw-text-black" x-text="seatLayout.name"></h3>
+										<p class="tw-m-0">Columns: <span x-text="seatLayout.col_count"></span>
+										</p>
+										<p class="tw-m-0">Rows: <span x-text="seatLayout.row_count"></span>
+										</p>
+									</div>
+								</label>
+							</template>
+						</div>
+						<div class="tw-flex tw-justify-end tw-p-4 tw-border-t tw-border-gray-200">
+							<button type="button" @click="toggleModal()"
+								class="tw-btn tw-btn-sm tw-btn-secondary hover:tw-bg-red-600 tw-transition tw-duration-300">Close</button>
 						</div>
 					</div>
+				</div>
 			</form>
 		</div>
 	</div>
