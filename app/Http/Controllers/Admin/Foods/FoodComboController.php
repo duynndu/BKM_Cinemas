@@ -3,16 +3,24 @@
 namespace App\Http\Controllers\Admin\Foods;
 
 use App\Http\Controllers\Controller;
+use App\Services\Admin\Foods\FoodComboService;
 use Illuminate\Http\Request;
 
 class FoodComboController extends Controller
 {
+    protected $foodComboService;
+    public function __construct(
+        FoodComboService $foodComboService
+    ) {
+        $this->foodComboService = $foodComboService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $data = $this->foodComboService->getAll();
+        return view('admin.pages.foodCombos.index', compact('data'));
     }
 
     /**

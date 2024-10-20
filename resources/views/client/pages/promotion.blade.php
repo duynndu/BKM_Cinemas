@@ -3,74 +3,7 @@
 @section('title', 'Khuyễn mãi')
 
 @section('css')
-    <style>
-        .page-cinema-list {
-            color: #FFF;
-        }
-
-        .movie {
-            width: 250px;
-        }
-
-        .movie .poster img {
-            height: 360px;
-        }
-
-        .nav-tabs {
-            border-bottom: 1px solid #630460;
-            padding-bottom: 10px;
-        }
-
-        .nav-tabs>li {
-            padding: 10px 2px;
-            background: #630460;
-            text-transform: uppercase;
-            border-radius: 4px;
-            font-size: 18px;
-            width: 150px;
-            display: inline-block;
-            text-align: center;
-            vertical-align: bottom;
-            float: initial;
-        }
-
-        .nav-tabs>li a,
-        .nav-tabs>li a:hover,
-        .nav-tabs>li a:focus {
-            background: transparent;
-            border: none;
-            color: #fff;
-            padding: initial;
-        }
-
-        .nav-tabs>li.active {
-            background-color: #eb1689;
-            height: 60px;
-            padding-top: 22px;
-        }
-
-        .nav-tabs>li.active a,
-        .nav-tabs>li.active a:hover,
-        .nav-tabs>li.active a:focus {
-            background: transparent;
-            border: none;
-            color: #fff;
-            padding: initial;
-        }
-
-        .nav-tabs>li a h3 {
-            font-size: 20px;
-            margin: 0;
-        }
-
-        .tab-content {
-            margin: 10px 0;
-        }
-
-        img {
-            max-width: 100% !important;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('client/css/promotion.css') }}">
     <link rel="stylesheet" href="https://touchcinema.com/statics/frontend/plugins/owl-carousel/assets/owl.carousel.min.css"
         type="text/css" media="all" />
 @endsection
@@ -308,7 +241,8 @@
                                 allow="encrypted-media"
                                 src="https://web.facebook.com/v12.0/plugins/page.php?adapt_container_width=true&amp;app_id=1700069773628064&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Dffdb3cf7d97080a2a%26domain%3Dtouchcinema.com%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Ftouchcinema.com%252Ff2b32f582b5238d6a%26relation%3Dparent.parent&amp;container_width=0&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Ftouchcinema%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=false&amp;width=390"
                                 style="border: none; visibility: visible; width: 390px; height: 130px;"
-                                class=""></iframe></span></div>
+                                class=""></iframe></span>
+                    </div>
                 </div>
                 <div class="widget-ticket ">
                     <h2>

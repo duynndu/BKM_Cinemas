@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin\Foods;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FoodTypes\FoodTypeRequest;
 use App\Services\Admin\Foods\FoodTypeService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class FoodTypeController extends Controller
@@ -12,8 +15,7 @@ class FoodTypeController extends Controller
 
     public function __construct(
         FoodTypeService $foodTypeService
-    )
-    {
+    ) {
         $this->foodTypeService = $foodTypeService;
     }
 
@@ -22,7 +24,8 @@ class FoodTypeController extends Controller
      */
     public function index()
     {
-        $this->foodTypeService->test();
+        $data = $this->foodTypeService->getAll();
+        return view('admin.pages.foodTypes.index', compact('data'));
     }
 
     /**
@@ -30,15 +33,29 @@ class FoodTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.foodTypes.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FoodTypeRequest $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $this->foodTypeService->store($request->foodType);
+
+            DB::commit();
+
+            return redirect()->route('admin.food-types.index')->with('status_succeed', "Thêm loại đồ ăn thành công");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return back()->with(['status_failed' => 'Đã xảy ra lỗi, vui lòng thử lại sau.']);
+
+        }
     }
 
     /**
@@ -54,22 +71,100 @@ class FoodTypeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = $this->foodTypeService->find($id);
+        if (!$data) {
+            return redirect()->route('admin.food-types.index')->with(['status_failed' => 'Không tìm thấy!']);
+        }
+        return view('admin.pages.foodTypes.edit', compact('data'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FoodTypeRequest $request, string $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            if (!$this->foodTypeService->update($request->foodType, $id)) {
+                return redirect()->route('admin.food-types.index')->with(['status_failed' => 'Không tìm thấy!']);
+            }
+
+            DB::commit();
+            return redirect()->route('admin.food-types.index')->with('status_succeed', "Sửa loại đồ ăn thành công");
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error("Error updating food type: {$e->getMessage()} at line {$e->getLine()}");
+            return back()->with(['status_failed' => 'Đã xảy ra lỗi, vui lòng thử lại sau.']);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            if (!$this->foodTypeService->delete($id)) {
+                return redirect()->route('admin.food-types.index')->with(['status_failed' => 'Không tìm thấy!']);
+            }
+            DB::commit();
+            return redirect()->route('admin.food-types.index')->with([
+                'status_succeed' => 'Xóa loại đồ ăn thành công'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return back()->with([
+                'status_failed' => 'Đã xảy ra lỗi khi xóa'
+            ]);
+        }
+    }
+
+    public function changeOrder(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = $this->foodTypeService->changeOrder($request);
+            DB::commit();
+            if (!$data) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Có lỗi xảy ra!'
+                ], 400);
+            }
+            return response()->json(['newOrder' => $request->order]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
+    }
+
+    public function changeActive(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = $this->foodTypeService->changeActive($request);
+            DB::commit();
+            if (!$data) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Có lỗi xảy ra!'
+                ], 400);
+            }
+            return response()->json(['newStatus' => $data->active]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
     }
 }

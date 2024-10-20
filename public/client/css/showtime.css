@@ -1,0 +1,41 @@
+  .showtime-movie {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+  }
+
+  .showtime-movie>.col-lg-9.col-md-9.col-sm-8 {
+      background-color: #FFF;
+  }
+
+
+  .page-showtime .container .showtime-movie .info a h3 {
+      margin-top: 20px;
+  }
+
+  .page-showtime .container .showtime-movie .info h3,
+  .page-showtime .container .showtime-movie .showtimes .showtime-type {
+      color: #000;
+  }
+
+  .page-showtime .container .showtime-movie .info .detail {
+      overflow: hidden;
+      margin-top: 10px;
+  }
+
+  .page-showtime .container .showtime-movie .showtimes a {
+      display: inline-block;
+      width: 65px;
+      text-align: center;
+      padding: 3px;
+      margin: 0 8px 8px 0;
+  }
+
+  .page-showtime .container .showtime-movie .info .release .date {
+      margin-bottom: -5px
+  }
+
+  .showtimes {
+      margin-top: 20px;
+  }
