@@ -174,7 +174,7 @@
                                                                 class="toggle-active-btn btn btn-xs {{ $food->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
                                                                 data-id="{{ $food->id }}"
                                                                 data-status="{{ $food->active }}"
-                                                                data-url="{{ route('admin.foods.changeActive') }}">
+                                                                data-url="{{ route('admin.food-combos.changeActive') }}">
                                                                 {{ $food->active == 1 ? 'Hiện' : 'Ẩn' }}
                                                             </button>
                                                         </td>
@@ -183,7 +183,7 @@
                                                             <input type="number" min="0" name="order"
                                                                 value="{{ $food->order }}"
                                                                 data-id="{{ $food->id }}"
-                                                                data-url="{{ route('admin.foods.changeOrder') }}"
+                                                                data-url="{{ route('admin.food-combos.changeOrder') }}"
                                                                 class="form-control changeOrder" style="width: 67px;">
                                                         </td>
 
@@ -191,13 +191,13 @@
                                                             <div
                                                                 style="padding-right: 20px; display: flex; justify-content: end">
 
-                                                                <a href="{{ route('admin.foods.edit', $food->id) }}"
+                                                                <a href="{{ route('admin.food-combos.edit', $food->id) }}"
                                                                     class="btn btn-primary shadow btn-xs sharp me-1">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
 
                                                                 <form
-                                                                    action="{{ route('admin.foods.delete', $food->id) }}"
+                                                                    action="{{ route('admin.food-combos.delete', $food->id) }}"
                                                                     class="formDelete" method="post">
                                                                     @csrf
                                                                     @method('DELETE')
