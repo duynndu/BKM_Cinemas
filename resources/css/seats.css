@@ -130,4 +130,7 @@
   border: 2px dashed #ff0000 !important;
 }
 
-
+.seat-table .seat.selected {
+  background-color: #fff200!important;
+  color: #fff!important;
+}

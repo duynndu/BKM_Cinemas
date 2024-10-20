@@ -7,5 +7,6 @@ interface ISeat {
   slot: number;
   visible: any;
   merged_seats?: number[] | null;
-  order: any;
+  order: number;
+  selected?: boolean;
 }

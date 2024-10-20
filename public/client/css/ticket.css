@@ -8336,7 +8336,9 @@ label:hover:before {
 #main-left #app-content #content #wrap-datve .note .seat {
     font-size: 13px;
     display: block;
-    margin-bottom: 20px
+    margin-bottom: 20px;
+    text-align: left;
+    box-shadow: unset;
 }
 
 #main-left #app-content #content #wrap-datve .note .seat span {
