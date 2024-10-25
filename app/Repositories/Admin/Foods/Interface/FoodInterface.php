@@ -8,8 +8,6 @@ interface FoodInterface extends RepositoryInterface
 {
     public function deleteMultiple(array $ids);
 
-    public function deleteMultipleItem($record, array $ids);
-
     public function getAllActive();
 
     public function getByMultipleId(array $ids);
