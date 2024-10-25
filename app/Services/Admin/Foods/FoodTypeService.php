@@ -27,6 +27,14 @@ class FoodTypeService
     {
         return $this->foodTypeRepository->delete($id);
     }
+    public function deleteMultipleChecked($request)
+    {
+        if (count($request->selectedIds) < 0) {
+            return false;
+        }
+        $this->foodTypeRepository->deleteMultiple($request->selectedIds);
+        return true;
+    }
 
     public function getAll()
     {

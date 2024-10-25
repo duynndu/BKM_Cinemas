@@ -14,7 +14,7 @@ class FoodCombo extends Model
 
     protected $guarded = [];
 
-    public function Item(){
+    public function items(){
         return $this->hasMany(FoodComboItem::class, 'food_combo_id', 'id');
     }
 }

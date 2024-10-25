@@ -42,7 +42,7 @@ class FoodController extends Controller
      */
     public function create()
     {
-        $listFoodTypes = $this->foodTypeService->getAll();
+        $listFoodTypes = $this->foodTypeService->getAllActive();
         return view('admin.pages.foods.create', compact('listFoodTypes'));
     }
 
@@ -51,15 +51,22 @@ class FoodController extends Controller
      */
     public function store(FoodRequest $request)
     {
+        $data = $request->food;
         try {
             DB::beginTransaction();
 
-            $this->foodService->store($request->food);
+            $this->foodService->store($data);
 
             DB::commit();
 
             return redirect()->route('admin.foods.index')->with('status_succeed', "Thêm đồ ăn thành công");
         } catch (\Exception $e) {
+            if (!empty($data['image'])) {
+                $path = "public/foods/" . basename($data['image']);
+                if (Storage::exists($path)) {
+                    Storage::delete($path);
+                }
+            }
             DB::rollBack();
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
@@ -103,7 +110,7 @@ class FoodController extends Controller
             DB::commit();
             return redirect()->route('admin.foods.index')->with('status_succeed', "Sửa đồ ăn thành công");
         } catch (\Throwable $e) {
-            if ($data['image']) {
+            if (!empty($data['image'])) {
                 $path = "public/foods/" . basename($data['image']);
                 if (Storage::exists($path)) {
                     Storage::delete($path);
@@ -118,7 +125,7 @@ class FoodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(string $id)
+    public function destroy(string $id)
     {
         try {
             DB::beginTransaction();
@@ -137,6 +144,28 @@ class FoodController extends Controller
             return back()->with([
                 'status_failed' => 'Đã xảy ra lỗi khi xóa'
             ]);
+        }
+    }
+
+    public function deleteItemMultipleChecked(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            if (empty($request->selectedIds)) {
+                return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400);
+            }
+            $this->foodService->deleteMultipleChecked($request);
+
+            DB::commit();
+            return response()->json(['message' => 'Xóa thành công!'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
         }
     }
 

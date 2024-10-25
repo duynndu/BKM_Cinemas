@@ -118,7 +118,7 @@
                                                                             <input type="file"
                                                                                 class="form-control d-none uploadImage"
                                                                                 id="imageUpload" name="food[image]"
-                                                                                accept=".png, .jpg, .jpeg">
+                                                                                accept=".png, .jpg, .jpeg, .webp">
                                                                             <label for="imageUpload"
                                                                                 class="btn btn-sm btn-primary light ms-0">Chọn
                                                                                 ảnh</label>

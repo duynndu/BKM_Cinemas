@@ -42,14 +42,14 @@ class FoodRequest extends FormRequest
             $rules['food.image'] = [
                 "required",
                 "image",
-                "mimes:jpeg,png,jpg,gif",
+                "mimes:jpeg,png,jpg,gif,webp",
                 "max:2048",
             ];
         } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
             $rules['food.image'] = [
                 "nullable",
                 "image",
-                "mimes:jpeg,png,jpg,gif",
+                "mimes:jpeg,png,jpg,webp",
                 "max:2048",
             ];
         }

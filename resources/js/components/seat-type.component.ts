@@ -29,10 +29,12 @@ Alpine.data('SeatTypeComponent', (seatTypeId?: number) => ({
     this.getSeatTypeById();
   },
   async onSubmit() {
+    // in ra lỗi
     try {
       await seatTypeSchema.validate(this.formData, { abortEarly: false });
     } catch (error: any) {
       if (error instanceof yup.ValidationError) {
+
         const { inner } = error;
         inner.forEach((err: any) => {
           this.errors[err.path] = err.message;
@@ -40,6 +42,7 @@ Alpine.data('SeatTypeComponent', (seatTypeId?: number) => ({
       }
       return;
     }
+
     try {
       if (seatTypeId) {
         await RoomService.putSeatType(seatTypeId, this.formData);
@@ -59,7 +62,6 @@ Alpine.data('SeatTypeComponent', (seatTypeId?: number) => ({
     if (seatTypeId) {
       const seatType = await RoomService.getSeatType(seatTypeId);
       this.formData = seatType;
-
     }
   },
 }));
