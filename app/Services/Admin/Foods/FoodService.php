@@ -19,14 +19,11 @@ class FoodService
         $this->foodRepository = $foodRepository;
     }
 
-    public function store($data)
+    public function store(&$data)
     {
         $uploadData = $this->uploadFile($data['image'], 'public/foods');
         if (isset($data['image']) && $data['image']) {
             $uploadData = $this->uploadFile($data['image'], 'public/foods');
-            if (!$uploadData) {
-                throw new \Exception("Avatar upload failed");
-            }
             $data['image'] = $uploadData['path'];
         }
         $data['price'] = $this->sanitizePrice($data['price']);
@@ -57,9 +54,28 @@ class FoodService
         return $this->foodRepository->delete($id);
     }
 
+    public function deleteMultipleChecked($request)
+    {
+        if (count($request->selectedIds) < 0) {
+            return false;
+        }
+        $this->foodRepository->deleteMultiple($request->selectedIds);
+        return true;
+    }
+
     public function getAll()
     {
         return $this->foodRepository->getAll();
+    }
+
+    public function getAllActive()
+    {
+        return $this->foodRepository->getAllActive();
+    }
+
+    public function getByMultipleId(array $ids)
+    {
+        return $this->foodRepository->getByMultipleId($ids);
     }
 
     public function find($id)

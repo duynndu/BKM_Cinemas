@@ -102,7 +102,7 @@ class FoodTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(string $id)
+    public function destroy(string $id)
     {
         try {
             DB::beginTransaction();
@@ -121,6 +121,28 @@ class FoodTypeController extends Controller
             return back()->with([
                 'status_failed' => 'Đã xảy ra lỗi khi xóa'
             ]);
+        }
+    }
+
+    public function deleteItemMultipleChecked(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            if (empty($request->selectedIds)) {
+                return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400);
+            }
+            $this->foodTypeService->deleteMultipleChecked($request);
+
+            DB::commit();
+            return response()->json(['message' => 'Xóa thành công!'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
         }
     }
 
