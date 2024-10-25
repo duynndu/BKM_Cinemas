@@ -166,6 +166,8 @@ class FoodComboController extends Controller
             return response()->json(['message' => 'Xóa thành công!'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Có lỗi xảy ra!',
