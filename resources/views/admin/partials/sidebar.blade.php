@@ -152,6 +152,31 @@
                     </li>
                 </ul>
             </li>
+            @if(auth()->user()->can('viewAny', App\Models\Food::class) || auth()->user()->can('viewAny', App\Models\FoodType::class) || auth()->user()->can('viewAny', App\Models\FoodCombo::class))
+                <li>
+                    <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                        <i class="material-icons">fastfood</i>
+                        <span class="nav-text">Quản lý đồ ăn</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        @can('viewAny', App\Models\FoodType::class)
+                            <li>
+                                <a href="{{ route('admin.food-types.index') }}" aria-expanded="false">Loại đồ ăn</a>
+                            </li>
+                        @endcan
+                        @can('viewAny', App\Models\Food::class)
+                            <li>
+                                <a href="{{ route('admin.foods.index') }}" aria-expanded="false">Đồ ăn</a>
+                            </li>
+                        @endcan
+                        @can('viewAny', App\Models\FoodCombo::class)
+                            <li>
+                                <a href="{{ route('admin.food-combos.index') }}" aria-expanded="false">Combo</a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
 
             @if(auth()->user()->can('viewAny', App\Models\User::class) || auth()->user()->can('viewAny', App\Models\Role::class) || auth()->user()->can('viewAny', App\Models\Module::class) || auth()->user()->can('viewAny', App\Models\Permission::class))
                 <li>
@@ -163,25 +188,25 @@
                         @can('viewAny', App\Models\User::class)
                             <li>
                                 <a href="{{ route('admin.users.index') }}"
-                                   aria-expanded="false">{{ __('language.admin.members.users.title') }}</a>
+                                aria-expanded="false">{{ __('language.admin.members.users.title') }}</a>
                             </li>
                         @endcan
                         @can('viewAny', App\Models\Role::class)
                             <li>
                                 <a href="{{ route('admin.roles.index') }}"
-                                   aria-expanded="false">{{ __('language.admin.members.roles.title') }}</a>
+                                aria-expanded="false">{{ __('language.admin.members.roles.title') }}</a>
                             </li>
                         @endcan
                         @can('viewAny', App\Models\Module::class)
                             <li>
                                 <a href="{{ route('admin.modules.index') }}"
-                                   aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>
+                                aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>  
                             </li>
                         @endcan
                         @can('viewAny', App\Models\Permission::class)
                             <li>
                                 <a href="{{ route('admin.permissions.index') }}"
-                                   aria-expanded="false">{{ __('language.admin.members.permissions.title') }}</a>
+                                aria-expanded="false">{{ __('language.admin.members.permissions.title') }}</a>
                             </li>
                         @endcan
                     </ul>
