@@ -559,11 +559,11 @@
 
 <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
+<script src="{{ asset('vendor/peity/jquery.peity.min.js') }}"></script>
+<script src="{{ asset('vendor/nestable2/js/jquery.nestable.min.js') }}"></script>
 
 <script src="{{ asset('vendor/chart-js/chart.bundle.min.js') }}"></script>
 <script src="{{ asset('vendor/apexchart/apexchart.js') }}"></script>
-<script src="{{ asset('vendor/peity/jquery.peity.min.js') }}"></script>
-<script src="{{ asset('vendor/nestable2/js/jquery.nestable.min.js') }}"></script>
 <script src="{{ asset('vendor/swiper/js/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('js/dashboard/dashboard-1.js') }}"></script>
 <script src="{{ asset('vendor/wow-master/dist/wow.min.js') }}"></script>
@@ -576,7 +576,7 @@
 <script src="{{ asset('js/dashboard/cms.js') }}"></script>
 <script src="{{ asset('js/plugins-init/nestable-init.js') }}"></script>
 
-<
+
 <script type="module">
     @if (session()->has('status_succeed'))
     toastr.success('{{ session()->pull('status_succeed') }}', {

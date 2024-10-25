@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\Blocks\BlockTypeController;
 use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenreController;
+use App\Http\Controllers\Admin\Foods\FoodComboController;
+use App\Http\Controllers\Admin\Foods\FoodController;
+use App\Http\Controllers\Admin\Foods\FoodTypeController;
 use App\Http\Controllers\Admin\Members\ModuleController;
 use App\Http\Controllers\Admin\Members\PermissionController;
 use App\Http\Controllers\Admin\Members\RoleController;
@@ -610,6 +613,103 @@ Route::prefix('admin')->middleware(['web'])
                     Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                         ->name('deleteItemMultipleChecked')
                         ->middleware('authorizeAction:deleteMultiple,App\Models\Permission');
+                });
+            Route::prefix('foods')
+                ->controller(FoodController::class)
+                ->name('foods.')->group(function () {
+                    Route::get('/', 'index')
+                        ->name('index')
+                        ->middleware('authorizeAction:viewAny,App\Models\Food');
+                    Route::get('/create', 'create')
+                        ->name('create')
+                        ->middleware('authorizeAction:create,App\Models\Food');
+                    Route::post('/store', 'store')
+                        ->name('store')
+                        ->middleware('authorizeAction:create,App\Models\Food');
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit')
+                        ->middleware('authorizeAction:update,App\Models\Food');
+                    Route::put('/{id}/update', 'update')
+                        ->name('update')
+                        ->middleware('authorizeAction:update,App\Models\Food');
+                    Route::delete('/{id}/delete', 'destroy')
+                        ->name('delete')
+                        ->middleware('authorizeAction:delete,App\Models\Food');
+                    Route::post('/change-order', 'changeOrder')
+                        ->name('changeOrder')
+                        ->middleware('authorizeAction:changeOrder,App\Models\Food');
+                    Route::post('/change-active', 'changeActive')
+                        ->name('changeActive')
+                        ->middleware('authorizeAction:changeActive,App\Models\Food');
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')
+                        ->name('removeAvatarImage');
+                    Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                        ->name('deleteItemMultipleChecked')
+                        ->middleware('authorizeAction:deleteMultiple,App\Models\Post');
+                });
+            Route::prefix('food-types')
+                ->controller(FoodTypeController::class)
+                ->name('food-types.')->group(function () {
+                    Route::get('/', 'index')
+                        ->name('index')
+                        ->middleware('authorizeAction:viewAny,App\Models\FoodType');
+                    Route::get('/create', 'create')
+                        ->name('create')
+                        ->middleware('authorizeAction:create,App\Models\FoodType');
+                    Route::post('/store', 'store')
+                        ->name('store')
+                        ->middleware('authorizeAction:create,App\Models\FoodType');
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit')
+                        ->middleware('authorizeAction:update,App\Models\FoodType');
+                    Route::put('/{id}/update', 'update')
+                        ->name('update')
+                        ->middleware('authorizeAction:update,App\Models\FoodType');
+                    Route::delete('/{id}/delete', 'destroy')
+                        ->name('delete')
+                        ->middleware('authorizeAction:delete,App\Models\FoodType');
+                    Route::post('/change-order', 'changeOrder')
+                        ->name('changeOrder')
+                        ->middleware('authorizeAction:changeOrder,App\Models\FoodType');
+                    Route::post('/change-active', 'changeActive')
+                        ->name('changeActive')
+                        ->middleware('authorizeAction:changeActive,App\Models\FoodType');
+                    Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                        ->name('deleteItemMultipleChecked')
+                        ->middleware('authorizeAction:deleteMultiple,App\Models\FoodType');
+                });
+            Route::prefix('food-combos')
+                ->controller(FoodComboController::class)
+                ->name('food-combos.')->group(function () {
+                    Route::get('/', 'index')
+                        ->name('index')
+                        ->middleware('authorizeAction:viewAny,App\Models\FoodCombo');
+                    Route::get('/create', 'create')
+                        ->name('create')
+                        ->middleware('authorizeAction:create,App\Models\FoodCombo');
+                    Route::post('/store', 'store')
+                        ->name('store')
+                        ->middleware('authorizeAction:create,App\Models\FoodCombo');
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit')
+                        ->middleware('authorizeAction:update,App\Models\FoodCombo');
+                    Route::put('/{id}/update', 'update')
+                        ->name('update')
+                        ->middleware('authorizeAction:update,App\Models\FoodCombo');
+                    Route::delete('/{id}/delete', 'destroy')
+                        ->name('delete')
+                        ->middleware('authorizeAction:delete,App\Models\FoodCombo');
+                    Route::post('/change-order', 'changeOrder')
+                        ->name('changeOrder')
+                        ->middleware('authorizeAction:changeOrder,App\Models\FoodCombo');
+                    Route::post('/change-active', 'changeActive')
+                        ->name('changeActive')
+                        ->middleware('authorizeAction:changeActive,App\Models\FoodCombo');
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')
+                        ->name('removeAvatarImage');
+                    Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                        ->name('deleteItemMultipleChecked')
+                        ->middleware('authorizeAction:deleteMultiple,App\Models\FoodCombo');
                 });
         });
     });
