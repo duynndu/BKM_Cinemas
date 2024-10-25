@@ -25,14 +25,6 @@ class FoodTypeRepository extends BaseRepository implements FoodTypeInterface
         return $data->paginate(self::PAGINATION);
     }
 
-    public function deleteMultiple(array $ids)
-    {
-        collect($ids)->chunk(1000)->each(function ($chunk) {
-            $this->model->whereIn('id', $chunk)->delete();
-        });
-        return true;
-    }
-
     protected function filterByName($query)
     {
         if (!empty(request()->name)) {
@@ -70,6 +62,15 @@ class FoodTypeRepository extends BaseRepository implements FoodTypeInterface
         }
         return $query->orderBy('order');
     }
+    
+    public function deleteMultiple(array $ids)
+    {
+        collect($ids)->chunk(1000)->each(function ($chunk) {
+            $this->model->whereIn('id', $chunk)->delete();
+        });
+        return true;
+    }
+
     public function getAllActive()
     {
         return $this->model->select('id', 'name', 'order')->where('active', 1)->get();
