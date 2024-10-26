@@ -27,7 +27,6 @@
                         <div class="seat selected"><span></span> Ghế đang chọn</div>
                         <div class="seat booking"><span></span> Ghế đã có người chọn</div>
                         <div class="seat booked"><span></span> Ghế đã có người đặt</div>
-                        <div class="seat disable"><span></span> Ghế không thể đặt</div>
                     </div>
                 </div>
                 <div class="col-sm-9">
@@ -36,6 +35,7 @@
                     </div>
                     <div id="map" class="map-wrap">
                         <div id="seatingArea" class="tw-inline-flex tw-items-center tw-mb-3 tw-text-white"></div>
+                        <button class="btn btn-primary" @click="checkSeatMapping">Check</button>
                     </div>
                 </div>
             </div>

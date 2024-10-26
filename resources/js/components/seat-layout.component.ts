@@ -6,6 +6,7 @@ import "../jquery-plugin/seatmanager.plugin";
 import { ISeatLayout } from "@/types/seat-layout.interface";
 import * as yup from 'yup';
 import { ISeatType } from "@/types/seat-type.interface";
+import { ISeat } from "@/types/seat.interface";
 const seatLayoutSchema = yup.object().shape({
   name: yup.string().required('Tên sơ đồ ghế là bắt buộc'),
   col_count: yup.number()

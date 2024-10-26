@@ -6,6 +6,7 @@ import "../jquery-plugin/seat-view.plugin";
 import { IRoom } from "@/types/room.interface";
 import * as yup from 'yup';
 import { ISeatType } from "@/types/seat-type.interface";
+import { ISeat } from "@/types/seat.interface";
 
 const roomSchema = yup.object().shape({
   room_name: yup.string().required('Tên phòng là bắt buộc'),
@@ -103,7 +104,7 @@ Alpine.data('SeatViewComponent', (roomId?: number) => ({
       seat_types: this.seatTypes,
       base_price: this.formData.base_price,
     }, (data: any) => {
-      console.log(data);
+      // console.log(data);
     });
   }
 }));
