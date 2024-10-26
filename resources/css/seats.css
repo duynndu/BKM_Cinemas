@@ -130,7 +130,49 @@
   border: 2px dashed #ff0000 !important;
 }
 
-.seat-table .seat.selected {
-  background-color: #fff200!important;
-  color: #fff!important;
+.seat-table .seat.available {
+  position: relative;
 }
+/* 
+green
+https://imgur.com/FjlD5ge
+
+red
+https://imgur.com/tJ4dAvZ
+
+yellow
+https://imgur.com/iMydoI1
+*/
+
+.seat-table .seat.selected,
+.seat-table .seat.occupied,
+.seat-table .seat.reserved {
+  position: relative;
+}
+
+.seat-table .seat.selected:after,
+.seat-table .seat.occupied:after,
+.seat-table .seat.reserved:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: 45%;
+  background-repeat: no-repeat;
+  top: -12%;
+  right: -40%;
+}
+
+.seat-table .seat.selected:after {
+  background-image: url("http://bookmon.test/images/thumbtack/yellow.png");
+}
+
+.seat-table .seat.occupied:after {
+  background-image: url("http://bookmon.test/images/thumbtack/green.png");
+}
+
+.seat-table .seat.reserved:after {
+  background-image: url("http://bookmon.test/images/thumbtack/red.png");
+}
+
+
