@@ -14,3 +14,5 @@ return [
     'image.max' => ':attribute không được vượt quá :max !',
     'string' => ':attribute phải là một chuỗi!'
 ];
+
+
