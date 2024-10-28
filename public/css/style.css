@@ -127,6 +127,14 @@
     --bs-tertiary-bg: #f3f3f3;
 }
 
+.text-style {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 240px;
+}
+
 .gradient_one {
     background-image: linear-gradient(
         to right,
@@ -16111,7 +16119,7 @@ ul {
 }
 
 .search-area .input-group-text svg path {
-    fill: var(--primary);
+    fill: #ff35c1;
 }
 
 .header-right {
@@ -16984,16 +16992,18 @@ ul {
     fill: #8088a1;
 }
 
-.dlabnav .metismenu > li:hover > a, .dlabnav .metismenu > li:focus > a {
-    color: var(--primary);
-}
+/*.dlabnav .metismenu > li:hover > a, .dlabnav .metismenu > li:focus > a, .dlabnav .metismenu > li:hover > a > i {*/
+/*    background: linear-gradient(to right, #ff00eb, #ff7000);*/
+/*    -webkit-background-clip: text;*/
+/*    -webkit-text-fill-color: transparent;*/
+/*}*/
 
 .dlabnav .metismenu > li:hover > a g [fill], .dlabnav .metismenu > li:focus > a g [fill] {
     fill: var(--primary);
 }
 
-.dlabnav .metismenu>li.mm-active>a {
-    background: var(--primary);
+.dlabnav .metismenu>li.mm-active > a {
+    background: linear-gradient(45deg, #ff00f7d4, #ff4700bd);
     color: #fff;
     border-radius: 0.5rem;
 }
@@ -17031,7 +17041,9 @@ ul {
 .dlabnav .metismenu ul a:focus,
 .dlabnav .metismenu ul a.mm-active {
     text-decoration: none;
-    color: var(--primary);
+    background: linear-gradient(to right, #ff00eb, #ff7000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .dlabnav .metismenu ul a:before {
@@ -18018,22 +18030,21 @@ ul {
     }
 
     [data-sidebar-style="mini"][data-layout="vertical"] .dlabnav .metismenu > li.mm-active > a {
-        background: var(--rgba-primary-1);
+        background: linear-gradient(45deg, #ff27e7, #fb8146d1);
         color: #fff;
     }
 
     [data-sidebar-style="mini"][data-layout="vertical"] .dlabnav .metismenu > li.mm-active > a i {
-        color: var(--primary);
+        color: #ffffff;
     }
 
     [data-sidebar-style="mini"][data-layout="vertical"] .dlabnav .metismenu > li:hover > a {
-        background: var(--rgba-primary-1);
-        color: var(--primary);
-        position: unset;
+        background: linear-gradient(45deg, #ff27e7, #fb8146d1);
+        color: #fff;
     }
 
     [data-sidebar-style="mini"][data-layout="vertical"] .dlabnav .metismenu > li:hover > a i {
-        color: var(--primary);
+        color: #fff;
     }
 
     [data-sidebar-style="mini"][data-layout="vertical"] .dlabnav .metismenu > li:hover > ul {
@@ -33605,7 +33616,7 @@ div:where(.swal2-container) div:where(.swal2-popup) {
 }
 
 .page-titles .breadcrumb li.active {
-    color: var(--primary);
+    color: #ff00f7d4;
     font-size: 0.938rem;
 }
 
@@ -39587,7 +39598,6 @@ table.dataTable > tfoot > tr > th, table.dataTable > tfoot > tr > td {
 }
 
 .login-account .account-info-area {
-    background-color: var(--primary);
     border-radius: 2.5rem;
     display: flex;
     align-items: center;
@@ -39598,14 +39608,13 @@ table.dataTable > tfoot > tr > th, table.dataTable > tfoot > tr > td {
     min-height: 600px;
     background-repeat: no-repeat;
     background-size: cover;
-    background-blend-mode: luminosity;
 }
 
 .login-account .account-info-area:after {
     content: "";
     height: 100%;
     width: 100%;
-    background-color: var(--primary);
+    background-color: #2d2d2d;
     position: absolute;
     left: 0;
     top: 0;
@@ -39691,6 +39700,10 @@ table.dataTable > tfoot > tr > th, table.dataTable > tfoot > tr > td {
     margin-bottom: 1.4rem;
     margin-top: 0;
     color: #fff;
+    -webkit-text-stroke: 1px #ff974d;
+    background: linear-gradient(to right, #cb3ec0, #c57f48);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .login-account .account-info-area .login-content .title span {
@@ -44886,5 +44899,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .form-check-input {
     border-color: #2e2e42;
 }
+
+
 
 /*# sourceMappingURL=style.css.map */

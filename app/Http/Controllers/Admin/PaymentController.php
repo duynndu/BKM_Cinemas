@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PaymentRequests;
+use App\Http\Requests\Payments\PaymentRequest;
 use Illuminate\Http\Request;
 use App\Services\Admin\Payments\PaymentService;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +37,7 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PaymentRequests $request)
+    public function store(PaymentRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -71,7 +71,7 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PaymentRequests $request, $id)
+    public function update(PaymentRequest $request, $id)
     {
         $this->paymentService->updatePayment($request, $id);
         return redirect()->route('admin.payments.index')->with('success', 'Payment updated successfully.');

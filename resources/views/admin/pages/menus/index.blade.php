@@ -96,14 +96,17 @@
                                                                     <div class="form-check custom-checkbox mb-3">
                                                                         <input type="checkbox" class="form-check-input checkbox_all" required="">
                                                                         <label class="form-check-label"
+                                                                               style="text-overflow: ellipsis; white-space: nowrap; display: inline-block; overflow: hidden; width: 300px;"
                                                                                for="customCheckBox1">{{ __('language.admin.interfaces.menus.pages.checkAll') }}</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="custom-checkbox mb-3 text-end">
-                                                                        <button class="btn btn-sm btn-outline-primary btn-add-menu">
-                                                                            {{ __('language.admin.interfaces.menus.pages.add') }}
-                                                                        </button>
+                                                                        @can('create', App\Models\Menu::class)
+                                                                            <button class="btn btn-sm btn-outline-primary btn-add-menu">
+                                                                                {{ __('language.admin.interfaces.menus.posts.add') }}
+                                                                            </button>
+                                                                        @endcan
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -163,6 +166,7 @@
                                                                                                class="form-check-input"
                                                                                                type="checkbox">
                                                                                         <label class="form-check-label"
+                                                                                               style="text-overflow: ellipsis; white-space: nowrap; display: inline-block; overflow: hidden; width: 300px;"
                                                                                                for="flexCheckDefault">
                                                                                             {{ $cate->name }}
                                                                                         </label>
@@ -190,9 +194,11 @@
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="custom-checkbox mb-3 text-end">
-                                                                        <button class="btn btn-sm btn-outline-primary btn-add-menu">
-                                                                            {{ __('language.admin.interfaces.menus.categoryPosts.add') }}
-                                                                        </button>
+                                                                        @can('create', App\Models\Menu::class)
+                                                                            <button class="btn btn-sm btn-outline-primary btn-add-menu">
+                                                                                {{ __('language.admin.interfaces.menus.categoryProducts.add') }}
+                                                                            </button>
+                                                                        @endcan
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -252,6 +258,7 @@
                                                                                                class="form-check-input"
                                                                                                type="checkbox">
                                                                                         <label class="form-check-label"
+                                                                                               style="text-overflow: ellipsis; white-space: nowrap; display: inline-block; overflow: hidden; width: 300px;"
                                                                                                for="flexCheckDefault">
                                                                                             {{ $post->name }}
                                                                                         </label>
@@ -279,9 +286,11 @@
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="custom-checkbox mb-3 text-end">
-                                                                        <button class="btn btn-sm btn-outline-primary btn-add-menu">
-                                                                            {{ __('language.admin.interfaces.menus.posts.add') }}
-                                                                        </button>
+                                                                        @can('create', App\Models\Menu::class)
+                                                                            <button class="btn btn-sm btn-outline-primary btn-add-menu">
+                                                                                {{ __('language.admin.interfaces.menus.products.add') }}
+                                                                            </button>
+                                                                        @endcan
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -294,184 +303,6 @@
                                 </div>
                             </div>
                             <!-- End Bài viết -->
-
-                            <!-- Danh mục Sản Phẩm -->
-                            <div class="filter cm-content-box box-primary border">
-                                <div class="content-title border-0 SlideToolHeader collapse">
-                                    <div class="cpa">
-                                        {{ __('language.admin.interfaces.menus.categoryProducts.title') }}
-                                    </div>
-                                    <div class="tools">
-                                        <a href="javascript:void(0);" class="handle collapse"><i
-                                                class="fa-solid fa-chevron-up"></i></a>
-                                    </div>
-                                </div>
-                                <div class="cm-content-body form excerpt border-top" style="display: none;">
-                                    <div class="col-xl-12">
-                                        <div class="card dz-card">
-                                            <div class="card-header flex-wrap border-0" id="default-tab">
-                                                <h4 class="card-title"></h4>
-                                            </div>
-                                            <div class="tab-content" id="myTabContent">
-                                                <div class="tab-pane fade show active" id="DefaultTab" role="tabpanel"
-                                                     aria-labelledby="home-tab">
-                                                    <div class="card-body pt-0">
-                                                        <!-- Nav tabs -->
-                                                        <div class="default-tab">
-                                                            <ul class="nav nav-tabs" role="tablist">
-                                                                <li class="nav-item" role="presentation">
-                                                                    <a class="nav-link tab-menus active"
-                                                                       data-bs-toggle="tab"
-                                                                       href="#post"
-                                                                       aria-selected="false" role="tab" tabindex="-1">
-                                                                        <i class="fa-solid fa-fire"></i>
-                                                                        {{ __('language.admin.interfaces.menus.categoryProducts.list') }}</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="tab-content tab-menus-border">
-                                                                <div class="tab-pane fade active show" id="post"
-                                                                     role="tabpanel">
-                                                                    <div style="padding: 1rem 1rem 0 1rem">
-                                                                        <div class="menu-tabs">
-                                                                            @if(!$categoryProducts->isEmpty())
-                                                                                @foreach($categoryProducts as $cate)
-                                                                                    <div class="form-check">
-                                                                                        <input data-id="{{ $cate->id }}"
-                                                                                               data-type="3"
-                                                                                               class="form-check-input"
-                                                                                               type="checkbox">
-                                                                                        <label class="form-check-label"
-                                                                                               for="flexCheckDefault">
-                                                                                            {{ $cate->name }}
-                                                                                        </label>
-                                                                                    </div>
-                                                                                @endforeach
-                                                                            @else
-                                                                                <div class="d-flex justify-content-center align-items-center p-3">
-                                                                                    <p>{{ __('language.admin.interfaces.menus.categoryProducts.notFound') }}</p>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div style="padding: 1rem 0 0 1rem">
-                                                            <div class="row">
-                                                                <div class="col-6">
-                                                                    <div class="form-check custom-checkbox mb-3">
-                                                                        <input type="checkbox" class="form-check-input checkbox_all" required="">
-                                                                        <label class="form-check-label"
-                                                                               for="customCheckBox1">{{ __('language.admin.interfaces.menus.categoryProducts.checkAll') }}</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="custom-checkbox mb-3 text-end">
-                                                                        <button class="btn btn-sm btn-outline-primary btn-add-menu">
-                                                                            {{ __('language.admin.interfaces.menus.categoryProducts.add') }}
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Danh mục Sản Phẩm -->
-
-                            <!-- Sản Phẩm -->
-                            <div class="filter cm-content-box box-primary border">
-                                <div class="content-title border-0 SlideToolHeader collapse">
-                                    <div class="cpa">
-                                        {{ __('language.admin.interfaces.menus.products.title') }}
-                                    </div>
-                                    <div class="tools">
-                                        <a href="javascript:void(0);" class="handle collapse"><i
-                                                class="fa-solid fa-chevron-up"></i></a>
-                                    </div>
-                                </div>
-                                <div class="cm-content-body form excerpt border-top" style="display: none;">
-                                    <div class="col-xl-12">
-                                        <div class="card dz-card">
-                                            <div class="card-header flex-wrap border-0" id="default-tab">
-                                                <h4 class="card-title"></h4>
-                                            </div>
-                                            <div class="tab-content" id="myTabContent">
-                                                <div class="tab-pane fade show active" id="DefaultTab" role="tabpanel"
-                                                     aria-labelledby="home-tab">
-                                                    <div class="card-body pt-0">
-                                                        <!-- Nav tabs -->
-                                                        <div class="default-tab">
-                                                            <ul class="nav nav-tabs" role="tablist">
-                                                                <li class="nav-item" role="presentation">
-                                                                    <a class="nav-link tab-menus active"
-                                                                       data-bs-toggle="tab"
-                                                                       href="#post"
-                                                                       aria-selected="false" role="tab" tabindex="-1">
-                                                                        <i class="fa-solid fa-fire"></i>
-                                                                        {{ __('language.admin.interfaces.menus.products.list') }}</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="tab-content tab-menus-border">
-                                                                <div class="tab-pane fade active show" id="post"
-                                                                     role="tabpanel">
-                                                                    <div style="padding: 1rem 1rem 0 1rem">
-                                                                        <div class="menu-tabs">
-                                                                            @if(!$products->isEmpty())
-                                                                                @foreach($products as $product)
-                                                                                    <div class="form-check">
-                                                                                        <input data-id="{{ $product->id }}"
-                                                                                               data-type="4"
-                                                                                               class="form-check-input"
-                                                                                               type="checkbox">
-                                                                                        <label class="form-check-label"
-                                                                                               for="flexCheckDefault">
-                                                                                            {{ $product->name }}
-                                                                                        </label>
-                                                                                    </div>
-                                                                                @endforeach
-                                                                            @else
-                                                                                <div class="d-flex justify-content-center align-items-center p-3">
-                                                                                    <p>{{ __('language.admin.interfaces.menus.products.notFound') }}</p>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div style="padding: 1rem 0 0 1rem">
-                                                            <div class="row">
-                                                                <div class="col-6">
-                                                                    <div class="form-check custom-checkbox mb-3">
-                                                                        <input type="checkbox" class="form-check-input checkbox_all" required="">
-                                                                        <label class="form-check-label"
-                                                                               for="customCheckBox1">{{ __('language.admin.interfaces.menus.products.checkAll') }}</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="custom-checkbox mb-3 text-end">
-                                                                        <button class="btn btn-sm btn-outline-primary btn-add-menu">
-                                                                            {{ __('language.admin.interfaces.menus.products.add') }}
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Sản Phẩm -->
                         </div>
                     </div>
                 </div>
@@ -504,7 +335,7 @@
                                                                                     <div class="move-media dd-handle">
                                                                                         <i class="fa-solid fa-arrows-up-down-left-right"></i>
                                                                                     </div>
-                                                                                    <button class="accordion-button btnLabel collapsed" data-id="{{ $menu->id }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{ $menu->id }}" aria-expanded="true" aria-controls="collapseOne__id__">
+                                                                                    <button class="accordion-button btnLabel collapsed" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: inline-block;" data-id="{{ $menu->id }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{ $menu->id }}" aria-expanded="true" aria-controls="collapseOne__id__">
                                                                                         {{ $menu->name ?? '' }}
                                                                                     </button>
                                                                                 </div>
@@ -529,9 +360,17 @@
                                                                                                     <input type="text" class="form-control url_menu" value="{{ $menu->url ?? '' }}">
                                                                                                 </div>
                                                                                             </div>
+
+                                                                                            <input type="hidden" class="form-control record_id" value="{{ $menu->record_id ?? '' }}">
+
+                                                                                            <input type="hidden" class="form-control type_menu" value="{{ $menu->type ?? '' }}">
+
                                                                                             <div class="d-flex align-items-center">
-                                                                                                <a class="text-hover remove-menu-item remove" href="javascript:void(0);">{{  __('language.admin.interfaces.menus.deleteMenuItem')}}</a>
-                                                                                                <span class="mx-2">|</span>
+                                                                                                @can('delete', App\Models\Menu::class)
+                                                                                                    <a class="text-hover remove-menu-item remove" href="javascript:void(0);">{{  __('language.admin.interfaces.menus.deleteMenuItem')}}</a>
+                                                                                                    <span class="mx-2">|</span>
+                                                                                                @endcan
+
                                                                                                 <a class="text-hover cancel" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseOne{{ $menu->id }}" aria-expanded="true" aria-controls="collapseOne">
                                                                                                     {{  __('language.admin.interfaces.menus.cancel')}}
                                                                                                 </a>
@@ -555,7 +394,7 @@
                                                                         <div class="move-media dd-handle">
                                                                             <i class="fa-solid fa-arrows-up-down-left-right"></i>
                                                                         </div>
-                                                                        <button class="accordion-button btnLabel collapsed" data-type="__type__" data-id="__id__" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne__id__" aria-expanded="true" aria-controls="collapseOne__id__">
+                                                                        <button class="accordion-button btnLabel collapsed" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: inline-block;" data-type="__type__" data-id="__id__" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne__id__" aria-expanded="true" aria-controls="collapseOne__id__">
                                                                             __name__
                                                                         </button>
                                                                     </div>
@@ -580,6 +419,8 @@
                                                                                         <input type="text" class="form-control url_menu" value="">
                                                                                     </div>
                                                                                 </div>
+
+                                                                                <input type="hidden" class="form-control record_id" value="__recordId__">
 
                                                                                 <input type="hidden" class="form-control type_menu" value="__type__">
 
@@ -606,10 +447,14 @@
                                         <div class="row" style="padding-left: 1.875rem;">
                                             <div class="d-flex flex-start">
                                                 <div class="custom-checkbox text-end">
-                                                    <button data-url="{{  route('admin.menus.store')}}" data-image="{{ asset('images/hand.png') }}" data-error="{{ asset('images/no-hand.png') }}" class="btn btn-primary btn-save-menu">
-                                                        {{ __('language.admin.interfaces.menus.save') }}
-                                                    </button>
-                                                    <a href="{{ route('admin.menus.delete') }}" class="text-red btnDeleteMenu" style="margin-left: 10px;">{{ __('language.admin.interfaces.menus.delete') }}</a>
+                                                    @can('save', App\Models\Menu::class)
+                                                        <button data-url="{{  route('admin.menus.store')}}" data-image="{{ asset('images/hand.png') }}" data-error="{{ asset('images/no-hand.png') }}" class="btn btn-primary btn-save-menu">
+                                                            {{ __('language.admin.interfaces.menus.save') }}
+                                                        </button>
+                                                    @endcan
+                                                    @can('delete', App\Models\Menu::class)
+                                                        <a href="{{ route('admin.menus.delete') }}" class="text-red btnDeleteMenu" style="margin-left: 10px;">{{ __('language.admin.interfaces.menus.delete') }}</a>
+                                                    @endcan
                                                 </div>
                                             </div>
                                         </div>

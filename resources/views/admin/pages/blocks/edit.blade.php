@@ -108,34 +108,6 @@
 
                                 <div class="row mb-4">
                                     <div class="col-6">
-                                        <label class="form-label">{{ __('language.admin.interfaces.blocks.language') }}</label><br>
-                                        <select class="form-control" multiple name="language_id[]" id="language">
-                                            <option value=" " disabled>-- {{ __('language.admin.interfaces.blocks.select') }} --</option>
-                                            @if(!empty($languages))
-                                                @foreach($languages as $language)
-                                                    <option value="{{ $language->id }}" @selected(in_array($language->id, old('language_id', $languagesTransactions)))>
-                                                        {{ $language->name }}
-                                                    </option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                        @error('language_id')
-                                        <div class="mt-2">
-                                            <span class="text-red">{{ $message }}</span>
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-6">
-                                        <label class="form-label">{{ __('language.admin.interfaces.blocks.order') }}</label><br>
-                                        <input class="form-control" value="{{ $block->order ?? 0 }}"
-                                               type="number" min="0" id="order"
-                                               name="order">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-4">
-                                    <div class="col-6">
                                         <label class="form-label">{{ __('language.admin.interfaces.blocks.active') }}</label><br>
                                         <div class="row mt-2">
                                             <div class="col-sm-6">
@@ -155,6 +127,12 @@
                                                 </label>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">{{ __('language.admin.interfaces.blocks.order') }}</label><br>
+                                        <input class="form-control" value="{{ $block->order ?? 0 }}"
+                                               type="number" min="0" id="order"
+                                               name="order">
                                     </div>
                                 </div>
                             </div>

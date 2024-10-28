@@ -13,4 +13,14 @@ class System extends Model
     protected $table = 'systems';
 
     protected $guarded = [];
+
+    public function childs()
+    {
+        return $this->hasMany(System::class, 'type', 'id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(System::class, 'type', 'id');
+    }
 }

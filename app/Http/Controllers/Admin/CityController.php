@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CityRequests;
+use App\Http\Requests\Cities\CityRequest;
 use App\Services\Admin\Cities\CityService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CityController extends Controller
 {
@@ -28,40 +28,44 @@ class CityController extends Controller
         return view('admin.pages.city.create');
     }
 
-    public function store(CityRequests $request)
+    public function store(CityRequest $request)
     {
         DB::beginTransaction(); 
         try {
             $this->cityService->create($request);
             DB::commit(); 
-            return redirect()->route('admin.cities.index')->with('success', 'City created successfully.');
+            return redirect()->route('admin.cities.index')->with('status_succeed', 'Thêm thành phố thành công');
         } catch (\Exception $e) {
             DB::rollBack(); 
-            return redirect()->route('aadmin.cities.create')->with('error', 'Không thể tạo danh mục.');
+
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return redirect()->route('aadmin.cities.create')->with('status_failed', 'Không thể tạo thành phố.');
         }
     }
     public function edit($id)
     {
-        try {
             $city = $this->cityService->findCityById($id);
+
+            if (!$city) {
+                return redirect()->route('admin.cities.index')->with(['status_failed' => 'Không tìm thấy!']);
+            }
             return view('admin.pages.city.edit', compact('city'));
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.cities.index')->with('error', 'City not found.');
-        } catch (\Exception $e) {
-            return redirect()->route('admin.cities.index')->with('error', 'An error occurred.');
-        }
     }
 
-    public function update(CityRequests $request, $id)
+    public function update(CityRequest $request, $id)
     {
         DB::beginTransaction();
         try {
             $this->cityService->update($id, $request);
             DB::commit(); 
-            return redirect()->route('admin.cities.index')->with('success', 'City updated successfully.');
+            return redirect()->route('admin.cities.index')->with('status_succeed', 'Cập nhật thành phố thành công');
         } catch (\Exception $e) {
-            DB::rollBack(); 
-            return redirect()->route('admin.cities.edit', $id)->with('error', 'Cập nhật danh mục không thành công.');
+            DB::rollBack();
+            
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+            
+            return redirect()->route('admin.cities.edit', $id)->with('status_failed', 'Cập nhật thành phố không thành công.');
         }
     }
 
@@ -71,10 +75,13 @@ class CityController extends Controller
         try {
             $this->cityService->delete($id);
             DB::commit();
-            return redirect()->route('admin.cities.index')->with('success', 'City deleted successfully.');
+            return redirect()->route('admin.cities.index')->with('status_succeed', 'Xóa thành phố thành công');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('admin.cities.index')->with('error', 'Xóa danh mục không thành công.');
+
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return redirect()->route('admin.cities.index')->with('status_failed', 'Xóa thành phố không thành công.');
         }
         
     }

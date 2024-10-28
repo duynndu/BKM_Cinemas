@@ -13,28 +13,27 @@
                     <div class="col-xl-12">
                         <div class="page-titles">
                             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                                {{-- @include('admin.components.breadcrumbs', [
+                                @include('admin.components.breadcrumbs', [
                                     'title' => $title['create'] ?? '',
                                     'breadcrumbs' => $breadcrumbs
-                                ]) --}}
+                                ])
                             </nav>
                         </div>
                     </div>
                 </div>
                 <form method="post"
-                    action="{{ route('admin.areas.store', request()->area_id > 0 ? 'area_id=' . request()->area_id : '') }}"
+                    action="{{ route('admin.areas.store') }}"
                     class="product-vali" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="type" value="{{ request()->area_id ?? 0 }}">
                     <div class="row">
                         <div>
                             <div class="card h-auto">
                                 <div class="card-body">
                                     <div>
                                         <div>
-                                            <label class="form-label mb-2">{{ __('language.admin.areas.nameArea') }}</label>
+                                            <label class="form-label mb-2">Tên Khu Vực</label>
                                             <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="{{ __('language.admin.areas.inputName') }}" value="{{ old('name') ?? '' }}">
+                                                placeholder="Nhập Tên Khu Vực" value="{{ old('name') ?? '' }}">
                                             @error('name')
                                                 <div class="mt-2">
                                                     <span class="text-red">{{ $message }}</span>
@@ -44,9 +43,11 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <label class="form-label mb-2">{{ __('language.admin.areas.city_id') }}</label>
+                                        <label class="form-label mb-2">Chọn Thành Phố</label>
                                         <select name="city_id" class="form-control">
-                                            <option value="" selected>-- {{ __('language.admin.areas.chooseCity') }} --</option>
+                                         
+                                            <option value="" selected>-- Chọn Thành Phố --</option>
+        
                                             @foreach($cities as $city)
                                                 <option value="{{ $city->id }}">{{ $city->name }}</option>
                                             @endforeach
@@ -59,8 +60,8 @@
                                     </div>
 
                                     <div class="mt-3 d-flex justify-content-start gap-2">
-                                        <button type="submit" class="btn btn-success">{{ __('language.admin.areas.createNew') }}</button>
-                                        <a href="{{ route('admin.areas.index') }}" class="btn btn-warning">{{ __('language.admin.areas.back') }}</a>
+                                        <button type="submit" class="btn btn-success">Tạo Mới</button>
+                                        <a href="{{ route('admin.areas.index') }}" class="btn btn-warning">Quay Về Trang Danh Sách</a>
                                     </div>
                                 </div>
                             </div>

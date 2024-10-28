@@ -13,7 +13,7 @@
       <div class="row">
         <x-page-titles />
       </div>
-      <form onsubmit="return false" x-data="SeatLayout({{ $seat_layout->id }})" method="post" action="" class="product-vali"
+      <form id="form-data" onsubmit="return false" x-data="SeatLayout({{ $seatLayout->id }})" method="post" action="" class="product-vali"
         enctype="multipart/form-data">
         <div class="row">
           <div class="col-xl-12">
@@ -24,18 +24,21 @@
                     <label class="me-sm-2 form-label mb-2">Tên sơ đồ ghế</label>
                     <input type="text" x-model="formData.name" class="form-control"
                       placeholder="Nhập tên sơ đồ ghế">
+                    <span class="text-danger" x-text="errors.name"></span>
                   </div>
                   <div class="col-6 mb-3">
                     <label class="form-label mb-2">Số cột</label>
                     <input type="number" x-model="formData.col_count" @input="renderSeatLayout; formData.seats = []"
                       @change="formData.seats = []" class="form-control" id="slug"
                       placeholder="Nhập số cột">
+                    <span class="text-danger" x-text="errors.col_count"></span>
                   </div>
                   <div class="col-6 mb-3">
                     <label class="form-label mb-2">Số hàng</label>
                     <input type="number" x-model="formData.row_count" @input="renderSeatLayout; formData.seats = []"
                       @change="formData.seats = []" class="form-control" id="slug"
                       placeholder="Nhập số hàng" value="{{ old('slug') ?? '' }}">
+                    <span class="text-danger" x-text="errors.row_count"></span>
                   </div>
                   <div id="seatingArea" class="tw-inline-flex tw-items-center tw-mb-3 tw-text-white"></div>
                   <div class="mb-3">
@@ -53,7 +56,7 @@
         <div x-show="showModal"
           class="tw-fixed tw-inset-0 tw-z-50 tw-flex tw-items-center tw-justify-center tw-bg-black tw-bg-opacity-50" x-cloak>
           <div @click.outside="toggleModal()"
-            class="tw-bg-[#ffffff] tw-bg-opacity-90 tw-rounded-lg tw-shadow-lg tw-w-full tw-max-w-7xl tw-min-h-[500px] tw-p-6 tw-relative">
+            class="tw-bg-black tw-bg-opacity-60 tw-rounded-lg tw-shadow-lg tw-w-full tw-max-w-7xl tw-min-h-[500px] tw-p-6 tw-relative">
             <div class="tw-flex tw-justify-between tw-items-center tw-border-b tw-pb-3">
               <h5 class="tw-text-2xl tw-font-bold tw-text-black">Chọn từ sơ đồ ghế có sẵn</h5>
               <button type="button" @click="toggleModal()"

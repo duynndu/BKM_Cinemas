@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Danh sách khối trang')
+@section('title', __('language.admin.interfaces.blocks.list'))
 
 @section('css')
 @endsection
@@ -49,7 +49,8 @@
                                                     </svg>
                                                 </div>
                                                 <div class="drive-content">
-                                                    <h5>{{ __('language.admin.interfaces.blocks.have') }}: {{ $countBlock }} {{ __('language.admin.interfaces.blocks.block_sample') }}</h5>
+                                                    <h5>{{ __('language.admin.interfaces.blocks.have') }}
+                                                        : {{ $countBlock }} {{ __('language.admin.interfaces.blocks.block_sample') }}</h5>
                                                     <div class="progress default-progress">
                                                         <div class="progress-bar bg-vigit progress-animated bg-primary"
                                                              style="width: {{ $countBlock }}%; height:100%;"
@@ -91,18 +92,24 @@
                                                     </svg>
                                                 </div>
                                                 <div class="dz-info">
-                                                    <a href="{{ route('admin.blocks.edit', $block->id) }}">
+                                                    <a @can('update', $block)
+                                                           href="{{ route('admin.blocks.edit', $block->id) }}"
+                                                        @endcan>
                                                         <h6 class="mb-0">{{ $block->name }}</h6>
                                                     </a>
                                                     <div class="mt-1 d-flex justify-content-center align-items-center">
-                                                        <a href="{{ route('admin.blocks.edit', $block->id) }}"
-                                                           class="text-hover">{{ __('language.admin.interfaces.blocks.quick_fix') }}</a>
-                                                        <form action="{{ route('admin.blocks.delete', $block->id) }}"
-                                                              class="formDelete" method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="text-hover bt-form btnDelete">{{ __('language.admin.interfaces.blocks.delete') }}</button>
-                                                        </form>
+                                                        @can('update', $block)
+                                                            <a href="{{ route('admin.blocks.edit', $block->id) }}"
+                                                               class="text-hover">{{ __('language.admin.interfaces.blocks.quick_fix') }}</a>
+                                                        @endcan
+                                                        @can('delete', $block)
+                                                            <form action="{{ route('admin.blocks.delete', $block->id) }}"
+                                                                  class="formDelete" method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="text-hover bt-form btnDelete">{{ __('language.admin.interfaces.blocks.delete') }}</button>
+                                                            </form>
+                                                        @endcan
                                                     </div>
                                                 </div>
                                             </div>
@@ -139,7 +146,7 @@
     <script>
         $(document).ready(function () {
             @if ($errors->any())
-                $('#modalAddBlock').modal('show');
+            $('#modalAddBlock').modal('show');
             @endif
         });
     </script>

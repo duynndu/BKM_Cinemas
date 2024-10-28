@@ -3,26 +3,34 @@ import Alpine from "alpinejs";
 import { domToBlob, redirect } from "@/utils/common";
 import $ from "jquery";
 import "../jquery-plugin/seatmanager.plugin";
+import { ISeatLayout } from "@/types/seat-layout.interface";
+import * as yup from 'yup';
+import { ISeatType } from "@/types/seat-type.interface";
+const seatLayoutSchema = yup.object().shape({
+  name: yup.string().required('Tên sơ đồ ghế là bắt buộc'),
+  col_count: yup.number()
+    .typeError('Số cột phải là một số và không được để trống')
+    .min(1, 'Số cột phải lớn hơn hoặc bằng 1'),
+  row_count: yup.number()
+    .typeError('Số cột phải là một số và không được để trống')
+    .min(1, 'Số hàng phải lớn hơn hoặc bằng 1'),
+});
 
 Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
   formData: {
     id: null as any,
-    name: 'Test',
+    name: '',
     col_count: 11,
     row_count: 10,
-    seats: [] as {
-      seat_number: any,
-      seat_type: any,
-      seat_status: any,
-      slot: any,
-      visible: any,
-      order: any,
-    }[],
-  },
+    seats: [] as ISeat[],
+  } as ISeatLayout,
+  seatTypes: [] as ISeatType[],
+  errors: {} as Record<string, string>,
   seatTable: null as JQuery<HTMLElement> | null,
   showModal: false,
   seatLayouts: null as any[] | null,
   async init() {
+    this.seatTypes = await RoomService.getSeatTypesKeyByCode();
     this.seatLayouts = await RoomService.getSeatLayouts();
     this.getSeatLayoutById();
     this.renderSeatLayout();
@@ -37,6 +45,17 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
     }
   },
   async onSubmit() {
+    try {
+      await seatLayoutSchema.validate(this.formData, { abortEarly: false });
+    } catch (error: any) {
+      if (error instanceof yup.ValidationError) {
+        const { inner } = error;
+        inner.forEach((err: any) => {
+          this.errors[err.path] = err.message;
+        });
+      }
+      return;
+    }
     const formData = new FormData();
     formData.set('name', this.formData.name);
     formData.set('col_count', this.formData.col_count.toString());
@@ -47,24 +66,23 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
     }
     try {
       if (seatLayoutId) {
-        RoomService.putSeatLayout(seatLayoutId, formData).then((response) => {
-          console.log('update success');
-        });
+        await RoomService.putSeatLayout(seatLayoutId, formData);
       } else {
-        RoomService.postSeatLayout(formData).then((response) => {
-          console.log('add success');
-        });
+        await RoomService.postSeatLayout(formData);
       }
-      redirect().route('seat-layouts.index');
-    } catch (error) {
-      console.log(error);
+      toastr.success('Thao tác thành công');
+      setTimeout(() => {
+        redirect().route('admin.seat-layouts.index');
+      }, 500);
+    } catch (error: any) {
+      console.error(error);
+      toastr.error(error.message);
     }
   },
   toggleModal() {
     this.showModal = !this.showModal;
   },
   selectLayout(seatLayout: any) {
-    console.log(seatLayout.id);
     this.formData.id = seatLayout.id;
     this.formData.col_count = seatLayout.col_count;
     this.formData.row_count = seatLayout.row_count;
@@ -79,9 +97,16 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
       col_count: this.formData.col_count,
       row_count: this.formData.row_count,
       seats: this.formData.seats,
+      seat_types: this.seatTypes,
     }, (data: any) => {
       this.formData.seats = data.seats;
       this.seatTable = data.seatTable;
+      if (!isNaN(data.col_count)) {
+        this.formData.col_count = data.col_count;
+      }
+      if (!isNaN(data.row_count)) {
+        this.formData.row_count = data.row_count;
+      }
     });
   },
 }));

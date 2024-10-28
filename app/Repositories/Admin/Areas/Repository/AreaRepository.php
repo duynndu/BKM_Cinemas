@@ -4,47 +4,41 @@ namespace App\Repositories\Admin\Areas\Repository;
 
 use App\Models\Area;
 use App\Repositories\Admin\Areas\Interface\AreaInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Repositories\Base\BaseRepository;
 
-class AreaRepository implements AreaInterface
+class AreaRepository extends BaseRepository implements AreaInterface
 {
-    protected $area;
-
-    public function __construct(Area $area)
+    public function getModel()
     {
-        $this->area = $area;
+        return Area::class;
     }
 
-    
-    public function getAllArea()
+    public function getAll()
     {
-        return $this->area->all(); 
+        $query = $this->model->newQuery();
+
+        $query = $this->filterByName($query);
+
+        $query = $this->filterByCity($query);
+
+        return $query->paginate(self::PAGINATION);
     }
 
-    
-    public function create(array $data)
+    public function filterByName($query): mixed
     {
-        return $this->area->create($data);
+        if (!empty(request()->name)) {
+            $query->where('name', 'like', '%' . request()->name . '%');
+        }
+        return $query; 
     }
 
-   
-    public function getById($id)
+    public function filterByCity($query)
     {
-        return $this->area->findOrFail($id);
+        if (!empty(request()->cityId)) {
+            
+            $query->where('city_id', request()->cityId);
+        }
+        return $query; 
     }
 
-    
-    public function update(array $data, $id)
-    {
-        $area = $this->getById($id); 
-        $area->update($data);
-        return $area;
-    }
-
-    
-    public function delete($id)
-    {
-        $area = $this->getById($id); 
-        return $area->delete();
-    }
 }

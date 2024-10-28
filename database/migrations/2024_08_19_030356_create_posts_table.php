@@ -22,9 +22,6 @@ return new class extends Migration
             $table->tinyInteger('hot')->default(0);
             $table->tinyInteger('active')->default(1);
             $table->integer('order')->default(0);
-            $table->string('title_seo')->nullable();
-            $table->string('description_seo')->nullable();
-            $table->string('keyword_seo')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

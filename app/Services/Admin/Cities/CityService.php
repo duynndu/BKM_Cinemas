@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Admin\Cities;
 
-use App\Http\Requests\CityRequests;
+
 use App\Repositories\Admin\Cities\Repository\CityRepository;
 
 class CityService {
@@ -12,14 +12,19 @@ class CityService {
         $this->cityRepository = $cityRepository;
     }
 
+    public function getAllCity()
+    {
+        return $this->cityRepository->getAllCity();
+    }
+
     public function getAllCities()
     {
-        return $this->cityRepository->getAllCities();
+        return $this->cityRepository->getAll();
     }
 
     public function findCityById($id)
     {
-        return $this->cityRepository->findCityById($id);
+        return $this->cityRepository->find($id);
     }
 
     public function create( $request)

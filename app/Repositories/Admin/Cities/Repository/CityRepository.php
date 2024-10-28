@@ -4,44 +4,33 @@ namespace App\Repositories\Admin\Cities\Repository;
 
 use App\Models\City;
 use App\Repositories\Admin\Cities\Interface\CityInterface;
+use App\Repositories\Base\BaseRepository;
 
-
-
-
-class CityRepository implements CityInterface
+class CityRepository extends BaseRepository implements CityInterface
 {
-    protected $city;
-
-    public function __construct(City $city)
+    public function getModel()
     {
-        $this->city = $city;
+        return City::class;
     }
 
-    public function getAllCities()
+    public function getAll()
     {
-        return $this->city->all();
-    }
+        $query = $this->model->newQuery();
+        
+        $query = $this->filterByName($query);
 
-    public function findCityById($id)
-    {
-        return $this->city->findOrFail($id);
+        return $query->paginate(self::PAGINATION);
     }
-
-    public function create($data)
+    public function getAllCity()
     {
-        return $this->city->create($data);
+        return $this->getModel()::all();
+        
     }
-
-    public function update($id, $data)
+    public function filterByName($query)
     {
-        $city = $this->findCityById($id);
-        $city->update($data);
-        return $city;
-    }
-
-    public function delete($id)
-    {
-        $city = $this->findCityById($id);
-        return $city->delete();
+        if (!empty(request()->name)) {
+            return $query->where('name', 'like', '%' . request()->name . '%');
+        }
+        return $query;
     }
 }
