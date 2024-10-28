@@ -4,7 +4,7 @@ use App\Repositories\Base\RepositoryInterface;
 abstract class BaseRepository implements RepositoryInterface
 {
     protected $model;
-    const PAGINATION = 2;
+    const PAGINATION = 6;
 
     public function __construct()
     {
