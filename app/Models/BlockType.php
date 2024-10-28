@@ -13,4 +13,10 @@ class BlockType extends Model
     protected $table = 'block_types';
 
     protected $guarded = [];
+
+    public function blocks()
+    {
+        return $this->hasMany(Block::class, 'block_type_id', 'id');
+    }
+
 }

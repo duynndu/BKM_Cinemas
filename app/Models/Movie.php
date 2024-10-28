@@ -13,4 +13,20 @@ class Movie extends Model
     protected $table = 'movies';
 
     protected $guarded = [];
+
+    public function actors()
+    {
+        return $this->belongsToMany(Actor::class, 'movie_actors')->withPivot('role', 'order');
+    }
+
+
+    public function movieActor()
+    {
+        return $this->hasMany(MovieActor::class, 'movie_id', 'id');
+    }
+
+    public function movieGenre()
+    {
+        return $this->hasMany(MovieGenre::class, 'movie_id', 'id');
+    }
 }

@@ -13,10 +13,10 @@
                     <div class="col-xl-12">
                         <div class="page-titles">
                             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                                {{-- @include('admin.components.breadcrumbs', [
+                                @include('admin.components.breadcrumbs', [
                                     'title' => $title['edit'] ?? '',
                                     'breadcrumbs' => $breadcrumbs
-                                ]) --}}
+                                ])
                             </nav>
                         </div>
                     </div>
@@ -26,16 +26,15 @@
                     class="product-vali" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')  
-                    <input type="hidden" name="type" value="{{ request()->area_id ?? 0 }}">
                     <div class="row">
                         <div>
                             <div class="card h-auto">
                                 <div class="card-body">
                                     <div>
                                         <div>
-                                            <label class="form-label mb-2">{{ __('language.admin.areas.nameArea') }}</label>
+                                            <label class="form-label mb-2">Tên Khu Vực</label>
                                             <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="{{ __('language.admin.areas.inputName') }}" 
+                                                placeholder="Nhập Tên Khu Vực" 
                                                 value="{{ old('name', $area->name) }}">  
                                             @error('name')
                                                 <div class="mt-2">
@@ -46,9 +45,9 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <label class="form-label mb-2">{{ __('language.admin.areas.city_id') }}</label>
+                                        <label class="form-label mb-2">Chọn Thành Phố</label>
                                         <select name="city_id" class="form-control">
-                                            <option value="" selected>-- {{ __('language.admin.areas.chooseCity') }} --</option>
+                                            <option value="" selected>-- Chọn Thành Phố --</option>
                                             @foreach($cities as $city)
                                                 <option value="{{ $city->id }}" {{ $city->id == $area->city_id ? 'selected' : '' }}>
                                                     {{ $city->name }}
@@ -63,8 +62,8 @@
                                     </div>
 
                                     <div class="mt-3 d-flex justify-content-start gap-2">
-                                        <button type="submit" class="btn btn-success">{{ __('language.admin.areas.saveEdit') }}</button>  {{-- Thay đổi nhãn nút --}}
-                                        <a href="{{ route('admin.areas.index') }}" class="btn btn-warning">{{ __('language.admin.areas.back') }}</a>
+                                        <button type="submit" class="btn btn-success">Lưu Thay Đổi</button>  
+                                        <a href="{{ route('admin.areas.index') }}" class="btn btn-warning">Quay Về Trang Chủ</a>
                                     </div>
                                 </div>
                             </div>

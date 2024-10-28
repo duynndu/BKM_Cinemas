@@ -16,21 +16,25 @@ import "./components";
 window.axios = axios;
 window.route = route;
 window.Alpine = Alpine;
+
+window.axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content') ?? '';
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+window.axios.defaults.baseURL = "/api";
 
 // Request interceptor
 window.axios.interceptors.request.use(
   (config) => {
-    const data = new FormData();
-    
-    if (config.method === "delete" || config.method === "put" || config.method === "patch") {
+    const methodsToOverride = ['delete', 'put', 'patch'];
+
+    if (methodsToOverride.includes(config.method ?? '')) {
       config.headers['X-HTTP-Method-Override'] = config.method;
-      config.method = "POST";
+      config.method = 'post';
     }
-    data.append('_token', $('meta[name="csrf-token"]')?.attr('content') || '');
+
     return config;
   },
   (error) => {
+    console.error('Request interceptor error:', error);
     return Promise.reject(error);
   }
 );
@@ -48,8 +52,6 @@ window.axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-window.axios.defaults.baseURL = "/api";
 
 // custom
 window.utils = utils;

@@ -16,6 +16,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('cinema_id');
             $table->string('room_name');
+            $table->string('image')->nullable();
+            $table->decimal('base_price', 10, 2)->default(50000);
+            $table->integer('col_count');
+            $table->integer('row_count');
             $table->timestamps();
             $table->softDeletes();
         });

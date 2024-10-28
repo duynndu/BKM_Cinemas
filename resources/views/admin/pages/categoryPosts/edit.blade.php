@@ -66,44 +66,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- SEO Section -->
-                            <div class="filter cm-content-box box-primary">
-                                <div class="content-title SlideToolHeader">
-                                    <div class="cpa">
-                                        {{ __('language.admin.categoryPosts.seo') }}
-                                    </div>
-                                </div>
-                                <div class="cm-content-body form excerpt">
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <label class="me-sm-2 form-label mb-2">{{ __('language.admin.categoryPosts.title_seo') }}</label>
-                                            <input type="text" class="form-control" id="title_seo" name="title_seo"
-                                                value="{{ old('title_seo', $cate->title_seo) ?? '' }}"
-                                                placeholder="{{ __('language.admin.categoryPosts.inputTitle') }}">
-                                            @error('title_seo')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="me-sm-2 form-label mb-2">{{ __('language.admin.categoryPosts.keyword_seo') }}</label>
-                                            <input type="text" class="form-control" id="keyword_seo" name="keyword_seo"
-                                                value="{{ old('keyword_seo', $cate->keyword_seo) ?? '' }}"
-                                                placeholder="{{ __('language.admin.categoryPosts.inputKeyword') }}">
-                                            @error('keyword_seo')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="me-sm-2 form-label">{{ __('language.admin.categoryPosts.description_seo') }}</label>
-                                            <textarea name="description_seo" id="description_seo" class="form-control" cols="30" rows="10">{{ old('description_seo', $cate->description_seo) ?? '' }}</textarea>
-                                            @error('description_seo')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="col-xl-4">
                             <div class="right-sidebar-sticky">
@@ -144,12 +106,10 @@
                                                             @endif
                                                         @endforeach
                                                     </select>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
 
 
@@ -211,23 +171,15 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="p-3">
-                                                    <div class="mb-3">
-                                                        <label class="form-label mb-2">{{ __('language.admin.categoryPosts.language') }}</label>
-                                                        <select class="form-control" multiple name="language_id[]" id="language">
-                                                            <option value="" disabled>-- {{ __('language.admin.categoryPosts.select') }} --</option>
-                                                            @if(!empty($languages))
-                                                                @foreach($languages as $language)
-                                                                    <option @selected(in_array($language->id, old('language_id', $languagesTransactions)))
-                                                                    value="{{ $language->id }}">
-                                                                        {{ $language->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
-                                                        @error('language_id')
-                                                            <div class="text-danger mt-2">{{ $message }}</div>
-                                                        @enderror
+                                                    <label
+                                                        class="form-label">{{ __('language.admin.categoryPosts.position') }}</label><br>
+                                                    <input class="form-control" value="{{ old('position',$cate->position) ?? 0 }}"
+                                                           type="number" min="0" id="position" name="position">
+                                                    @error('position')
+                                                    <div class="mt-2">
+                                                        <span class="text-red">{{ $message }}</span>
                                                     </div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-6">

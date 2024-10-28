@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite && chokidar '**/*.php' -c 'php artisan optimize'",
+        "dev": "vite",
         "build": "tsc && vite build"
     },
     "devDependencies": {
@@ -15,6 +15,7 @@
         "@types/node": "^18.13.0",
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.10",
+        "@types/toastr": "^2.1.43",
         "@types/ziggy-js": "^1.8.0",
         "@vitejs/plugin-react": "^4.2.0",
         "alpinejs": "^3.14.1",
@@ -33,18 +34,23 @@
     },
     "dependencies": {
         "@ant-design/icons": "^5.4.0",
+        "@colinaut/alpinejs-plugin-simple-validate": "^1.8.2",
+        "@ryangjchandler/alpine-tooltip": "^2.0.0",
         "@types/jquery": "^3.5.30",
+        "@types/yup": "^0.32.0",
         "dayjs": "^1.11.12",
         "dom-to-image": "^2.6.0",
         "flowbite": "^2.5.1",
         "flowbite-react": "^0.10.1",
         "jquery": "^3.7.1",
+        "jquery-validation": "^1.21.0",
         "js-cookie": "^3.0.5",
         "rc-menu": "^9.14.1",
         "rc-picker": "^4.6.11",
         "recoil": "^0.7.7",
         "recoil-nexus": "^0.5.1",
         "swiper": "^11.1.9",
-        "vite-plugin-run": "^0.5.2"
+        "vite-plugin-run": "^0.5.2",
+        "yup": "^1.4.0"
     }
 }

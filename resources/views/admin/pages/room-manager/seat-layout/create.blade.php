@@ -24,18 +24,21 @@
                     <label class="me-sm-2 form-label mb-2">Tên sơ đồ ghế</label>
                     <input type="text" x-model="formData.name" class="form-control"
                       placeholder="Nhập tên sơ đồ ghế">
+                    <span class="text-danger" x-text="errors.name"></span>
                   </div>
                   <div class="col-6 mb-3">
                     <label class="form-label mb-2">Số cột</label>
                     <input type="number" x-model="formData.col_count" @input="renderSeatLayout; formData.seats = []"
                       @change="formData.seats = []" class="form-control" id="slug" name="slug"
                       placeholder="Nhập số cột">
+                    <span class="text-danger" x-text="errors.col_count"></span>
                   </div>
                   <div class="col-6 mb-3">
                     <label class="form-label mb-2">Số hàng</label>
                     <input type="number" x-model="formData.row_count" @input="renderSeatLayout; formData.seats = []"
                       @change="formData.seats = []" class="form-control" id="slug" name="slug"
                       placeholder="Nhập số hàng">
+                    <span class="text-danger" x-text="errors.row_count"></span>
                   </div>
                   <div id="seatingArea" class="tw-inline-flex tw-items-center tw-mb-3 tw-text-white"></div>
                   <div class="mb-3">

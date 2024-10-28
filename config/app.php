@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -163,11 +163,15 @@ return [
         /*
          * Application Service Providers...
          */
+        Jenssegers\Agent\AgentServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        App\Providers\Admin\BreadcrumbServiceProvider::class,
+        App\Providers\Client\ViewServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -184,5 +188,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
+
+    'Agent' => Jenssegers\Agent\Facades\Agent::class,
 
 ];

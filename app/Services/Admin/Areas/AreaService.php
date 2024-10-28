@@ -1,23 +1,29 @@
 <?php 
 namespace App\Services\Admin\Areas;
 
-use App\Http\Requests\AreaRequests;
-use App\Repositories\Admin\Areas\Interface\AreaInterface;
 use App\Repositories\Admin\Areas\Repository\AreaRepository;
+use App\Repositories\Admin\Cities\Repository\CityRepository;
 
 class AreaService
 {
     protected $areaRepository;
+    protected $cityRepository;
 
-    public function __construct(AreaRepository $areaRepository)
+    public function __construct(AreaRepository $areaRepository,CityRepository $cityRepository)
     {
         $this->areaRepository = $areaRepository;
+        $this->cityRepository = $cityRepository;
     }
 
     public function getAllArea()
     {
-        return $this->areaRepository->getAllArea();
+        return $this->areaRepository->getAll();
     }
+    public function getAllCities()
+    {
+        return $this->cityRepository->getAllCity();
+    }
+
 
     public function create( $request)
     {
@@ -30,7 +36,7 @@ class AreaService
 
     public function getById($id)
     {
-        return $this->areaRepository->getById($id);
+        return $this->areaRepository->find($id);
     }
 
     public function update($id, $request )
@@ -39,7 +45,7 @@ class AreaService
             'name' => $request->name,
             'city_id' => $request->city_id
         ];
-        return $this->areaRepository->update($data, $id);
+        return $this->areaRepository->update($id, $data);
     }
 
     public function delete($id)

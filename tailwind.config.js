@@ -39,6 +39,9 @@ export default {
     {
       pattern: /bg-.*/,
     },
+    {
+      pattern: /text-.*/,
+    },
   ],
 
   plugins: [forms, require("daisyui"), require("flowbite/plugin")],
