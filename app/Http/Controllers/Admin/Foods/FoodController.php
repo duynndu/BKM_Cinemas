@@ -138,7 +138,6 @@ class FoodController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
             return back()->with([
@@ -161,7 +160,6 @@ class FoodController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
-
             return response()->json([
                 'success' => false,
                 'message' => 'Có lỗi xảy ra!',
@@ -184,6 +182,7 @@ class FoodController extends Controller
             return response()->json(['newOrder' => $request->order]);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
             return response()->json([
                 'success' => false,
                 'message' => 'Có lỗi xảy ra!',
@@ -206,6 +205,7 @@ class FoodController extends Controller
             return response()->json(['newStatus' => $data->active]);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
             return response()->json([
                 'success' => false,
                 'message' => 'Có lỗi xảy ra!',

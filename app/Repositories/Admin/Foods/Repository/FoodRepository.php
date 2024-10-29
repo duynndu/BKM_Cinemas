@@ -2,10 +2,10 @@
 
 namespace App\Repositories\Admin\Foods\Repository;
 
-use App\Repositories\Admin\Foods\Interface\FoodTypeInterface;
+use App\Repositories\Admin\Foods\Interface\FoodInterface;
 use App\Repositories\Base\BaseRepository;
 
-class FoodRepository extends BaseRepository implements FoodTypeInterface
+class FoodRepository extends BaseRepository implements FoodInterface
 {
     public function getModel()
     {
