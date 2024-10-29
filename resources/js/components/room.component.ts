@@ -1,11 +1,20 @@
-import { RoomService } from "@/services/room.service";
+import { roomService } from "@/services/room.service";
 import Alpine from "alpinejs";
 import { domToBlob, redirect } from "@/utils/common";
 import $ from "jquery";
 import "../jquery-plugin/seatmanager.plugin";
+import "@/jquery-plugin/select-day"
+import "@/jquery-plugin/select-time"
 import { IRoom } from "@/types/room.interface";
 import * as yup from 'yup';
 import { ISeatType } from "@/types/seat-type.interface";
+import { showtimeService } from "@/services/showtime.service";
+import { IShowtime } from "@/types/showtime.interface";
+import { IMovie } from "@/types/movie.interface";
+import { movieService } from "@/services/movie.service";
+import Inputmask from "inputmask";
+import "jquery.inputmask";
+import moment from "moment";
 
 const roomSchema = yup.object().shape({
   room_name: yup.string().required('Tên phòng là bắt buộc'),
@@ -18,7 +27,7 @@ const roomSchema = yup.object().shape({
   base_price: yup.number().min(0, 'Giá cơ bản phải lớn hơn hoặc bằng 0').required('Giá cơ bản là bắt buộc'),
 });
 
-Alpine.data('RoomComponent', (roomId?: number) => ({
+Alpine.data('RoomComponent', (roomId: string | null = null) => ({
   errors: {} as Record<string, string>,
   formData: {
     id: null as any,
@@ -30,15 +39,24 @@ Alpine.data('RoomComponent', (roomId?: number) => ({
   } as IRoom,
   seatTable: null as JQuery<HTMLElement> | null,
   showModal: false,
+  showModalMovie: false,
   seatLayouts: null as any[] | null,
   seatTypes: [] as ISeatType[],
+  showtimeSelected: null as IShowtime | null,
+  showtimes: [] as IShowtime[],
+  dateSelected: null as string | null,
+  movies: [] as IMovie[],
   async init() {
-    this.seatTypes = await RoomService.getSeatTypesKeyByCode();
-    this.seatLayouts = await RoomService.getSeatLayouts();
+    $(":input").inputmask();
+    this.seatTypes = await roomService.getSeatTypesKeyByCode();
+    this.seatLayouts = await roomService.getSeatLayouts();
+    this.movies = await movieService.getMovies();
+
     if (roomId) {
       await this.getRoomById(roomId);
     }
     this.renderSeatLayout();
+    this.renderSelectDay();
   },
   async onSubmit() {
     try {
@@ -63,9 +81,9 @@ Alpine.data('RoomComponent', (roomId?: number) => ({
     }
     try {
       if (roomId) {
-        await RoomService.putRoom(roomId, formData);
+        await roomService.putRoom(roomId, formData);
       } else {
-        await RoomService.postRoom(formData);
+        await roomService.postRoom(formData);
       }
       toastr.success('Thao tác thành công');
       setTimeout(() => {
@@ -76,8 +94,8 @@ Alpine.data('RoomComponent', (roomId?: number) => ({
       toastr.error(error.message);
     }
   },
-  async getRoomById(roomId: number) {
-    const room = await RoomService.getRoom(roomId);
+  async getRoomById(roomId: string) {
+    const room = await roomService.getRoom(roomId);
     if (room) {
       this.formData = { ...room };
     }
@@ -112,5 +130,126 @@ Alpine.data('RoomComponent', (roomId?: number) => ({
         this.formData.row_count = data.row_count;
       }
     });
+  },
+  renderSelectDay() {
+    $("#selectDay").selectDay({
+      daysFromNow: 1,
+      numberOfDays: 24,
+    }, (date: string | null) => {
+      console.log(date);
+      this.dateSelected = moment(date).format('YYYY-MM-DD');
+      this.showtimeSelected = null;
+      (date && roomId) && showtimeService.getShowtimesByDayAndRoomId(date, roomId).then((showtimes) => {
+        this.showtimes = showtimes;
+        this.renderSelectTime(showtimes);
+      });
+    });
+  },
+  renderSelectTime(showtimes: IShowtime[], idShowtimeSelected: string | null = null) {
+    $("#selectedTime").selectTime({ showtimes, idShowtimeSelected }, (showtime: IShowtime | null) => {
+      console.log(showtime);
+      this.showtimeSelected = showtime;
+
+    });
+  },
+  searchQuery: '',
+  filteredMovies() {
+    if (this.searchQuery === '') {
+      return this.movies;
+    }
+    return this.movies?.filter(movie => movie.title.toLowerCase().includes(this.searchQuery.toLowerCase())) ?? [];
+  },
+  async selectMovie(movie: IMovie) {
+    console.log(movie);
+    if (!this.showtimeSelected?.id) return;
+    await showtimeService.updateShowtimeMovie(this.showtimeSelected?.id, movie.id)
+      .then((showtime) => {
+        toastr.success('Cập nhật phim thành công');
+        this.showtimeSelected = showtime;
+        this.showModalMovie = false;
+        const index = this.showtimes.findIndex(showtime => showtime.id === this.showtimeSelected?.id);
+        if (index !== -1) {
+          this.showtimes[index] = showtime;
+          this.renderSelectTime(this.showtimes, showtime.id);
+        }
+      }).catch((error: any) => {
+        toastr.error(error.message);
+      });
+
+  },
+  clearShowtimeMovie() {
+    console.log('delete movie');
+    this.showtimeSelected?.id &&
+      showtimeService.clearShowtimeMovie(this.showtimeSelected?.id)
+        .then(() => {
+          toastr.success('Gỡ phim thành công');
+          if (this.showtimeSelected?.movie) {
+            this.showtimeSelected.movie = null;
+            this.showtimeSelected.movie_id = null;
+          }
+        }).catch((error: any) => {
+          toastr.error(error.message);
+        });
+  },
+  addShowtime() {
+    if (!moment(this.dateSelected).isValid()) {
+      toastr.error('Ngày không hợp lệ vui lòng chọn ngày');
+      return false;
+    }
+    if (!$("#start_time").inputmask('isComplete') || !$("#end_time").inputmask('isComplete')) {
+      toastr.error('Thời gian không hợp lệ');
+      return false;
+    }
+
+    const startTime = moment(`${this.dateSelected} ${$("#start_time").val()}`, 'YYYY-MM-DD HH:mm').format();
+    const endTime = moment(`${this.dateSelected} ${$("#end_time").val()}`, 'YYYY-MM-DD HH:mm').format();
+
+    if (moment(startTime).isAfter(endTime)) {
+      toastr.error('Thời gian kết thúc phải lớn hơn thời gian bắt đầu');
+      return false;
+    }
+
+    if (this.checkTimeRangeExists(startTime, endTime)) {
+      toastr.error('Khoảng thời gian đã tồn tại');
+      return false;
+    }
+
+
+
+    showtimeService.postShowtime({
+      room_id: roomId,
+      movie_id: null,
+      start_time: startTime,
+      end_time: endTime,
+    }).then((res) => {
+      this.showtimes.push(res);
+      this.renderSelectTime(this.showtimes);
+      toastr.success('Thêm suất chiếu thành công');
+    }).catch((error: any) => {
+      toastr.error(error.message);
+    });
+
+    return true;
+  },
+  checkTimeRangeExists(startTime: string, endTime: string) {
+    const isTimeRangeExists = this.showtimes.some(showtime => {
+      const existingStart = moment(showtime.start_time);
+      const existingEnd = moment(showtime.end_time);
+      return (moment(startTime).isBetween(existingStart, existingEnd, null, '[)') ||
+        moment(endTime).isBetween(existingStart, existingEnd, null, '(]') ||
+        (moment(startTime).isSameOrBefore(existingStart) && moment(endTime).isSameOrAfter(existingEnd)));
+    });
+    return isTimeRangeExists;
+  },
+  deleteShowtime() {
+    if (!this.showtimeSelected?.id) return;
+    showtimeService.deleteShowtime(this.showtimeSelected.id)
+      .then(() => {
+        toastr.success('Xóa suất chiếu thành công');
+        this.showtimes = this.showtimes.filter(showtime => showtime.id !== this.showtimeSelected?.id);
+        this.renderSelectTime(this.showtimes);
+      }).catch((error: any) => {
+        toastr.error(error.message);
+      });
   }
 }));
