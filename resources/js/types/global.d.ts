@@ -5,6 +5,7 @@ import { IMediaFileManager as IMedia } from "@/types/media-file-manager.interfac
 import Alpine from "alpinejs";
 import * as utils from "@/utils/common";
 import Services from "@/services";
+import Swal from "sweetalert2";
 
 declare global {
   interface Window {
@@ -23,4 +24,5 @@ declare global {
   }
   var route: typeof ziggyRoute;
   var toastr: Toastr;
+  var swal: typeof Swal;
 }
