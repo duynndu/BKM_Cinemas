@@ -77,16 +77,16 @@
 										</div>
 										<div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-mt-3">
 											<div class="tw-col-span-7" id="selectedTime"></div>
-											<div style="border: 1px solid; min-height: 276px; border-radius: 4px;" class="tw-col-span-5 tw-flex tw-justify-center tw-items-center tw-relative">
+											<div style="border: 1px solid; min-height: 276px; border-radius: 4px;" class="tw-col-span-5 tw-flex tw-relative">
 												<div x-show="showtimeSelected" class="tw-absolute tw-top-0 tw-right-0 tw-p-2"><i @click="deleteShowtime()" class="fa-solid fa-trash-can hover:tw-text-red-500 tw-cursor-pointer tw-text-xl"></i></div>
-												<div class="tw-flex tw-justify-center tw-items-center tw-flex-col" x-show="showtimeSelected && !showtimeSelected?.movie_id" x-cloak>
+												<div class="tw-flex tw-justify-center tw-items-center tw-flex-col tw-w-full" x-show="showtimeSelected && !showtimeSelected?.movie_id" x-cloak>
 													<div>Xuất chiếu chưa có phim</div>
 													<button type="button" class="btn btn-sm btn-primary" @click="showModalMovie = true">Chọn phim</button>
 												</div>
 												<div x-show="showtimeSelected?.movie_id" x-cloak>
 													<div class="movie-info tw-grid tw-grid-cols-12 tw-gap-2">
 														<div class="tw-col-span-5">
-															<img class="tw-block tw-w-full tw-h-[276px] tw-rounded tw-object-cover" src="https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/thumbnail/240x388/c88460ec71d04fa96e628a21494d2fd3/r/s/rsz_nxcmct_main-poster_printing.jpg" alt="Movie Image" class="movie-image">
+															<img class="tw-block tw-w-full tw-h-[276px] tw-w-[190px] tw-rounded tw-object-cover" :src="showtimeSelected?.movie?.image" alt="Movie Image" class="movie-image">
 														</div>
 														<div class="tw-col-span-7">
 															<h3 x-text="showtimeSelected?.movie?.title"></h3>

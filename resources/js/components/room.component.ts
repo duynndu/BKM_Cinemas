@@ -136,7 +136,6 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
       daysFromNow: 1,
       numberOfDays: 24,
     }, (date: string | null) => {
-      console.log(date);
       this.dateSelected = moment(date).format('YYYY-MM-DD');
       this.showtimeSelected = null;
       (date && roomId) && showtimeService.getShowtimesByDayAndRoomId(date, roomId).then((showtimes) => {
@@ -147,9 +146,7 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
   },
   renderSelectTime(showtimes: IShowtime[], idShowtimeSelected: string | null = null) {
     $("#selectedTime").selectTime({ showtimes, idShowtimeSelected }, (showtime: IShowtime | null) => {
-      console.log(showtime);
       this.showtimeSelected = showtime;
-
     });
   },
   searchQuery: '',
@@ -160,7 +157,6 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
     return this.movies?.filter(movie => movie.title.toLowerCase().includes(this.searchQuery.toLowerCase())) ?? [];
   },
   async selectMovie(movie: IMovie) {
-    console.log(movie);
     if (!this.showtimeSelected?.id) return;
     await showtimeService.updateShowtimeMovie(this.showtimeSelected?.id, movie.id)
       .then((showtime) => {
@@ -178,7 +174,6 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
 
   },
   clearShowtimeMovie() {
-    console.log('delete movie');
     this.showtimeSelected?.id &&
       showtimeService.clearShowtimeMovie(this.showtimeSelected?.id)
         .then(() => {
@@ -247,6 +242,7 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
       .then(() => {
         toastr.success('Xóa suất chiếu thành công');
         this.showtimes = this.showtimes.filter(showtime => showtime.id !== this.showtimeSelected?.id);
+        this.showtimeSelected = null;
         this.renderSelectTime(this.showtimes);
       }).catch((error: any) => {
         toastr.error(error.message);
