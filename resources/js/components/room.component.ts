@@ -237,15 +237,27 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
     return isTimeRangeExists;
   },
   deleteShowtime() {
-    if (!this.showtimeSelected?.id) return;
-    showtimeService.deleteShowtime(this.showtimeSelected.id)
-      .then(() => {
-        toastr.success('Xóa suất chiếu thành công');
-        this.showtimes = this.showtimes.filter(showtime => showtime.id !== this.showtimeSelected?.id);
-        this.showtimeSelected = null;
-        this.renderSelectTime(this.showtimes);
-      }).catch((error: any) => {
-        toastr.error(error.message);
-      });
+    swal.fire({
+      title: 'Bạn có chắc không?',
+      text: "Bạn sẽ không thể hoàn tác điều này!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Tiếp tục',
+      cancelButtonText: 'Hủy bỏ',
+      reverseButtons: true
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        if (!this.showtimeSelected?.id) return;
+        showtimeService.deleteShowtime(this.showtimeSelected.id)
+          .then(() => {
+            toastr.success('Xóa suất chiếu thành công');
+            this.showtimes = this.showtimes.filter(showtime => showtime.id !== this.showtimeSelected?.id);
+            this.showtimeSelected = null;
+            this.renderSelectTime(this.showtimes);
+          }).catch((error: any) => {
+            toastr.error(error.message);
+          });
+      }
+    });
   }
 }));
