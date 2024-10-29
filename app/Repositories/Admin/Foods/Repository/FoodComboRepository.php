@@ -2,10 +2,10 @@
 
 namespace App\Repositories\Admin\Foods\Repository;
 
-use App\Repositories\Admin\Foods\Interface\FoodTypeInterface;
+use App\Repositories\Admin\Foods\Interface\FoodComboInterface;
 use App\Repositories\Base\BaseRepository;
 
-class FoodComboRepository extends BaseRepository implements FoodTypeInterface
+class FoodComboRepository extends BaseRepository implements FoodComboInterface
 {
     public function getModel()
     {
@@ -84,7 +84,7 @@ class FoodComboRepository extends BaseRepository implements FoodTypeInterface
     public function deleteMultiple(array $ids)
     {
         collect($ids)->chunk(1000)->each(function ($chunk) {
-            \App\Models\FoodComboItem::whereIn('food_combo_id ', $chunk)->delete();
+            \App\Models\FoodComboItem::whereIn('food_combo_id', $chunk)->delete();
             $this->model->whereIn('id', $chunk)->delete();
         });
         return true;

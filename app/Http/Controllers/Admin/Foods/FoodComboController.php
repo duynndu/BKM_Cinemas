@@ -144,7 +144,6 @@ class FoodComboController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
             return back()->with([
@@ -166,6 +165,8 @@ class FoodComboController extends Controller
             return response()->json(['message' => 'Xóa thành công!'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Có lỗi xảy ra!',
@@ -188,6 +189,7 @@ class FoodComboController extends Controller
             return response()->json(['newOrder' => $request->order], 200);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
             return response()->json([
                 'success' => false,
                 'message' => 'Có lỗi xảy ra!',
@@ -210,6 +212,7 @@ class FoodComboController extends Controller
             return response()->json(['newStatus' => $data->active], 200);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
             return response()->json([
                 'success' => false,
                 'message' => 'Có lỗi xảy ra!',

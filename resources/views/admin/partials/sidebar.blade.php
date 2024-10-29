@@ -152,6 +152,21 @@
                     </li>
                 </ul>
             </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">apartment</i>
+                    <span class="nav-text">Quản lý Thành Phố</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{{ route('admin.cities.index') }}" aria-expanded="false">Thành Phố</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.areas.index') }}" aria-expanded="false">Khu Vực</a>
+                    </li>
+                </ul>
+            </li>
             @if(auth()->user()->can('viewAny', App\Models\Food::class) || auth()->user()->can('viewAny', App\Models\FoodType::class) || auth()->user()->can('viewAny', App\Models\FoodCombo::class))
                 <li>
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
@@ -212,6 +227,7 @@
                     </ul>
                 </li>
             @endif
+
         </ul>
     </div>
 </div>
