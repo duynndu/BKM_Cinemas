@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 // Namespace Error Admin
 
 
-Route::group(['prefix' => 'filemanager', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'admin']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 

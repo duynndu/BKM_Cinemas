@@ -18,6 +18,8 @@ declare global {
   interface JQuery {
     filemanager(type: string, options: IOption): any;
     seatmanager(seatLayout: any, options: any): any;
+    selectDay(options: any, onChange?: (data: any) => any): any;
+    selectTime(data: any, onChange?: (data: any) => any): any;
   }
   var route: typeof ziggyRoute;
   var toastr: Toastr;
