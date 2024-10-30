@@ -132,6 +132,9 @@
                     <li>
                         <a href="{{ route('admin.movies.index') }}" aria-expanded="false">Phim</a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.actors.index') }}" aria-expanded="false">Diễn viên</a>
+                    </li>
                 </ul>
             </li>
 
@@ -215,7 +218,7 @@
                         @can('viewAny', App\Models\Module::class)
                             <li>
                                 <a href="{{ route('admin.modules.index') }}"
-                                aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>  
+                                aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>
                             </li>
                         @endcan
                         @can('viewAny', App\Models\Permission::class)

@@ -143,7 +143,7 @@
                         <button type="submit" class="btn btn-success">
                             {{ isset($combo) ? 'Sửa' : 'Thêm mới' }}
                         </button>
-                        <a href="{{ route('admin.foods.index') }}" class="btn btn-warning">
+                        <a href="{{ route('admin.food-combos.index') }}" class="btn btn-warning">
                             Trở về trang danh sách
                         </a>
                     </div>

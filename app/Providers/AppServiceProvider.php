@@ -13,9 +13,11 @@ use App\Repositories\Admin\Payments\Repository\PaymentRepository;
 use App\Repositories\Admin\Posts\Interface\PostInterface;
 use App\Repositories\Admin\Posts\Repository\PostRepository;
 use App\Http\Views\Composers\GetAllDataComposer;
+use App\Repositories\Admin\Actors\Interface\ActorInterface;
 use App\Repositories\Admin\Foods\Interface\FoodComboInterface;
 use App\Repositories\Admin\Foods\Interface\FoodInterface;
 use App\Repositories\Admin\Foods\Interface\FoodTypeInterface;
+use App\Repositories\Admin\Actors\Repository\ActorRepository;
 use App\Repositories\Admin\Foods\Repository\FoodComboRepository;
 use App\Repositories\Admin\Foods\Repository\FoodRepository;
 use App\Repositories\Admin\Foods\Repository\FoodTypeRepository;
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(FoodTypeInterface    ::class, FoodTypeRepository    ::class);
         $this->app->bind(FoodInterface        ::class, FoodRepository        ::class);
         $this->app->bind(FoodComboInterface   ::class, FoodComboRepository   ::class);
+        $this->app->bind(ActorInterface       ::class, ActorRepository       ::class);
     }
 
     /**
