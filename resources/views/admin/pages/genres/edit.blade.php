@@ -59,7 +59,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label mb-2">{{ __('language.admin.genres.content') }}</label>
-                                        <textarea name="content" id="ckeditor">{!! old('content') ?? $genreEdit->content !!}</textarea>
+                                        <textarea name="content" class="ckeditor">{!! old('content') ?? $genreEdit->content !!}</textarea>
                                         @error('content')
                                         <div class="text-danger mt-2">{{ $message }}</div>
                                         @enderror

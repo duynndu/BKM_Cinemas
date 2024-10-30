@@ -195,10 +195,7 @@
                                                 <div class="mb-3">
                                                     <label
                                                         class="form-label mb-2">{{ __('language.admin.movies.content') }}</label>
-                                                    <textarea placeholder="{{ __('language.admin.movies.inputContent') }}" name="content" id="ckeditor"
-                                                        style="display: none;">
-                                                        {{ old('content', $movie->content) }}
-                                                        </textarea>
+                                                    <textarea placeholder="{{ __('language.admin.movies.inputContent') }}" name="content" class="ckeditor" style="display: none;">{{ old('content', $movie->content) }}</textarea>
                                                     @error('content')
                                                         <div class="text-danger mt-2">{{ $message }}</div>
                                                     @enderror
@@ -366,7 +363,7 @@
                                                                     class="form-label">{{ __('language.admin.movies.status') }}</label><br>
                                                                 <div class="row mt-2">
                                                                     <div class="col-sm-6">
-                                                                   
+
                                                                         <input class="form-check-input" type="radio"
                                                                             id="active" @checked($movie->active == 1)
                                                                             name="active" value="1"
