@@ -30,7 +30,6 @@ class FoodComboService
         return $this->foodComboRepository->create($data);
     }
 
-
     public function update(&$data, $id)
     {
         $record = $this->find($id);
@@ -64,7 +63,6 @@ class FoodComboService
         }
         return $this->foodComboRepository->update($id, $data['food_combo']);
     }
-
 
     public function delete($id)
     {
@@ -100,7 +98,6 @@ class FoodComboService
         return $this->foodComboRepository->changeOrder($request->id, $request->order);
     }
 
-
     private function uploadFile($data, $folderName)
     {
         $path = $data->store($folderName);
@@ -118,7 +115,6 @@ class FoodComboService
             Storage::delete($path);
         }
     }
-
 
     private function sanitizePrice($price)
     {
