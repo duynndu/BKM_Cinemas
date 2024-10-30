@@ -4,13 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Movies\MovieRequest;
-use App\Http\Requests\Posts\PostRequest;
 use App\Models\Movie;
-use App\Models\Post;
-use App\Services\Admin\CategoryPosts\CategoryPostService;
 use App\Services\Admin\Genres\GenreService;
 use App\Services\Admin\Movies\MovieService;
-use App\Services\Admin\Posts\PostService;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -50,6 +46,8 @@ class MovieController extends Controller
     public function create()
     {
         $listGenre = $this->genreService->getListGenre();
+        // $actots = $this->actorService->getLi
+
         return view('admin.pages.movies.create',compact('listGenre'));
     }
 
