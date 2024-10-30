@@ -19,3 +19,5 @@ return [
     'emailRequired' => 'Vui lòng nhập email.',
     'passwordRequired' => 'Vui lòng nhập mật khẩu.',
 ];
+
+
