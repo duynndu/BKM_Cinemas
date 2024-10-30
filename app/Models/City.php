@@ -13,4 +13,17 @@ class City extends Model
     protected $table = 'cities';
 
     protected $guarded = [];
+
+    public function areas()
+    {
+        return $this->hasMany(Area::class, 'city_id', 'id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($city) {
+            $city->areas()->delete();
+        });
+    }
 }

@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 import { exec } from "child_process";
+import path from "path";
 
 export default defineConfig({
   plugins: [
@@ -26,4 +27,9 @@ export default defineConfig({
       },
     },
   ],
+  resolve: {
+    alias: {
+      'jquery.inputmask': path.resolve('node_modules/inputmask/dist/jquery.inputmask.js')
+    }
+  }
 });

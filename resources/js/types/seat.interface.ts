@@ -1,5 +1,5 @@
 interface ISeat {
-  id?: number | null;
+  id?: string | null;
   room_id?: number | null;
   seat_number: any;
   price?: number;

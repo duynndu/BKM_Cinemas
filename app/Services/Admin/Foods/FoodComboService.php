@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Foods;
 
-use App\Repositories\Admin\Foods\Repository\FoodComboRepository;
+use App\Repositories\Admin\Foods\Interface\FoodComboInterface;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,7 +14,7 @@ class FoodComboService
     protected $foodComboRepository;
 
     public function __construct(
-        FoodComboRepository $foodComboRepository
+        FoodComboInterface $foodComboRepository
     ) {
         $this->foodComboRepository = $foodComboRepository;
     }
