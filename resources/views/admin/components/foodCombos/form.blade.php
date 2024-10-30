@@ -72,7 +72,7 @@
                     <div class="row mb-4">
                         <div class="col-6">
                             <label class="form-label mb-2">Mô tả</label>
-                            <textarea class="form-control" cols="20" rows="5" name="food_combo[description]">{{ $combo->description ?? '' }}</textarea>
+                            <textarea class="form-control ckeditor" cols="20" rows="5" name="food_combo[description]">{{ $combo->description ?? '' }}</textarea>
                             <div id="food_combo_description_error" class="mt-2"></div>
                         </div>
                         <div class="col-6">
