@@ -1,5 +1,5 @@
 export interface ISeatType {
-  id: number;
+  id: string;
   code: string;
   bonus_price: number;
   text: string;

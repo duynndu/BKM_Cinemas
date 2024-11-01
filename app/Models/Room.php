@@ -28,4 +28,14 @@ class Room extends Model
     {
         return $this->belongsTo(Cinema::class);
     }
+
+    public function showtimes()
+    {
+        return $this->hasMany(Showtime::class);
+    }
+
+    public function movies()
+    {
+        return $this->belongsToMany(Movie::class, 'showtimes');
+    }
 }

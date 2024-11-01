@@ -1,4 +1,4 @@
-import { RoomService } from "@/services/room.service";
+import { roomService } from "@/services/room.service";
 import { ISeatType } from "@/types/seat-type.interface";
 import { redirect } from "@/utils/common";
 import Alpine from "alpinejs";
@@ -45,9 +45,9 @@ Alpine.data('SeatTypeComponent', (seatTypeId?: number) => ({
 
     try {
       if (seatTypeId) {
-        await RoomService.putSeatType(seatTypeId, this.formData);
+        await roomService.putSeatType(seatTypeId, this.formData);
       } else {
-        await RoomService.postSeatType(this.formData);
+        await roomService.postSeatType(this.formData);
       }
       toastr.success('Thao tác thành công');
       setTimeout(() => {
@@ -60,7 +60,7 @@ Alpine.data('SeatTypeComponent', (seatTypeId?: number) => ({
   },
   async getSeatTypeById() {
     if (seatTypeId) {
-      const seatType = await RoomService.getSeatType(seatTypeId);
+      const seatType = await roomService.getSeatType(seatTypeId);
       this.formData = seatType;
     }
   },

@@ -50,7 +50,7 @@
                                     <div class="row mb-4">
                                         <div class="col-6">
                                             <label class="form-label mb-2">Mô tả</label>
-                                            <textarea class="form-control" cols="20" rows="5" name="food[description]">{{ old('food.description') }}</textarea>
+                                            <textarea class="form-control ckeditor" cols="20" rows="5" name="food[description]">{{ old('food.description') }}</textarea>
                                             @error('food.description')
                                                 <div class="text-danger mt-2">{{ $message }}</div>
                                             @enderror
