@@ -93,7 +93,7 @@
                     <button type="submit" class="btn btn-success">
                         Sửa
                     </button>
-                    <a href="{{ route('admin.categoryPosts.index') }}" class="btn btn-warning">
+                    <a href="{{ route('admin.food-types.index') }}" class="btn btn-warning">
                         Trở về trang danh sách
                     </a>
                 </form>

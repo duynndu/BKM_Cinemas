@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Services\Admin\Foods;
-
-use App\Repositories\Admin\Foods\Repository\FoodTypeRepository;
+use App\Repositories\Admin\Foods\Interface\FoodTypeInterface;
 
 class FoodTypeService
 {
     protected $foodTypeRepository;
     public function __construct(
-        FoodTypeRepository $foodTypeRepository
+        FoodTypeInterface $foodTypeRepository
     ) {
         $this->foodTypeRepository = $foodTypeRepository;
     }

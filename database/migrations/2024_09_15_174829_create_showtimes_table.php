@@ -14,8 +14,8 @@ return new class extends Migration
         // Bảng ngày chiếu
         Schema::create('showtimes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('movie_id'); // Id Phim được chiếu
-            $table->bigInteger('room_id'); // Id Rạp chiếu phim
+            $table->bigInteger('movie_id')->nullable(); // Id Phim được chiếu
+            $table->bigInteger('room_id')->nullable(); // Id Rạp chiếu phim
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->timestamps();

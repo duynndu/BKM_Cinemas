@@ -1,5 +1,5 @@
 export interface IMediaFileManager {
-  id: number;
+  id: string;
   icon: string;
   is_file: boolean;
   is_image: boolean;
