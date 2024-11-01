@@ -29,4 +29,14 @@ class Movie extends Model
     {
         return $this->hasMany(MovieGenre::class, 'movie_id', 'id');
     }
+
+    public function showtimes()
+    {
+        return $this->hasMany(Showtime::class);
+    }
+
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class, 'showtimes');
+    }
 }

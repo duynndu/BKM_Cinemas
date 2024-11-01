@@ -7,3 +7,35 @@
 [x-cloak] {
   display: none !important;
 }
+
+.day {
+  padding: 8px 0;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background-color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.day.selected {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.time {
+  padding: 4px 0;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background-color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.time.selected {
+  background-color: #007bff;
+  color: #fff;
+}

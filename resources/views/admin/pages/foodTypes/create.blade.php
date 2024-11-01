@@ -37,7 +37,7 @@
                                         <div class="col-6">
                                             <label class="form-label mb-2">Tên loại đồ ăn</label>
                                             <input type="text" id="name" name="foodType[name]" class="form-control"
-                                                placeholder="Nhập tên loại đồ ăn" value="{{ old('name') }}">
+                                                placeholder="Nhập tên loại đồ ăn" value="{{ old('foodType.name') }}">
                                             @error('foodType.name')
                                                 <div class="text-danger mt-2">{{ $message }}</div>
                                             @enderror
@@ -51,7 +51,7 @@
                                                             <div class="col-sm-6">
                                                                 <input class="form-check-input" type="radio"
                                                                     id="active" name="foodType[active]" value="1"
-                                                                    @checked(old('active', 1) == 1)>
+                                                                    @checked(old('foodType.active', 1) == 1)>
                                                                 <label class="form-check-label" for="active">
                                                                     Hiển thị
                                                                 </label>
@@ -59,7 +59,7 @@
                                                             <div class="col-sm-6">
                                                                 <input class="form-check-input" value="0"
                                                                     type="radio" id="active" name="foodType[active]"
-                                                                    @checked(old('active', 1) == 0)>
+                                                                    @checked(old('foodType.active', 1) == 0)>
                                                                 <label class="form-check-label" for="active">
                                                                     Ẩn
                                                                 </label>
@@ -74,7 +74,7 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <label class="form-label">Số thứ tự</label><br>
-                                                    <input class="form-control" value="{{ old('order', 0) }}" type="number"
+                                                    <input class="form-control" value="{{ old('foodType.order', 0) }}" type="number"
                                                         min="0" id="order" name="foodType[order]">
                                                     @error('foodType.order')
                                                         <div class="mt-2">
@@ -92,7 +92,7 @@
                     <button type="submit" class="btn btn-success">
                         Tạo mới
                     </button>
-                    <a href="{{ route('admin.categoryPosts.index') }}" class="btn btn-warning">
+                    <a href="{{ route('admin.food-types.index') }}" class="btn btn-warning">
                         Trở về trang danh sách
                     </a>
                 </form>

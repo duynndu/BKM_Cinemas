@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ActorController;
 use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\Blocks\BlockController;
 use App\Http\Controllers\Admin\Blocks\BlockTypeController;
@@ -33,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 // Namespace Error Admin
 
 
-Route::group(['prefix' => 'filemanager', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'file-manager', 'middleware' => ['web', 'admin']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
@@ -864,5 +865,16 @@ Route::prefix('admin')->middleware(['web'])
                 Route::post('/{id}/update', 'update')->name('update');
                 Route::delete('/{id}/delete', 'delete')->name('delete');
                 Route::post('/change-active', 'changeActive')->name('changeActive');
+            });
+        Route::prefix('actors')
+            ->controller(ActorController::class)
+            ->name('actors.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/store', 'store')->name('store');
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::put('/{id}/update', 'update')->name('update');
+                Route::delete('/{id}/delete', 'destroy')->name('delete');
+                Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')->name('deleteItemMultipleChecked');
             });
     });

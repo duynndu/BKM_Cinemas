@@ -4,11 +4,7 @@
 
 @section('css')
     <style>
-        .del-actor {
-            display: block;
-            position: absolute;
-            bottom: 0;
-        }
+    
     </style>
 @endsection
 
@@ -195,10 +191,8 @@
                                                 <div class="mb-3">
                                                     <label
                                                         class="form-label mb-2">{{ __('language.admin.movies.content') }}</label>
-                                                    <textarea placeholder="{{ __('language.admin.movies.inputContent') }}" name="content" id="ckeditor"
-                                                        style="display: none;">
-                                                        {{ old('content', $movie->content) }}
-                                                        </textarea>
+                                                    <textarea placeholder="{{ __('language.admin.movies.inputContent') }}" name="content" class="ckeditor"
+                                                        style="display: none;">{{ old('content', $movie->content) }}</textarea>
                                                     @error('content')
                                                         <div class="text-danger mt-2">{{ $message }}</div>
                                                     @enderror
@@ -287,13 +281,13 @@
                                                                         style="background-image: url({{ $movie->image ? asset($movie->image) : asset('images/no-img-avatar.png') }});">
                                                                     </div>
                                                                     @if (!empty($movie->image))
-                                                                    <button type="button" class="removeImage"
-                                                                        data-id="{{ $movie->id }}"
-                                                                        data-url="{{ route('admin.movies.removeAvatarImage') }}"
-                                                                        data-image="{{ asset('images/no-img-avatar.png') }}">
-                                                                        <i class="fa-solid fa-xmark"></i>
-                                                                    </button>
-                                                                @endif
+                                                                        <button type="button" class="removeImage"
+                                                                            data-id="{{ $movie->id }}"
+                                                                            data-url="{{ route('admin.movies.removeAvatarImage') }}"
+                                                                            data-image="{{ asset('images/no-img-avatar.png') }}">
+                                                                            <i class="fa-solid fa-xmark"></i>
+                                                                        </button>
+                                                                    @endif
                                                                 </div>
                                                                 <div
                                                                     class="change-btn d-flex align-items-center flex-wrap">
@@ -366,20 +360,18 @@
                                                                     class="form-label">{{ __('language.admin.movies.status') }}</label><br>
                                                                 <div class="row mt-2">
                                                                     <div class="col-sm-6">
-                                                                   
+
                                                                         <input class="form-check-input" type="radio"
                                                                             id="active" @checked($movie->active == 1)
-                                                                            name="active" value="1"
-                                                                            >
+                                                                            name="active" value="1">
                                                                         <label class="form-check-label" for="active">
                                                                             {{ __('language.admin.movies.show') }}
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <input @checked($movie->active == 0)
-                                                                            class="form-check-input"
-                                                                            value="0" type="radio"
-                                                                            id="noActive" name="active">
+                                                                            class="form-check-input" value="0"
+                                                                            type="radio" id="noActive" name="active">
                                                                         <label class="form-check-label" for="active">
                                                                             {{ __('language.admin.movies.hidden') }}
                                                                         </label>
@@ -421,91 +413,78 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="actor">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="add-actor btn btn-success" onclick="addActor()">
-                                                {{ __('language.admin.movies.addActor') }}
-                                            </div>
-                                            <div id="actor-list" class="row mt-4">
-                                                <div class="actor-row row mt-2">
-                                                    <div class="col-3">
-                                                        <label
-                                                            class="form-label mb-2">{{ __('language.admin.movies.nameActor') }}:</label>
-                                                        <input type="text" value="" name="name_actor[]"
-                                                            class="form-control"
-                                                            placeholder="{{ __('language.admin.movies.inputNameActor') }}">
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <label
-                                                            class="form-label mb-2">{{ __('language.admin.movies.birtDate') }}:</label>
-                                                        <input type="date" name="birth_date[]" class="form-control">
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <label
-                                                            class="form-label mb-2">{{ __('language.admin.movies.nationality') }}:</label>
-                                                        <input type="text" value="" name="nationality[]"
-                                                            class="form-control"
-                                                            placeholder="{{ __('language.admin.movies.inputNationality') }}">
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <label
-                                                            class="form-label mb-2">{{ __('language.admin.movies.role') }}:</label>
-                                                        <input type="text" value="" name="role[]"
-                                                            class="form-control"
-                                                            placeholder="{{ __('language.admin.movies.inputRole') }}">
-                                                    </div>
-                                                    <div class="col-1" style="position: relative">
-                                                        <!-- Không có nút xóa cho hàng đầu tiên -->
-                                                    </div>
-                                                </div>
-                                                @if ($movie->actors->isNotEmpty())
+                                <div class="row">
+                                    <div class="col-xl-3">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5>
+                                                    {{ __('language.admin.movies.chooseActor') }}
+                                                </h5>
+                                                <select multiple name="actors[]" id="selectActor" class="form-control"
+                                                    onchange="updateRoleBoxes()">
+                                                    @if (!empty($actors))
+                                                        @foreach ($actors as $actor)
+                                                            <option @selected($movie->actors->contains($actor->id))
+                                                                value="{{ $actor->id }}">{{ $actor->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+
+                                                <div id="roleBoxes">
                                                     @foreach ($movie->actors as $actor)
-                                                        <div class="actor-row row mt-2">
-                                                            <div class="col-3">
-                                                                <label
-                                                                    class="form-label mb-2">{{ __('language.admin.movies.nameActor') }}:</label>
-                                                                <input type="text" value="{{ $actor->name }}"
-                                                                    name="name_actor[]" class="form-control"
-                                                                    placeholder="{{ __('language.admin.movies.inputNameActor') }}">
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <label
-                                                                    class="form-label mb-2">{{ __('language.admin.movies.birtDate') }}:</label>
-                                                                <input type="date" value="{{ $actor->birth_date }}"
-                                                                    name="birth_date[]" class="form-control">
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <label
-                                                                    class="form-label mb-2">{{ __('language.admin.movies.nationality') }}:</label>
-                                                                <input type="text" value="{{ $actor->nationality }}"
-                                                                    name="nationality[]" class="form-control"
-                                                                    placeholder="{{ __('language.admin.movies.inputNationality') }}">
-                                                            </div>
-                                                            <div class="col-2">
-                                                                <label
-                                                                    class="form-label mb-2">{{ __('language.admin.movies.role') }}:</label>
-                                                                <input type="text" value="{{ $actor->pivot->role }}"
-                                                                    name="role[]" class="form-control"
-                                                                    placeholder="{{ __('language.admin.movies.inputRole') }}">
-                                                            </div>
-                                                            <div class="col-1" style="position: relative">
-                                                                <!-- Add a delete button for existing actors -->
-
-                                                                <!-- Check if it's not the first item -->
-                                                                <a class="btn btn-danger del-actor"
-                                                                    onclick="deleteActor(event)">Xóa</a>
-
-                                                            </div>
+                                                        <div class="role-box">
+                                                            <label>Vai trò của {{ $actor->name }}: </label>
+                                                            <input class="form-control" type="text"
+                                                                name="role_actor_chooses[{{ $actor->id }}]"
+                                                                value="{{ $actor->pivot->role }}">
                                                         </div>
                                                     @endforeach
-                                                @endif
-
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="col-xl-9">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="add-actor btn btn-success" onclick="addActor()">
+                                                    {{ __('language.admin.movies.addActor') }}
+                                                </div>
+                                                <div id="actor-list" class="row mt-4">
+                                                    <div class="actor-row row mt-2">
+                                                        <div class="col-3">
+                                                            <label
+                                                                class="form-label mb-2">{{ __('language.admin.movies.nameActor') }}:</label>
+                                                            <input type="text" value="{{ old('name_actor[]') }}"
+                                                                name="name_actor[]" class="form-control">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label
+                                                                class="form-label mb-2">{{ __('language.admin.movies.birtDate') }}:</label>
+                                                            <input type="date" value="{{ old('birth_date[]') }}"
+                                                                name="birth_date[]" class="form-control">
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <label
+                                                                class="form-label mb-2">{{ __('language.admin.movies.nationality') }}:</label>
+                                                            <input type="text" value="{{ old('nationality[]') }}"
+                                                                value="" name="nationality[]" class="form-control">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label
+                                                                class="form-label mb-2">{{ __('language.admin.movies.role') }}:</label>
+                                                            <input type="text" value="{{ old('role[]') }}"
+                                                                value="" name="role[]" class="form-control">
+                                                        </div>
+                                                        <div class="col-1" style="position: relative">
+                                                            <!-- Không có nút xóa cho hàng đầu tiên -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
 
                         </div>
@@ -519,36 +498,8 @@
 @endsection
 
 @section('js')
-    <script>
-        function addActor() {
-            const actorList = document.getElementById('actor-list');
-            const newRow = document.querySelector('.actor-row').cloneNode(true);
-
-            // Clear the values in the cloned row
-            newRow.querySelectorAll('input').forEach(input => {
-                input.value = '';
-            });
-
-            // Thêm nút xóa cho hàng mới
-            const deleteButton = document.createElement('a');
-            deleteButton.className = 'btn btn-danger del-actor';
-            deleteButton.innerText = 'Xóa';
-            deleteButton.onclick = deleteActor;
-            deleteButton.style.cssText = 'display:block; position:absolute; bottom:0;'; // Thêm style nếu cần
-
-            const deleteCol = newRow.querySelector('.col-1');
-            deleteCol.innerHTML = ''; // Xóa nội dung cũ
-            deleteCol.appendChild(deleteButton); // Thêm nút xóa vào hàng mới
-
-            actorList.appendChild(newRow);
-        }
-
-        function deleteActor(event) {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-            const actorRow = event.target.closest('.actor-row'); // Tìm hàng cha
-            if (actorRow) {
-                actorRow.remove(); // Xóa hàng
-            }
-        }
-    </script>
+<script>
+    const existingRole = @json($movie->actors->pluck('pivot.role', 'id')->toArray());
+</script>
+<script src="{{ asset('js/admin/commons/movies/update.js') }}"></script>
 @endsection
