@@ -607,6 +607,7 @@
 <script src="{{ asset('js/admin/ajaxs/removeImage.js') }}"></script>
 <script src="{{ asset('js/admin/ajaxs/removeImageRelate.js') }}"></script>
 <script src="{{ asset('js/admin/commons/common.js') }}"></script>
+<script src="{{ asset('js/admin/commons/movies/createNewActorMovie.js') }}"></script>
 <script src="{{ asset('js/admin/commons/changeCheckbox.js') }}"></script>
 <script src="{{ asset('js/admin/commons/format-price.js') }}"></script>
 <script src="{{ asset('js/plugins-init/swiper.min.js') }}"></script>
