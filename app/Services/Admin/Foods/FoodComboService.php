@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Foods;
 
-use App\Repositories\Admin\Foods\Repository\FoodComboRepository;
+use App\Repositories\Admin\Foods\Interface\FoodComboInterface;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,7 +14,7 @@ class FoodComboService
     protected $foodComboRepository;
 
     public function __construct(
-        FoodComboRepository $foodComboRepository
+        FoodComboInterface $foodComboRepository
     ) {
         $this->foodComboRepository = $foodComboRepository;
     }
@@ -29,7 +29,6 @@ class FoodComboService
         $data['food_combo']['price'] = $this->sanitizePrice($data['food_combo']['price']);
         return $this->foodComboRepository->create($data);
     }
-
 
     public function update(&$data, $id)
     {
@@ -65,7 +64,6 @@ class FoodComboService
         return $this->foodComboRepository->update($id, $data['food_combo']);
     }
 
-
     public function delete($id)
     {
         return $this->foodComboRepository->delete($id);
@@ -100,7 +98,6 @@ class FoodComboService
         return $this->foodComboRepository->changeOrder($request->id, $request->order);
     }
 
-
     private function uploadFile($data, $folderName)
     {
         $path = $data->store($folderName);
@@ -118,7 +115,6 @@ class FoodComboService
             Storage::delete($path);
         }
     }
-
 
     private function sanitizePrice($price)
     {

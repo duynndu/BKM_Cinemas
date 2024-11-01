@@ -188,10 +188,7 @@
                                                 <div class="mb-3">
                                                     <label
                                                         class="form-label mb-2">{{ __('language.admin.movies.content') }}</label>
-                                                    <textarea placeholder="{{ __('language.admin.movies.inputContent') }}" name="content" id="ckeditor"
-                                                        style="display: none;">
-                                                            {{ old('content') }}
-                                                        </textarea>
+                                                    <textarea placeholder="{{ __('language.admin.movies.inputContent') }}" name="content" class="ckeditor"style="display: none;">{{ old('content') }}</textarea>
                                                     @error('content')
                                                         <div class="text-danger mt-2">{{ $message }}</div>
                                                     @enderror

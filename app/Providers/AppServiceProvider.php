@@ -13,6 +13,14 @@ use App\Repositories\Admin\Payments\Repository\PaymentRepository;
 use App\Repositories\Admin\Posts\Interface\PostInterface;
 use App\Repositories\Admin\Posts\Repository\PostRepository;
 use App\Http\Views\Composers\GetAllDataComposer;
+use App\Repositories\Admin\Actors\Interface\ActorInterface;
+use App\Repositories\Admin\Foods\Interface\FoodComboInterface;
+use App\Repositories\Admin\Foods\Interface\FoodInterface;
+use App\Repositories\Admin\Foods\Interface\FoodTypeInterface;
+use App\Repositories\Admin\Actors\Repository\ActorRepository;
+use App\Repositories\Admin\Foods\Repository\FoodComboRepository;
+use App\Repositories\Admin\Foods\Repository\FoodRepository;
+use App\Repositories\Admin\Foods\Repository\FoodTypeRepository;
 use App\Repositories\Admin\Systems\Interface\SystemInterface;
 use App\Repositories\Admin\Systems\Repository\SystemRepository;
 use Illuminate\Support\ServiceProvider;
@@ -26,11 +34,15 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(CategoryPostInterface::class, CategoryPostRepository::class);
-        $this->app->bind(PostInterface::class, PostRepository::class);
-        $this->app->bind(CityInterface::class, CityRepository::class);
-        $this->app->bind(AreaInterface::class, AreaRepository::class);
-        $this->app->bind(PaymentInterface::class, PaymentRepository::class);
-        $this->app->bind(SystemInterface::class, SystemRepository::class);
+        $this->app->bind(PostInterface        ::class, PostRepository        ::class);
+        $this->app->bind(CityInterface        ::class, CityRepository        ::class);
+        $this->app->bind(AreaInterface        ::class, AreaRepository        ::class);
+        $this->app->bind(PaymentInterface     ::class, PaymentRepository     ::class);
+        $this->app->bind(SystemInterface      ::class, SystemRepository      ::class);
+        $this->app->bind(FoodTypeInterface    ::class, FoodTypeRepository    ::class);
+        $this->app->bind(FoodInterface        ::class, FoodRepository        ::class);
+        $this->app->bind(FoodComboInterface   ::class, FoodComboRepository   ::class);
+        $this->app->bind(ActorInterface       ::class, ActorRepository       ::class);
     }
 
     /**
