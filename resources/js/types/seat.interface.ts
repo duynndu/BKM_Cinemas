@@ -1,6 +1,6 @@
 import { SEAT_STATUS } from "@/define/seat.define";
 
-interface ISeat {
+export interface ISeat {
   id?: string | null;
   room_id?: number | null;
   seat_number: any;
