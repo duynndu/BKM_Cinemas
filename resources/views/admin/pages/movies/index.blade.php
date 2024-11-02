@@ -388,6 +388,7 @@
                                                                                                 @foreach ($movie->actors as $actor)
                                                                                                     <div
                                                                                                         class="swiper-slide">
+                                                                                                        <img src="{{ $actor->avatar  }}" alt="">
                                                                                                         <p
                                                                                                             style="font-weight: 500">
                                                                                                             {{ $actor->name }}

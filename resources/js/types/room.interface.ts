@@ -1,7 +1,7 @@
 import { ISeat } from "./seat.interface";
 
 export interface IRoom {
-  id?: number | null;
+  id?: string | null;
   room_name: string;
   image: any;
   base_price: number;

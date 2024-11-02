@@ -2,7 +2,7 @@ import { ISeat } from "./seat.interface";
 
 
 export interface ISeatLayout {
-  id?: number | null;
+  id?: string | null;
   name: string;
   image: string;
   col_count: number;

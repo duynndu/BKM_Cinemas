@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="{{ asset('css/style_image.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style_auth.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/monaco-editor-0.51.0/package/min/vs/editor/editor.main.css') }}">
-    
+
     @yield('css')
     @routes
 </head>
@@ -559,11 +559,11 @@
 
 <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
+<script src="{{ asset('vendor/peity/jquery.peity.min.js') }}"></script>
+<script src="{{ asset('vendor/nestable2/js/jquery.nestable.min.js') }}"></script>
 
 <script src="{{ asset('vendor/chart-js/chart.bundle.min.js') }}"></script>
 <script src="{{ asset('vendor/apexchart/apexchart.js') }}"></script>
-<script src="{{ asset('vendor/peity/jquery.peity.min.js') }}"></script>
-<script src="{{ asset('vendor/nestable2/js/jquery.nestable.min.js') }}"></script>
 <script src="{{ asset('vendor/swiper/js/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('js/dashboard/dashboard-1.js') }}"></script>
 <script src="{{ asset('vendor/wow-master/dist/wow.min.js') }}"></script>
@@ -576,7 +576,7 @@
 <script src="{{ asset('js/dashboard/cms.js') }}"></script>
 <script src="{{ asset('js/plugins-init/nestable-init.js') }}"></script>
 
-<
+
 <script type="module">
     @if (session()->has('status_succeed'))
     toastr.success('{{ session()->pull('status_succeed') }}', {
@@ -598,6 +598,7 @@
 
 <!-- Page level Js : Dashboard 2  -->
 <script src="{{ asset('js/custom.min.js') }}"></script>
+<script src="{{ asset('js/admin/commons/customCkeditor.js') }}"></script>
 <script src="{{ asset('js/dlabnav-init.js') }}"></script>
 
 <script src="{{ asset('js/admin/change-images/image.js') }}"></script>
@@ -606,6 +607,7 @@
 <script src="{{ asset('js/admin/ajaxs/removeImage.js') }}"></script>
 <script src="{{ asset('js/admin/ajaxs/removeImageRelate.js') }}"></script>
 <script src="{{ asset('js/admin/commons/common.js') }}"></script>
+<script src="{{ asset('js/admin/commons/movies/createNewActorMovie.js') }}"></script>
 <script src="{{ asset('js/admin/commons/changeCheckbox.js') }}"></script>
 <script src="{{ asset('js/admin/commons/format-price.js') }}"></script>
 <script src="{{ asset('js/plugins-init/swiper.min.js') }}"></script>
