@@ -1,4 +1,4 @@
-import { RoomService } from "@/services/room.service";
+import { roomService } from "@/services/room.service";
 import Alpine from "alpinejs";
 import { domToBlob, redirect } from "@/utils/common";
 import $ from "jquery";
@@ -31,8 +31,8 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
   showModal: false,
   seatLayouts: null as any[] | null,
   async init() {
-    this.seatTypes = await RoomService.getSeatTypesKeyByCode();
-    this.seatLayouts = await RoomService.getSeatLayouts();
+    this.seatTypes = await roomService.getSeatTypesKeyByCode();
+    this.seatLayouts = await roomService.getSeatLayouts();
     this.getSeatLayoutById();
     this.renderSeatLayout();
     if (seatLayoutId) {
@@ -67,9 +67,9 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
     }
     try {
       if (seatLayoutId) {
-        await RoomService.putSeatLayout(seatLayoutId, formData);
+        await roomService.putSeatLayout(seatLayoutId, formData);
       } else {
-        await RoomService.postSeatLayout(formData);
+        await roomService.postSeatLayout(formData);
       }
       toastr.success('Thao tác thành công');
       setTimeout(() => {

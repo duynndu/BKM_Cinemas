@@ -1,16 +1,18 @@
 import { IRoom } from "@/types/room.interface";
 import { ISeatType } from "@/types/seat-type.interface";
+import { BaseService } from "./base.service";
+import axios from "axios";
 
-export class RoomService {
+export class Room extends BaseService {
 
   //#region SeatLayout
-  static async getSeatLayouts() {
-    const response = await window.axios.get('/seat-layouts');
+  async getSeatLayouts() {
+    const response = await axios.get('/seat-layouts');
     return response.data;
   }
 
-  static async postSeatLayout(data: any) {
-    const response = await window.axios.post('/seat-layouts', data, {
+  async postSeatLayout(data: any) {
+    const response = await axios.post('/seat-layouts', data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -18,8 +20,8 @@ export class RoomService {
     return response.data;
   }
 
-  static async putSeatLayout(id: number, data: FormData) {
-    const response = await window.axios.put(`/seat-layouts/${id}`, data, {
+  async putSeatLayout(id: number, data: FormData) {
+    const response = await axios.put(`/seat-layouts/${id}`, data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -27,8 +29,8 @@ export class RoomService {
     return response.data;
   }
 
-  static async deleteSeatLayout(id: number) {
-    const response = await window.axios.delete(`/seat-layouts/${id}`, {
+  async deleteSeatLayout(id: number) {
+    const response = await axios.delete(`/seat-layouts/${id}`, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -38,18 +40,18 @@ export class RoomService {
   //#endregion
 
   //#region Room
-  static async getRooms() {
-    const response = await window.axios.get('/rooms');
+  async getRooms() {
+    const response = await axios.get('/rooms');
     return response.data;
   }
 
-  static async getRoom(id: number) {
-    const response = await window.axios.get<IRoom>(`/rooms/${id}`);
+  async getRoom(id: string) {
+    const response = await axios.get<IRoom>(`/rooms/${id}`);
     return response.data;
   }
 
-  static async postRoom(data: any) {
-    const response = await window.axios.post('/rooms', data, {
+  async postRoom(data: any) {
+    const response = await axios.post('/rooms', data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -57,8 +59,8 @@ export class RoomService {
     return response.data;
   }
 
-  static async putRoom(id: number, data: any) {
-    const response = await window.axios.put(`/rooms/${id}`, data, {
+  async putRoom(id: string, data: any) {
+    const response = await axios.put(`/rooms/${id}`, data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -66,42 +68,44 @@ export class RoomService {
     return response.data;
   }
 
-  static async deleteRoom(id: number) {
-    const response = await window.axios.delete(`/rooms/${id}`);
+  async deleteRoom(id: number) {
+    const response = await axios.delete(`/rooms/${id}`);
     return response.data;
   }
   //#endregion
 
   //#region SeatType
-  static async getSeatTypes() {
-    const response = await window.axios.get<ISeatType[]>('/seat-types');
+  async getSeatTypes() {
+    const response = await axios.get<ISeatType[]>('/seat-types');
     return response.data;
   }
 
-  static async getSeatType(id: number) {
-    const response = await window.axios.get<ISeatType>(`/seat-types/${id}`);
+  async getSeatType(id: number) {
+    const response = await axios.get<ISeatType>(`/seat-types/${id}`);
     return response.data;
   }
 
-  static async postSeatType(data: ISeatType) {
-    const response = await window.axios.post<ISeatType>('/seat-types', data);
+  async postSeatType(data: ISeatType) {
+    const response = await axios.post<ISeatType>('/seat-types', data);
     return response.data;
   }
 
-  static async putSeatType(id: number, data: ISeatType) {
-    const response = await window.axios.put<ISeatType>(`/seat-types/${id}`, data);
+  async putSeatType(id: number, data: ISeatType) {
+    const response = await axios.put<ISeatType>(`/seat-types/${id}`, data);
     return response.data;
   }
 
 
-  static async deleteSeatType(id: number) {
-    const response = await window.axios.delete(`/seat-types/${id}`);
+  async deleteSeatType(id: number) {
+    const response = await axios.delete(`/seat-types/${id}`);
     return response.data;
   }
 
-  static async getSeatTypesKeyByCode() {
-    const response = await window.axios.get('/seat-types-key-by-code');
+  async getSeatTypesKeyByCode() {
+    const response = await axios.get('/seat-types-key-by-code');
     return response.data;
   }
   //#endregion
 }
+
+export const roomService: Room = Room.getInstance();

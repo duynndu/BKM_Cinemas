@@ -8,8 +8,12 @@ use App\Constants\RoleConstant;
 use App\Constants\SeatType;
 use App\Models\Banner;
 use App\Models\Image;
+use App\Models\Movie;
 use App\Models\RefreshToken;
+use App\Models\Room;
+use App\Models\Showtime;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -86,6 +90,64 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
+
+        $movies = [1, 2, 3]; // Giả sử có 3 phim
+
+        $timeSlots = [
+            'morning' => ['08:00', '10:00'],
+            'afternoon' => ['13:00', '15:00'],
+            'evening' => ['18:00', '20:00'],
+        ];
+
+        foreach (range(0, 4) as $dayOffset) { // Change range to 0-4 for 5 days
+            $date = Carbon::now()->addDays($dayOffset);
+
+            foreach ($timeSlots as $slot) {
+                $numberOfRecords = rand(3, 5); // Random number of records between 3 and 5
+                foreach (range(0, $numberOfRecords - 1) as $i) {
+                    $startTime = $date->copy()->setTimeFromTimeString($slot[0])->addMinutes($i * 30); // Adjust start time
+                    $endTime = $startTime->copy()->addHours(2); // Assuming each movie lasts 2 hours
+
+                    Showtime::create([
+                        'room_id' => 1, // Set default room ID to 1
+                        'movie_id' => $movies[array_rand($movies)] == 1 ? 1 : null,
+                        'start_time' => $startTime,
+                        'end_time' => $endTime,
+                    ]);
+                }
+            }
+        }
+
+        Room::create([
+            'cinema_id' => 1,
+            'room_name' => 'Phòng 1',
+            'image' => 'path/to/image.jpg',
+            'base_price' => 50000,
+            'col_count' => 11,
+            'row_count' => 10,
+        ]);
+
+        Movie::create([
+            'id' => 1,
+            'title' => 'Movie Title',
+            'slug' => 'movie-slug',
+            'image' => 'path/to/movie/image.jpg',
+            'banner_movie' => 'path/to/movie/banner.jpg',
+            'description' => 'Movie description',
+            'content' => 'Movie content',
+            'duration' => 120, // in minutes
+            'director' => 'Director Name',
+            'trailer_url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            'format' => '2D',
+            'age' => 18,
+            'release_date' => '2022-01-01',
+            'premiere_date' => '2022-01-01',
+            'country' => 'USA',
+            'language' => 'English',
+            'order' => 1,
+            'hot' => true,
+            'active' => true
+        ]);
 
         DB::table('users')->insert([
             'name' => 'admin',

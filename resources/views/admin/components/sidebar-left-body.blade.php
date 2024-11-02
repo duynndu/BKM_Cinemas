@@ -41,7 +41,6 @@
                     <a href="{{ route('admin.blockTypes.create') }}"
                        class="list-group-item change">{{ __('language.admin.interfaces.blockTypes.create') }}</a>
                 </div>
-
             @endif
             <!-- End If -->
         </div>

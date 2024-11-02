@@ -166,7 +166,10 @@ class MovieRepository implements MovieInterface
     public function genreOfMovie($id)
     {
         $data = [];
-
+        $movie = $this->movie->find($id);
+        if (!$movie) {
+            return redirect()->route('admin.movies.index')->with('status_failed', 'Không tìm thấy phim');
+        }
         $genre = $this->movie->find($id);
 
         $data = $genre->movieGenre->pluck('genre_id')->all();;

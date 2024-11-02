@@ -10,6 +10,9 @@ use App\Models\Page;
 use App\Models\Permission;
 use App\Models\Post;
 use App\Models\Block as BlockModel;
+use App\Models\Food;
+use App\Models\FoodCombo;
+use App\Models\FoodType;
 use App\Models\Role;
 use App\Models\System;
 use App\Models\Tag;
@@ -18,6 +21,9 @@ use App\Policies\Admin\Blocks\BlockPolicy;
 use App\Policies\Admin\Blocks\BlockTypePolicy;
 use App\Policies\Admin\CategoryPosts\CategoryPostPolicy;
 use App\Policies\Admin\Dashboards\DashboardPolicy;
+use App\Policies\Admin\Foods\FoodComboPolicy;
+use App\Policies\Admin\Foods\FoodPolicy;
+use App\Policies\Admin\Foods\FoodTypePolicy;
 use App\Policies\Admin\Menus\MenuPolicy;
 use App\Policies\Admin\Modules\ModulePolicy;
 use App\Policies\Admin\Pages\PagePolicy;
@@ -51,6 +57,9 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         Module::class => ModulePolicy::class,
         Permission::class => PermissionPolicy::class,
+        Food::class => FoodPolicy::class,
+        FoodType::class => FoodTypePolicy::class,
+        FoodCombo::class => FoodComboPolicy::class,
     ];
 
     /**
