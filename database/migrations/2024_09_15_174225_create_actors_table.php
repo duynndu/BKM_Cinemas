@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('image')->nullable();
+            $table->text('biography')->nullable();
             $table->date('birth_date')->nullable(); // Ngày sinh
             $table->string('nationality')->nullable(); // Quốc tịch
             $table->timestamps();

@@ -35,7 +35,7 @@
                                 <div class="card-body">
                                     <div class="row mb-4">
                                         <div class="actor-row row mt-2">
-                                            <div class="col-3">
+                                            <div class="col-4">
                                                 <label
                                                     class="form-label mb-2">Tên diễn viên:</label>
                                                 <input type="text" value="{{ old('actor.name') }}" name="actor[name]"
@@ -45,7 +45,7 @@
                                                     <div class="text-danger mt-2">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-4">
                                                 <label
                                                     class="form-label mb-2">Ngày sinh:</label>
                                                 <input type="date" value="{{ old('actor.birth_date') }}" name="actor[birth_date]"
@@ -54,7 +54,7 @@
                                                     <div class="text-danger mt-2">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-4">
                                                 <label
                                                     class="form-label mb-2">Quốc tịch:</label>
                                                 <input type="text" value="{{ old('actor.nationality') }}" value=""
@@ -64,7 +64,14 @@
                                                     <div class="text-danger mt-2">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-8 p-3">
+                                                <label class="form-label mb-2">Tiểu sử:</label>
+                                                <textarea class="form-control ckeditor" cols="20" rows="5" name="actor[biography]">{{ old('actor.biography') }}</textarea>
+                                                @error('actor.biography')
+                                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-4 p-3">
                                                 <label class="form-label mb-2">Ảnh</label>
                                                 <div class="avatar-upload d-flex align-items-center">
                                                     <div class=" position-relative" style="width: 120px;">
