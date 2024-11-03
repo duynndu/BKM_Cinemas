@@ -20,7 +20,7 @@ class FoodComboService extends BaseService implements FoodComboServiceInterface
         return FoodComboInterface::class;
     }
 
-    public function store(&$data)
+    public function create(&$data)
     {
         if (isset($data['food_combo']['image']) && $data['food_combo']['image']) {
             $uploadData = $this->uploadFile($data['food_combo']['image'], 'public/foodCombos');
