@@ -119,7 +119,12 @@
                     </ul>
                 </li>
             @endif
-
+            <li>
+                <a class="" href="{{ route('admin.cinemas.index') }}" aria-expanded="false">
+                    <i class="material-icons">theaters</i>
+                    <span class="nav-text">Rạp chiếu phim</span>
+                </a>
+            </li>
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">movie</i>
@@ -156,6 +161,17 @@
                 </ul>
             </li>
 
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">payment</i>
+                    <span class="nav-text">Quản lý phương thức thanh toán</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{{ route('admin.payments.index') }}" aria-expanded="false">Phương thức thanh toán</a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">apartment</i>

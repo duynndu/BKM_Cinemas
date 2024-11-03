@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', $title['create'] ?? 'Thêm mới khu vực')
+@section('title', 'Thêm mới thành phố')
 
 @section('css')
 @endsection
@@ -15,15 +15,14 @@
                             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                 @include('admin.components.breadcrumbs', [
                                     'title' => $title['create'] ?? '',
-                                    'breadcrumbs' => $breadcrumbs
+                                    'breadcrumbs' => $breadcrumbs,
                                 ])
                             </nav>
                         </div>
                     </div>
                 </div>
-                <form method="post"
-                    action="{{ route('admin.areas.store') }}"
-                    class="product-vali" enctype="multipart/form-data">
+                <form method="post" action="{{ route('admin.cities.store') }}" class="product-vali"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div>
@@ -31,9 +30,9 @@
                                 <div class="card-body">
                                     <div>
                                         <div>
-                                            <label class="form-label mb-2">Tên Khu Vực</label>
+                                            <label class="form-label mb-2">Tên Thành Phố</label>
                                             <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="Nhập Tên Khu Vực" value="{{ old('name') ?? '' }}">
+                                                placeholder="Nhập Tên Thành Phố" value="{{ old('name') ?? '' }}">
                                             @error('name')
                                                 <div class="mt-2">
                                                     <span class="text-red">{{ $message }}</span>
@@ -41,27 +40,10 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <div class="mt-3">
-                                        <label class="form-label mb-2">Chọn Thành Phố</label>
-                                        <select name="city_id" class="form-control">
-                                         
-                                            <option value="" selected>-- Chọn Thành Phố --</option>
-        
-                                            @foreach($cities as $city)
-                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('city_id')
-                                            <div class="mt-2">
-                                                <span class="text-red">{{ $message }}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
-
                                     <div class="mt-3 d-flex justify-content-start gap-2">
                                         <button type="submit" class="btn btn-success">Tạo Mới</button>
-                                        <a href="{{ route('admin.areas.index') }}" class="btn btn-warning">Quay Về Trang Danh Sách</a>
+                                        <a href="{{ route('admin.cities.index') }}" class="btn btn-warning">Quay Về Trang
+                                            Danh Sách</a>
                                     </div>
                                 </div>
                             </div>
@@ -69,6 +51,7 @@
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 @endsection

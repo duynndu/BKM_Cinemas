@@ -65,6 +65,47 @@
                                                     <div class="text-danger mt-2">{{ $message }}</div>
                                                 @enderror
                                             </div>
+                                            <div class="col-8 p-3">
+                                                <label class="form-label mb-2">Tiểu sử:</label>
+                                                <textarea class="form-control ckeditor" cols="20" rows="5" name="actor[biography]">{{ old('actor.biography', $data->biography) }}</textarea>
+                                                @error('actor.biography')
+                                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-4 p-3">
+                                                <label class="form-label mb-2">Ảnh</label>
+                                                <div class="avatar-upload d-flex align-items-center">
+                                                    <div class=" position-relative" style="width: 120px;">
+                                                        <div class="avatar-preview">
+                                                            <div class="imagePreview"
+                                                                style="background-image: url({{ asset($data->image ?? 'images/no-img-avatar.png') }});">
+                                                            </div>
+                                                            @if (!empty($data->image))
+                                                                <button type="button"
+                                                                    class="removeImage"
+                                                                    data-id="{{ $data->id }}"
+                                                                    data-url="{{ route('admin.actors.removeAvatarImage') }}"
+                                                                    data-image="{{ asset('images/no-img-avatar.png') }}">
+                                                                    <i class="fa-solid fa-xmark"></i>
+                                                                </button>
+                                                            @endif
+                                                        </div>
+                                                        <div
+                                                            class="change-btn d-flex align-items-center flex-wrap">
+                                                            <input type="file"
+                                                                class="form-control d-none uploadImage"
+                                                                id="imageUpload" name="actor[image]"
+                                                                accept=".png, .jpg, .jpeg, .webp">
+                                                            <label for="imageUpload"
+                                                                class="btn btn-sm btn-primary light ms-0">Chọn
+                                                                ảnh</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @error('actor.image')
+                                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

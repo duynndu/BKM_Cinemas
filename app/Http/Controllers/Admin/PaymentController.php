@@ -1,15 +1,19 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\PaymentRequest;
-use Illuminate\Http\Request;
+use App\Models\Payment;
+use App\Repositories\Admin\Payments\Interface\PaymentInterface;
 use App\Services\Admin\Payments\PaymentService;
+use Illuminate\Http\Request;
+use App\Traits\RemoveImageTrait;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentController extends Controller
 {
+    use RemoveImageTrait;
     protected $paymentService;
 
     public function __construct(PaymentService $paymentService)
@@ -22,8 +26,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = $this->paymentService->getAllPayments();
-        return view('admin.pages.payment.index', compact('payments'));
+        $payments = $this->paymentService->getAll();
+        return view('admin.pages.payments.index', compact('payments'));
     }
 
     /**
@@ -31,7 +35,7 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        return view('admin.payments.create');
+        return view('admin.pages.payments.create');
     }
 
     /**
@@ -39,14 +43,26 @@ class PaymentController extends Controller
      */
     public function store(PaymentRequest $request)
     {
+        $data = $request->payment;
+
         DB::beginTransaction();
         try {
-            $this->paymentService->create($request);
+            $this->paymentService->store($data);
             DB::commit();
-            return redirect()->route('admin.payments.index')->with('success', 'Payment created successfully.');
+            return redirect()->route('admin.payments.index')->with('status_succeed', 'Thêm phương thức thanh toán thành công');
         } catch (\Exception $e) {
+            if (!empty($data['image'])) {
+                $path = "public/payments/" . basename($data['image']);
+                if (Storage::exists($path)) {
+                    Storage::delete($path);
+                }
+            }
+
             DB::rollBack();
-            return redirect()->route('admin.payments.create')->with('success', 'Payment created successfully.');
+
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return redirect()->route('admin.payments.create')->with('status_failed', 'Không thể tạo phương thức thanh toán.');
         }
     }
 
@@ -55,8 +71,7 @@ class PaymentController extends Controller
      */
     public function show(string $id)
     {
-        $payment = $this->paymentService->getById($id);
-        return view('admin.payments.show', compact('payment'));
+
     }
 
     /**
@@ -64,8 +79,11 @@ class PaymentController extends Controller
      */
     public function edit(string $id)
     {
-        $payment = $this->paymentService->getById($id);
-        return view('admin.payments.edit', compact('payment'));
+        $payment = $this->paymentService->find($id);
+        if (!$payment) {
+            return redirect()->route('admin.payments.index')->with(['status_failed' => 'Không tìm thấy!']);
+        }
+        return view('admin.pages.payments.edit', compact('payment'));
     }
 
     /**
@@ -73,16 +91,70 @@ class PaymentController extends Controller
      */
     public function update(PaymentRequest $request, $id)
     {
-        $this->paymentService->updatePayment($request, $id);
-        return redirect()->route('admin.payments.index')->with('success', 'Payment updated successfully.');
+        $data = $request->payment;
+
+        DB::beginTransaction();
+        try {
+            $this->paymentService->update($data, $id);
+            DB::commit();
+            return redirect()->route('admin.payments.index')->with('status_succeed', 'Phương thức thanh toán đã được cập nhật thành công.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return redirect()->route('admin.payments.edit', $id)->with('status_failed', 'Cập nhật phương thức thanh toán không thành công.');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
-        $this->paymentService->delete($id);
-        return redirect()->route('admin.payments.index')->with('success', 'Payment deleted successfully.');
+        DB::beginTransaction();
+        try {
+            if (!$this->paymentService->delete($id)) {
+                return redirect()->route('admin.payments.index')->with(['status_failed' => 'Không tìm thấy!']);
+            }
+            DB::commit();
+            return redirect()->route('admin.payments.index')->with('status_succeed', 'Phương thức thành toán đã được xóa thành công.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return redirect()->route('admin.payments.index')->with('status_failed', 'Xóa phương thức thành toán không thành công.');
+        }
+    }
+
+    public function removeAvatarImage(Request $request)
+    {
+        $payment = $this->removeImage($request, new Payment, 'image', 'payments');
+
+        return response()->json(['avatar' => $payment], 200);
+    }
+
+    public function changeActive(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = $this->paymentService->changeActive($request);
+            DB::commit();
+            if (!$data) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Có lỗi xảy ra!'
+                ], 400);
+            }
+            return response()->json(['newStatus' => $data->active]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
     }
 }

@@ -122,10 +122,6 @@
                                                                             <label for="imageUpload"
                                                                                 class="btn btn-sm btn-primary light ms-0">Chọn
                                                                                 ảnh</label>
-                                                                            @error('avatar')
-                                                                                <div class="text-danger mt-2">
-                                                                                    {{ $message }}</div>
-                                                                            @enderror
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -164,10 +160,7 @@
                                                             </div>
                                                         @enderror
                                                     </div>
-
-
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>

@@ -20,7 +20,6 @@ class FoodService
 
     public function store(&$data)
     {
-        $uploadData = $this->uploadFile($data['image'], 'public/foods');
         if (isset($data['image']) && $data['image']) {
             $uploadData = $this->uploadFile($data['image'], 'public/foods');
             $data['image'] = $uploadData['path'];
@@ -91,7 +90,6 @@ class FoodService
     {
         return $this->foodRepository->changeOrder($request->id, $request->order);
     }
-
 
     private function uploadFile($data, $folderName)
     {

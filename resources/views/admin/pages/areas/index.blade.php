@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', $title['index'] ?? 'Danh sách khu vực')
+@section('title', 'Danh sách khu vực')
 
 @section('css')
 @endsection
@@ -29,7 +29,7 @@
                                     <div class="row">
                                         <div class="col-xl-3 col-sm-6">
                                             <label class="form-label">Tên khu vực</label>
-                                            <input id="name" value="{{ request()->name }}" name="name"
+                                            <input id="name" value="{{ request()->area_name }}" name="area_name"
                                                 type="text" class="form-control mb-xl-0 mb-3"
                                                 placeholder="Nhập tên khu vực">
                                         </div>
@@ -72,11 +72,11 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">{{ $title['index'] ?? __('language.admin.areas.list') }}</h4>
+                        <h4 class="card-title">Danh sách khu vực</h4>
                         <div class="compose-btn">
                             <a href="{{ route('admin.areas.create') }}">
                                 <button class="btn btn-secondary btn-sm light">
-                                    + {{ __('language.admin.areas.add') }}
+                                    + Thêm Mới
                                 </button>
                             </a>
                         </div>
@@ -128,6 +128,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        {{ $areas->links('pagination::bootstrap-4') }}
+                                    </div>
+                                </div>
                             @else
                                 <div class="d-flex justify-content-center align-items-center p-5">
                                     <div>
@@ -137,9 +142,6 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="d-flex justify-content-center align-items-center">
-                                {{ $areas->appends(request()->query())->links('pagination::bootstrap-4') }}
-                            </div>
                         </div>
                     </div>
                 </div>

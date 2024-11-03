@@ -1,28 +1,24 @@
 <?php
 namespace App\Services\Admin\Cities;
-
-
-use App\Repositories\Admin\Cities\Repository\CityRepository;
+use App\Repositories\Admin\Cities\Interface\CityInterface;
 
 class CityService {
     protected $cityRepository;
 
-    public function __construct(CityRepository $cityRepository)
+    public function __construct(
+        CityInterface $cityRepository 
+    )
     {
         $this->cityRepository = $cityRepository;
     }
 
-    public function getAllCity()
-    {
-        return $this->cityRepository->getAllCity();
-    }
-
-    public function getAllCities()
+    public function getAll()
     {
         return $this->cityRepository->getAll();
     }
 
-    public function findCityById($id)
+
+    public function find($id)
     {
         return $this->cityRepository->find($id);
     }

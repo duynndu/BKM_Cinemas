@@ -22,20 +22,26 @@ class PaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
-            'description' => 'nullable|string',
-            'active' => 'required|boolean', 
+            'payment.name' => 'required|min:3|max:255',
+            'payment.image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'payment.description' => 'nullable|string|max:500',
+            "payment.active" => 'integer|numeric'
         ];
     }
 
     public function messages(): array
     {
         return [
-            'name.required' => 'Tên phương thức thanh toán là bắt buộc.',
-            'image.image' => 'Tệp tải lên phải là hình ảnh.',
-            'active.required' => 'Trạng thái kích hoạt là bắt buộc.',
-            'active.boolean' => 'Trạng thái kích hoạt phải là true hoặc false.',
+            "payment.name.required" => "Tên không được để trống!",
+            "payment.name.min" => "Tên ít nhất 3 ký tự!",
+            "payment.name.max" => "Tên tối đa 255 ký tự!",
+            'payment.image.required' => 'Hình ảnh không được để trống!',
+            'payment.image.image' => 'Tệp tải lên phải là hình ảnh.',
+            "payment.image.mimes" => "Chỉ chấp nhận các định dạng jpeg, png, jpg, gif!",
+            "payment.image.max" => "Kích thước hình ảnh tối đa là 2MB!",
+            "payment.description.max" => "Mô tả tối đa 1000 ký tự!",
+            "payment.active.integer" => "Trạng thái không đúng!",
+            "payment.active.numeric" => "Trạng thái không đúng!",
         ];
     }
 }

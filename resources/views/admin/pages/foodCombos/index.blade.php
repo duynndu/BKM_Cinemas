@@ -156,7 +156,7 @@
                                                         @endcan
 
 
-                                                        <td>{{ $key + 1 }}</td>
+                                                        <td>{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</td>
 
                                                         <td style="max-width: 155px !important;">
                                                             <b class="text-style">
