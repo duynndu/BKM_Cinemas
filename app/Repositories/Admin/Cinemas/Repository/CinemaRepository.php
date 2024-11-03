@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Repositories\Admin\Actors\Repository;
-use App\Repositories\Admin\Actors\Interface\ActorInterface;
+namespace App\Repositories\Admin\Cinemas\Repository;
+use App\Repositories\Admin\Cinemas\Interface\CinemaInterface;
 use App\Repositories\Base\BaseRepository;
 
-class ActorRepository extends BaseRepository implements ActorInterface
+class CinemaRepository extends BaseRepository implements CinemaInterface
 {
     public function getModel()
     {
-        return \App\Models\Actor::class;
+        return \App\Models\Cinema::class;
     }
 
     public function getAll()
@@ -16,14 +16,16 @@ class ActorRepository extends BaseRepository implements ActorInterface
         $data = $this->model->newQuery();
         $data = $this->filterByName($data);
         $data = $this->applyOrdering($data);
-        $data = $this->filterByNationality($data);
-        $data = $data->paginate(self::PAGINATION);
+        $data = $data->with('area')->paginate(self::PAGINATION);
 
         return $data->appends([
             'name' => request()->name,
             'order_with' => request()->order_with,
-            'nationality' => request()->nationality,
         ]);
+    }
+
+    public function getAllActive(){
+        return $this->model->select('id', 'name', 'city_id')->where('active', 1)->get();
     }
 
     public function deleteMultiple(array $ids)
@@ -59,11 +61,25 @@ class ActorRepository extends BaseRepository implements ActorInterface
         return $query;
     }
 
-    protected function filterByNationality($query)
+    public function changeActive($id)
     {
-        if (!empty(request()->nationality)) {
-            return $query->where('nationality', 'like', '%' . request()->nationality . '%');
+        $result = $this->find($id);
+        if ($result) {
+            $result->active ^= 1;
+            $result->save();
+            return $result;
         }
-        return $query;
+        return false;
+    }
+
+    public function changeOrder($id, $order)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->order = $order;
+            $result->save();
+            return $result;
+        }
+        return false;
     }
 }

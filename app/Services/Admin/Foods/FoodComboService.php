@@ -21,7 +21,6 @@ class FoodComboService
 
     public function store(&$data)
     {
-        $uploadData = $this->uploadFile($data['food_combo']['image'], 'public/foodCombos');
         if (isset($data['food_combo']['image']) && $data['food_combo']['image']) {
             $uploadData = $this->uploadFile($data['food_combo']['image'], 'public/foodCombos');
             $data['food_combo']['image'] = $uploadData['path'];

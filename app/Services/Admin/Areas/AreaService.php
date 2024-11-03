@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Services\Admin\Areas;
 
 use App\Repositories\Admin\Areas\Repository\AreaRepository;
@@ -23,7 +23,6 @@ class AreaService
     {
         return $this->cityRepository->getAllCity();
     }
-
 
     public function create( $request)
     {

@@ -119,7 +119,12 @@
                     </ul>
                 </li>
             @endif
-
+            <li>
+                <a class="" href="{{ route('admin.cinemas.index') }}" aria-expanded="false">
+                    <i class="material-icons">theaters</i>
+                    <span class="nav-text">Rạp chiếu phim</span>
+                </a>
+            </li>
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">movie</i>

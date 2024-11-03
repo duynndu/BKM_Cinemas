@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin\Foods;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FoodCombos\FoodComboRequest;
+use App\Models\FoodCombo;
 use App\Services\Admin\Foods\FoodComboService;
 use App\Services\Admin\Foods\FoodService;
+use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +17,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class FoodComboController extends Controller
 {
+    use RemoveImageTrait;
     protected $foodComboService;
     protected $foodService;
     public function __construct(
@@ -150,6 +153,13 @@ class FoodComboController extends Controller
                 'status_failed' => 'Đã xảy ra lỗi khi xóa'
             ]);
         }
+    }
+
+    public function removeAvatarImage(Request $request)
+    {
+        $foodCombo = $this->removeImage($request, new FoodCombo, 'image', 'foodCombos');
+
+        return response()->json(['avatar' => $foodCombo], 200);
     }
 
     public function deleteItemMultipleChecked(Request $request)
