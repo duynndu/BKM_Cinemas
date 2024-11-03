@@ -27,7 +27,6 @@ if ($agent->isDesktop()) {
    Route::get('/tin-tuc/{slug}', [PostController::class, 'postDetail'])->name('post.detail');
    
 
-
    Route::get('/login', function () {
       return view('client.pages.auth.login');
    });
@@ -80,6 +79,7 @@ if ($agent->isDesktop()) {
    Route::get('/dat-ve', function () {
       return view('client.pages.buy-ticket');
    });
+   
    Route::get('/dat-ve/xac-nhan', function () {
       return view('client.pages.payment-verification');
    });
