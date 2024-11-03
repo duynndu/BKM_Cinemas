@@ -85,16 +85,16 @@ class BreadcrumbServiceProvider extends ServiceProvider
 
                 // Category Posts
                 case 'admin.categoryPosts.index':
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.title'), 'url' => route('admin.dashboard')];
+                    $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.title'), 'url' => route('admin.categoryPosts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.list'), 'url' => route('admin.categoryPosts.index')];
                     break;
                 case 'admin.categoryPosts.create':
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.title'), 'url' => route('admin.dashboard')];
+                    $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.title'), 'url' => route('admin.categoryPosts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.list'), 'url' => route('admin.categoryPosts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.create'), 'url' => route('admin.categoryPosts.create')];
                     break;
                 case 'admin.categoryPosts.edit':
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.title'), 'url' => route('admin.dashboard')];
+                    $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.title'), 'url' => route('admin.categoryPosts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.list'), 'url' => route('admin.categoryPosts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.edit'), 'url' => route('admin.categoryPosts.edit', request()->id)];
                     break;
