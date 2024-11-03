@@ -517,6 +517,7 @@ return [
             'editSave' => 'Lưu thay đổi',
         ],
         'movies' => [
+            'chooseActor'=>'Chọn diễn viên',
             'format'=>'Định dạng',
             'Subtitles'=>'Phụ đề',
             'created_at'=>'Ngày đăng',
@@ -532,7 +533,7 @@ return [
                 '3d'=>'Phim 3d',
             ],
             'addActor'=>'Thêm diễn viên',
-            'nameActor'=>'Tên diễn viên',
+            'nameActor'=>'Tên',
             'inputNameActor'=>'Tên diễn viên',
             'birtDate'=>'Ngày sinh',
             'nationality'=>'Quốc tịch',

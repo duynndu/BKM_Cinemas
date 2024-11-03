@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Movies\MovieRequest;
-use App\Http\Requests\Posts\PostRequest;
 use App\Models\Movie;
-use App\Models\Post;
-use App\Services\Admin\CategoryPosts\CategoryPostService;
+use App\Services\Admin\Actors\ActorService;
 use App\Services\Admin\Genres\GenreService;
 use App\Services\Admin\Movies\MovieService;
-use App\Services\Admin\Posts\PostService;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,15 +20,18 @@ class MovieController extends Controller
     protected $movieService;
 
     protected $genreService;
+    protected $actorService;
 
 
     public function __construct(
         MovieService     $movieService,
         GenreService      $genreService,
+        ActorService      $actorService,
     ) {
         $this->movieService = $movieService;
 
         $this->genreService = $genreService;
+        $this->actorService = $actorService;
     }
 
     public function index(Request $request)
@@ -50,11 +50,13 @@ class MovieController extends Controller
     public function create()
     {
         $listGenre = $this->genreService->getListGenre();
-        return view('admin.pages.movies.create',compact('listGenre'));
+        $actors = $this->actorService->getAll();
+        return view('admin.pages.movies.create',compact('listGenre','actors'));
     }
 
     public function store(MovieRequest $request)
     {
+      
         try {
             DB::beginTransaction();
 
@@ -82,6 +84,7 @@ class MovieController extends Controller
         $movie = $this->movieService->getMovieById($id);
         $listGenre = $this->movieService->getListGenre();
         $cateData = $this->movieService->genreOfMovie($id);
+        $actors = $this->actorService->getAll();
        
         if (!$movie) {
             return redirect()->route('admin.posts.index')->with([
@@ -89,7 +92,7 @@ class MovieController extends Controller
             ]);
         }
 
-        return view('admin.pages.movies.edit', compact('movie','listGenre','cateData'));
+        return view('admin.pages.movies.edit', compact('movie','listGenre','cateData','actors'));
         
     }
 

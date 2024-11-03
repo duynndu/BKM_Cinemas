@@ -19,17 +19,17 @@ class CityRepository extends BaseRepository implements CityInterface
         
         $query = $this->filterByName($query);
 
-        return $query->paginate(self::PAGINATION);
+        $data = $query->paginate(self::PAGINATION);
+
+        return $data->appends([
+            'name' => request()->area_name
+        ]);
     }
-    public function getAllCity()
+
+    protected function filterByName($query)
     {
-        return $this->getModel()::all();
-        
-    }
-    public function filterByName($query)
-    {
-        if (!empty(request()->name)) {
-            return $query->where('name', 'like', '%' . request()->name . '%');
+        if (!empty(request()->city_name)) {
+            return $query->where('name', 'like', '%' . request()->city_name . '%');
         }
         return $query;
     }

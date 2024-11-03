@@ -21,21 +21,25 @@ class AreaRepository extends BaseRepository implements AreaInterface
 
         $query = $this->filterByCity($query);
 
-        return $query->paginate(self::PAGINATION);
+        $data = $query->paginate(self::PAGINATION);
+
+        return $data->appends([
+            'name' => request()->area_name,
+            'city_id' => request()->cityId
+        ]);
     }
 
-    public function filterByName($query): mixed
+    protected function filterByName($query)
     {
-        if (!empty(request()->name)) {
-            $query->where('name', 'like', '%' . request()->name . '%');
+        if (!empty(request()->area_name)) {
+            $query->where('name', 'like', '%' . request()->area_name . '%');
         }
         return $query;
     }
 
-    public function filterByCity($query)
+    protected function filterByCity($query)
     {
         if (!empty(request()->cityId)) {
-
             $query->where('city_id', request()->cityId);
         }
         return $query;
