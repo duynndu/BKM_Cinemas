@@ -25,6 +25,8 @@ use App\Repositories\Admin\Foods\Repository\FoodRepository;
 use App\Repositories\Admin\Foods\Repository\FoodTypeRepository;
 use App\Repositories\Admin\Systems\Interface\SystemInterface;
 use App\Repositories\Admin\Systems\Repository\SystemRepository;
+use App\Services\Admin\CategoryPosts\Services\CategoryPostService;
+use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
 use App\Services\Admin\Foods\Interfaces\FoodComboServiceInterface;
 use App\Services\Admin\Foods\Interfaces\FoodServiceInterface;
 use App\Services\Admin\Foods\Interfaces\FoodTypeServiceInterFace;
@@ -42,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(CategoryPostInterface    ::class, CategoryPostRepository::class);
+        $this->app->bind(CategoryPostServiceInterface    ::class, CategoryPostService::class);
         $this->app->bind(PostInterface            ::class, PostRepository        ::class);
         $this->app->bind(CityInterface            ::class, CityRepository        ::class);
         $this->app->bind(AreaInterface            ::class, AreaRepository        ::class);

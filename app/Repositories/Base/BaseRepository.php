@@ -46,7 +46,6 @@ abstract class BaseRepository implements RepositoryInterface
             $result->update($attributes);
             return true;
         }
-
         return false;
     }
 

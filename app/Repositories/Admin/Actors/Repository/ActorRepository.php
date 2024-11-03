@@ -18,7 +18,7 @@ class ActorRepository extends BaseRepository implements ActorInterface
         $data = $this->applyOrdering($data);
         $data = $this->filterByNationality($data);
         $data = $data->paginate(self::PAGINATION);
-
+        
         return $data->appends([
             'name' => request()->name,
             'order_with' => request()->order_with,
