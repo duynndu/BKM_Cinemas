@@ -189,10 +189,14 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            {{ number_format($food->price, 0, '.', ',') }}đ
+                                                            <b>
+                                                                {{ number_format($food->price, 0, '.', ',') }}đ
+                                                            </b>
                                                         </td>
                                                         <td>
-                                                            {{ $food->type->name ?? 'Chưa có' }}
+                                                           <b>
+                                                               {{ $food->type->name ?? 'Chưa có' }}
+                                                           </b>
                                                         </td>
                                                         @can('changeActive', \App\Models\Food::class)
                                                             <td>

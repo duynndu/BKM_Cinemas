@@ -1,40 +1,36 @@
 <?php
-
-namespace App\Http\Controllers\Admin\Foods;
-
+namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Foods\FoodRequest;
-use App\Models\Food;
-use App\Services\Admin\Foods\FoodService;
-use App\Services\Admin\Foods\FoodTypeService;
-use Illuminate\Http\Request;
+use App\Http\Requests\Cinemas\CinemaRequest;
+use App\Models\Cinema;
+use App\Services\Admin\Areas\AreaService;
+use App\Services\Admin\Cinemas\CinemaService;
 use App\Traits\RemoveImageTrait;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
-class FoodController extends Controller
+class CinemaController extends Controller
 {
     use RemoveImageTrait;
-
-    protected $foodService;
-    protected $foodTypeService;
-
+    protected $cinemaService;
+    protected $areaService;
     public function __construct(
-        FoodService $foodService,
-        FoodTypeService $foodTypeService
+        CinemaService $cinemaService,
+        AreaService $areaService,
     ) {
-        $this->foodService = $foodService;
-        $this->foodTypeService = $foodTypeService;
+        $this->cinemaService = $cinemaService;
+        $this->areaService = $areaService;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = $this->foodService->getAll();
-        $listFoodTypes = $this->foodTypeService->getAllActive();
-        return view('admin.pages.foods.index', compact('data', 'listFoodTypes'));
+        $data = $this->cinemaService->getAll();
+        $areas = $this->areaService->getAllArea();
+        return view('admin.pages.cinemas.index', compact('data', 'areas'));
     }
 
     /**
@@ -42,27 +38,27 @@ class FoodController extends Controller
      */
     public function create()
     {
-        $listFoodTypes = $this->foodTypeService->getAllActive();
-        return view('admin.pages.foods.create', compact('listFoodTypes'));
+        $areas = $this->areaService->getAllArea();
+        return view('admin.pages.cinemas.create', compact('areas'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(FoodRequest $request)
+    public function store(CinemaRequest $request)
     {
-        $data = $request->food;
+        $data = $request->cinema;
         try {
             DB::beginTransaction();
 
-            $this->foodService->store($data);
+            $this->cinemaService->store($data);
 
             DB::commit();
 
-            return redirect()->route('admin.foods.index')->with('status_succeed', "Thêm đồ ăn thành công");
+            return redirect()->route('admin.cinemas.index')->with('status_succeed', "Thêm rạp thành công");
         } catch (\Exception $e) {
             if (!empty($data['image'])) {
-                $path = "public/foods/" . basename($data['image']);
+                $path = "public/cinemas/" . basename($data['image']);
                 if (Storage::exists($path)) {
                     Storage::delete($path);
                 }
@@ -87,37 +83,36 @@ class FoodController extends Controller
      */
     public function edit(string $id)
     {
-        $data = $this->foodService->find($id);
-        $listFoodTypes = $this->foodTypeService->getAllActive();
+        $data = $this->cinemaService->find($id);
+        $areas = $this->areaService->getAllArea();
         if (!$data) {
-            return redirect()->route('admin.foods.index')->with(['status_failed' => 'Không tìm thấy!']);
+            return redirect()->route('admin.cinemas.index')->with(['status_failed' => 'Không tìm thấy!']);
         }
-        return view('admin.pages.foods.edit', compact('data', 'listFoodTypes'));
+        return view('admin.pages.cinemas.edit', compact('data', 'areas'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(FoodRequest $request, string $id)
+    public function update(CinemaRequest $request, string $id)
     {
-        $data = $request->food;
+        $data = $request->cinema;
         try {
             DB::beginTransaction();
-            if (!$this->foodService->update($data, $id)) {
-                return redirect()->route('admin.foods.index')->with(['status_failed' => 'Không tìm thấy!']);
+            if (!$this->cinemaService->update($data, $id)) {
+                return redirect()->route('admin.cinemas.index')->with(['status_failed' => 'Không tìm thấy!']);
             }
-
             DB::commit();
-            return redirect()->route('admin.foods.index')->with('status_succeed', "Sửa đồ ăn thành công");
+            return redirect()->route('admin.cinemas.index')->with('status_succeed', "Sửa rạp thành công");
         } catch (\Throwable $e) {
             if (!empty($data['image'])) {
-                $path = "public/foods/" . basename($data['image']);
+                $path = "public/cinemas/" . basename($data['image']);
                 if (Storage::exists($path)) {
                     Storage::delete($path);
                 }
             }
             DB::rollBack();
-            Log::error("Error updating food: {$e->getMessage()} at line {$e->getLine()}");
+            Log::error("Error updating cinema: {$e->getMessage()} at line {$e->getLine()}");
             return back()->with(['status_failed' => 'Đã xảy ra lỗi, vui lòng thử lại sau.']);
         }
     }
@@ -129,12 +124,12 @@ class FoodController extends Controller
     {
         try {
             DB::beginTransaction();
-            if (!$this->foodService->delete($id)) {
-                return redirect()->route('admin.foods.index')->with(['status_failed' => 'Không tìm thấy!']);
+            if (!$this->cinemaService->delete($id)) {
+                return redirect()->route('admin.cinemas.index')->with(['status_failed' => 'Không tìm thấy!']);
             }
             DB::commit();
-            return redirect()->route('admin.foods.index')->with([
-                'status_succeed' => 'Xóa đồ ăn thành công'
+            return redirect()->route('admin.cinemas.index')->with([
+                'status_succeed' => 'Xóa rạp thành công'
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -148,9 +143,9 @@ class FoodController extends Controller
 
     public function removeAvatarImage(Request $request)
     {
-        $food = $this->removeImage($request, new Food, 'image', 'foods');
+        $cinema = $this->removeImage($request, new Cinema, 'image', 'cinemas');
 
-        return response()->json(['avatar' => $food], 200);
+        return response()->json(['avatar' => $cinema], 200);
     }
 
     public function deleteItemMultipleChecked(Request $request)
@@ -160,7 +155,7 @@ class FoodController extends Controller
             if (empty($request->selectedIds)) {
                 return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400);
             }
-            $this->foodService->deleteMultipleChecked($request);
+            $this->cinemaService->deleteMultipleChecked($request);
 
             DB::commit();
             return response()->json(['message' => 'Xóa thành công!'], 200);
@@ -178,7 +173,7 @@ class FoodController extends Controller
     {
         try {
             DB::beginTransaction();
-            $data = $this->foodService->changeOrder($request);
+            $data = $this->cinemaService->changeOrder($request);
             DB::commit();
             if (!$data) {
                 return response()->json([
@@ -201,7 +196,7 @@ class FoodController extends Controller
     {
         try {
             DB::beginTransaction();
-            $data = $this->foodService->changeActive($request);
+            $data = $this->cinemaService->changeActive($request);
             DB::commit();
             if (!$data) {
                 return response()->json([

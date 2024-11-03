@@ -29,16 +29,16 @@ class AreaRepository extends BaseRepository implements AreaInterface
         if (!empty(request()->name)) {
             $query->where('name', 'like', '%' . request()->name . '%');
         }
-        return $query; 
+        return $query;
     }
 
     public function filterByCity($query)
     {
         if (!empty(request()->cityId)) {
-            
+
             $query->where('city_id', request()->cityId);
         }
-        return $query; 
+        return $query;
     }
 
 }

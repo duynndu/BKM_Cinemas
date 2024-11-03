@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Danh sách diễn viên')
+@section('title', 'Danh sách rạp')
 
 @section('css')
 @endsection
@@ -30,16 +30,15 @@
                             </div>
                             <div class="col-12">
                                 <div class="filter cm-content-box box-primary">
-
                                     <div class="cm-content-body form excerpt" style="">
-                                        <form action="{{ route('admin.actors.index') }}" method="GET">
+                                        <form action="{{ route('admin.cinemas.index') }}" method="GET">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-xl-3 col-sm-6">
-                                                        <label class="form-label">Tên diễn viên</label>
+                                                        <label class="form-label">Tên rạp</label>
                                                         <input id="" value="{{ request()->name }}" name="name"
                                                             type="text" class="form-control mb-xl-0 mb-3"
-                                                            placeholder="Nhập tên diễn viên">
+                                                            placeholder="Nhập tên rạp">
                                                     </div>
                                                     <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
                                                         <label class="form-label">Sắp xếp</label>
@@ -64,10 +63,20 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
-                                                        <label class="form-label">Quốc tịch</label>
-                                                        <input id="" value="{{ request()->nationality }}" name="nationality"
-                                                            type="text" class="form-control mb-xl-0 mb-3"
-                                                            placeholder="Nhập quốc tịch">
+                                                        <label class="form-label">Khu vực</label>
+                                                        <div id="order" class="dropdown bootstrap-select form-control">
+                                                            <select name="area_id" class="form-control">
+                                                                <option value="">
+                                                                    --chọn--
+                                                                </option>
+                                                                @foreach ($areas as $area)
+                                                                    <option @selected(request()->area_id == $area->id)
+                                                                        value="{{ $area->id }}">
+                                                                        {{ $area->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                     <div class="col-xl-5 col-sm-5 align-self-end">
                                                         <div class="">
@@ -91,9 +100,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Danh sách diễn viên</h4>
+                                <h4 class="card-title">Danh sách rạp</h4>
                                 <div class="compose-btn">
-                                    <a href="{{ route('admin.actors.create') }}">
+                                    <a href="{{ route('admin.cinemas.create') }}">
                                         <button class="btn btn-secondary btn-sm light">
                                             + Thêm mới
                                         </button>
@@ -110,7 +119,7 @@
                                                         <div class="box-delete-item">
                                                             <input type="checkbox" id="item-all-checked">
                                                             <button id="btn-delete-all"
-                                                                data-url="{{ route('admin.actors.deleteItemMultipleChecked') }}"
+                                                                data-url="{{ route('admin.cinemas.deleteItemMultipleChecked') }}"
                                                                 class="btn btn-sm btn-danger btn-delete-multiple_item">
                                                                 <svg width="15" height="15"
                                                                     xmlns="http://www.w3.org/2000/svg"
@@ -124,17 +133,21 @@
                                                     </th>
                                                     <th style="width:80px;">#</th>
                                                     <th>Tên</th>
+                                                    <th>Khu vực</th>
                                                     <th>Hình ảnh</th>
-                                                    <th>Ngày sinh</th>
-                                                    <th>Quốc tịch</th>
+                                                    <th>Địa chỉ</th>
+                                                    <th>Số điện thoại</th>
+                                                    <th>Email</th>
+                                                    <th>Map</th>
+                                                    <th>Trạng thái</th>
                                                     <th>Hành động</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($data as $key => $actor)
+                                                @foreach ($data as $key => $cinema)
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox" data-id="{{ $actor->id }}"
+                                                            <input type="checkbox" data-id="{{ $cinema->id }}"
                                                                 class="item-checked">
                                                         </td>
                                                         <td>
@@ -142,14 +155,19 @@
                                                         </td>
                                                         <td>
                                                             <b>
-                                                                <a href="{{ route('admin.actors.index') }}">
-                                                                    {{ $actor->name }}
+                                                                <a href="{{ route('admin.cinemas.index') }}">
+                                                                    {{ $cinema->name }}
                                                                 </a>
                                                             </b>
                                                         </td>
                                                         <td>
-                                                            @if (!empty($actor->image) && file_exists(public_path($actor->image)))
-                                                                <img src="{{ asset($actor->image) }}"
+                                                            <b>
+                                                                {{ $cinema->area->name }}
+                                                            </b>
+                                                        </td>
+                                                        <td>
+                                                            @if (!empty($food->image) && file_exists(public_path($food->image)))
+                                                                <img src="{{ asset($food->image) }}"
                                                                     style="width:80px; height:100px; object-fit:cover">
                                                             @else
                                                                 <img src="#" alt="No image"
@@ -158,23 +176,42 @@
                                                         </td>
                                                         <td>
                                                             <b>
-                                                                {{ $actor->birth_date }}
+                                                                {{ $cinema->address }}
                                                             </b>
                                                         </td>
                                                         <td>
                                                             <b>
-                                                                {{ $actor->nationality }}
+                                                                {{ $cinema->phone }}
                                                             </b>
+                                                        </td>
+                                                        <td>
+                                                            <b>
+                                                                {{ $cinema->email }}
+                                                            </b>
+                                                        </td>
+                                                        <td>
+                                                            <b>
+                                                                {!! $cinema->map !!}
+                                                            </b>
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                class="toggle-active-btn btn btn-xs {{ $cinema->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                data-id="{{ $cinema->id }}"
+                                                                data-status="{{ $cinema->active }}"
+                                                                data-url="{{ route('admin.cinemas.changeActive') }}">
+                                                                {{ $cinema->active == 1 ? 'Hiện' : 'Ẩn' }}
+                                                            </button>
                                                         </td>
                                                         <td>
                                                             <div
                                                                 style="padding-right: 20px; display: flex; justify-content: end">
-                                                                <a href="{{ route('admin.actors.edit', $actor->id) }}"
+                                                                <a href="{{ route('admin.cinemas.edit', $cinema->id) }}"
                                                                     class="btn btn-primary shadow btn-xs sharp me-1">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
                                                                 <form
-                                                                    action="{{ route('admin.actors.delete', $actor->id) }}"
+                                                                    action="{{ route('admin.cinemas.delete', $cinema->id) }}"
                                                                     class="formDelete" method="post">
                                                                     @csrf
                                                                     @method('DELETE')

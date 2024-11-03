@@ -1,31 +1,24 @@
 <?php
-
-namespace App\Services\Admin\Foods;
-
-use App\Repositories\Admin\Foods\Interface\FoodInterface;
-use App\Traits\StorageImageTrait;
+namespace App\Services\Admin\Cinemas;
+use App\Repositories\Admin\Cinemas\Interface\CinemaInterface;
 use Illuminate\Support\Facades\Storage;
 
-
-class FoodService
+class CinemaService
 {
-    use StorageImageTrait;
-
-    protected $foodRepository;
+    protected $cinemaRepository;
     public function __construct(
-        FoodInterface $foodRepository
+        CinemaInterface $cinemaRepository
     ) {
-        $this->foodRepository = $foodRepository;
+        $this->cinemaRepository = $cinemaRepository;
     }
 
     public function store(&$data)
     {
         if (isset($data['image']) && $data['image']) {
-            $uploadData = $this->uploadFile($data['image'], 'public/foods');
+            $uploadData = $this->uploadFile($data['image'], 'public/cinemas');
             $data['image'] = $uploadData['path'];
         }
-        $data['price'] = $this->sanitizePrice($data['price']);
-        return $this->foodRepository->create($data);
+        return $this->cinemaRepository->create($data);
     }
 
     public function update(&$data, $id)
@@ -37,19 +30,17 @@ class FoodService
 
         if (isset($data['image']) && $data['image']) {
             if ($record->image) {
-                $this->deleteAvatar($record->image, 'foods');
+                $this->deleteAvatar($record->image, 'cinemas');
             }
-            $uploadData = $this->uploadFile($data['image'], 'public/foods');
+            $uploadData = $this->uploadFile($data['image'], 'public/cinemas');
             $data['image'] = $uploadData['path'];
         }
-        $data['price'] = $this->sanitizePrice($data['price']);
-        return $this->foodRepository->update($id, $data);
+        return $this->cinemaRepository->update($id, $data);
     }
-
 
     public function delete($id)
     {
-        return $this->foodRepository->delete($id);
+        return $this->cinemaRepository->delete($id);
     }
 
     public function deleteMultipleChecked($request)
@@ -57,38 +48,33 @@ class FoodService
         if (count($request->selectedIds) < 0) {
             return false;
         }
-        $this->foodRepository->deleteMultiple($request->selectedIds);
+        $this->cinemaRepository->deleteMultiple($request->selectedIds);
         return true;
     }
 
     public function getAll()
     {
-        return $this->foodRepository->getAll();
+        return $this->cinemaRepository->getAll();
     }
 
     public function getAllActive()
     {
-        return $this->foodRepository->getAllActive();
-    }
-
-    public function getByMultipleId(array $ids)
-    {
-        return $this->foodRepository->getByMultipleId($ids);
+        return $this->cinemaRepository->getAllActive();
     }
 
     public function find($id)
     {
-        return $this->foodRepository->find($id);
+        return $this->cinemaRepository->find($id);
     }
 
     public function changeActive($request)
     {
-        return $this->foodRepository->changeActive($request->id);
+        return $this->cinemaRepository->changeActive($request->id);
     }
 
     public function changeOrder($request)
     {
-        return $this->foodRepository->changeOrder($request->id, $request->order);
+        return $this->cinemaRepository->changeOrder($request->id, $request->order);
     }
 
     private function uploadFile($data, $folderName)
@@ -107,10 +93,5 @@ class FoodService
         if (Storage::exists($path)) {
             Storage::delete($path);
         }
-    }
-
-    private function sanitizePrice($price)
-    {
-        return str_replace(',', '', $price) ?: null;
     }
 }
