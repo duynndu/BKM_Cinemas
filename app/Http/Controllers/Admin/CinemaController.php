@@ -29,7 +29,7 @@ class CinemaController extends Controller
     public function index()
     {
         $data = $this->cinemaService->getAll();
-        $areas = $this->areaService->getAllArea();
+        $areas = $this->areaService->getAll();
         return view('admin.pages.cinemas.index', compact('data', 'areas'));
     }
 
@@ -38,7 +38,7 @@ class CinemaController extends Controller
      */
     public function create()
     {
-        $areas = $this->areaService->getAllArea();
+        $areas = $this->areaService->getAll();
         return view('admin.pages.cinemas.create', compact('areas'));
     }
 
@@ -84,7 +84,7 @@ class CinemaController extends Controller
     public function edit(string $id)
     {
         $data = $this->cinemaService->find($id);
-        $areas = $this->areaService->getAllArea();
+        $areas = $this->areaService->getAll();
         if (!$data) {
             return redirect()->route('admin.cinemas.index')->with(['status_failed' => 'Không tìm thấy!']);
         }

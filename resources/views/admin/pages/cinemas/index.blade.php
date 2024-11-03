@@ -151,7 +151,7 @@
                                                                 class="item-checked">
                                                         </td>
                                                         <td>
-                                                            <strong class="text-black">{{ $key + 1 }}</strong>
+                                                            <strong class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
                                                         </td>
                                                         <td>
                                                             <b>

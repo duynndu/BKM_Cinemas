@@ -147,9 +147,7 @@ class MovieService
             }
         }
 
-        $movie->actors()->detach(); // xóa tất cả diễn viên của phim
-
-        // insert diễn viên của phim
+        // Thêm diễn viên mới
         if (!empty($request->name_actor) || !empty($request->birth_date) || !empty($request->nationality) || !empty($request->role)) {
             $dataActors = [
                 "name_actor" => $request->name_actor,
@@ -157,6 +155,9 @@ class MovieService
                 "nationality" => $request->nationality,
                 "role" => $request->role
             ];
+
+            // Lưu danh sách ID diễn viên mới đã thêm
+            $newActorIds = [];
 
             // Duyệt qua từng diễn viên
             for ($i = 0; $i < count($dataActors['name_actor']); $i++) {
@@ -183,9 +184,58 @@ class MovieService
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
+
+                    // Lưu ID diễn viên mới
+                    $newActorIds[] = $actor->id;
                 }
             }
         }
+
+        // dd($newActorIds);
+
+        // Cập nhật và xóa diễn viên đã chọn
+        $actors = $request->actors; // Mảng ID diễn viên
+        $role_actor_chooses = $request->role_actor_chooses; // Mảng vai trò tương ứng
+        $currentActors = $movie->actors->pluck('id')->toArray();
+
+        // Xử lý các diễn viên đã chọn
+        if (!empty($actors)) {
+
+            foreach ($currentActors as $actorId) {
+                // Nếu diễn viên không còn được chọn, xóa khỏi bảng trung gian
+                if (!in_array($actorId, $actors) && !in_array($actorId, $newActorIds)) {
+                    $movie->actors()->detach($actorId);
+                } else {
+                    // Nếu diễn viên còn được chọn, kiểm tra vai trò
+                    if (isset($role_actor_chooses[$actorId]) && !empty($role_actor_chooses[$actorId])) {
+                        // Cập nhật vai trò nếu có sự thay đổi
+                        $movie->actors()->updateExistingPivot($actorId, [
+                            'role' => $role_actor_chooses[$actorId],
+                            'updated_at' => now() // Cập nhật thời gian
+                        ]);
+                    }
+                }
+            }
+
+            // Thêm các diễn viên mới
+            foreach ($actors as $actorId) {
+                if (!in_array($actorId, $currentActors) && !in_array($actorId, $newActorIds)) {
+                    // Kiểm tra nếu vai trò tương ứng với diễn viên đã được nhập
+                    if (isset($role_actor_chooses[$actorId]) && !empty($role_actor_chooses[$actorId])) {
+                        // Thêm diễn viên vào bảng trung gian với vai trò
+                        $movie->actors()->attach($actorId, [
+                            'role' => $role_actor_chooses[$actorId],
+                            'created_at' => now(), // Thời gian hiện tại
+                            'updated_at' => now()  // Thời gian hiện tại
+                        ]);
+                    }
+                }
+            }
+        }
+
+
+
+
 
         return $movie->update($dataUpdated);
     }
@@ -246,32 +296,57 @@ class MovieService
         }
 
 
-
-        if (!empty($request->name_actor)) {
+        if (!empty($request->name_actor) || !empty($request->birth_date) || !empty($request->nationality) || !empty($request->role)) {
             $dataActors = [
-                "name_actor" => $request->input('name_actor'),
-                "birth_date" => $request->input('birth_date'),
-                "nationality" => $request->input('nationality'),
-                "role" => $request->input('role')
+                "name_actor" => $request->name_actor,
+                "birth_date" => $request->birth_date,
+                "nationality" => $request->nationality,
+                "role" => $request->role
             ];
 
             // Duyệt qua từng diễn viên
             for ($i = 0; $i < count($dataActors['name_actor']); $i++) {
-                // Tạo hoặc lấy diễn viên
-                $actor = Actor::firstOrCreate(
-                    ['name' => $dataActors['name_actor'][$i]], // Kiểm tra diễn viên đã tồn tại không
-                    [
-                        'birth_date' => $dataActors['birth_date'][$i],
-                        'nationality' => $dataActors['nationality'][$i],
-                    ]
-                );
+                // Kiểm tra xem có ít nhất một trường không rỗng
+                if (
+                    !empty($dataActors['name_actor'][$i]) ||
+                    !empty($dataActors['birth_date'][$i]) ||
+                    !empty($dataActors['nationality'][$i]) ||
+                    !empty($dataActors['role'][$i])
+                ) {
 
-                // Thêm vào bảng movie_actor
-                $movieCreated->actors()->attach($actor->id, [
-                    'role' => $dataActors['role'][$i],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                    // Tạo hoặc lấy diễn viên
+                    $actor = Actor::firstOrCreate(
+                        ['name' => $dataActors['name_actor'][$i]], // Kiểm tra diễn viên đã tồn tại không
+                        [
+                            'birth_date' => $dataActors['birth_date'][$i],
+                            'nationality' => $dataActors['nationality'][$i],
+                        ]
+                    );
+
+                    // Thêm vào bảng movie_actor
+                    $movieCreated->actors()->attach($actor->id, [
+                        'role' => $dataActors['role'][$i],
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+            }
+        }
+
+        $actors = $request->actors; // Mảng ID diễn viên
+        $role_actor_chooses = $request->role_actor_chooses; // Mảng vai trò tương ứng
+
+        if (!empty($actors)) {
+            foreach ($actors as $actorId) {
+                // Kiểm tra nếu vai trò tương ứng với diễn viên đã được nhập
+                if (isset($role_actor_chooses[$actorId]) && !empty($role_actor_chooses[$actorId])) {
+                    // Thêm diễn viên vào bảng trung gian với vai trò
+                    $movieCreated->actors()->attach($actorId, [
+                        'role' => $role_actor_chooses[$actorId],
+                        'created_at' => now(), // Thời gian hiện tại
+                        'updated_at' => now()  // Thời gian hiện tại
+                    ]);
+                }
             }
         }
     }

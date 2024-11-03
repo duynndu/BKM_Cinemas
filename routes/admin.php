@@ -836,36 +836,57 @@ Route::prefix('admin')->middleware(['web'])
             ->controller(CityController::class)
             ->name('cities.')
             ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::put('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'destroy')->name('delete');
+                Route::get('/', 'index')
+                     ->name('index');
+                Route::get('/create', 'create')
+                    ->name('create');
+                Route::post('/store', 'store')
+                    ->name('store');
+                Route::get('/{id}/edit', 'edit')
+                    ->name('edit');
+                Route::put('/{id}/update', 'update')
+                    ->name('update');
+                Route::delete('/{id}/delete', 'destroy')
+                    ->name('delete');
             });
 
         Route::prefix('areas')
             ->controller(AreaController::class)
             ->name('areas.')
             ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::put('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'destroy')->name('delete');
+                Route::get('/', 'index')
+                    ->name('index');
+                Route::get('/create', 'create')
+                    ->name('create');
+                Route::post('/store', 'store')
+                    ->name('store');
+                Route::get('/{id}/edit', 'edit')
+                    ->name('edit');
+                Route::put('/{id}/update', 'update')
+                    ->name('update');
+                Route::delete('/{id}/delete', 'destroy')
+                    ->name('delete');
             });
 
         Route::prefix('payments')
             ->controller(PaymentController::class)
             ->name('payments.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::post('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'delete')->name('delete');
-                Route::post('/change-active', 'changeActive')->name('changeActive');
+                Route::get('/', 'index')
+                    ->name('index');
+                Route::get('/create', 'create')
+                    ->name('create');
+                Route::post('/store', 'store')
+                    ->name('store');
+                Route::get('/{id}/edit', 'edit')
+                    ->name('edit');
+                Route::put('/{id}/update', 'update')
+                    ->name('update');
+                Route::delete('/{id}/delete', 'delete')
+                    ->name('delete');
+                Route::post('/change-active', 'changeActive')
+                    ->name('changeActive');
+                Route::post('/removeAvatarImage', 'removeAvatarImage')
+                    ->name('removeAvatarImage');
             });
 
         Route::prefix('actors')

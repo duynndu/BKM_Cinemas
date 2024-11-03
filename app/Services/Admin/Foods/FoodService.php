@@ -108,7 +108,6 @@ class FoodService
             Storage::delete($path);
         }
     }
-
     private function sanitizePrice($price)
     {
         return str_replace(',', '', $price) ?: null;
