@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', $title['index'] ?? 'Danh sách thành phố')
+@section('title', 'Danh sách thành phố')
 
 @section('css')
 @endsection
@@ -34,7 +34,7 @@
                                         <div class="col-xl-3 col-sm-6">
                                             <label
                                                 class="form-label">Tên thành phố</label>
-                                            <input id="name" value="{{ request()->name }}" name="name" type="text"
+                                            <input id="name" value="{{ request()->city_name }}" name="city_name" type="text"
                                                 class="form-control mb-xl-0 mb-3"
                                                 placeholder="Nhập tên thành phố">
                                         </div>
@@ -105,6 +105,11 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        <div class="row">
+                                            <div class="col-12 d-flex justify-content-center">
+                                                {{ $cities->links('pagination::bootstrap-4') }}
+                                            </div>
+                                        </div>
                                     @else
                                     <div class="d-flex justify-content-center align-items-center p-5">
                                         <div>
@@ -114,9 +119,6 @@
                                         </div>
                                     </div>
                                     @endif
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        {{ $cities->appends(request()->query())->links('pagination::bootstrap-4') }}
-                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', $title['edit'] ?? 'Chỉnh sửa khu vực')
+@section('title', 'Chỉnh sửa khu vực')
 
 @section('css')
 @endsection

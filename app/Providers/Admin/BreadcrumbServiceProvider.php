@@ -305,29 +305,42 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     break;
                 //Cities
                 case 'admin.cities.index':
-                    $breadcrumbs[] = ['title' => 'Thành Phố', 'url' => ''];
+                    $breadcrumbs[] = ['title' => 'Thành phố', 'url' => ''];
                     $breadcrumbs[] = ['title' => 'Danh sách thành phố', 'url' => route('admin.cities.index')];
                     break;
                 case 'admin.cities.create':
-                    $breadcrumbs[] = ['title' => 'Thành Phố', 'url' => route('admin.cities.index')];
+                    $breadcrumbs[] = ['title' => 'Thành phố', 'url' => route('admin.cities.index')];
                     $breadcrumbs[] = ['title' => 'Thêm mới thành phố', 'url' => route('admin.cities.create')];
                     break;
                 case 'admin.cities.edit':
-                    $breadcrumbs[] = ['title' => 'Thành Phố', 'url' => route('admin.cities.index')];
+                    $breadcrumbs[] = ['title' => 'Thành phố', 'url' => route('admin.cities.index')];
                     $breadcrumbs[] = ['title' => 'Chỉnh sửa thành phố', 'url' => route('admin.cities.edit', request()->id)];
                     break;
                 //Areas
                 case 'admin.areas.index':
-                    $breadcrumbs[] = ['title' => 'Khu Vực', 'url' => ''];
+                    $breadcrumbs[] = ['title' => 'Khu vực', 'url' => ''];
                     $breadcrumbs[] = ['title' => 'Danh sách khu vực', 'url' => route('admin.areas.index')];
                     break;
                 case 'admin.areas.create':
-                    $breadcrumbs[] = ['title' => 'Khu Vực', 'url' => route('admin.areas.index')];
+                    $breadcrumbs[] = ['title' => 'Khu vực', 'url' => route('admin.areas.index')];
                     $breadcrumbs[] = ['title' => 'Thêm mới khu vực', 'url' => route('admin.areas.create')];
                     break;
                 case 'admin.areas.edit':
-                    $breadcrumbs[] = ['title' => 'Khu Vực', 'url' => route('admin.areas.index')];
+                    $breadcrumbs[] = ['title' => 'Khu vực', 'url' => route('admin.areas.index')];
                     $breadcrumbs[] = ['title' => 'Chỉnh sửa khu vực', 'url' => route('admin.areas.edit', request()->id)];
+                    break;
+                //Payments
+                case 'admin.payments.index':
+                    $breadcrumbs[] = ['title' => 'Phương thức thanh toán ', 'url' => ''];
+                    $breadcrumbs[] = ['title' => 'Danh sách phương thức thanh toán', 'url' => route('admin.payments.index')];
+                    break;
+                case 'admin.payments.create':
+                    $breadcrumbs[] = ['title' => 'Phương thức thanh toán', 'url' => route('admin.payments.index')];
+                    $breadcrumbs[] = ['title' => 'Thêm mới phương thức thanh toán', 'url' => route('admin.payments.create')];
+                    break;
+                case 'admin.payments.edit':
+                    $breadcrumbs[] = ['title' => 'Phương thức thanh toán', 'url' => route('admin.payments.index')];
+                    $breadcrumbs[] = ['title' => 'Chỉnh sửa phương thức thanh toán', 'url' => route('admin.payments.edit', request()->id)];
                     break;
                 // Foods
                 case 'admin.foods.index':
