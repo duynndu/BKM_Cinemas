@@ -17,8 +17,13 @@ class ActorRepository extends BaseRepository implements ActorInterface
         $data = $this->filterByName($data);
         $data = $this->applyOrdering($data);
         $data = $this->filterByNationality($data);
+        $data = $data->paginate(self::PAGINATION);
 
-        return $data->paginate(self::PAGINATION);
+        return $data->appends([
+            'name' => request()->name,
+            'order_with' => request()->order_with,
+            'nationality' => request()->nationality,
+        ]);
     }
 
     public function deleteMultiple(array $ids)

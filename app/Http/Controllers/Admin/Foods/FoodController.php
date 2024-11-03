@@ -146,6 +146,13 @@ class FoodController extends Controller
         }
     }
 
+    public function removeAvatarImage(Request $request)
+    {
+        $food = $this->removeImage($request, new Food, 'image', 'foods');
+
+        return response()->json(['avatar' => $food], 200);
+    }
+
     public function deleteItemMultipleChecked(Request $request)
     {
         try {

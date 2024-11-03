@@ -18,6 +18,8 @@ use App\Repositories\Admin\Foods\Interface\FoodComboInterface;
 use App\Repositories\Admin\Foods\Interface\FoodInterface;
 use App\Repositories\Admin\Foods\Interface\FoodTypeInterface;
 use App\Repositories\Admin\Actors\Repository\ActorRepository;
+use App\Repositories\Admin\Cinemas\Interface\CinemaInterface;
+use App\Repositories\Admin\Cinemas\Repository\CinemaRepository;
 use App\Repositories\Admin\Foods\Repository\FoodComboRepository;
 use App\Repositories\Admin\Foods\Repository\FoodRepository;
 use App\Repositories\Admin\Foods\Repository\FoodTypeRepository;
@@ -43,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(FoodInterface        ::class, FoodRepository        ::class);
         $this->app->bind(FoodComboInterface   ::class, FoodComboRepository   ::class);
         $this->app->bind(ActorInterface       ::class, ActorRepository       ::class);
+        $this->app->bind(CinemaInterface      ::class, CinemaRepository      ::class);
     }
 
     /**

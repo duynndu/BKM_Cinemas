@@ -21,7 +21,13 @@ class FoodComboRepository extends BaseRepository implements FoodComboInterface
 
         $data = $this->applyOrdering($data);
 
-        return $data->paginate(self::PAGINATION);
+        $data = $data->paginate(self::PAGINATION);
+
+        return $data->appends([
+            'name' => request()->name,
+            'order_with' => request()->order_with,
+            'fill_action' => request()->fill_action,
+        ]);
     }
 
     protected function filterByName($query)

@@ -1,24 +1,22 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Areas\AreaRequest;
 use App\Services\Admin\Areas\AreaService;
-use App\Models\City;
 use App\Services\Admin\Cities\CityService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class AreaController extends Controller
 {
     protected $areaService;
-
     protected $cityService;
 
 
-    public function __construct(AreaService $areaService, CityService $cityService)
+    public function __construct(
+        AreaService $areaService, 
+        CityService $cityService
+    )
     {
         $this->areaService = $areaService;
         $this->cityService = $cityService;
@@ -26,17 +24,17 @@ class AreaController extends Controller
 
     public function index()
     {
-        $areas = $this->areaService->getAllArea();
-        $cities = $this->areaService->getAllCities();
+        $areas = $this->areaService->getAll();
+        $cities = $this->cityService->getAll();
         
-        return view('admin.pages.area.index', compact('areas', 'cities'));
+        return view('admin.pages.areas.index', compact('areas', 'cities'));
     }
 
     public function create()
     {
         
-        $cities = $this->cityService->getAllCities();
-        return view('admin.pages.area.create', compact('cities'));
+        $cities = $this->cityService->getAll();
+        return view('admin.pages.areas.create', compact('cities'));
     }
 
     public function store(AreaRequest $request)
@@ -62,9 +60,12 @@ class AreaController extends Controller
 
     public function edit($id)
     {
-        $area = $this->areaService->getById($id);
-        $cities = $this->cityService->getAllCities();
-        return view('admin.pages.area.edit', compact('area', 'cities'));
+        $area = $this->areaService->find($id);
+        $cities = $this->cityService->getAll();
+        if (!$area) {
+            return redirect()->route('admin.areas.index')->with(['status_failed' => 'Không tìm thấy!']);
+        }
+        return view('admin.pages.areas.edit', compact('area', 'cities'));
     }
 
     public function update(AreaRequest $request, $id)

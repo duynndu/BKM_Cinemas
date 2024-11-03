@@ -22,7 +22,13 @@ class FoodTypeRepository extends BaseRepository implements FoodTypeInterface
 
         $data = $this->applyOrdering($data);
 
-        return $data->paginate(self::PAGINATION);
+        $data = $data->paginate(self::PAGINATION);
+
+        return $data->appends([
+            'name' => request()->name,
+            'order_with' => request()->order_with,
+            'fill_action' => request()->fill_action,
+        ]);
     }
 
     public function deleteMultiple(array $ids)

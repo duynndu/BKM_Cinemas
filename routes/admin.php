@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\Blocks\BlockController;
 use App\Http\Controllers\Admin\Blocks\BlockTypeController;
 use App\Http\Controllers\Admin\CategoryPostController;
+use App\Http\Controllers\Admin\CinemaController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenreController;
@@ -717,7 +718,6 @@ Route::prefix('admin')->middleware(['web'])
                 });
         });
 
-
         Route::prefix('systems')
             ->controller(SystemController::class)
             ->name('systems.')->group(function () {
@@ -836,45 +836,99 @@ Route::prefix('admin')->middleware(['web'])
             ->controller(CityController::class)
             ->name('cities.')
             ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::put('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'destroy')->name('delete');
+                Route::get('/', 'index')
+                     ->name('index');
+                Route::get('/create', 'create')
+                    ->name('create');
+                Route::post('/store', 'store')
+                    ->name('store');
+                Route::get('/{id}/edit', 'edit')
+                    ->name('edit');
+                Route::put('/{id}/update', 'update')
+                    ->name('update');
+                Route::delete('/{id}/delete', 'destroy')
+                    ->name('delete');
             });
 
         Route::prefix('areas')
             ->controller(AreaController::class)
             ->name('areas.')
             ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::put('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'destroy')->name('delete');
+                Route::get('/', 'index')
+                    ->name('index');
+                Route::get('/create', 'create')
+                    ->name('create');
+                Route::post('/store', 'store')
+                    ->name('store');
+                Route::get('/{id}/edit', 'edit')
+                    ->name('edit');
+                Route::put('/{id}/update', 'update')
+                    ->name('update');
+                Route::delete('/{id}/delete', 'destroy')
+                    ->name('delete');
             });
+
         Route::prefix('payments')
             ->controller(PaymentController::class)
             ->name('payments.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::post('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'delete')->name('delete');
-                Route::post('/change-active', 'changeActive')->name('changeActive');
+                Route::get('/', 'index')
+                    ->name('index');
+                Route::get('/create', 'create')
+                    ->name('create');
+                Route::post('/store', 'store')
+                    ->name('store');
+                Route::get('/{id}/edit', 'edit')
+                    ->name('edit');
+                Route::put('/{id}/update', 'update')
+                    ->name('update');
+                Route::delete('/{id}/delete', 'delete')
+                    ->name('delete');
+                Route::post('/change-active', 'changeActive')
+                    ->name('changeActive');
+                Route::post('/removeAvatarImage', 'removeAvatarImage')
+                    ->name('removeAvatarImage');
             });
+
         Route::prefix('actors')
             ->controller(ActorController::class)
             ->name('actors.')->group(function () {
                 Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::put('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'destroy')->name('delete');
-                Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')->name('deleteItemMultipleChecked');
+                Route::get('/create', 'create')
+                    ->name('create');
+                Route::post('/store', 'store')
+                    ->name('store');
+                Route::get('/{id}/edit', 'edit')
+                    ->name('edit');
+                Route::put('/{id}/update', 'update')
+                    ->name('update');
+                Route::delete('/{id}/delete', 'destroy')
+                    ->name('delete');
+                Route::post('/removeAvatarImage', 'removeAvatarImage')
+                    ->name('removeAvatarImage');
+                Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                    ->name('deleteItemMultipleChecked');
+            });
+
+        Route::prefix('cinemas')
+            ->controller(CinemaController::class)
+            ->name('cinemas.')->group(function () {
+                Route::get('/', 'index')
+                    ->name('index');
+                Route::get('/create', 'create')
+                    ->name('create');
+                Route::post('/store', 'store')
+                    ->name('store');
+                Route::get('/{id}/edit', 'edit')
+                    ->name('edit');
+                Route::put('/{id}/update', 'update')
+                    ->name('update');
+                Route::delete('/{id}/delete', 'destroy')
+                    ->name('delete');
+                Route::post('/change-active', 'changeActive')
+                    ->name('changeActive');
+                Route::post('/removeAvatarImage', 'removeAvatarImage')
+                    ->name('removeAvatarImage');
+                Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                    ->name('deleteItemMultipleChecked');
             });
     });
