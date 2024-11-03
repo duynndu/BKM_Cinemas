@@ -28,7 +28,6 @@ class ActorService
         if (!$record) {
             return false;
         }
-
         if (isset($data['image']) && $data['image']) {
             if ($record->image) {
                 $this->deleteAvatar($record->image, 'actors');

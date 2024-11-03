@@ -32,12 +32,12 @@ abstract class BaseService implements BaseServiceInterface
         return $this->repository->find($id);
     }
 
-    public function create(array $data)
+    public function create($data)
     {
         return $this->repository->create($data);
     }
 
-    public function update(array $data, $id)
+    public function update($data, $id)
     {
         return $this->repository->update($id, $data);
     }

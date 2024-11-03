@@ -15,5 +15,4 @@ interface FoodInterface extends RepositoryInterface
     public function changeActive($id);
 
     public function changeOrder($id, $order);
-
 }

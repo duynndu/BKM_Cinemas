@@ -2,20 +2,14 @@
 
 namespace App\Repositories\Admin\CategoryPosts\Interface;
 
-interface CategoryPostInterface
+use App\Repositories\Base\RepositoryInterface;
+
+interface CategoryPostInterface extends RepositoryInterface
 {
-    public function getAllCategoryPost($request);
-
-    public function createCategoryPost($data);
-
-    public function getCategoryPostById($id);
-
-    public function delete($id);
-
     public function getListCategoryPost();
 
     public function getListCategoryPostEdit($id);
-
-    public function updateCategoryPost($data, $id);
+    public function getAll();
+    public function delete($id);
+    public function checkPosition($positionValue);
 }
-

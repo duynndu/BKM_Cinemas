@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryPosts\CategoryPostRequest;
-use App\Models\CategoryPost;
-use App\Services\Admin\CategoryPosts\CategoryPostService;
+use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +16,7 @@ class CategoryPostController extends Controller
     Protected $categoryPostService;
 
     public function __construct(
-        CategoryPostService $categoryPostService,
+        CategoryPostServiceInterface $categoryPostService
     ) {
         $this->categoryPostService = $categoryPostService;
     }
@@ -37,7 +36,7 @@ class CategoryPostController extends Controller
             'parent_id' => $parentId ?? null
         ]);
 
-        $data = $this->categoryPostService->getAllCategoryPost($request);
+        $data = $this->categoryPostService->getAll();
 
         return view('admin.pages.categoryPosts.index', compact('data'));
     }
@@ -45,9 +44,7 @@ class CategoryPostController extends Controller
 
     public function create()
     {
-        $listCategoryPost = $this->categoryPostService->getListCategoryPost();
-
-
+        $listCategoryPost = $this->categoryPostService->getAll();
         return view('admin.pages.categoryPosts.create', compact('listCategoryPost'));
     }
     public function store(CategoryPostRequest $request)
@@ -55,7 +52,7 @@ class CategoryPostController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->categoryPostService->store($request);
+            $this->categoryPostService->create($request);
 
             DB::commit();
 
@@ -82,124 +79,124 @@ class CategoryPostController extends Controller
         }
     }
 
-    public function edit($id)
-    {
-        $cate = $this->categoryPostService->getCategoryPostById($id);
+    // public function edit($id)
+    // {
+    //     $cate = $this->categoryPostService->getCategoryPostById($id);
 
-        if (!$cate) {
-            return redirect()->route('admin.categoryPosts.index')->with([
-                'status_failed' => 'Không tìm thấy danh mục'
-            ]);
-        }
+    //     if (!$cate) {
+    //         return redirect()->route('admin.categoryPosts.index')->with([
+    //             'status_failed' => 'Không tìm thấy danh mục'
+    //         ]);
+    //     }
 
-        $getListCategoryPostEdit = $this->categoryPostService->getListCategoryPostEdit($id);
+    //     $getListCategoryPostEdit = $this->categoryPostService->getListCategoryPostEdit($id);
 
-        if ($getListCategoryPostEdit) {
-            return view('admin.pages.categoryPosts.edit', compact('cate', 'getListCategoryPostEdit'));
-        }
-    }
+    //     if ($getListCategoryPostEdit) {
+    //         return view('admin.pages.categoryPosts.edit', compact('cate', 'getListCategoryPostEdit'));
+    //     }
+    // }
 
-    public function update(CategoryPostRequest $request, $id)
-    {
-        try {
-            DB::beginTransaction();
+    // public function update(CategoryPostRequest $request, $id)
+    // {
+    //     try {
+    //         DB::beginTransaction();
 
-            $this->categoryPostService->update($request, $id);
+    //         $this->categoryPostService->update($request, $id);
 
-            DB::commit();
+    //         DB::commit();
 
-            $currentPage = session('page', 1);
+    //         $currentPage = session('page', 1);
 
-            $parentId = session('parent_id', null);
+    //         $parentId = session('parent_id', null);
 
-            $redirectUrl = route('admin.categoryPosts.index', [
-                'page' => $currentPage,
-                'parent_id' => $parentId
-            ]);
+    //         $redirectUrl = route('admin.categoryPosts.index', [
+    //             'page' => $currentPage,
+    //             'parent_id' => $parentId
+    //         ]);
 
-            return redirect($redirectUrl)->with([
-                'status_succeed' => 'Cập nhật danh mục thành công'
-            ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
+    //         return redirect($redirectUrl)->with([
+    //             'status_succeed' => 'Cập nhật danh mục thành công'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
 
-            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+    //         Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
-            return back()->with([
-                'status_failed' => 'Đã xảy ra lỗi khi cập nhật'
-            ]);
-        }
-    }
-    public function delete($id)
-    {
-        try {
-            DB::beginTransaction();
+    //         return back()->with([
+    //             'status_failed' => 'Đã xảy ra lỗi khi cập nhật'
+    //         ]);
+    //     }
+    // }
+    // public function delete($id)
+    // {
+    //     try {
+    //         DB::beginTransaction();
 
-            $this->categoryPostService->delete($id);
+    //         $this->categoryPostService->delete($id);
 
-            DB::commit();
+    //         DB::commit();
 
-            $currentPage = session('page', 1);
+    //         $currentPage = session('page', 1);
 
-            $parentId = session('parent_id', null);
+    //         $parentId = session('parent_id', null);
 
-            $redirectUrl = route('admin.categoryPosts.index', [
-                'page' => $currentPage,
-                'parent_id' => $parentId
-            ]);
+    //         $redirectUrl = route('admin.categoryPosts.index', [
+    //             'page' => $currentPage,
+    //             'parent_id' => $parentId
+    //         ]);
 
-            return redirect($redirectUrl)->with([
-                'status_succeed' => 'Xóa danh mục thành công'
-            ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
+    //         return redirect($redirectUrl)->with([
+    //             'status_succeed' => 'Xóa danh mục thành công'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
 
-            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+    //         Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
-            return back()->with([
-                'status_failed' => 'Đã xảy ra lỗi khi xóa'
-            ]);
-        }
-    }
+    //         return back()->with([
+    //             'status_failed' => 'Đã xảy ra lỗi khi xóa'
+    //         ]);
+    //     }
+    // }
 
 
-    public function removeAvatarImage(Request $request)
-    {
-        $post = $this->removeImage($request, new CategoryPost, 'avatar', 'categoryPosts');
+    // public function removeAvatarImage(Request $request)
+    // {
+    //     $post = $this->removeImage($request, new CategoryPost, 'avatar', 'categoryPosts');
 
-        return response()->json(['avatar' => $post]);
-    }
+    //     return response()->json(['avatar' => $post]);
+    // }
 
-    public function changeOrder(Request $request)
-    {
-        $this->categoryPostService->changeOrder($request);
+    // public function changeOrder(Request $request)
+    // {
+    //     $this->categoryPostService->changeOrder($request);
 
-        return response()->json(['newOrder' => $request->order]);
-    }
+    //     return response()->json(['newOrder' => $request->order]);
+    // }
 
-    public function changePosition(Request $request)
-    {
-        $result = $this->categoryPostService->changePosition($request);
+    // public function changePosition(Request $request)
+    // {
+    //     $result = $this->categoryPostService->changePosition($request);
 
-        if(!$result) {
-            return response()->json([
-                'status' => false,
-                'newPosition' => $request->position,
-            ]);
-        }
+    //     if(!$result) {
+    //         return response()->json([
+    //             'status' => false,
+    //             'newPosition' => $request->position,
+    //         ]);
+    //     }
 
-        return response()->json([
-            'status' => true,
-            'newPosition' => $request->position,
-        ]);
-    }
-    public function deleteItemMultipleChecked(Request $request)
-    {
-        if (empty($request->selectedIds)) {
-            return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400); // Trả về mã lỗi 400
-        }
-        $this->categoryPostService->deleteMultipleChecked($request);
+    //     return response()->json([
+    //         'status' => true,
+    //         'newPosition' => $request->position,
+    //     ]);
+    // }
+    // public function deleteItemMultipleChecked(Request $request)
+    // {
+    //     if (empty($request->selectedIds)) {
+    //         return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400); // Trả về mã lỗi 400
+    //     }
+    //     $this->categoryPostService->deleteMultipleChecked($request);
 
-        return response()->json(['message' => 'Xóa thành công!']);
-    }
+    //     return response()->json(['message' => 'Xóa thành công!']);
+    // }
 }
