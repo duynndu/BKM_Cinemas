@@ -33,7 +33,7 @@ class FoodRequest extends FormRequest
                 "max:500",
             ],
             "food.food_type_id" => "required|integer|numeric",
-            "food.price" => "required",
+            "food.price" => "required|min:6|max:7",
             "food.order" => "integer|numeric",
             "food.active" => "integer|numeric",
         ];
@@ -63,6 +63,7 @@ class FoodRequest extends FormRequest
     public function messages()
     {
         return [
+          
             "food.name.required" => "Tên không được để trống!",
             "food.name.min" => "Tên ít nhất 3 ký tự!",
             "food.name.max" => "Tên tối đa 255 ký tự!",
@@ -72,6 +73,8 @@ class FoodRequest extends FormRequest
             "food.image.max" => "Kích thước hình ảnh tối đa là 2MB!",
             "food.description.max" => "Mô tả tối đa 1000 ký tự!",
             "food.price.required" => "Giá không được để trống!",
+            "food.price.min"=>"Giá phải >= 10.000 vnđ",
+            "food.price.max"=>"Giá phải < 1.000.000 vnđ",
             "food.food_type_id.required" => "Vui lòng chọn loại đồ ăn!",
             "food.food_type_id.integer" => "Loại đồ ăn không đúng!",
             "food.food_type_id.numeric" => "Loại đồ ăn không đúng!",

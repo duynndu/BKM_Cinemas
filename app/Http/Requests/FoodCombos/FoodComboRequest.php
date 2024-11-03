@@ -26,7 +26,7 @@ class FoodComboRequest extends FormRequest
     {
         $rules = [
             "food_combo.name" => "required|min:3|max:250",
-            "food_combo.price" => "required",
+            "food_combo.price" => "required|min:6|max:7",
             "food" => "required",
             "food_combo.description" => "nullable|string|max:500",
             "food_combo.order" => "integer|numeric",
@@ -60,6 +60,8 @@ class FoodComboRequest extends FormRequest
             "food_combo.name.min" => "Tên phải có ít nhất 3 ký tự!",
             "food_combo.name.max" => "Tên tối đa 250 ký tự!",
             "food_combo.price.required" => "Giá không được để trống!",
+            "food_combo.price.min"=>"Giá phải >= 10.000 vnđ",
+            "food_combo.price.max"=>"Giá phải < 1.000.000 vnđ",
             "food_combo.image.required" => "Hình ảnh không được để trống!",
             "food_combo.image.image" => "Tệp phải là hình ảnh!",
             "food_combo.image.mimes" => "Chỉ chấp nhận các định dạng jpeg, png, jpg, gif, webp!",
