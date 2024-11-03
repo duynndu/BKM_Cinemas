@@ -4,46 +4,69 @@ namespace App\Repositories\Admin\Payments\Repository;
 
 use App\Models\Payment;
 use App\Repositories\Admin\Payments\Interface\PaymentInterface;
+use App\Repositories\Base\BaseRepository;
 
-class PaymentRepository implements PaymentInterface
+class PaymentRepository extends BaseRepository implements PaymentInterface
 {
-    protected $payment;
-
-    public function __construct(Payment $payment)
+    public function getModel()
     {
-        $this->payment = $payment;
+        return \App\Models\Payment::class;
     }
 
-    // Lấy tất cả các bản ghi Payment
-    public function getAllPayments()
+    public function getAll()
     {
-        return $this->payment->all();
+        $data = $this->model->newQuery();
+
+        $data = $this->filterByName($data);
+
+        $data = $this->filterByStatus($data);
+
+        $data = $data->paginate(self::PAGINATION);
+
+        return $data->appends([
+            'name' => request()->payment_name,
+            'fill_action' => request()->fill_action,
+        ]);
+
     }
 
-    
-    public function create(array $data)
+    protected function filterByName($query)
     {
-        return $this->payment->create($data);
+        if (!empty(request()->payment_name)) {
+            return $query->where('name', 'like', '%' . request()->payment_name . '%');
+        }
+        return $query;
     }
 
- 
-    public function getById($id)
+    protected function filterByStatus($query)
     {
-        return $this->payment->findOrFail($id);
+        if (!empty(request()->fill_action)) {
+            switch (request()->fill_action) {
+                case 'active':
+                    return $query->where('active', 1);
+                case 'noActive':
+                    return $query->where('active', 0);
+            }
+        }
+        return $query;
     }
 
-   
-    public function update(array $data, $id)
+    public function getAllActive()
     {
-        $payment = $this->payment->findOrFail($id);
-        $payment->update($data);
-        return $payment;
+        return $this->model->select('id', 'name')->where('active', 1)->get();
     }
 
-  
-    public function delete($id)
+    public function changeActive($id)
     {
-        $payment = $this->payment->findOrFail($id);
-        return $payment->delete();
+        $result = $this->find($id);
+        if ($result) {
+            $result->active ^= 1;
+            $result->save();
+            return $result;
+        }
+        return false;
     }
 }
+
+
+

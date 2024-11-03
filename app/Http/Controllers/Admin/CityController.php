@@ -19,13 +19,13 @@ class CityController extends Controller
 
     public function index()
     {
-        $cities = $this->cityService->getAllCities();
-        return view('admin.pages.city.index', compact('cities'));
+        $cities = $this->cityService->getAll();
+        return view('admin.pages.cities.index', compact('cities'));
     }
 
     public function create()
     {
-        return view('admin.pages.city.create');
+        return view('admin.pages.cities.create');
     }
 
     public function store(CityRequest $request)
@@ -45,12 +45,12 @@ class CityController extends Controller
     }
     public function edit($id)
     {
-            $city = $this->cityService->findCityById($id);
+            $city = $this->cityService->find($id);
 
             if (!$city) {
                 return redirect()->route('admin.cities.index')->with(['status_failed' => 'Không tìm thấy!']);
             }
-            return view('admin.pages.city.edit', compact('city'));
+            return view('admin.pages.cities.edit', compact('city'));
     }
 
     public function update(CityRequest $request, $id)

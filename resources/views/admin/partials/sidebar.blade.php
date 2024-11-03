@@ -158,6 +158,17 @@
 
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">payment</i>
+                    <span class="nav-text">Quản lý phương thức thanh toán</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{{ route('admin.payments.index') }}" aria-expanded="false">Phương thức thanh toán</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">apartment</i>
                     <span class="nav-text">Quản lý Thành Phố</span>
                 </a>
