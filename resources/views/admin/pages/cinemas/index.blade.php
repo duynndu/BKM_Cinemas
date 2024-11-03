@@ -166,8 +166,8 @@
                                                             </b>
                                                         </td>
                                                         <td>
-                                                            @if (!empty($food->image) && file_exists(public_path($food->image)))
-                                                                <img src="{{ asset($food->image) }}"
+                                                            @if (!empty($cinema->image) && file_exists(public_path($cinema->image)))
+                                                                <img src="{{ asset($cinema->image) }}"
                                                                     style="width:80px; height:100px; object-fit:cover">
                                                             @else
                                                                 <img src="#" alt="No image"
@@ -190,9 +190,7 @@
                                                             </b>
                                                         </td>
                                                         <td>
-                                                            <b>
-                                                                {!! $cinema->map !!}
-                                                            </b>
+                                                            {!! $cinema->map !!}
                                                         </td>
                                                         <td>
                                                             <button
