@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Services\Admin\Foods;
-
+namespace App\Services\Admin\Foods\Services;
 use App\Repositories\Admin\Foods\Interface\FoodInterface;
+use App\Services\Admin\Foods\Interfaces\FoodServiceInterface;
+use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 
-
-class FoodService
+class FoodService extends BaseService implements FoodServiceInterface
 {
     use StorageImageTrait;
 
-    protected $foodRepository;
-    public function __construct(
-        FoodInterface $foodRepository
-    ) {
-        $this->foodRepository = $foodRepository;
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    public function getRepository()
+    {
+        return FoodInterface::class;
     }
 
     public function store(&$data)
@@ -25,7 +27,7 @@ class FoodService
             $data['image'] = $uploadData['path'];
         }
         $data['price'] = $this->sanitizePrice($data['price']);
-        return $this->foodRepository->create($data);
+        return $this->repository->create($data);
     }
 
     public function update(&$data, $id)
@@ -43,13 +45,7 @@ class FoodService
             $data['image'] = $uploadData['path'];
         }
         $data['price'] = $this->sanitizePrice($data['price']);
-        return $this->foodRepository->update($id, $data);
-    }
-
-
-    public function delete($id)
-    {
-        return $this->foodRepository->delete($id);
+        return $this->repository->update($id, $data);
     }
 
     public function deleteMultipleChecked($request)
@@ -57,38 +53,28 @@ class FoodService
         if (count($request->selectedIds) < 0) {
             return false;
         }
-        $this->foodRepository->deleteMultiple($request->selectedIds);
+        $this->repository->deleteMultiple($request->selectedIds);
         return true;
-    }
-
-    public function getAll()
-    {
-        return $this->foodRepository->getAll();
     }
 
     public function getAllActive()
     {
-        return $this->foodRepository->getAllActive();
+        return $this->repository->getAllActive();
     }
 
     public function getByMultipleId(array $ids)
     {
-        return $this->foodRepository->getByMultipleId($ids);
-    }
-
-    public function find($id)
-    {
-        return $this->foodRepository->find($id);
+        return $this->repository->getByMultipleId($ids);
     }
 
     public function changeActive($request)
     {
-        return $this->foodRepository->changeActive($request->id);
+        return $this->repository->changeActive($request->id);
     }
 
     public function changeOrder($request)
     {
-        return $this->foodRepository->changeOrder($request->id, $request->order);
+        return $this->repository->changeOrder($request->id, $request->order);
     }
 
     private function uploadFile($data, $folderName)

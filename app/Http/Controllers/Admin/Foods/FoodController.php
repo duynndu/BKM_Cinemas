@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin\Foods;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Foods\FoodRequest;
 use App\Models\Food;
-use App\Services\Admin\Foods\FoodService;
-use App\Services\Admin\Foods\FoodTypeService;
+use App\Services\Admin\Foods\Interfaces\FoodServiceInterface;
+use App\Services\Admin\Foods\Interfaces\FoodTypeServiceInterFace;
 use Illuminate\Http\Request;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Support\Facades\Storage;
@@ -21,8 +21,8 @@ class FoodController extends Controller
     protected $foodTypeService;
 
     public function __construct(
-        FoodService $foodService,
-        FoodTypeService $foodTypeService
+        FoodServiceInterface $foodService,
+        FoodTypeServiceInterFace $foodTypeService
     ) {
         $this->foodService = $foodService;
         $this->foodTypeService = $foodTypeService;
@@ -55,7 +55,7 @@ class FoodController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->foodService->store($data);
+            $this->foodService->create($data);
 
             DB::commit();
 

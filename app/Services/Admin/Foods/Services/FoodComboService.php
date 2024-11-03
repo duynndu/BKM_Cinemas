@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Services\Admin\Foods;
-
+namespace App\Services\Admin\Foods\Services;
 use App\Repositories\Admin\Foods\Interface\FoodComboInterface;
+use App\Services\Admin\Foods\Interfaces\FoodComboServiceInterface;
+use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 
-
-class FoodComboService
+class FoodComboService extends BaseService implements FoodComboServiceInterface
 {
     use StorageImageTrait;
 
-    protected $foodComboRepository;
-
-    public function __construct(
-        FoodComboInterface $foodComboRepository
-    ) {
-        $this->foodComboRepository = $foodComboRepository;
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    public function getRepository()
+    {
+        return FoodComboInterface::class;
     }
 
     public function store(&$data)
@@ -26,7 +27,7 @@ class FoodComboService
             $data['food_combo']['image'] = $uploadData['path'];
         }
         $data['food_combo']['price'] = $this->sanitizePrice($data['food_combo']['price']);
-        return $this->foodComboRepository->create($data);
+        return $this->repository->create($data);
     }
 
     public function update(&$data, $id)
@@ -45,7 +46,7 @@ class FoodComboService
         }
         $data['food_combo']['price'] = $this->sanitizePrice($data['food_combo']['price']);
         if (!empty($data['item'])) {
-            $this->foodComboRepository->createManyItem($record, $data['item']);
+            $this->repository->createManyItem($record, $data['item']);
         }
         if (!empty($data['old_item'])) {
             $existingIds = $record->items->pluck('id')->toArray();
@@ -55,17 +56,12 @@ class FoodComboService
             $idsToDelete = array_diff($existingIds, $newIds);
 
             if (!empty($idsToDelete)) {
-                $this->foodComboRepository->deleteMultipleItem($record, $idsToDelete);
+                $this->repository->deleteMultipleItem($record, $idsToDelete);
             }
 
-            $this->foodComboRepository->updateItem($record, $data['old_item']);
+            $this->repository->updateItem($record, $data['old_item']);
         }
-        return $this->foodComboRepository->update($id, $data['food_combo']);
-    }
-
-    public function delete($id)
-    {
-        return $this->foodComboRepository->delete($id);
+        return $this->repository->update($id, $data['food_combo']);
     }
 
     public function deleteMultipleChecked($request)
@@ -73,28 +69,18 @@ class FoodComboService
         if (count($request->selectedIds) < 0) {
             return false;
         }
-        $this->foodComboRepository->deleteMultiple($request->selectedIds);
+        $this->repository->deleteMultiple($request->selectedIds);
         return true;
-    }
-
-    public function getAll()
-    {
-        return $this->foodComboRepository->getAll();
-    }
-
-    public function find($id)
-    {
-        return $this->foodComboRepository->find($id);
     }
 
     public function changeActive($request)
     {
-        return $this->foodComboRepository->changeActive($request->id);
+        return $this->repository->changeActive($request->id);
     }
 
     public function changeOrder($request)
     {
-        return $this->foodComboRepository->changeOrder($request->id, $request->order);
+        return $this->repository->changeOrder($request->id, $request->order);
     }
 
     private function uploadFile($data, $folderName)
