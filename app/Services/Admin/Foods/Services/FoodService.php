@@ -20,7 +20,7 @@ class FoodService extends BaseService implements FoodServiceInterface
         return FoodInterface::class;
     }
 
-    public function store(&$data)
+    public function create(&$data)
     {
         if (isset($data['image']) && $data['image']) {
             $uploadData = $this->uploadFile($data['image'], 'public/foods');
