@@ -25,7 +25,7 @@
                     action="{{ route('admin.areas.update', $area->id) }}"
                     class="product-vali" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')  
+                    @method('PUT')
                     <div class="row">
                         <div>
                             <div class="card h-auto">
@@ -33,10 +33,10 @@
                                     <div>
                                         <div>
                                             <label class="form-label mb-2">Tên Khu Vực</label>
-                                            <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="Nhập Tên Khu Vực" 
-                                                value="{{ old('name', $area->name) }}">  
-                                            @error('name')
+                                            <input type="text" id="name" name="area[name]" class="form-control"
+                                                placeholder="Nhập Tên Khu Vực"
+                                                value="{{ old('area.name', $area->name) }}">
+                                            @error('area.name')
                                                 <div class="mt-2">
                                                     <span class="text-red">{{ $message }}</span>
                                                 </div>
@@ -46,15 +46,15 @@
 
                                     <div class="mt-3">
                                         <label class="form-label mb-2">Chọn Thành Phố</label>
-                                        <select name="city_id" class="form-control">
-                                            <option value="" selected>-- Chọn Thành Phố --</option>
+                                        <select name="area[city_id]" class="form-control">
+                                            <option value="">-- Chọn Thành Phố --</option>
                                             @foreach($cities as $city)
-                                                <option value="{{ $city->id }}" {{ $city->id == $area->city_id ? 'selected' : '' }}>
+                                                <option value="{{ $city->id }}" @selected(old('area.city_id', $area->city_id) == $city->id)>
                                                     {{ $city->name }}
-                                                </option>  
+                                                </option>
                                             @endforeach
                                         </select>
-                                        @error('city_id')
+                                        @error('area.city_id')
                                             <div class="mt-2">
                                                 <span class="text-red">{{ $message }}</span>
                                             </div>
@@ -62,7 +62,7 @@
                                     </div>
 
                                     <div class="mt-3 d-flex justify-content-start gap-2">
-                                        <button type="submit" class="btn btn-success">Lưu Thay Đổi</button>  
+                                        <button type="submit" class="btn btn-success">Lưu Thay Đổi</button>
                                         <a href="{{ route('admin.areas.index') }}" class="btn btn-warning">Quay Về Trang Chủ</a>
                                     </div>
                                 </div>
