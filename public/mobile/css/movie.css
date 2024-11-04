@@ -1,0 +1,339 @@
+.movies {
+    margin-bottom: 60px;
+}
+
+.tab-container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.tab-header {
+    position: static;
+    list-style-type: none;
+    padding: 0 20px;
+    margin: 0;
+    display: flex;
+    cursor: pointer;
+    background-color: #e83a93;
+}
+
+.tab-header li {
+    padding: 10px 20px;
+    background-color: #c63c82;
+}
+
+.tab-header li.active {
+    background-color: #281a3a;
+    font-weight: bold;
+}
+
+.tab-content {
+    padding: 20px;
+    margin-bottom: 80px;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.movie-item {
+    background-color: #FFF;
+    padding: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+.movie-thumbnail {
+    margin-right: 10px;
+    width: 115px;
+    float: left;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.movie-item .movie-detail {
+    float: left;
+    width: calc(100% - 125px);
+    height: 170px;
+    padding: 10px;
+    background: url(../statics/mobile/images/movie-bg-top.png) top left repeat-x, url(../statics/mobile/images/movie-bg-right.png) right top repeat-y, url(../statics/mobile/images/movie-bg-bottom.png) bottom left repeat-x, url(../statics/mobile/images/movie-bg-left.png) left center repeat-y;
+    background-color: #ce3e82;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.movie-item .movie-detail a.view-trailer {
+    font-size: 10px;
+    background-color: #f29438;
+    border-radius: 5px;
+    padding: 5px;
+    color: #FFF;
+    text-decoration: none;
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+}
+
+/* CSS Movie detail */
+#touch-content {
+    padding: 10px 5px;
+    overflow: hidden;
+}
+
+.moviel-poster {
+    max-width: 100%;
+    text-align: center;
+    position: relative;
+    padding: 0 10px;
+    left: 0;
+    -webkit-transition: left 0.5s;
+    /* Safari */
+    transition: left 0.5s;
+}
+
+.moviel-poster img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.moviel-poster a {
+    position: absolute;
+    top: 50%;
+    height: 37px;
+    margin-top: -18px;
+}
+
+.moviel-poster a:hover img {
+    opacity: 0.7;
+}
+
+.moviel-poster a.prev {
+    left: 0;
+}
+
+.moviel-poster a.next {
+    right: 0;
+}
+
+.movie-info {
+    display: flex;
+    padding: 0 15px;
+}
+
+.movie-info .info {
+    flex: 1;
+    width: 0;
+    text-align: center;
+    font-size: 10px;
+    padding: 10px 0;
+    padding-bottom: 0;
+}
+
+.movie-info .info .detailbtn {
+    padding-top: 7px;
+}
+
+.movie-info .info a.view-trailer {
+    background-color: #f29438;
+    border-radius: 5px;
+    padding: 7px 10px;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.movie-title {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#movie-content .nav-tabs {
+    border: none;
+}
+
+#movie-content .nav-tabs>li {
+    padding: 5px 5px;
+    position: relative;
+}
+
+#movie-content>.nav-tabs>li:not(:last-child):after {
+    content: ' ';
+    height: 15px;
+    width: 0;
+    border-right: 1px solid #FFF;
+    position: absolute;
+    top: 0%;
+    margin-top: 10px;
+    right: 0;
+}
+
+#movie-content .nav-tabs>li>a {
+    padding: 0;
+    background: none;
+    border: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #8c747c;
+    font-weight: bold;
+    padding-top: 5px;
+}
+
+#movie-content .nav-tabs>li.active>a,
+#movie-content .nav-tabs>li.active>a:hover,
+#movie-content .nav-tabs>li.active>a:focus {
+    border-radius: 0;
+    color: #ea3b92;
+}
+
+#movie-content>.nav-tabs>li.active a {
+    border-bottom: 1px solid #f29438;
+}
+
+#noidung {
+    padding: 10px;
+    text-align: justify;
+    box-sizing: content-box;
+    border: 1px solid #441f45;
+}
+
+#lichchieu .nav-tabs {
+    display: flex;
+    background-color: #4d455c;
+}
+
+#lichchieu .nav-tabs li {
+    flex: 1;
+    width: 0;
+    text-align: center;
+    font-size: 10px;
+    padding: 0 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+#lichchieu .nav-tabs li a {
+    text-transform: inherit;
+    padding: 5px 0;
+    border: none;
+    margin-right: 0;
+}
+
+#lichchieu .nav-tabs li.active a {
+    background-color: #ffffff;
+    color: #f29438;
+
+}
+
+#lichchieu .tab-content {
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+#lichchieu .tab-content .showtime-type {
+    font-size: 12px;
+}
+
+#lichchieu .tab-content .showtimes a {
+    border: 1px solid #d68337;
+    border-radius: 3px;
+    padding: 2px 5px;
+}
+
+#lichchieu .tab-content .showtimes .times {
+    padding: 0 15px 15px 15px;
+}
+
+#lichchieu .tab-content .showtimes a.active {
+    background-color: #ea3b92;
+}
+
+.age_restricted_wrap {
+    display: flex;
+    gap: 10px;
+}
+
+.age_restricted_wrap span.age_restricted_label {
+    width: calc(100% - 70px);
+}
+
+#lichchieu .tab-lc {
+    display: block;
+}
+
+.showtimes-message {
+    padding: 15px;
+    background: #ea3b92;
+    color: #FFF;
+    text-align: center;
+    box-shadow: 7px 7px 1px #f29438;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.bootbox .modal-content {
+    border-radius: 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.bootbox .modal-content .modal-body {
+    padding-bottom: 0;
+}
+
+.bootbox .modal-content .modal-body .bootbox-body {
+    padding-top: 20px;
+}
+
+.bootbox .modal-content .modal-footer {
+    margin-top: 15px;
+    padding: 10px 20px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.bootbox .modal-content .modal-footer .btn-primary {
+    background-color: #b1325b;
+    border-color: #c11e97;
+    border-radius: 0;
+}
+
+.bootbox .modal-content .modal-footer .btn-primary:hover,
+.bootbox .modal-content .modal-footer .btn-primary:active,
+.bootbox .modal-content .modal-footer .btn-primary:focus {
+    background-color: #9c0f3c;
+    border-color: #9c0f3c;
+}
+
+a.showdate {
+    display: block;
+    background: #e83a93;
+    padding: 5px 15px;
+    margin-bottom: 5px;
+    color: #fff;
+    text-decoration: none;
+}
+
+#movie-content {
+    position: relative;
+}
+
+.age_restricted {
+    text-align: center;
+    position: absolute;
+    right: 10px;
+    background-image: url(../images/age.png);
+    width: 41px;
+    height: 60px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: #000;
+    padding-top: 10px;
+    font-weight: bold;
+    top: -20px;
+}

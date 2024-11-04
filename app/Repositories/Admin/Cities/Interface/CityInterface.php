@@ -7,8 +7,4 @@ interface CityInterface extends RepositoryInterface {
 
     public function getAll();
 
-    public function getAllCity();
-
-    public function filterByName($query);
-
 }

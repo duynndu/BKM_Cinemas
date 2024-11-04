@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Admin\Roles\Interface;
 
-interface RoleInterface
+interface RoleInterface 
 {
     public function getAllRole($request);
 

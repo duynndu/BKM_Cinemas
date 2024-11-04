@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Foods;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FoodTypes\FoodTypeRequest;
 use App\Services\Admin\Foods\FoodTypeService;
+use App\Services\Admin\Foods\Interfaces\FoodTypeServiceInterFace;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class FoodTypeController extends Controller
     protected $foodTypeService;
 
     public function __construct(
-        FoodTypeService $foodTypeService
+        FoodTypeServiceInterFace $foodTypeService
     ) {
         $this->foodTypeService = $foodTypeService;
     }
@@ -44,7 +45,7 @@ class FoodTypeController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->foodTypeService->store($request->foodType);
+            $this->foodTypeService->create($request->foodType);
 
             DB::commit();
 

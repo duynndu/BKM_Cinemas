@@ -23,9 +23,16 @@ class FoodRepository extends BaseRepository implements FoodInterface
 
         $data = $this->filterByFoodTypeId($data);
 
-        return $data->with(['type' => function ($query) {
+        $data = $data->with(['type' => function ($query) {
             $query->select('id', 'name')->where('active', 1);
         }])->paginate(self::PAGINATION);
+
+        return $data->appends([
+            'name'        => request()->name,
+            'order_with'  => request()->order_with,
+            'nationality' => request()->nationality,
+            'foodTypeId'  => request()->foodTypeId
+        ]);
     }
 
     public function delete($id)

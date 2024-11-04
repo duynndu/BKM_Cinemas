@@ -26,8 +26,7 @@ class BlockRepository implements BlockInterface
         Block        $block,
         BlockType    $blockType,
         BlockContent $blockContent
-    )
-    {
+    ) {
         $this->block = $block;
         $this->blockType = $blockType;
         $this->page = $page;

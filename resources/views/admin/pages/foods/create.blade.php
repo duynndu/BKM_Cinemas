@@ -110,10 +110,6 @@
                                                                                 accept=".png, .jpg, .jpeg, .webp">
                                                                             <label for="imageUpload"
                                                                                 class="btn btn-sm btn-primary light ms-0">Chọn ảnh</label>
-                                                                            @error('avatar')
-                                                                                <div class="text-danger mt-2">
-                                                                                    {{ $message }}</div>
-                                                                            @enderror
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -125,7 +121,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-5">
-
                                                     <div class="p-3">
                                                         <label class="form-label">Trạng thái</label><br>
                                                         <div class="row mt-2">
@@ -152,10 +147,7 @@
                                                             </div>
                                                         @enderror
                                                     </div>
-
-
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
