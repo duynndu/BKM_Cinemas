@@ -4,17 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Actors\ActorRequest;
-use App\Services\Admin\Actors\ActorService;
+use App\Models\Actor;
+use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
+use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ActorController extends Controller
 {
+    use RemoveImageTrait;
+
     protected $actorService;
 
     public function __construct(
-        ActorService $actorService
+        ActorServiceInterface $actorService
     ) {
         $this->actorService = $actorService;
     }
@@ -41,15 +46,22 @@ class ActorController extends Controller
      */
     public function store(ActorRequest $request)
     {
+        $data = $request->actor;
         try {
             DB::beginTransaction();
 
-            $this->actorService->store($request->actor);
+            $this->actorService->create($data);
 
             DB::commit();
 
             return redirect()->route('admin.actors.index')->with('status_succeed', "Thêm diễn viên thành công");
         } catch (\Exception $e) {
+            if (!empty($data['image'])) {
+                $path = "public/actors/" . basename($data['image']);
+                if (Storage::exists($path)) {
+                    Storage::delete($path);
+                }
+            }
             DB::rollBack();
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
@@ -84,15 +96,22 @@ class ActorController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $data = $request->actor;
         try {
             DB::beginTransaction();
-            if (!$this->actorService->update($request->actor, $id)) {
+            if (!$this->actorService->update($data, $id)) {
                 return redirect()->route('admin.actors.index')->with(['status_failed' => 'Không tìm thấy!']);
             }
 
             DB::commit();
             return redirect()->route('admin.actors.index')->with('status_succeed', "Sửa diễn viên thành công");
         } catch (\Throwable $e) {
+            if (!empty($data['image'])) {
+                $path = "public/actors/" . basename($data['image']);
+                if (Storage::exists($path)) {
+                    Storage::delete($path);
+                }
+            }
             DB::rollBack();
             Log::error("Error updating actors: {$e->getMessage()} at line {$e->getLine()}");
             return back()->with(['status_failed' => 'Đã xảy ra lỗi, vui lòng thử lại sau.']);
@@ -122,6 +141,14 @@ class ActorController extends Controller
             ]);
         }
     }
+
+    public function removeAvatarImage(Request $request)
+    {
+        $actor = $this->removeImage($request, new Actor, 'image', 'actors');
+
+        return response()->json(['avatar' => $actor], 200);
+    }
+
 
     public function deleteItemMultipleChecked(Request $request)
     {

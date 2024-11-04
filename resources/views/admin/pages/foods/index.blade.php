@@ -172,7 +172,7 @@
                                                                     class="item-checked">
                                                             </td>
                                                         @endcan
-                                                        <td>{{ $key + 1 }}</td>
+                                                        <td>{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</td>
 
                                                         <td style="max-width: 155px !important;">
                                                             <b class="text-style">
@@ -189,10 +189,14 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            {{ number_format($food->price, 0, '.', ',') }}đ
+                                                            <b>
+                                                                {{ number_format($food->price, 0, '.', ',') }}đ
+                                                            </b>
                                                         </td>
                                                         <td>
-                                                            {{ $food->type->name ?? 'Chưa có' }}
+                                                           <b>
+                                                               {{ $food->type->name ?? 'Chưa có' }}
+                                                           </b>
                                                         </td>
                                                         @can('changeActive', \App\Models\Food::class)
                                                             <td>

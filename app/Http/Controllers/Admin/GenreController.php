@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Genres\GenreRequest;
 use App\Models\Genre;
-use App\Services\Admin\Genres\GenreService;
+use App\Services\Admin\Genres\Interfaces\GenreServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,16 +14,17 @@ use Illuminate\Support\Facades\Log;
 class GenreController extends Controller
 {
     use RemoveImageTrait;
-    Protected $genreService;
+    protected $genreService;
 
     public function __construct(
-        GenreService $genreService,
+        GenreServiceInterface $genreService,
     ) {
         $this->genreService = $genreService;
     }
 
     public function index(Request $request)
     {
+
         if ($request->query('page')) {
             $currentPage = $request->query('page', 1);
         }
@@ -37,7 +38,7 @@ class GenreController extends Controller
             'parent_id' => $parentId ?? null
         ]);
 
-        $data = $this->genreService->getAllGenre($request);
+        $data = $this->genreService->getAll();
 
         return view('admin.pages.genres.index', compact('data'));
     }
@@ -45,7 +46,7 @@ class GenreController extends Controller
 
     public function create()
     {
-        $listGenre = $this->genreService->getListGenre();
+        $listGenre = $this->genreService->getAll();
 
 
         return view('admin.pages.genres.create', compact('listGenre'));
@@ -55,7 +56,7 @@ class GenreController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->genreService->store($request);
+            $this->genreService->create($request);
 
             DB::commit();
 
@@ -67,7 +68,6 @@ class GenreController extends Controller
                 'page' => $currentPage,
                 'parent_id' => $parentId
             ]);
-
             return redirect($redirectUrl)->with([
                 'status_succeed' => "Thêm mới thể loại thành công"
             ]);
@@ -84,7 +84,7 @@ class GenreController extends Controller
 
     public function edit($id)
     {
-        $genreEdit = $this->genreService->getGenreById($id);
+        $genreEdit = $this->genreService->find($id);
 
         if (!$genreEdit) {
             return redirect()->route('admin.genres.index')->with([
@@ -165,9 +165,8 @@ class GenreController extends Controller
 
     public function removeAvatarImage(Request $request)
     {
-        $post = $this->removeImage($request, new Genre, 'avatar', 'Genres');
-
-        return response()->json(['avatar' => $post]);
+        $genre = $this->removeImage($request, new Genre, 'avatar', 'Genres');
+        return response()->json(['avatar' => $genre]);
     }
 
     public function changeOrder(Request $request)
@@ -181,7 +180,7 @@ class GenreController extends Controller
     {
         $result = $this->genreService->changePosition($request);
 
-        if(!$result) {
+        if (!$result) {
             return response()->json([
                 'status' => false,
                 'newPosition' => $request->position,
@@ -195,6 +194,7 @@ class GenreController extends Controller
     }
     public function deleteItemMultipleChecked(Request $request)
     {
+
         if (empty($request->selectedIds)) {
             return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400); // Trả về mã lỗi 400
         }

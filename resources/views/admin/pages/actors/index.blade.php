@@ -124,6 +124,7 @@
                                                     </th>
                                                     <th style="width:80px;">#</th>
                                                     <th>Tên</th>
+                                                    <th>Hình ảnh</th>
                                                     <th>Ngày sinh</th>
                                                     <th>Quốc tịch</th>
                                                     <th>Hành động</th>
@@ -137,7 +138,7 @@
                                                                 class="item-checked">
                                                         </td>
                                                         <td>
-                                                            <strong class="text-black">{{ $key + 1 }}</strong>
+                                                            <strong class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
                                                         </td>
                                                         <td>
                                                             <b>
@@ -145,6 +146,15 @@
                                                                     {{ $actor->name }}
                                                                 </a>
                                                             </b>
+                                                        </td>
+                                                        <td>
+                                                            @if (!empty($actor->image) && file_exists(public_path($actor->image)))
+                                                                <img src="{{ asset($actor->image) }}"
+                                                                    style="width:80px; height:100px; object-fit:cover">
+                                                            @else
+                                                                <img src="#" alt="No image"
+                                                                    style="width:80px; height:100px; object-fit:cover">
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             <b>

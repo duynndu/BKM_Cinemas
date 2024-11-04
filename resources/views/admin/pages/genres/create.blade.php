@@ -130,15 +130,22 @@
                                             <div class="avatar-upload d-flex align-items-center">
                                                 <div class=" position-relative" style="width: 120px;">
                                                     <div class="avatar-preview">
-                                                        <div id="imagePreview"
+                                                        <div class="imagePreview"
                                                             style="background-image: url({{ asset('images/no-img-avatar.png') }});">
                                                         </div>
                                                     </div>
-                                                    <div class="change-btn d-flex align-items-center flex-wrap">
-                                                        <input type="file" class="form-control d-none"
-                                                            id="imageUpload" name="avatar" accept=".png, .jpg, .jpeg">
+                                                    <div
+                                                        class="change-btn d-flex align-items-center flex-wrap">
+                                                        <input type="file"
+                                                            class="form-control d-none uploadImage"
+                                                            id="imageUpload" name="avatar"
+                                                            accept=".png, .jpg, .jpeg, .webp">
                                                         <label for="imageUpload"
-                                                            class="btn btn-sm btn-primary light ms-0">{{ __('language.admin.genres.selectImage') }}</label>
+                                                            class="btn btn-sm btn-primary light ms-0">Chọn ảnh</label>
+                                                        @error('avatar')
+                                                            <div class="text-danger mt-2">
+                                                                {{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
