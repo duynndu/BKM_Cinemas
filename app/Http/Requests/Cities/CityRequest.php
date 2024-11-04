@@ -23,16 +23,16 @@ class CityRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'name' => 'required|min:3|max:255|unique:cities,name,' . $id
+            'city.name' => 'required|min:3|max:255|unique:cities,name,' . $id
         ];
     }
 
     public function messages(){
         return [
-            "name.required" => __('validation.required', ['attribute' => __('language.admin.cities.name')]),
-            "name.min" => __('validation.min', ['attribute' => __('language.admin.cities.name'), 'min' => 3]),
-            "name.max" => __('validation.max', ['attribute' => __('language.admin.cities.name'), 'max' => 255]),
-            'name.unique' => __('validation.unique', ['attribute' => __('language.admin.cities.name')]),
+            "city.name.required" => __('validation.required', ['attribute' => __('language.admin.cities.name')]),
+            "city.name.min" => __('validation.min', ['attribute' => __('language.admin.cities.name'), 'min' => 3]),
+            "city.name.max" => __('validation.max', ['attribute' => __('language.admin.cities.name'), 'max' => 255]),
+            "city.name.unique" => __('validation.unique', ['attribute' => __('language.admin.cities.name')]),
         ];
     }
 }
