@@ -132,7 +132,7 @@
                                                             <button type="button"
                                                                 class="removeImage"
                                                                 data-id="{{ $genreEdit->id }}"
-                                                                data-url="{{ route('admin.foods.removeAvatarImage') }}"
+                                                                data-url="{{ route('admin.genres.removeAvatarImage') }}"
                                                                 data-image="{{ asset('images/no-img-avatar.png') }}">
                                                                 <i class="fa-solid fa-xmark"></i>
                                                             </button>

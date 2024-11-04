@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Movies\MovieRequest;
 use App\Models\Movie;
-use App\Services\Admin\Actors\ActorService;
-use App\Services\Admin\Genres\GenreService;
+use App\Services\Admin\Actors\Services\ActorService;
+use App\Services\Admin\Genres\Services\GenreService;
 use App\Services\Admin\Movies\MovieService;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
@@ -36,7 +36,7 @@ class MovieController extends Controller
 
     public function index(Request $request)
     {
-        $listGenre = $this->genreService->getListGenre();
+        $listGenre = $this->genreService->getAll();
         
         $listMovie = $this->movieService->listMovies($request);
 
@@ -49,7 +49,7 @@ class MovieController extends Controller
 
     public function create()
     {
-        $listGenre = $this->genreService->getListGenre();
+        $listGenre = $this->genreService->getAll();
         $actors = $this->actorService->getAll();
         return view('admin.pages.movies.create',compact('listGenre','actors'));
     }

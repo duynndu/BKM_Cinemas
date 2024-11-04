@@ -9,51 +9,35 @@ use App\Models\PostCategory;
 use App\Models\PostTag;
 use App\Models\Tag;
 use App\Repositories\Admin\Posts\Interface\PostInterface;
+use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Str;
 
-class PostRepository implements PostInterface
+class PostRepository extends BaseRepository implements PostInterface
 {
-    protected $post;
     protected $postCategory;
-
-    protected $Images;
-
     protected $tag;
     protected $postTag;
-    protected $categoryPost;
-
     protected $image;
-
-    const PAGINATION = 10;
-
     public function __construct(
-        Post                $post,
-        PostCategory        $postCategory,
-        Image               $Images,
-        Tag                 $tag,
-        PostTag             $postTag,
-        CategoryPost        $categoryPost,
-        Image               $image
+        PostCategory $postCategory,
+        Tag $tag,
+        PostTag $postTag,
+        Image $image
     ) {
-        $this->post = $post;
-
         $this->postCategory = $postCategory;
-
-        $this->Images = $Images;
-
         $this->tag = $tag;
-
         $this->postTag = $postTag;
-
-        $this->categoryPost = $categoryPost;
-
         $this->image = $image;
+        parent::__construct();
     }
-
-    public function allFillter($request)
+    public function getModel()
     {
-        $query = $this->post->newQuery();
-        $categories = $request->categories ?? [];
+        return \App\Models\Post::class;
+    }
+    public function getAll()
+    {
+        $query = $this->model->newQuery();
+        $categories = request()->categories ?? [];
         $hot = null;
         $active = null;
         $name = null;
@@ -61,8 +45,8 @@ class PostRepository implements PostInterface
         $postIds = [];
 
         // Lọc theo tên bài viết
-        if ($request->has('name') && $request->input('name') !== null) {
-            $name = $request->input('name');
+        if (request()->has('name') && request()->input('name') !== null) {
+            $name = request()->input('name');
             $query->where('name', 'like', '%' . $name . '%');
         }
         if (!empty($categories)) {
@@ -76,7 +60,7 @@ class PostRepository implements PostInterface
         }
 
         // Lọc theo bài viết nổi bật
-        switch ($request->fill_action) {
+        switch (request()->fill_action) {
             case 'hot':
                 $query->where('hot', 1);
                 $hot = 1;
@@ -98,7 +82,7 @@ class PostRepository implements PostInterface
                 break;
         }
         // Sắp xếp bài viết theo tiêu chí
-        $typeOrder = $request->order_with;
+        $typeOrder = request()->order_with;
         if (!empty($typeOrder)) {
             switch ($typeOrder) {
                 case 'dateASC':
@@ -127,7 +111,7 @@ class PostRepository implements PostInterface
 
         $data = $data->appends([
             'name' => $name,
-            'typeOrder' => $request->order_with,
+            'typeOrder' => request()->order_with,
             'categories' => $categories,
         ]);
 
@@ -167,30 +151,6 @@ class PostRepository implements PostInterface
             'categories' => $categories
         ];
     }
-
-    public function getListCategoryPost()
-    {
-        $categoryPost = $this->categoryPost
-            ->where('parent_id', 0)
-            ->get();
-
-        return $categoryPost;
-    }
-
-    public function listTags()
-    {
-        $tags = $this->tag->select(
-            'id',
-            'name',
-        )->orderBy('created_at', 'desc')->get();
-        return $tags;
-    }
-
-    public function createPost($data)
-    {
-        return $this->post->create($data);
-    }
-
     public function checkExitsTags($tagName)
     {
         return $this->tag->firstOrCreate(
@@ -214,15 +174,6 @@ class PostRepository implements PostInterface
         ]);
     }
 
-    public function updatePost($data, $id)
-    {
-        $post = $this->post->find($id);
-
-        $post->update($data);
-
-        return $post;
-    }
-
     public function updateAllRecordPostTagByPost($tagId)
     {
         return $this->postTag->where('tag_id', $tagId)
@@ -240,20 +191,13 @@ class PostRepository implements PostInterface
         return $postTag;
     }
 
-    public function getPostById($id)
-    {
-        $postEdit = $this->post->find($id);
-
-        return $postEdit;
-    }
-
     public function categoryOfPost($id)
     {
         $data = [];
 
-        $cate = $this->post->find($id);
+        $post = $this->model->find($id);
 
-        $data = $cate->postCategories->pluck('category.id')->all();
+        $data = $post->postCategories->pluck('category.id')->all();
 
         return $data;
     }
@@ -299,7 +243,7 @@ class PostRepository implements PostInterface
 
     public function delete($id)
     {
-        $post = $this->post->find($id);
+        $post = $this->model->find($id);
 
         if (!$post) {
             return redirect()->route('admin.posts.index')->with([

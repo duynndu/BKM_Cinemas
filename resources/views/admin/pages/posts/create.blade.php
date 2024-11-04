@@ -150,8 +150,7 @@
                                                     </div>
                                                     <div class="change-btn d-flex align-items-center flex-wrap">
                                                         <input type="file" class="form-control d-none uploadImage"
-                                                            id="imageUpload" name="image"
-                                                            accept=".png, .jpg, .jpeg">
+                                                            id="imageUpload" name="avatar" accept=".png, .jpg, .jpeg">
                                                         <label for="imageUpload"
                                                             class="btn btn-sm btn-primary light ms-0">{{ __('language.admin.movies.select') }}</label>
                                                         <div id="avatar_error" class="mt-2"></div>
@@ -180,7 +179,7 @@
                                                             <div class="mb-3 w-25 file-input-wrapper"
                                                                 style="margin-right: 18px; width: 110px !important;">
                                                                 <input type="file" multiple
-                                                                    name="relatedPhotos"
+                                                                    name="relatedPhotos[]"
                                                                     class="form-control relatedPhotos"
                                                                     accept=".png, .jpg, .jpeg">
                                                                 <div class="custom-button"

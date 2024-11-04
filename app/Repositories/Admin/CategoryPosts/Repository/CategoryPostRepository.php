@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Repositories\Admin\CategoryPosts\Repository;
+
 use App\Repositories\Admin\CategoryPosts\Interface\CategoryPostInterface;
 use App\Repositories\Base\BaseRepository;
 
-class CategoryPostRepository extends BaseRepository implements CategoryPostInterface
+    class CategoryPostRepository extends BaseRepository implements CategoryPostInterface
 {
-   
-
     public function getModel()
     {
         return \App\Models\CategoryPost::class;
@@ -16,11 +15,8 @@ class CategoryPostRepository extends BaseRepository implements CategoryPostInter
     public function getAll()
     {
         $query = $this->model->newQuery();
-
-        $parentId = request()->parent_id;
-
+        $parentId = request()->parent_id ?? 0;
         if (!empty(request()->name)) {
-
             $query->where('name', 'like', '%' . request()->name . '%');
 
             $query->where('parent_id', $parentId)->orderBy('order');
@@ -40,7 +36,6 @@ class CategoryPostRepository extends BaseRepository implements CategoryPostInter
         $query->where('parent_id', $parentId)->orderBy('order');
 
         $data = $query->withCount('childs')->paginate(self::PAGINATION);
-
         return $data;
     }
 
@@ -48,7 +43,7 @@ class CategoryPostRepository extends BaseRepository implements CategoryPostInter
     {
         $category = $this->model->find($id);
 
-        if(!$category) {
+        if (!$category) {
             $redirectUrl = request()->parent_id ?
                 route('admin.categoryPosts.index') . '?parent_id=' . request()->parent_id :
                 route('admin.categoryPosts.index');
@@ -57,14 +52,13 @@ class CategoryPostRepository extends BaseRepository implements CategoryPostInter
                 'status_failed' => 'Không tìm thấy danh mục'
             ]);
         }
+        if (!empty($category->childs)) {
+            foreach ($category->childs as $child) {
 
-        foreach ($category->childs as $child) {
-            $this->delete($child->id);
+                $child->delete();
+            }
         }
-
-        $category->delete();
-
-        return true;
+        return  $category->delete();
     }
 
     public function getListCategoryPost()
@@ -92,5 +86,15 @@ class CategoryPostRepository extends BaseRepository implements CategoryPostInter
             ->get();
 
         return $categoryPost;
+    }
+    public function changeOrder($id, $order)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->order = $order;
+            $result->save();
+            return $result;
+        }
+        return false;
     }
 }
