@@ -2,8 +2,8 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Areas\AreaRequest;
-use App\Services\Admin\Areas\AreaService;
-use App\Services\Admin\Cities\CityService;
+use App\Services\Admin\Areas\Interfaces\AreaServiceInterface;
+use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -14,8 +14,8 @@ class AreaController extends Controller
 
 
     public function __construct(
-        AreaService $areaService, 
-        CityService $cityService
+        AreaServiceInterface $areaService,
+        CityServiceInterface $cityService
     )
     {
         $this->areaService = $areaService;
@@ -26,22 +26,23 @@ class AreaController extends Controller
     {
         $areas = $this->areaService->getAll();
         $cities = $this->cityService->getAll();
-        
+
         return view('admin.pages.areas.index', compact('areas', 'cities'));
     }
 
     public function create()
     {
-        
+
         $cities = $this->cityService->getAll();
         return view('admin.pages.areas.create', compact('cities'));
     }
 
     public function store(AreaRequest $request)
     {
+        $data = $request->area;
         DB::beginTransaction();
         try {
-            $this->areaService->create($request);
+            $this->areaService->create($data);
             DB::commit();
             return redirect()->route('admin.areas.index')->with('status_succeed', 'Khu vực đã được tạo thành công.');
         } catch (\Exception $e) {
@@ -70,9 +71,10 @@ class AreaController extends Controller
 
     public function update(AreaRequest $request, $id)
     {
+        $data = $request->area;
         DB::beginTransaction();
         try {
-            $this->areaService->update($id, $request);
+            $this->areaService->update($data, $id);
             DB::commit();
             return redirect()->route('admin.areas.index')->with('status_succeed', 'Khu vực đã được cập nhật thành công.');
         } catch (\Exception $e) {
