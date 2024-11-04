@@ -27,6 +27,8 @@ use App\Repositories\Admin\Systems\Interface\SystemInterface;
 use App\Repositories\Admin\Systems\Repository\SystemRepository;
 use App\Services\Admin\CategoryPosts\Services\CategoryPostService;
 use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
+use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
+use App\Services\Admin\Actors\Services\ActorService;
 use App\Services\Admin\Foods\Interfaces\FoodComboServiceInterface;
 use App\Services\Admin\Foods\Interfaces\FoodServiceInterface;
 use App\Services\Admin\Foods\Interfaces\FoodTypeServiceInterFace;
@@ -57,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(FoodServiceInterface     ::class, FoodService           ::class);
         $this->app->bind(FoodComboServiceInterface::class, FoodComboService      ::class);
         $this->app->bind(ActorInterface           ::class, ActorRepository       ::class);
+        $this->app->bind(ActorServiceInterface    ::class, ActorService          ::class);
         $this->app->bind(CinemaInterface          ::class, CinemaRepository      ::class);
     }
 
