@@ -21,7 +21,7 @@ class CategoryPostService extends BaseService implements CategoryPostServiceInte
         return CategoryPostInterface::class;
     }
 
-    public function store($request)
+    public function create(&$request)
     {
         $data = [
             'name' => $request->name,
@@ -39,11 +39,12 @@ class CategoryPostService extends BaseService implements CategoryPostServiceInte
             $data['avatar'] = $uploadData['path'];
         }
 
+
         $this->repository->create($data);
 
         return true;
     }
-    public function update($request, $id)
+    public function update(&$request, $id)
     {
         $categoryPost = $this->find($id);
 
@@ -79,7 +80,7 @@ class CategoryPostService extends BaseService implements CategoryPostServiceInte
             $data['avatar'] = $imageUploadData['path'];
         }
 
-        return  $this->repository->update($id,$data);
+        return  $this->repository->update($id, $data);
     }
     public function getListCategoryPostEdit($id)
     {
@@ -113,10 +114,11 @@ class CategoryPostService extends BaseService implements CategoryPostServiceInte
     }
     public function deleteMultipleChecked($request)
     {
-        if (count($request->selectedIds) < 0) {
-            return false;
+        if (count($request->selectedIds) > 0) {
+            foreach ($request->selectedIds as $id) {
+                $this->repository->delete($id);
+            }
+            return true;
         }
-        $this->repository->deleteMultiple($request->selectedIds);
-        return true;
     }
 }

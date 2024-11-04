@@ -1,49 +1,30 @@
 <?php
 
-namespace App\Services\Admin\Posts;
+namespace App\Services\Admin\Posts\Services;
 
-use App\Models\Image;
-use App\Models\Post;
-use App\Models\PostCategory;
 use App\Models\PostTag;
-use App\Models\Tag;
-use App\Repositories\Admin\Posts\Repository\PostRepository;
+use App\Repositories\Admin\Posts\Interface\PostInterface;
+use App\Services\Admin\Posts\Interfaces\PostServiceInterface;
+use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 
-class PostService
+class PostService extends BaseService implements PostServiceInterface
 {
     use StorageImageTrait;
-
-    protected $post;
-    protected $postCategory;
-
-    protected $Images;
-
-    protected $tags;
     protected $postTag;
-    protected $postRepository;
-    const PAGINATION = 10;
-
     public function __construct(
-        Post                $post,
-        PostCategory        $postCategory,
-        Image               $Images,
-        Tag                 $tags,
         PostTag             $postTag,
-        PostRepository      $postRepository
-    )
-    {
-        $this->post = $post;
-        $this->postCategory = $postCategory;
-        $this->Images = $Images;
-        $this->tags = $tags;
+    ) {
         $this->postTag = $postTag;
-        $this->postRepository = $postRepository;
+        parent::__construct();
     }
 
-
-    public function store($request)
+    public function getRepository()
+    {
+        return PostInterface::class;
+    }
+    public function create(&$request)
     {
         $dataPost = [
             'name' => $request->name,
@@ -61,7 +42,7 @@ class PostService
             $dataPost['avatar'] = $uploadData['path'];
         }
 
-        $post = $this->postRepository->createPost($dataPost);
+        $post = $this->repository->create($dataPost);
 
         if ($post) {
             foreach ($request->parent_id as $category) {
@@ -86,7 +67,7 @@ class PostService
 
         if (isset($request->tags) && count($request->tags) > 0) {
             foreach ($request->tags as $tagName) {
-                $tag = $this->postRepository->checkExitsTags($tagName);
+                $tag = $this->repository->checkExitsTags($tagName);
                 $tagIds[] = $tag->id;
             }
         }
@@ -105,25 +86,19 @@ class PostService
         return true;
     }
 
-
-    public function getPostById($id)
-    {
-        return $this->postRepository->getPostById($id);
-    }
-
     public function categoryOfPost($id)
     {
-        return $this->postRepository->categoryOfPost($id);
+        return $this->repository->categoryOfPost($id);
     }
 
     public function tagsSelected($id)
     {
-        return $this->postRepository->tagsSelected($id);
+        return $this->repository->tagsSelected($id);
     }
 
-    public function update($request, $id)
+    public function update(&$request, $id)
     {
-        $post = $this->post->findOrFail($id);
+        $post = $this->find($id);
 
         $uploadAvatar = $this->storageTraitUpload($request, 'avatar', 'public/posts');
 
@@ -149,15 +124,14 @@ class PostService
 
             if (!in_array($existingCategoryId, $request->parent_id)) {
                 // xóa mối quan hệ giữa sản phẩm và các danh mục (categories) mà hiện tại
-                $this->postRepository->deleteCategoryPostByPost($post, $existingCategoryId);
+                $this->repository->deleteCategoryPostByPost($post, $existingCategoryId);
             }
         }
 
         // Thêm hoặc cập nhật các danh mục từ request
         foreach ($request->parent_id as $category) {
-
             // Kiểm tra nếu đã có bản ghi với category_id này tồn tại
-            $existingPostCategory = $this->postRepository->checkExitsCategoryPost($post, $category);
+            $existingPostCategory = $this->repository->checkExitsCategoryPost($post, $category);
 
             if ($existingPostCategory) {
                 // Nếu tồn tại và đã bị xóa, khôi phục nó
@@ -166,7 +140,7 @@ class PostService
                 }
             } else {
                 // Nếu không tồn tại, tạo mới
-                $this->postRepository->createCategoryPost($post, [
+                $this->repository->createCategoryPost($post, [
                     'category_id' => $category
                 ]);
             }
@@ -174,14 +148,13 @@ class PostService
 
         // Handle related photos
         $relatedPhotos = [];
-
         if ($request->hasFile('relatedPhotos')) {
             $relatedPhotos = $this->storageTraitUploadMultiple($request, 'relatedPhotos', 'public/postRelated');
         }
 
         // Save related photos
         foreach ($relatedPhotos as $photo) {
-            $this->postRepository->createRelatedPhotoPost($post, [
+            $this->repository->createRelatedPhotoPost($post, [
                 'path' => $photo['path']
             ]);
         }
@@ -203,7 +176,7 @@ class PostService
 
         $tagData = [];
         foreach ($newTags as $tagName) {
-            $tag = $this->postRepository->checkExitsTags($tagName);
+            $tag = $this->repository->checkExitsTags($tagName);
             $tagData[] = $tag->id; // Thêm ID của thẻ mới vào mảng tagData
         }
 
@@ -231,24 +204,23 @@ class PostService
 
         foreach ($tagsDeletedSoft as $tag) {
             // Cập nhật (Khôi phục) lại tất cả các bản ghi bị xóa mềm
-            $this->postRepository->updateAllRecordPostTagByPost($tag->tag_id);
+            $this->repository->updateAllRecordPostTagByPost($tag->tag_id);
         }
 
         foreach ($tagIds as $tagId) {
             if (!$post->tags->contains($tagId)) {
                 // có tác dụng gắn (attach) một thẻ (tag) vào bài viết nếu thẻ đó chưa được liên kết với bài viết.
-                $this->postRepository->attachTagIfNotExists($post, $tagId);
+                $this->repository->attachTagIfNotExists($post, $tagId);
             }
         }
-
-        $this->postRepository->updatePost($dataPost, $id);
+        $this->repository->update($id, $dataPost);
 
         // dịch tags
         $tagsData = [];
 
         if (isset($request->tags) && count($request->tags) > 0) {
             foreach ($request->tags as $tagName) {
-                $tag = $this->postRepository->checkExitsTags($tagName);
+                $tag = $this->repository->checkExitsTags($tagName);
 
                 $tagIds[] = $tag->id;
 
@@ -263,20 +235,23 @@ class PostService
 
     public function delete($id)
     {
-        return $this->postRepository->delete($id);
+        return $this->repository->delete($id);
     }
 
     public function changeOrder($request)
     {
-        $item = $this->post->findOrFail($request->id);
-        $item->order = $request->order;
-        $item->save();
+        $item = $this->repository->find($request->id);
+
+        $item->update([
+            'order' => $request->order
+        ]);
+
         return $item;
     }
 
     public function changeHot($request)
     {
-        $item = $this->post->findOrFail($request->id);
+        $item = $this->repository->find($request->id);
         $item->hot = $item->hot == 1 ? 0 : 1;
         $item->save();
         return $item;
@@ -284,7 +259,7 @@ class PostService
 
     public function changeActive($request)
     {
-        $item = $this->post->findOrFail($request->id);
+        $item = $this->repository->find($request->id);
         $item->active = $item->active == 1 ? 0 : 1;
         $item->save();
         return $item;
@@ -292,7 +267,7 @@ class PostService
 
     public function destroyImage($id)
     {
-        $image = $this->postRepository->getImageRelatedPhotoById($id);
+        $image = $this->repository->getImageRelatedPhotoById($id);
 
         if (!$image) {
             return response()->json([
@@ -310,30 +285,13 @@ class PostService
         return true;
     }
 
-    public function getListCategoryPost()
-    {
-        return $this->postRepository->getListCategoryPost();
-    }
-
-    public function listTags()
-    {
-        return $this->postRepository->listTags();
-    }
-
-    public function allFillter($request)
-    {
-        return $this->postRepository->allFillter($request);
-    }
     public function deleteMultipleChecked($request)
     {
         if (count($request->selectedIds) > 0) {
-
             foreach ($request->selectedIds as $id) {
-                $this->postRepository->delete($id);
+                $this->repository->delete($id);
             }
-
             return true;
         }
     }
-
 }

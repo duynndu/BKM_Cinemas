@@ -23,8 +23,12 @@ use App\Repositories\Admin\Cinemas\Repository\CinemaRepository;
 use App\Repositories\Admin\Foods\Repository\FoodComboRepository;
 use App\Repositories\Admin\Foods\Repository\FoodRepository;
 use App\Repositories\Admin\Foods\Repository\FoodTypeRepository;
+use App\Repositories\Admin\Genres\Interface\GenreInterface;
+use App\Repositories\Admin\Genres\Repository\GenreRepository;
 use App\Repositories\Admin\Systems\Interface\SystemInterface;
 use App\Repositories\Admin\Systems\Repository\SystemRepository;
+use App\Repositories\Admin\Tags\Interface\TagInterface;
+use App\Repositories\Admin\Tags\Repository\TagRepository;
 use App\Services\Admin\CategoryPosts\Services\CategoryPostService;
 use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
 use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
@@ -35,6 +39,12 @@ use App\Services\Admin\Foods\Interfaces\FoodTypeServiceInterFace;
 use App\Services\Admin\Foods\Services\FoodComboService;
 use App\Services\Admin\Foods\Services\FoodService;
 use App\Services\Admin\Foods\Services\FoodTypeService;
+use App\Services\Admin\Genres\Services\GenreService;
+use App\Services\Admin\Genres\Interfaces\GenreServiceInterface;
+use App\Services\Admin\Posts\Interfaces\PostServiceInterface;
+use App\Services\Admin\Posts\Services\PostService;
+use App\Services\Admin\Tags\Interfaces\TagServiceInterface;
+use App\Services\Admin\Tags\Services\TagService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -45,22 +55,27 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(CategoryPostInterface    ::class, CategoryPostRepository::class);
-        $this->app->bind(CategoryPostServiceInterface    ::class, CategoryPostService::class);
-        $this->app->bind(PostInterface            ::class, PostRepository        ::class);
-        $this->app->bind(CityInterface            ::class, CityRepository        ::class);
-        $this->app->bind(AreaInterface            ::class, AreaRepository        ::class);
-        $this->app->bind(PaymentInterface         ::class, PaymentRepository     ::class);
-        $this->app->bind(SystemInterface          ::class, SystemRepository      ::class);
-        $this->app->bind(FoodTypeInterface        ::class, FoodTypeRepository    ::class);
-        $this->app->bind(FoodInterface            ::class, FoodRepository        ::class);
-        $this->app->bind(FoodComboInterface       ::class, FoodComboRepository   ::class);
-        $this->app->bind(FoodTypeServiceInterFace ::class, FoodTypeService       ::class);
-        $this->app->bind(FoodServiceInterface     ::class, FoodService           ::class);
-        $this->app->bind(FoodComboServiceInterface::class, FoodComboService      ::class);
-        $this->app->bind(ActorInterface           ::class, ActorRepository       ::class);
-        $this->app->bind(ActorServiceInterface    ::class, ActorService          ::class);
-        $this->app->bind(CinemaInterface          ::class, CinemaRepository      ::class);
+        $this->app->bind(CategoryPostInterface::class, CategoryPostRepository::class);
+        $this->app->bind(CategoryPostServiceInterface::class, CategoryPostService::class);
+        $this->app->bind(TagInterface::class, TagRepository::class);
+        $this->app->bind(TagServiceInterface::class, TagService::class);
+        $this->app->bind(GenreInterface::class, GenreRepository::class);
+        $this->app->bind(GenreServiceInterface::class, GenreService::class);
+        $this->app->bind(PostInterface::class, PostRepository::class);
+        $this->app->bind(PostServiceInterface::class, PostService::class);
+        $this->app->bind(CityInterface::class, CityRepository::class);
+        $this->app->bind(AreaInterface::class, AreaRepository::class);
+        $this->app->bind(PaymentInterface::class, PaymentRepository::class);
+        $this->app->bind(SystemInterface::class, SystemRepository::class);
+        $this->app->bind(FoodTypeInterface::class, FoodTypeRepository::class);
+        $this->app->bind(FoodInterface::class, FoodRepository::class);
+        $this->app->bind(FoodComboInterface::class, FoodComboRepository::class);
+        $this->app->bind(FoodTypeServiceInterFace::class, FoodTypeService::class);
+        $this->app->bind(FoodServiceInterface::class, FoodService::class);
+        $this->app->bind(FoodComboServiceInterface::class, FoodComboService::class);
+        $this->app->bind(ActorInterface::class, ActorRepository::class);
+        $this->app->bind(ActorServiceInterface::class, ActorService::class);
+        $this->app->bind(CinemaInterface::class, CinemaRepository::class);
     }
 
     /**

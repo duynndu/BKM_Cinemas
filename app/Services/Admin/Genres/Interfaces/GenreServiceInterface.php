@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Services\Admin\CategoryPosts\Interfaces;
+namespace App\Services\Admin\Genres\Interfaces;
 
 use App\Services\Base\BaseServiceInterface;
 
-interface CategoryPostServiceInterface extends BaseServiceInterface
+interface GenreServiceInterface extends BaseServiceInterface
 {
     public function create(&$request);
     public function update(&$request, $id);
-    public function getListCategoryPostEdit($id);
+    public function getListGenreEdit($id);
+    public function delete($id);
     public function changeOrder($request);
-    public function changeActive($request);
     public function changePosition($request);
     public function deleteMultipleChecked($request);
-    
-    
 }
