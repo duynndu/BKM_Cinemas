@@ -29,7 +29,7 @@ function addActor() {
             <label
                 class="form-label mb-2">Vai trò:</label>
             <input type="text" value=""
-                value="" name="actors[${index}][role]" class="form-control">
+                value="" name="role[${index}]" class="form-control">
         </div>
         <div class="col-1 mt-4">
             <a href="#" class="btn btn-danger" onclick="deleteActor(event)">

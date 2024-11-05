@@ -3,8 +3,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cinemas\CinemaRequest;
 use App\Models\Cinema;
-use App\Services\Admin\Areas\AreaService;
-use App\Services\Admin\Cinemas\CinemaService;
+use App\Services\Admin\Areas\Interfaces\AreaServiceInterface;
+use App\Services\Admin\Cinemas\Interfaces\CinemaServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +17,8 @@ class CinemaController extends Controller
     protected $cinemaService;
     protected $areaService;
     public function __construct(
-        CinemaService $cinemaService,
-        AreaService $areaService,
+        CinemaServiceInterface $cinemaService,
+        AreaServiceInterface $areaService,
     ) {
         $this->cinemaService = $cinemaService;
         $this->areaService = $areaService;
@@ -51,7 +51,7 @@ class CinemaController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->cinemaService->store($data);
+            $this->cinemaService->create($data);
 
             DB::commit();
 

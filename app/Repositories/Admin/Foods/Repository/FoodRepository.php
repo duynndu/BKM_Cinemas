@@ -56,7 +56,7 @@ class FoodRepository extends BaseRepository implements FoodInterface
         return true;
     }
 
-    protected function filterByName($query)
+    private function filterByName($query)
     {
         if (!empty(request()->name)) {
             return $query->where('name', 'like', '%' . request()->name . '%');
@@ -64,7 +64,7 @@ class FoodRepository extends BaseRepository implements FoodInterface
         return $query;
     }
 
-    protected function filterByStatus($query)
+    private function filterByStatus($query)
     {
         if (!empty(request()->fill_action)) {
             switch (request()->fill_action) {
@@ -77,7 +77,7 @@ class FoodRepository extends BaseRepository implements FoodInterface
         return $query;
     }
 
-    protected function applyOrdering($query)
+    private function applyOrdering($query)
     {
         if (!empty(request()->order_with)) {
             switch (request()->order_with) {
@@ -94,7 +94,7 @@ class FoodRepository extends BaseRepository implements FoodInterface
         return $query->orderBy('order');
     }
 
-    protected function filterByFoodTypeId($query)
+    private function filterByFoodTypeId($query)
     {
         if (!empty(request()->foodTypeId)) {
             $foodTypeId = request()->foodTypeId;

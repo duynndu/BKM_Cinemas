@@ -47,7 +47,7 @@ $('#movie_actors').on('change', function() {
                     <label>Vai trò của ${actorName}: </label>
                     <input class="form-control" type="text" name="movie_actors[${index}][role]" value="">
                     <input class="form-control" type="text" hidden name="movie_actors[${index}][actor_id]" value="${actorId}">
-                    <input class="form-control" type="text" hidden name="movie_actors[${index}][name]" value="${actorName}">
+                    <input class="form-control" type="text" hidden name="actors_name[${index}]" value="${actorName}">
                 </div>
             `;
             $('#roleBoxes').append(roleBox);
