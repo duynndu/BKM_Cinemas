@@ -747,6 +747,7 @@ return [
                 'frontend' => 'Bộ phận giao diện',
                 'backend' => 'Bộ phận kỹ thuật',
                 'management' => 'Quản trị',
+                'manage' => 'Admin quản lý rạp',
                 'administrative' => 'Hành chính',
                 'staff' => 'Nhân viên',
                 'member' => 'Thành viên đăng ký',

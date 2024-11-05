@@ -2,8 +2,8 @@
     <div class="container">
         <div class="logo">
             <h1>
-                <strong>Awesome Cinema - Rạp chiếu phim 3D công nghệ hàng đầu.</strong>
-                <a href="{{ url("/") }}"><img style="max-width: 100%" src="{{ asset('images/logo.png') }}"
+                <strong>BKM Cinemas - Rạp chiếu phim 3D công nghệ hàng đầu.</strong>
+                <a href="{{ route('home') }}"><img style="max-width: 100%" src="{{ asset('images/logo.png') }}"
                         alt="touchcinema" /></a>
             </h1>
         </div>
@@ -24,17 +24,98 @@
                             </div>
                         </form>
                     </div>
+
                     <div class="col-md-4 col-sm-5 account">
-                        <a href="login.html" class="login" style="background-image: url({{ asset('movie/images/login-bgd8e6.png') }});">
-                            <img src="{{ asset('movie/images/icons/so-da.png') }}" alt="Đăng nhập"
-                                class="img-responsive">
-                            <span>Đăng nhập</span>
-                        </a>
-                        <a href="register.html" class="register" style="background-image: url({{ asset('movie/images/reg-bg094c.png') }});">
-                            <img src="{{ asset('movie/images/icons/bong-ngo.png') }}" alt="Đăng kí"
-                                class="img-responsive">
-                            <span>Đăng kí <b class="hh">thành viên</b></span>
-                        </a>
+                        @guest
+                            <a href="{{ route('account') }}" class="login"
+                                style="background-image: url({{ asset('movie/images/login-bgd8e6.png') }});">
+                                <img src="{{ asset('movie/images/icons/so-da.png') }}" alt="Đăng nhập"
+                                    class="img-responsive">
+                                <span>Đăng nhập</span>
+                            </a>
+                            <a href="{{ route('account') }}" class="register"
+                                style="background-image: url({{ asset('movie/images/reg-bg094c.png') }});">
+                                <img src="{{ asset('movie/images/icons/bong-ngo.png') }}" alt="Đăng kí"
+                                    class="img-responsive">
+                                <span>Đăng kí <b class="hh">thành viên</b></span>
+                            </a>
+                        @else
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    @php
+                                        $user = Auth::user();
+                                        $avatarUrl = $user->image ?? ''; 
+                                        $firstLetter = strtoupper(substr($user->last_name ?? $user->first_name, 0, 1));
+                                        $colors = ['#FF5733', '#3374ff', '#3357FF', '#FF33A6', '#4ec1bc', '#7c8484'];
+                                        $backgroundColor = $colors[$user->id % count($colors)];
+                                    @endphp
+
+                                    <a class="account" href="">
+                                        @if ($avatarUrl)
+                                            <img class="avatar" src="{{ $avatarUrl }}"
+                                                alt="{{ $user->first_name . ' ' . $user->last_name }}">
+                                        @else
+                                            <div class="avatar-placeholder"
+                                                style="background-color: {{ $backgroundColor }};">
+                                                {{ !empty($firstLetter) ? $firstLetter : strtoupper(substr($user->name, 0, 1)) }}
+                                            </div>
+                                        @endif
+                                        <span class="name">
+                                            @auth
+                                                @if (!empty($user->first_name) && !empty($user->last_name))
+                                                    {{ $user->first_name . ' ' . $user->last_name }}
+                                                @else
+                                                    {{ $user->name }}
+                                                @endif
+                                            @endauth
+                                            <small style="margin-top: 5px">
+                                                @if ($user->isAdmin())
+                                                    Quản trị viên
+                                                @elseif($user->isManage())
+                                                    Quản lý rạp
+                                                @elseif($user->isStaff())
+                                                    Nhân viên rạp
+                                                @else
+                                                    Thành viên
+                                                @endif
+                                            </small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" type="button" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ route('account') }}">Thông tin tài khoản</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://touchcinema.com/account/transaction">Lịch sử mua vé</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://touchcinema.com/account/profile">Đổi thông tin</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://touchcinema.com/account/password">Đổi mật khẩu</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">Đổi thưởng</a>
+                                            </li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li>
+                                                <form action="{{ route('logout') }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit">Đăng xuất</button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        @endguest
                     </div>
                 </div>
             </div>

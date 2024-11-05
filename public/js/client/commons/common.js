@@ -1,7 +1,5 @@
 $(function() {
-
     window.dataLayer = window.dataLayer || [];
-
     function gtag() {
         dataLayer.push(arguments);
     }
@@ -88,4 +86,51 @@ $(function() {
             version: 'v12.0'
         });
     };
+
+    $('.select2').select2({
+        placeholder: "Chọn tỉnh/thành phố", // Placeholder cho dropdown
+        allowClear: true, // Cho phép xóa lựa chọn
+        width: '100%',
+    });
+
+    // Khi người dùng nhấn vào liên kết trong phần Đăng nhập
+    $('.attr-link a').on('click', function (event) {
+        event.preventDefault();
+
+        // Lấy ID của tab được nhấn
+        var targetTab = $(this).attr('href');
+
+        // Xóa class 'active' khỏi tất cả các tab và thẻ `li`
+        $('.tab-pane, .menu li').removeClass('active');
+
+        // Thêm class 'active' vào tab và thẻ `li` tương ứng
+        $(targetTab).addClass('active in');
+        $('.menu li').find('a[href="' + targetTab + '"]').parent().addClass('active');
+    });
+
+    $('#toggle-password-icon').on('click', function () {
+        // Toggle the type attribute
+        const passwordInput = $('input[name="password"]');
+        const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+        passwordInput.attr('type', type);
+
+        // Toggle the eye icon
+        $(this).toggleClass('fa-eye fa-eye-slash');
+    });
+
+    $('#toggle-confirm-password-icon').on('click', function () {
+        // Toggle the type attribute
+        const confirmPasswordInput = $('#password-confirm');
+        const type = confirmPasswordInput.attr('type') === 'password' ? 'text' : 'password';
+        confirmPasswordInput.attr('type', type);
+
+        // Toggle the eye icon
+        $(this).toggleClass('fa-eye fa-eye-slash');
+    });
+
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy', // Định dạng ngày
+        autoclose: true,      // Tự động đóng khi chọn ngày
+        todayHighlight: true   // Nổi bật ngày hôm nay
+    });
 })

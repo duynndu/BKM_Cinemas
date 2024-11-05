@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Client;
 
-use Faker\Provider\vi_VN\Address;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,16 +10,25 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MyEmail extends Mailable
+class RegisterMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(public $options)
+    public $user;
+
+    public function __construct(User $user)
     {
-        //
+        $this->user = $user;
+    }
+
+    public function build()
+    {
+        return $this->subject('BKM Cinemas - Rạp chiếu phim 3D công nghệ hàng đầu.')
+            ->view('client.mails.register-email')
+            ->attach(public_path('images/logo.png'), [
+                'as' => 'logo.png',
+                'mime' => 'image/png',
+            ]);; 
     }
 
     /**
@@ -28,8 +37,7 @@ class MyEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: 'duynnz2812@gmail',
-            subject: 'Đặt hàng thành công',
+            subject: 'Welcome, ' . $this->user->first_name . ' ' . $this->user->last_name . '!',
         );
     }
 
@@ -39,10 +47,7 @@ class MyEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.test-email',
-            with: [
-                'options' => $this->options,
-            ],
+            view: 'client.mails.register-email',
         );
     }
 
