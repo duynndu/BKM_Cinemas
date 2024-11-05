@@ -1,3 +1,4 @@
+import { ISeatType } from "./seat-type.interface";
 import { ISeat } from "./seat.interface";
 
 export interface IRoom {
@@ -8,4 +9,6 @@ export interface IRoom {
   col_count: number;
   row_count: number;
   seats: ISeat[] | null;
+  seat_types?: ISeatType[];
+
 }

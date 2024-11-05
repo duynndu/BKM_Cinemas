@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Constants\SeatType as ConstantsSeatType;
 use App\Http\Controllers\Controller;
+use App\Models\Room;
+use App\Models\SeatType;
 use App\Models\Showtime;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ShowtimeController extends Controller
 {
@@ -36,6 +40,26 @@ class ShowtimeController extends Controller
         return response()->json($showtime);
     }
 
+    public function getShowtimeDetailById(Showtime $showtime)
+    {
+        $seats = DB::select("
+        SELECT seats.*, IF(seats.type = ?, 'unavailable', IF(bs.booking_id is null, 'available', 'occupied')) as status
+        FROM seats
+        LEFT JOIN booking_seats as bs ON seats.id = bs.seat_id
+        WHERE seats.room_id = ? AND seats.deleted_at IS NULL
+    ", [ConstantsSeatType::EMPTY_SEAT, $showtime->room_id]);
+        $seatTypes = collect($seats)
+        ->filter(fn($seat) => $seat->type !== ConstantsSeatType::EMPTY_SEAT)
+        ->map(fn ($seat) => $seat->type)->unique()->values()->toArray();
+        $seatTypes = SeatType::whereIn('code', $seatTypes)->get();
+        $room = Room::find($showtime->room_id);
+        $room->seats = $seats;
+        $room->seat_types = $seatTypes;
+        $showtime->room = $room;
+        $showtime->load('movie');
+        return response()->json($showtime);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -61,7 +85,13 @@ class ShowtimeController extends Controller
         $request->validate([
             'start_date' => 'required|date',
             'room_id' => 'required|integer|exists:rooms,id',
+            // 'cinema_id' => 'nullable|integer|exists:cinemas,id',
+            'cinema_id' => 'nullable|integer',
         ]);
+        if(!$request->cinema_id){
+            // $request->merge(['cinema_id' => auth()->user()->cinema_id]);
+            $request->merge(['cinema_id' => 1]);
+        }
 
         $startDate = $request->start_date;
         $showtimes = Showtime::whereDate('start_time', '=', Carbon::parse($startDate)->toDateString())
