@@ -22,7 +22,7 @@
                 </div>
                 <form method="post" action="{{ route('admin.movies.store') }}" class="product-vali"
                     enctype="multipart/form-data">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}" autocomplete="off">
+                    @csrf
                     <div class="custom-tab-1">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
@@ -196,14 +196,14 @@
                                                 </div>
                                                 <div class="cm-content-body publish-content form excerpt">
                                                     <div class="card-body">
-                                                        <select multiple class="form-control" name="genre_id[]">
+                                                        <select multiple class="form-control" name="genre_id[][genre_id]">
                                                             <option value=" " disabled>
                                                                 --{{ __('language.admin.movies.select') }}--
                                                             </option>
                                                             @if ($listGenre)
                                                                 @foreach ($listGenre as $genre)
                                                                     <option value="{{ $genre->id }}"
-                                                                        @selected(in_array($genre->id, old('genre_id', [])))>
+                                                                        @selected(in_array($genre->id, array_column(old('genre_id', []), 'genre_id')))>
                                                                         {{ $genre->name }}
                                                                     </option>
                                                                     @if (count($genre->childrenRecursive) > 0)
@@ -371,10 +371,10 @@
                                                     @if (!empty(old('movie_actors')))
                                                         @foreach (old('movie_actors') as $index => $item)
                                                             <div class="role-box" data-actor-id="{{ $item['actor_id'] }}" data-index="{{ $index }}">
-                                                                <label>Vai trò của {{ $item['name'] }}: </label>
+                                                                <label>Vai trò của {{ old('actors_name')[$index] }}: </label>
                                                                 <input class="form-control" type="text" name="movie_actors[{{ $index }}][role]" value="{{ $item['role'] }}">
                                                                 <input class="form-control" type="text" hidden name="movie_actors[{{ $index }}][actor_id]" value="{{ $item['actor_id'] }}">
-                                                                <input class="form-control" type="text" hidden name="movie_actors[{{ $index }}][name]" value="{{ $item['name'] }}">
+                                                                <input class="form-control" type="text" hidden name="actors_name[{{ $index }}]" value="{{ old('actors_name')[$index] }}">
                                                             </div>
                                                         @endforeach
                                                     @endif
@@ -413,8 +413,8 @@
                                                                 <div class="col-3">
                                                                     <label
                                                                         class="form-label mb-2">Vai trò:</label>
-                                                                    <input type="text" value="{{ $actor['role'] }}"
-                                                                        value="" name="actors[{{ $index }}][role]" class="form-control">
+                                                                    <input type="text" value="{{ old('role')[$index] }}"
+                                                                        name="role[{{ $index }}]" class="form-control">
                                                                 </div>
                                                                 <div class="col-1 mt-4">
                                                                     <a href="#" class="btn btn-danger" onclick="deleteActor(event)">

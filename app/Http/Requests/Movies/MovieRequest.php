@@ -55,9 +55,7 @@ class MovieRequest extends FormRequest
             "genre_id" => "required",
             "movie.active" => "nullable|numeric",
             'movie.release_date'=>'required',
-            'movie.premiere_date'=>'required',
-
-
+            'movie.premiere_date'=>'required|date|after_or_equal:today',
         ];
     }
 
@@ -87,6 +85,7 @@ class MovieRequest extends FormRequest
             "movie.active.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.active')]),
             "movie.release_date.required" => __('validation.required', ['attribute' => __('language.admin.movies.release_date')]),
             "movie.premiere_date.required" => __('validation.required', ['attribute' => __('language.admin.movies.premiere_date')]),
+            'movie.premiere_date.after_or_equal' => 'Ngày công chiếu phải lớn hơn hoặc bằng ngày hiện tại!',
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cities\CityRequest;
-use App\Services\Admin\Cities\Services\CityService;
+use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -12,8 +12,10 @@ class CityController extends Controller
 {
     protected $cityService;
 
-    public function __construct(CityService $cityService)
-    {
+
+    public function __construct(
+        CityServiceInterface $cityService
+    ){
         $this->cityService =  $cityService;
     }
 
