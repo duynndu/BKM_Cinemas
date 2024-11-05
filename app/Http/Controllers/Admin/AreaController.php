@@ -16,8 +16,7 @@ class AreaController extends Controller
     public function __construct(
         AreaServiceInterface $areaService,
         CityServiceInterface $cityService
-    )
-    {
+    ){
         $this->areaService = $areaService;
         $this->cityService = $cityService;
     }

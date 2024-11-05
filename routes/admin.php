@@ -464,7 +464,7 @@ Route::prefix('admin')->middleware(['web'])
                     Route::get('/{id}/edit', 'edit')
                         ->name('edit');
 
-                    Route::post('/{id}/update', 'update')
+                    Route::put('/{id}/update', 'update')
                         ->name('update');
 
                     Route::delete('/{id}/delete', 'delete')

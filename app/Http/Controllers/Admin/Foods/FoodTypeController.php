@@ -42,10 +42,11 @@ class FoodTypeController extends Controller
      */
     public function store(FoodTypeRequest $request)
     {
+        $data = $request->foodType;
         try {
             DB::beginTransaction();
 
-            $this->foodTypeService->create($request->foodType);
+            $this->foodTypeService->create($data);
 
             DB::commit();
 
@@ -85,9 +86,10 @@ class FoodTypeController extends Controller
      */
     public function update(FoodTypeRequest $request, string $id)
     {
+        $data = $request->foodType;
         try {
             DB::beginTransaction();
-            if (!$this->foodTypeService->update($request->foodType, $id)) {
+            if (!$this->foodTypeService->update($data, $id)) {
                 return redirect()->route('admin.food-types.index')->with(['status_failed' => 'Không tìm thấy!']);
             }
 
