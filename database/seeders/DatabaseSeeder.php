@@ -149,6 +149,8 @@ class DatabaseSeeder extends Seeder
             'active' => true
         ]);
 
+        
+
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'demo@gmail.com',

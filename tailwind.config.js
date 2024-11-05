@@ -40,6 +40,9 @@ export default {
       pattern: /bg-.*/,
     },
     {
+      pattern: /border-.*/,
+    },
+    {
       pattern: /text-.*/,
     },
   ],

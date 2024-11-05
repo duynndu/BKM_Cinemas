@@ -8341,12 +8341,13 @@ label:hover:before {
     box-shadow: unset;
 }
 
-#main-left #app-content #content #wrap-datve .note .seat span {
+#main-left #app-content #content #wrap-datve .note .seat .list-style {
     height: 25px;
     width: 25px;
     display: inline-block;
     vertical-align: middle;
-    border-radius: 5px
+    border-radius: 5px;
+    border: 1px solid;
 }
 
 #main-left #app-content #content #wrap-datve .note .seat:last-child {

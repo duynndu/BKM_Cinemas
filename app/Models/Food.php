@@ -21,4 +21,8 @@ class Food extends Model
     public function items(){
         return $this->hasMany(FoodComboItem::class, 'food_id', 'id');
     }
+
+    public function combos(){
+        return $this->belongsToMany(FoodCombo::class, 'food_combo_items', 'food_id', 'food_combo_id');
+    }
 }

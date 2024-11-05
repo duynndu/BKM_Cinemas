@@ -7,31 +7,30 @@ import { ISeat, SEAT_STATUS_VALUES } from "@/types/seat.interface";
 
 $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, seat_types: ISeatType[] }, onChange?: (data: any) => any) {
   let { seats, col_count, row_count, base_price = 0, seat_types = [] } = seatLayout;
-  if (!seats || seats.length === 0) {
-    seats = [];
-    for (let row = 0; row < row_count; row++) {
-      for (let col = 0; col < col_count; col++) {
-        seats.push({
-          id: (row + 1) * col,
-          type: distributeByPct([
-            { string: SEAT_TYPE.STANDARD_SEAT, percent: 80 },
-            { string: SEAT_TYPE.VIP_SEAT, percent: 10 },
-          ]),
-          slot: 1,
-          visible: true,
-          seat_number: `${String.fromCharCode(65 + row)}${(col + 1).toString().padStart(2, '0')}`,
-          merged_seats: [],
-          order: row * col_count + col,
-          price: 0,
-          status: distributeByPct([
-            { string: SEAT_STATUS.AVAILABLE, percent: 90 },
-            { string: SEAT_STATUS.RESERVED, percent: 5 },
-            { string: SEAT_STATUS.OCCUPIED, percent: 5 },
-          ]) as SEAT_STATUS_VALUES,
-        });
-      }
-    }
-  }
+  // if (!seats || seats.length === 0) {
+  //   seats = [];
+  //   for (let row = 0; row < row_count; row++) {
+  //     for (let col = 0; col < col_count; col++) {
+  //       seats.push({
+  //         id: (row + 1) * col,
+  //         type: distributeByPct([
+  //           { string: SEAT_TYPE.STANDARD_SEAT, percent: 80 },
+  //           { string: SEAT_TYPE.VIP_SEAT, percent: 10 },
+  //         ]),
+  //         slot: 1,
+  //         visible: true,
+  //         seat_number: `${String.fromCharCode(65 + row)}${(col + 1).toString().padStart(2, '0')}`,
+  //         merged_seats: [],
+  //         order: row * col_count + col,
+  //         price: 0,
+  //         status: distributeByPct([
+  //           { string: SEAT_STATUS.AVAILABLE, percent: 90 },
+  //           { string: SEAT_STATUS.OCCUPIED, percent: 5 },
+  //         ]) as SEAT_STATUS_VALUES,
+  //       });
+  //     }
+  //   }
+  // }
   let seatSelected: ISeat[] = [];
 
   const seatTypes = seat_types;
@@ -44,7 +43,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
   });
   this.empty();
 
-  generateSeats(seats);
+  generateSeats(seats ?? []);
   addEventListeners();
   this.append(rowLabels, seatTable, rowLabels.clone());
 
@@ -62,17 +61,9 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
     }
 
     seats.forEach((seat, index) => {
-      let calculatorPrice = 0;
-      if (base_price !== 0) {
-        calculatorPrice = (parseFloat(base_price) + seatTypes[seat.type].bonus_price) * seat.slot
-      } else if (seat?.price) {
-        calculatorPrice = seat.price
-      } else {
-        calculatorPrice = seatTypes[seat.type].bonus_price * seat.slot
-      }
       seatTable.append($('<div>', {
         style: `${seat.status !== SEAT_STATUS.AVAILABLE ? 'cursor: not-allowed' : ''}`,
-        class: `tw-cursor-pointer seat seat-lg tw-col-span-${seat.slot} tw-bg-${seat.type} ${!seat.visible ? 'tw-hidden' : 'tw-visible'} ${seat.status}`,
+        class: `tw-cursor-pointer seat seat-lg tw-col-span-${seat.slot} tw-border-solid tw-text-white tw-border-2 tw-border-${seat.type} ${!seat.visible ? 'tw-hidden' : 'tw-visible'} ${seat.status}`,
         id: seat.seat_number,
         'data-id': seat.id,
         'data-slot': seat.slot,
@@ -82,7 +73,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         'data-price': seat.price ?? 0,
         'data-status': seat.status ?? SEAT_STATUS.AVAILABLE,
         'data-order': seat.order,
-        ...(seat.type !== SEAT_TYPE.EMPTY_SEAT && { 'x-tooltip': `"${seat.seat_number} - ${price(calculatorPrice)}"` }),
+        ...(seat.type !== SEAT_TYPE.EMPTY_SEAT && { 'x-tooltip': `"${seat.seat_number} - ${price(seat.price ?? 0)}"` }),
       }));
       $(seatTable.children()[index]).data('merged-seats', seat.merged_seats ?? []);
     });
@@ -201,13 +192,17 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
       let lastSelectedIndex = seatMatrix[selectedPos.rowIndex].findLastIndex(seat => seat.status === SEAT_STATUS.SELECTED);
 
       if (seatSelected.length === 0) {
-        // alert('Không chọn ghế nào à ???')
+        alert('Vui lòng chọn ghế trước khi đặt')
         return false;
+      }
+
+      if (seatMatrix[selectedPos.rowIndex].some(seat => seat.slot > 1)) {
+        return true; // nếu hàng có ghế slot > 1 thì không cần check
       }
 
       for (let i = firstSelectedIndex; i <= lastSelectedIndex; i++) {
         if (seatMatrix[selectedPos.rowIndex][i].status !== SEAT_STATUS.SELECTED) {
-          alert('Đi đánh lẻ à ???');
+          alert('Vui lòng không chừa 1 ghế trống bên trái hoặc bên phải của các ghế bạn đã chọn.');
           return false
         }
       }
@@ -217,7 +212,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         seatMatrix[selectedPos.rowIndex][0].status === SEAT_STATUS.AVAILABLE &&
         seatMatrix[selectedPos.rowIndex][lastSelectedIndex + 1].status === SEAT_STATUS.AVAILABLE
       ) {
-        alert('Chọn ghế bên phải đi');
+        alert('Vui lòng không chừa 1 ghế trống bên trái hoặc bên phải của các ghế bạn đã chọn.');
         return false;
       }
 
@@ -226,7 +221,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         seatMatrix[selectedPos.rowIndex][col_count - 1].status === SEAT_STATUS.AVAILABLE &&
         seatMatrix[selectedPos.rowIndex][firstSelectedIndex - 1].status === SEAT_STATUS.AVAILABLE
       ) {
-        alert('Chọn ghế bên trái đi');
+        alert('Vui lòng không chừa 1 ghế trống bên trái hoặc bên phải của các ghế bạn đã chọn.');
         return false
       }
 
