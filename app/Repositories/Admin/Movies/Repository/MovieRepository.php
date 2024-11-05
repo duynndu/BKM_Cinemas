@@ -4,210 +4,183 @@ namespace App\Repositories\Admin\Movies\Repository;
 
 use App\Models\Movie;
 use App\Models\MovieGenre;
-
 use App\Repositories\Admin\Movies\Interface\MovieInterface;
+use App\Repositories\Base\BaseRepository;
 
-class MovieRepository implements MovieInterface
+class MovieRepository extends BaseRepository implements MovieInterface
 {
-    protected $movie;
-    protected $movieGenre;
-
-    const PAGINATION = 10;
-
-    public function __construct(
-        Movie  $movie,
-        MovieGenre $movieGenre
-
-    ) {
-        $this->movie = $movie;
-        $this->movieGenre = $movieGenre;
-    }
-
-    public function listMovies($request)
+    public function getModel()
     {
-        $query = $this->movie->query();
-        $genres = $request->genres ?? [];
+        return \App\Models\Movie::class;
+    }
+    public function getAll()
+    {
+        $data = $this->model->newQuery();
+        $data = $this->filterByTitle($data);
+        $data = $this->filterByStatus($data);
+        $data = $this->applyOrdering($data);
+        $data = $this->filterByGenres($data);
 
-        if (!empty($request->name)) {
-            $query->where('title', 'LIKE', '%' . $request->name . '%');
-        }
-        if (!empty($genres)) {
-
-            $movieIds = $this->movieGenre
-                ->whereIn('genre_id', $genres)
-                ->groupBy('movie_id')
-                ->havingRaw('COUNT(DISTINCT genre_id) = ?', [count($genres)])
-                ->pluck('movie_id')
-                ->toArray();
-            $query->whereIn('id', $movieIds);
-        }
-
-        $typeOrder = $request->order_with;
-        if (!empty($typeOrder)) {
-            switch ($typeOrder) {
-                case 'postedDateASC':
-                    $query->orderBy('created_at', 'asc');
-                    break;
-                case 'postedDateDESC':
-                    $query->orderBy('created_at', 'desc');
-                    break;
-                case 'releaseDateASC':
-                    $query->orderBy('release_date', 'asc');
-                    break;
-                case 'releaseDateDESC':
-                    $query->orderBy('release_date', 'desc');
-                    break;
-                case 'premiereDateASC':
-                    $query->orderBy('premiere_date', 'desc');
-                    break;
-                case 'premiereDateDESC':
-                    $query->orderBy('premiere_date', 'desc');
-                    break;
-                default:
-                    $query->orderBy('created_at', 'desc');
-                    break;
-            }
-        } else {
-            // Sắp xếp mặc định nếu không có order_with
-            $query->orderBy('created_at', 'desc');
-        }
-
-
-        switch ($request->fill_action) {
-            case 'hot':
-                $query->where('hot', 1);
-              
-                break;
-            case 'noHot':
-                $query->where('hot', 0);
-             
-                break;
-            case 'active':
-                $query->where('active', 1);
-                
-                break;
-            case 'noActive':
-                $query->where('active', 0);
-              
-                break;
-            default:
-                $query->orderBy('order');
-                break;
-        }
-
-        $listMovies = $query->orderBy('order')->paginate(self::PAGINATION);
-
-        $listMovies = $listMovies->appends([
-            'name' => $request->name,
-            'typeOrder' => $request->order_with,
-            'genres' => $genres,
+        $data = $data->paginate(self::PAGINATION);
+        return $data->appends([
+            'title' => request()->title,
+            'order_with' => request()->order_with,
+            'genres' => request()->genres,
+            'fill_action' => request()->fill_action
         ]);
-      
-        switch (true) {
-            case $request->fill_action == 'hot':
-                $listMovies = $listMovies->appends('fill_action', 'hot');
-                break;
-            case $request->fill_action == 'noHot':
-                $listMovies = $listMovies->appends('fill_action', 'noHot');
-                break;
-            case $request->fill_action == 'active':
-                $listMovies = $listMovies->appends('fill_action', 'active');
-                break;
-            case $request->fill_action == 'noActive':
-                $listMovies = $listMovies->appends('fill_action', 'noActive');
-                break;
-            case $typeOrder == 'postedDateASC':
-                $listMovies = $listMovies->appends('order_with', 'postedDateASC');
-                break;
-            case $typeOrder == 'postedDateDESC':
-                $listMovies = $listMovies->appends('order_with', 'postedDateDESC');
-                break;
-            case $typeOrder == 'releaseDateASC':
-                $listMovies = $listMovies->appends('order_with', 'releaseDateASC');
-                break;
-            case $typeOrder == 'releaseDateDESC':
-                $listMovies = $listMovies->appends('order_with', value: 'releaseDateDESC');
-                break;
-            case $typeOrder == 'premiereDateASC':
-                $listMovies = $listMovies->appends('order_with', 'premiereDateASC');
-                break;
-            case $typeOrder == 'premiereDateDESC':
-                $listMovies = $listMovies->appends('order_with', value: 'premiereDateDESC');
-                break;
-            default:
-                $query->orderBy('created_at', 'desc');
-                break;
-        }
-        return [
-            'listMovies' => $listMovies,
-            'genres' => $genres
-        ];
+
     }
 
+    public function find($id)
+    {
+        $result = $this->model->with('movieGenre', 'movieActor.actor')->find($id);
+
+        if ($result) {
+            return $result;
+        }
+
+        return false;
+    }
+
+    public function changeActive($id)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->active ^= 1;
+            $result->save();
+            return $result;
+        }
+        return false;
+    }
+
+    public function changeHot($id)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->hot ^= 1;
+            $result->save();
+            return $result;
+        }
+        return false;
+    }
+
+    public function changeOrder($id, $order)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->order = $order;
+            $result->save();
+            return $result;
+        }
+        return false;
+    }
+
+    public function createGenre($record, $data)
+    {
+        return $record->movieGenre()->createMany($data);
+    }
+
+    public function createMovieActors($record, $data)
+    {
+        return $record->movieActor()->createMany($data);
+    }
+
+    public function updateActors($record, $data)
+    {
+        foreach ($data as $actorData) {
+            $actor = $record->movieActor()->where('actor_id', $actorData['actor_id'])->first();
+            if ($actor) {
+                $actor->update($actorData);
+            }
+        }
+    }
+
+    public function deleteGenre($record, $data)
+    {
+        return $record->movieGenre()->whereIn('genre_id', $data)->delete();
+    }
+
+    public function deleteActor($record, $data)
+    {
+        return $record->movieActor()->whereIn('actor_id', $data)->delete();
+    }
 
     public function delete($id)
     {
-        $movie = $this->movie->find($id);
+        $result = $this->find($id);
+        if ($result) {
+            $result->movieActor()->forceDelete();
+            $result->movieGenre()->forceDelete();
+            $result->delete();
+            return true;
+        }
 
-        if (!$movie) {
-            return redirect()->route('admin.movies.index')->with([
-                'status_failed' => "Không tìm thấy phim"
-            ]);
-        }
-        if ($movie) {
-            $movie->movieActor()->delete();
-            $movie->movieGenre()->delete();
-            $movie->delete();
-        }
+        return false;
+    }
+
+    public function deleteMultiple(array $ids)
+    {
+        collect($ids)->chunk(1000)->each(function ($chunk) {
+            \App\Models\MovieGenre::whereIn('movie_id', $chunk)->forceDelete();
+            \App\Models\MovieActor::whereIn('movie_id', $chunk)->forceDelete();
+            $this->model->whereIn('id', $chunk)->delete();
+        });
         return true;
     }
-
-
-    public function genreOfMovie($id)
+    private function filterByTitle($query)
     {
-        $data = [];
-        $movie = $this->movie->find($id);
-        if (!$movie) {
-            return redirect()->route('admin.movies.index')->with('status_failed', 'Không tìm thấy phim');
+        if (!empty(request()->title)) {
+            return $query->where('title', 'like', '%' . request()->title . '%');
         }
-        $genre = $this->movie->find($id);
-
-        $data = $genre->movieGenre->pluck('genre_id')->all();;
-        return $data;
+        return $query;
     }
 
-    public function deleteGenreByMovie($record, $existingGenreid)
+    private function filterByGenres($query)
     {
-        return $record->movieGenre()->where('genre_id', $existingGenreid)->delete();
+        $genres = request()->genres;
+        if (!empty($genres)) {
+            return $query->whereHas('movieGenre', function ($q) use ($genres) {
+                $q->whereIn('id', $genres);
+            });
+        }
+        return $query;
     }
 
-    public function checkExitsGenre($record, $genreId)
+    private function filterByStatus($query)
     {
-        return $record->movieGenre()
-            ->withTrashed()
-            ->where('genre_id', $genreId)
-            ->first();
+        if (!empty(request()->fill_action)) {
+            switch (request()->fill_action) {
+                case 'active':
+                    return $query->where('active', 1);
+                case 'noActive':
+                    return $query->where('active', 0);
+                case 'hot':
+                    return $query->where('hot', 1);
+                case 'noHot':
+                    return $query->where('hot', 0);
+            }
+        }
+        return $query;
     }
-    public function createGenreMovie($record, $data)
+
+    private function applyOrdering($query)
     {
-        return $record->movieGenre()->create($data);
+        if (!empty(request()->order_with)) {
+            switch (request()->order_with) {
+                case 'postedDateASC':
+                    return $query->orderBy('created_at', 'asc');
+                case 'postedDateDESC':
+                    return $query->orderBy('created_at', 'desc');
+                case 'releaseDateASC':
+                    return $query->orderBy('release_date', 'asc');
+                case 'releaseDateDESC':
+                    return $query->orderBy('release_date', 'desc');
+                case 'premiereDateASC':
+                    return $query->orderBy('premiere_date', 'asc');
+                case 'premiereDateDESC':
+                    return $query->orderBy('premiere_date', 'desc');
+            }
+        }
+        return $query->orderBy('order');
     }
-
-    public function getMovieById($id)
-    {
-        $postEdit = $this->movie->find($id);
-
-        return $postEdit;
-    }
-
-    public function categoryOfPost($id)
-    {
-        $data = [];
-
-        $cate = $this->movie->find($id);
-
-        $data = $cate->movieGenres->pluck('genre.id')->all();
-        return $data;
-    }
-
 }

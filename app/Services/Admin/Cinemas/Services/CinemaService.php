@@ -1,15 +1,15 @@
 <?php
-namespace App\Services\Admin\Cinemas;
+namespace App\Services\Admin\Cinemas\Services;
 use App\Repositories\Admin\Cinemas\Interface\CinemaInterface;
+use App\Services\Admin\Cinemas\Interfaces\CinemaServiceInterface;
+use App\Services\Base\BaseService;
 use Illuminate\Support\Facades\Storage;
 
-class CinemaService
+class CinemaService extends BaseService implements CinemaServiceInterface
 {
-    protected $cinemaRepository;
-    public function __construct(
-        CinemaInterface $cinemaRepository
-    ) {
-        $this->cinemaRepository = $cinemaRepository;
+    public function getRepository()
+    {
+        return CinemaInterface::class;
     }
 
     public function store(&$data)
@@ -18,7 +18,7 @@ class CinemaService
             $uploadData = $this->uploadFile($data['image'], 'public/cinemas');
             $data['image'] = $uploadData['path'];
         }
-        return $this->cinemaRepository->create($data);
+        return $this->repository->create($data);
     }
 
     public function update(&$data, $id)
@@ -35,46 +35,32 @@ class CinemaService
             $uploadData = $this->uploadFile($data['image'], 'public/cinemas');
             $data['image'] = $uploadData['path'];
         }
-        return $this->cinemaRepository->update($id, $data);
+        return $this->repository->update($id, $data);
     }
 
-    public function delete($id)
-    {
-        return $this->cinemaRepository->delete($id);
-    }
 
     public function deleteMultipleChecked($request)
     {
         if (count($request->selectedIds) < 0) {
             return false;
         }
-        $this->cinemaRepository->deleteMultiple($request->selectedIds);
+        $this->repository->deleteMultiple($request->selectedIds);
         return true;
-    }
-
-    public function getAll()
-    {
-        return $this->cinemaRepository->getAll();
     }
 
     public function getAllActive()
     {
-        return $this->cinemaRepository->getAllActive();
-    }
-
-    public function find($id)
-    {
-        return $this->cinemaRepository->find($id);
+        return $this->repository->getAllActive();
     }
 
     public function changeActive($request)
     {
-        return $this->cinemaRepository->changeActive($request->id);
+        return $this->repository->changeActive($request->id);
     }
 
     public function changeOrder($request)
     {
-        return $this->cinemaRepository->changeOrder($request->id, $request->order);
+        return $this->repository->changeOrder($request->id, $request->order);
     }
 
     private function uploadFile($data, $folderName)

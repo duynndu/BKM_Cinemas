@@ -1,10 +1,13 @@
 <?php
-namespace App\Services\Admin\Foods\Interfaces;
+namespace App\Services\Admin\Cinemas\Interfaces;
+
 use App\Services\Base\BaseServiceInterface;
 
-interface FoodComboServiceInterface extends BaseServiceInterface
+interface CinemaServiceInterface extends BaseServiceInterface
 {
     public function changeOrder($request);
     public function changeActive($request);
+    public function getAllActive();
     public function deleteMultipleChecked($request);
+    
 }

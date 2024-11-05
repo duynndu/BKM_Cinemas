@@ -2,14 +2,17 @@
 
 namespace App\Repositories\Admin\Movies\Interface;
 
-interface MovieInterface
+use App\Repositories\Base\RepositoryInterface;
+
+interface MovieInterface extends RepositoryInterface
 {
-    public function listMovies($request);
-    public function delete($id);
-    public function genreOfMovie($id);
-    public function deleteGenreByMovie($record, $existingGenreid);
-    public function checkExitsGenre($record, $genreId);
-    public function createGenreMovie($record, $data);
-    public function getMovieById($id);
-    public function categoryOfPost($id);
+    public function createGenre($record, $data);
+    public function createMovieActors($record, $data);
+    public function deleteGenre($record, $data);
+    public function deleteActor($record, $data);
+    public function changeActive($id);
+    public function changeHot($id);
+    public function changeOrder($id, $order);
+    public function deleteMultiple(array $ids);
+
 }
