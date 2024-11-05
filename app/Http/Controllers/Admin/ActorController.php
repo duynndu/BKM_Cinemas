@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Actors\ActorRequest;
 use App\Models\Actor;
-use App\Services\Admin\Actors\ActorService;
+use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +19,7 @@ class ActorController extends Controller
     protected $actorService;
 
     public function __construct(
-        ActorService $actorService
+        ActorServiceInterface $actorService
     ) {
         $this->actorService = $actorService;
     }
@@ -50,7 +50,7 @@ class ActorController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->actorService->store($data);
+            $this->actorService->create($data);
 
             DB::commit();
 

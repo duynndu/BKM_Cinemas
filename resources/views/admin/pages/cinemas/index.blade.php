@@ -190,9 +190,7 @@
                                                             </b>
                                                         </td>
                                                         <td>
-                                                            <b>
-                                                                {!! $cinema->map !!}
-                                                            </b>
+                                                            {!! $cinema->map !!}
                                                         </td>
                                                         <td>
                                                             <button

@@ -188,7 +188,7 @@
                                                 @can('changeOrder', \App\Models\Post::class)
                                                     <th>{{ __('language.admin.posts.order') }}</th>
                                                 @endcan
-                                                @if(Auth()->user()->can('copy', \App\Models\Post::class) || Auth()->user()->can('update', \App\Models\Post::class) || Auth()->user()->can('delete', \App\Models\Post::class))
+                                                @if(Auth()->user()->can('update', \App\Models\Post::class) || Auth()->user()->can('delete', \App\Models\Post::class))
                                                     <th>{{ __('language.admin.posts.action') }}</th>
                                                 @endif
                                             </tr>
@@ -269,14 +269,7 @@
                                                     @if(Auth()->user()->can('copy', \App\Models\Post::class) || Auth()->user()->can('update', \App\Models\Post::class) || Auth()->user()->can('delete', \App\Models\Post::class))
                                                         <td>
                                                             <div
-                                                                style="padding-right: 20px; display: flex; justify-content: end">
-                                                                @can('copy', \App\Models\Post::class)
-                                                                    <a href="{{ route('admin.posts.copy', $post->id) }}"
-                                                                       class="btn btn-success shadow btn-xs sharp me-1">
-                                                                        <i class="fa-solid fa-copy"></i>
-                                                                    </a>
-                                                                @endcan
-
+                                                                style="padding-right: 20px; display: flex; justify-content: end">                        
                                                                 @can('update', \App\Models\Post::class)
                                                                     <a href="{{ route('admin.posts.edit', $post->id) }}"
                                                                        class="btn btn-primary shadow btn-xs sharp me-1">

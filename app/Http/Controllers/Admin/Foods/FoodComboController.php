@@ -7,6 +7,8 @@ use App\Http\Requests\FoodCombos\FoodComboRequest;
 use App\Models\FoodCombo;
 use App\Services\Admin\Foods\FoodComboService;
 use App\Services\Admin\Foods\FoodService;
+use App\Services\Admin\Foods\Interfaces\FoodComboServiceInterface;
+use App\Services\Admin\Foods\Interfaces\FoodServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -21,8 +23,8 @@ class FoodComboController extends Controller
     protected $foodComboService;
     protected $foodService;
     public function __construct(
-        FoodComboService $foodComboService,
-        FoodService      $foodService
+        FoodComboServiceInterface $foodComboService,
+        FoodServiceInterface      $foodService
     ) {
         $this->foodComboService = $foodComboService;
         $this->foodService      = $foodService;
@@ -54,7 +56,7 @@ class FoodComboController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->foodComboService->store($data);
+            $this->foodComboService->create($data);
 
             DB::commit();
 

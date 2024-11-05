@@ -7,4 +7,5 @@ use App\Repositories\Base\RepositoryInterface;
 interface ActorInterface extends RepositoryInterface
 {
     public function deleteMultiple(array $ids);
+    public function createMany($data, $role);
 }

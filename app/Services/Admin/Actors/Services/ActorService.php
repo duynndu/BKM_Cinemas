@@ -1,25 +1,31 @@
 <?php
 
-namespace App\Services\Admin\Actors;
+namespace App\Services\Admin\Actors\Services;
+
 use App\Repositories\Admin\Actors\Interface\ActorInterface;
+use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
+use App\Services\Base\BaseService;
 use Illuminate\Support\Facades\Storage;
 
-class ActorService
+class ActorService extends BaseService implements ActorServiceInterface
 {
-    protected $actorRepository;
-    public function __construct(
-        ActorInterface $actorRepository
-    ) {
-        $this->actorRepository = $actorRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    public function getRepository()
+    {
+        return ActorInterface::class;
     }
 
-    public function store(&$data)
+    public function create(&$data)
     {
         if (isset($data['image']) && $data['image']) {
             $uploadData = $this->uploadFile($data['image'], 'public/actors');
             $data['image'] = $uploadData['path'];
         }
-        return $this->actorRepository->create($data);
+        return $this->repository->create($data);
     }
 
     public function update(&$data, $id)
@@ -28,7 +34,6 @@ class ActorService
         if (!$record) {
             return false;
         }
-
         if (isset($data['image']) && $data['image']) {
             if ($record->image) {
                 $this->deleteAvatar($record->image, 'actors');
@@ -36,30 +41,17 @@ class ActorService
             $uploadData = $this->uploadFile($data['image'], 'public/actors');
             $data['image'] = $uploadData['path'];
         }
-        return $this->actorRepository->update($id, $data);
+        return $this->repository->update($id, $data);
     }
 
-    public function delete($id)
-    {
-        return $this->actorRepository->delete($id);
-    }
     public function deleteMultipleChecked($request)
     {
+
         if (count($request->selectedIds) < 0) {
             return false;
         }
-        $this->actorRepository->deleteMultiple($request->selectedIds);
+        $this->repository->deleteMultiple($request->selectedIds);
         return true;
-    }
-
-    public function getAll()
-    {
-        return $this->actorRepository->getAll();
-    }
-
-    public function find($id)
-    {
-        return $this->actorRepository->find($id);
     }
 
     private function deleteAvatar($avatar, $folderName)

@@ -26,6 +26,32 @@ class ActorRepository extends BaseRepository implements ActorInterface
         ]);
     }
 
+
+    public function createMany($data, $role)
+    {
+        $dataInserted = [];
+
+        foreach ($data as $key => $item) {
+            $createdItem = $this->model->create($item);
+            $dataInserted[$key]['actor_id'] = $createdItem->id;
+            $dataInserted[$key]['role'] = $role[$key];
+        }
+
+        return $dataInserted;
+    }
+
+    public function delete($id)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->movie_actor()->forceDelete();
+            $result->delete();
+            return true;
+        }
+
+        return false;
+    }
+
     public function deleteMultiple(array $ids)
     {
         collect($ids)->chunk(1000)->each(function ($chunk) {

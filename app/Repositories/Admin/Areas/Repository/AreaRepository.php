@@ -29,7 +29,7 @@ class AreaRepository extends BaseRepository implements AreaInterface
         ]);
     }
 
-    protected function filterByName($query)
+    private function filterByName($query)
     {
         if (!empty(request()->area_name)) {
             $query->where('name', 'like', '%' . request()->area_name . '%');
@@ -37,7 +37,7 @@ class AreaRepository extends BaseRepository implements AreaInterface
         return $query;
     }
 
-    protected function filterByCity($query)
+    private function filterByCity($query)
     {
         if (!empty(request()->cityId)) {
             $query->where('city_id', request()->cityId);

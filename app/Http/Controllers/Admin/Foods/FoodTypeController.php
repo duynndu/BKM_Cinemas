@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Foods;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FoodTypes\FoodTypeRequest;
 use App\Services\Admin\Foods\FoodTypeService;
+use App\Services\Admin\Foods\Interfaces\FoodTypeServiceInterFace;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class FoodTypeController extends Controller
     protected $foodTypeService;
 
     public function __construct(
-        FoodTypeService $foodTypeService
+        FoodTypeServiceInterFace $foodTypeService
     ) {
         $this->foodTypeService = $foodTypeService;
     }
@@ -41,10 +42,11 @@ class FoodTypeController extends Controller
      */
     public function store(FoodTypeRequest $request)
     {
+        $data = $request->foodType;
         try {
             DB::beginTransaction();
 
-            $this->foodTypeService->store($request->foodType);
+            $this->foodTypeService->create($data);
 
             DB::commit();
 
@@ -84,9 +86,10 @@ class FoodTypeController extends Controller
      */
     public function update(FoodTypeRequest $request, string $id)
     {
+        $data = $request->foodType;
         try {
             DB::beginTransaction();
-            if (!$this->foodTypeService->update($request->foodType, $id)) {
+            if (!$this->foodTypeService->update($data, $id)) {
                 return redirect()->route('admin.food-types.index')->with(['status_failed' => 'Không tìm thấy!']);
             }
 
