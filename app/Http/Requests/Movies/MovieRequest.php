@@ -30,64 +30,63 @@ class MovieRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            "title" => [
+            "movie.title" => [
                 "required",
                 "min:3",
                 "max:250",
                 new CheckRuleTitle($id, 'movies')
             ],
-            'slug' => [
+            'movie.slug' => [
                 "required",
                 "min:3",
                 "max:255",
                 new CheckRuleSlug($id),
             ],
-            "image" => "nullable|mimes:jpeg,jpg,png,svg,webp|max:2048",
-            "duration" => "required|numeric|min:1",
-            "director" => "required",
-            "trailer_url" => "required",
-            "format" => "required",
-            "age" => "required|numeric",
-            "country" => "required",
-            "language" => "required",
-            "order" => "nullable|numeric",
-            "hot" => "nullable|numeric",
-            "parent_id" => "required",
-            "active" => "nullable|numeric",
-            'release_date'=>'required',
-             'premiere_date'=>'required',
+            "movie.image" => "nullable|mimes:jpeg,jpg,png,svg,webp|max:2048",
+            "movie.duration" => "required|numeric|min:1",
+            "movie.director" => "required",
+            "movie.trailer_url" => "required",
+            "movie.format" => "required",
+            "movie.age" => "required|numeric",
+            "movie.country" => "required",
+            "movie.language" => "required",
+            "movie.order" => "nullable|numeric",
+            "movie.hot" => "nullable|numeric",
+            "genre_id" => "required",
+            "movie.active" => "nullable|numeric",
+            'movie.release_date'=>'required',
+            'movie.premiere_date'=>'required',
 
-            
+
         ];
     }
 
     public function messages()
     {
         return [
-            "title.required" => __('validation.required', ['attribute' => __('language.name',)]),
-            "title.min" => __('validation.min', ['attribute' => __('language.name'), 'min' => 3]),
-            "title.max" => __('validation.max', ['attribute' => __('language.name'), 'max' => 255]),
-            "slug.required" => __('validation.required', ['attribute' => __('language.slug')]),
-            "slug.min" => __('validation.min', ['attribute' => __('language.slug'), 'min' => 3]),
-            "slug.max" => __('validation.max', ['attribute' => __('language.slug'), 'max' => 255]),
-            "image.mimes" => __('validation.image.mimes', ['attribute' => __('language.image'), 'format' => 'jpeg, jpg, png, svg, webp']),
-            "image.max" => __('validation.image.max', ['attribute' => __('language.image'), 'max' => '2MB']),
-            "order.numeric" =>  __('validation.numeric', ['attribute' => __('language.order')]),
-            "parent_id.required" => __('validation.required', ['attribute' => __('language.admin.movies.genre')]),
-            "duration.required" => __('validation.required', ['attribute' => __('language.admin.movies.duration')]),
-            "duration.min" => __('validation.min', ['attribute' => __('language.admin.movies.duration'), 'min' => 1]),
-            "duration.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.movies.duration')]),
-            "trailer_url.required" => __('validation.required', ['attribute' => __('language.admin.movies.trailer_url')]),
-            "format.required" => __('validation.required', ['attribute' => __('language.admin.movies.format')]),
-            "age.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.movies.age')]),
-            "age.required" => __('validation.required', ['attribute' => __('language.admin.movies.age')]),
-            "country.required" => __('validation.required', ['attribute' => __('language.admin.movies.country')]),
-            "director.required" => __('validation.required', ['attribute' => __('language.admin.movies.director')]),
-            "hot.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.hot')]),
-            "active.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.active')]),
-            "release_date.required" => __('validation.required', ['attribute' => __('language.admin.movies.release_date')]),
-            "premiere_date.required" => __('validation.required', ['attribute' => __('language.admin.movies.premiere_date')]),
-
+            "movie.title.required" => __('validation.required', ['attribute' => __('language.name',)]),
+            "movie.title.min" => __('validation.min', ['attribute' => __('language.name'), 'min' => 3]),
+            "movie.title.max" => __('validation.max', ['attribute' => __('language.name'), 'max' => 255]),
+            "movie.slug.required" => __('validation.required', ['attribute' => __('language.slug')]),
+            "movie.slug.min" => __('validation.min', ['attribute' => __('language.slug'), 'min' => 3]),
+            "movie.slug.max" => __('validation.max', ['attribute' => __('language.slug'), 'max' => 255]),
+            "movie.image.mimes" => __('validation.image.mimes', ['attribute' => __('language.image'), 'format' => 'jpeg, jpg, png, svg, webp']),
+            "movie.image.max" => __('validation.image.max', ['attribute' => __('language.image'), 'max' => '2MB']),
+            "movie.order.numeric" =>  __('validation.numeric', ['attribute' => __('language.order')]),
+            "genre_id.required" => __('validation.required', ['attribute' => __('language.admin.movies.genre')]),
+            "movie.duration.required" => __('validation.required', ['attribute' => __('language.admin.movies.duration')]),
+            "movie.duration.min" => __('validation.min', ['attribute' => __('language.admin.movies.duration'), 'min' => 1]),
+            "movie.duration.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.movies.duration')]),
+            "movie.trailer_url.required" => __('validation.required', ['attribute' => __('language.admin.movies.trailer_url')]),
+            "movie.format.required" => __('validation.required', ['attribute' => __('language.admin.movies.format')]),
+            "movie.age.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.movies.age')]),
+            "movie.age.required" => __('validation.required', ['attribute' => __('language.admin.movies.age')]),
+            "movie.country.required" => __('validation.required', ['attribute' => __('language.admin.movies.country')]),
+            "movie.director.required" => __('validation.required', ['attribute' => __('language.admin.movies.director')]),
+            "movie.hot.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.hot')]),
+            "movie.active.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.active')]),
+            "movie.release_date.required" => __('validation.required', ['attribute' => __('language.admin.movies.release_date')]),
+            "movie.premiere_date.required" => __('validation.required', ['attribute' => __('language.admin.movies.premiere_date')]),
         ];
     }
 }

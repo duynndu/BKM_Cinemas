@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Movies\MovieRequest;
 use App\Models\Movie;
-use App\Services\Admin\Actors\Services\ActorService;
-use App\Services\Admin\Genres\Services\GenreService;
-use App\Services\Admin\Movies\MovieService;
+use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
+use App\Services\Admin\Genres\Interfaces\GenreServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,11 +23,11 @@ class MovieController extends Controller
 
 
     public function __construct(
-        MovieService     $movieService,
-        GenreService      $genreService,
-        ActorService      $actorService,
+        // MovieService     $movieService,
+        GenreServiceInterface      $genreService,
+        ActorServiceInterface      $actorService,
     ) {
-        $this->movieService = $movieService;
+        // $this->movieService = $movieService;
 
         $this->genreService = $genreService;
         $this->actorService = $actorService;
@@ -37,13 +36,13 @@ class MovieController extends Controller
     public function index(Request $request)
     {
         $listGenre = $this->genreService->getAll();
-        
-        $listMovie = $this->movieService->listMovies($request);
+
+        // $listMovie = $this->movieService->listMovies($request);
 
         return view('admin.pages.movies.index', [
-            'data' => $listMovie['listMovies'],
+            // 'data' => $listMovie['listMovies'],
             'listGenre'=>$listGenre,
-            'selectedGenre'=>$listMovie['genres']
+            // 'selectedGenre'=>$listMovie['genres']
         ]);
     }
 
@@ -56,11 +55,11 @@ class MovieController extends Controller
 
     public function store(MovieRequest $request)
     {
-      
+        $data = $request->all();
         try {
             DB::beginTransaction();
 
-            $this->movieService->store($request);
+            $this->movieService->store($data);
 
             DB::commit();
 
@@ -85,7 +84,7 @@ class MovieController extends Controller
         $listGenre = $this->movieService->getListGenre();
         $cateData = $this->movieService->genreOfMovie($id);
         $actors = $this->actorService->getAll();
-       
+
         if (!$movie) {
             return redirect()->route('admin.posts.index')->with([
                 'status_failed' => "Không tìm thấy phim"
@@ -93,12 +92,12 @@ class MovieController extends Controller
         }
 
         return view('admin.pages.movies.edit', compact('movie','listGenre','cateData','actors'));
-        
+
     }
 
     public function update(movieRequest $request, $id)
     {
-        
+
         try {
             DB::beginTransaction();
 
@@ -187,5 +186,5 @@ class MovieController extends Controller
 
         return response()->json(['message' => 'Xóa thành công!']);
     }
-    
+
 }

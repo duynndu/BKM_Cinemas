@@ -153,7 +153,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                @if ($data->count() > 0)
+                                @if (!empty($data))
                                     <div class="table-responsive">
                                         <table class="table table-responsive-md" id="data-table">
                                             <input type="hidden" id="value-item-id" value="">
