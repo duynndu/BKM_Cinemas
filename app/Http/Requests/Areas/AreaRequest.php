@@ -23,18 +23,18 @@ class AreaRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'name' => 'required|min:3|max:255|unique:areas,name,' . $id,
-            'city_id' => 'required'
+            'area.name' => 'required|min:3|max:255|unique:areas,name,' . $id,
+            'area.city_id' => 'required'
         ];
     }
 
     public function messages(){
         return [
-            "name.required" => __('validation.required', ['attribute' => __('language.admin.areas.name')]),
-            'name.min' => __('validation.min', ['attribute' => __('language.admin.areas.name')]),
-            "name.max" => __('validation.max', ['attribute' => __('language.admin.areas.name'), 'max' => 255]),
-            'name.unique' => __('validation.unique', ['attribute' => __('language.admin.areas.name')]),
-            'city_id.required' => __('validation.required', ['attribute' => __('language.admin.cities.name')]),
+            "area.name.required" => __('validation.required', ['attribute' => __('language.admin.areas.name')]),
+            'area.name.min' => __('validation.min', ['attribute' => __('language.admin.areas.name')]),
+            "area.name.max" => __('validation.max', ['attribute' => __('language.admin.areas.name'), 'max' => 255]),
+            'area.name.unique' => __('validation.unique', ['attribute' => __('language.admin.areas.name')]),
+            'area.city_id.required' => __('validation.required', ['attribute' => __('language.admin.cities.name')]),
         ];
     }
 }

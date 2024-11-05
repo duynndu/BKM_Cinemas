@@ -30,97 +30,79 @@ class BreadcrumbServiceProvider extends ServiceProvider
             ];
 
             switch ($routeName) {
-                // Dashboard
+                    // Dashboard
                 case 'admin.dashboard':
                     $breadcrumbs[] = ['title' => __('language.admin.dashboard'), 'url' => route('admin.dashboard')];
                     break;
 
-                // Products
-                case 'admin.products.index':
-                    $breadcrumbs[] = ['title' => __('language.admin.products.title'), 'url' => route('admin.dashboard')];
-                    $breadcrumbs[] = ['title' => __('language.admin.products.list'), 'url' => route('admin.products.index')];
-                    break;
-                case 'admin.products.create':
-                    $breadcrumbs[] = ['title' => __('language.admin.products.title'), 'url' => route('admin.dashboard')];
-                    $breadcrumbs[] = ['title' => __('language.admin.products.list'), 'url' => route('admin.products.index')];
-                    $breadcrumbs[] = ['title' => __('language.admin.products.create'), 'url' => route('admin.products.create')];
-                    break;
-                case 'admin.products.edit':
-                    $breadcrumbs[] = ['title' => __('language.admin.products.title'), 'url' => route('admin.dashboard')];
-                    $breadcrumbs[] = ['title' => __('language.admin.products.list'), 'url' => route('admin.products.index')];
-                    $breadcrumbs[] = ['title' => __('language.admin.products.edit'), 'url' => route('admin.products.edit', request()->id)];
-                    break;
-
-                // Category Products
-                case 'admin.categoryProducts.index':
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryProducts.title'), 'url' => route('admin.dashboard')];
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryProducts.list'), 'url' => route('admin.categoryProducts.index')];
-                    break;
-                case 'admin.categoryProducts.create':
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryProducts.title'), 'url' => route('admin.dashboard')];
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryProducts.list'), 'url' => route('admin.categoryProducts.index')];
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryProducts.create'), 'url' => route('admin.categoryProducts.create')];
-                    break;
-                case 'admin.categoryProducts.edit':
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryProducts.title'), 'url' => route('admin.dashboard')];
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryProducts.list'), 'url' => route('admin.categoryProducts.index')];
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryProducts.edit'), 'url' => route('admin.categoryProducts.edit', request()->id)];
-                    break;
-
-                // Posts
+            
+                    // Posts
                 case 'admin.posts.index':
-                    $breadcrumbs[] = ['title' => __('language.admin.posts.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.posts.list'), 'url' => route('admin.posts.index')];
                     break;
                 case 'admin.posts.create':
-                    $breadcrumbs[] = ['title' => __('language.admin.posts.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.posts.list'), 'url' => route('admin.posts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.posts.create'), 'url' => route('admin.posts.create')];
                     break;
                 case 'admin.posts.edit':
-                    $breadcrumbs[] = ['title' => __('language.admin.posts.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.posts.list'), 'url' => route('admin.posts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.posts.edit'), 'url' => route('admin.posts.edit', request()->id)];
                     break;
 
-                // Category Posts
+                    // Category Posts
                 case 'admin.categoryPosts.index':
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.title'), 'url' => route('admin.categoryPosts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.list'), 'url' => route('admin.categoryPosts.index')];
                     break;
                 case 'admin.categoryPosts.create':
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.title'), 'url' => route('admin.categoryPosts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.list'), 'url' => route('admin.categoryPosts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.create'), 'url' => route('admin.categoryPosts.create')];
                     break;
                 case 'admin.categoryPosts.edit':
-                    $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.title'), 'url' => route('admin.categoryPosts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.list'), 'url' => route('admin.categoryPosts.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.categoryPosts.edit'), 'url' => route('admin.categoryPosts.edit', request()->id)];
                     break;
 
-                // Tags
+                    // genres
+                case 'admin.genres.index':
+                    $breadcrumbs[] = ['title' => __('language.admin.genres.list'), 'url' => route('admin.genres.index')];
+                    break;
+                case 'admin.genres.create':
+                    $breadcrumbs[] = ['title' => __('language.admin.genres.list'), 'url' => route('admin.genres.index')];
+                    $breadcrumbs[] = ['title' => __('language.admin.genres.create'), 'url' => route('admin.genres.create')];
+                    break;
+                case 'admin.genres.edit':
+                    $breadcrumbs[] = ['title' => __('language.admin.genres.list'), 'url' => route('admin.genres.index')];
+                    $breadcrumbs[] = ['title' => __('language.admin.genres.edit'), 'url' => route('admin.genres.edit', request()->id)];
+                    break;
+
+                case 'admin.movies.index':
+                    $breadcrumbs[] = ['title' => __('language.admin.movies.list'), 'url' => route('admin.movies.index')];
+                    break;
+                case 'admin.movies.create':
+                    $breadcrumbs[] = ['title' => __('language.admin.movies.list'), 'url' => route('admin.movies.index')];
+                    $breadcrumbs[] = ['title' => __('language.admin.movies.create'), 'url' => route('admin.movies.create')];
+                    break;
+                case 'admin.movies.edit':
+                    $breadcrumbs[] = ['title' => __('language.admin.movies.list'), 'url' => route('admin.movies.index')];
+                    $breadcrumbs[] = ['title' => __('language.admin.movies.edit'), 'url' => route('admin.movies.edit', request()->id)];
+                    break;
+
+                    // Tags
                 case 'admin.tags.index':
-                    $breadcrumbs[] = ['title' => __('language.admin.tags.post'), 'url' => route('admin.dashboard')];
-                    $breadcrumbs[] = ['title' => __('language.admin.tags.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.tags.list'), 'url' => route('admin.tags.index')];
                     break;
                 case 'admin.tags.create':
-                    $breadcrumbs[] = ['title' => __('language.admin.tags.post'), 'url' => route('admin.dashboard')];
-                    $breadcrumbs[] = ['title' => __('language.admin.tags.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.tags.list'), 'url' => route('admin.tags.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.tags.create'), 'url' => route('admin.tags.create')];
                     break;
                 case 'admin.tags.edit':
-                    $breadcrumbs[] = ['title' => __('language.admin.tags.post'), 'url' => route('admin.dashboard')];
-                    $breadcrumbs[] = ['title' => __('language.admin.tags.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.tags.list'), 'url' => route('admin.tags.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.tags.edit'), 'url' => route('admin.tags.edit', request()->id)];
                     break;
 
-                // Systems
+                    // Systems
                 case 'admin.systems.index':
-                    $breadcrumbs[] = ['title' => __('language.admin.systems.title'), 'url' => route('admin.dashboard')];
+                    $breadcrumbs[] = ['title' => __('language.admin.systems.title'), 'url' => route('admin.tags.index')];
                     $breadcrumbs[] = ['title' => __('language.admin.systems.list'), 'url' => route('admin.systems.index')];
 
                     if (request()->has('system_id')) {
@@ -206,7 +188,7 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => __('language.admin.systems.edit'), 'url' => route('admin.systems.edit', request()->id)];
                     break;
 
-                // Menus
+                    // Menus
                 case 'admin.menus.index':
                     $breadcrumbs[] = ['title' => __('language.admin.interfaces.menus.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.interfaces.menus.name'), 'url' => route('admin.menus.index')];
@@ -220,7 +202,7 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => 'Cập nhật menu', 'url' => route('admin.menus.edit', request()->id)];
                     break;
 
-                // Pages
+                    // Pages
                 case 'admin.pages.index':
                     $breadcrumbs[] = ['title' => __('language.admin.interfaces.pages.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.interfaces.pages.list'), 'url' => route('admin.pages.index')];
@@ -236,7 +218,7 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => __('language.admin.interfaces.pages.edit'), 'url' => route('admin.pages.edit', request()->id)];
                     break;
 
-                // Blocks
+                    // Blocks
                 case 'admin.blocks.index':
                     $breadcrumbs[] = ['title' => __('language.admin.interfaces.blocks.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.interfaces.blocks.list'), 'url' => route('admin.blocks.index')];
@@ -253,7 +235,7 @@ class BreadcrumbServiceProvider extends ServiceProvider
 
                     break;
 
-                // Block Types
+                    // Block Types
                 case 'admin.blockTypes.index':
                     $breadcrumbs[] = ['title' => __('language.admin.interfaces.blockTypes.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.interfaces.blockTypes.list'), 'url' => route('admin.blockTypes.index')];
@@ -269,7 +251,7 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => __('language.admin.interfaces.blockTypes.edit'), 'url' => route('admin.blockTypes.edit', request()->id)];
                     break;
 
-                // contacts
+                    // contacts
                 case 'admin.roles.index':
                     $breadcrumbs[] = ['title' => __('language.admin.members.title'), 'url' => '#'];
                     $breadcrumbs[] = ['title' => __('language.admin.members.roles.title'), 'url' => route('admin.roles.index')];
@@ -282,13 +264,13 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => __('language.admin.members.roles.create'), 'url' => route('admin.roles.create')];
                     break;
 
-                // contacts
+                    // contacts
                 case 'admin.contacts.index':
                     $breadcrumbs[] = ['title' => __('language.admin.contacts.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.contacts.list'), 'url' => route('admin.contacts.index')];
                     break;
 
-                // Languages
+                    // Languages
                 case 'admin.languages.index':
                     $breadcrumbs[] = ['title' => __('language.admin.settings.languages.title'), 'url' => route('admin.dashboard')];
                     $breadcrumbs[] = ['title' => __('language.admin.settings.languages.list'), 'url' => route('admin.languages.index')];
@@ -303,7 +285,7 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => __('language.admin.settings.languages.list'), 'url' => route('admin.languages.edit', request()->id)];
                     $breadcrumbs[] = ['title' => __('language.admin.settings.languages.edit'), 'url' => route('admin.languages.edit', request()->id)];
                     break;
-                //Cities
+                    //Cities
                 case 'admin.cities.index':
                     $breadcrumbs[] = ['title' => 'Thành phố', 'url' => ''];
                     $breadcrumbs[] = ['title' => 'Danh sách thành phố', 'url' => route('admin.cities.index')];
@@ -316,7 +298,7 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => 'Thành phố', 'url' => route('admin.cities.index')];
                     $breadcrumbs[] = ['title' => 'Chỉnh sửa thành phố', 'url' => route('admin.cities.edit', request()->id)];
                     break;
-                //Areas
+                    //Areas
                 case 'admin.areas.index':
                     $breadcrumbs[] = ['title' => 'Khu vực', 'url' => ''];
                     $breadcrumbs[] = ['title' => 'Danh sách khu vực', 'url' => route('admin.areas.index')];
@@ -329,20 +311,8 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => 'Khu vực', 'url' => route('admin.areas.index')];
                     $breadcrumbs[] = ['title' => 'Chỉnh sửa khu vực', 'url' => route('admin.areas.edit', request()->id)];
                     break;
-                //Payments
-                case 'admin.payments.index':
-                    $breadcrumbs[] = ['title' => 'Phương thức thanh toán ', 'url' => ''];
-                    $breadcrumbs[] = ['title' => 'Danh sách phương thức thanh toán', 'url' => route('admin.payments.index')];
-                    break;
-                case 'admin.payments.create':
-                    $breadcrumbs[] = ['title' => 'Phương thức thanh toán', 'url' => route('admin.payments.index')];
-                    $breadcrumbs[] = ['title' => 'Thêm mới phương thức thanh toán', 'url' => route('admin.payments.create')];
-                    break;
-                case 'admin.payments.edit':
-                    $breadcrumbs[] = ['title' => 'Phương thức thanh toán', 'url' => route('admin.payments.index')];
-                    $breadcrumbs[] = ['title' => 'Chỉnh sửa phương thức thanh toán', 'url' => route('admin.payments.edit', request()->id)];
-                    break;
-                // Foods
+                    // Foods
+
                 case 'admin.foods.index':
                     $breadcrumbs[] = ['title' => 'Đồ ăn', 'url' => ''];
                     $breadcrumbs[] = ['title' => 'Danh sách đồ ăn', 'url' => route('admin.foods.index')];
@@ -351,11 +321,12 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => 'Đồ ăn', 'url' => route('admin.foods.index')];
                     $breadcrumbs[] = ['title' => 'Thêm mới đồ ăn', 'url' => route('admin.foods.create')];
                     break;
+
                 case 'admin.foods.edit':
                     $breadcrumbs[] = ['title' => 'Đồ ăn', 'url' => route('admin.foods.index')];
                     $breadcrumbs[] = ['title' => 'Chỉnh sửa đồ ăn', 'url' => route('admin.foods.edit', request()->id)];
                     break;
-                // Food-types
+                    // Food-types
                 case 'admin.food-types.index':
                     $breadcrumbs[] = ['title' => 'Loại đồ ăn', 'url' => ''];
                     $breadcrumbs[] = ['title' => 'Danh sách loại đồ ăn', 'url' => route('admin.food-types.index')];
@@ -368,7 +339,7 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => 'Loại đồ ăn', 'url' => route('admin.food-types.index')];
                     $breadcrumbs[] = ['title' => 'Chỉnh sửa loại đồ ăn', 'url' => route('admin.food-types.edit', request()->id)];
                     break;
-                // Foods
+                    // Foods
                 case 'admin.food-combos.index':
                     $breadcrumbs[] = ['title' => 'Combo', 'url' => ''];
                     $breadcrumbs[] = ['title' => 'Danh sách combo ', 'url' => route('admin.food-combos.index')];

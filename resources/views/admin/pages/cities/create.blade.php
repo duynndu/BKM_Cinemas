@@ -31,9 +31,9 @@
                                     <div>
                                         <div>
                                             <label class="form-label mb-2">Tên Thành Phố</label>
-                                            <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="Nhập Tên Thành Phố" value="{{ old('name') ?? '' }}">
-                                            @error('name')
+                                            <input type="text" id="name" name="city[name]" class="form-control"
+                                                placeholder="Nhập Tên Thành Phố" value="{{ old('city.name') }}">
+                                            @error('city.name')
                                                 <div class="mt-2">
                                                     <span class="text-red">{{ $message }}</span>
                                                 </div>

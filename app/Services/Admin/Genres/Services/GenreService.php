@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Services\Admin\Genres;
+namespace App\Services\Admin\Genres\Services;
 
-use App\Repositories\Admin\Genres\Repository\GenreRepository;
+use App\Repositories\Admin\Genres\Interface\GenreInterface;
+use App\Services\Admin\Genres\Interfaces\GenreServiceInterface;
+use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 
-class GenreService
+class GenreService extends BaseService implements GenreServiceInterface
 {
     use StorageImageTrait;
-    protected $genreRepository;
 
-    public function __construct(
-        GenreRepository $genreRepository
-    ) {
-        $this->genreRepository = $genreRepository;
-    }
-
-    public function getAllGenre($request)
+    public function __construct()
     {
-        return $this->genreRepository->getAllGenre($request);
+        parent::__construct();
+    }
+    public function getRepository()
+    {
+        return GenreInterface::class;
     }
 
-    public function store($request)
+
+    public function create(&$request)
     {
         $data = [
             'name' => $request->name,
@@ -34,27 +34,23 @@ class GenreService
             'position' => $request->position ?? 0
         ];
 
-      
-     
+
+
         $uploadData = $this->storageTraitUpload($request, 'avatar', 'public/genres');
         if ($uploadData) {
             $data['avatar'] = $uploadData['path'];
         }
 
-       
-        $this->genreRepository->createGenre($data);
+
+        $this->repository->create($data);
 
         return true;
     }
 
-    public function getGenreById($id)
-    {
-        return $this->genreRepository->getGenreById($id);
-    }
 
-    public function update($request, $id)
+    public function update(&$request, $id)
     {
-        $genre = $this->genreRepository->getGenreById($id);
+        $genre = $this->find($id);
 
         if (!$genre) {
             $redirectUrl = $request->parent_id ?
@@ -67,7 +63,7 @@ class GenreService
         }
 
         $data = [
-          'name' => $request->name,
+            'name' => $request->name,
             'slug' => $request->slug,
             'order' => $request->order ?? 0,
             'description' => $request->description,
@@ -88,29 +84,23 @@ class GenreService
             $data['avatar'] = $imageUploadData['path'];
         }
 
-        $this->genreRepository->updateGenre($data, $id);
-
-        return true;
+        return  $this->repository->update($id, $data);
     }
 
-    public function getListGenre()
-    {
-        return $this->genreRepository->getListGenre();
-    }
 
     public function getListGenreEdit($id)
     {
-        return $this->genreRepository->getListGenreEdit($id);
+        return $this->repository->getListGenreEdit($id);
     }
 
     public function delete($id)
     {
-        return $this->genreRepository->delete($id);
+        return $this->repository->delete($id);
     }
 
     public function changeOrder($request)
     {
-        $item = $this->genreRepository->getGenreById($request->id);
+        $item = $this->repository->find($request->id);
 
         $item->update([
             'order' => $request->order
@@ -121,13 +111,13 @@ class GenreService
 
     public function changePosition($request)
     {
-        $result = $this->genreRepository->checkPosition($request->position);
+        $result = $this->repository->checkPosition($request->position);
 
-        if($result) {
+        if ($result) {
             return false;
         }
 
-        $item = $this->genreRepository->getGenreById($request->id);
+        $item = $this->repository->find($request->id);
 
         $item->update([
             'position' => $request->position
@@ -139,10 +129,9 @@ class GenreService
     {
         if (count($request->selectedIds) > 0) {
             foreach ($request->selectedIds as $id) {
-                $this->genreRepository->delete($id);
+                $this->repository->delete($id);
             }
             return true;
         }
     }
-
 }

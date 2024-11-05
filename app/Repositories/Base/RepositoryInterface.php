@@ -23,7 +23,6 @@ interface RepositoryInterface
      * @return mixed
      */
     public function create($attributes = []);
-
     /**
      * Update
      * @param $id

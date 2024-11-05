@@ -1,28 +1,27 @@
 <?php
 
-namespace App\Services\Admin\CategoryPosts;
+namespace App\Services\Admin\CategoryPosts\Services;
 
-use App\Repositories\Admin\CategoryPosts\Repository\CategoryPostRepository;
+use App\Repositories\Admin\CategoryPosts\Interface\CategoryPostInterface;
+use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
+use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 
-class CategoryPostService
+class CategoryPostService extends BaseService implements CategoryPostServiceInterface
 {
     use StorageImageTrait;
-    protected $categoryPostRepository;
 
-    public function __construct(
-        CategoryPostRepository $categoryPostRepository
-    ) {
-        $this->categoryPostRepository = $categoryPostRepository;
-    }
-
-    public function getAllCategoryPost($request)
+    public function __construct()
     {
-        return $this->categoryPostRepository->getAllCategoryPost($request);
+        parent::__construct();
+    }
+    public function getRepository()
+    {
+        return CategoryPostInterface::class;
     }
 
-    public function store($request)
+    public function create(&$request)
     {
         $data = [
             'name' => $request->name,
@@ -40,19 +39,14 @@ class CategoryPostService
             $data['avatar'] = $uploadData['path'];
         }
 
-       $this->categoryPostRepository->createCategoryPost($data);
+
+        $this->repository->create($data);
 
         return true;
     }
-
-    public function getCategoryPostById($id)
+    public function update(&$request, $id)
     {
-        return $this->categoryPostRepository->getCategoryPostById($id);
-    }
-
-    public function update($request, $id)
-    {
-        $categoryPost = $this->categoryPostRepository->getCategoryPostById($id);
+        $categoryPost = $this->find($id);
 
         if (!$categoryPost) {
             $redirectUrl = $request->parent_id ?
@@ -86,46 +80,31 @@ class CategoryPostService
             $data['avatar'] = $imageUploadData['path'];
         }
 
-        $this->categoryPostRepository->updateCategoryPost($data, $id);
-
-        return true;
+        return  $this->repository->update($id, $data);
     }
-
-    public function getListCategoryPost()
-    {
-        return $this->categoryPostRepository->getListCategoryPost();
-    }
-
     public function getListCategoryPostEdit($id)
     {
-        return $this->categoryPostRepository->getListCategoryPostEdit($id);
-    }
-
-    public function delete($id)
-    {
-        return $this->categoryPostRepository->delete($id);
+        return $this->repository->getListCategoryPostEdit($id);
     }
 
     public function changeOrder($request)
     {
-        $item = $this->categoryPostRepository->getCategoryPostById($request->id);
-
-        $item->update([
-            'order' => $request->order
-        ]);
-
-        return $item;
+        return $this->repository->changeOrder($request->id, $request->order);
+    }
+    public function changeActive($request)
+    {
+        return $this->repository->changeActive($request->id);
     }
 
     public function changePosition($request)
     {
-        $result = $this->categoryPostRepository->checkPosition($request->position);
+        $result = $this->repository->checkPosition($request->position);
 
-        if($result) {
+        if ($result) {
             return false;
         }
 
-        $item = $this->categoryPostRepository->getCategoryPostById($request->id);
+        $item = $this->repository->find($request->id);
 
         $item->update([
             'position' => $request->position
@@ -137,10 +116,9 @@ class CategoryPostService
     {
         if (count($request->selectedIds) > 0) {
             foreach ($request->selectedIds as $id) {
-                $this->categoryPostRepository->delete($id);
+                $this->repository->delete($id);
             }
             return true;
         }
     }
-
 }
