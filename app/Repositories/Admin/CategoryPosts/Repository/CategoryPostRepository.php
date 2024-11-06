@@ -2,81 +2,48 @@
 
 namespace App\Repositories\Admin\CategoryPosts\Repository;
 
-use App\Models\CategoryPost;
-use App\Models\Post;
-use App\Models\PostCategory;
 use App\Repositories\Admin\CategoryPosts\Interface\CategoryPostInterface;
+use App\Repositories\Base\BaseRepository;
 
-class CategoryPostRepository implements CategoryPostInterface
+class CategoryPostRepository extends BaseRepository implements CategoryPostInterface
 {
-    const PAGINATION = 10;
-
-    protected $categoryPost;
-
-    protected $postCategory;
-
-    protected $post;
-
-    public function __construct(
-        CategoryPost $categoryPost,
-        PostCategory $postCategory,
-        Post $post,
-
-    ) {
-        $this->categoryPost = $categoryPost;
-        $this->postCategory = $postCategory;
-        $this->post = $post;
+    public function getModel()
+    {
+        return \App\Models\CategoryPost::class;
     }
 
-    public function getAllCategoryPost($request)
+    public function getAll()
     {
-        $query = $this->categoryPost->newQuery();
-
-        $parentId = $request->query('parent_id', 0);
-
-        if ($request->has('name') && !is_null($request->name)) {
-
-            $query->where('name', 'like', '%' . $request->name . '%');
+        $query = $this->model->newQuery();
+        $parentId = request()->parent_id ?? 0;
+        if (!empty(request()->name)) {
+            $query->where('name', 'like', '%' . request()->name . '%');
 
             $query->where('parent_id', $parentId)->orderBy('order');
 
             $data = $query->paginate(self::PAGINATION);
 
-            if ($request->name) {
-                $data = $data->appends('name', $request->name);
+            if (request()->name) {
+                $data = $data->appends('name', request()->name);
             }
 
-            if ($request->parent_id) {
-                $data = $data->appends('parent_id', $request->parent_id);
+            if (request()->parent_id) {
+                $data = $data->appends('parent_id', request()->parent_id);
             }
-
             return $data;
         }
 
         $query->where('parent_id', $parentId)->orderBy('order');
 
         $data = $query->withCount('childs')->paginate(self::PAGINATION);
-
         return $data;
-    }
-
-    public function createCategoryPost($data)
-    {
-        return $this->categoryPost->create($data);
-    }
-
-    public function getCategoryPostById($id)
-    {
-        $categoryPost = $this->categoryPost->find($id);
-
-        return $categoryPost;
     }
 
     public function delete($id)
     {
-        $category = $this->categoryPost->find($id);
+        $category = $this->model->find($id);
 
-        if(!$category) {
+        if (!$category) {
             $redirectUrl = request()->parent_id ?
                 route('admin.categoryPosts.index') . '?parent_id=' . request()->parent_id :
                 route('admin.categoryPosts.index');
@@ -85,50 +52,51 @@ class CategoryPostRepository implements CategoryPostInterface
                 'status_failed' => 'Không tìm thấy danh mục'
             ]);
         }
+        if (!empty($category->childs)) {
+            foreach ($category->childs as $child) {
 
-        foreach ($category->childs as $child) {
-            $this->delete($child->id);
+                $child->delete();
+            }
         }
-
-        $category->delete();
-
-        return true;
+        return $category->delete();
     }
 
     public function getListCategoryPost()
     {
-        $categoryPost =  $this->categoryPost
+        $categoryPost = $this->model
             ->where('parent_id', 0)
             ->get();
-
         return $categoryPost;
     }
 
     public function checkPosition($positionValue)
     {
-        return $this->categoryPost->where('position', $positionValue)
+        return $this->model->where('position', $positionValue)
             ->where('position', '!=', 0)->first();
     }
 
     public function getListCategoryPostEdit($id)
     {
-        $categoryPost = $this->categoryPost->query()
-            ->with(['childrenRecursive' => function ($category) use ($id) {
-                $category->where('id', '<>', $id);
-            }])
+        $categoryPost = $this->model->query()
+            ->with([
+                'childrenRecursive' => function ($category) use ($id) {
+                    $category->where('id', '<>', $id);
+                }
+            ])
             ->where('id', '<>', $id)
             ->where('parent_id', 0)
             ->get();
 
         return $categoryPost;
     }
-
-    public function updateCategoryPost($data, $id)
+    public function changeOrder($id, $order)
     {
-        $categoryPost = $this->categoryPost->find($id);
-
-        $categoryPost->update($data);
-
-        return $categoryPost;
+        $result = $this->find($id);
+        if ($result) {
+            $result->order = $order;
+            $result->save();
+            return $result;
+        }
+        return false;
     }
 }

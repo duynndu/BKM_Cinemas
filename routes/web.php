@@ -25,8 +25,6 @@ $agent = new Agent();
 
 if ($agent->isDesktop()) {
 
-    Route::get('/sendOtpSms', [AuthController::class, 'sendOtpSms']);
-
     // Tài khoản
     Route::get('/account', [AuthController::class, 'account'])->name('account');
 

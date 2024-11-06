@@ -1,8 +1,9 @@
 import { FileManagerService } from "./file-manager.service";
-import { RoomService } from "./room.service";
+import { roomService } from "./room.service";
+import "@/jquery-plugin/filemanager.plugin"
 
 
 export default {
   FileManagerService,
-  RoomService
+  roomService
 }

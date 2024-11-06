@@ -59,7 +59,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label mb-2">{{ __('language.admin.genres.content') }}</label>
-                                        <textarea name="content" id="ckeditor">{!! old('content') ?? $genreEdit->content !!}</textarea>
+                                        <textarea name="content" class="ckeditor">{!! old('content') ?? $genreEdit->content !!}</textarea>
                                         @error('content')
                                         <div class="text-danger mt-2">{{ $message }}</div>
                                         @enderror
@@ -125,30 +125,32 @@
                                             <div class="avatar-upload d-flex align-items-center">
                                                 <div class=" position-relative" style="width: 120px;">
                                                     <div class="avatar-preview">
-                                                        <div id="imagePreview" class="imagePreview"
-                                                             style="background-image: url({{ asset($genreEdit->avatar ?? 'images/no-img-avatar.png') }});">
+                                                        <div class="imagePreview"
+                                                            style="background-image: url({{ asset($genreEdit->avatar ?? 'images/no-img-avatar.png') }});">
                                                         </div>
-                                                        @if(!empty($genreEdit->avatar))
-                                                            <button type="button" class="removeImage"
-                                                                    data-id="{{ $genreEdit->id }}"
-                                                                    data-url="{{ route('admin.genres.removeAvatarImage') }}"
-                                                                    data-image="{{ asset('images/no-img-avatar.png') }}">
+                                                        @if (!empty($genreEdit->avatar))
+                                                            <button type="button"
+                                                                class="removeImage"
+                                                                data-id="{{ $genreEdit->id }}"
+                                                                data-url="{{ route('admin.genres.removeAvatarImage') }}"
+                                                                data-image="{{ asset('images/no-img-avatar.png') }}">
                                                                 <i class="fa-solid fa-xmark"></i>
                                                             </button>
                                                         @endif
                                                     </div>
-
-                                                    @error('avatar')
-                                                        <div class="mt-2 mb-2">
-                                                            <span class="text-red">{{ $message }}</span>
-                                                        </div>
-                                                    @enderror
-
-                                                    <div class="change-btn d-flex align-items-center flex-wrap">
-                                                        <input type="file" class="form-control d-none" id="imageUpload"
-                                                            name="avatar" accept=".png, .jpg, .jpeg">
+                                                    <div
+                                                        class="change-btn d-flex align-items-center flex-wrap">
+                                                        <input type="file"
+                                                            class="form-control d-none uploadImage"
+                                                            id="imageUpload" name="avatar"
+                                                            accept=".png, .jpg, .jpeg, .webp">
                                                         <label for="imageUpload"
-                                                            class="btn btn-sm btn-primary light ms-0">{{ __('language.admin.genres.selectImage') }}</label>
+                                                            class="btn btn-sm btn-primary light ms-0">Chọn
+                                                            ảnh</label>
+                                                        @error('avatar')
+                                                            <div class="text-danger mt-2">
+                                                                {{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>

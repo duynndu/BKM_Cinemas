@@ -3,13 +3,6 @@
 @section('title', 'Thêm mới phim')
 
 @section('css')
-    <style>
-        .del-actor {
-            display: block;
-            position: absolute;
-            bottom: 0;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -29,7 +22,7 @@
                 </div>
                 <form method="post" action="{{ route('admin.movies.store') }}" class="product-vali"
                     enctype="multipart/form-data">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}" autocomplete="off">
+                    @csrf
                     <div class="custom-tab-1">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
@@ -52,22 +45,20 @@
                                                     <div class="col-6">
                                                         <label
                                                             class="form-label mb-2">{{ __('language.admin.movies.title') }}</label>
-                                                        <input type="text" value="{{ old('title') }}" id="name"
-                                                            name="title" class="form-control"
-                                                            placeholder="{{ __('language.admin.movies.inputTitle') }}"
-                                                            value="">
-                                                        @error('title')
+                                                        <input type="text" value="{{ old('movie.title') }}"
+                                                            id="name" name="movie[title]" class="form-control"
+                                                            placeholder="{{ __('language.admin.movies.inputTitle') }}">
+                                                        @error('movie.title')
                                                             <div class="text-danger mt-2">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                     <div class="col-6">
                                                         <label
                                                             class="form-label mb-2">{{ __('language.admin.movies.slug') }}</label>
-                                                        <input type="text" value="{{ old('slug') }}"
-                                                            class="form-control" id="slug" name="slug"
-                                                            placeholder="{{ __('language.admin.movies.inputSlug') }}"
-                                                            value="">
-                                                        @error('slug')
+                                                        <input type="text" value="{{ old('movie.slug') }}"
+                                                            class="form-control" id="slug" name="movie[slug]"
+                                                            placeholder="{{ __('language.admin.movies.inputSlug') }}">
+                                                        @error('movie.slug')
                                                             <div class="text-danger mt-2">{{ $message }}</div>
                                                         @enderror
                                                     </div>
@@ -75,11 +66,10 @@
                                                 <div class="mb-3">
                                                     <label
                                                         class="form-label mb-2">{{ __('language.admin.movies.director') }}</label>
-                                                    <input value="{{ old('director') }}" type="text"
-                                                        class="form-control" name="director"
-                                                        placeholder="{{ __('language.admin.movies.director') }}"
-                                                        value="">
-                                                    @error('director')
+                                                    <input value="{{ old('movie.director') }}" type="text"
+                                                        class="form-control" name="movie[director]"
+                                                        placeholder="{{ __('language.admin.movies.director') }}">
+                                                    @error('movie.director')
                                                         <div class="text-danger mt-2">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -88,36 +78,35 @@
                                                     <div class="col-6">
                                                         <label
                                                             class="form-label mb-2">{{ __('language.admin.movies.duration') }}</label>
-                                                        <input value="{{ old('duration') }}" type="number" id="duration"
-                                                            name="duration" min="1" class="form-control"
-                                                            placeholder="{{ __('language.admin.movies.duration') }}"
-                                                            value="">
-                                                        @error('duration')
+                                                        <input value="{{ old('movie.duration') }}" type="number"
+                                                            id="duration" name="movie[duration]" min="1"
+                                                            class="form-control"
+                                                            placeholder="{{ __('language.admin.movies.duration') }}">
+                                                        @error('movie.duration')
                                                             <div class="text-danger mt-2">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                     <div class="col-6">
                                                         <label
                                                             class="form-label mb-2">{{ __('language.admin.movies.formatMovie.name') }}</label>
-                                                        <select name="format" id="" class="form-control">
-                                                            <option value="2d">
+                                                        <select name="movie[format]" id="" class="form-control">
+                                                            <option value="2d" @selected(old('movie.format') == '2d')>
                                                                 {{ __('language.admin.movies.formatMovie.2d') }}</option>
-                                                            <option value="3d">
+                                                            <option value="3d" @selected(old('movie.format') == '3d')>
                                                                 {{ __('language.admin.movies.formatMovie.3d') }}</option>
                                                         </select>
-                                                        @error('formatMovie')
+                                                        @error('movie.format')
                                                             <div class="text-danger mt-2">{{ $message }}</div>
                                                         @enderror
-
                                                     </div>
                                                 </div>
                                                 <div class="mb-4">
                                                     <label
                                                         class="form-label mb-2">{{ __('language.admin.movies.trailer_url') }}</label>
-                                                    <input value="{{ old('trailer_url') }}"
+                                                    <input value="{{ old('movie.trailer_url') }}"
                                                         placeholder="{{ __('language.admin.movies.trailer_url') }}"
-                                                        type="text" class="form-control" name="trailer_url"></input>
-                                                    @error('trailer_url')
+                                                        type="text" class="form-control" name="movie[trailer_url]">
+                                                    @error('movie.trailer_url')
                                                         <div class="text-danger mt-2">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -125,53 +114,53 @@
                                                     <div class="col-6">
                                                         <label
                                                             class="form-label mb-2">{{ __('language.admin.movies.release_date') }}:</label>
-                                                        <input type="date" value="{{ old('release_date') }}"
-                                                            name="release_date" class="form-control" value="">
-                                                        @error('release_date')
+                                                        <input type="date" value="{{ old('movie.release_date') }}"
+                                                            name="movie[release_date]" class="form-control">
+                                                        @error('movie.release_date')
                                                             <div class="text-danger mt-2">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                     <div class="col-6">
                                                         <label
                                                             class="form-label mb-2">{{ __('language.admin.movies.premiere_date') }}</label>
-                                                        <input type="date" value="{{ old('premiere_date') }}"
-                                                            name="premiere_date" class="form-control" value="">
-                                                        @error('premiere_date')
+                                                        <input type="date" value="{{ old('movie.premiere_date') }}"
+                                                            name="movie[premiere_date]" class="form-control">
+                                                        @error('movie.premiere_date')
                                                             <div class="text-danger mt-2">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="mb-4">
                                                     <label class="form-label mb-2">Tuổi:</label>
-                                                    <input value="{{ old('age') }}"
+                                                    <input value="{{ old('movie.age') }}"
                                                         placeholder="{{ __('language.admin.movies.inputAge') }}"
                                                         type="number" min="1" class="form-control"
-                                                        name="age">
-                                                    @error('age')
+                                                        name="movie[age]">
+                                                    @error('movie.age')
                                                         <div class="text-danger mt-2">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                                 <div class="row mb-4">
                                                     <div class="col-6">
                                                         <label class="form-label mb-2">Quốc gia:</label>
-                                                        <input alue="{{ old('country') }}" type="text" id="country"
-                                                            name="country" class="form-control"
-                                                            placeholder="{{ __('language.admin.movies.inputCountry') }}"
-                                                            value="">
-                                                        @error('country')
+                                                        <input value="{{ old('movie.country') }}" type="text"
+                                                            id="country" name="movie[country]" class="form-control"
+                                                            placeholder="{{ __('language.admin.movies.inputCountry') }}">
+                                                        @error('movie.country')
                                                             <div class="text-danger mt-2">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                     <div class="col-6">
                                                         <label
                                                             class="form-label mb-2">{{ __('language.admin.movies.language') }}</label>
-                                                        <select name="language" id="" class="form-control">
+                                                        <select name="movie[language]" id=""
+                                                            class="form-control">
                                                             <option value="vietsub">
                                                                 {{ __('language.admin.movies.vietSub') }}</option>
                                                             <option value="noVietsub">
                                                                 {{ __('language.admin.movies.noVietsub') }}</option>
                                                         </select>
-                                                        @error('language')
+                                                        @error('movie.language')
                                                             <div class="text-danger mt-2">{{ $message }}</div>
                                                         @enderror
                                                     </div>
@@ -179,28 +168,23 @@
                                                 <div class="mb-4">
                                                     <label
                                                         class="form-label mb-2">{{ __('language.admin.movies.introduce') }}</label>
-                                                    <textarea value="{{ old('description') }}" placeholder="{{ __('language.admin.movies.inputIntroduce') }}"
-                                                        class="form-control" cols="20" rows="5" name="description"></textarea>
-                                                    @error('description')
+                                                    <textarea placeholder="{{ __('language.admin.movies.inputIntroduce') }}" class="form-control" cols="20"
+                                                        rows="5" name="movie[description]">{{ old('movie.description') }}</textarea>
+                                                    @error('movie.description')
                                                         <div class="text-danger mt-2">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-
                                                 <div class="mb-3">
                                                     <label
                                                         class="form-label mb-2">{{ __('language.admin.movies.content') }}</label>
-                                                    <textarea placeholder="{{ __('language.admin.movies.inputContent') }}" name="content" id="ckeditor"
-                                                        style="display: none;">
-                                                            {{ old('content') }}
-                                                        </textarea>
-                                                    @error('content')
+                                                    <textarea placeholder="{{ __('language.admin.movies.inputContent') }}" name="movie[content]"
+                                                        class="ckeditor"style="display: none;">{{ old('movie.content') }}</textarea>
+                                                    @error('movie.content')
                                                         <div class="text-danger mt-2">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                     <div class="col-xl-4">
                                         <div class="right-sidebar-sticky">
@@ -212,14 +196,14 @@
                                                 </div>
                                                 <div class="cm-content-body publish-content form excerpt">
                                                     <div class="card-body">
-                                                        <select multiple class="form-control" name="parent_id[]">
+                                                        <select multiple class="form-control" name="genre_id[][genre_id]">
                                                             <option value=" " disabled>
                                                                 --{{ __('language.admin.movies.select') }}--
                                                             </option>
                                                             @if ($listGenre)
                                                                 @foreach ($listGenre as $genre)
                                                                     <option value="{{ $genre->id }}"
-                                                                        @selected(in_array($genre->id, old('parent_id', [])))>
+                                                                        @selected(in_array($genre->id, array_column(old('genre_id', []), 'genre_id')))>
                                                                         {{ $genre->name }}
                                                                     </option>
                                                                     @if (count($genre->childrenRecursive) > 0)
@@ -235,7 +219,7 @@
                                                                 @endforeach
                                                             @endif
                                                         </select>
-                                                        @error('parent_id')
+                                                        @error('genre_id')
                                                             <div class="text-danger mt-2">{{ $message }}</div>
                                                         @enderror
                                                     </div>
@@ -261,7 +245,7 @@
                                                                     class="change-btn d-flex align-items-center flex-wrap">
                                                                     <input type="file"
                                                                         class="form-control d-none uploadImage"
-                                                                        id="imageUpload1" name="image"
+                                                                        id="imageUpload1" name="movie[image]"
                                                                         accept=".png, .jpg, .jpeg">
                                                                     <label for="imageUpload1"
                                                                         class="btn btn-sm btn-primary light ms-0">{{ __('language.admin.movies.select') }}</label>
@@ -272,7 +256,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="filter cm-content-box box-primary">
                                                 <div class="content-title SlideToolHeader">
                                                     <div class="cpa">
@@ -292,7 +275,7 @@
                                                                     class="change-btn d-flex align-items-center flex-wrap">
                                                                     <input type="file"
                                                                         class="form-control d-none uploadImage"
-                                                                        id="imageUpload2" name="banner_movie"
+                                                                        id="imageUpload2" name="movie[banner_movie]"
                                                                         accept=".png, .jpg, .jpeg">
                                                                     <label for="imageUpload2"
                                                                         class="btn btn-sm btn-primary light ms-0">{{ __('language.admin.movies.select') }}</label>
@@ -303,17 +286,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
                                             <div class="filter cm-content-box box-primary">
                                                 <div class="content-title SlideToolHeader">
                                                     <div class="cpa">
                                                         {{ __('language.admin.movies.customize') }}
                                                     </div>
                                                 </div>
-
                                                 <div class="cm-content-body publish-content form excerpt">
                                                     <div class="row">
                                                         <div class="col-6">
@@ -323,15 +301,14 @@
                                                                 <div class="row mt-2">
                                                                     <div class="col-sm-6">
                                                                         <input class="form-check-input" type="radio"
-                                                                            id="active" name="active" value="1"
-                                                                            checked="">
+                                                                            id="active" name="movie[active]" value="1" @checked(old('movie.active', 1) == 1)>
                                                                         <label class="form-check-label" for="active">
                                                                             {{ __('language.admin.movies.show') }}
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <input class="form-check-input" value="0"
-                                                                            type="radio" id="active" name="active">
+                                                                            type="radio" id="active" name="movie[active]" @checked(old('movie.active', 1) == 0)>
                                                                         <label class="form-check-label" for="active">
                                                                             {{ __('language.admin.movies.hidden') }}
                                                                         </label>
@@ -342,9 +319,10 @@
                                                         <div class="col-6">
                                                             <div class="p-3">
                                                                 <label
-                                                                    class="form-label">{{ __('language.admin.movies.numberOrder') }}</label><br>
-                                                                <input class="form-control" value="0" type="number"
-                                                                    min="0" id="order" name="order">
+                                                                    class="form-label">{{ __('language.admin.movies.numberOrder') }}</label>
+                                                                <br>
+                                                                <input class="form-control" value="{{ old('movie.order', 0) }}" type="number"
+                                                                    min="0" id="order" name="movie[order]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -354,7 +332,7 @@
                                                                 <label
                                                                     class="form-label">{{ __('language.admin.movies.hot') }}</label><br>
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="hot" name="hot" value="1">
+                                                                    id="hot" name="movie[hot]" value="{{ old('movie.hot', 0) }}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -371,93 +349,95 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="actor">
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="add-actor btn btn-success" onclick="addActor()">
-                                                {{ __('language.admin.movies.addActor') }}
-                                            </div>
-                                            <div id="actor-list" class="row mt-4">
-                                                <div class="actor-row row mt-2">
-                                                    <div class="col-3">
-                                                        <label
-                                                            class="form-label mb-2">{{ __('language.admin.movies.nameActor') }}:</label>
-                                                        <input type="text" value="{{ old('name_actor[]') }}"
-                                                            name="name_actor[]" class="form-control"
-                                                            placeholder="{{ __('language.admin.movies.inputNameActor') }}">
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <label
-                                                            class="form-label mb-2">{{ __('language.admin.movies.birtDate') }}:</label>
-                                                        <input type="date" value="{{ old('birth_date[]') }}"
-                                                            name="birth_date[]" class="form-control">
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <label
-                                                            class="form-label mb-2">{{ __('language.admin.movies.nationality') }}:</label>
-                                                        <input type="text" value="{{ old('nationality[]') }}"
-                                                            value="" name="nationality[]" class="form-control"
-                                                            placeholder="{{ __('language.admin.movies.inputNationality') }}">
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <label
-                                                            class="form-label mb-2">{{ __('language.admin.movies.role') }}:</label>
-                                                        <input type="text" value="{{ old('role[]') }}" value=""
-                                                            name="role[]" class="form-control"
-                                                            placeholder="{{ __('language.admin.movies.inputRole') }}">
-                                                    </div>
-                                                    <div class="col-1" style="position: relative">
-                                                        <!-- Không có nút xóa cho hàng đầu tiên -->
-                                                    </div>
+                                <div class="row">
+                                    <div class="col-xl-3">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5>
+                                                    {{ __('language.admin.movies.chooseActor') }}
+                                                </h5>
+                                                <select multiple="multiple" id="movie_actors" style="width:100%;" name="actor_id[]" class="js-example-disabled-multi">
+                                                    @if (!empty($actors))
+                                                        @foreach ($actors as $actor)
+                                                            <option value="{{ $actor->id }}"
+                                                                    data-image="{{ asset($actor->image) }}"
+                                                                    @selected(in_array($actor->id, old('actor_id', [])))>
+                                                                {{ $actor->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                <div id="roleBoxes">
+                                                    @if (!empty(old('movie_actors')))
+                                                        @foreach (old('movie_actors') as $index => $item)
+                                                            <div class="role-box" data-actor-id="{{ $item['actor_id'] }}" data-index="{{ $index }}">
+                                                                <label>Vai trò của {{ old('actors_name')[$index] }}: </label>
+                                                                <input class="form-control" type="text" name="movie_actors[{{ $index }}][role]" value="{{ $item['role'] }}">
+                                                                <input class="form-control" type="text" hidden name="movie_actors[{{ $index }}][actor_id]" value="{{ $item['actor_id'] }}">
+                                                                <input class="form-control" type="text" hidden name="actors_name[{{ $index }}]" value="{{ old('actors_name')[$index] }}">
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="col-xl-9">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="btn btn-success" id="add-actor">
+                                                    {{ __('language.admin.movies.addActor') }}
+                                                </div>
+                                                <div id="actor-list" class="row mt-4">
+                                                    @if (!empty(old('actors')))
+                                                        @foreach (old('actors') as $index => $actor)
+                                                            <div class="actor-row row mt-3" data-index="{{ $index }}">
+                                                                <div class="col-3">
+                                                                    <label
+                                                                        class="form-label mb-2">Tên:</label>
+                                                                    <input type="text" value="{{ $actor['name'] }}"
+                                                                        name="actors[{{ $index }}][name]" class="form-control">
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <label
+                                                                        class="form-label mb-2">Ngày sinh:</label>
+                                                                    <input type="date" value="{{ $actor['birth_date'] }}"
+                                                                        name="actors[{{ $index }}][birth_date]" class="form-control">
+                                                                </div>
+                                                                <div class="col-2">
+                                                                    <label
+                                                                        class="form-label mb-2">Quốc tịch:</label>
+                                                                    <input type="text" value="{{ $actor['nationality'] }}"
+                                                                        name="actors[{{ $index }}][nationality]" class="form-control">
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <label
+                                                                        class="form-label mb-2">Vai trò:</label>
+                                                                    <input type="text" value="{{ old('role')[$index] }}"
+                                                                        name="role[{{ $index }}]" class="form-control">
+                                                                </div>
+                                                                <div class="col-1 mt-4">
+                                                                    <a href="#" class="btn btn-danger" onclick="deleteActor(event)">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                 </form>
             </div>
-
         </div>
     </div>
 @endsection
 
 @section('js')
-    <script>
-        function addActor() {
-            const actorList = document.getElementById('actor-list');
-            const newRow = document.querySelector('.actor-row').cloneNode(true);
-
-            // Clear the values in the cloned row
-            newRow.querySelectorAll('input').forEach(input => {
-                input.value = '';
-            });
-
-            // Thêm nút xóa cho hàng mới
-            const deleteButton = document.createElement('a');
-            deleteButton.className = 'btn btn-danger del-actor';
-            deleteButton.innerText = 'Xóa';
-            deleteButton.onclick = deleteActor;
-            deleteButton.style.cssText = 'display:block; position:absolute; bottom:0;'; // Thêm style nếu cần
-
-            const deleteCol = newRow.querySelector('.col-1');
-            deleteCol.innerHTML = ''; // Xóa nội dung cũ
-            deleteCol.appendChild(deleteButton); // Thêm nút xóa vào hàng mới
-
-            actorList.appendChild(newRow);
-        }
-
-        function deleteActor(event) {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-            const actorRow = event.target.closest('.actor-row'); // Tìm hàng cha
-            if (actorRow) {
-                actorRow.remove(); // Xóa hàng
-            }
-        }
-    </script>
+    <script src="{{ asset('js/admin/commons/movies/create.js') }}"></script>
 @endsection

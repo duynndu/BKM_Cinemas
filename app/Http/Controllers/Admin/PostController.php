@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\PostRequest;
 use App\Models\Post;
-use App\Services\Admin\CategoryPosts\CategoryPostService;
-use App\Services\Admin\Posts\PostService;
+use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
+use App\Services\Admin\Posts\Interfaces\PostServiceInterface;
+use App\Services\Admin\Tags\Interfaces\TagServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,24 +18,25 @@ class PostController extends Controller
     use RemoveImageTrait;
 
     protected $postService;
-
+    protected $tagService;
     protected $categoryPostService;
 
 
     public function __construct(
-        CategoryPostService     $categoryPostService,
-        PostService             $postService,
+        CategoryPostServiceInterface     $categoryPostService,
+        TagServiceInterface $tagService,
+        PostServiceInterface             $postService,
     ) {
         $this->postService = $postService;
-
+        $this->tagService = $tagService;
         $this->categoryPostService = $categoryPostService;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $listCategoryPost = $this->postService->getListCategoryPost();
+        $listCategoryPost = $this->categoryPostService->getAll();
 
-        $results = $this->postService->allFillter($request);
+        $results = $this->postService->getAll();
 
         return view('admin.pages.posts.index', [
             'data' => $results['data'],
@@ -49,20 +51,18 @@ class PostController extends Controller
 
     public function create()
     {
-        $listCategoryPost = $this->postService->getListCategoryPost();
-
-        $tags = $this->postService->listTags();
+        $listCategoryPost = $this->categoryPostService->getAll();
+        $tags = $this->tagService->getAll();
 
         return view('admin.pages.posts.create', compact('listCategoryPost', 'tags'));
     }
 
     public function store(PostRequest $request)
     {
-
         try {
             DB::beginTransaction();
 
-            $this->postService->store($request);
+            $this->postService->create($request);
 
             DB::commit();
 
@@ -82,7 +82,7 @@ class PostController extends Controller
 
     public function edit($id)
     {
-        $post = $this->postService->getPostById($id);
+        $post = $this->postService->find($id);
 
         if (!$post) {
             return redirect()->route('admin.posts.index')->with([
@@ -90,9 +90,9 @@ class PostController extends Controller
             ]);
         }
 
-        $listCategoryPost = $this->postService->getListCategoryPost();
+        $listCategoryPost = $this->categoryPostService->getAll();
 
-        $tags = $this->postService->listTags();
+        $tags = $this->tagService->getAll();
 
         $cateData = $this->postService->categoryOfPost($id);
 
@@ -207,12 +207,23 @@ class PostController extends Controller
     }
     public function deleteItemMultipleChecked(Request $request)
     {
-        if (empty($request->selectedIds)) {
-            return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400); // Trả về mã lỗi 400
-        }
-        $this->postService->deleteMultipleChecked($request);
+        try {
+            DB::beginTransaction();
+            if (empty($request->selectedIds)) {
+                return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400);
+            }
+            $this->postService->deleteMultipleChecked($request);
 
-        return response()->json(['message' => 'Xóa thành công!']);
+            DB::commit();
+            return response()->json(['message' => 'Xóa thành công!'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
     }
-    
 }

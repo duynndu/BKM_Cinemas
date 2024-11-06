@@ -51,6 +51,57 @@
 										<button type="button" @click="toggleModal()" class="btn btn-sm btn-primary">Chọn
 											từ sơ đồ ghế có sẵn</button>
 									</div>
+									<div class="mb-3">
+										<div class="tw-text-sm tw-font-medium tw-mb-2">Ngày chiếu</div>
+										<div class="tw-mb-3">
+											<div id="selectDay"></div>
+										</div>
+										<div class="row tw-items-end">
+											<div class="col-6">
+												<div class="row">
+													<div class="col">
+														<label for="start_time" class="form-label">Thời gian bắt đầu</label>
+														<input id="start_time" data-inputmask="'alias': 'datetime', 'inputFormat': 'HH:MM'" placeholder="HH:MM" class="form-control" />
+													</div>
+													<div class="col">
+														<label for="end_time" class="form-label">Thời gian kết thúc</label>
+														<input id="end_time" data-inputmask="'alias': 'datetime', 'inputFormat': 'HH:MM'" placeholder="HH:MM" class="form-control" />
+													</div>
+													<div class="col tw-flex tw-justify-start tw-items-end">
+														<div>
+															<button type="button" @click="addShowtime()" class="btn btn-sm btn-primary">Thêm</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-mt-3">
+											<div class="tw-col-span-7" id="selectedTime"></div>
+											<div style="border: 1px solid; min-height: 276px; border-radius: 4px;" class="tw-col-span-5 tw-flex tw-relative">
+												<div x-show="showtimeSelected" class="tw-absolute tw-top-0 tw-right-0 tw-p-2"><i @click="deleteShowtime()" class="fa-solid fa-trash-can hover:tw-text-red-500 tw-cursor-pointer tw-text-xl"></i></div>
+												<div class="tw-flex tw-justify-center tw-items-center tw-flex-col tw-w-full" x-show="showtimeSelected && !showtimeSelected?.movie_id" x-cloak>
+													<div>Xuất chiếu chưa có phim</div>
+													<button type="button" class="btn btn-sm btn-primary" @click="showModalMovie = true">Chọn phim</button>
+												</div>
+												<div x-show="showtimeSelected?.movie_id" x-cloak>
+													<div class="movie-info tw-grid tw-grid-cols-12 tw-gap-2">
+														<div class="tw-col-span-5">
+															{{-- <img class="tw-block tw-w-full tw-h-[276px] tw-w-[190px] tw-rounded tw-object-cover" :src="showtimeSelected?.movie?.image" alt="Movie Image" class="movie-image"> --}}
+														</div>
+														<div class="tw-col-span-7">
+															<h3 x-text="showtimeSelected?.movie?.title"></h3>
+															<p><strong>Director:</strong> <span x-text="showtimeSelected?.movie?.director"></span></p>
+															<p><strong>Duration:</strong> <span x-text="showtimeSelected?.movie?.duration"></span> phút</p>
+															<p><strong>Release Date:</strong> <span x-text="showtimeSelected?.movie?.release_date"></span></p>
+															<p><strong>Language:</strong> <span x-text="showtimeSelected?.movie?.language"></span></p>
+															<p><strong>Description:</strong> <span x-text="showtimeSelected?.movie?.description"></span></p>
+															<button type="button" class="btn btn-sm btn-danger" @click="clearShowtimeMovie()">Gỡ phim</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 									<div class="tw-flex tw-justify-end">
 										<button class="btn btn-md btn-success">Cập nhật</button>
 									</div>
@@ -60,6 +111,7 @@
 					</div>
 				</div>
 			</form>
+			<!-- modal -->
 			<div x-show="showModal"
 				class="tw-fixed tw-inset-0 tw-z-50 tw-flex tw-items-center tw-justify-center tw-bg-black tw-bg-opacity-50" x-cloak>
 				<div @click.outside="toggleModal()"
@@ -89,6 +141,45 @@
 					<div class="tw-flex tw-justify-end tw-p-4 tw-border-t tw-border-gray-200">
 						<button type="button" @click="toggleModal()"
 							class="tw-btn tw-btn-sm tw-btn-secondary hover:tw-bg-red-600 tw-transition tw-duration-300">Close</button>
+					</div>
+				</div>
+			</div>
+			<div x-show="showModalMovie"
+				class="tw-fixed tw-inset-0 tw-z-50 tw-flex tw-items-center tw-justify-center tw-bg-black tw-bg-opacity-50 tw-w-full tw-h-full" x-cloak>
+				<div @click.outside="showModalMovie = false"
+					class="tw-bg-white tw-rounded-lg tw-shadow-lg tw-w-full tw-max-w-7xl tw-p-6 tw-relative">
+					<!-- Search Bar -->
+					<div class="tw-mb-4">
+						<div class="input-group">
+							<span class="input-group-text">
+								<a href="javascript:void(0)">
+									<svg width="15" height="15" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M17.5605 15.4395L13.7527 11.6317C14.5395 10.446 15 9.02625 15 7.5C15 3.3645 11.6355 0 7.5 0C3.3645 0 0 3.3645 0 7.5C0 11.6355 3.3645 15 7.5 15C9.02625 15 10.446 14.5395 11.6317 13.7527L15.4395 17.5605C16.0245 18.1462 16.9755 18.1462 17.5605 17.5605C18.1462 16.9747 18.1462 16.0252 17.5605 15.4395V15.4395ZM2.25 7.5C2.25 4.605 4.605 2.25 7.5 2.25C10.395 2.25 12.75 4.605 12.75 7.5C12.75 10.395 10.395 12.75 7.5 12.75C4.605 12.75 2.25 10.395 2.25 7.5V7.5Z" fill="#ff00f7d4"></path>
+									</svg>
+								</a>
+							</span>
+							<input type="text" x-model="searchQuery" class="form-control" placeholder="Tìm kiếm...">
+						</div>
+					</div>
+
+					<!-- Movie Grid -->
+					<div class="tw-h-[400px] tw-pb-14 tw-overflow-y-auto tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 tw-gap-4 tw-p-8">
+						<template x-for="movie in filteredMovies()" :key="movie.id">
+							<div @click="selectMovie(movie)" class="tw-border-2 tw-border-solid tw-p-2 tw-rounded-lg tw-shadow hover:tw-shadow-lg tw-transition-shadow tw-duration-300 tw-cursor-pointer">
+								<figure class="tw-p-0 tw-m-0">
+									<img class="tw-w-full tw-h-[225px] tw-object-cover" :src="movie.image" alt="Movie Image" />
+								</figure>
+								<div class="tw-p-2">
+									<h2 class="tw-card-title" x-text="movie.title"></h2>
+									<div>Thời lượng: <span x-text="movie.duration"></span>p</div>
+								</div>
+							</div>
+						</template>
+					</div>
+
+					<!-- Close Button -->
+					<div class="tw-flex tw-justify-end tw-mt-4 tw-absolute tw-right-0 tw-bottom-0 tw-left-0 tw-p-4 tw-bg-white tw-border-t-2 tw-border-gray-500">
+						<button @click="showModalMovie = false" class="tw-btn tw-btn-sm tw-btn-secondary">Close</button>
 					</div>
 				</div>
 			</div>
