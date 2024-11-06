@@ -16,10 +16,11 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('area_id');
             $table->string('name');
+            $table->string('image')->nullable();
             $table->string('address');
             $table->string('phone');
             $table->string('email');
-            $table->string('map');
+            $table->text('map');
             $table->text('description')->nullable();
             $table->tinyInteger('active')->default(1);
             $table->timestamps();

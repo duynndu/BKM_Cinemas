@@ -6,45 +6,30 @@ use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\Tag;
 use App\Repositories\Admin\Tags\Interface\TagInterface;
+use App\Repositories\Base\BaseRepository;
 
-class TagRepository implements TagInterface
+class TagRepository extends BaseRepository implements TagInterface
 {
     protected $postTag;
-
-    protected $post;
-
-    protected $tag;
-    const PAGINATION = 10;
-
-    public function __construct(
-        PostTag $postTag,
-        Post $post,
-        Tag $tag
-    )
+    public function __construct(PostTag $postTag)
     {
         $this->postTag = $postTag;
-        $this->post = $post;
-        $this->tag = $tag;
+        parent::__construct();
+    }
+    public function getModel()
+    {
+        return \App\Models\Tag::class;
     }
 
-    public function listTags()
+    public function getAll()
     {
-        $tags = $this->tag->orderBy('id', 'desc')->get();
+        $query = $this->model->newQuery();
 
-        return $tags;
-    }
-
-    public function getAlltags($request)
-    {
-
-        $query = $this->tag->newQuery();
-
-        if (!empty($request->name)) {
-            $query->where('name', 'like', '%' . $request->name . '%');
+        if (!empty(request()->name)) {
+            $query->where('name', 'like', '%' . request()->name . '%');
         }
-
-        if (!empty($request->fill_action)) {
-            switch ($request->fill_action):
+        if (!empty(request()->fill_action)) {
+            switch (request()->fill_action):
                 case 'active':
                     $query->where('active', 1);
                     break;
@@ -55,7 +40,7 @@ class TagRepository implements TagInterface
         }
         $data = $query->orderBy('order')->paginate(self::PAGINATION);
 
-        switch ($request->fill_action):
+        switch (request()->fill_action):
             case 'active':
                 $data = $data->appends('fill_action', 'active');
                 break;
@@ -66,11 +51,6 @@ class TagRepository implements TagInterface
 
         return $data;
     }
-    public function store($data)
-    {
-        return $this->tag->create($data);
-    }
-
     public function tagsSelected($id)
     {
         return $this->postTag
@@ -78,26 +58,9 @@ class TagRepository implements TagInterface
             ->whereNull('deleted_at')
             ->pluck('tag_id'); // Lấy các tag chưa bị xóa
     }
-    public function getTagById($id)
-    {
-        $tagEdit = $this->tag->find($id);
-
-        return $tagEdit;
-    }
-
-
-    public function updateTag($data, $id)
-    {
-        $tag = $this->tag->find($id);
-
-        $tag->update($data);
-
-        return $tag;
-    }
-
     public function delete($id)
     {
-        $tag = $this->tag->find($id);
+        $tag = $this->model->find($id);
 
         if (!$tag) {
 
@@ -109,9 +72,36 @@ class TagRepository implements TagInterface
         }
 
         $tag->postTags()->delete();
-
         $tag->delete();
 
         return true;
+    }
+    public function changeActive($id)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->active ^= 1;
+            $result->save();
+            return $result;
+        }
+        return false;
+    }
+    public function changeOrder($id, $order)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->order = $order;
+            $result->save();
+            return $result;
+        }
+        return false;
+    }
+    public function getAllActive()
+    {
+        $tags = $this->model->select(
+            'id',
+            'name',
+        )->where('active', 1)->get();
+        return $tags;
     }
 }

@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Movies\MovieRequest;
-use App\Http\Requests\Posts\PostRequest;
 use App\Models\Movie;
-use App\Models\Post;
-use App\Services\Admin\CategoryPosts\CategoryPostService;
-use App\Services\Admin\Genres\GenreService;
-use App\Services\Admin\Movies\MovieService;
-use App\Services\Admin\Posts\PostService;
+use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
+use App\Services\Admin\Genres\Interfaces\GenreServiceInterface;
+use App\Services\Admin\Movies\Interfaces\MovieServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,42 +20,44 @@ class MovieController extends Controller
     protected $movieService;
 
     protected $genreService;
+    protected $actorService;
 
 
     public function __construct(
-        MovieService     $movieService,
-        GenreService      $genreService,
+        MovieServiceInterface     $movieService,
+        GenreServiceInterface      $genreService,
+        ActorServiceInterface      $actorService,
     ) {
         $this->movieService = $movieService;
-
         $this->genreService = $genreService;
+        $this->actorService = $actorService;
     }
+
 
     public function index(Request $request)
     {
-        $listGenre = $this->genreService->getListGenre();
-        
-        $listMovie = $this->movieService->listMovies($request);
+        $listGenre = $this->genreService->getAll();
+        $data = $this->movieService->getAll();
 
-        return view('admin.pages.movies.index', [
-            'data' => $listMovie['listMovies'],
-            'listGenre'=>$listGenre,
-            'selectedGenre'=>$listMovie['genres']
-        ]);
+        return view('admin.pages.movies.index', compact('data','listGenre'));
     }
 
     public function create()
     {
-        $listGenre = $this->genreService->getListGenre();
-        return view('admin.pages.movies.create',compact('listGenre'));
+        $listGenre = $this->genreService->getAll();
+        $actors = $this->actorService->getAll();
+
+        return view('admin.pages.movies.create',compact('listGenre','actors'));
     }
 
     public function store(MovieRequest $request)
     {
+        $data = $request->all();
+        // dd($data);
         try {
             DB::beginTransaction();
 
-            $this->movieService->store($request);
+            $this->movieService->create($data);
 
             DB::commit();
 
@@ -79,27 +78,27 @@ class MovieController extends Controller
 
     public function edit($id)
     {
-        $movie = $this->movieService->getMovieById($id);
-        $listGenre = $this->movieService->getListGenre();
-        $cateData = $this->movieService->genreOfMovie($id);
-       
-        if (!$movie) {
+        $data = $this->movieService->find($id);
+        $listGenre = $this->genreService->getAll();
+        $actors = $this->actorService->getAll();
+
+        if (!$data) {
             return redirect()->route('admin.posts.index')->with([
                 'status_failed' => "Không tìm thấy phim"
             ]);
         }
 
-        return view('admin.pages.movies.edit', compact('movie','listGenre','cateData'));
-        
+        return view('admin.pages.movies.edit', compact('data', 'listGenre','actors'));
+
     }
 
-    public function update(movieRequest $request, $id)
+    public function update(MovieRequest $request, $id)
     {
-        
+        $data = $request->all();
         try {
             DB::beginTransaction();
 
-            $this->movieService->update($request, $id);
+            $this->movieService->update($data, $id);
 
             DB::commit();
 
@@ -177,12 +176,22 @@ class MovieController extends Controller
 
     public function deleteItemMultipleChecked(Request $request)
     {
-        if (empty($request->selectedIds)) {
-            return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400); // Trả về mã lỗi 400
-        }
-        $this->movieService->deleteMultipleChecked($request);
+        try {
+            DB::beginTransaction();
+            if (empty($request->selectedIds)) {
+                return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400);
+            }
+            $this->movieService->deleteMultipleChecked($request);
 
-        return response()->json(['message' => 'Xóa thành công!']);
+            DB::commit();
+            return response()->json(['message' => 'Xóa thành công!'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
     }
-    
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryPosts\CategoryPostRequest;
 use App\Models\CategoryPost;
-use App\Services\Admin\CategoryPosts\CategoryPostService;
+use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Log;
 class CategoryPostController extends Controller
 {
     use RemoveImageTrait;
-    Protected $categoryPostService;
+    protected $categoryPostService;
 
     public function __construct(
-        CategoryPostService $categoryPostService,
+        CategoryPostServiceInterface $categoryPostService
     ) {
         $this->categoryPostService = $categoryPostService;
     }
@@ -37,7 +37,8 @@ class CategoryPostController extends Controller
             'parent_id' => $parentId ?? null
         ]);
 
-        $data = $this->categoryPostService->getAllCategoryPost($request);
+        $data = $this->categoryPostService->getAll();
+
 
         return view('admin.pages.categoryPosts.index', compact('data'));
     }
@@ -45,9 +46,7 @@ class CategoryPostController extends Controller
 
     public function create()
     {
-        $listCategoryPost = $this->categoryPostService->getListCategoryPost();
-
-
+        $listCategoryPost = $this->categoryPostService->getAll();
         return view('admin.pages.categoryPosts.create', compact('listCategoryPost'));
     }
     public function store(CategoryPostRequest $request)
@@ -55,7 +54,7 @@ class CategoryPostController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->categoryPostService->store($request);
+            $this->categoryPostService->create($request);
 
             DB::commit();
 
@@ -84,7 +83,7 @@ class CategoryPostController extends Controller
 
     public function edit($id)
     {
-        $cate = $this->categoryPostService->getCategoryPostById($id);
+        $cate = $this->categoryPostService->find($id);
 
         if (!$cate) {
             return redirect()->route('admin.categoryPosts.index')->with([
@@ -165,9 +164,9 @@ class CategoryPostController extends Controller
 
     public function removeAvatarImage(Request $request)
     {
-        $post = $this->removeImage($request, new CategoryPost, 'avatar', 'categoryPosts');
+        $categoryPost = $this->removeImage($request, new CategoryPost, 'avatar', 'categoryPosts');
 
-        return response()->json(['avatar' => $post]);
+        return response()->json(['avatar' => $categoryPost]);
     }
 
     public function changeOrder(Request $request)
@@ -181,7 +180,7 @@ class CategoryPostController extends Controller
     {
         $result = $this->categoryPostService->changePosition($request);
 
-        if(!$result) {
+        if (!$result) {
             return response()->json([
                 'status' => false,
                 'newPosition' => $request->position,
@@ -195,11 +194,23 @@ class CategoryPostController extends Controller
     }
     public function deleteItemMultipleChecked(Request $request)
     {
-        if (empty($request->selectedIds)) {
-            return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400); // Trả về mã lỗi 400
-        }
-        $this->categoryPostService->deleteMultipleChecked($request);
+        try {
+            DB::beginTransaction();
+            if (empty($request->selectedIds)) {
+                return response()->json(['message' => 'Vui lòng chọn ít nhất 1 bản ghi'], 400);
+            }
+            $this->categoryPostService->deleteMultipleChecked($request);
 
-        return response()->json(['message' => 'Xóa thành công!']);
+            DB::commit();
+            return response()->json(['message' => 'Xóa thành công!'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
     }
 }

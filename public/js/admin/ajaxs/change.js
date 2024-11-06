@@ -59,7 +59,13 @@ $(document).ready(function () {
                 });
             },
             error: function (xhr, status, error) {
-                console.log("Error:", error); // Xem có lỗi gì xảy ra không
+                Swal.fire({
+                    title: "Thất bại!",
+                    text: xhr.responseJSON.message,
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
             },
 
         });
@@ -85,7 +91,15 @@ $(document).ready(function () {
                     icon: "success",
                     confirmButtonText: "OK",
                 });
-            }
+            }, error: function (xhr, status, error) {
+                Swal.fire({
+                    title: "Thất bại!",
+                    text: xhr.responseJSON.message,
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            },
         });
     }
 

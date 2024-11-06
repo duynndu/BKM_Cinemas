@@ -18,4 +18,9 @@ class Cinema extends Model
     {
         return $this->hasMany(Room::class);
     }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
+    }
 }
