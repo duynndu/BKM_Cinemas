@@ -11,7 +11,7 @@ class MovieRepository extends BaseRepository implements MovieInterface
 {
     public function getModel()
     {
-        return \App\Models\Movie::class;
+        return Movie::class;
     }
     public function getAll()
     {

@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin\Members;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Roles\RoleRequest;
 use App\Models\Role;
-use App\Services\Admin\Roles\RoleService;
+use App\Services\Admin\Modules\Interfaces\ModuleServiceInterface;
+use App\Services\Admin\Roles\Interfaces\RoleServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,13 +16,15 @@ class RoleController extends Controller
 {
     use RemoveImageTrait;
     protected $roleService;
-
+    protected $moduleService;
 
     public function __construct(
-        RoleService $roleService,
+        RoleServiceInterface $roleService,
+        ModuleServiceInterface $moduleService,
     )
     {
         $this->roleService = $roleService;
+        $this->moduleService = $moduleService;
     }
 
     public function index(Request $request)
@@ -34,24 +37,25 @@ class RoleController extends Controller
             'page' => $currentPage ?? null,
         ]);
 
-        $data['roles'] = $this->roleService->getAllRole($request);
+        $data['roles'] = $this->roleService->getAll();
 
         return view('admin.pages.members.roles.index', compact('data'));
     }
 
     public function create()
     {
-        $data['modules'] = $this->roleService->getModules();
+        $data['modules'] = $this->moduleService->getAll();
 
         return view('admin.pages.members.roles.create', compact('data'));
     }
 
     public function store(RoleRequest $request)
     {
+        $data = $request->all();
         try {
             DB::beginTransaction();
 
-            $this->roleService->store($request);
+            $this->roleService->create($data);
 
             DB::commit();
 
@@ -75,19 +79,20 @@ class RoleController extends Controller
 
     public function edit($id)
     {
-        $data['role'] = $this->roleService->getRoleById($id);
+        $data['role'] = $this->roleService->find($id);
 
-        $data['modules'] = $this->roleService->getModules();
+        $data['modules'] = $this->moduleService->getAll();
 
         return view('admin.pages.members.roles.edit', compact('data'));
     }
 
     public function update(RoleRequest $request, $id)
     {
+        $data = $request->all();
         try {
             DB::beginTransaction();
 
-            $this->roleService->update($request, $id);
+            $this->roleService->update($data, $id);
 
             DB::commit();
 

@@ -24,7 +24,6 @@
                     @include('admin.components.sidebar-left-body', [
                         'pages' => $pages,
                         'blockTypes' => $blockTypes,
-                        'languages' => $languages,
                     ])
                 </div>
                 <!--/column-->
@@ -144,4 +143,11 @@
 @endsection
 
 @section('js')
+<script>
+    $(document).ready(function () {
+        @if ($errors->any())
+        $('#modalAddBlock').modal('show');
+        @endif
+    });
+</script>
 @endsection

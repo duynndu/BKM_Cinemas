@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin\Blocks;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Blocks\BlockRequest;
-use App\Services\Admin\Blocks\BlockService;
+use App\Services\Admin\Blocks\Interfaces\BlockServiceInterface;
+use App\Services\Admin\BlockTypes\Interfaces\BlockTypeServiceInterface;
+use App\Services\Admin\Pages\Interfaces\PageServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -12,21 +14,28 @@ use Illuminate\Support\Facades\Log;
 class BlockController extends Controller
 {
     protected $blockService;
+    protected $blockTypeService;
+    protected $pageService;
 
-    public function __construct(BlockService $blockService)
-    {
+    public function __construct(
+        BlockServiceInterface $blockService,
+        BlockTypeServiceInterface $blockTypeService,
+        PageServiceInterface $pageService,
+    ){
         $this->blockService = $blockService;
+        $this->blockTypeService = $blockTypeService;
+        $this->pageService = $pageService;
     }
 
     public function index(Request $request)
     {
         $countBlock = $this->blockService->countBlock();
 
-        $pages = $this->blockService->getAllPage();
+        $pages = $this->pageService->getAllActive();
 
-        $blocks = $this->blockService->getAllBLock($request);
+        $blockTypes = $this->blockTypeService->getAllActive();
 
-        $blockTypes = $this->blockService->getAllBlockType();
+        $blocks = $this->blockService->getAll();
 
         return view('admin.pages.blocks.index', compact(
                 'countBlock',
@@ -39,17 +48,18 @@ class BlockController extends Controller
 
     public function create()
     {
-        $blockTypes = $this->blockService->getAllBlockType();
+        $blockTypes = $this->blockTypeService->getAllActive();
 
         return view('admin.pages.blocks.create', compact('blockTypes'));
     }
 
     public function store(BlockRequest $request)
     {
+        $data = $request->block;
         try {
             DB::beginTransaction();
 
-            $block = $this->blockService->store($request);
+            $block = $this->blockService->create($data);
 
             DB::commit();
 
@@ -66,15 +76,15 @@ class BlockController extends Controller
 
     public function edit($id)
     {
-        $pages = $this->blockService->getAllPage();
+        $pages = $this->pageService->getAllActive();
 
-        $data = $this->blockService->getBlockByIdWithContents($id);
+        $data = $this->blockService->find($id);
 
-        $block = $data['block'];
+        $block = $data;
 
-        $contents = $data['contents'];
+        $contents = $data->blockContents->pluck('value', 'key_name')->toArray();
 
-        $blockTypes = $this->blockService->getAllBlockType();
+        $blockTypes = $this->blockTypeService->getAllActive();
 
         return view('admin.pages.blocks.edit', compact(
             'pages',
@@ -86,10 +96,12 @@ class BlockController extends Controller
 
     public function update(BlockRequest $request, $id)
     {
+        $data = $request->all();
+
         try {
             DB::beginTransaction();
 
-            $this->blockService->update($request, $id);
+            $this->blockService->update($data, $id);
 
             DB::commit();
 

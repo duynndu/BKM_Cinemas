@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin\Blocks;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlockTypes\BlockTypeRequest;
-use App\Services\Admin\BlockTypes\BlockTypeService;
+use App\Services\Admin\BlockTypes\Interfaces\BlockTypeServiceInterface;
+use App\Services\Admin\Pages\Interfaces\PageServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -12,21 +13,24 @@ use Illuminate\Support\Facades\Log;
 class BlockTypeController extends Controller
 {
     protected $blockTypeService;
+    protected $pageService;
 
     public function __construct(
-        BlockTypeService $blockTypeService
+        BlockTypeServiceInterface $blockTypeService,
+        PageServiceInterface $pageService
     )
     {
         $this->blockTypeService = $blockTypeService;
+        $this->pageService = $pageService;
     }
 
     public function index(Request $request)
     {
         $countBlockType = $this->blockTypeService->countBlockType();
 
-        $pages = $this->blockTypeService->getAllPage();
+        $pages = $this->pageService->getAllActive();
 
-        $blockTypes = $this->blockTypeService->getAllBlockType($request);
+        $blockTypes = $this->blockTypeService->getAll();
 
         return view('admin.pages.blockTypes.index', compact(
                 'pages',
@@ -43,10 +47,11 @@ class BlockTypeController extends Controller
 
     public function store(BlockTypeRequest $request)
     {
+        $data = $request->blockType;
         try {
             DB::beginTransaction();
 
-            $this->blockTypeService->store($request);
+            $this->blockTypeService->create($data);
 
             DB::commit();
 
@@ -62,7 +67,7 @@ class BlockTypeController extends Controller
 
     public function edit($id)
     {
-        $blockType = $this->blockTypeService->getBlockTypeById($id);
+        $blockType = $this->blockTypeService->find($id);
 
         if (!$blockType) {
             return redirect()->route('admin.blockTypes.index')->with('status_failed', 'Không tìm thấy loại khối');
@@ -73,10 +78,11 @@ class BlockTypeController extends Controller
 
     public function update(BlockTypeRequest $request, $id)
     {
+        $data = $request->blockType;
         try {
             DB::beginTransaction();
 
-            $this->blockTypeService->update($request, $id);
+            $this->blockTypeService->update($data, $id);
 
             DB::commit();
 

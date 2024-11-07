@@ -24,24 +24,24 @@ class PermissionRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'module_id' => 'required',
-            'name' => [
+            'permission.module_id' => 'required',
+            'permission.name' => [
                 "required",
                 "max:255",
                 new CheckRuleName($id, 'permissions', false)
             ],
-            'value' => 'required|max:255',
+            'permission.value' => 'required|max:255',
         ];
     }
 
     public function messages()
     {
         return [
-            "module_id.required" => __('validation.module', ['attribute' => __('language.admin.module')]),
-            "name.required" => __('validation.required', ['attribute' => __('language.admin.name')]),
-            "name.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
-            "value.required" => __('validation.required', ['attribute' => __('language.admin.value')]),
-            "value.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
+            "permission.module_id.required" => __('validation.module', ['attribute' => __('language.admin.module')]),
+            "permission.name.required" => __('validation.required', ['attribute' => __('language.admin.name')]),
+            "permission.name.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
+            "permission.value.required" => __('validation.required', ['attribute' => __('language.admin.value')]),
+            "permission.value.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
         ];
     }
 }
