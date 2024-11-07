@@ -8684,8 +8684,8 @@ label:hover:before {
     margin: 40px 0
 }
 
-#tab-combo table.combo tbody>tr>td,
-#tab-combo table.combo tbody>tr>th,
+#tab-combo table.combo tbody>template>tr>td,
+#tab-combo table.combo tbody>template>tr>th,
 #tab-combo table.combo tfoot>tr>td,
 #tab-combo table.combo tfoot>tr>th,
 #tab-combo table.combo thead>tr>td,
@@ -8733,11 +8733,11 @@ label:hover:before {
     font-weight: 700
 }
 
-#tab-combo table.combo .comb-qty {
+.comb-qty {
     text-align: center
 }
 
-#tab-combo table.combo .comb-qty button {
+.comb-qty button {
     margin: 0;
     background: 0 0;
     border: transparent;
@@ -8747,29 +8747,29 @@ label:hover:before {
     font-size: 16px
 }
 
-#tab-combo table.combo .comb-qty button.giamItem {
+button.giamItem {
     -webkit-transform: scale(3);
     transform: scale(3);
     font-size: 13px;
     font-weight: 700
 }
 
-#tab-combo table.combo .comb-qty button.tangItem {
+button.tangItem {
     -webkit-transform: scale(2);
     transform: scale(2);
     font-size: 15px;
     font-weight: 700
 }
 
-#tab-combo table.combo .comb-qty button.active {
+.comb-qty button.active {
     color: #e82327
 }
 
-#tab-combo table.combo .comb-qty button:focus {
+.comb-qty button:focus {
     outline: 0
 }
 
-#tab-combo table.combo .comb-qty .tongItem {
+.comb-qty .tongItem {
     width: 29px;
     text-align: center;
     display: inline-block;

@@ -56,7 +56,7 @@ class ShowtimeController extends Controller
         $room->seats = $seats;
         $room->seat_types = $seatTypes;
         $showtime->room = $room;
-        $showtime->load('movie');
+        $showtime->load(['movie', 'cinema']);
         return response()->json($showtime);
     }
 
@@ -85,17 +85,13 @@ class ShowtimeController extends Controller
         $request->validate([
             'start_date' => 'required|date',
             'room_id' => 'required|integer|exists:rooms,id',
-            // 'cinema_id' => 'nullable|integer|exists:cinemas,id',
-            'cinema_id' => 'nullable|integer',
+            'cinema_id' => 'nullable|integer|exists:cinemas,id',
         ]);
-        if(!$request->cinema_id){
-            // $request->merge(['cinema_id' => auth()->user()->cinema_id]);
-            $request->merge(['cinema_id' => 1]);
-        }
 
         $startDate = $request->start_date;
         $showtimes = Showtime::whereDate('start_time', '=', Carbon::parse($startDate)->toDateString())
             ->where('room_id', '=', $request->room_id)
+            ->where('cinema_id', '=', 1)
             ->with('movie')
             ->get();
         return response()->json($showtimes);

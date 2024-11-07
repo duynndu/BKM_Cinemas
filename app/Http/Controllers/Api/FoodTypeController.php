@@ -3,22 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Food;
-use App\Models\FoodCombo;
 use App\Models\FoodType;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use stdClass;
 
-class FoodController extends Controller
+class FoodTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $foods = Food::with('type')->get();
-        return response()->json($foods);
+        $data = FoodType::with('foods')->get();
+        return response()->json($data);
     }
 
     /**

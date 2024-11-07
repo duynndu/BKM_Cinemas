@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FoodController;
+use App\Http\Controllers\Api\FoodTypeController;
 use App\Http\Controllers\Api\MovieController;
 use App\Http\Controllers\Api\SeatController;
 use App\Http\Controllers\Api\SeatLayoutController;
@@ -46,6 +47,13 @@ Route::name('api.')->group(function () {
         Route::post('', 'store');
         Route::put('{food}', 'update');
         Route::delete('{showtime}', 'destroy');
+    });
+    Route::controller(FoodTypeController::class)->prefix('food-types')->name('food-types.')->group(function () {
+        Route::get('', 'index');
+        Route::get('{food-type}', 'show');
+        Route::post('', 'store');
+        Route::put('{food-type}', 'update');
+        Route::delete('{food-type}', 'destroy');
     });
     Route::controller(MovieController::class)->prefix('movies')->name('movies.')->group(function () {
         Route::get('', 'index');
