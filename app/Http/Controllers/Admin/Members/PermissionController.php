@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Members;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Permissions\PermissionRequest;
-use App\Services\Admin\Permissions\PermissionService;
+use App\Services\Admin\Permissions\Interfaces\PermissionServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +14,7 @@ class PermissionController extends Controller
     protected $permissionService;
 
     public function __construct(
-        PermissionService $permissionService,
+        PermissionServiceInterface $permissionService,
     )
     {
         $this->permissionService = $permissionService;
@@ -30,24 +30,25 @@ class PermissionController extends Controller
             'page' => $currentPage ?? null,
         ]);
 
-        $data['permissions'] = $this->permissionService->getAllPermissions();
+        $data['permissions'] = $this->permissionService->getAll();
 
         return view('admin.pages.members.permissions.index', compact('data'));
     }
 
     public function create()
     {
-        $data['modules'] = $this->permissionService->getAllModules();
+        $data['modules'] = $this->permissionService->getAll();
 
         return view('admin.pages.members.permissions.create', compact('data'));
     }
 
     public function store(PermissionRequest $request)
     {
+        $data = $request->permission;
         try {
             DB::beginTransaction();
 
-            $this->permissionService->store($request);
+            $this->permissionService->create($data);
 
             DB::commit();
 
@@ -71,19 +72,21 @@ class PermissionController extends Controller
 
     public function edit($id)
     {
-        $data['permission'] = $this->permissionService->getPermissionById($id);
+        $data['permission'] = $this->permissionService->find($id);
 
-        $data['modules'] = $this->permissionService->getAllModules();
+        $data['modules'] = $this->permissionService->getAll();
 
         return view('admin.pages.members.permissions.edit', compact('data'));
     }
 
     public function update(PermissionRequest $request, $id)
     {
+        $data = $request->permission;
+
         try {
             DB::beginTransaction();
 
-            $this->permissionService->update($request, $id);
+            $this->permissionService->update($data, $id);
 
             DB::commit();
 

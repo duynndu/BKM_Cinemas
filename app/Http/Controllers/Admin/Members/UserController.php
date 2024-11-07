@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin\Members;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\UserRequest;
 use App\Models\User;
-use App\Services\Admin\Roles\RoleService;
-use App\Services\Admin\Users\UserService;
+use App\Services\Admin\Roles\Interfaces\RoleServiceInterface;
+use App\Services\Admin\Users\Interfaces\UserServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,8 +21,8 @@ class UserController extends Controller
 
 
     public function __construct(
-        UserService $userService,
-        RoleService $roleService,
+        UserServiceInterface $userService,
+        RoleServiceInterface $roleService,
     )
     {
         $this->userService = $userService;
@@ -39,14 +39,14 @@ class UserController extends Controller
             'page' => $currentPage ?? null,
         ]);
 
-        $data['users'] = $this->userService->getAllUser();
+        $data['users'] = $this->userService->getAll();
 
         return view('admin.pages.members.users.index', compact('data'));
     }
 
     public function create()
     {
-        $data['roles'] = $this->userService->getAllRole();
+        $data['roles'] = $this->roleService->getAll();
 
         return view('admin.pages.members.users.create', compact('data'));
     }
@@ -56,7 +56,7 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->userService->store($request);
+            $this->userService->create($request);
 
             DB::commit();
 
@@ -80,13 +80,13 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $data['user'] = $this->userService->getUserById($id);
+        $data['user'] = $this->userService->find($id);
 
         if (!$data['user']) {
             return redirect()->route('admin.users.index')->with('status_failed', 'Không tìm thấy người dùng');
         }
 
-        $data['roles'] = $this->userService->getAllRole();
+        $data['roles'] = $this->roleService->getAll();
 
         return view('admin.pages.members.users.edit', compact('data'));
     }

@@ -4,24 +4,18 @@ namespace App\Repositories\Admin\Systems\Repository;
 
 use App\Models\System;
 use App\Repositories\Admin\Systems\Interface\SystemInterface;
+use App\Repositories\Base\BaseRepository;
 
-class SystemRepository implements SystemInterface
+class SystemRepository extends BaseRepository implements SystemInterface
 {
-    const PAGINATION = 10;
-
-    protected $system;
-
-
-    public function __construct(
-        System   $system,
-    )
+    public function getModel()
     {
-        $this->system = $system;
+        return System::class;
     }
 
     public function getAllSystemByType0SideBar()
     {
-        $systems = $this->system->where('type', 0)
+        $systems = $this->model->where('type', 0)
             ->orderBy('order')
             ->get();
 
@@ -30,7 +24,7 @@ class SystemRepository implements SystemInterface
 
     public function getAllSystemByType0($request)
     {
-        $systems = $this->system->where('type', 0);
+        $systems = $this->model->where('type', 0);
 
         if ($request->name) {
             $systems = $systems->where('name', 'like', '%' . $request->name . '%');
@@ -50,7 +44,7 @@ class SystemRepository implements SystemInterface
 
     public function getAllSystemBySystemId($request)
     {
-        $systems = $this->system->where('type', $request->system_id);
+        $systems = $this->model->where('type', $request->system_id);
 
         if ($request->name) {
             $systems = $systems->where('name', 'like', '%' . $request->name . '%');
@@ -69,37 +63,16 @@ class SystemRepository implements SystemInterface
         return $systems;
     }
 
-    public function createSystem($data)
-    {
-        return $this->system->create($data);
-    }
-
-    public function getSystemById($id)
-    {
-        $system = $this->system->find($id);
-
-        return $system;
-    }
-
-    public function updateSystem($data, $id)
-    {
-        $system = $this->system->find($id);
-
-        $system->update($data);
-
-        return $system;
-    }
-
     public function delete($id)
     {
-        $system = $this->system->find($id);
+        $system = $this->find($id);
 
         if (!$system) {
             return redirect()->route('admin.systems.index')->with('status_failed', 'Không tìm thấy nội dung');
         }
 
         if ($system->type == 0) {
-            $systemsToDelete = $this->system->where('type', $id)->get();
+            $systemsToDelete = $this->model->where('type', $id)->get();
 
             foreach ($systemsToDelete as $item) {
                 $item->delete();
@@ -109,5 +82,27 @@ class SystemRepository implements SystemInterface
         $system->delete();
 
         return $system;
+    }
+
+    public function changeActive($id)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->active ^= 1;
+            $result->save();
+            return $result;
+        }
+        return false;
+    }
+
+    public function changeOrder($id, $order)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->order = $order;
+            $result->save();
+            return $result;
+        }
+        return false;
     }
 }

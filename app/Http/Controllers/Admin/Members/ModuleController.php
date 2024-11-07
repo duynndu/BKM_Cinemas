@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin\Members;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Modules\ModuleRequest;
-use App\Services\Admin\Modules\ModuleServices;
+use App\Services\Admin\Modules\Interfaces\ModuleServiceInterface;
+use App\Services\Admin\Permissions\Interfaces\PermissionServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -12,12 +13,15 @@ use Illuminate\Support\Facades\Log;
 class ModuleController extends Controller
 {
     protected $moduleServices;
+    protected $permissionServices;
 
     public function __construct(
-        ModuleServices $moduleServices,
+        ModuleServiceInterface $moduleServices,
+        PermissionServiceInterface $permissionServices,
     )
     {
         $this->moduleServices = $moduleServices;
+        $this->permissionServices = $permissionServices;
     }
 
     public function index(Request $request)
@@ -30,24 +34,25 @@ class ModuleController extends Controller
             'page' => $currentPage ?? null,
         ]);
 
-        $data['modules'] = $this->moduleServices->getAllModule();
+        $data['modules'] = $this->moduleServices->getAll();
 
         return view('admin.pages.members.modules.index', compact('data'));
     }
 
     public function create()
     {
-        $data['permissions'] = $this->moduleServices->getAllPermissions();
+        $data['permissions'] = $this->permissionServices->getAll();
 
         return view('admin.pages.members.modules.create', compact('data'));
     }
 
     public function store(ModuleRequest $request)
     {
+        $data = $request->all();
         try {
             DB::beginTransaction();
 
-            $this->moduleServices->store($request);
+            $this->moduleServices->create($data);
 
             DB::commit();
 
@@ -71,19 +76,20 @@ class ModuleController extends Controller
 
     public function edit($id)
     {
-        $data['module'] = $this->moduleServices->getModuleById($id);
+        $data['module'] = $this->moduleServices->find($id);
 
-        $data['permissions'] = $this->moduleServices->getAllPermissions();
+        $data['permissions'] = $this->permissionServices->getAll();
 
         return view('admin.pages.members.modules.edit', compact('data'));
     }
 
     public function update(ModuleRequest $request, $id)
     {
+        $data = $request->all();
         try {
             DB::beginTransaction();
 
-            $this->moduleServices->update($request, $id);
+            $this->moduleServices->update($data, $id);
 
             DB::commit();
 

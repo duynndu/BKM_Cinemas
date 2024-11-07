@@ -6,6 +6,7 @@ use App\Services\Base\BaseServiceInterface;
 
 interface PostServiceInterface extends BaseServiceInterface
 {
+    public function getAllActive();
     public function categoryOfPost($id);
     public function tagsSelected($id);
     public function changeOrder($request);

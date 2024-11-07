@@ -3,44 +3,27 @@
 namespace App\Repositories\Admin\BlockTypes\Repository;
 
 use App\Models\BlockType;
-use App\Models\Language;
-use App\Models\Page;
 use App\Repositories\Admin\BlockTypes\Interface\BlockTypeInterface;
+use App\Repositories\Base\BaseRepository;
 
-class BlockTypeRepository implements BlockTypeInterface
+class BlockTypeRepository extends BaseRepository implements BlockTypeInterface
 {
-    const PAGINATION = 6;
-
-    protected $blockType;
-
-    protected $page;
-
-    public function __construct(
-        Page        $page,
-        BlockType   $blockType,
-    )
+    public function getModel()
     {
-        $this->blockType = $blockType;
-        $this->page = $page;
+        return BlockType::class;
     }
 
     public function countBlockType()
     {
-        return $this->blockType->count();
+        return $this->model->count();
     }
 
-    public function getAllPage()
+    public function getAll()
     {
-        $pages = $this->page->get();
-        return $pages;
-    }
+        $blockTypes = $this->model->orderBy('order');
 
-    public function getAllBlockType($request)
-    {
-        $blockTypes = $this->blockType->orderBy('order');
-
-        if($request->name) {
-            $blockTypes = $blockTypes->where('name', 'like', '%' . $request->name . '%');
+        if(request()->name) {
+            $blockTypes = $blockTypes->where('name', 'like', '%' . request()->name . '%');
         }
 
         $blockTypes = $blockTypes->paginate(self::PAGINATION);
@@ -48,42 +31,9 @@ class BlockTypeRepository implements BlockTypeInterface
         return $blockTypes;
     }
 
-    public function createBlockType($data)
+    public function getAllActive()
     {
-        return $this->blockType->create($data);
-    }
-
-
-    public function getBlockTypeById($id)
-    {
-        $blockType = $this->blockType->find($id);
-
-        return $blockType;
-    }
-
-    public function updateBlockType($data, $id)
-    {
-        $blockType = $this->blockType->find($id);
-
-        $blockType->update($data);
-
-        return $blockType;
-    }
-
-
-    public function delete($id)
-    {
-        $blockType = $this->blockType->find($id);
-
-        if(!$blockType) {
-            return redirect()->route('admin.blockTypes.index')->with([
-                'status_failed' => 'Không tìm thấy danh mục'
-            ]);
-        }
-
-        $blockType->delete();
-
-        return $blockType;
+        return $this->model->where('active', 1)->get();
     }
 
 }

@@ -1,36 +1,25 @@
 <?php
 
-namespace App\Services\Admin\Users;
+namespace App\Services\Admin\Users\Services;
 
+use App\Repositories\Admin\Users\Interface\UserInterface;
 use App\Repositories\Admin\Users\Repository\UserRepository;
+use App\Services\Admin\Users\Interfaces\UserServiceInterface;
+use App\Services\Base\BaseService;
 use App\Traits\RemoveImageTrait;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Hash;
 
-class UserService
+class UserService extends BaseService implements UserServiceInterface
 {
     use StorageImageTrait, RemoveImageTrait;
 
-    protected $userRepository;
+   public function getRepository()
+   {
+       return UserInterface::class;
+   }
 
-    public function __construct(
-        UserRepository $userRepository
-    )
-    {
-        $this->userRepository = $userRepository;
-    }
-
-    public function getAllUser()
-    {
-        return $this->userRepository->getAllUser();
-    }
-
-    public function getAllRole()
-    {
-        return $this->userRepository->getAllRole();
-    }
-
-    public function store($request)
+    public function create(&$request)
     {
         $data = [
             'name' => $request->name,
@@ -49,19 +38,14 @@ class UserService
             $data['image'] = $imageUploadData['path'];
         }
 
-        $this->userRepository->create($data);
+        $this->repository->create($data);
 
         return true;
     }
 
-    public function getUserById($id)
+    public function update(&$request, $id)
     {
-        return $this->userRepository->getUserById($id);
-    }
-
-    public function update($request, $id)
-    {
-        $user = $this->userRepository->getUserById($id);
+        $user = $this->repository->find($id);
 
         if (!$user) {
             return redirect()->route('admin.users.index')->with('status_failed', 'Không tìm thấy người dùng');
@@ -85,19 +69,14 @@ class UserService
             $data['image'] = $imageUploadData['path'];
         }
 
-        $this->userRepository->update($data, $id);
+        $this->repository->update($id, $data);
 
         return true;
     }
 
-    public function delete($id)
-    {
-        return $this->userRepository->delete($id);
-    }
-
     public function changeStatus($request)
     {
-        $user = $this->userRepository->getUserById($request->id);
+        $user = $this->repository->find($request->id);
 
         if (!$user) {
             return redirect()->route('admin.users.index')->with('status_failed', 'Không tìm thấy người dùng');

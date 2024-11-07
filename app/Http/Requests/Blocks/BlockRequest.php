@@ -21,37 +21,37 @@ class BlockRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            "name" => [
+            "block.name" => [
                 "required",
                 "min:3",
                 "max:255",
                 new CheckRuleName($id, 'blocks')],
-            'slug' => [
+            'block.slug' => [
                 "required",
                 "min:3",
                 "max:255",
                 new CheckRuleSlug($id),
             ],
-            'page_id' => 'required|numeric',
-            'block_type_id' => 'required|numeric',
-            'order' => 'nullable|numeric',
-            'active' => 'nullable|numeric',
+            'block.page_id' => 'required|numeric',
+            'block.block_type_id' => 'required|numeric',
+            'block.order' => 'nullable|numeric',
+            'block.active' => 'nullable|numeric',
         ];
     }
 
     public function messages()
     {
         return [
-            "name.required" => __('validation.required', ['attribute' => __('language.admin.name')]),
-            "name.min" => __('validation.min', ['attribute' => __('language.admin.name'), 'min' => 3]),
-            "name.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
-            "slug.required" => __('validation.required', ['attribute' => __('language.admin.slug')]),
-            "slug.min" => __('validation.min', ['attribute' => __('language.admin.slug'), 'min' => 3]),
-            "slug.max" => __('validation.max', ['attribute' => __('language.admin.slug'), 'max' => 255]),
-            'page_id.required' => __('validation.required', ['attribute' => __('language.admin.interfaces.pages.title')]),
-            'page_id.numeric' => __('validation.numeric', ['attribute' => __('language.admin.interfaces.pages.title')]),
-            'block_type_id.required' => __('validation.required', ['attribute' => __('language.admin.interfaces.blockTypes.blockType_sample')]),
-            'block_type_id.numeric' => __('validation.numeric', ['attribute' => __('language.admin.interfaces.blockTypes.blockType_sample')]),
+            "block.name.required" => __('validation.required', ['attribute' => __('language.admin.name')]),
+            "block.name.min" => __('validation.min', ['attribute' => __('language.admin.name'), 'min' => 3]),
+            "block.name.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
+            "block.slug.required" => __('validation.required', ['attribute' => __('language.admin.slug')]),
+            "block.slug.min" => __('validation.min', ['attribute' => __('language.admin.slug'), 'min' => 3]),
+            "block.slug.max" => __('validation.max', ['attribute' => __('language.admin.slug'), 'max' => 255]),
+            'block.page_id.required' => __('validation.required', ['attribute' => __('language.admin.interfaces.pages.title')]),
+            'block.page_id.numeric' => __('validation.numeric', ['attribute' => __('language.admin.interfaces.pages.title')]),
+            'block.block_type_id.required' => __('validation.required', ['attribute' => __('language.admin.interfaces.blockTypes.blockType_sample')]),
+            'block.block_type_id.numeric' => __('validation.numeric', ['attribute' => __('language.admin.interfaces.blockTypes.blockType_sample')]),
         ];
     }
 }
