@@ -2,17 +2,10 @@
 
 namespace App\Repositories\Admin\Pages\Interface;
 
-interface PageInterface
+use App\Repositories\Base\RepositoryInterface;
+
+interface PageInterface extends RepositoryInterface
 {
     public function countPage();
-
-    public function getAllPage($request);
-
-    public function createPage($data);
-
-    public function updatePage($data, $id);
-
-    public function getPageById($id);
-
-    public function delete($id);
+    public function getAllActive();
 }

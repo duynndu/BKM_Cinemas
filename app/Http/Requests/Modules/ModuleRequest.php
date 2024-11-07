@@ -24,7 +24,7 @@ class ModuleRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'name' => [
+            'module.name' => [
                 "required",
                 "max:255",
                 new CheckRuleName($id, 'modules', false)
@@ -36,8 +36,8 @@ class ModuleRequest extends FormRequest
     public function messages()
     {
         return [
-            "name.required" => __('validation.required', ['attribute' => __('language.admin.name')]),
-            "name.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
+            "module.name.required" => __('validation.required', ['attribute' => __('language.admin.name')]),
+            "module.name.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
             "permissions"=>__('validation.required', ['attribute' => __('language.admin.permissions')]),
         ];
     }

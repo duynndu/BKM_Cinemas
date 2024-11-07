@@ -6,44 +6,21 @@ use App\Models\Module;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Repositories\Admin\Modules\Interface\ModuleInterface;
+use App\Repositories\Base\BaseRepository;
 
-class ModuleRepository implements ModuleInterface
+class ModuleRepository extends BaseRepository implements ModuleInterface
 {
-    CONST PAGINATION = 10;
 
-    protected $module;
-
-    protected $role;
-
-    protected $permission;
-
-
-    public function __construct(
-        Role $role,
-        Module $module,
-        Permission $permission,
-    )
+    public function getModel()
     {
-        $this->module = $module;
-        $this->role = $role;
-        $this->permission = $permission;
+        return Module::class;
     }
 
-    public function getAllModule()
+    public function getAll()
     {
-        return $this->module->with(['permissions'])
+        return $this->model->with(['permissions'])
             ->orderBy('id', 'DESC')
             ->paginate(self::PAGINATION);
-    }
-
-    public function getAllPermissions()
-    {
-        return $this->permission->orderBy('id', 'DESC')->get();
-    }
-
-    public function create($data)
-    {
-        return $this->module->create($data);
     }
 
     public function createPermission($record, $data)
@@ -51,34 +28,16 @@ class ModuleRepository implements ModuleInterface
         return $record->permissions()->create($data);
     }
 
-    public function getModuleById($id)
+    public function find($id)
     {
-        return $this->module->find($id);
-    }
+        $result = $this->model->with('permissions')->find($id);
 
-
-    public function update($data, $id)
-    {
-        $module = $this->getModuleById($id);
-
-        $module->update($data);
-
-        return $module;
-    }
-
-    public function getPermissionsByModuleId($moduleId)
-    {
-        // Lấy tất cả permission_id cho module tương ứng
-        $module = $this->getModuleById($moduleId);
-
-        if (!$module) {
-            return redirect()->route('admin.modules.index')->with('status_failed', 'Không tìm thấy module');
+        if ($result) {
+            return $result;
         }
 
-        // Lấy permission_id cho module tương ứng
-        return $this->permission->where('module_id', $moduleId)->pluck('id')->toArray();
+        return false;
     }
-
 
     public function deletePermissionsByModuleId($module, $permissionsIds)
     {
@@ -91,7 +50,7 @@ class ModuleRepository implements ModuleInterface
 
     public function delete($id)
     {
-        $module = $this->getModuleById($id);
+        $module = $this->find($id);
 
         if (!$module) {
             return redirect()->route('admin.modules.index')->with('status_failed', 'Không tìm thấy module');

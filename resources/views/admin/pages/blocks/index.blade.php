@@ -24,7 +24,6 @@
                     @include('admin.components.sidebar-left-body', [
                         'pages' => $pages,
                         'blockTypes' => $blockTypes,
-                        'languages' => $languages,
                     ])
                 </div>
                 <!--/column-->

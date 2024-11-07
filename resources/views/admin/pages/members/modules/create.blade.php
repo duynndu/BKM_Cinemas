@@ -29,9 +29,9 @@
                                     <div class="row mb-4">
                                         <div class="col-12">
                                             <label class="form-label mb-2">{{ __('language.admin.members.modules.name') }}</label>
-                                            <input type="text" id="name" name="name" class="form-control"
-                                                   placeholder="{{ __('language.admin.members.modules.inputName') }}" value="{{ old('name') ?? '' }}">
-                                            @error('name')
+                                            <input type="text" id="name" name="module[name]" class="form-control"
+                                                   placeholder="{{ __('language.admin.members.modules.inputName') }}" value="{{ old('module.name') }}">
+                                            @error('module.name')
                                             <div class="mt-2">
                                                 <span class="text-red">{{ $message }}</span>
                                             </div>
@@ -55,8 +55,8 @@
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label mb-2">{{ __('language.admin.members.modules.description') }}</label>
-                                        <textarea class="form-control" cols="20" rows="5" name="description">{{ old('description') ?? '' }}</textarea>
-                                        @error('description')
+                                        <textarea class="form-control" cols="20" rows="5" name="module[description]">{{ old('module.description') }}</textarea>
+                                        @error('module.description')
                                             <div class="mt-2">
                                                 <span class="text-red">{{ $message }}</span>
                                             </div>

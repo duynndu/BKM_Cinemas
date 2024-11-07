@@ -151,6 +151,11 @@ class PostRepository extends BaseRepository implements PostInterface
             'categories' => $categories
         ];
     }
+
+    public function getAllActive()
+    {
+        return $this->model->where('active', 1)->get();
+    }
     public function checkExitsTags($tagName)
     {
         return $this->tag->firstOrCreate(

@@ -2,23 +2,11 @@
 
 namespace App\Repositories\Admin\Menus\Interface;
 
-interface MenuInterface
+use App\Repositories\Base\RepositoryInterface;
+
+interface MenuInterface extends RepositoryInterface
 {
-    public function getAllPage();
-
-    public function getAllMenu();
-
-    public function getAllPost();
-
-    public function getAllCategoryPost();
-
-    public function checkExistMenu($languageId, $key);
-
-    public function createMenu($data);
-
     public function deleteAllStructureMenu();
 
     public function getLastChildId();
-
-    public function delete();
 }

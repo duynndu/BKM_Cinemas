@@ -163,4 +163,11 @@
 @endsection
 
 @section('js')
+<script>
+    $(document).ready(function () {
+        @if ($errors->any())
+        $('#modalAddBlock').modal('show');
+        @endif
+    });
+</script>
 @endsection
