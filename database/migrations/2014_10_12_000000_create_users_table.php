@@ -15,6 +15,7 @@ return new class extends Migration
         // Bảng người dùng
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('cinema_id')->nullable();
             $table->bigInteger('role_id');
             $table->string('name');
             $table->string('first_name')->nullable();
