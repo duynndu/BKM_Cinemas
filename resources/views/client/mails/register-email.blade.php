@@ -54,7 +54,7 @@
         <div style="border-collapse:collapse;padding:0;margin:0 auto;width:600px; margin-top: 80px !important;">
             <div class="email-container">
                 <div class="email-header">
-                    <img src="{{ $message->embed(public_path('images/logo.png')) }}" alt="Logo của Nền tảng" />
+                    <img src="{{ $message->embed(public_path('client/images/logo.png')) }}" alt="Logo của Nền tảng" />
                     <h1>Chào mừng, {{ $user->first_name . ' ' . $user->last_name }},</h1>
                 </div>
                 <div class="email-body">

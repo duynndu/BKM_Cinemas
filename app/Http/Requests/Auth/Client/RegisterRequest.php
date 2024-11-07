@@ -27,7 +27,14 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:255|regex:/^[a-zA-Z0-9]+$/',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users',
+                'regex:/^[\w\.-]+@(?:gmail\.com|fpt\.edu\.vn)$/i',
+            ],
             'phone' => [
                 'required',
                 'string',
@@ -58,6 +65,7 @@ class RegisterRequest extends FormRequest
             'email.required' => 'Vui lòng nhập địa chỉ email.',
             'email.email' => 'Email không đúng định dạng.',
             'email.unique' => 'Email này đã được đăng ký.',
+            'email.regex' => 'Email không hợp lệ.',
             'phone.required' => 'Vui lòng nhập số điện thoại.',
             'phone.regex' => 'Số điện thoại không hợp lệ.',
             'phone.unique' => 'Số điện thoại này đã được đăng ký.',

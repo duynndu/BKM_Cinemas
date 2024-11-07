@@ -3,6 +3,8 @@
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
+// header("Content-Security-Policy: upgrade-insecure-requests");
+
 define('LARAVEL_START', microtime(true));
 
 /*

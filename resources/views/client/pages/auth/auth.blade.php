@@ -43,7 +43,7 @@
                                 <div class="row flex">
                                     <div class="col-md-7 col-sm-6">
                                         <form
-                                            data-image="{{ asset('images/success.png') }}"
+                                            data-image="{{ asset('client/images/success.png') }}"
                                             class="form-login" action="{{ route('login') }}" method="post">
                                             @csrf
                                             <div class="form-group">
@@ -79,13 +79,13 @@
                                         <a class="login-social"
                                             href="{{ route('facebook.redirectToFacebook') }}"
                                             title="Đăng nhập bằng facebook">
-                                            <img class="img-responsive" src="{{ asset('images/fb.png') }}" alt="Facebook">
+                                            <img class="img-responsive" src="{{ asset('client/images/fb.png') }}" alt="Facebook">
                                         </a>
 
                                         <a class="login-social"
                                             href="{{ route('google.redirectToGoogle') }}"
                                             title="Đăng nhập bằng google">
-                                            <img class="img-responsive" src="{{ asset('images/gp.png') }}" alt="Google">
+                                            <img class="img-responsive" src="{{ asset('client/images/gp.png') }}" alt="Google">
                                         </a>
                                     </div>
                                 </div>
@@ -100,7 +100,7 @@
                                 <div class="row flex">
                                     <div class="col-md-8 col-sm-6">
                                         <div>
-                                            <form data-image="{{ asset('images/register_success.jpg') }}" role="form"
+                                            <form data-image="{{ asset('client/images/register_success.jpg') }}" role="form"
                                                 method="POST" class="form-register" action="{{ route('register') }}">
                                                 @csrf
 
