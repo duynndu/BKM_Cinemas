@@ -22,5 +22,5 @@
     @endguest
 </ul>
 <div class="member-card">
-    <img src="{{ asset('images/member-card.png') }}" alt="member-card">
+    <img src="{{ asset('client/images/member-card.png') }}" alt="member-card">
 </div>

@@ -26,8 +26,11 @@ class ForgotPasswordRequest extends FormRequest
         return [
             'email' => [
                 'required',
+                'string',
                 'email',
-                'exists:users,email', // Kiểm tra email có tồn tại trong bảng users
+                'max:255',
+                'regex:/^[\w\.-]+@(?:gmail\.com|fpt\.edu\.vn)$/i',
+                'exists:users,email',
             ],
         ];
     }
@@ -36,8 +39,11 @@ class ForgotPasswordRequest extends FormRequest
     {
         return [
             'email.required' => 'Vui lòng nhập email.',
+            'email.string' => 'Email phải là một chuỗi ký tự hợp lệ.',
             'email.email' => 'Email không hợp lệ.',
-            'email.exists' => 'Email này không tồn tại trong hệ thống.', // Thông báo lỗi nếu email không tồn tại
+            'email.max' => 'Email phải có tối đa 255 ký tự.',
+            'email.exists' => 'Email này không tồn tại trong hệ thống.',
+            'email.regex' => 'Email không hợp lệ.',
         ];
     }
 

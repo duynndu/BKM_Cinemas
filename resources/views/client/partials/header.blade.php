@@ -3,7 +3,7 @@
         <div class="logo">
             <h1>
                 <strong>BKM Cinemas - Rạp chiếu phim 3D công nghệ hàng đầu.</strong>
-                <a href="{{ route('home') }}"><img style="max-width: 100%" src="{{ asset('images/logo.png') }}"
+                <a href="{{ route('home') }}"><img style="max-width: 100%" src="{{ asset('client/images/logo.png') }}"
                         alt="touchcinema" /></a>
             </h1>
         </div>
@@ -12,9 +12,9 @@
                 <div class="row">
                     <div class="col-md-8 col-sm-7">
                         <a class="buy-ticket" href="#"><img class="img-responsive"
-                                src="{{ asset('movie/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
+                                src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
                         <a class="flags" href="#"><img class="img-responsive"
-                                src="{{ asset('movie/images/flags/vn.png') }}" alt="Ngôn ngữ" /></a>
+                                src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a>
                         <a class="hidden-lg btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
                         <form action="https://touchcinema.com/tim-kiem" class="form-search visible-lg">
                             <div class="input-group">
@@ -28,14 +28,14 @@
                     <div class="col-md-4 col-sm-5 account">
                         @guest
                             <a href="{{ route('account') }}" class="login"
-                                style="background-image: url({{ asset('movie/images/login-bgd8e6.png') }});">
-                                <img src="{{ asset('movie/images/icons/so-da.png') }}" alt="Đăng nhập"
+                                style="background-image: url({{ asset('client/images/login-bg.png') }});">
+                                <img src="{{ asset('client/images/icons/so-da.png') }}" alt="Đăng nhập"
                                     class="img-responsive">
                                 <span>Đăng nhập</span>
                             </a>
                             <a href="{{ route('account') }}" class="register"
-                                style="background-image: url({{ asset('movie/images/reg-bg094c.png') }});">
-                                <img src="{{ asset('movie/images/icons/bong-ngo.png') }}" alt="Đăng kí"
+                                style="background-image: url({{ asset('client/images/reg-bg.png') }});">
+                                <img src="{{ asset('client/images/icons/bong-ngo.png') }}" alt="Đăng kí"
                                     class="img-responsive">
                                 <span>Đăng kí <b class="hh">thành viên</b></span>
                             </a>
@@ -235,5 +235,80 @@
                 </div>
             </nav>
         </div>
+
+        {{-- menu mobile --}}
+        <div class="menu-mobile">
+            <div class="menu-icon">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </div>
+
+            {{-- <div class="menu-mobile-background "></div> --}}
+            <div class="menu-mobile-content ">
+                <div class="menu-mobile-search">
+                    <form action="" method="post">
+                        <input type="text" placeholder="Tìm kiếm..." class=" menu-search--mobile">
+                    </form>
+                </div>
+                <button class="btn-close-menu">
+                    <i class="fa fa-close " aria-hidden="true"></i>
+                </button>
+
+                <ul>
+                    <li class="menu-item ">
+                        <a href="phim.html">Phim <i class="fa-solid fa-angle-down menu-icon-right"></i></a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="phim/nha-ba-nu.html">Nhà Bà Nú</a>
+                            </li>
+                            <li>
+                                <a href="phim/avatar-dong-chay-cua-nuoc.html">Avatar 2</a>
+                            </li>
+                            <li>
+                                <a href="phim/black-adam.html">Black Adam</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="lich-chieu.html">Lịch chiếu</a>
+
+                    </li>
+                    <li class="menu-item">
+                        <a href="phim.html">Phim 123 <i class="fa-solid fa-angle-down menu-icon-right"></i></a>
+
+                        <ul class="submenu">
+                            <li>
+                                <a href="phim/nha-ba-nu.html">Nhà Bà Nú</a>
+                            </li>
+                            <li>
+                                <a href="phim/avatar-dong-chay-cua-nuoc.html">Avatar 2</a>
+                            </li>
+                            <li>
+                                <a href="phim/black-adam.html">Black Adam</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="gia-ve.html">giá vé</a>
+                    </li>
+                    <li>
+                        <a href="thanh-vien.html">Thành viên</a>
+                    </li>
+                    <li>
+                        <a href="khuyen-mai.html">Ưu khôngi - Sự kiện</a>
+                    </li>
+                    <li>
+                        <a href="danh-gia-phim.html">Đánh giá phim</a>
+                    </li>
+                    <li>
+                        <a href="gioi-thieu.html">Giờ thiệu</a>
+                    </li>
+                    <li>
+                        <a href="lien-he.html">Lien hệ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 </div>
+

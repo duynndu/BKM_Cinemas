@@ -35,25 +35,39 @@
                         <div class="text-center">
                             <h2>Khôi phục mật khẩu đăng nhập</h2>
                         </div>
-                        <div style="padding: 0 20px 20px 20px; display: flex; flex-direction: column;" class="main-forgotpassword">
+                        <div style="padding: 0 20px 20px 20px; display: flex; flex-direction: column;"
+                            class="main-forgotpassword">
                             <div style="width: 50%; margin: 20px 0;">
-                                <form 
-                                    data-image="{{ asset('images/success.png') }}"
+                                <form data-image="{{ asset('client/images/success.png') }}"
                                     data-token="{{ !empty($token) ? $token : '' }}"
-                                    data-email="{{ !empty($email) ? $email : '' }}"
-                                    id="confirmResetPassword" action="{{ route('resetPassword') }}" method="post">
+                                    data-email="{{ !empty($email) ? $email : '' }}" id="confirmResetPassword"
+                                    action="{{ route('resetPassword') }}" method="post">
                                     @csrf
                                     <div class="form-group">
                                         <label for="password">Mật khẩu mới:</label>
-                                        <input id="password" type="text" name="password"
-                                            class="form-control password">
+                                        <div class="input-group">
+                                            <input id="password" type="password" name="password"
+                                                class="form-control password">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text toggle-password" style="cursor: pointer;">
+                                                    <i class="fas fa-eye" id="toggle-password-icon"></i>
+                                                </span>
+                                            </div>
+                                        </div>
                                         <div class="password_error"></div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="password_confirmation">Nhập lại mật khẩu mới:</label>
-                                        <input id="password_confirmation" type="text" name="password_confirmation"
-                                            class="form-control password_confirmation">
+                                        <div class="input-group">
+                                            <input id="password-confirm" type="password" name="password_confirmation"
+                                                class="form-control password_confirmation">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text toggle-password" style="cursor: pointer;">
+                                                    <i class="fas fa-eye" id="toggle-confirm-password-icon"></i>
+                                                </span>
+                                            </div>
+                                        </div>
                                         <div class="password_confirmation_error"></div>
                                     </div>
 
@@ -66,7 +80,7 @@
                                 <a style="color: #f29438;" href="{{ route('account') }}">Quay lại trang đăng nhập</a>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

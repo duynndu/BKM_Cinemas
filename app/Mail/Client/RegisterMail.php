@@ -25,7 +25,7 @@ class RegisterMail extends Mailable
     {
         return $this->subject('BKM Cinemas - Rạp chiếu phim 3D công nghệ hàng đầu.')
             ->view('client.mails.register-email')
-            ->attach(public_path('images/logo.png'), [
+            ->attach(public_path('client/images/logo.png'), [
                 'as' => 'logo.png',
                 'mime' => 'image/png',
             ]);; 
