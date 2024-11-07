@@ -29,9 +29,9 @@
                                     <div class="row mb-4">
                                         <div class="col-12">
                                             <label class="form-label mb-2">{{ __('language.admin.members.roles.name') }}</label>
-                                            <input type="text" id="name" name="name" class="form-control"
-                                                   placeholder="{{ __('language.admin.members.roles.inputName') }}" value="{{ old('name') ?? '' }}">
-                                            @error('name')
+                                            <input type="text" id="name" name="role[name]" class="form-control"
+                                                   placeholder="{{ __('language.admin.members.roles.inputName') }}" value="{{ old('role.name') }}">
+                                            @error('role.name')
                                             <div class="mt-2">
                                                 <span class="text-red">{{ $message }}</span>
                                             </div>
@@ -42,14 +42,14 @@
                                     <div class="row mb-4">
                                         <div class="col-12">
                                             <label class="form-label mb-2">{{ __('language.admin.members.roles.type') }}</label><br>
-                                            <select name="type" class="form-control w-50 selectRoles" id="">
+                                            <select name="role[type]" class="form-control w-50 selectRoles" id="">
                                                 <option value="" selected>-- {{ __('language.admin.members.roles.select') }} --</option>
-                                                <option value="{{ \App\Models\User::TYPE_ADMIN }}" {{ old('type') == \App\Models\User::TYPE_ADMIN ? 'selected' : '' }}>{{ __('language.admin.members.roles.admin') }}</option>
-                                                <option value="{{ \App\Models\User::TYPE_MANAGE }}" {{ old('type') == \App\Models\User::TYPE_MANAGE ? 'selected' : '' }}>{{ __('language.admin.members.roles.manage') }}</option>
-                                                <option value="{{ \App\Models\User::TYPE_STAFF }}" {{ old('type') == \App\Models\User::TYPE_STAFF ? 'selected' : '' }}>{{ __('language.admin.members.roles.staff') }}</option>
-                                                <option value="{{ \App\Models\User::TYPE_MEMBER }}" {{ old('type') == \App\Models\User::TYPE_MEMBER ? 'selected' : '' }}>{{ __('language.admin.members.roles.member') }}</option>
+                                                <option value="{{ \App\Models\User::TYPE_ADMIN }}" {{ old('role.type') == \App\Models\User::TYPE_ADMIN ? 'selected' : '' }}>{{ __('language.admin.members.roles.admin') }}</option>
+                                                <option value="{{ \App\Models\User::TYPE_MANAGE }}" {{ old('role.type') == \App\Models\User::TYPE_MANAGE ? 'selected' : '' }}>{{ __('language.admin.members.roles.manage') }}</option>
+                                                <option value="{{ \App\Models\User::TYPE_STAFF }}" {{ old('role.type') == \App\Models\User::TYPE_STAFF ? 'selected' : '' }}>{{ __('language.admin.members.roles.staff') }}</option>
+                                                <option value="{{ \App\Models\User::TYPE_MEMBER }}" {{ old('role.type') == \App\Models\User::TYPE_MEMBER ? 'selected' : '' }}>{{ __('language.admin.members.roles.member') }}</option>
                                             </select>
-                                            @error('type')
+                                            @error('role.type')
                                             <div class="mt-2">
                                                 <span class="text-red">{{ $message }}</span>
                                             </div>
@@ -59,8 +59,8 @@
 
                                     <div class="mb-4">
                                         <label class="form-label mb-2">{{ __('language.admin.members.roles.inputDescription') }}</label>
-                                        <textarea class="form-control" cols="20" rows="3" name="description">{{ old('description') ?? '' }}</textarea>
-                                        @error('description')
+                                        <textarea class="form-control" cols="20" rows="3" name="role[description]">{{ old('role.description') ?? '' }}</textarea>
+                                        @error('role.description')
                                         <div class="mt-2">
                                             <span class="text-red">{{ $message }}</span>
                                         </div>
@@ -156,13 +156,13 @@
                                                              style="background-image: url({{ asset('images/no-img-avatar.png') }});">
                                                         </div>
                                                     </div>
-                                                    @error('image')
+                                                    @error('role.image')
                                                     <div class="mt-2 mb-2">
                                                         <span class="text-red">{{ $message }}</span>
                                                     </div>
                                                     @enderror
                                                     <div class="change-btn d-flex align-items-center flex-wrap">
-                                                        <input type="file" class="form-control d-none uploadImage" id="imageUpload" name="image" accept=".png, .jpg, .jpeg">
+                                                        <input type="file" class="form-control d-none uploadImage" id="imageUpload" name="role[image]" accept=".png, .jpg, .jpeg">
                                                         <label for="imageUpload"
                                                                class="btn btn-sm btn-primary light ms-0">{{ __('language.admin.members.roles.selectImage') }}</label>
                                                     </div>

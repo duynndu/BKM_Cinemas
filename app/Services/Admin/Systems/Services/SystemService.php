@@ -1,34 +1,33 @@
 <?php
 
-namespace App\Services\Admin\Systems;
+namespace App\Services\Admin\Systems\Services;
 
-use App\Repositories\Admin\Systems\Repository\SystemRepository;
+use App\Repositories\Admin\Systems\Interface\SystemInterface;
+use App\Services\Admin\Systems\Interfaces\SystemServiceInterface;
+use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 
-class SystemService
+class SystemService extends BaseService implements SystemServiceInterface
 {
     use StorageImageTrait;
-    protected $systemRepository;
 
-    public function __construct(
-        SystemRepository $systemRepository
-    )
+    public function getRepository()
     {
-        $this->systemRepository = $systemRepository;
+        return SystemInterface::class;
     }
 
     public function getAllSystemByType0($request)
     {
-        return $this->systemRepository->getAllSystemByType0($request);
+        return $this->repository->getAllSystemByType0($request);
     }
 
     public function getAllSystemBySystemId($request)
     {
-        return $this->systemRepository->getAllSystemBySystemId($request);
+        return $this->repository->getAllSystemBySystemId($request);
     }
 
-    public function store($request)
+    public function create(&$request)
     {
         $data = [
             'name' => $request->name,
@@ -40,28 +39,20 @@ class SystemService
             'type' => $request->type,
         ];
 
-        // Xử lý upload ảnh nếu có
         $imageUploadData = $this->storageTraitUpload($request, 'image', 'public/systems');
 
         if ($imageUploadData) {
             $data['image'] = $imageUploadData['path'];
         }
 
-        // Tạo mới hệ thống
-        $system = $this->systemRepository->createSystem($data);
+        $system = $this->repository->create($data);
 
         return $system;
     }
 
-    public function getSystemById($id)
+    public function update(&$request, $id)
     {
-        return $this->systemRepository->getSystemById($id);
-    }
-
-    public function update($request, $id)
-    {
-        // Tìm bản ghi hệ thống cần cập nhật
-        $system = $this->systemRepository->getSystemById($id);
+        $system = $this->repository->find($id);
 
         if (!$system) {
             return redirect()->route('admin.systems.index')->with('status_failed', 'Không tìm thấy nội dung');
@@ -88,37 +79,20 @@ class SystemService
             $imageUploadData = $this->storageTraitUpload($request, 'image', 'public/systems');
             $data['image'] = $imageUploadData['path'];
         }
-
-        // Cập nhật thông tin hệ thống
-        $system = $this->systemRepository->updateSystem($data, $id);
+        $system = $this->repository->update($id, $data);
 
         return $system;
     }
 
-    public function delete($id)
+    public function changeActive($request)
     {
-        return $this->systemRepository->delete($id);
+        return $this->repository->changeActive($request->id);
     }
 
     public function changeOrder($request)
     {
-        $item = $this->systemRepository->getSystemById($request->id);
-
-        $item->update([
-            'order' => $request->order
-        ]);
-
-        return $item;
+        return $this->repository->changeOrder($request->id, $request->order);
     }
 
-    public function changeActive($request)
-    {
-        $item = $this->systemRepository->getSystemById($request->id);
 
-        $item->update([
-            'active' => $item->active == 1 ? 0 : 1
-        ]);
-
-        return $item;
-    }
 }

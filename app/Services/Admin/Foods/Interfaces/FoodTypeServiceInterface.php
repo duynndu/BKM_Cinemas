@@ -3,7 +3,7 @@ namespace App\Services\Admin\Foods\Interfaces;
 
 use App\Services\Base\BaseServiceInterface;
 
-interface FoodTypeServiceInterFace extends BaseServiceInterface
+interface FoodTypeServiceInterface extends BaseServiceInterface
 {
     public function getAllActive();
     public function deleteMultipleChecked($request);

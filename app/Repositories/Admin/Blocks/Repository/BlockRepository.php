@@ -7,15 +7,11 @@ use App\Models\BlockContent;
 use App\Models\BlockType;
 use App\Models\Page;
 use App\Repositories\Admin\Blocks\Interface\BlockInterface;
+use App\Repositories\Base\BaseRepository;
 
-class BlockRepository implements BlockInterface
+class BlockRepository extends BaseRepository implements BlockInterface
 {
-    const PAGINATION = 6;
-
     protected $page;
-
-    protected $block;
-
 
     protected $blockType;
 
@@ -23,78 +19,47 @@ class BlockRepository implements BlockInterface
 
     public function __construct(
         Page         $page,
-        Block        $block,
         BlockType    $blockType,
         BlockContent $blockContent
     ) {
-        $this->block = $block;
         $this->blockType = $blockType;
         $this->page = $page;
         $this->blockContent = $blockContent;
+        parent::__construct();
+    }
+    public function getModel()
+    {
+        return Block::class;
     }
 
     public function countBlock()
     {
-        $count = $this->block->count();
+        $count = $this->model->count();
 
         return $count;
     }
 
-    public function getAllPage()
+    public function getAll()
     {
-        $pages = $this->page->get();
+        $blocks = $this->model->newQuery();
 
-        return $pages;
-    }
-
-    public function getAllBLock($request)
-    {
-        $blocks = $this->block->orderBy('order');
-
-        if ($request->name) {
-            $blocks = $blocks->where('name', 'like', '%' . $request->name . '%');
+        if (!empty(request()->name)) {
+            $blocks = $blocks->where('name', 'like', '%' . request()->name . '%');
         }
-
+        $blocks = $blocks->orderBy('order');
         $blocks = $blocks->paginate(self::PAGINATION);
 
         return $blocks;
     }
 
-    public function getAllBlockType()
+    public function find($id)
     {
-        $blockTypes = $this->blockType->get();
+        $result = $this->model->with('blockContents')->find($id);
+        if ($result) {
+            return $result;
+        }
 
-        return $blockTypes;
-    }
-
-    public function createBlock($data)
-    {
-        return $this->block->create($data);
-    }
-
-    public function updateBlock($data, $id)
-    {
-        $block = $this->block->find($id);
-
-        $block->update($data);
-
-        return $block;
-    }
-
-    public function getBlockByIdWithContents($id)
-    {
-        $block = $this->block->with('blockContents')->find($id);
-
-        $contents = $block->blockContents->pluck('value', 'key_name')->toArray();
-
-        return compact('block', 'contents');
-    }
-
-    public function getBlockById($id)
-    {
-        $block = $this->block->with('blockContents')->find($id);
-
-        return $block;
+        return false;
     }
 
     public function deleteBlockContentById($id)
@@ -119,12 +84,9 @@ class BlockRepository implements BlockInterface
 
     public function delete($id)
     {
-        $block = $this->block->find($id);
-
-        $block->delete();
-
+        $block = $this->model->find($id);
         $block->blockContents()->delete();
-
+        $block->delete();
         return $block;
     }
 }
