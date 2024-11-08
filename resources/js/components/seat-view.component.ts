@@ -61,8 +61,6 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
     });
   },
   async submit() {
-    console.log(this.seatErrors);
-    
     if (this.seatErrors.slotError) {
       alert('Vui lòng không chừa 1 ghế trống bên trái hoặc bên phải của các ghế bạn đã chọn.');
     }
@@ -77,7 +75,7 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
         seat_types: this.seatTypes,
         base_price: room.base_price,
       }, ({ seatsSelected, seatErrors }: { seatsSelected: ISeat[], seatErrors: any }) => {
-        this.seatsSelected = [...seatsSelected] ?? [];
+        this.seatsSelected = [...seatsSelected];
         this.seatErrors = seatErrors;
         this.calculateTotalPrice();
       });

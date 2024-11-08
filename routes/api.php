@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\RoomController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\FoodTypeController;
 use App\Http\Controllers\Api\MovieController;
