@@ -51,7 +51,7 @@
                             <li class="active dlab-chat-user">
                                 <div class="d-flex bd-highlight">
                                     <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
+                                        <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img" alt="">
                                         <span class="online_icon"></span>
                                     </div>
                                     <div class="user_info">
@@ -63,7 +63,7 @@
                             <li class="dlab-chat-user">
                                 <div class="d-flex bd-highlight">
                                     <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/2.jpg') }}" class="rounded-circle user_img" alt="">
+                                        <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img" alt="">
                                         <span class="online_icon offline"></span>
                                     </div>
                                     <div class="user_info">
@@ -75,7 +75,7 @@
                             <li class="dlab-chat-user">
                                 <div class="d-flex bd-highlight">
                                     <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/3.jpg') }}" class="rounded-circle user_img" alt="">
+                                        <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img" alt="">
                                         <span class="online_icon"></span>
                                     </div>
                                     <div class="user_info">
@@ -87,7 +87,7 @@
                             <li class="dlab-chat-user">
                                 <div class="d-flex bd-highlight">
                                     <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/4.jpg') }}" class="rounded-circle user_img" alt="">
+                                        <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img" alt="">
                                         <span class="online_icon offline"></span>
                                     </div>
                                     <div class="user_info">
@@ -100,7 +100,7 @@
                             <li class="dlab-chat-user">
                                 <div class="d-flex bd-highlight">
                                     <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/5.jpg') }}" class="rounded-circle user_img" alt="">
+                                        <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img" alt="">
                                         <span class="online_icon offline"></span>
                                     </div>
                                     <div class="user_info">
@@ -112,123 +112,12 @@
                             <li class="dlab-chat-user">
                                 <div class="d-flex bd-highlight">
                                     <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
+                                        <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img" alt="">
                                         <span class="online_icon"></span>
                                     </div>
                                     <div class="user_info">
                                         <span>Breddie Ronan</span>
                                         <p>Kalid is online</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="dlab-chat-user">
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
-                                        <span class="online_icon offline"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>Ceorge Carson</span>
-                                        <p>Taherah left 7 mins ago</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="name-first-letter">D</li>
-                            <li class="dlab-chat-user">
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
-                                        <span class="online_icon"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>Darry Parker</span>
-                                        <p>Sami is online</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="dlab-chat-user">
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
-                                        <span class="online_icon offline"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>Denry Hunter</span>
-                                        <p>Nargis left 30 mins ago</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="name-first-letter">J</li>
-                            <li class="dlab-chat-user">
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
-                                        <span class="online_icon offline"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>Jack Ronan</span>
-                                        <p>Rashid left 50 mins ago</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="dlab-chat-user">
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
-                                        <span class="online_icon"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>Jacob Tucker</span>
-                                        <p>Kalid is online</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="dlab-chat-user">
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
-                                        <span class="online_icon offline"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>James Logan</span>
-                                        <p>Taherah left 7 mins ago</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="dlab-chat-user">
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
-                                        <span class="online_icon"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>Joshua Weston</span>
-                                        <p>Sami is online</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="name-first-letter">O</li>
-                            <li class="dlab-chat-user">
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
-                                        <span class="online_icon offline"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>Oliver Acker</span>
-                                        <p>Nargis left 30 mins ago</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="dlab-chat-user">
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img" alt="">
-                                        <span class="online_icon offline"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>Oscar Weston</span>
-                                        <p>Rashid left 50 mins ago</p>
                                     </div>
                                 </div>
                             </li>
@@ -285,7 +174,7 @@
                     <div class="card-body msg_card_body dlab-scroll" id="DLAB_W_Contacts_Body3">
                         <div class="d-flex justify-content-start mb-4">
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                             <div class="msg_cotainer">
                                 Hi, how are you samim?
@@ -298,12 +187,12 @@
                                 <span class="msg_time_send">8:55 AM, Today</span>
                             </div>
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                         </div>
                         <div class="d-flex justify-content-start mb-4">
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                             <div class="msg_cotainer">
                                 I am good too, thank you for your chat template
@@ -316,12 +205,12 @@
                                 <span class="msg_time_send">9:05 AM, Today</span>
                             </div>
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                         </div>
                         <div class="d-flex justify-content-start mb-4">
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                             <div class="msg_cotainer">
                                 I am looking for your next templates
@@ -334,12 +223,12 @@
                                 <span class="msg_time_send">9:10 AM, Today</span>
                             </div>
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                         </div>
                         <div class="d-flex justify-content-start mb-4">
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                             <div class="msg_cotainer">
                                 Bye, see you
@@ -348,7 +237,7 @@
                         </div>
                         <div class="d-flex justify-content-start mb-4">
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                             <div class="msg_cotainer">
                                 Hi, how are you samim?
@@ -361,12 +250,12 @@
                                 <span class="msg_time_send">8:55 AM, Today</span>
                             </div>
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                         </div>
                         <div class="d-flex justify-content-start mb-4">
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                             <div class="msg_cotainer">
                                 I am good too, thank you for your chat template
@@ -379,12 +268,12 @@
                                 <span class="msg_time_send">9:05 AM, Today</span>
                             </div>
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                         </div>
                         <div class="d-flex justify-content-start mb-4">
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                             <div class="msg_cotainer">
                                 I am looking for your next templates
@@ -397,12 +286,12 @@
                                 <span class="msg_time_send">9:10 AM, Today</span>
                             </div>
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                         </div>
                         <div class="d-flex justify-content-start mb-4">
                             <div class="img_cont_msg">
-                                <img src="{{ asset('images/avatar/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
+                                <img src="{{ asset('client/images/1.jpg') }}" class="rounded-circle user_img_msg" alt="">
                             </div>
                             <div class="msg_cotainer">
                                 Bye, see you

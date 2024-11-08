@@ -55,7 +55,7 @@
                                     <li>
                                         <div class="timeline-panel">
                                             <div class="media me-2">
-                                                <img alt="image" width="50" src="{{ asset('images/avatar/1.jpg') }}">
+                                                <img alt="image" width="50" src="">
                                             </div>
                                             <div class="media-body">
                                                 <h6 class="mb-1">Dr sultads Send you Photo</h6>
@@ -88,7 +88,7 @@
                                     <li>
                                         <div class="timeline-panel">
                                             <div class="media me-2">
-                                                <img alt="image" width="50" src="{{ asset('images/avatar/1.jpg') }}">
+                                                <img alt="image" width="50" src="">
                                             </div>
                                             <div class="media-body">
                                                 <h6 class="mb-1">Dr sultads Send you Photo</h6>
@@ -204,7 +204,7 @@
                                             <p class="mb-0 text-end">{{ Auth::user()->role->name ?? '' }}</p>
                                         </div>
                                     </div>
-                                    <img src="{{ Auth::user()->image ?? asset('images/avatar/1.jpg') }}" alt="">
+                                    <img src="{{ Auth::user()->image ?? asset('client/images/1.jpg') }}" alt="">
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
