@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Auth\Admin\Logins\Interface\LoginInterface;
+use App\Services\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordServicesInterface;
+use App\Services\Auth\Client\Registers\Interfaces\RegisterServiceInterface;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -73,6 +76,11 @@ use App\Repositories\Admin\Roles\Interface\RoleInterface;
 use App\Repositories\Admin\Roles\Repository\RoleRepository;
 use App\Repositories\Admin\Users\Interface\UserInterface;
 use App\Repositories\Admin\Users\Repository\UserRepository;
+use App\Repositories\Auth\Admin\Logins\Repository\LoginRepository;
+use App\Repositories\Auth\Client\ForgotPasswords\Interface\ForgotPasswordInterface;
+use App\Repositories\Auth\Client\ForgotPasswords\Repository\ForgotPasswordRepository;
+use App\Repositories\Auth\Client\Registers\Interface\RegisterInterface;
+use App\Repositories\Auth\Client\Registers\Repository\RegisterRepository;
 use App\Services\Admin\Blocks\Interfaces\BlockServiceInterface;
 use App\Services\Admin\Blocks\Services\BlockService;
 use App\Services\Admin\BlockTypes\Interfaces\BlockTypeServiceInterface;
@@ -92,6 +100,10 @@ use App\Services\Admin\Systems\Interfaces\SystemServiceInterface;
 use App\Services\Admin\Systems\Services\SystemService;
 use App\Services\Admin\Users\Interfaces\UserServiceInterface;
 use App\Services\Admin\Users\Services\UserService;
+use App\Services\Auth\Admin\Logins\Interfaces\LoginServiceInterface;
+use App\Services\Auth\Admin\Logins\Services\LoginService;
+use App\Services\Auth\Client\ForgotPasswords\ForgotPasswordService;
+use App\Services\Auth\Client\Registers\Services\RegisterService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -100,6 +112,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Admin
         $this->app->bind(ActorInterface              ::class, ActorRepository       ::class);
         $this->app->bind(ActorServiceInterface       ::class, ActorService          ::class);
         $this->app->bind(AreaInterface               ::class, AreaRepository        ::class);
@@ -143,6 +156,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TagServiceInterface         ::class, TagService            ::class);
         $this->app->bind(RoleInterface               ::class, RoleRepository        ::class);
         $this->app->bind(RoleServiceInterface        ::class, RoleService           ::class);
+        $this->app->bind(LoginInterface              ::class, LoginRepository       ::class);
+        $this->app->bind(LoginServiceInterface       ::class, LoginService          ::class);
+        // End admin
+
+        // Client
+        $this->app->bind(RegisterInterface           ::class, RegisterRepository       ::class);
+        $this->app->bind(RegisterServiceInterface    ::class, RegisterService          ::class);
+        $this->app->bind(ForgotPasswordInterface     ::class, ForgotPasswordRepository ::class);
+        $this->app->bind(ForgotPasswordServicesInterface::class, ForgotPasswordService ::class);
+        // End client
     }
 
 

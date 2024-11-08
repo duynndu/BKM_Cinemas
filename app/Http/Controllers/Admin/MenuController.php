@@ -55,6 +55,12 @@ class MenuController extends Controller
     public function store(StoreMenuRequest $request)
     {
         try {
+            if(empty($request->menu)) {
+                return response()->json([
+                    'status' => false,
+                ]);
+            }
+
             $this->menuService->create($request);
 
             return response()->json([

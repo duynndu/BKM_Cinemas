@@ -146,7 +146,7 @@
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">movie</i>
-                    <span class="nav-text">Quản lý phòng chiếu</span>
+                    <span class="nav-text">Phòng chiếu</span>
                 </a>
                 <ul aria-expanded="false">
                     <li>
@@ -162,20 +162,15 @@
             </li>
 
             <li>
-                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                <a href="{{ route('admin.payments.index') }}">
                     <i class="material-icons">payment</i>
-                    <span class="nav-text">Quản lý phương thức thanh toán</span>
+                    <span class="nav-text">Phương thức thanh toán</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li>
-                        <a href="{{ route('admin.payments.index') }}" aria-expanded="false">Phương thức thanh toán</a>
-                    </li>
-                </ul>
             </li>
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">apartment</i>
-                    <span class="nav-text">Quản lý Thành Phố</span>
+                    <span class="nav-text">Thành Phố</span>
                 </a>
                 <ul aria-expanded="false">
                     <li>
@@ -190,7 +185,7 @@
                 <li>
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">fastfood</i>
-                        <span class="nav-text">Quản lý đồ ăn</span>
+                        <span class="nav-text">Đồ ăn</span>
                     </a>
                     <ul aria-expanded="false">
                         @can('viewAny', App\Models\FoodType::class)

@@ -1,0 +1,371 @@
+$(document).ready(function () {
+
+    $(document).on("submit", ".form-login", function (e) {
+        e.preventDefault();
+    
+        // Xóa thông báo lỗi cũ
+        $('.form-login div[class$="_error"]').text('');
+    
+        let form = $(this);
+        let url = form.attr("action");
+        let image = form.data("image");
+        let data = form.serialize();
+    
+        let hasErrors = false;
+    
+        let emailOrPhone = form.find("input[name='emailOrPhone']").val();
+        if (!emailOrPhone) {
+            form.find(".emailOrPhone_error")
+                .text("Vui lòng nhập email hoặc số điện thoại.")
+                .css("color", "red");
+            hasErrors = true;
+        }
+    
+        let password = form.find("input[name='password']").val();
+        if (!password) {
+            form.find(".password_error")
+                .text("Vui lòng nhập mật khẩu.")
+                .css("color", "red");
+            hasErrors = true;
+        }
+    
+        if (!hasErrors) {
+            $.ajax({
+                url: url,
+                method: "POST",
+                data: data,
+                success: function (response) {
+                    if (response.status) {
+                        Swal.fire({
+                            position: "center",
+                            imageUrl: image,
+                            imageWidth: 100,
+                            imageHeight: 100,
+                            width: "400px",
+                            title: "Đăng nhập thành công.",
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            timer: 1500,
+                        }).then(() => {
+                            window.location.href = response.url;
+                        });
+                    } else {
+                        if (response.errors) {
+                            $.each(response.errors, function (key, value) {
+                                if (key == "emailOrPhone") {
+                                    form.find(".emailOrPhone_error")
+                                        .text(value)
+                                        .css("color", "red");
+                                } else if (key == "password") {
+                                    form.find(".password_error")
+                                        .text(value)
+                                        .css("color", "red");
+                                }
+                            });
+                        }
+                    }
+                },
+                error: function (xhr) { 
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        $.each(errors, function (key, messages) {
+                            let errorContainer = form.find("." + key + "_error");
+                            if (errorContainer.length) {
+                                errorContainer.text(messages[0]).css("color", "red");
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            position: "center",
+                            icon: "error",
+                            title: "Đã xảy ra lỗi!",
+                            text: "Vui fitte liên hệ với bộ phận kỹ thuật.",
+                            showConfirmButton: false,
+                            timer: 2500,
+                        });
+                    }
+                },
+            });
+        }
+    });
+
+    $(document).on("submit", ".form-register", function (e) {
+        e.preventDefault();
+    
+        // Xóa thông báo lỗi cũ
+        $('.form-register div[class$="_error"]').text('');
+    
+        let form = $(this);
+        let url = form.attr("action");
+        let image = form.data("image");
+        let data = form.serialize();
+    
+        let hasErrors = false;
+    
+        let name = form.find("input[name='name']").val();
+        if (!name) {
+            form.find(".name_error").text("Vui lòng nhập tên.").css("color", "red");
+            hasErrors = true;
+        }
+    
+        let firstName = form.find("input[name='first_name']").val();
+        if (!firstName) {
+            form.find(".first_name_error").text("Vui lòng nhập họ.").css("color", "red");
+            hasErrors = true;
+        }
+    
+        let lastName = form.find("input[name='last_name']").val();
+        if (!lastName) {
+            form.find(".last_name_error").text("Vui lòng nhập tên đệm và tên.").css("color", "red");
+            hasErrors = true;
+        }
+    
+        let email = form.find("input[name='email']").val();
+        if (!email) {
+            form.find(".email_error").text("Vui lòng nhập email.").css("color", "red");
+            hasErrors = true;
+        }
+    
+        let gender = form.find("input[name='gender']:checked").val(); // Lấy giá trị của ô radio được chọn
+        if (!gender) {
+            form.find(".gender_error").text("Vui lòng chọn giới tính.").css("color", "red");
+            hasErrors = true;
+        }
+    
+        let phone = form.find("input[name='phone']").val();
+        if (!phone) {
+            form.find(".phone_error").text("Vui lòng nhập số điện thoại.").css("color", "red");
+            hasErrors = true;
+        }
+    
+        let date_birth = form.find("input[name='date_birth']").val();
+        if (!date_birth) {
+            form.find(".date_birth_error").text("Vui lòng nhập ngày sinh.").css("color", "red");
+            hasErrors = true;
+        }
+    
+        let city_id = form.find("select[name='city_id']").val();
+        if (!city_id) {
+            form.find(".city_id_error").text("Vui lòng chọn tỉnh/thành phố.").css("color", "red");
+            hasErrors = true;
+        }
+    
+        let password = form.find("input[name='password']").val();
+        if (!password) {
+            form.find(".password_error").text("Vui lòng nhập mật khẩu.").css("color", "red");
+            hasErrors = true;
+        }
+    
+        let passwordConfirm = form.find("input[name='password_confirmation']").val();
+        if (!passwordConfirm) {
+            form.find(".password_confirmation_error").text("Vui lòng nhập lại mật khẩu.").css("color", "red");
+            hasErrors = true;
+        }
+
+        // Kiểm tra checkbox điều khoản
+        let isTermsAccepted = form.find("input[name='is_terms_accepted']").is(":checked");
+        if (!isTermsAccepted) {
+            form.find(".is_terms_accepted_error").text("Bạn phải chấp nhận các điều khoản.").css("color", "red");
+            hasErrors = true;
+        }
+    
+        if (!hasErrors) {
+            Swal.fire({
+                title: "Đang xử lý yêu cầu...",
+                icon: "info",
+                showConfirmButton: false,
+                allowOutsideClick: false,
+            });
+    
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            text: "Chúc mừng bạn đã đăng ký thành công.",
+                            imageUrl: image,
+                            imageWidth: 100,
+                            imageHeight: 100,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            timer: 3000,
+                            with: "400px",
+                        }).then(() => {
+                            $(".form-register").trigger("reset");
+                            $('#city').val('').trigger('change');
+
+                            $('.nav-tabs li').removeClass('active');
+                            $('.nav-tabs a[href="#dang-nhap"]').closest('li').addClass('active'); 
+
+                            $('.nav-tabs a[href="#dang-nhap"]').tab('show');
+
+                            $('#dang-nhap').addClass('active in');
+                            $('#dang-ky').removeClass('active in'); 
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    Swal.close();
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        $.each(errors, function (key, messages) {
+                            let errorContainer = form.find("." + key + "_error");
+                            if (errorContainer.length) {
+                                errorContainer.text(messages[0]).css("color", "red");
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            position: "center",
+                            icon: "error",
+                            title: "Đã xảy ra lỗi!",
+                            text: "Vui lòng thử lại sau.",
+                            showConfirmButton: false,
+                            timer: 2500,
+                        });
+                    }
+                },
+            });
+        }
+    });
+    
+
+    $(document).on("submit", "#forgotPass", function (e) {
+        e.preventDefault();
+
+        // Xóa thông báo lỗi cũ
+        $('#forgotPass div[class$="_error"]').empty();
+
+        let url = $(this).attr("action");
+        let form = $(this);
+        let data = form.serialize();
+
+        // Kiểm tra lỗi trước khi gửi yêu cầu
+        let hasErrors = false;
+
+        // Kiểm tra trường emailOrPhone
+        let emailOrPhone = form.find("input[name='email']").val();
+        if (!emailOrPhone) {
+            form.find(".email_error")
+                .html("Vui lòng nhập email.")
+                .css("color", "red");
+                hasErrors = true;
+        }
+
+        if (!hasErrors) {
+            Swal.fire({
+                title: "Đang gửi yêu cầu...",
+                text: "Vui lòng chờ trong giây lát.",
+                icon: "info",
+                showConfirmButton: false,
+                allowOutsideClick: false,
+            });
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: data,
+                success: function (response) {
+                // Kiểm tra nếu gửi thành công
+                if (response.sendResetLink) {
+                    Swal.fire({
+                    title: "Yêu cầu thay đổi mật khẩu đã được gửi.",
+                    text: "Chúng tôi đã gửi yêu cầu thay đổi mật khẩu đến email của bạn. Vui lòng kiểm tra lại email.",
+                    icon: "success",
+                    showConfirmButton: true,
+                    allowOutsideClick: false,
+                    }).then(() => {
+                        $("#forgotPass").trigger("reset");
+                    });
+                }
+                },
+                error: function (xhr) {
+                // Đóng thông báo đang xử lý
+                Swal.close();
+
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    $.each(errors, function (key, messages) {
+                    let errorContainer = form.find("." + key + "_error");
+                    if (errorContainer.length) {
+                        errorContainer.html(messages[0]).css("color", "red");
+                    }
+                    });
+                } else {
+                    Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Đã xảy ra lỗi!",
+                    text: "Vui lòng thử lại sau.",
+                    showConfirmButton: false,
+                    timer: 2500,
+                    });
+                }
+                },
+            });
+        }
+    });
+
+    $(document).on("submit", "#confirmResetPassword", function (e) {
+        e.preventDefault();
+
+        $('#confirmResetPassword div[class$="_error"]').empty();
+
+        let form = $(this);
+        let token = form.data("token");
+        let image = form.data("image");
+        let email = form.data("email");
+        let data = form.serialize();
+
+        // Thêm token và email vào data
+        data += `&token=${encodeURIComponent(token)}&email=${encodeURIComponent(email)}`;
+
+        $.ajax({
+        url: $(this).attr("action"),
+        type: "POST",
+        data: data,
+        success: function (response) {
+            if (response.sendResetPassword) {
+                Swal.fire({
+                    position: "center",
+                    imageUrl: image,
+                    imageWidth: 100,
+                    imageHeight: 100,
+                    width: "400px",
+                    title: "Thay đổi mật khẩu thành công!",
+                    text: "Bây giờ bạn có thể đăng nhập bằng mật khẩu mới bạn vừa thay đổi.",
+                    showConfirmButton: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    // Chuyển hướng và reset form sau khi bấm "OK"
+                    window.location.href = response.url;
+                    $("#confirmResetPassword").trigger("reset");
+                    }
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            if (xhr.status === 422) {
+            let errors = xhr.responseJSON.errors;
+            $.each(errors, function (key, messages) {
+                let errorContainer = form.find("." + key + "_error");
+                if (errorContainer.length) {
+                errorContainer.html(messages[0]).css("color", "red");
+                }
+            });
+            } else {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: `${xhr.responseJSON.message}`,
+                showConfirmButton: false,
+                timer: 2500,
+            });
+            }
+        },
+        });
+    });
+});
