@@ -312,7 +312,7 @@
                 <div class="container-fluid pt-0 ps-0 pe-lg-4 pe-0">
                     <div class="row">
                         <div class="col-xl-12">
-                            <form action="{{  route('admin.menus.store')}}" method="post">
+                            <form action="{{ route('admin.menus.store') }}" method="post">
                                 @csrf
                                 <div class="card dz-card">
                                     <div class="card-header flex-wrap border-0"
@@ -448,7 +448,7 @@
                                             <div class="d-flex flex-start">
                                                 <div class="custom-checkbox text-end">
                                                     @can('save', App\Models\Menu::class)
-                                                        <button data-url="{{  route('admin.menus.store')}}" data-image="{{ asset('images/hand.png') }}" data-error="{{ asset('images/no-hand.png') }}" class="btn btn-primary btn-save-menu">
+                                                        <button data-url="{{  route('admin.menus.store')}}" data-image="{{ asset('client/images/hand.png') }}" data-error="{{ asset('client/images/no-hand.png') }}" class="btn btn-primary btn-save-menu">
                                                             {{ __('language.admin.interfaces.menus.save') }}
                                                         </button>
                                                     @endcan

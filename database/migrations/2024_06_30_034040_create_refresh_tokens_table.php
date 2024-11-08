@@ -13,7 +13,7 @@ return new class extends Migration {
         if (!Schema::hasTable('refresh_tokens')) {
             Schema::create('refresh_tokens', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('user_id')->constrained()->onDelete('cascade');
+                $table->bigInteger('user_id');
                 $table->string('refresh_token');
                 $table->timestamp('expires_at')->nullable();
                 $table->timestamps();

@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
-            $table->string('token');
+            $table->string('phone')->nullable(); // Thêm trường phone
+            $table->string('token')->nullable(); // Nếu bạn muốn lưu mã token cho email
+            $table->string('otp')->nullable(); // Thêm trường otp
             $table->timestamp('created_at')->nullable();
+            $table->timestamp('expires_at')->nullable(); // Thêm trường expires_at để xác định thời gian hết hạn
         });
     }
 

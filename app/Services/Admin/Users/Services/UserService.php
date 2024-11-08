@@ -28,7 +28,10 @@ class UserService extends BaseService implements UserServiceInterface
             'last_name' => $request->last_name,
             'password' => Hash::make($request->password),
             'role_id' => $request->role_id ?? null,
+            'cinema_id' => $request->cinema_id ?? null,
             'type' => $request->type,
+            'is_terms_accepted' => 1,
+            'is_subscribed_promotions' => 0
         ];
 
         // Xử lý upload ảnh nếu có
@@ -58,7 +61,10 @@ class UserService extends BaseService implements UserServiceInterface
             'last_name' => $request->last_name,
             'password' => $request->new_password ? Hash::make($request->new_password) : $user->password,
             'role_id' => $request->role_id ?? null,
+            'cinema_id' => $request->cinema_id ?? null,
             'type' => $request->type,
+            'is_terms_accepted' => 1,
+            'is_subscribed_promotions' => 0
         ];
 
         if($request->hasFile('image')) {

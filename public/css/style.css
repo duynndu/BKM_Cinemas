@@ -64,7 +64,7 @@
 @import url("../icons/line-awesome/css/line-awesome.min.css");
 @import url("../icons/flaticon/flaticon.css");
 @import url("../icons/flaticon-1/font/flaticon-1.css");
-@import url(../vendor/metismenu/css/metisMenu.min.css);
+@import url("../vendor/metismenu/css/metisMenu.min.css");
 
 :root {
     --primary: #01a3ff;
