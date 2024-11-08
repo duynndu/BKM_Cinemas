@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Auth\Admin\Logins\Interface;
 
-interface LoginInterface
-{
+use App\Repositories\Base\RepositoryInterface;
 
+interface LoginInterface extends RepositoryInterface
+{
+    public function checkEmailGuard($email);
 }
