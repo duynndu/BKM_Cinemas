@@ -29,27 +29,29 @@
                                     <div class="row mb-4">
                                         <div class="col-12">
                                             <label class="form-label mb-2">{{ __('language.admin.members.permissions.name') }}</label>
-                                            <input type="text" id="name" name="name" class="form-control"
-                                                   placeholder="{{ __('language.admin.members.permissions.inputName') }}" value="{{ old('name') ?? '' }}">
-                                            @error('name')
-                                            <div class="mt-2">
-                                                <span class="text-red">{{ $message }}</span>
-                                            </div>
+                                            <input type="text" id="name" name="permission[name]" class="form-control"
+                                                   placeholder="{{ __('language.admin.members.permissions.inputName') }}" value="{{ old('permission.name') }}">
+                                            @error('permission.name')
+                                                <div class="mt-2">
+                                                    <span class="text-red">{{ $message }}</span>
+                                                </div>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col-12">
                                             <label class="form-label mb-2">{{ __('language.admin.members.permissions.selectModule') }}</label><br>
-                                            <select class="form-control w-50" name="module_id">
-                                                <option value="" selected>-- {{ __('language.admin.members.modules.select') }} --</option>
+                                            <select class="form-control w-50" name="permission[module_id]">
+                                                <option value="">-- {{ __('language.admin.members.modules.select') }} --</option>
                                                 @if($data['modules']->isNotEmpty())
                                                     @foreach($data['modules'] as $module)
-                                                        <option value="{{ $module->id }}">{{ $module->name }}</option>
+                                                        <option value="{{ $module->id }}" @selected(old('permission.module_id') == $module->id)>
+                                                            {{ $module->name }}
+                                                        </option>
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            @error('module_id')
+                                            @error('permission.module_id')
                                             <div class="mt-2">
                                                 <span class="text-red">{{ $message }}</span>
                                             </div>
@@ -59,8 +61,8 @@
                                     <div class="mb-4">
                                         <label class="form-label mb-2">{{ __('language.admin.members.permissions.value') }}</label>
                                         <input type="text" class="form-control"
-                                               placeholder="{{ __('language.admin.members.permissions.inputValue') }}" name="value" value="{{ old('value') ?? '' }}">
-                                        @error('value')
+                                               placeholder="{{ __('language.admin.members.permissions.inputValue') }}" name="permission[value]" value="{{ old('permission.value') }}">
+                                        @error('permission.value')
                                         <div class="mt-2">
                                             <span class="text-red">{{ $message }}</span>
                                         </div>
@@ -80,7 +82,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 @endsection

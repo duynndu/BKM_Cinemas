@@ -64,10 +64,10 @@
                         <div class="row mb-4">
                             <div class="col-6">
                                 <label class="form-label mb-2">{{ __('language.admin.interfaces.blocks.name') }}</label>
-                                <input type="text" id="name" name="name" class="form-control"
+                                <input type="text" id="name" name="block[name]" class="form-control"
                                        placeholder="{{ __('language.admin.interfaces.blocks.inputName') }}"
-                                       value="{{ old('name') }}">
-                                @error('name')
+                                       value="{{ old('block.name') }}">
+                                @error('block.name')
                                 <div class="mt-2">
                                     <span class="text-red">{{ $message }}</span>
                                 </div>
@@ -75,10 +75,10 @@
                             </div>
                             <div class="col-6">
                                 <label class="form-label mb-2">{{ __('language.admin.interfaces.blocks.slug') }}</label>
-                                <input type="text" class="form-control" id="slug" name="slug"
+                                <input type="text" class="form-control" id="slug" name="block[slug]"
                                        placeholder="{{ __('language.admin.interfaces.blocks.inputSlug') }}"
-                                       value="{{ old('slug') }}">
-                                @error('slug')
+                                       value="{{ old('block.slug') }}">
+                                @error('block.slug')
                                 <div class="mt-2">
                                     <span class="text-red">{{ $message }}</span>
                                 </div>
@@ -89,15 +89,19 @@
                             <div class="col-6">
                                 <label
                                     class="form-label">{{ __('language.admin.interfaces.blocks.selectBlock') }}</label><br>
-                                <select class="form-control" name="page_id" id="page_id">
-                                    <option value="" selected>-- {{ __('language.admin.interfaces.blocks.select') }} --</option>
+                                <select class="form-control" name="block[page_id]" id="page_id">
+                                    <option value="">
+                                        -- {{ __('language.admin.interfaces.blocks.select') }} --
+                                    </option>
                                     @if(!empty($pages))
                                         @foreach($pages as $page)
-                                            <option value="{{ $page->id }}">{{ $page->name }}</option>
+                                            <option value="{{ $page->id }}" @selected(old('block.page_id') == $page->id)>
+                                                {{ $page->name }}
+                                            </option>
                                         @endforeach
                                     @endif
                                 </select>
-                                @error('page_id')
+                                @error('block.page_id')
                                     <div class="mt-2">
                                         <span class="text-red">{{ $message }}</span>
                                     </div>
@@ -106,18 +110,22 @@
 
                             <div class="col-6">
                                 <label class="form-label">{{ __('language.admin.interfaces.blocks.typeBlock') }}</label><br>
-                                <select class="form-control" name="block_type_id" id="block_type_id">
-                                    <option value="" selected>-- {{ __('language.admin.interfaces.blocks.select') }} --</option>
+                                <select class="form-control" name="block[block_type_id]" id="block_type_id">
+                                    <option value="">
+                                        -- {{ __('language.admin.interfaces.blocks.select') }} --
+                                    </option>
                                     @if(!empty($blockTypes))
                                         @foreach($blockTypes as $blockType)
-                                            <option value="{{ $blockType->id }}">{{ $blockType->name }}</option>
+                                            <option value="{{ $blockType->id }}" @selected(old('block.block_type_id') == $blockType->id)>
+                                                {{ $blockType->name }}
+                                            </option>
                                         @endforeach
                                     @endif
                                 </select>
-                                @error('block_type_id')
-                                <div class="mt-2">
-                                    <span class="text-red">{{ $message }}</span>
-                                </div>
+                                @error('block.block_type_id')
+                                    <div class="mt-2">
+                                        <span class="text-red">{{ $message }}</span>
+                                    </div>
                                 @enderror
                             </div>
                         </div>
@@ -129,16 +137,16 @@
                                 <div class="row mt-2">
                                     <div class="col-sm-6">
                                         <input class="form-check-input" type="radio" id="active"
-                                               name="active"
-                                               value="1" checked>
+                                               name="block[active]"
+                                               value="1" @checked(old('block.active', 1) == 1)>
                                         <label class="form-check-label" for="active">
                                             {{ __('language.admin.interfaces.blocks.show') }}
                                         </label>
                                     </div>
                                     <div class="col-sm-6">
                                         <input class="form-check-input" value="0" type="radio"
-                                               id="active"
-                                               name="active">
+                                               id="active" @checked(old('block.active', 1) == 0)
+                                               name="block[active]">
                                         <label class="form-check-label" for="active">
                                             {{ __('language.admin.interfaces.blocks.hidden') }}
                                         </label>
@@ -148,9 +156,9 @@
 
                             <div class="col-6">
                                 <label class="form-label">{{ __('language.admin.interfaces.blocks.order') }}</label><br>
-                                <input class="form-control" value="0"
+                                <input class="form-control" value="{{ old('block.order', 0) }}"
                                        type="number" min="0" id="order"
-                                       name="order">
+                                       name="block[order]">
                             </div>
                         </div>
                     </div>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pages\PageRequest;
-use App\Services\Admin\Pages\PageService;
+use App\Services\Admin\Pages\Interfaces\PageServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +14,7 @@ class PageController extends Controller
     protected $pageService;
 
     public function __construct(
-        PageService $pageService
+        PageServiceInterface $pageService
     )
     {
         $this->pageService = $pageService;
@@ -32,7 +32,7 @@ class PageController extends Controller
 
         $countPage = $this->pageService->countPage();
 
-        $pages = $this->pageService->getAllPage($request);
+        $pages = $this->pageService->getAll();
 
         return view('admin.pages.pages.index', compact('pages', 'countPage'));
     }
@@ -44,10 +44,11 @@ class PageController extends Controller
 
     public function store(PageRequest $request)
     {
+        $data = $request->page;
         try {
             DB::beginTransaction();
 
-            $this->pageService->store($request);
+            $this->pageService->create($data);
 
             DB::commit();
 
@@ -72,7 +73,7 @@ class PageController extends Controller
 
     public function edit($id)
     {
-        $page = $this->pageService->getPageById($id);
+        $page = $this->pageService->find($id);
 
         if (!$page) {
             return redirect()->route('admin.pages.index')->with('status_failed', 'Không tìm thấy trang');
@@ -83,10 +84,12 @@ class PageController extends Controller
 
     public function update(PageRequest $request, $id)
     {
+        $data = $request->page;
+
         try {
             DB::beginTransaction();
 
-            $this->pageService->update($request, $id);
+            $this->pageService->update($data, $id);
 
             DB::commit();
 

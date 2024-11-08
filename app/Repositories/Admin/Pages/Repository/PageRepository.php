@@ -1,35 +1,28 @@
 <?php
 
 namespace App\Repositories\Admin\Pages\Repository;
-
-use App\Models\Language;
 use App\Models\Page;
 use App\Repositories\Admin\Pages\Interface\PageInterface;
+use App\Repositories\Base\BaseRepository;
 
-class PageRepository implements PageInterface
+class PageRepository extends BaseRepository implements PageInterface
 {
-    const PAGINATION = 6;
-
-    protected $page;
-
-    public function __construct(
-        Page     $page,
-    )
+    public function getModel()
     {
-        $this->page = $page;
+        return Page::class;
     }
 
     public function countPage()
     {
-        return $this->page->count();
+        return $this->model->count();
     }
 
-    public function getAllPage($request)
+    public function getAll()
     {
-        $pages = $this->page->orderBy('order');
+        $pages = $this->model->orderBy('order');
 
-        if ($request->name) {
-            $pages = $pages->where('name', 'like', '%' . $request->name . '%');
+        if (request()->name) {
+            $pages = $pages->where('name', 'like', '%' . request()->name . '%');
         }
 
         $pages = $pages->paginate(self::PAGINATION);
@@ -37,36 +30,8 @@ class PageRepository implements PageInterface
         return $pages;
     }
 
-    public function createPage($data)
+    public function getAllActive()
     {
-        return $this->page->create($data);
-    }
-
-    public function getPageById($id)
-    {
-        $page = $this->page->find($id);
-        return $page;
-    }
-
-    public function updatePage($data, $id)
-    {
-        $page = $this->page->find($id);
-
-        $page->update($data);
-
-        return $page;
-    }
-
-    public function delete($id)
-    {
-        $page = $this->page->find($id);
-
-        if (!$page) {
-            return redirect()->route('admin.pages.index')->with('status_failed', 'Không tìm thấy trang');
-        }
-
-        $page->delete();
-
-        return $page;
+        return $this->model->where('active', 1)->get();
     }
 }

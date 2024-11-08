@@ -27,10 +27,10 @@
                                     <div class="col-12">
                                         <label
                                             class="form-label mb-2">{{ __('language.admin.interfaces.blockTypes.name') }}</label>
-                                        <input type="text" id="name" name="name" class="form-control"
+                                        <input type="text" id="name" name="blockType[name]" class="form-control"
                                                placeholder="{{ __('language.admin.interfaces.blockTypes.inputName') }}"
-                                               value="{{ old('name') ?? '' }}">
-                                        @error('name')
+                                               value="{{ old('blockType.name') }}">
+                                        @error('blockType.name')
                                         <div class="mt-2">
                                             <span class="text-red">{{ $message }}</span>
                                         </div>
@@ -58,14 +58,14 @@
                                                 <div class="row mt-2">
                                                     <div class="col-sm-6">
                                                         <input class="form-check-input" type="radio" id="active"
-                                                               name="active" value="1" checked>
+                                                               name="blockType[active]" value="1" checked>
                                                         <label class="form-check-label" for="active">
                                                             {{ __('language.admin.interfaces.blockTypes.show') }}
                                                         </label>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <input class="form-check-input" value="0" type="radio"
-                                                               id="active" name="active">
+                                                               id="active" name="blockType[active]">
                                                         <label class="form-check-label" for="active">
                                                             {{ __('language.admin.interfaces.blockTypes.hidden') }}
                                                         </label>
@@ -77,13 +77,13 @@
                                             <div class="p-3">
                                                 <label
                                                     class="form-label">{{ __('language.admin.interfaces.blockTypes.order') }}</label><br>
-                                                <input class="form-control" value="{{ old('order') ?? 0 }}"
+                                                <input class="form-control" value="{{ old('blockType.order', 0) }}"
                                                        type="number"
-                                                       min="0" id="order" name="order">
-                                                @error('order')
-                                                <div class="mt-2">
-                                                    <span class="text-red">{{ $message }}</span>
-                                                </div>
+                                                       min="0" id="order" name="blockType[order]">
+                                                @error('blockType.order')
+                                                    <div class="mt-2">
+                                                        <span class="text-red">{{ $message }}</span>
+                                                    </div>
                                                 @enderror
                                             </div>
                                         </div>

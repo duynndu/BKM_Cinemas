@@ -77,7 +77,7 @@
                                     <div class="mb-4">
                                         <label class="form-label mb-2">{{ __('language.admin.members.users.password') }}</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" id="password" name="password" class="form-control"
+                                            <input type="password" id="password" name="password" class="form-control"
                                                    placeholder="{{ __('language.admin.members.users.inputPassword') }}" value="{{ old('password') }}">
                                             <button class="btn btn-outline btn-facebook changeTypePassword" type="button">
                                                 <i class="fa-solid fa-eye-slash" id="toggleIcon"></i>
@@ -91,26 +91,50 @@
                                     </div>
 
                                     <div class="mb-4">
-                                        <label class="form-label mb-2">{{ __('language.admin.members.users.role') }}</label><br>
-                                        <select name="role_id" class="form-control w-50 role_id" id="">
-                                            @if($data['roles']->isNotEmpty())
-                                                @foreach($data['roles'] as $role)
-                                                    <option
-                                                        @selected($role->type === 'member')
-                                                        data-type="{{ $role->type ?? '' }}"
-                                                        value="{{ $role->id }}">{{ $role->name ?? '' }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                        <br>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label class="form-label mb-2">{{ __('language.admin.members.users.role') }}</label><br>
+                                                <select name="role_id" class="form-control role_id" id="">
+                                                    @if($data['roles']->isNotEmpty())
+                                                        @foreach($data['roles'] as $role)
+                                                            <option
+                                                                @selected($role->type === 'member')
+                                                                data-type="{{ $role->type ?? '' }}"
+                                                                value="{{ $role->id }}">{{ $role->name ?? '' }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                <br>
 
-                                        <input type="hidden" name="type" class="type" value="member">
+                                                <input type="hidden" name="type" class="type" value="member">
 
-                                        @error('role_id')
-                                        <div class="mt-2">
-                                            <span class="text-red">{{ $message }}</span>
+                                                @error('role_id')
+                                                <div class="mt-2">
+                                                    <span class="text-red">{{ $message }}</span>
+                                                </div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label class="form-label mb-2">Chọn rạp (nếu có)</label><br>
+                                                <select name="cinema_id" class="form-control cinema_id" id="">
+                                                    <option value="">-- Chọn rạp --</option>
+                                                    @if($data['cinemas']->isNotEmpty())
+                                                        @foreach($data['cinemas'] as $cinema)
+                                                            <option
+                                                                value="{{ $cinema->id }}">{{ $cinema->name ?? '' }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                <br>
+        
+                                                @error('cinema_id')
+                                                    <div class="mt-2">
+                                                        <span class="text-red">{{ $message }}</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
-                                        @enderror
                                     </div>
                                 </div>
                             </div>
