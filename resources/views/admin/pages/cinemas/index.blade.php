@@ -3,6 +3,12 @@
 @section('title', 'Danh sách rạp')
 
 @section('css')
+    <style>
+        .box-map iframe {
+            width: 100px !important;
+            height: 100px !important;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -190,7 +196,9 @@
                                                             </b>
                                                         </td>
                                                         <td>
-                                                            {!! $cinema->map !!}
+                                                            <div class="box-map" style="width: 100px">
+                                                                {!! $cinema->map !!}
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <button

@@ -2,13 +2,13 @@
 
 namespace App\Http\Views\Composers;
 
-use App\Repositories\Admin\Systems\Repository\SystemRepository;
+use App\Repositories\Admin\Systems\Interface\SystemInterface;
 use Illuminate\View\View;
 
 class GetAllDataComposer
 {
     protected $systemRepository;
-    public function __construct(SystemRepository $systemRepository)
+    public function __construct(SystemInterface $systemRepository)
     {
         $this->systemRepository = $systemRepository;
     }

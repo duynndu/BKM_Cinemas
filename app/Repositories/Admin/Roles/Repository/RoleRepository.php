@@ -2,63 +2,41 @@
 
 namespace App\Repositories\Admin\Roles\Repository;
 
-use App\Models\Module;
 use App\Models\Role;
 use App\Repositories\Admin\Roles\Interface\RoleInterface;
+use App\Repositories\Base\BaseRepository;
 use App\Traits\RemoveImageTrait;
 
-class RoleRepository implements RoleInterface
+class RoleRepository extends BaseRepository implements RoleInterface
 {
     use RemoveImageTrait;
-
-    CONST PAGINATION = 12;
-
-    protected $role;
-    protected $module;
-
-    public function __construct(
-        Role       $role,
-        Module     $module
-    )
+    public function getModel()
     {
-        $this->role = $role;
-        $this->module = $module;
+        return Role::class;
     }
 
-    public function getAllRole($request)
+    public function getAll()
     {
-        $roles = $this->role->with('permissions')
+        $roles = $this->model->with('permissions')
             ->paginate(self::PAGINATION);
 
         return $roles;
     }
 
-    public function getModules()
+    public function find($id)
     {
-        return $this->module->select('id', 'name')->with('permissions')->orderBy('id', 'ASC')
-            ->get();
-    }
+        $result = $this->model->with('permissions')->find($id);
 
-    public function getRoleById($id)
-    {
-        return $this->role->find($id);
-    }
+        if ($result) {
+            return $result;
+        }
 
-    public function create($data)
-    {
-        return $this->role->create($data);
-    }
-
-    public function update($data, $id)
-    {
-        $role = $this->role->find($id);
-        $role->update($data);
-        return $role;
+        return false;
     }
 
     public function delete($id)
     {
-        $role = $this->getRoleById($id);
+        $role = $this->find($id);
 
         if (!$role) {
             return redirect()->route('admin.roles.index')->with('status_failed', 'Không tìm thấy vai trò');

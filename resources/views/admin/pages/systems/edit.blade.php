@@ -105,7 +105,7 @@
                                                         </div>
                                                     @enderror
                                                     <div class="change-btn d-flex align-items-center flex-wrap">
-                                                        <input type="file" class="form-control d-none" name="image"
+                                                        <input type="file" class="form-control d-none uploadImage" name="image"
                                                             id="imageUpload" accept=".png, .jpg, .jpeg">
                                                         <label for="imageUpload"
                                                             class="btn btn-sm btn-primary light ms-0">{{ __('language.admin.systems.selectImage') }}</label>

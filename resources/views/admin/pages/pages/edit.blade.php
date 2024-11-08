@@ -26,9 +26,9 @@
                                 <div class="row mb-4">
                                     <div class="col-6">
                                         <label class="form-label mb-2">{{ __('language.admin.interfaces.pages.name') }}</label>
-                                        <input type="text" id="name" name="name" class="form-control"
-                                            placeholder="{{ __('language.admin.interfaces.pages.inputName') }}" value="{{ old('name') ?? $page->name }}">
-                                        @error('name')
+                                        <input type="text" id="name" name="page[name]" class="form-control"
+                                            placeholder="{{ __('language.admin.interfaces.pages.inputName') }}" value="{{ old('page.name',  $page->name) }}">
+                                        @error('page.name')
                                             <div class="mt-2">
                                                 <span class="text-red">{{ $message }}</span>
                                             </div>
@@ -36,9 +36,9 @@
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label mb-2">{{ __('language.admin.interfaces.pages.slug') }}</label>
-                                        <input type="text" class="form-control" id="slug" name="slug"
-                                            placeholder="{{ __('language.admin.interfaces.pages.inputSlug') }}" value="{{ old('slug') ?? $page->slug }}">
-                                        @error('slug')
+                                        <input type="text" class="form-control" id="slug" name="page[slug]"
+                                            placeholder="{{ __('language.admin.interfaces.pages.inputSlug') }}" value="{{ old('page.slug', $page->slug) }}">
+                                        @error('page.slug')
                                             <div class="mt-2">
                                                 <span class="text-red">{{ $message }}</span>
                                             </div>
@@ -65,7 +65,7 @@
                                                 <div class="row mt-2">
                                                     <div class="col-sm-6">
                                                         <input class="form-check-input" type="radio" id="active"
-                                                               name="active" value="1"
+                                                               name="page[active]" value="1"
                                                             {{ $page->active == 1 ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="active">
                                                             {{ __('language.admin.interfaces.pages.show') }}
@@ -73,7 +73,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <input class="form-check-input" value="0" type="radio"
-                                                               id="active" name="active"
+                                                               id="active" name="page[active]"
                                                             {{ $page->active == 0 ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="active">
                                                             {{ __('language.admin.interfaces.pages.hidden') }}
@@ -85,9 +85,9 @@
                                         <div class="col-6">
                                             <div class="p-3">
                                                 <label class="form-label">{{ __('language.admin.interfaces.pages.order') }}</label><br>
-                                                <input class="form-control" value="{{ $page->order ?? 0 }}" type="number"
-                                                    min="0" id="order" name="order">
-                                                @error('order')
+                                                <input class="form-control" value="{{ old('page.order', $page->order) }}" type="number"
+                                                    min="0" id="order" name="page[order]">
+                                                @error('page.order')
                                                     <div class="mt-2">
                                                         <span class="text-red">{{ $message }}</span>
                                                     </div>

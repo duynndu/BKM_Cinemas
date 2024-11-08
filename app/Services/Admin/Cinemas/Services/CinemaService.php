@@ -12,7 +12,7 @@ class CinemaService extends BaseService implements CinemaServiceInterface
         return CinemaInterface::class;
     }
 
-    public function store(&$data)
+    public function create(&$data)
     {
         if (isset($data['image']) && $data['image']) {
             $uploadData = $this->uploadFile($data['image'], 'public/cinemas');

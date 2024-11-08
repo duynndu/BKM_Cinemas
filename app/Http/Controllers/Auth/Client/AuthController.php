@@ -11,8 +11,9 @@ use App\Http\Requests\Auth\Client\RegisterRequest;
 use App\Http\Requests\Auth\Client\ResetPasswordRequest;
 use App\Models\PasswordResetToken;
 use App\Models\User;
-use App\Services\Auth\Client\Registers\RegisterService;
-use App\Services\Client\Cities\CityService;
+use App\Repositories\Auth\Client\ForgotPasswords\Interface\ForgotPasswordInterface;
+use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
+use App\Services\Auth\Client\Registers\Interfaces\RegisterServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -26,18 +27,21 @@ class AuthController extends Controller
     protected $cityService;
 
     protected $registerService;
+    protected $forgotPassword;
 
     public function __construct(
-        CityService $cityService,
-        RegisterService $registerService
+        CityServiceInterface           $cityService,
+        RegisterServiceInterface       $registerService,
+        ForgotPasswordInterface        $forgotPassword
     ) {
         $this->cityService = $cityService;
         $this->registerService = $registerService;
+        $this->forgotPassword = $forgotPassword;
     }
 
     public function account()
     {
-        $cities = $this->cityService->getAllCity();
+        $cities = $this->cityService->getAll();
         return view('client.pages.auth.auth', compact('cities'));
     }
 
@@ -83,7 +87,7 @@ class AuthController extends Controller
     {
         DB::beginTransaction();
         try {
-            $user = $this->registerService->register($request);
+            $user = $this->registerService->create($request);
 
             event(new UserRegistered($user));
 
@@ -132,10 +136,10 @@ class AuthController extends Controller
     public function sendResetLinkEmail(ForgotPasswordRequest $request)
     {
         try {
-            $user = User::where('email', $request->email)->first();
+            $user = $this->forgotPassword->getUserByEmail($request->email);
             $token = Str::random(60);
 
-            PasswordResetToken::updateOrInsert(
+            $this->forgotPassword->updateOrInsert(
                 ['email' => $user->email],
                 ['token' => $token, 'created_at' => now()]
             );
@@ -181,9 +185,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            $reset = PasswordResetToken::where('token', $token)
-                ->where('email', $email)
-                ->first();
+            $reset = $this->forgotPassword->getResetToken($token, $email);
 
             if (!$reset) {
                 return response()->json([
@@ -192,14 +194,16 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            $user = User::where('email', $reset->email)->first();
+            $user = $this->forgotPassword->getUserByEmail($reset->email);
 
             if ($user) {
-                $user->password = Hash::make($request->password);
-                $user->save();
+                $this->forgotPassword->update($user->id, [
+                    'password' => Hash::make($request->password),
+                ]);
             }
 
-            PasswordResetToken::where('token', $token)->delete();
+            $this->forgotPassword->deleteByToken($token);
+
             session()->forget(['reset_token', 'reset_email']);
 
             return response()->json([

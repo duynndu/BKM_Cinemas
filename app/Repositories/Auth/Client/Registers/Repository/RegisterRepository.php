@@ -4,19 +4,12 @@ namespace App\Repositories\Auth\Client\Registers\Repository;
 
 use App\Models\User;
 use App\Repositories\Auth\Client\Registers\Interface\RegisterInterface;
+use App\Repositories\Base\BaseRepository;
 
-class RegisterRepository implements RegisterInterface
+class RegisterRepository extends BaseRepository implements RegisterInterface
 {
-    protected $user;
-
-    public function __construct(
-        User $user
-    ) {
-        $this->user = $user;
-    }
-    
-    public function createUser($data)
+    public function getModel()
     {
-        return $this->user->create($data);
+        return User::class;
     }
 }
