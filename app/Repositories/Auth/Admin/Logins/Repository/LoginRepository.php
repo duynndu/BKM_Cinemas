@@ -4,30 +4,22 @@ namespace App\Repositories\Auth\Admin\Logins\Repository;
 
 use App\Models\User;
 use App\Repositories\Auth\Admin\Logins\Interface\LoginInterface;
+use App\Repositories\Base\BaseRepository;
 
-class LoginRepository implements LoginInterface
+class LoginRepository extends BaseRepository implements LoginInterface
 {
-    protected $user;
-
-    public function __construct(
-        User $user
-    )
+    public function getModel()
     {
-        $this->user = $user;
+        return User::class;
     }
 
     public function checkEmailGuard($email)
     {
-        return $this->user->select('id', 'email', 'password', 'type', 'status')
+        return $this->model->select('id', 'email', 'password', 'type', 'status')
             ->where('email', strtolower($email))
             ->whereIn('type', [
                 'admin',
-                'director',
-                'departmentHead',
-                'frontend',
-                'backend',
-                'management',
-                'administrative',
+                'manage',
                 'staff'
             ])->first();
     }

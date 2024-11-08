@@ -6,7 +6,6 @@
 <head>
     <meta name="csrf_token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
-
     <meta name="description"
         content="Rạp chiếu phim Touch Cinema với chất lượng âm thanh & hình ảnh đạt chuẩn quốc tế đầu tiên tại Pleiku, Gia Lai. Đặt vé ngay hôm nay để nhận được nhiều ưu đãi!">
     <meta property="og:title" content="Touch Cinema - Rạp chiếu phim công nghệ hiện đại đầu tiên tại Gia Lai" />
@@ -32,6 +31,9 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700&amp;subset=latin,latin-ext"
         rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('libs/fontawesome-free-6.6.0-web/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -42,6 +44,8 @@
     <link rel="stylesheet" href="{{ asset('client/css/style_movie.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/style_auth.css') }}">
     <!-- CSRF Token -->
+
+    {{-- @vite(['resources/js/app.js']) --}}
     @yield('css')
 </head>
 
@@ -49,7 +53,7 @@
     <div id="fb-root"></div>
     <div id="app">
         @include('client.partials.header')
-        <div id="wrap">
+        <div id="wrap" style="margin-bottom: 30px;">
             @yield('content')
         </div>
         @include('client.partials.footer')
@@ -179,13 +183,15 @@
 </body>
 
 <!-- Scripts -->
+<script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('client/js/statics/js/jquery.js') }}"></script>
 <script src="{{ asset('client/js/jquery/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('libs/bootstrap/3.3.6/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/statics/js/scripts.js') }}"></script>
 <script src="{{ asset('client/js/statics/js/showtime-widget.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
-
 
 <script src="{{ asset('client/js/common.js') }}"></script>
 

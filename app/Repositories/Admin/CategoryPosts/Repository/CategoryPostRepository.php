@@ -5,7 +5,7 @@ namespace App\Repositories\Admin\CategoryPosts\Repository;
 use App\Repositories\Admin\CategoryPosts\Interface\CategoryPostInterface;
 use App\Repositories\Base\BaseRepository;
 
-    class CategoryPostRepository extends BaseRepository implements CategoryPostInterface
+class CategoryPostRepository extends BaseRepository implements CategoryPostInterface
 {
     public function getModel()
     {
@@ -58,12 +58,12 @@ use App\Repositories\Base\BaseRepository;
                 $child->delete();
             }
         }
-        return  $category->delete();
+        return $category->delete();
     }
 
     public function getListCategoryPost()
     {
-        $categoryPost =  $this->model
+        $categoryPost = $this->model
             ->where('parent_id', 0)
             ->get();
         return $categoryPost;
@@ -78,9 +78,11 @@ use App\Repositories\Base\BaseRepository;
     public function getListCategoryPostEdit($id)
     {
         $categoryPost = $this->model->query()
-            ->with(['childrenRecursive' => function ($category) use ($id) {
-                $category->where('id', '<>', $id);
-            }])
+            ->with([
+                'childrenRecursive' => function ($category) use ($id) {
+                    $category->where('id', '<>', $id);
+                }
+            ])
             ->where('id', '<>', $id)
             ->where('parent_id', 0)
             ->get();
