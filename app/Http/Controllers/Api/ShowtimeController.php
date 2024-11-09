@@ -27,7 +27,18 @@ class ShowtimeController extends Controller
      */
     public function store(Request $request)
     {
-        $showtime = Showtime::create($request->all());
+        $request->validate([
+            'start_time' => 'required|date',
+            'end_time' => 'required|date',
+            'room_id' => 'required|integer|exists:rooms,id',
+        ]);
+        $data = $request->all();
+        $showtime = Showtime::create([
+            'cinema_id' => auth()->user()->cinema_id,
+            'start_time' => $data['start_time'],
+            'end_time' => $data['end_time'],
+            'room_id' => $data['room_id'],
+        ]);
         return response()->json($showtime, 201);
     }
 
@@ -49,8 +60,8 @@ class ShowtimeController extends Controller
         WHERE seats.room_id = ? AND seats.deleted_at IS NULL
     ", [ConstantsSeatType::EMPTY_SEAT, $showtime->room_id]);
         $seatTypes = collect($seats)
-        ->filter(fn($seat) => $seat->type !== ConstantsSeatType::EMPTY_SEAT)
-        ->map(fn ($seat) => $seat->type)->unique()->values()->toArray();
+            ->filter(fn($seat) => $seat->type !== ConstantsSeatType::EMPTY_SEAT)
+            ->map(fn($seat) => $seat->type)->unique()->values()->toArray();
         $seatTypes = SeatType::whereIn('code', $seatTypes)->get();
         $room = Room::find($showtime->room_id);
         $room->seats = $seats;
@@ -87,11 +98,12 @@ class ShowtimeController extends Controller
             'room_id' => 'required|integer|exists:rooms,id',
             'cinema_id' => 'nullable|integer|exists:cinemas,id',
         ]);
+        $cinemaId = $request->cinema_id ?? auth()->user()->cinema_id;
 
         $startDate = $request->start_date;
         $showtimes = Showtime::whereDate('start_time', '=', Carbon::parse($startDate)->toDateString())
             ->where('room_id', '=', $request->room_id)
-            ->where('cinema_id', '=', 1)
+            ->where('cinema_id', '=', $cinemaId)
             ->with('movie')
             ->get();
         return response()->json($showtimes);

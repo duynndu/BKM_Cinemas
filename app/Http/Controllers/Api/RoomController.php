@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Room;
-use App\Models\SeatLayout;
-use App\Models\Cinema;
 use App\Models\SeatType;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
@@ -27,7 +26,6 @@ class RoomController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            // 'cinema_id' => 'required|integer|exists cinemas,id',
             'room_name' => 'required|string|max:255',
             'base_price' => 'required|numeric|min:0',
             'col_count' => 'required|integer|min:0',
@@ -37,38 +35,48 @@ class RoomController extends Controller
         ]);
 
         $seatType = SeatType::all()->keyBy('code');
-        $room = new Room();
-        $room->room_name  = $validatedData['room_name'];
-        $room->base_price = $validatedData['base_price'];
-        $room->cinema_id  = 1;
-        // $room->cinema_id  = $validatedData['cinema_id'];
-        $room->image      = $validatedData['image'];
-        $room->col_count  = $validatedData['col_count'];
-        $room->row_count  = $validatedData['row_count'];
         $seats = json_decode($validatedData['seats'], true);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('seat_layouts', 'public');
-            $room->image = $path;
-        }
-        $room->save();
-        foreach ($seats as $seat) {
-            if (!$seatType->has($seat['type'])) {
-                return response()->json(['error' => "Loại ghế " . $seat['type'] . " không tồn tại, ghế " . $seat['seat_number'] . " không thể tạo"], 404);
+        DB::beginTransaction();
+        try {
+            $room = new Room();
+            $room->room_name  = $validatedData['room_name'];
+            $room->base_price = $validatedData['base_price'];
+            $room->cinema_id  = auth()->user()->cinema_id;
+            $room->image      = $validatedData['image'];
+            $room->col_count  = $validatedData['col_count'];
+            $room->row_count  = $validatedData['row_count'];
+
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('seat_layouts', 'public');
+                $room->image = $path;
             }
-            $price = ($room->base_price + $seatType[$seat['type']]->bonus_price) * $seat['slot'];
-            $room->seats()->create([
-                'room_id' => $room->id,
-                'seat_number' => $seat['seat_number'],
-                'slot' => $seat['slot'],
-                'type' => $seat['type'],
-                'visible' => $seat['visible'],
-                'merged_seats' => $seat['merged_seats'],
-                'order' => $seat['order'],
-                'price' => $price,
-            ]);
+            $room->save();
+
+            foreach ($seats as $seat) {
+                if (!$seatType->has($seat['type'])) {
+                    DB::rollBack();
+                    return response()->json(['error' => "Loại ghế " . $seat['type'] . " không tồn tại, ghế " . $seat['seat_number'] . " không thể tạo"], 404);
+                }
+                $price = ($room->base_price + $seatType[$seat['type']]->bonus_price) * $seat['slot'];
+                $room->seats()->create([
+                    'room_id' => $room->id,
+                    'seat_number' => $seat['seat_number'],
+                    'slot' => $seat['slot'],
+                    'type' => $seat['type'],
+                    'visible' => $seat['visible'],
+                    'merged_seats' => $seat['merged_seats'],
+                    'order' => $seat['order'],
+                    'price' => $price,
+                ]);
+            }
+
+            DB::commit();
+            return response()->json($room);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'An error occurred while creating the room.'], 500);
         }
-        return response()->json($room);
     }
 
     /**
@@ -84,7 +92,6 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-
         $validatedData = $request->validate([
             'room_name' => 'sometimes|required|string|max:255',
             'base_price' => 'sometimes|required|numeric|min:0',
@@ -94,44 +101,51 @@ class RoomController extends Controller
             'seats' => 'sometimes|required|json',
         ]);
 
-        $room->room_name  = $validatedData['room_name'];
-        $room->base_price = $validatedData['base_price'];
-        $room->cinema_id  = 1;
-        // $room->cinema_id  = $validatedData['cinema_id'];
-        $room->col_count  = $validatedData['col_count'];
-        $room->row_count  = $validatedData['row_count'];
-        $seats = json_decode($validatedData['seats'], true);
-        if ($request->hasFile('image')) {
-            if ($room->image) {
-                Storage::disk('public')->delete($room->image);
-            }
-            $path = $request->file('image')->store('seat_layouts', 'public');
-            $room->image = $path;
-        }
-        $room->save();
+        DB::beginTransaction();
+        try {
+            $room->room_name  = $validatedData['room_name'];
+            $room->base_price = $validatedData['base_price'];
+            $room->col_count  = $validatedData['col_count'];
+            $room->row_count  = $validatedData['row_count'];
+            $seats = json_decode($validatedData['seats'], true);
 
-        if (isset($validatedData['seats'])) {
-            $seatType = SeatType::all()->keyBy('code');
-            $room->seats()->delete();
-
-            foreach ($seats as $seat) {
-                if (!$seatType->has($seat['type'])) {
-                    return response()->json(['error' => "Loại ghế " . $seat['type'] . " không tồn tại, ghế " . $seat['seat_number'] . " không thể tạo"], 404);
+            if ($request->hasFile('image')) {
+                if ($room->image) {
+                    Storage::disk('public')->delete($room->image);
                 }
-                $price = ($room->base_price + $seatType[$seat['type']]->bonus_price) * $seat['slot'];
-                $room->seats()->create([
-                    'seat_number' => $seat['seat_number'],
-                    'slot' => $seat['slot'],
-                    'type' => $seat['type'],
-                    'visible' => $seat['visible'],
-                    'merged_seats' => $seat['merged_seats'],
-                    'order' => $seat['order'],
-                    'price' => $price,
-                ]);
+                $path = $request->file('image')->store('seat_layouts', 'public');
+                $room->image = $path;
             }
-        }
+            $room->save();
 
-        return response()->json($room->load('seats'));
+            if (isset($validatedData['seats'])) {
+                $seatType = SeatType::all()->keyBy('code');
+                $room->seats()->delete();
+
+                foreach ($seats as $seat) {
+                    if (!$seatType->has($seat['type'])) {
+                        DB::rollBack();
+                        return response()->json(['error' => "Loại ghế " . $seat['type'] . " không tồn tại, ghế " . $seat['seat_number'] . " không thể tạo"], 404);
+                    }
+                    $price = ($room->base_price + $seatType[$seat['type']]->bonus_price) * $seat['slot'];
+                    $room->seats()->create([
+                        'seat_number' => $seat['seat_number'],
+                        'slot' => $seat['slot'],
+                        'type' => $seat['type'],
+                        'visible' => $seat['visible'],
+                        'merged_seats' => $seat['merged_seats'],
+                        'order' => $seat['order'],
+                        'price' => $price,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return response()->json($room->load('seats'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'An error occurred while updating the room.'], 500);
+        }
     }
 
     /**
