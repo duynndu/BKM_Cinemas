@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { SEAT_TYPE } from "@/define/seat-type";
+import { SEAT_TYPE } from "@/define/seat.define";
 import { ISeatLayout } from "@/types/seat-layout.interface";
 import { price } from "@/utils/common";
 import { ISeatType } from "@/types/seat-type.interface";
