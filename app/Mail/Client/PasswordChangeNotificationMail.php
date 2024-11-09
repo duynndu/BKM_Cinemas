@@ -10,21 +10,23 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class RegisterMail extends Mailable
+class PasswordChangeNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
+    public $time;
 
-    public function __construct(User $user)
+    public function __construct(User $user, $time)
     {
         $this->user = $user;
+        $this->time = $time;
     }
 
     public function build()
     {
         return $this->subject('BKM Cinemas - Rạp chiếu phim 3D công nghệ hàng đầu.')
-            ->view('client.mails.register-email')
+            ->view('client.mails.change-password-email')
             ->attach(public_path('client/images/logo.png'), [
                 'as' => 'logo.png',
                 'mime' => 'image/png',
@@ -37,7 +39,7 @@ class RegisterMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome, ' . $this->user->first_name . ' ' . $this->user->last_name . '!',
+            subject: '[BKM Cinemas] Thông báo: Mật khẩu của bạn đã được thay đổi!',
         );
     }
 
@@ -47,7 +49,7 @@ class RegisterMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'client.mails.register-email',
+            view: 'client.mails.change-password-email',
         );
     }
 

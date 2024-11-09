@@ -10,6 +10,12 @@
             <a data-toggle="tab" href="#quen-mat-khau" aria-expanded="false">Quên mật khẩu</a>
         </li>
     @else
+        <li class="active">
+            <a data-toggle="tab" href="#thanhvien" aria-expanded="true">Thành viên</a>
+        </li>
+        <li class="">
+            <a data-toggle="tab" href="#doimatkhau" aria-expanded="false">Đổi mật khẩu</a>
+        </li>
         <li class="">
             <a data-toggle="tab" href="#tichluydiem" aria-expanded="false">Tích lũy điểm</a>
         </li>

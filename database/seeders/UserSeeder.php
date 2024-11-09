@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
                 'email' => 'user' . $i . '@gmail.com',
                 'password' => Hash::make('11111111'),
                 'is_terms_accepted' => 1,
-                'is_subscribed_promotions' => 1,
+                'is_subscribed_promotions' => 0,
             ]);
         }
     }
