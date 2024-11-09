@@ -19,6 +19,7 @@ declare global {
   interface JQuery {
     filemanager(type: string, options: IOption): any;
     seatmanager(seatLayout: any, options: any): any;
+    seatview(seatLayout: any, options: any): any;
     selectDay(options: any, onChange?: (data: any) => any): any;
     selectTime(data: any, onChange?: (data: any) => any): any;
   }

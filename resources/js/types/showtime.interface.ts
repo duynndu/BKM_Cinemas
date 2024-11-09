@@ -1,5 +1,6 @@
 import { IMovie } from "./movie.interface";
 import { IRoom } from "./room.interface";
+import { ICinema } from "./cinema.interface";
 
 export interface IShowtime {
   id?: string;
@@ -13,4 +14,5 @@ export interface IShowtime {
 
   movie?: IMovie | null;
   room?: IRoom | null;
+  cinema?: ICinema | null;
 }

@@ -5,8 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Room;
-use App\Models\Movie;
 
 class Showtime extends Model
 {
@@ -28,5 +26,10 @@ class Showtime extends Model
     public function movie()
     {
         return $this->belongsTo(Movie::class);
+    }
+
+    public function cinema()
+    {
+        return $this->belongsTo(Cinema::class);
     }
 }

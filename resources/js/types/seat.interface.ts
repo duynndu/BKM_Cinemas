@@ -1,4 +1,6 @@
-interface ISeat {
+import { SEAT_STATUS } from "@/define/seat.define";
+
+export interface ISeat {
   id?: string | null;
   room_id?: number | null;
   seat_number: any;
@@ -7,5 +9,12 @@ interface ISeat {
   slot: number;
   visible: any;
   merged_seats?: number[] | null;
-  order: any;
+  order: number;
+  selected?: boolean;
+  status?: SEAT_STATUS_VALUES;
 }
+
+export type SEAT_STATUS_VALUES =
+  | typeof SEAT_STATUS.AVAILABLE
+  | typeof SEAT_STATUS.SELECTED
+  | typeof SEAT_STATUS.OCCUPIED

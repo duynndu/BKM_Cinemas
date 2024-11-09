@@ -1,3 +1,4 @@
+import { ISeat } from "./seat.interface";
 
 
 export interface ISeatLayout {
