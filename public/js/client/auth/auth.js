@@ -1,5 +1,27 @@
 $(document).ready(function () {
 
+    function togglePasswordVisibility(passwordInput, icon) {
+        const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+        passwordInput.attr('type', type);
+
+        icon.toggleClass('fa-eye fa-eye-slash');
+    }
+
+    $(document).on('click', '.toggle-old-password-icon', function() {
+        const passwordInput = $('input[name="old_password"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $(document).on('click', '.toggle-password-change-icon', function() {
+        const passwordInput = $('input[name="password"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $(document).on('click', '.toggle-confirm-password-icon', function() {
+        const passwordInput = $('input[name="confirm_password"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
     $(document).on("submit", ".form-login", function (e) {
         e.preventDefault();
     
@@ -232,7 +254,6 @@ $(document).ready(function () {
         }
     });
     
-
     $(document).on("submit", "#forgotPass", function (e) {
         e.preventDefault();
 
@@ -272,11 +293,11 @@ $(document).ready(function () {
                 // Kiểm tra nếu gửi thành công
                 if (response.sendResetLink) {
                     Swal.fire({
-                    title: "Yêu cầu thay đổi mật khẩu đã được gửi.",
-                    text: "Chúng tôi đã gửi yêu cầu thay đổi mật khẩu đến email của bạn. Vui lòng kiểm tra lại email.",
-                    icon: "success",
-                    showConfirmButton: true,
-                    allowOutsideClick: false,
+                        title: "Yêu cầu thay đổi mật khẩu đã được gửi.",
+                        text: "Chúng tôi đã gửi yêu cầu thay đổi mật khẩu đến email của bạn. Vui lòng kiểm tra lại email.",
+                        icon: "success",
+                        showConfirmButton: true,
+                        allowOutsideClick: false,
                     }).then(() => {
                         $("#forgotPass").trigger("reset");
                     });
@@ -289,19 +310,19 @@ $(document).ready(function () {
                 if (xhr.status === 422) {
                     let errors = xhr.responseJSON.errors;
                     $.each(errors, function (key, messages) {
-                    let errorContainer = form.find("." + key + "_error");
-                    if (errorContainer.length) {
-                        errorContainer.html(messages[0]).css("color", "red");
-                    }
+                        let errorContainer = form.find("." + key + "_error");
+                        if (errorContainer.length) {
+                            errorContainer.html(messages[0]).css("color", "red");
+                        }
                     });
                 } else {
                     Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: "Đã xảy ra lỗi!",
-                    text: "Vui lòng thử lại sau.",
-                    showConfirmButton: false,
-                    timer: 2500,
+                        position: "center",
+                        icon: "error",
+                        title: "Đã xảy ra lỗi!",
+                        text: "Vui lòng thử lại sau.",
+                        showConfirmButton: false,
+                        timer: 2500,
                     });
                 }
                 },
@@ -342,7 +363,7 @@ $(document).ready(function () {
                     if (result.isConfirmed) {
                     // Chuyển hướng và reset form sau khi bấm "OK"
                     window.location.href = response.url;
-                    $("#confirmResetPassword").trigger("reset");
+                        $("#confirmResetPassword").trigger("reset");
                     }
                 });
             }
@@ -367,5 +388,123 @@ $(document).ready(function () {
             }
         },
         });
+    });
+
+    $(document).on("submit", "#form-changepassword", function (e) {
+        e.preventDefault();
+    
+        // Xóa thông báo lỗi cũ
+        $('#form-changepassword div[class$="_error"]').text('');
+    
+        let form = $(this);
+        let urlLogout = form.data("url-logout");
+        let urlRedirect = form.data("url-redirect");
+        let url = form.attr("action");
+        let image = form.data("image");
+        let data = form.serialize();
+    
+        let hasErrors = false;
+    
+        let old_password = form.find("input[name='old_password']").val();
+        if (!old_password) {
+            form.find(".old_password_error")
+                .text("Vui lòng nhập mật khẩu hiện tại.")
+                .css("color", "red");
+            hasErrors = true;
+        }
+    
+        let password = form.find("input[name='password']").val();
+        if (!password) {
+            form.find(".password_error")
+                .text("Vui lòng nhập mật khẩu.")
+                .css("color", "red");
+            hasErrors = true;
+        }
+    
+        let confirm_password = form.find("input[name='confirm_password']").val();
+        if (!confirm_password) {
+            form.find(".confirm_password_error")
+                .text("Vui lòng nhập lại mật khẩu.")
+                .css("color", "red");
+            hasErrors = true;
+        }
+    
+        if (!hasErrors) {
+            Swal.fire({
+                title: "Đang gửi yêu cầu...",
+                text: "Vui lòng chờ trong giây lát.",
+                icon: "info",
+                showConfirmButton: false,
+                allowOutsideClick: false,
+            });
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: {
+                    _token: $('meta[name="csrf_token"]').attr('content'),
+                    old_password: old_password,
+                    password: password,
+                    confirm_password: confirm_password
+                },
+                success: function (response) {
+                    if (response.status) {
+                        Swal.fire({
+                            position: "center",
+                            title: "Thay đổi mật khẩu thành công!",
+                            text: "Bạn có muốn duy trì đăng nhập?",
+                            imageUrl: image,
+                            imageWidth: 100,
+                            imageHeight: 100,
+                            showCancelButton: true,
+                            confirmButtonText: "Duy trì",
+                            cancelButtonText: "Đăng xuất khỏi thiết bị",
+                            width: "400px"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $("#form-changepassword").trigger("reset");
+                            } else {
+                                $.ajax({
+                                    url: urlLogout,
+                                    type: "POST",
+                                    data: data,
+                                    success: function () {
+                                        window.location.href = urlRedirect; 
+                                    },
+                                    error: function () {
+                                        Swal.fire({
+                                            icon: "error",
+                                            title: "Có lỗi xảy ra khi đăng xuất!",
+                                            showConfirmButton: false,
+                                            timer: 2500,
+                                        });
+                                    },
+                                });
+                            }
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    Swal.close();
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        $.each(errors, function (key, messages) {
+                            let errorContainer = form.find("." + key + "_error");
+                            if (errorContainer.length) {
+                                errorContainer.html(messages[0]).css("color", "red");
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            position: "center",
+                            icon: "error",
+                            title: `${xhr.responseJSON.message}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                        });
+                    }
+                },
+            });
+        }
     });
 });

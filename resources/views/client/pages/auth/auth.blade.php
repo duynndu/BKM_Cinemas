@@ -42,18 +42,27 @@
                             <div style="padding: 20px 20px;">
                                 <div class="row flex">
                                     <div class="col-md-7 col-sm-6">
-                                        <form
-                                            data-image="{{ asset('client/images/success.png') }}"
-                                            class="form-login" action="{{ route('login') }}" method="post">
+                                        <form data-image="{{ asset('client/images/success.png') }}" class="form-login"
+                                            action="{{ route('login') }}" method="post">
                                             @csrf
                                             <div class="form-group">
                                                 <label for="emailOrPhone">Email hoặc Số điện thoại:</label>
-                                                <input id="emailOrPhone" type="text" name="emailOrPhone" class="form-control emailOrPhone">
+                                                <input id="emailOrPhone" type="text" name="emailOrPhone"
+                                                    class="form-control emailOrPhone">
                                                 <div class="emailOrPhone_error"></div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="password">Mật khẩu:</label>
-                                                <input id="password" type="password" name="password" class="form-control password">
+                                                <div class="input-group">
+                                                    <input id="password" type="password" name="password"
+                                                    class="form-control password passwordLogin">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text toggle-password"
+                                                            style="cursor: pointer;">
+                                                            <i class="fas fa-eye toggle-password-login-icon"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
                                                 <div class="password_error"></div>
                                             </div>
                                             <div class="form-group">
@@ -76,16 +85,16 @@
                                         <span class="center">Hoặc</span>
                                     </div>
                                     <div class="col-md-4 col-sm-5">
-                                        <a class="login-social"
-                                            href="{{ route('facebook.redirectToFacebook') }}"
+                                        <a class="login-social" href="{{ route('facebook.redirectToFacebook') }}"
                                             title="Đăng nhập bằng facebook">
-                                            <img class="img-responsive" src="{{ asset('client/images/fb.png') }}" alt="Facebook">
+                                            <img class="img-responsive" src="{{ asset('client/images/fb.png') }}"
+                                                alt="Facebook">
                                         </a>
 
-                                        <a class="login-social"
-                                            href="{{ route('google.redirectToGoogle') }}"
+                                        <a class="login-social" href="{{ route('google.redirectToGoogle') }}"
                                             title="Đăng nhập bằng google">
-                                            <img class="img-responsive" src="{{ asset('client/images/gp.png') }}" alt="Google">
+                                            <img class="img-responsive" src="{{ asset('client/images/gp.png') }}"
+                                                alt="Google">
                                         </a>
                                     </div>
                                 </div>
@@ -269,7 +278,8 @@
                                             <p>Quên mật khẩu? <br> Vui lòng nhập địa chỉ email.</p>
                                             <div class="form-group">
                                                 <label for="email">Email:</label>
-                                                <input id="email" type="text" name="email" class="form-control email">
+                                                <input id="email" type="text" name="email"
+                                                    class="form-control email">
                                                 <div class="email_error"></div>
                                             </div>
 
@@ -288,7 +298,96 @@
                             </div>
                         </div>
                     @else
-                        <div id="tichluydiem" class="mbox tab-pane fade active in">
+                        <div id="thanhvien" class="mbox tab-pane fade active in">
+                            <div class="title">
+                                <h2>Thành viên</h2>
+                            </div>
+                            <div class="box-body">
+                                <div class="row flex">
+                                    <div class="col-md-12 col-sm-12">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="doimatkhau" class="mbox tab-pane fade">
+                            <div class="title">
+                                <h2>Đổi mật khẩu</h2>
+                            </div>
+                            <div style="padding: 20px 20px;">
+                                <div class="row flex">
+                                    <div class="col-md-6 col-sm-6">
+                                        <form id="form-changepassword"
+                                            data-url-logout="{{ route('logout') }}"
+                                            data-url-redirect="{{ route('account') }}"
+                                            data-image="{{ asset('client/images/success.png') }}"
+                                            action="{{ route('changePassword') }}" method="POST">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label for="old-password">Mật khẩu hiện tại</label>
+                                                <div class="input-group">
+                                                    <input type="password" name="old_password" value=""
+                                                        autocomplete="false" class="form-control old_password"
+                                                        id="old_password">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text toggle-password"
+                                                            style="cursor: pointer;">
+                                                            <i class="fas fa-eye toggle-old-password-icon"
+                                                                id="toggle-old-password-icon"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="old_password_error"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Mật khẩu mới</label>
+                                                <div class="input-group">
+                                                    <input type="password" name="password" value=""
+                                                        autocomplete="false" class="form-control password" id="password">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text toggle-password"
+                                                            style="cursor: pointer;">
+                                                            <i class="fas fa-eye toggle-password-change-icon"
+                                                                id="toggle-password-change-icon"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="password_error"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="re-password">Nhập lại mật khẩu mới</label>
+                                                <div class="input-group">
+                                                    <input type="password" name="confirm_password" value=""
+                                                        autocomplete="false" class="form-control confirm_password"
+                                                        id="confirm_password">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text toggle-password"
+                                                            style="cursor: pointer;">
+                                                            <i class="fas fa-eye toggle-confirm-password-icon"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="confirm_password_error"></div>
+                                            </div>
+
+                                            <div class="center">
+                                                <input type="submit" name="submit" value="Lưu"
+                                                    class="btn btn-success btn-login">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div style="padding: 55px;">
+                                            <img src="https://cdn.moveek.com/bundles/ornweb/img/mascot.png" width="100%"
+                                                alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tichluydiem" class="mbox tab-pane fade">
                             <div class="title">
                                 <h2>Tích lũy điểm</h2>
                             </div>
@@ -334,5 +433,5 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('js/client/auth/auth.js') }}"></script>
+    <script src="{{ asset('js/client/auth/auth.js') }}"></script>
 @endsection

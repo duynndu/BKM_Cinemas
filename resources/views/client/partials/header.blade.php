@@ -50,7 +50,7 @@
                                         $backgroundColor = $colors[$user->id % count($colors)];
                                     @endphp
 
-                                    <a class="account" href="">
+                                    <a class="account" href="{{ route('account') }}">
                                         @if ($avatarUrl)
                                             <img class="avatar" src="{{ $avatarUrl }}"
                                                 alt="{{ $user->first_name . ' ' . $user->last_name }}">

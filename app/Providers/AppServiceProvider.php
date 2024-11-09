@@ -77,6 +77,8 @@ use App\Repositories\Admin\Roles\Repository\RoleRepository;
 use App\Repositories\Admin\Users\Interface\UserInterface;
 use App\Repositories\Admin\Users\Repository\UserRepository;
 use App\Repositories\Auth\Admin\Logins\Repository\LoginRepository;
+use App\Repositories\Auth\Client\ChangePasswords\Interface\ChangePasswordInterface;
+use App\Repositories\Auth\Client\ChangePasswords\Repository\ChangePasswordRepository;
 use App\Repositories\Auth\Client\ForgotPasswords\Interface\ForgotPasswordInterface;
 use App\Repositories\Auth\Client\ForgotPasswords\Repository\ForgotPasswordRepository;
 use App\Repositories\Auth\Client\Registers\Interface\RegisterInterface;
@@ -102,6 +104,8 @@ use App\Services\Admin\Users\Interfaces\UserServiceInterface;
 use App\Services\Admin\Users\Services\UserService;
 use App\Services\Auth\Admin\Logins\Interfaces\LoginServiceInterface;
 use App\Services\Auth\Admin\Logins\Services\LoginService;
+use App\Services\Auth\Client\ChangePasswords\Interfaces\ChangePasswordServiceInterface;
+use App\Services\Auth\Client\ChangePasswords\Services\ChangePasswordService;
 use App\Services\Auth\Client\ForgotPasswords\ForgotPasswordService;
 use App\Services\Auth\Client\Registers\Services\RegisterService;
 
@@ -161,10 +165,12 @@ class AppServiceProvider extends ServiceProvider
         // End admin
 
         // Client
-        $this->app->bind(RegisterInterface           ::class, RegisterRepository       ::class);
-        $this->app->bind(RegisterServiceInterface    ::class, RegisterService          ::class);
-        $this->app->bind(ForgotPasswordInterface     ::class, ForgotPasswordRepository ::class);
-        $this->app->bind(ForgotPasswordServicesInterface::class, ForgotPasswordService ::class);
+        $this->app->bind(RegisterInterface                  ::class, RegisterRepository         ::class);
+        $this->app->bind(RegisterServiceInterface           ::class, RegisterService            ::class);
+        $this->app->bind(ForgotPasswordInterface            ::class, ForgotPasswordRepository   ::class);
+        $this->app->bind(ForgotPasswordServicesInterface    ::class, ForgotPasswordService      ::class);
+        $this->app->bind(ChangePasswordInterface            ::class, ChangePasswordRepository   ::class);
+        $this->app->bind(ChangePasswordServiceInterface     ::class, ChangePasswordService      ::class);
         // End client
     }
 

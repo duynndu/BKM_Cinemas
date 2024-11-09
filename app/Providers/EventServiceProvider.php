@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\Client\ForgotPasswordRequested;
+use App\Events\Client\PasswordChanged;
 use App\Events\Client\UserRegistered;
+use App\Listeners\Client\SendPasswordChangeNotification;
 use App\Listeners\Client\SendPasswordResetEmail;
 use App\Listeners\Client\SendRegisterEmail;
 use Illuminate\Auth\Events\Registered;
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ForgotPasswordRequested::class => [
             SendPasswordResetEmail::class,
+        ],
+        PasswordChanged::class => [
+            SendPasswordChangeNotification::class
         ]
     ];
 

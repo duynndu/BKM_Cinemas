@@ -28,23 +28,38 @@ Route::get('/tin-tuc/{slug}', [PostController::class, 'postDetail'])->name('post
 // Tài khoản
 Route::get('/account', [AuthController::class, 'account'])->name('account');
 
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])
+    ->middleware('checkLogin')
+    ->name('register');
 
-Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])
+    ->middleware('checkLogin')
+    ->name('login');
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
 
-Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
+Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])
+    ->middleware('checkLogin')
+    ->name('forgotPassword');
 
-Route::post('/sendResetLinkEmail', [AuthController::class, 'sendResetLinkEmail'])->name('sendResetLinkEmail');
+Route::post('/sendResetLinkEmail', [AuthController::class, 'sendResetLinkEmail'])
+    ->middleware('checkLogin')
+    ->name('sendResetLinkEmail');
 
-Route::post('/resetPassword', [AuthController::class, 'resetPassword'])->name('resetPassword');
+Route::post('/resetPassword', [AuthController::class, 'resetPassword'])
+    ->middleware('checkLogin')
+    ->name('resetPassword');
+
+Route::post('/changePassword', [AuthController::class, 'changePassword'])
+    ->name('changePassword');
 // End Tài khoản
 
 // Đăng nhập facebook
 Route::prefix('facebook')
     ->name('facebook.')
     ->controller(FacebookController::class)
+    ->middleware('checkLogin')
     ->group(function () {
         Route::get('/redirect', 'redirectToFacebook')->name('redirectToFacebook');
 
@@ -56,6 +71,7 @@ Route::prefix('facebook')
 Route::prefix('google')
     ->name('google.')
     ->controller(GoogleController::class)
+    ->middleware('checkLogin')
     ->group(function () {
         Route::get('/redirect', 'redirectToGoogle')->name('redirectToGoogle');
 

@@ -108,26 +108,6 @@ $(function() {
         $('.menu li').find('a[href="' + targetTab + '"]').parent().addClass('active');
     });
 
-    $('#toggle-password-icon').on('click', function () {
-        // Toggle the type attribute
-        const passwordInput = $('input[name="password"]');
-        const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
-        passwordInput.attr('type', type);
-
-        // Toggle the eye icon
-        $(this).toggleClass('fa-eye fa-eye-slash');
-    });
-
-    $('#toggle-confirm-password-icon').on('click', function () {
-        // Toggle the type attribute
-        const confirmPasswordInput = $('#password-confirm');
-        const type = confirmPasswordInput.attr('type') === 'password' ? 'text' : 'password';
-        confirmPasswordInput.attr('type', type);
-
-        // Toggle the eye icon
-        $(this).toggleClass('fa-eye fa-eye-slash');
-    });
-
     $('.datepicker').datepicker({
         format: 'dd/mm/yyyy', // Định dạng ngày
         autoclose: true,      // Tự động đóng khi chọn ngày

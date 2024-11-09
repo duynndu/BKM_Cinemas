@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Auth\Client;
 
 use App\Events\Client\ForgotPasswordRequested;
+use App\Events\Client\PasswordChanged;
 use App\Events\Client\UserRegistered;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\Client\ChangePasswordRequest;
 use App\Http\Requests\Auth\Client\ForgotPasswordRequest;
 use App\Http\Requests\Auth\Client\LoginRequest;
 use App\Http\Requests\Auth\Client\RegisterRequest;
 use App\Http\Requests\Auth\Client\ResetPasswordRequest;
-use App\Models\PasswordResetToken;
-use App\Models\User;
+use App\Repositories\Auth\Client\ChangePasswords\Interface\ChangePasswordInterface;
 use App\Repositories\Auth\Client\ForgotPasswords\Interface\ForgotPasswordInterface;
 use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
 use App\Services\Auth\Client\Registers\Interfaces\RegisterServiceInterface;
@@ -27,16 +28,21 @@ class AuthController extends Controller
     protected $cityService;
 
     protected $registerService;
+
     protected $forgotPassword;
+
+    protected $changePassword;
 
     public function __construct(
         CityServiceInterface           $cityService,
         RegisterServiceInterface       $registerService,
-        ForgotPasswordInterface        $forgotPassword
+        ForgotPasswordInterface        $forgotPassword,
+        ChangePasswordInterface        $changePassword
     ) {
         $this->cityService = $cityService;
         $this->registerService = $registerService;
         $this->forgotPassword = $forgotPassword;
+        $this->changePassword = $changePassword;
     }
 
     public function account()
@@ -129,6 +135,8 @@ class AuthController extends Controller
 
             return redirect()->route('home');
         } catch (\Exception $e) {
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
             return redirect()->route('home')->withErrors('Đã xảy ra lỗi: ' . $e->getMessage());
         }
     }
@@ -137,6 +145,7 @@ class AuthController extends Controller
     {
         try {
             $user = $this->forgotPassword->getUserByEmail($request->email);
+
             $token = Str::random(60);
 
             $this->forgotPassword->updateOrInsert(
@@ -157,7 +166,6 @@ class AuthController extends Controller
             ], 500);
         }
     }
-
 
     public function forgotPassword(Request $request)
     {
@@ -215,6 +223,27 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'sendResetPassword' => false,
+                'message' => 'Đã xảy ra lỗi: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        try {
+            $this->changePassword->update(Auth::user()->id, [
+                'password' => Hash::make($request->password)
+            ]);
+
+            event(new PasswordChanged(Auth::user()));
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Mật khẩu đã được thay đổi thành công.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
                 'message' => 'Đã xảy ra lỗi: ' . $e->getMessage(),
             ], 500);
         }

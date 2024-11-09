@@ -34,8 +34,8 @@ return new class extends Migration
             $table->string('password');
             $table->tinyInteger('status')->default(1);  // 1: Hoạt động, 0: Bị khóa
             $table->string('type')->default(\App\Models\User::TYPE_MEMBER);
-            $table->tinyInteger('is_terms_accepted'); // Tôi đồng ý với điều khoản
-            $table->tinyInteger('is_subscribed_promotions'); // Nhận thông tin chương trình khuyến mãi
+            $table->tinyInteger('is_terms_accepted')->default(0); // Tôi đồng ý với điều khoản
+            $table->tinyInteger('is_subscribed_promotions')->default(0); // Nhận thông tin chương trình khuyến mãi
             $table->rememberToken();
             $table->timestamps();
         });
