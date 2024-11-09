@@ -46,7 +46,6 @@ class ActorService extends BaseService implements ActorServiceInterface
 
     public function deleteMultipleChecked($request)
     {
-
         if (count($request->selectedIds) < 0) {
             return false;
         }
@@ -72,3 +71,19 @@ class ActorService extends BaseService implements ActorServiceInterface
         ];
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

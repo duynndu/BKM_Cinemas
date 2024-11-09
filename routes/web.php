@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\PostController;
-use App\Http\Controllers\Client\CategoryPostController;
-use App\Http\Controllers\Auth\Client\AuthController;
-use App\Http\Controllers\Auth\Client\FacebookController;
-use App\Http\Controllers\Auth\Client\GoogleController;
 use App\Http\Controllers\Client\PaymentController;
+use App\Http\Controllers\Auth\Client\AuthController;
+use App\Http\Controllers\Client\ListMovieController;
+use App\Http\Controllers\Auth\Client\GoogleController;
+use App\Http\Controllers\Client\CategoryPostController;
+use App\Http\Controllers\Auth\Client\FacebookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,9 +95,13 @@ Route::get('/profile-history-ticket', function () {
     return view('client.pages.profile.history-ticket');
 });
 
-Route::get('/phim', function () {
-    return view('client.pages.movie');
-});
+// List movie
+Route::get('/phim', [ListMovieController::class, 'listMovie'])->name('list.movie');
+
+// Route::get('/phim', function () {
+
+//     return view('client.pages.movie');
+// });
 Route::get('/phim-chi-tiet', function () {
     return view('client.pages.movie-detail');
 });
@@ -133,4 +138,3 @@ Route::get('/dat-ve/xac-nhan', function () {
 Route::get('/dat-ve/thanh-toan', function () {
     return view('client.pages.payment-verification-step2');
 });
-

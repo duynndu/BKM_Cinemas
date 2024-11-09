@@ -18,4 +18,5 @@ class CityService
     {
         return $this->cityRepository->getAllCity();
     }
+    
 }

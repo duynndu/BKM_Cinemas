@@ -6,4 +6,5 @@ use App\Services\Base\BaseServiceInterface;
 
 interface RegisterServiceInterface extends BaseServiceInterface
 {
+    
 }

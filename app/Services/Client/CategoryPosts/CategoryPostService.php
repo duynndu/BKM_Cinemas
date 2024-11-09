@@ -4,11 +4,9 @@ namespace App\Services\Client\CategoryPosts;
 
 
 use App\Repositories\Client\CategoryPosts\Repository\CategoryPostRepository;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class CategoryPostService
 {
-
     protected $categoryPostRepository;
 
     public function __construct(
