@@ -13,4 +13,5 @@ Alpine.plugin(Tooltip.defaultProps({
 import "./seat-layout.component";
 import "./room.component";
 import "./seat-type.component";
+import "./seat-view.component";
 //#endregion

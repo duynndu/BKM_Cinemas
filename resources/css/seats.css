@@ -130,4 +130,53 @@
   border: 2px dashed #ff0000 !important;
 }
 
+.seat.selected>span{
+  background-color: #ff0000 !important;
+}
+
+.seat-table .seat.selected {
+  background-color: #ff0000 !important;
+}
+
+.seat.occupied>.list-style{
+  background-color: #bbb !important;
+}
+
+.seat.standard-seat>.list-style{
+  background-color: #FFFFFF !important;
+}
+
+.seat.couple-seat>.list-style{
+  background-color: #ffb6c1 !important;
+}
+
+.seat.vip-seat>.list-style{
+  background-color: #ffd700 !important;
+}
+
+.seat-table .seat.occupied {
+  background-color: #bbb !important;
+}
+
+.seat-table .seat.unavailable {
+  visibility: hidden;
+}
+
+#seatingArea {
+  position: relative;
+}
+
+#seatingArea.event-none::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 

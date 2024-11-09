@@ -1,6 +1,7 @@
 import { IShowtime } from "@/types/showtime.interface";
 import { BaseService } from "./base.service";
 import axios from "axios";
+import { ISeat } from "@/types/seat.interface";
 
 
 class Showtime extends BaseService {
@@ -36,6 +37,11 @@ class Showtime extends BaseService {
         room_id: roomId
       }
     });
+    return response.data;
+  }
+
+  async getShowtimeDetailById(id: string) {
+    const response = await axios.get<IShowtime>(`/showtimes/${id}/detail`);
     return response.data;
   }
 

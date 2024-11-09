@@ -6,7 +6,12 @@ namespace Database\Seeders;
 use App\Constants\PermissionConstant;
 use App\Constants\RoleConstant;
 use App\Constants\SeatType;
+use App\Models\Area;
 use App\Models\Banner;
+use App\Models\Cinema;
+use App\Models\City;
+use App\Models\Food;
+use App\Models\FoodType;
 use App\Models\Image;
 use App\Models\Movie;
 use App\Models\RefreshToken;
@@ -77,7 +82,6 @@ class DatabaseSeeder extends Seeder
                 'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-wheelchair" viewBox="0 0 16 16"><path d="M12 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-.663 2.146a1.5 1.5 0 0 0-.47-2.115l-2.5-1.508a1.5 1.5 0 0 0-1.676.086l-2.329 1.75a.866.866 0 0 0 1.051 1.375L7.361 3.37l.922.71-2.038 2.445A4.73 4.73 0 0 0 2.628 7.67l1.064 1.065a3.25 3.25 0 0 1 4.574 4.574l1.064 1.063a4.73 4.73 0 0 0 1.09-3.998l1.043-.292-.187 2.991a.872.872 0 1 0 1.741.098l.206-4.121A1 1 0 0 0 12.224 8h-2.79zM3.023 9.48a3.25 3.25 0 0 0 4.496 4.496l1.077 1.077a4.75 4.75 0 0 1-6.65-6.65z"/></svg>'
             ],
         ];
-
         foreach ($seatTypes as $seatType) {
             DB::table('seat_types')->insert([
                 'code' => $seatType['code'],
@@ -90,34 +94,47 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
-
-        $movies = [1, 2, 3]; // Giả sử có 3 phim
-
+        City::create([
+            'name' => 'Hà Nội',
+        ]);
+        Area::create([
+            'city_id' => 1,
+            'name' => 'Quận Cầu Giấy',
+        ]);
+        Cinema::create([
+            'area_id' => 1,
+            'name' => 'Rạp test',
+            'image' => 'path/to/image.jpg',
+            'address' => '123 Cinema Street',
+            'phone' => '123-456-7890',
+            'email' => 'contact@cinema.com',
+            'map' => 'Map details or URL',
+            'description' => 'A brief description of the cinema',
+            'active' => 1,
+        ]);
         $timeSlots = [
             'morning' => ['08:00', '10:00'],
             'afternoon' => ['13:00', '15:00'],
             'evening' => ['18:00', '20:00'],
         ];
-
-        foreach (range(0, 4) as $dayOffset) { // Change range to 0-4 for 5 days
+        foreach (range(0, 4) as $dayOffset) {
             $date = Carbon::now()->addDays($dayOffset);
-
             foreach ($timeSlots as $slot) {
-                $numberOfRecords = rand(3, 5); // Random number of records between 3 and 5
+                $numberOfRecords = rand(3, 5);
                 foreach (range(0, $numberOfRecords - 1) as $i) {
                     $startTime = $date->copy()->setTimeFromTimeString($slot[0])->addMinutes($i * 30); // Adjust start time
-                    $endTime = $startTime->copy()->addHours(2); // Assuming each movie lasts 2 hours
+                    $endTime = $startTime->copy()->addHours(2);
 
                     Showtime::create([
-                        'room_id' => 1, // Set default room ID to 1
-                        'movie_id' => $movies[array_rand($movies)] == 1 ? 1 : null,
+                        'room_id' => 1,
+                        'cinema_id' => 1,
+                        'movie_id' => 1,
                         'start_time' => $startTime,
                         'end_time' => $endTime,
                     ]);
                 }
             }
         }
-
         Room::create([
             'cinema_id' => 1,
             'room_name' => 'Phòng 1',
@@ -126,10 +143,9 @@ class DatabaseSeeder extends Seeder
             'col_count' => 11,
             'row_count' => 10,
         ]);
-
         Movie::create([
             'id' => 1,
-            'title' => 'Movie Title',
+            'title' => 'Phế vật chuyển sinh thành súc sinh',
             'slug' => 'movie-slug',
             'image' => 'path/to/movie/image.jpg',
             'banner_movie' => 'path/to/movie/banner.jpg',
@@ -148,8 +164,8 @@ class DatabaseSeeder extends Seeder
             'hot' => true,
             'active' => true
         ]);
-
-        DB::table('users')->insert([
+        User::create([
+            'cinema_id' => 1,
             'name' => 'admin',
             'email' => 'demo@gmail.com',
             'password' => bcrypt('1111'),
@@ -158,5 +174,19 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $foodTypes = ['Combo', 'Đồ ăn', 'Đồ uống'];
+        foreach ($foodTypes as $foodType) {
+            FoodType::create([
+                'name' => $foodType,
+            ]);
+        }
+        $foods = ['Combo 1', 'Combo 2', 'Combo 3'];
+        foreach ($foods as $key => $food) {
+            Food::create([
+                'food_type_id' => $key + 1,
+                'name' => $food,
+                'price' => 50000,
+            ]);
+        }
     }
 }
