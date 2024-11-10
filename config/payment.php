@@ -4,7 +4,7 @@ return [
     'vnpay' => [
         'vnp_TmnCode' => env('VNP_TMN_CODE'),
         'vnp_HashSecret' => env('VNP_HASH_SECRET'),
-        'vnp_Url' => env(key: 'VNP_URL'), 
+        'vnp_Url' => env('VNP_URL'), 
     ],
     'momo' => [
         'momo_Url' => env('MOMO_URL'),
