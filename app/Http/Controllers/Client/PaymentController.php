@@ -33,15 +33,15 @@ class PaymentController extends Controller
         } elseif ($request->payment_method == 'momo') {
 
             $momoUrl = $this->momo_payment($orderCode, $request->amount);
-
+            
             return redirect()->to($momoUrl['momo_Url'])->send();
 
         } elseif ($request->payment_method == 'zalopay') {
+
             $zaloPayUrl = $this->zaloPay_payment($request->amount);
 
             return redirect()->to($zaloPayUrl['zaloPay_Url'])->send();
         }
-
     }
 
 
