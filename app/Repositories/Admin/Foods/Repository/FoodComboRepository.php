@@ -11,37 +11,38 @@ class FoodComboRepository extends BaseRepository implements FoodComboInterface
     {
         return \App\Models\FoodCombo::class;
     }
-    public function getAll()
+    
+    public function filter($request)
     {
         $data = $this->model->newQuery();
 
-        $data = $this->filterByName($data);
+        $data = $this->filterByName($data, $request);
 
-        $data = $this->filterByStatus($data);
+        $data = $this->filterByStatus($data, $request);
 
-        $data = $this->applyOrdering($data);
+        $data = $this->applyOrdering($data, $request);
 
         $data = $data->paginate(self::PAGINATION);
 
         return $data->appends([
-            'name' => request()->name,
-            'order_with' => request()->order_with,
-            'fill_action' => request()->fill_action,
+            'name' => $request->name,
+            'order_with' => $request->order_with,
+            'fill_action' => $request->fill_action,
         ]);
     }
 
-    protected function filterByName($query)
+    protected function filterByName($query, $request)
     {
-        if (!empty(request()->name)) {
-            return $query->where('name', 'like', '%' . request()->name . '%');
+        if (!empty($request->name)) {
+            return $query->where('name', 'like', '%' . $request->name . '%');
         }
         return $query;
     }
 
-    protected function filterByStatus($query)
+    protected function filterByStatus($query, $request)
     {
-        if (!empty(request()->fill_action)) {
-            switch (request()->fill_action) {
+        if (!empty($request->fill_action)) {
+            switch ($request->fill_action) {
                 case 'active':
                     return $query->where('active', 1);
                 case 'noActive':
@@ -51,10 +52,10 @@ class FoodComboRepository extends BaseRepository implements FoodComboInterface
         return $query;
     }
 
-    protected function applyOrdering($query)
+    protected function applyOrdering($query, $request)
     {
-        if (!empty(request()->order_with)) {
-            switch (request()->order_with) {
+        if (!empty($request->order_with)) {
+            switch ($request->order_with) {
                 case 'dateASC':
                     return $query->orderBy('created_at', 'asc');
                 case 'dateDESC':

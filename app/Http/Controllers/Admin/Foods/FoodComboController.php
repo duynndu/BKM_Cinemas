@@ -32,9 +32,9 @@ class FoodComboController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->foodComboService->getAll();
+        $data = $this->foodComboService->filter($request);
         return view('admin.pages.foodCombos.index', compact('data'));
     }
 

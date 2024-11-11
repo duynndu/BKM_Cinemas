@@ -19,6 +19,9 @@ class FoodComboService extends BaseService implements FoodComboServiceInterface
     {
         return FoodComboInterface::class;
     }
+    public function filter($request){
+        return $this->repository->filter($request);
+    }
 
     public function create(&$data)
     {

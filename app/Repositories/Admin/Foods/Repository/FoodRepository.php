@@ -11,27 +11,28 @@ class FoodRepository extends BaseRepository implements FoodInterface
     {
         return \App\Models\Food::class;
     }
-    public function getAll()
+
+    public function filter($request)
     {
         $data = $this->model->newQuery();
 
-        $data = $this->filterByName($data);
+        $data = $this->filterByName($data, $request);
 
-        $data = $this->filterByStatus($data);
+        $data = $this->filterByStatus($data, $request);
 
-        $data = $this->applyOrdering($data);
+        $data = $this->applyOrdering($data, $request);
 
-        $data = $this->filterByFoodTypeId($data);
+        $data = $this->filterByFoodTypeId($data, $request);
 
         $data = $data->with(['type' => function ($query) {
             $query->select('id', 'name')->where('active', 1);
         }])->paginate(self::PAGINATION);
 
         return $data->appends([
-            'name'        => request()->name,
-            'order_with'  => request()->order_with,
-            'nationality' => request()->nationality,
-            'foodTypeId'  => request()->foodTypeId
+            'name'        => $request->name,
+            'order_with'  => $request->order_with,
+            'nationality' => $request->nationality,
+            'foodTypeId'  => $request->foodTypeId
         ]);
     }
 
@@ -56,18 +57,18 @@ class FoodRepository extends BaseRepository implements FoodInterface
         return true;
     }
 
-    private function filterByName($query)
+    private function filterByName($query, $request)
     {
-        if (!empty(request()->name)) {
-            return $query->where('name', 'like', '%' . request()->name . '%');
+        if (!empty($request->name)) {
+            return $query->where('name', 'like', '%' . $request->name . '%');
         }
         return $query;
     }
 
-    private function filterByStatus($query)
+    private function filterByStatus($query, $request)
     {
-        if (!empty(request()->fill_action)) {
-            switch (request()->fill_action) {
+        if (!empty($request->fill_action)) {
+            switch ($request->fill_action) {
                 case 'active':
                     return $query->where('active', 1);
                 case 'noActive':
@@ -77,10 +78,10 @@ class FoodRepository extends BaseRepository implements FoodInterface
         return $query;
     }
 
-    private function applyOrdering($query)
+    private function applyOrdering($query, $request)
     {
-        if (!empty(request()->order_with)) {
-            switch (request()->order_with) {
+        if (!empty($request->order_with)) {
+            switch ($request->order_with) {
                 case 'dateASC':
                     return $query->orderBy('created_at', 'asc');
                 case 'dateDESC':
@@ -94,10 +95,10 @@ class FoodRepository extends BaseRepository implements FoodInterface
         return $query->orderBy('order');
     }
 
-    private function filterByFoodTypeId($query)
+    private function filterByFoodTypeId($query, $request)
     {
-        if (!empty(request()->foodTypeId)) {
-            $foodTypeId = request()->foodTypeId;
+        if (!empty($request->foodTypeId)) {
+            $foodTypeId = $request->foodTypeId;
             return $query->whereHas('type', function ($q) use ($foodTypeId) {
                 $q->where('food_type_id', $foodTypeId);
             });

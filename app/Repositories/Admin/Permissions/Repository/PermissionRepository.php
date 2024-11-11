@@ -12,10 +12,20 @@ class PermissionRepository extends BaseRepository implements PermissionInterface
     {
         return Permission::class;
     }
-    public function getAll()
+    public function filter($request)
     {
-        return $this->model->select('id', 'name', 'value')
-            ->orderBy('id', 'DESC')
-            ->paginate(self::PAGINATION);
+        $data = $this->model->newQuery();
+        if ($request->name) {
+            $data = $data->where('name', 'like', '%' . $request->name . '%');
+        }
+        if ($request->type) {
+            $data = $data->where('type', $request->type);
+        }
+        $data = $data->paginate(self::PAGINATION);
+
+        return $data->appends([
+            'name' => $request->name,
+            'type' => $request->type
+        ]);
     }
 }
