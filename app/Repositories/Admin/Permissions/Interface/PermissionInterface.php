@@ -2,17 +2,8 @@
 
 namespace App\Repositories\Admin\Permissions\Interface;
 
-interface PermissionInterface
+use App\Repositories\Base\RepositoryInterface;
+
+interface PermissionInterface extends RepositoryInterface
 {
-    public function getAllPermissions();
-
-    public function getAllModules();
-
-    public function create($data);
-
-    public function getPermissionById($permissionId);
-
-    public function update($data, $id);
-
-    public function delete($id);
 }

@@ -126,21 +126,6 @@
                                     </div>
                                     <div class="cm-content-body publish-content form excerpt">
                                         <div class="card-body">
-                                            {{-- <div class="avatar-upload d-flex align-items-center">
-                                                <div class=" position-relative" style="width: 120px;">
-                                                    <div class="avatar-preview">
-                                                        <div id="imagePreview"
-                                                            style="background-image: url({{ asset('images/no-img-avatar.png') }});">
-                                                        </div>
-                                                    </div>
-                                                    <div class="change-btn d-flex align-items-center flex-wrap">
-                                                        <input type="file" class="form-control d-none"
-                                                            id="imageUpload" name="avatar" accept=".png, .jpg, .jpeg">
-                                                        <label for="imageUpload"
-                                                            class="btn btn-sm btn-primary light ms-0">{{ __('language.admin.categoryPosts.selectImage') }}</label>
-                                                    </div>
-                                                </div>
-                                            </div> --}}
                                             <div class="avatar-upload d-flex align-items-center">
                                                 <div class=" position-relative" style="width: 120px;">
                                                     <div class="avatar-preview">

@@ -10,6 +10,10 @@ function formatFoodOption(food) {
     return $foodOption;
 }
 
+$("#food").select2({
+    templateResult: formatFoodOption,
+    templateSelection: formatFoodOption
+});
 function getMaxIndex() {
     let indices = $('.food-item').map(function() {
         return parseInt($(this).data('index'));
@@ -21,10 +25,6 @@ function getMaxIndex() {
     return maxIndex + 1;
 }
 
-$("#food").select2({
-    templateResult: formatFoodOption,
-    templateSelection: formatFoodOption
-});
 
 let foodIds = [];
 let index = getMaxIndex();

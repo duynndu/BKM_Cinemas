@@ -1,17 +1,9 @@
 <?php
 
 namespace App\Repositories\Admin\Users\Interface;
-interface UserInterface
+
+use App\Repositories\Base\RepositoryInterface;
+
+interface UserInterface extends RepositoryInterface
 {
-    public function getAllUser();
-
-    public function getAllRole();
-
-    public function create($request);
-
-    public function getUserById($id);
-
-    public function update($data, $id);
-
-    public function delete($id);
 }

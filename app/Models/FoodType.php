@@ -14,7 +14,7 @@ class FoodType extends Model
 
     protected $guarded = [];
 
-    public function food(){
+    public function foods(){
         return $this->hasMany(Food::class, 'food_type_id', 'id');
     }
 }

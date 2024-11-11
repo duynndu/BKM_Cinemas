@@ -8,6 +8,7 @@ import "@/jquery-plugin/select-time"
 import { IRoom } from "@/types/room.interface";
 import * as yup from 'yup';
 import { ISeatType } from "@/types/seat-type.interface";
+import { ISeat } from "@/types/seat.interface";
 import { showtimeService } from "@/services/showtime.service";
 import { IShowtime } from "@/types/showtime.interface";
 import { IMovie } from "@/types/movie.interface";

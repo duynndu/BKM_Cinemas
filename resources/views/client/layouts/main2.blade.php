@@ -2,9 +2,7 @@
 <html lang="vi">
 
 
-<!-- Mirrored from touchcinema.com/dat-ve/79240 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Aug 2024 15:07:30 GMT -->
-<!-- Added by HTTrack -->
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
     <meta name="csrf_token" content="{{ csrf_token() }}">
@@ -14,7 +12,7 @@
     <meta name="robots" content="noindex,nofollow">
     <meta property="og:title" content="Đặt vé" />
     <meta name="twitter:title" content="Đặt vé" />
-    <link rel="canonical" href="https://touchcinema.com/dat-ve/79240">
+    <link rel="canonical" href="">
     <meta charset="utf-8">
     <meta property="fb:pages" content="1853915061599035" />
     <meta name="google-site-verification" content="SxvPRCl-fvBTkk86cD376h47_B7wRg2KKYywKfqE9ic" />
@@ -36,8 +34,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet"
-        href="{{ asset('client/movie/js/statics/plugins/owl-carousel/assets/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('client/js/statics/plugins/owl-carousel/assets/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/ticket.css') }}">
     <!-- CSRF Token -->
@@ -216,12 +213,12 @@
 
 
     <!-- Scripts -->
-    <script src="{{ asset('movie/js/statics/js/jquery.js') }}"></script>
-    <script src="{{ asset('movie/js/jquery/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('client/js/statics/js/jquery.js') }}"></script>
+    <script src="{{ asset('client/js/jquery/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('libs/bootstrap/3.3.6/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('movie/js/statics/js/scripts.js') }}"></script>
-    <script src="{{ asset('movie/js/statics/js/showtime-widget.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('movie/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('client/js/statics/js/scripts.js') }}"></script>
+    <script src="{{ asset('client/js/statics/js/showtime-widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
 
     @yield('js')
 </body>

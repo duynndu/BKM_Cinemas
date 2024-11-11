@@ -11,6 +11,9 @@ import Alpine from "alpinejs";
 import * as utils from "@/utils/common";
 import Services from "./services";
 import "./components";
+import moment from "moment";
+import "./moment.vi";
+moment.locale("vi");
 
 // thư viện
 window.axios = axios;

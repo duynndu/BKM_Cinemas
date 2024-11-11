@@ -28,7 +28,7 @@
     <!-- Mobile Specific -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon icon -->
-    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('client/images/favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('icons/line-awesome/css/line-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/wow-master/css/libs/animate.css') }}">

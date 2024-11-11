@@ -2,15 +2,9 @@
 
 namespace App\Repositories\Admin\Roles\Interface;
 
-interface RoleInterface 
+use App\Repositories\Base\RepositoryInterface;
+
+interface RoleInterface extends RepositoryInterface
 {
-    public function getAllRole($request);
-
-    public function getRoleById($id);
-
-    public function create($data);
-
-    public function update($data, $id);
-
-    public function delete($id);
+   
 }

@@ -4,15 +4,16 @@
 
 @section('css')
     <style>
-        
+
     </style>
 @endsection
 
 @section('content')
     <div class="container" id="page-movie">
         <div class="row">
-            <div class="movie-slider"
-                style="background-image: url('https://touchcinema.com/uploads/slider-app/300wx450h-cam-1-poster.jpg')">
+            <div class="movie-slider" 
+            {{-- Khi đổ thì thêm này vào --}}
+            {{-- style="background-image: url('https://touchcinema.com/uploads/slider-app/300wx450h-cam-1-poster.jpg')" --}}>
                 <div class="overlay"></div>
                 <div class="trailer">
                     <a class="video-play-button" data-toggle="modal" href="#modal-trailer"><span></span></a>
@@ -63,8 +64,8 @@
                     </p>
                     <div class="age_restricted"><span>T18</span></div>
                     <div class="group-buton">
-                        <a href="#showtime" id="dat-ve"><img
-                                src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Đặt vé"> Đặt vé</a>
+                        <a href="#showtime" id="dat-ve"><img src="https://touchcinema.com/images/icons/icon-dat-ve.png"
+                                alt="Đặt vé"> Đặt vé</a>
                     </div>
                 </div>
             </div>
@@ -394,7 +395,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="video-container">
-                        <iframe width="1519" height="526" src="https://www.youtube.com/embed/msCaQtp8e7w"
+                        <iframe width="1519" height="526" src="https://www.youtube.com/embed/Yo__G10TN9w"
                             title="NHẠC NGHE TRÊN XE - DẰM TRONG TIM REMIX 🎧 VIET DEEP 2024 - DEEP HOUSE CHILL 8X9X HOT TIKTOK HAY NHẤT"
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

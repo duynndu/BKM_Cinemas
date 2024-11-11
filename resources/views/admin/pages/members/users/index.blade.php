@@ -43,7 +43,7 @@
                                         <div class="user-content">
                                             <div class="user-info">
                                                 <div class="user-img position-relative">
-                                                    <img src="{{ $user->image ?? asset('images/no-img-avatar.png') }}"
+                                                    <img src="{{ $user->image ?? asset('client/images/1.jpg') }}"
                                                          class="avatar avatar-lg me-3" alt="">
                                                 </div>
                                                 <div class="user-details">

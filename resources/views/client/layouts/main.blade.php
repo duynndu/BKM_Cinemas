@@ -6,7 +6,6 @@
 <head>
     <meta name="csrf_token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
-
     <meta name="description"
         content="Rạp chiếu phim Touch Cinema với chất lượng âm thanh & hình ảnh đạt chuẩn quốc tế đầu tiên tại Pleiku, Gia Lai. Đặt vé ngay hôm nay để nhận được nhiều ưu đãi!">
     <meta property="og:title" content="Touch Cinema - Rạp chiếu phim công nghệ hiện đại đầu tiên tại Gia Lai" />
@@ -18,7 +17,7 @@
         content="Rạp chiếu phim Touch Cinema với chất lượng âm thanh & hình ảnh đạt chuẩn quốc tế đầu tiên tại Pleiku, Gia Lai. Đặt vé ngay hôm nay để nhận được nhiều ưu đãi!" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('client/images/favicon.ico') }}">
     <meta name="robots" content="all">
     <meta name="DC.title" content="Rạp Chiếu Phim Touch Cinema" />
     <meta name="geo.region" content="VN" />
@@ -32,17 +31,21 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700&amp;subset=latin,latin-ext"
         rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('libs/fontawesome-free-6.6.0-web/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="{{ asset('movie/js/statics/plugins/owl-carousel/assets/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('client/js/statics/plugins/owl-carousel/assets/owl.carousel.min.css') }}">
     {{-- @vite(['resources/js/app.js']) --}}
     <link rel="stylesheet" href="{{ asset('client/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/style_movie.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/style_auth.css') }}">
-    <link rel="stylesheet" href="">
     <!-- CSRF Token -->
+
+    {{-- @vite(['resources/js/app.js']) --}}
     @yield('css')
 </head>
 
@@ -50,7 +53,7 @@
     <div id="fb-root"></div>
     <div id="app">
         @include('client.partials.header')
-        <div id="wrap">
+        <div id="wrap" style="margin-bottom: 30px;">
             @yield('content')
         </div>
         @include('client.partials.footer')
@@ -97,12 +100,12 @@
                                     <a class="login-social"
                                         href="https://www.facebook.com/v3.0/dialog/oauth?client_id=1700069773628064&amp;redirect_uri=https%3A%2F%2Ftouchcinema.com%2Fauth%2Ffacebook%2Fcallback&amp;scope=email&amp;response_type=code"
                                         title="Login with facebook">
-                                        <img class="img-responsive" src="{{ asset('movie/images/fb.png') }}"
+                                        <img class="img-responsive" src="{{ asset('client/images/fb.png') }}"
                                             alt="Facebook" /></a>
                                     <a class="login-social"
                                         href="https://accounts.google.com/o/oauth2/auth?client_id=466904351297-msl2laa82gh9ugqhp3n0j6gor1c6kr9k.apps.googleusercontent.com&amp;redirect_uri=https%3A%2F%2Ftouchcinema.com%2Fauth%2Fgoogle%2Fcallback&amp;scope=openid+profile+email&amp;response_type=code"
                                         title="Login with google"><img class="img-responsive"
-                                            src="{{ asset('movie/images/gp.png') }}" alt="Google" /></a>
+                                            src="{{ asset('client/images/gp.png') }}" alt="Google" /></a>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +117,7 @@
 
     <div class="main-popup">
         <div class="main-popup-content">
-            <img src="{{ asset('movie/images/slider-app/hai-muoi-payoff-poster-khoi-chieu-30082024-1.jpg') }}" />
+            <img src="https://touchcinema.com/storage/slide-web/1920wx1080h-13-1729583438.jpg" />
         </div>
     </div>
 
@@ -180,15 +183,17 @@
 </body>
 
 <!-- Scripts -->
-<script src="{{ asset('movie/js/statics/js/jquery.js') }}"></script>
-<script src="{{ asset('movie/js/jquery/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('client/js/statics/js/jquery.js') }}"></script>
+<script src="{{ asset('client/js/jquery/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('libs/bootstrap/3.3.6/js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('movie/js/statics/js/scripts.js') }}"></script>
-<script src="{{ asset('movie/js/statics/js/showtime-widget.js') }}"></script>
-<script type="text/javascript" src="{{ asset('movie/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('client/js/statics/js/scripts.js') }}"></script>
+<script src="{{ asset('client/js/statics/js/showtime-widget.js') }}"></script>
+<script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
 
-
-<script src="{{ asset('movie/commons/common.js') }}"></script>
+<script src="{{ asset('client/js/common.js') }}"></script>
 
 @yield('js')
 

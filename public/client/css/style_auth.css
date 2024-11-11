@@ -45,9 +45,153 @@
     background: none;
     border: none;
     padding: 0;
-    color: #000;
+    color: #242424;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 17px;
     text-decoration: none;
+}
+
+.error-message {
+    color: red;
+}
+
+.main-forgotpassword {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+a {
+    color: #3097D1;
+    text-decoration: none;
+}
+
+.swal2-popup {
+    background-color: #f0f8ff;
+    border-radius: 10px;
+}
+
+.swal2-title {
+    color: #333;
+    font-size: 20px;
+}
+
+.swal2-image {
+    border-radius: 10px;
+}
+
+.account-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.account-group .avatar {
+    width: 200px;
+}
+
+#current-avatar {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.img-circle {
+    border-radius: 50%;
+    width: 100%;
+    height: 100% !important;
+}
+
+.img-responsive {
+    display: block;
+    height: auto;
+}
+
+.img-responsive,
+.img-thumbnail,
+.table,
+label {
+    max-width: 100%;
+}
+
+#current-avatar a {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 10px 15px 10px;
+    background: #0000008f;
+    color: #FFF;
+    opacity: 0;
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
+}
+
+#current-avatar:hover a {
+    opacity: 1;
+}
+
+.account-group .account-info {
+    margin-left: 20px;
+    width: calc(100% - 220px);
+}
+
+.account-group .account-info p {
+    margin-bottom: 5px;
+}
+
+.account-page .account-wrap .box-body p {
+    font-size: 15px;
+    line-height: 1.5em;
+}
+
+.no-verify {
+    padding: 5px 15px;
+    background: linear-gradient(45deg, #ff0089a1, #ff7a35c7);
+    color: #FFF;
+    font-size: 12px;
+    font-weight: normal;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+
+.account-page .account-wrap .box-body p {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.mbox-2 .box-body {
+    border: 1px solid #211d3e;
+}
+
+.mbox .box-body {
+    padding: 15px 30px;
+}
+
+.level {
+    padding: 4px 10px;
+    background: linear-gradient(45deg, #ff0089a1, #ff7a35c7);
+    color: #FFF;
+    border-radius: 4px;
+}
+
+.no-verify:hover,
+.no-verify:focus,
+.no-verify:active {
+    text-decoration: none;
+    background: linear-gradient(45deg, #ff0089bf, #ff7a35);
+    color: #FFF;
 }
