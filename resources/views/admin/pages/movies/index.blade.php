@@ -89,7 +89,7 @@
                                                                             'children' =>
                                                                                 $genre->childrenRecursive,
                                                                             'depth' => 1,
-                                                                            'cateData' => $selectedGenre,
+                                                                            'cateData' => request()->genres
                                                                         ]
                                                                     )
                                                                 @endif
