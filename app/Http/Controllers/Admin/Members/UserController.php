@@ -47,7 +47,7 @@ class UserController extends Controller
             'page' => $currentPage ?? null,
         ]);
 
-        $data['users'] = $this->userService->getAll();
+        $data['users'] = $this->userService->filter($request);
 
         return view('admin.pages.members.users.index', compact('data'));
     }

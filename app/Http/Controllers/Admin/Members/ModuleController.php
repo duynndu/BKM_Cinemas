@@ -34,7 +34,7 @@ class ModuleController extends Controller
             'page' => $currentPage ?? null,
         ]);
 
-        $data['modules'] = $this->moduleServices->getAll();
+        $data['modules'] = $this->moduleServices->filter($request);
 
         return view('admin.pages.members.modules.index', compact('data'));
     }

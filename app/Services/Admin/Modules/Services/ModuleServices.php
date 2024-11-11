@@ -12,7 +12,10 @@ class ModuleServices extends BaseService implements ModuleServiceInterface
     {
         return ModuleInterface::class;
     }
-
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
     public function create(&$data)
     {
         $module = $this->repository->create($data['module']);

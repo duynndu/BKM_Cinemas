@@ -24,25 +24,25 @@ class RoleRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'name' => [
+            'role.name' => [
                 "required",
                 "max:255",
                 new CheckRuleName($id, 'roles', false)
             ],
-            'type' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'role.type' => 'required',
+            'role.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 
     public function messages()
     {
         return [
-            "name.required" => __('validation.required', ['attribute' => __('language.admin.name')]),
-            "name.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
-            "type.required" => __('validation.required', ['attribute' => __('language.admin.typeRole')]),
-            'image.image' => __('validation.image'),
-            'image.mimes' => __('validation.image.mimes', ['attribute' => __('language.admin.image'), 'format' => 'jpeg, jpg, png, svg, webp']),
-            'image.max' => __('validation.image.max', ['attribute' => __('language.admin.image'), 'max' => '2MB']),
+            "role.name.required" => __('validation.required', ['attribute' => __('language.admin.name')]),
+            "role.name.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
+            "role.type.required" => __('validation.required', ['attribute' => __('language.admin.typeRole')]),
+            'role.image.image' => __('validation.image'),
+            'role.image.mimes' => __('validation.image.mimes', ['attribute' => __('language.admin.image'), 'format' => 'jpeg, jpg, png, svg, webp']),
+            'role.image.max' => __('validation.image.max', ['attribute' => __('language.admin.image'), 'max' => '2MB']),
         ];
     }
 }

@@ -13,7 +13,10 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
     {
         return PermissionInterface::class;
     }
-
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
     public function deleteMultipleChecked($request)
     {
         if (count($request->selectedIds) > 0) {
