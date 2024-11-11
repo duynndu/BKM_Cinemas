@@ -53,7 +53,6 @@ class MovieController extends Controller
     public function store(MovieRequest $request)
     {
         $data = $request->all();
-        // dd($data);
         try {
             DB::beginTransaction();
 
