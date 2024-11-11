@@ -18,12 +18,38 @@ class ActorRepository extends BaseRepository implements ActorInterface
         $data = $this->applyOrdering($data);
         $data = $this->filterByNationality($data);
         $data = $data->paginate(self::PAGINATION);
-        
+
         return $data->appends([
             'name' => request()->name,
             'order_with' => request()->order_with,
             'nationality' => request()->nationality,
         ]);
+    }
+
+
+    public function createMany($data, $role)
+    {
+        $dataInserted = [];
+
+        foreach ($data as $key => $item) {
+            $createdItem = $this->model->create($item);
+            $dataInserted[$key]['actor_id'] = $createdItem->id;
+            $dataInserted[$key]['role'] = $role[$key];
+        }
+
+        return $dataInserted;
+    }
+
+    public function delete($id)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->movie_actor()->forceDelete();
+            $result->delete();
+            return true;
+        }
+
+        return false;
     }
 
     public function deleteMultiple(array $ids)

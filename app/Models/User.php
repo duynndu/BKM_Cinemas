@@ -24,7 +24,7 @@ class User extends Authenticatable
 
     const TYPE_MANAGE = 'manage';      // Quản lý rạp
 
-    const TYPE_STAFF = 'staff'; // Nhân viên
+    const TYPE_STAFF = 'staff';         // Nhân viên
 
     const TYPE_MEMBER = 'member';      // Thành viên
 

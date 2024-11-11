@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\Admin\LoginRequest;
+use App\Services\Auth\Admin\Logins\Interfaces\LoginServiceInterface;
 use App\Services\Auth\Admin\Logins\LoginService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +14,7 @@ class LoginController extends Controller
     protected $loginService;
 
     public function __construct(
-        LoginService $loginService
+        LoginServiceInterface $loginService
     )
     {
         $this->loginService = $loginService;

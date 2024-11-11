@@ -7,6 +7,7 @@ use App\Repositories\Base\RepositoryInterface;
 interface PostInterface extends RepositoryInterface
 {
     public function getAll();
+    public function getAllActive();
     public function checkExitsTags($tagName);
     public function deleteRecordPostTagByPost($postId, $tagsToRemove);
     public function attachTagIfNotExists($record, $tagId);

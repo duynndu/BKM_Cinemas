@@ -15,12 +15,14 @@ class CinemaRepository extends BaseRepository implements CinemaInterface
     {
         $data = $this->model->newQuery();
         $data = $this->filterByName($data);
+        $data = $this->filterByArea($data);
         $data = $this->applyOrdering($data);
         $data = $data->with('area')->paginate(self::PAGINATION);
 
         return $data->appends([
             'name' => request()->name,
             'order_with' => request()->order_with,
+            'area_id' => request()->area_id,
         ]);
     }
 
@@ -36,7 +38,7 @@ class CinemaRepository extends BaseRepository implements CinemaInterface
         return true;
     }
 
-    protected function filterByName($query)
+    private function filterByName($query)
     {
         if (!empty(request()->name)) {
             return $query->where('name', 'like', '%' . request()->name . '%');
@@ -44,7 +46,15 @@ class CinemaRepository extends BaseRepository implements CinemaInterface
         return $query;
     }
 
-    protected function applyOrdering($query)
+    private function filterByArea($query)
+    {
+        if (!empty(request()->area_id)) {
+            return $query->where('area_id', request()->area_id);
+        }
+        return $query;
+    }
+
+    private function applyOrdering($query)
     {
         if (!empty(request()->order_with)) {
             switch (request()->order_with) {

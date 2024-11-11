@@ -1,6 +1,5 @@
 <?php
 namespace App\Services\Admin\Foods\Interfaces;
-
 use App\Services\Base\BaseServiceInterface;
 
 interface FoodComboServiceInterface extends BaseServiceInterface

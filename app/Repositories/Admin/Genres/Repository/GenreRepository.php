@@ -46,7 +46,7 @@ class GenreRepository extends BaseRepository implements GenreInterface
     public function delete($id)
     {
         $category = $this->model->find($id);
-
+        
         if (!$category) {
             $redirectUrl = request()->parent_id ?
                 route('admin.Genres.index') . '?parent_id=' . request()->parent_id :

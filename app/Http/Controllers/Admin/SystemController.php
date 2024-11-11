@@ -6,7 +6,7 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Systems\SystemRequest;
 use App\Models\System;
-use App\Services\Admin\Systems\SystemService;
+use App\Services\Admin\Systems\Interfaces\SystemServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +20,7 @@ class SystemController extends Controller
     protected $helper;
 
     public function __construct(
-        SystemService $systemService,
+        SystemServiceInterface $systemService,
         Helper        $helper,
     )
     {
@@ -68,7 +68,7 @@ class SystemController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->systemService->store($request);
+            $this->systemService->create($request);
 
             DB::commit();
 
@@ -95,7 +95,7 @@ class SystemController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $system = $this->systemService->getSystemById($id);
+        $system = $this->systemService->find($id);
 
         if (!$system) {
             return redirect()->route('admin.systems.index')->with('status_failed', 'Không tìm thấy nội dung');
