@@ -115,11 +115,11 @@
         </div>
     </div>
 
-    <div class="main-popup">
+    {{-- <div class="main-popup">
         <div class="main-popup-content">
             <img src="https://touchcinema.com/storage/slide-web/1920wx1080h-13-1729583438.jpg" />
         </div>
-    </div>
+    </div> --}}
 
     <div id="notification">
         <div class="setting-content">

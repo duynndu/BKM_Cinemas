@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\PostController;
-use App\Http\Controllers\Client\CategoryPostController;
-use App\Http\Controllers\Auth\Client\AuthController;
-use App\Http\Controllers\Auth\Client\FacebookController;
-use App\Http\Controllers\Auth\Client\GoogleController;
 use App\Http\Controllers\Client\PaymentController;
+use App\Http\Controllers\Auth\Client\AuthController;
+use App\Http\Controllers\Auth\Client\GoogleController;
+use App\Http\Controllers\Client\MovieDetailController;
+use App\Http\Controllers\Client\CategoryPostController;
+use App\Http\Controllers\Auth\Client\FacebookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,11 @@ Route::post('/resetPassword', [AuthController::class, 'resetPassword'])
 Route::post('/changePassword', [AuthController::class, 'changePassword'])
     ->name('changePassword');
 // End Tài khoản
+
+
+// Phim chi tiết
+Route::get('/phim/{slug}', [MovieDetailController::class, 'movieDetail'])->name('movie.detail');
+
 
 // Đăng nhập facebook
 Route::prefix('facebook')
@@ -109,6 +115,7 @@ Route::get('/profile-change-info', function () {
 Route::get('/profile-history-ticket', function () {
     return view('client.pages.profile.history-ticket');
 });
+
 
 Route::get('/phim', function () {
     return view('client.pages.movie');

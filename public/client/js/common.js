@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     window.dataLayer = window.dataLayer || [];
     function gtag() {
         dataLayer.push(arguments);
@@ -43,15 +43,21 @@ $(function() {
         nav: true,
         dots: true
     });
+
     $("#promotion-slider").owlCarousel({
         autoplay: true,
         autoplayTimeout: 5000,
         autoplayHoverPause: true,
         loop: true,
-        responsive: { 0: { items: 2, } },
         nav: true,
-        dots: false
+        dots: false,
+        margin: 20,
+        responsive: {
+            0: { items: 4, }, 420: { items: 2, }, 620: { items: 3, },
+            768: { items: 3, }, 980: { items: 3 }, 1010: { items: 3 }, 1100: { items: 4 }
+        }
     });
+
 
     $("#nowshowing-slider, #comingsoon-slider").owlCarousel({
         autoplay: true,

@@ -98,4 +98,5 @@ class FoodService extends BaseService implements FoodServiceInterface
     {
         return str_replace(',', '', $price) ?: null;
     }
+
 }

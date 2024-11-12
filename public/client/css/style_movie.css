@@ -8078,18 +8078,18 @@ label:hover:before {
     background-color: #fff
 }
 
-#modal-trailer .modal-content {
+.modal-content {
     background-color: transparent;
     box-shadow: none;
     border: none
 }
 
-#modal-trailer .modal-content .modal-header {
+.modal-content .modal-header {
     padding: 0;
     border-bottom: 0
 }
 
-#modal-trailer .modal-content .modal-header .close {
+.modal-content .modal-header .close {
     font-size: 50px;
     color: red;
     opacity: 1;
@@ -8105,11 +8105,11 @@ label:hover:before {
     line-height: 15px
 }
 
-#modal-trailer .modal-content .modal-body {
+.modal-content .modal-body {
     padding: 0
 }
 
-#modal-trailer .modal-content .modal-body .video-container {
+.modal-content .modal-body .video-container {
     position: relative;
     padding-bottom: 56.25%;
     padding-top: 30px;
@@ -8117,13 +8117,14 @@ label:hover:before {
     overflow: hidden
 }
 
-#modal-trailer .modal-content .modal-body .video-container iframe {
+.modal-content .modal-body .video-container iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%
 }
+
 
 #header .logo {
     width: 120px;
@@ -12001,10 +12002,10 @@ body {
     max-height: 100%;
 }
 
-body.open-main-popup {
+/* body.open-main-popup {
     height: 100vh;
     overflow-y: hidden;
-}
+} */
 
 .open-main-popup .main-popup-layout,
 .open-main-popup .main-popup {
