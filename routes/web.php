@@ -22,7 +22,7 @@ use App\Http\Controllers\Client\PaymentController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/danh-muc/{slug}', [CategoryPostController::class, 'categoryPost'])->name('category.post');
+Route::get('/danh-muc/{slug}', action: [CategoryPostController::class, 'categoryPost'])->name('category.post');
 Route::get('/tin-tuc/{slug}', [PostController::class, 'postDetail'])->name('post.detail');
 
 // Tài khoản
