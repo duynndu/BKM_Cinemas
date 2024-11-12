@@ -3,21 +3,13 @@
 namespace App\Repositories\Client\Cities\Repository;
 
 use App\Models\City;
+use App\Repositories\Base\BaseRepository;
 use App\Repositories\Client\Cities\Interface\CityInterface;
 
-class CityRepository implements CityInterface
+class CityRepository extends BaseRepository implements CityInterface
 {
-    protected $city;
-
-    public function __construct(
-        City $city
-    )
+    public function getModel()
     {
-        $this->city = $city;
-    }
-
-    public function getAllCity()
-    {
-        return $this->city->select('id', 'name')->get();
+        return City::class;
     }
 }

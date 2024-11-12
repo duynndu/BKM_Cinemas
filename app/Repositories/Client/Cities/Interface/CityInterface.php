@@ -2,7 +2,8 @@
 
 namespace App\Repositories\Client\Cities\Interface;
 
-interface CityInterface
+use App\Repositories\Base\RepositoryInterface;
+
+interface CityInterface extends RepositoryInterface
 {
-    public function getAllCity();
 }

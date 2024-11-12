@@ -3,111 +3,7 @@
 @section('title', Auth::check() ? 'Thông tin tài khoản' : 'Đăng ký - Đăng nhập | BKM Cinemas')
 
 @section('css')
-    <!-- CSS -->
     <style>
-        /* Modal Background */
-        .custom-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        /* Modal Content */
-        .custom-modal-content {
-            background-color: #f5f7f9;
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 900px;
-            position: relative;
-        }
-
-        /* Close Button */
-        .custom-close {
-            position: absolute;
-            top: -2px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            font-size: 35px;
-        }
-
-        /* Footer */
-        .modal-footer {
-            display: flex;
-            justify-content: end;
-            margin-top: 20px;
-            padding: 15px 0 15px 15px;
-            text-align: right;
-            border-top: 1px solid #e5e5e5;
-        }
-
-        .custom-modal {
-            display: none;
-        }
-
-        .close-modal,
-        .submit-modal {
-            color: #fff;
-        }
-
-        .close-modal {
-            background: #aaa;
-            margin-right: 15px;
-            border: none;
-            border-radius: 3px;
-            width: 90px;
-            height: 40px;
-        }
-
-        .submit-modal {
-            position: relative;
-            border: none;
-            border-radius: 3px;
-            width: 90px;
-            height: 40px;
-            color: white;
-            background: linear-gradient(45deg, #ff0089a8, #ff7a35f0);
-            overflow: hidden;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .submit-modal:hover {
-            background: linear-gradient(45deg, #ff0069, #ff5a15);
-        }
-
-        .submit-modal::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.5);
-            transition: left 0.3s ease;
-        }
-
-        .submit-modal:hover::before {
-            left: 100%;
-            transition: left 0.2s ease
-        }
-
-        .main-modal {
-            display: flex;
-            flex-direction: column;
-            padding-top: 24px;
-        }
-
-        .body_modal {
-            position: relative;
-            padding: 15px;
-        }
     </style>
 @endsection
 
@@ -145,7 +41,7 @@
                                             <div class="form-group">
                                                 <label for="password">Mật khẩu:</label>
                                                 <div class="input-group">
-                                                    <input id="password" type="password" name="password"
+                                                    <input id="passwordLogin" type="password" name="password"
                                                         class="form-control password passwordLogin">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text toggle-password" style="cursor: pointer;">
@@ -266,7 +162,7 @@
                                                         <label for="password">Mật khẩu <span
                                                                 style="color: red;">*</span></label>
                                                         <div class="input-group">
-                                                            <input id="password" type="password" class="form-control"
+                                                            <input id="passwordRegister" type="password" class="form-control"
                                                                 name="password">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text toggle-password"
@@ -436,7 +332,7 @@
                                                     Liên kết thẻ khác
                                                 </a>
                                             </p>
-                                            <p>Số dư tài khoản: <span class="point">0</span> VND</p>
+                                            <p>Ví thành viên: <span class="point">{{ !empty(Auth::user()->balance) ? number_format(Auth::user()->balance, 0, '.', ',') : 0 }}</span> VND</p>
                                             <p>EXP: <span class="point">0</span> </p>
                                             <p>Tổng chi tiêu: <span class="point">0</span> VND</p>
                                         </div>
@@ -574,169 +470,27 @@
         </div>
     </div>
 
-    <style>
-        .list-last-mb>:last-child {
-            margin-bottom: 0;
-        }
-
-        .list-method-item {
-            background-color: #fff;
-            border-radius: 3px;
-            -webkit-box-shadow: 0 0 2px rgba(33, 38, 44, .16);
-            box-shadow: 0 0 2px rgba(33, 38, 44, .16);
-            -webkit-transition: .15s all linear;
-            -o-transition: .15s all linear;
-            transition: .15s all linear;
-            border: 0;
-        }
-
-        .list-method-item:hover {
-            box-shadow: 0 4px 8px rgba(33, 38, 44, .16);
-        }
-
-        [type=button]:not(:disabled),
-        [type=reset]:not(:disabled),
-        [type=submit]:not(:disabled),
-        button:not(:disabled) {
-            cursor: pointer;
-        }
-
-        .list-method-button {
-            padding: 20px 16px;
-            display: block;
-            cursor: pointer;
-            width: 100%;
-            text-align: left;
-            border: 0;
-            outline: 0;
-            background-color: #fff;
-        }
-
-        .list-mb8>* {
-            margin-bottom: 8px;
-        }
-
-        @media (min-width: 768px) {
-            .list-method-button .title {
-                padding-left: 8px;
-            }
-        }
-
-        .title {
-            word-break: break-word;
-        }
-
-        .b {
-            font-weight: 700;
-        }
-
-        .h3 {
-            margin: 0;
-            font-size: 16px;
-            line-height: 1.5;
-            font-weight: 500;
-            text-align: start;
-        }
-
-        .color-default {
-            color: #21262c;
-        }
-
-        @media (min-width: 1200px) {
-            .h3 {
-                font-size: 1.75rem;
-            }
-        }
-
-        .vnpay-logo {
-            display: inline-flex;
-            -webkit-box-align: end;
-            align-items: flex-end;
-        }
-
-        .vnpay-red {
-            color: #e50019;
-        }
-
-        .vnpay-blue {
-            color: #004a9c;
-        }
-
-        .list-method-button .icon {
-            width: 56px;
-            height: 56px;
-        }
-
-        img {
-            vertical-align: middle;
-            max-width: 100%;
-            height: auto;
-        }
-
-        button::after,
-        button::before {
-            content: "";
-            -webkit-box-flex: 1;
-            -ms-flex: 1 0 auto;
-            flex: 1 0 auto;
-        }
-
-        .col-auto {
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 auto;
-            flex: 0 0 auto;
-            width: auto;
-        }
-
-        .row-16>* {
-            vertical-align: top;
-            padding-left: 8px;
-            padding-right: 8px;
-        }
-
-        .main-payment {
-            display: flex;
-            align-items: center;
-        }
-
-        .title-payment {
-            text-transform: uppercase;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .col {
-            -webkit-box-flex: 1;
-            -ms-flex: 1 0 0%;
-            flex: 1 0 0%;
-        }
-
-        .zalopay-blue {
-            color: rgb(0, 51, 201);
-        }
-
-        .zalopay-green {
-            color: rgb(0, 207, 106);
-        }
-
-        .momo-ping {
-            color: #d82d8b;
-        }
-    </style>
-
     <div id="topUpModal" class="custom-modal">
         <div class="custom-modal-content">
             <span class="custom-close">&times;</span>
-            <h3 class="title-payment">Nạp tiền vào tài khoản</h3>
-            <div class="main-modal">
-                <div class="body_modal">
-                    <form>
+            <div class="d-flex flex-column justify-content-center">
+                <h3 class="title-payment">Nạp tiền vào tài khoản</h3>
+                <div class="content-p">
+                    <p>Để nạp tiền vào tài khoản thành viên BKM Cinemas.</p>
+                    <p>Quý khách vui lòng chọn phương thức thanh toán và nhập số tiền cần nạp.</p>
+                </div>
+            </div>
+            <form data-error="{{ asset('client/images/error-image.png') }}" action="{{ route('processDeposit') }}"
+                id="depositForm" method="post">
+                @csrf
+                <div class="main-modal">
+                    <div class="body_modal">
                         <div class="list-method-item list-mb8">
-                            <button type="submit" value="VNMART" id="VNMART" name="paymethod"
-                                class="list-method-button">
+                            <div class="list-method-button" data-tab="1">
                                 <div class="row row-16 main-payment">
-                                    <div class="col">
+                                    <div class="col" style="padding-top: 20px;">
+                                        <input type="radio" name="payment_method" style="display: none;"
+                                            class="payment_method" id="payment_method" value="vnpay">
                                         <div class="title h3 color-default">
                                             Ví điện tử
                                             <span class="vnpay-logo b">
@@ -744,21 +498,48 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto" style="padding-top: 20px;">
                                         <div class="icon">
-                                            <img width="100%" src="https://sandbox.vnpayment.vn/paymentv2/images/icons/mics/64x64-vi-vnpay.svg"
+                                            <img width="100%"
+                                                src="https://sandbox.vnpayment.vn/paymentv2/images/icons/mics/64x64-vi-vnpay.svg"
                                                 alt="">
                                         </div>
                                     </div>
                                 </div>
-                            </button>
+                            </div>
+                            <div class="list-method-item-content" data-content="1" style="display: none;">
+                                <div>
+                                    <div class="list-bank list-bank-grid-4">
+                                        <div class="list-mb24 list-last-mb">
+                                            <div class="list-bank-search">
+                                                <div class="form-group">
+                                                    <div
+                                                        class="input-group-wrap input-default input-size-default input-group-vertical">
+                                                        <label class="input-inner-wrap">
+                                                            <input type="text"
+                                                                class="input input-label-change input-has-clear"
+                                                                placeholder="Nhập số tiền cần nạp..." name="amount[vnpay]"
+                                                                autocorrect="off" id="searchPayMethod2">
+                                                            <div class="input-extend input-extend-right">
+                                                                <div class="input-box input-ic-clear"></div>
+                                                            </div>
+                                                            <div class="input-frame"></div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="list-method-item list-mb8">
-                            <button type="submit" value="VNMART" id="VNMART" name="paymethod"
-                                class="list-method-button">
+                            <div class="list-method-button" data-tab="2">
                                 <div class="row row-16 main-payment">
-                                    <div class="col">
+                                    <div class="col" style="padding-top: 20px;">
+                                        <input type="radio" name="payment_method" style="display: none;"
+                                            class="payment_method" id="payment_method" value="momo">
                                         <div class="title h3 color-default">
                                             Ví điện tử
                                             <span class="vnpay-logo b">
@@ -766,44 +547,99 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto" style="padding-top: 20px;">
                                         <div class="icon">
-                                            <img width="100%" src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png"
+                                            <img width="100%"
+                                                src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png"
                                                 alt="">
                                         </div>
                                     </div>
                                 </div>
-                            </button>
+                            </div>
+                            <div class="list-method-item-content" data-content="2" style="display: none;">
+                                <div>
+                                    <div class="list-bank list-bank-grid-4">
+                                        <div class="list-mb24 list-last-mb">
+                                            <div class="list-bank-search">
+                                                <div class="form-group">
+                                                    <div
+                                                        class="input-group-wrap input-default input-size-default input-group-vertical">
+                                                        <label class="input-inner-wrap">
+                                                            <input type="text"
+                                                                class="input input-label-change input-has-clear"
+                                                                placeholder="Nhập số tiền cần nạp..." name="amount[momo]"
+                                                                autocorrect="off" id="searchPayMethod2">
+                                                            <div class="input-extend input-extend-right">
+                                                                <div class="input-box input-ic-clear"></div>
+                                                            </div>
+                                                            <div class="input-frame"></div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="list-method-item">
-                            <button type="submit" value="VNMART" id="VNMART" name="paymethod"
-                                class="list-method-button">
+                        <div class="list-method-item list-mb8">
+                            <div class="list-method-button" data-tab="3">
                                 <div class="row row-16 main-payment">
-                                    <div class="col">
+                                    <div class="col" style="padding-top: 20px;">
+                                        <input type="radio" name="payment_method" style="display: none;"
+                                            class="payment_method" id="payment_method" value="zalopay">
                                         <div class="title h3 color-default">
                                             Ví điện tử
                                             <span class="vnpay-logo b">
-                                                <span class="zalopay-blue">ZALO</span><span class="zalopay-green">PAY</span>
+                                                <span class="zalopay-blue">ZALO</span><span
+                                                    class="zalopay-green">PAY</span>
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto" style="padding-top: 20px;">
                                         <div class="icon">
-                                            <img width="100%" src="https://qcgateway.zalopay.vn/pay/v2/images/icon-zpapp-2.svg"
+                                            <img width="100%"
+                                                src="https://qcgateway.zalopay.vn/pay/v2/images/icon-zpapp-2.svg"
                                                 alt="">
                                         </div>
                                     </div>
                                 </div>
-                            </button>
+                            </div>
+                            <div class="list-method-item-content" data-content="3" style="display: none;">
+                                <div>
+                                    <div class="list-bank list-bank-grid-4">
+                                        <div class="list-mb24 list-last-mb">
+                                            <div class="list-bank-search">
+                                                <div class="form-group">
+                                                    <div
+                                                        class="input-group-wrap input-default input-size-default input-group-vertical">
+                                                        <label class="input-inner-wrap">
+                                                            <input type="text"
+                                                                class="input input-label-change input-has-clear"
+                                                                placeholder="Nhập số tiền cần nạp..."
+                                                                name="amount[zalopay]" autocorrect="off"
+                                                                id="searchPayMethod2">
+                                                            <div class="input-extend input-extend-right">
+                                                                <div class="input-box input-ic-clear"></div>
+                                                            </div>
+                                                            <div class="input-frame"></div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="close-modal" type="button">Đóng</button>
+                        <button class="submit-modal">Nạp tiền</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="close-modal">Đóng</button>
-                    <button class="submit-modal">Nạp tiền</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -825,29 +661,29 @@
 
 @section('js')
     <script src="{{ asset('js/client/auth/auth.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('.open-modal').click(function() {
-                const modalId = $(this).data('modal');
-                $(modalId).show();
+    @if (session()->has('transaction_succeed'))
+        <script>
+            Swal.fire({
+                imageUrl: '{{ asset("client/images/success.png") }}',
+                imageWidth: 100,
+                imageHeight: 100,
+                title: 'Nạp tiền thành công',
+                text: 'Chúc mừng bạn đã nạp thành công số tiền: '  + '{{ number_format(session()->get("amount"), 0, ',', '.') }}' + ' VND',
+                showConfirmButton: true,
+                width: "400px",
             });
-
-            $('.custom-close, .close-modal, .custom-modal').click(function(e) {
-                if ($(e.target).is('.custom-close, .close-modal, .custom-modal')) {
-                    $(this).closest('.custom-modal').hide();
-                }
+        </script>
+    @endif
+    @if (session()->has('transaction_failed'))
+        <script>
+            Swal.fire({
+                imageUrl: '{{ asset("client/images/error-image.png") }}',
+                imageWidth: 100,
+                imageHeight: 100,
+                title: 'Giao dịch của bạn đã bị hủy!',
+                showConfirmButton: true,
+                width: "400px",
             });
-
-            $('.submit-top-up').click(function() {
-                const modal = $(this).closest('.custom-modal');
-                const amount = modal.find('input[type="number"]').val();
-                if (amount) {
-                    alert(`Nạp tiền thành công với số tiền: ${amount}`);
-                    modal.hide();
-                } else {
-                    alert('Vui lòng nhập số tiền!');
-                }
-            });
-        });
-    </script>
+        </script>
+    @endif
 @endsection

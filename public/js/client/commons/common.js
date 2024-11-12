@@ -113,29 +113,209 @@ $(function() {
         autoclose: true,      // Tự động đóng khi chọn ngày
         todayHighlight: true   // Nổi bật ngày hôm nay
     });
-})
 
+    function togglePasswordVisibility(passwordInput, icon) {
+        const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+        passwordInput.attr('type', type);
 
-// header menu mobile
-document.addEventListener('DOMContentLoaded', () => {
-    const menuMobile = document.querySelector('.menu-icon');
-    const btnCloseMenuMobile = document.querySelector('.btn-close-menu');
-    const menuContent = document.querySelector('.menu-mobile-content');
+        icon.toggleClass('fa-eye fa-eye-slash');
+    }
 
-    menuMobile.addEventListener('click', () => {
-        menuMobile.style.opacity = '0';
-        menuContent.classList.toggle('active');
-    });
-    btnCloseMenuMobile.addEventListener('click', () => {
-        menuMobile.style.opacity = '1';
-        menuContent.classList.toggle('active');
+    $('#toggle-password-icon').on('click', function () {
+        const passwordInput = $('input[id="passwordRegister"]');
+        togglePasswordVisibility(passwordInput, $(this));
     });
 
-    document.querySelectorAll('.menu-item > a').forEach(menu => {
-        menu.addEventListener('click', function (e) {
-            e.preventDefault();
-            // Đóng hoặc mở menu hiện tại
-            this.parentElement.classList.toggle('active');
+    $('#toggle-confirm-password-icon').on('click', function () {
+        const passwordInput = $('input[name="password_confirmation"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $('.toggle-password-login-icon').on('click', function () {
+        const passwordInput = $('input[id="passwordLogin"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $('.toggle-old-password-icon').on('click', function () {
+        const passwordInput = $('input[name="old_password"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $('.toggle-password-change-icon').on('click', function () {
+        const passwordInput = $('input[name="password"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $('.toggle-confirm-password-icon').on('click', function () {
+        const passwordInput = $('input[name="confirm_password"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    function modal_deposit() {
+        $('.open-modal').click(function() {
+            const modalId = $(this).data('modal');
+            $(modalId).show();
         });
-    });
-});
+        
+        $('.custom-close, .close-modal, .custom-modal').click(function(e) {
+            if ($(e.target).is('.custom-close, .close-modal, .custom-modal')) {
+                $(this).closest('.custom-modal').hide();
+            }
+        });
+    
+        $('.submit-top-up').click(function() {
+            const modal = $(this).closest('.custom-modal');
+            const amount = modal.find('input[type="number"]').val();
+            if (amount) {
+                alert(`Nạp tiền thành công với số tiền: ${amount}`);
+                modal.hide();
+            } else {
+                alert('Vui lòng nhập số tiền!');
+            }
+        });
+
+        $('.list-method-button').on('click', function () {
+            const tab = $(this).data('tab');
+            
+            $('.list-method-item-content').hide();
+            $(`.list-method-item-content[data-content="${tab}"]`).show();
+            
+            $(this).find('input[type="radio"]').prop('checked', true);
+
+            $('input[name$="_amount"]').css({
+                'border': '',      
+                'box-shadow': ''   
+            });
+        });
+    
+        $('#depositForm').on('submit', function (e) {
+            e.preventDefault();
+            
+            let imageError = $(this).data('error');
+            const selectedPaymentMethod = $('input[name="payment_method"]:checked').val();
+    
+            if (!selectedPaymentMethod) {
+                Swal.fire({
+                    position: "center",
+                    imageUrl: imageError,
+                    imageWidth: 200,
+                    imageHeight: 120,
+                    width: "600px",
+                    title: "Vui lòng chọn phương thức thanh toán!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Ok",
+                });
+
+                return false;
+            }
+    
+            let amountInput;
+    
+            if (selectedPaymentMethod === 'vnpay') {
+                amountInput = $('input[name="amount[vnpay]"]');
+            } else if (selectedPaymentMethod === 'momo') {
+                amountInput = $('input[name="amount[momo]"]');
+            } else if (selectedPaymentMethod === 'zalopay') {
+                amountInput = $('input[name="amount[zalopay]"]');
+            }
+    
+            if (amountInput && amountInput.val().trim() === '') {
+                Swal.fire({
+                    position: "center",
+                    imageUrl: imageError,
+                    imageWidth: 200,
+                    imageHeight: 120,
+                    width: "600px",
+                    title: "Vui lòng nhập số tiền cần nạp cho phương thức đã chọn!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Ok",
+                }).then(() => {
+                    amountInput.css({
+                        'border': '1px solid red',
+                        'box-shadow': '0 0 10px rgba(255, 0, 0, 0.5)' 
+                    });
+                    amountInput.focus(); 
+                });
+
+                return false;
+            } else {
+                amountInput.css({
+                    'border': '',
+                    'box-shadow': '' 
+                });
+            }
+
+            if(amountInput && amountInput.val() < 10000) {
+                Swal.fire({
+                    position: "center",
+                    imageUrl: imageError,
+                    imageWidth: 200,
+                    imageHeight: 120,
+                    width: "600px",
+                    title: "Số tiền cần nạp phải ít nhất 10.000 VND",
+                    showConfirmButton: true,
+                    confirmButtonText: "Ok",
+                }).then(() => {
+                    amountInput.css({
+                        'border': '1px solid red',
+                        'box-shadow': '0 0 10px rgba(255, 0, 0, 0.5)' 
+                    });
+                    amountInput.focus(); 
+                });
+
+                return false;
+            } else {
+                amountInput.css({
+                    'border': '',
+                    'box-shadow': '' 
+                });
+            }
+
+            this.submit(); 
+            this.reset();
+        });
+    }
+
+    // header menu mobile
+    function header_mobile() {
+        const menuMobile = $('.menu-icon');
+        const btnCloseMenuMobile = $('.btn-close-menu');
+        const menuContent = $('.menu-mobile-content');
+
+        menuMobile.on('click', function () {
+            menuMobile.css('opacity', '0');
+            menuContent.toggleClass('active');
+        });
+
+        btnCloseMenuMobile.on('click', function () {
+            menuMobile.css('opacity', '1');
+            menuContent.toggleClass('active');
+        });
+
+        $('.menu-item > a').on('click', function (e) {
+            e.preventDefault();
+            $(this).parent().toggleClass('active');
+        });
+    }
+
+    function icon_venom()
+    {
+        const popup = $("#venom-popup");
+        const closeButton = $("#fragmentClose");
+
+        // Kiểm tra nếu chưa đóng popup trước đó
+        if (!localStorage.getItem("venomPopupHidden")) {
+            popup.show(); // Hiện popup
+        }
+
+        // Xử lý khi bấm nút close
+        closeButton.click(function() {
+            popup.hide(); // Ẩn popup ngay lập tức
+            localStorage.setItem("venomPopupHidden", "true"); // Lưu trạng thái đã đóng
+        });
+    }
+    
+    icon_venom();
+    header_mobile();
+    modal_deposit();
+})

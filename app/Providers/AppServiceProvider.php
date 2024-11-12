@@ -83,6 +83,10 @@ use App\Repositories\Auth\Client\ForgotPasswords\Interface\ForgotPasswordInterfa
 use App\Repositories\Auth\Client\ForgotPasswords\Repository\ForgotPasswordRepository;
 use App\Repositories\Auth\Client\Registers\Interface\RegisterInterface;
 use App\Repositories\Auth\Client\Registers\Repository\RegisterRepository;
+use App\Repositories\Client\Cities\Interface\CityInterface as ClientCityInterface;
+use App\Repositories\Client\Cities\Repository\CityRepository as ClientCityRepository;
+use App\Repositories\Client\Deposits\Interface\DepositInterface;
+use App\Repositories\Client\Deposits\Repository\DepositRepository;
 use App\Services\Admin\Blocks\Interfaces\BlockServiceInterface;
 use App\Services\Admin\Blocks\Services\BlockService;
 use App\Services\Admin\BlockTypes\Interfaces\BlockTypeServiceInterface;
@@ -108,6 +112,10 @@ use App\Services\Auth\Client\ChangePasswords\Interfaces\ChangePasswordServiceInt
 use App\Services\Auth\Client\ChangePasswords\Services\ChangePasswordService;
 use App\Services\Auth\Client\ForgotPasswords\ForgotPasswordService;
 use App\Services\Auth\Client\Registers\Services\RegisterService;
+use App\Services\Client\Cities\Interfaces\CityServiceInterface as ClientCityServiceInterface;
+use App\Services\Client\Cities\Services\CityService as ClientCityService;
+use App\Services\Client\Deposits\Interfaces\DepositServiceInterface;
+use App\Services\Client\Deposits\Services\DepositService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -171,6 +179,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ForgotPasswordServicesInterface    ::class, ForgotPasswordService      ::class);
         $this->app->bind(ChangePasswordInterface            ::class, ChangePasswordRepository   ::class);
         $this->app->bind(ChangePasswordServiceInterface     ::class, ChangePasswordService      ::class);
+        $this->app->bind(ClientCityInterface                ::class, ClientCityRepository       ::class);
+        $this->app->bind(ClientCityServiceInterface         ::class, ClientCityService          ::class);
+        $this->app->bind(DepositInterface                   ::class, DepositRepository          ::class);
+        $this->app->bind(DepositServiceInterface            ::class, DepositService             ::class);
         // End client
     }
 

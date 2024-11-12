@@ -174,6 +174,13 @@
         </div>
     </div>
 
+    <div id="venom-popup" style="display: none;">
+        <div class="venom-content">
+            <button type="button" id="fragmentClose">close</button>
+            <img src="{{ asset("client/images/V3_Popcorn-min.gif") }}" />
+        </div>
+    </div>
+
     <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
 
@@ -192,8 +199,7 @@
 <script type="text/javascript" src="{{ asset('client/js/statics/js/scripts.js') }}"></script>
 <script src="{{ asset('client/js/statics/js/showtime-widget.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
-
-<script src="{{ asset('client/js/common.js') }}"></script>
+<script src="{{ asset('js/client/commons/common.js') }}"></script>
 
 @yield('js')
 

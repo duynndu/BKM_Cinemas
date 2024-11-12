@@ -7,7 +7,7 @@ use App\Http\Controllers\Client\CategoryPostController;
 use App\Http\Controllers\Auth\Client\AuthController;
 use App\Http\Controllers\Auth\Client\FacebookController;
 use App\Http\Controllers\Auth\Client\GoogleController;
-use App\Http\Controllers\Client\PaymentController;
+use App\Http\Controllers\Client\DepositController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,15 +80,13 @@ Route::prefix('google')
 // End đăng nhập google
 
 // Nạp tiền
-Route::get('/nap-tien', [PaymentController::class, 'showDepositForm'])->name('showDepositForm');
+Route::post('/processDeposit', [DepositController::class, 'processDeposit'])->name('processDeposit');
 
-Route::post('/processDeposit', [PaymentController::class, 'processDeposit'])->name('processDeposit');
+Route::get('/vnpayReturn', [DepositController::class, 'vnpayReturn'])->name('vnpayReturn');
 
-Route::get('/vnpayReturn', [PaymentController::class, 'vnpayReturn'])->name('vnpayReturn');
+Route::get('/momoReturn', [DepositController::class, 'momoReturn'])->name('momoReturn');
 
-Route::get('/momoReturn', [PaymentController::class, 'momoReturn'])->name('momoReturn');
-
-Route::get('/zaloPayReturn', [PaymentController::class, 'zaloPayReturn'])->name('zaloPayReturn');
+Route::get('/zaloPayReturn', [DepositController::class, 'zaloPayReturn'])->name('zaloPayReturn');
 // End Nạp tiền
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
