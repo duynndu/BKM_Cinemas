@@ -26,6 +26,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/danh-muc/{slug}', [CategoryPostController::class, 'categoryPost'])->name('category.post');
 Route::get('/tin-tuc/{slug}', [PostController::class, 'postDetail'])->name('post.detail');
 
+
 // Tài khoản
 Route::get('/account', [AuthController::class, 'account'])->name('account');
 
