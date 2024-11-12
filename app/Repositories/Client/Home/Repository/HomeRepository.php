@@ -53,15 +53,14 @@ class HomeRepository implements HomeRepositoryInterface
 
     public function promotionEvent()
     {
-
         $category = $this->categoryPost->where('id', 1)->where('deleted_at', null)->first();
-        $ids = $this->postCategory->where('category_id', $category->id)->where('deleted_at', null)->pluck('post_id')->toArray();
-        $posts = $this->post->select('name', 'slug', 'avatar', 'description')->whereIn('id', $ids)->get();
-        return [
-            'category' => $category,
-            'posts' => $posts
-        ];
+        if ($category) {
+            $ids = $this->postCategory->where('category_id', $category->id)->where('deleted_at', null)->pluck('post_id')->toArray();
+            $posts = $this->post->select('name', 'slug', 'avatar', 'description')->whereIn('id', $ids)->get();
+            return [
+                'category' => $category,
+                'posts' => $posts
+            ];
+        }
     }
-
-    
 }
