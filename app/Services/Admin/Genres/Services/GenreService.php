@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Genres\Services;
 
-use App\Repositories\Admin\Genres\Interface\GenreInterface;
+use App\Repositories\Admin\Genres\Interfaces\GenreInterface;
 use App\Services\Admin\Genres\Interfaces\GenreServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->bigInteger('city_id')->nullable();
             $table->bigInteger('cinema_id')->nullable();
             $table->integer('facebook_id')->nullable();
-            $table->integer('google_id')->nullable();
+            $table->string('google_id')->nullable();
             $table->string('name')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
@@ -32,6 +32,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->tinyInteger('status')->default(1);  // 1: Hoạt động, 0: Bị khóa
+            $table->decimal('balance', 30, 2)->default(0); // Số dư ban đầu là 0
             $table->string('type')->default(\App\Models\User::TYPE_MEMBER);
             $table->tinyInteger('is_terms_accepted')->default(0); // Tôi đồng ý với điều khoản
             $table->tinyInteger('is_subscribed_promotions')->default(0); // Nhận thông tin chương trình khuyến mãi

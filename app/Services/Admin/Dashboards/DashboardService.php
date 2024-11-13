@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services\Admin\Dashboards;
-use App\Repositories\Admin\Dashboards\Repository\DashboardRepository;
+use App\Repositories\Admin\Dashboards\Repositories\DashboardRepository;
 
 class DashboardService
 {

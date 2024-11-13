@@ -1,6 +1,6 @@
 <?php
 namespace App\Services\Admin\Cities\Services;
-use App\Repositories\Admin\Cities\Interface\CityInterface;
+use App\Repositories\Admin\Cities\Interfaces\CityInterface;
 use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
 use App\Services\Base\BaseService;
 

@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Pages\Services;
 
-use App\Repositories\Admin\Pages\Interface\PageInterface;
+use App\Repositories\Admin\Pages\Interfaces\PageInterface;
 use App\Services\Admin\Pages\Interfaces\PageServiceInterface;
 use App\Services\Base\BaseService;
 

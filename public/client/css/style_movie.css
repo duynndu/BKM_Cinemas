@@ -12590,3 +12590,32 @@ body.open-main-popup {
         display: none;
     }
 }
+
+
+#venom-popup {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+
+#venom-popup .venom-content {
+    max-width: 110px;
+}
+
+#fragmentClose {
+    position: fixed;
+    bottom: 90px;
+    right: 5px;
+    display: block;
+    background: url('./images/icon_close.png') no-repeat top center;
+    width: 32px;
+    height: 32px;
+    text-indent: -9999px;
+    z-index: 9999;
+    border: none;
+    font-family: Verdana, Arial, sans-serif;
+    color: #222;
+    font-size: 14px;
+    line-height: 18px;
+}

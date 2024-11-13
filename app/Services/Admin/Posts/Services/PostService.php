@@ -3,7 +3,7 @@
 namespace App\Services\Admin\Posts\Services;
 
 use App\Models\PostTag;
-use App\Repositories\Admin\Posts\Interface\PostInterface;
+use App\Repositories\Admin\Posts\Interfaces\PostInterface;
 use App\Services\Admin\Posts\Interfaces\PostServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
