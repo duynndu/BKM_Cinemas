@@ -1,6 +1,6 @@
 <?php
 namespace App\Services\Admin\Cinemas\Services;
-use App\Repositories\Admin\Cinemas\Interface\CinemaInterface;
+use App\Repositories\Admin\Cinemas\Interfaces\CinemaInterface;
 use App\Services\Admin\Cinemas\Interfaces\CinemaServiceInterface;
 use App\Services\Base\BaseService;
 use Illuminate\Support\Facades\Storage;

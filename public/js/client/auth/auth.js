@@ -1,27 +1,4 @@
 $(document).ready(function () {
-
-    function togglePasswordVisibility(passwordInput, icon) {
-        const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
-        passwordInput.attr('type', type);
-
-        icon.toggleClass('fa-eye fa-eye-slash');
-    }
-
-    $(document).on('click', '.toggle-old-password-icon', function() {
-        const passwordInput = $('input[name="old_password"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
-    $(document).on('click', '.toggle-password-change-icon', function() {
-        const passwordInput = $('input[name="password"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
-    $(document).on('click', '.toggle-confirm-password-icon', function() {
-        const passwordInput = $('input[name="confirm_password"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
     $(document).on("submit", ".form-login", function (e) {
         e.preventDefault();
     

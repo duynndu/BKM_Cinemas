@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Auth\Admin\Logins\Repository;
+namespace App\Repositories\Auth\Admin\Logins\Repositories;
 
 use App\Models\User;
 use App\Repositories\Auth\Admin\Logins\Interface\LoginInterface;

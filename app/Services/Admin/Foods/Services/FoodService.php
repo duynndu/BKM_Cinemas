@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services\Admin\Foods\Services;
-use App\Repositories\Admin\Foods\Interface\FoodInterface;
+use App\Repositories\Admin\Foods\Interfaces\FoodInterface;
 use App\Services\Admin\Foods\Interfaces\FoodServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;

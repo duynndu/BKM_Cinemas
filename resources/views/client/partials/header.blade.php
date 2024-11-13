@@ -44,7 +44,7 @@
                                 <li>
                                     @php
                                         $user = Auth::user();
-                                        $avatarUrl = $user->image ?? ''; 
+                                        $avatarUrl = $user->image ?? '';
                                         $firstLetter = strtoupper(substr($user->last_name ?? $user->first_name, 0, 1));
                                         $colors = ['#FF5733', '#3374ff', '#3357FF', '#FF33A6', '#4ec1bc', '#7c8484'];
                                         $backgroundColor = $colors[$user->id % count($colors)];
@@ -91,6 +91,11 @@
                                             <li>
                                                 <a href="{{ route('account') }}">Thông tin tài khoản</a>
                                             </li>
+                                            @if(Auth::check() && Auth::user()->type !== 'member')
+                                                <li>
+                                                    <a href="{{ route('admin.dashboard') }}">Vào trang quản trị</a>
+                                                </li>
+                                            @endif
                                             <li>
                                                 <a href="https://touchcinema.com/account/transaction">Lịch sử mua vé</a>
                                             </li>

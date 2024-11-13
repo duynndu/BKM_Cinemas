@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Actors\Services;
 
-use App\Repositories\Admin\Actors\Interface\ActorInterface;
+use App\Repositories\Admin\Actors\Interfaces\ActorInterface;
 use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
 use App\Services\Base\BaseService;
 use Illuminate\Support\Facades\Storage;

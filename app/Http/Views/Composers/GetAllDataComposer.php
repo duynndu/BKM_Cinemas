@@ -2,7 +2,7 @@
 
 namespace App\Http\Views\Composers;
 
-use App\Repositories\Admin\Systems\Interface\SystemInterface;
+use App\Repositories\Admin\Systems\Interfaces\SystemInterface;
 use Illuminate\View\View;
 
 class GetAllDataComposer

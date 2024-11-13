@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Services\Admin\Payments\Services;
-use App\Repositories\Admin\Payments\Interface\PaymentInterface;
+
+use App\Repositories\Admin\Payments\Interfaces\PaymentInterface;
 use App\Services\Admin\Payments\Interfaces\PaymentServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
@@ -15,7 +17,7 @@ class PaymentService extends BaseService implements PaymentServiceInterface
     {
         return $this->repository->filter($request);
     }
-   
+
     public function getRepository()
     {
         return PaymentInterface::class;
@@ -28,7 +30,7 @@ class PaymentService extends BaseService implements PaymentServiceInterface
 
     public function create(&$data)
     {
-        
+
         if (isset($data['image']) && $data['image']) {
             $uploadData = $this->uploadFile($data['image'], 'public/payments');
             $data['image'] = $uploadData['path'];
@@ -42,7 +44,7 @@ class PaymentService extends BaseService implements PaymentServiceInterface
         return $this->repository->find($id);
     }
 
-    public function update(&$data,$id)
+    public function update(&$data, $id)
     {
         $record = $this->find($id);
 
