@@ -8078,18 +8078,18 @@ label:hover:before {
     background-color: #fff
 }
 
-#modal-trailer .modal-content {
+.modal-content {
     background-color: transparent;
     box-shadow: none;
     border: none
 }
 
-#modal-trailer .modal-content .modal-header {
+.modal-content .modal-header {
     padding: 0;
     border-bottom: 0
 }
 
-#modal-trailer .modal-content .modal-header .close {
+.modal-content .modal-header .close {
     font-size: 50px;
     color: red;
     opacity: 1;
@@ -8105,11 +8105,11 @@ label:hover:before {
     line-height: 15px
 }
 
-#modal-trailer .modal-content .modal-body {
+.modal-content .modal-body {
     padding: 0
 }
 
-#modal-trailer .modal-content .modal-body .video-container {
+.modal-content .modal-body .video-container {
     position: relative;
     padding-bottom: 56.25%;
     padding-top: 30px;
@@ -8117,7 +8117,7 @@ label:hover:before {
     overflow: hidden
 }
 
-#modal-trailer .modal-content .modal-body .video-container iframe {
+.modal-content .modal-body .video-container iframe {
     position: absolute;
     top: 0;
     left: 0;
@@ -12263,7 +12263,8 @@ body.open-main-popup {
 
 .radio-label input[type="radio"] {
     position: relative;
-    appearance: none; /* Loại bỏ style mặc định */
+    appearance: none;
+    /* Loại bỏ style mặc định */
     width: 18px;
     height: 18px;
     border: 2px solid #ddd;
@@ -12288,7 +12289,8 @@ body.open-main-popup {
     transform: translate(-50%, -50%);
     width: 9px;
     height: 9px;
-    background-color: #fff; /* Chấm trắng ở giữa */
+    background-color: #fff;
+    /* Chấm trắng ở giữa */
     border-radius: 50%;
 }
 
@@ -12310,17 +12312,21 @@ body.open-main-popup {
     display: flex;
     align-items: center;
 }
+
 .select2-container--default .select2-selection--single {
     border: 1px solid #d87d23;
-    height: 38px; /* Đặt chiều cao giống như input */
+    height: 38px;
+    /* Đặt chiều cao giống như input */
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 36px; /* Căn giữa chữ trong dropdown */
+    line-height: 36px;
+    /* Căn giữa chữ trong dropdown */
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 36px; /* Đặt chiều cao cho mũi tên */
+    height: 36px;
+    /* Đặt chiều cao cho mũi tên */
 }
 
 .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
@@ -12330,10 +12336,14 @@ body.open-main-popup {
 
 /* Xóa border và outline cho ô tìm kiếm */
 .select2-container--default .select2-search--dropdown .select2-search__field {
-    border: 1px solid #aaa; /* Xóa border */
-    outline: none; /* Xóa outline */
-    background-color: #f8f9fa; /* Đặt màu nền cho ô tìm kiếm */
+    border: 1px solid #aaa;
+    /* Xóa border */
+    outline: none;
+    /* Xóa outline */
+    background-color: #f8f9fa;
+    /* Đặt màu nền cho ô tìm kiếm */
 }
+
 /* reponsive */
 /* Màn hình nhỏ (điện thoại) - tối đa 800px */
 @media only screen and (max-width: 800px) {
