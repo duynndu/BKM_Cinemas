@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\FoodTypeController;
 use App\Http\Controllers\Api\MovieController;
@@ -27,6 +28,7 @@ Route::name('api.')->group(function () {
         Route::get('{showtime}/detail', 'getShowtimeDetailById');
         Route::get('', 'index');
         Route::get('{showtime}', 'show');
+        Route::post('{showtime}/book-seat', 'bookSeat');
         Route::post('', 'store');
         Route::put('{showtime}', 'update');
         Route::put('{showtime}/clear-movie', 'clearShowtimeMovie');
@@ -53,5 +55,8 @@ Route::name('api.')->group(function () {
         Route::post('', 'store');
         Route::put('{movie}', 'update');
         Route::delete('{movie}', 'destroy');
+    });
+    Route::controller(AuthController::class)->prefix('user')->name('user.')->group(function () {
+        Route::get('', 'index');
     });
 });
