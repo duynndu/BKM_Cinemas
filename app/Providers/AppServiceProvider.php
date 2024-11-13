@@ -108,6 +108,8 @@ use App\Repositories\Auth\Client\ChangePasswords\Interface\ChangePasswordInterfa
 use App\Repositories\Auth\Client\ForgotPasswords\Interface\ForgotPasswordInterface;
 use App\Repositories\Auth\Client\ChangePasswords\Repository\ChangePasswordRepository;
 use App\Repositories\Auth\Client\ForgotPasswords\Repository\ForgotPasswordRepository;
+use App\Services\Admin\Payments\Interfaces\PaymentServiceInterface;
+use App\Services\Admin\Payments\Services\PaymentService;
 use App\Services\Auth\Client\ChangePasswords\Interfaces\ChangePasswordServiceInterface;
 use App\Services\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordServicesInterface;
 
@@ -152,6 +154,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PageInterface               ::class, PageRepository        ::class);
         $this->app->bind(PageServiceInterface        ::class, PageService           ::class);
         $this->app->bind(PaymentInterface            ::class, PaymentRepository     ::class);
+        $this->app->bind(PaymentServiceInterface     ::class, PaymentService        ::class);
         $this->app->bind(PostInterface               ::class, PostRepository        ::class);
         $this->app->bind(PostServiceInterface        ::class, PostService           ::class);
         $this->app->bind(PermissionInterface         ::class, PermissionRepository  ::class);
