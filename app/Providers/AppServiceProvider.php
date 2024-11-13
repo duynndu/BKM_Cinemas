@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Admin\Modules\Services\ModuleServices;
+use App\Services\Admin\Payments\Services\PaymentService;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -47,7 +49,6 @@ use App\Repositories\Admin\Foods\Interfaces\FoodTypeInterface;
 use App\Repositories\Admin\Genres\Repositories\GenreRepository;
 use App\Repositories\Admin\Movies\Repositories\MovieRepository;
 use App\Repositories\Admin\Systems\Interfaces\SystemInterface;
-
 use App\Services\Admin\Areas\Interfaces\AreaServiceInterface;
 use App\Services\Admin\Foods\Interfaces\FoodServiceInterface;
 use App\Services\Admin\Menus\Interfaces\MenuServiceInterface;
@@ -59,22 +60,18 @@ use App\Repositories\Admin\Cinemas\Repositories\CinemaRepository;
 use App\Repositories\Admin\Foods\Repositories\FoodTypeRepository;
 use App\Repositories\Admin\Payments\Interfaces\PaymentInterface;
 use App\Repositories\Admin\Systems\Repositories\SystemRepository;
-
 use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
 use App\Services\Admin\Blocks\Interfaces\BlockServiceInterface;
 use App\Services\Admin\Genres\Interfaces\GenreServiceInterface;
 use App\Services\Admin\Movies\Interfaces\MovieServiceInterface;
 use App\Repositories\Admin\Foods\Repositories\FoodComboRepository;
 use App\Repositories\Admin\Payments\Repositories\PaymentRepository;
-
 use App\Services\Admin\Cinemas\Interfaces\CinemaServiceInterface;
 use App\Services\Admin\Foods\Interfaces\FoodTypeServiceInterFace;
 use App\Services\Admin\Modules\Interfaces\ModuleServiceInterface;
 use App\Services\Admin\Systems\Interfaces\SystemServiceInterface;
-use App\Repositories\Auth\Admin\Logins\Repository\LoginRepository;
 use App\Services\Admin\CategoryPosts\Services\CategoryPostService;
 use App\Services\Admin\Foods\Interfaces\FoodComboServiceInterface;
-
 use App\Repositories\Admin\CategoryPosts\Interfaces\CategoryPostInterface;
 use App\Repositories\Admin\CategoryPosts\Repositories\CategoryPostRepository;
 use App\Repositories\Admin\Menus\Interfaces\MenuInterface;
@@ -89,13 +86,13 @@ use App\Repositories\Admin\Roles\Interfaces\RoleInterface;
 use App\Repositories\Admin\Roles\Repositories\RoleRepository;
 use App\Repositories\Admin\Users\Interfaces\UserInterface;
 use App\Repositories\Admin\Users\Repositories\UserRepository;
+use App\Repositories\Auth\Admin\Logins\Interface\LoginInterface;
 use App\Repositories\Auth\Admin\Logins\Repository\LoginRepository;
 use App\Repositories\Auth\Client\ChangePasswords\Interface\ChangePasswordInterface;
 use App\Repositories\Auth\Client\ChangePasswords\Repository\ChangePasswordRepository;
 use App\Repositories\Auth\Client\ForgotPasswords\Interface\ForgotPasswordInterface;
 use App\Repositories\Auth\Client\ForgotPasswords\Repository\ForgotPasswordRepository;
 use App\Repositories\Auth\Client\Registers\Interface\RegisterInterface;
-use App\Repositories\Auth\Client\Registers\Repository\RegisterRepository;
 use App\Repositories\Client\Cities\Interfaces\CityInterface as ClientCityInterface;
 use App\Repositories\Client\Cities\Repositories\CityRepository as ClientCityRepository;
 use App\Repositories\Client\Deposits\Interfaces\DepositInterface;
@@ -104,28 +101,33 @@ use App\Repositories\Client\Transactions\Interfaces\TransactionInterface;
 use App\Repositories\Client\Transactions\Repositories\TransactionRepository;
 use App\Repositories\Client\Users\Interfaces\UserInterface as ClientUserInterface;
 use App\Repositories\Client\Users\Repositories\UserRepository as ClientUserRepository;
-use App\Services\Admin\Blocks\Interfaces\BlockServiceInterface;
-use App\Services\Admin\Blocks\Services\BlockService;
-
 use App\Services\Admin\BlockTypes\Interfaces\BlockTypeServiceInterface;
-use App\Repositories\Admin\CategoryPosts\Interface\CategoryPostInterface;
 use App\Repositories\Auth\Client\Registers\Repository\RegisterRepository;
+use App\Services\Admin\BlockTypes\Services\BlockTypeService;
+use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
+use App\Services\Admin\Payments\Interfaces\PaymentServiceInterface;
 use App\Services\Admin\Permissions\Interfaces\PermissionServiceInterface;
-use App\Repositories\Admin\CategoryPosts\Repository\CategoryPostRepository;
+use App\Services\Admin\Permissions\Services\PermissionService;
+use App\Services\Admin\Roles\Interfaces\RoleServiceInterface;
+use App\Services\Admin\Systems\Services\SystemService;
+use App\Services\Admin\Users\Interfaces\UserServiceInterface;
+use App\Services\Auth\Admin\Logins\Interfaces\LoginServiceInterface;
+use App\Services\Auth\Admin\Logins\Services\LoginService;
+use App\Services\Auth\Client\ChangePasswords\Interfaces\ChangePasswordServiceInterface;
 use App\Services\Auth\Client\Registers\Interfaces\RegisterServiceInterface;
 use App\Services\Auth\Client\ChangePasswords\Services\ChangePasswordService;
-
 use App\Services\Auth\Client\ForgotPasswords\ForgotPasswordService;
+use App\Services\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordServicesInterface;
 use App\Services\Auth\Client\Registers\Services\RegisterService;
 use App\Services\Client\Cities\Interfaces\CityServiceInterface as ClientCityServiceInterface;
 use App\Services\Client\Cities\Services\CityService as ClientCityService;
 use App\Services\Client\Deposits\Interfaces\DepositServiceInterface;
 use App\Services\Client\Deposits\Services\DepositService;
+use App\Services\Client\Home\Interfaces\HomeServiceInterface;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use App\Services\Client\Transactions\Services\TransactionService;
 use App\Services\Client\Users\Interfaces\UserServiceInterface as ClientUserServiceInterface;
 use App\Services\Client\Users\Services\UserService as ClientUserService;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -190,6 +192,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ForgotPasswordServicesInterface    ::class, ForgotPasswordService      ::class);
         $this->app->bind(ChangePasswordInterface            ::class, ChangePasswordRepository   ::class);
         $this->app->bind(ChangePasswordServiceInterface     ::class, ChangePasswordService      ::class);
+        $this->app->bind(HomeServiceInterface     ::class, HomeService      ::class);
+
+
+
         $this->app->bind(ClientCityInterface                ::class, ClientCityRepository       ::class);
         $this->app->bind(ClientCityServiceInterface         ::class, ClientCityService          ::class);
         $this->app->bind(DepositInterface                   ::class, DepositRepository          ::class);
@@ -198,7 +204,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TransactionServiceInterface        ::class, TransactionService         ::class);
         $this->app->bind(ClientUserInterface                ::class, ClientUserRepository       ::class);
         $this->app->bind(ClientUserServiceInterface         ::class, ClientUserService          ::class);
-        $this->app->bind(HomeServiceInterface     ::class, HomeService      ::class);
         // End client
     }
 

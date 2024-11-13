@@ -1,13 +1,10 @@
 <?php
-<<<<<<< HEAD:app/Services/Admin/Payments/PaymentService.php
-namespace App\Services\Admin\Payments;
-use App\Repositories\Admin\Payments\Interfaces\PaymentInterface;
-=======
+
 namespace App\Services\Admin\Payments\Services;
-use App\Repositories\Admin\Payments\Interface\PaymentInterface;
+
+use App\Repositories\Admin\Payments\Interfaces\PaymentInterface;
 use App\Services\Admin\Payments\Interfaces\PaymentServiceInterface;
 use App\Services\Base\BaseService;
->>>>>>> aac24e5964125c4ada925afb86c8cf32c15f7763:app/Services/Admin/Payments/Services/PaymentService.php
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 

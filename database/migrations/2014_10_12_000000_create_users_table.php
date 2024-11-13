@@ -19,7 +19,7 @@ return new class extends Migration
             $table->bigInteger('city_id')->nullable();
             $table->bigInteger('cinema_id')->nullable();
             $table->integer('facebook_id')->nullable();
-            $table->integer('google_id')->nullable();
+            $table->string('google_id')->nullable();
             $table->string('name')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();

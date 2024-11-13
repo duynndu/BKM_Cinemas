@@ -3,20 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\PostController;
-<<<<<<< HEAD
 use App\Http\Controllers\Client\CategoryPostController;
 use App\Http\Controllers\Auth\Client\AuthController;
 use App\Http\Controllers\Auth\Client\FacebookController;
 use App\Http\Controllers\Auth\Client\GoogleController;
 use App\Http\Controllers\Client\DepositController;
-=======
-use App\Http\Controllers\Client\PaymentController;
-use App\Http\Controllers\Auth\Client\AuthController;
-use App\Http\Controllers\Auth\Client\GoogleController;
 use App\Http\Controllers\Client\MovieDetailController;
-use App\Http\Controllers\Client\CategoryPostController;
-use App\Http\Controllers\Auth\Client\FacebookController;
->>>>>>> aac24e5964125c4ada925afb86c8cf32c15f7763
 
 /*
 |--------------------------------------------------------------------------
@@ -30,15 +22,9 @@ use App\Http\Controllers\Auth\Client\FacebookController;
 */
 
 
-<<<<<<< HEAD
 Route::get('/',                     [HomeController::class, 'index'])->name('home');
 Route::get('/danh-muc/{slug}',      [CategoryPostController::class, 'categoryPost'])->name('category.post');
 Route::get('/tin-tuc/{slug}',       [PostController::class, 'postDetail'])->name('post.detail');
-=======
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/danh-muc/{slug}', action: [CategoryPostController::class, 'categoryPost'])->name('category.post');
-Route::get('/tin-tuc/{slug}', [PostController::class, 'postDetail'])->name('post.detail');
->>>>>>> aac24e5964125c4ada925afb86c8cf32c15f7763
 
 
 // Tài khoản
