@@ -3,8 +3,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\PaymentRequest;
 use App\Models\Payment;
-use App\Repositories\Admin\Payments\Interfaces\PaymentInterface;
-use App\Services\Admin\Payments\PaymentService;
+use App\Services\Admin\Payments\Interfaces\PaymentServiceInterface;
 use Illuminate\Http\Request;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +15,7 @@ class PaymentController extends Controller
     use RemoveImageTrait;
     protected $paymentService;
 
-    public function __construct(PaymentService $paymentService)
+    public function __construct(PaymentServiceInterface $paymentService)
     {
         $this->paymentService = $paymentService;
     }
@@ -24,9 +23,9 @@ class PaymentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $payments = $this->paymentService->getAll();
+        $payments = $this->paymentService->filter($request);
         return view('admin.pages.payments.index', compact('payments'));
     }
 
@@ -47,7 +46,7 @@ class PaymentController extends Controller
 
         DB::beginTransaction();
         try {
-            $this->paymentService->store($data);
+            $this->paymentService->create($data);
             DB::commit();
             return redirect()->route('admin.payments.index')->with('status_succeed', 'Thêm phương thức thanh toán thành công');
         } catch (\Exception $e) {

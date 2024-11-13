@@ -14,8 +14,42 @@
                 ])
             </nav>
         </div>
-
         <div class="row">
+            <div class="col-12">
+                <div class="filter cm-content-box box-primary">
+                    <div class="content-title SlideToolHeader">
+                        <div class="cpa">
+                            <i class="fa-sharp fa-solid fa-filter me-2"></i>Bộ lọc
+                        </div>
+                    </div>
+                    <div class="cm-content-body form excerpt" style="">
+                        <form action="{{ route('admin.permissions.index') }}" method="GET">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-3 col-sm-6">
+                                        <label
+                                            class="form-label">Tên chức năng</label>
+                                        <input id="name" value="{{ request()->name }}" name="name" type="text"
+                                            class="form-control mb-xl-0 mb-3"
+                                            placeholder="Nhập tên chức năng">
+                                    </div>
+                                    <div class="col-xl-3 col-sm-6 align-self-end">
+                                        <div>
+                                            <button class="btn btn-primary me-2" title="Click here to Search"
+                                                type="submit"><i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm
+                                                kiếm nâng cao
+                                            </button>
+
+                                            <button type="reset" class="btn btn-danger light"
+                                                title="Click here to remove filter">Xóa trống</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">

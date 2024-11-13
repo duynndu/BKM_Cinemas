@@ -7,6 +7,8 @@ use App\Repositories\Base\RepositoryInterface;
 interface FoodComboInterface extends RepositoryInterface
 {
     public function deleteMultiple(array $ids);
+    
+    public function filter($request);
 
     public function deleteMultipleItem($record, array $ids);
 

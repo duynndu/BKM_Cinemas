@@ -32,12 +32,13 @@ class PostRepository extends BaseRepository implements PostInterface
     }
     public function getModel()
     {
-        return \App\Models\Post::class;
+        return Post::class;
     }
-    public function getAll()
+
+    public function filter($request)
     {
         $query = $this->model->newQuery();
-        $categories = request()->categories ?? [];
+        $categories = $request->categories ?? [];
         $hot = null;
         $active = null;
         $name = null;
@@ -45,8 +46,8 @@ class PostRepository extends BaseRepository implements PostInterface
         $postIds = [];
 
         // Lọc theo tên bài viết
-        if (request()->has('name') && request()->input('name') !== null) {
-            $name = request()->input('name');
+        if ($request->has('name') && $request->input('name') !== null) {
+            $name = $request->input('name');
             $query->where('name', 'like', '%' . $name . '%');
         }
         if (!empty($categories)) {
@@ -60,7 +61,7 @@ class PostRepository extends BaseRepository implements PostInterface
         }
 
         // Lọc theo bài viết nổi bật
-        switch (request()->fill_action) {
+        switch ($request->fill_action) {
             case 'hot':
                 $query->where('hot', 1);
                 $hot = 1;
@@ -82,7 +83,7 @@ class PostRepository extends BaseRepository implements PostInterface
                 break;
         }
         // Sắp xếp bài viết theo tiêu chí
-        $typeOrder = request()->order_with;
+        $typeOrder = $request->order_with;
         if (!empty($typeOrder)) {
             switch ($typeOrder) {
                 case 'dateASC':
@@ -111,7 +112,7 @@ class PostRepository extends BaseRepository implements PostInterface
 
         $data = $data->appends([
             'name' => $name,
-            'typeOrder' => request()->order_with,
+            'typeOrder' => $request->order_with,
             'categories' => $categories,
         ]);
 
@@ -150,6 +151,7 @@ class PostRepository extends BaseRepository implements PostInterface
             'typeOrder' => $typeOrder,
             'categories' => $categories
         ];
+
     }
 
     public function getAllActive()

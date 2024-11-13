@@ -24,6 +24,12 @@ class PostService extends BaseService implements PostServiceInterface
     {
         return PostInterface::class;
     }
+
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
+
     public function getAllActive(){
         return $this->repository->getAllActive();
     }

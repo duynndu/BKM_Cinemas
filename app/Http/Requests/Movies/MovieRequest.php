@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Movies;
 
+use App\Models\Movie;
 use App\Rules\CheckRuleName;
 use App\Rules\CheckRuleSlug;
 use App\Rules\CheckRuleTitle;
@@ -29,7 +30,7 @@ class MovieRequest extends FormRequest
     public function rules(): array
     {
         $id = $this->route('id');
-        return [
+        $rules = [
             "movie.title" => [
                 "required",
                 "min:3",
@@ -54,9 +55,21 @@ class MovieRequest extends FormRequest
             "movie.hot" => "nullable|numeric",
             "genre_id" => "required",
             "movie.active" => "nullable|numeric",
-            'movie.release_date'=>'required',
-            'movie.premiere_date'=>'required|date|after_or_equal:today',
+            'movie.release_date' => 'required|date|before_or_equal:movie.premiere_date',
+            'movie.premiere_date' => 'required|date|after_or_equal:today',
+           
         ];
+        if ($this->isMethod('put')) {
+            $movie = Movie::find($id);
+            // kiểm tra nếu như ngày công chiếu mà thay đổi giá trị lúc cập nhật thì mới validate, còn không thay đổi thì thôi
+            if ($this->input('movie.premiere_date') !== $movie->premiere_date) {
+                $rules['movie.premiere_date'] = 'required|date|after_or_equal:today';
+            } else {
+                unset($rules['movie.premiere_date']);
+            }
+        }
+
+        return $rules;
     }
 
     public function messages()
@@ -84,6 +97,7 @@ class MovieRequest extends FormRequest
             "movie.hot.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.hot')]),
             "movie.active.numeric" =>  __('validation.numeric', ['attribute' => __('language.admin.active')]),
             "movie.release_date.required" => __('validation.required', ['attribute' => __('language.admin.movies.release_date')]),
+            'movie.release_date.before_or_equal' => 'Ngày phát hành phải bé hơn hoặc bằng ngày công chiếu!',
             "movie.premiere_date.required" => __('validation.required', ['attribute' => __('language.admin.movies.premiere_date')]),
             'movie.premiere_date.after_or_equal' => 'Ngày công chiếu phải lớn hơn hoặc bằng ngày hiện tại!',
         ];

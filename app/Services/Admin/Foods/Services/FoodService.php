@@ -19,7 +19,9 @@ class FoodService extends BaseService implements FoodServiceInterface
     {
         return FoodInterface::class;
     }
-
+    public function filter($request){
+        return $this->repository->filter($request);
+    }
     public function create(&$data)
     {
         if (isset($data['image']) && $data['image']) {

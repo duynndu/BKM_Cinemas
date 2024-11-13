@@ -10,6 +10,10 @@ class AreaService extends BaseService implements AreaServiceInterface
     {
         parent::__construct();
     }
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
     public function getRepository()
     {
         return AreaInterface::class;

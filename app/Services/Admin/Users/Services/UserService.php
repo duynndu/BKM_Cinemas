@@ -14,11 +14,13 @@ class UserService extends BaseService implements UserServiceInterface
 {
     use StorageImageTrait, RemoveImageTrait;
 
-   public function getRepository()
-   {
-       return UserInterface::class;
-   }
-
+    public function getRepository()
+    {
+        return UserInterface::class;
+    }
+    public function filter($request){
+        return $this->repository->filter($request);
+    }
     public function create(&$request)
     {
         $data = [

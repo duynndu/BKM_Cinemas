@@ -20,7 +20,10 @@ class CategoryPostService extends BaseService implements CategoryPostServiceInte
     {
         return CategoryPostInterface::class;
     }
-
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
     public function create(&$request)
     {
         $data = [

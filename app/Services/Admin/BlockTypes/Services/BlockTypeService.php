@@ -13,6 +13,11 @@ class BlockTypeService extends BaseService implements BlockTypeServiceInterface
         return BlockTypeInterface::class;
     }
 
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
+
     public function countBlockType()
     {
         return $this->repository->countBlockType();

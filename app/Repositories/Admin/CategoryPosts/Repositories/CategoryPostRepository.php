@@ -12,23 +12,23 @@ class CategoryPostRepository extends BaseRepository implements CategoryPostInter
         return \App\Models\CategoryPost::class;
     }
 
-    public function getAll()
+    public function filter($request)
     {
         $query = $this->model->newQuery();
-        $parentId = request()->parent_id ?? 0;
-        if (!empty(request()->name)) {
-            $query->where('name', 'like', '%' . request()->name . '%');
+        $parentId = $request->parent_id ?? 0;
+        if (!empty($request->name)) {
+            $query->where('name', 'like', '%' . $request->name . '%');
 
             $query->where('parent_id', $parentId)->orderBy('order');
 
             $data = $query->paginate(self::PAGINATION);
 
-            if (request()->name) {
-                $data = $data->appends('name', request()->name);
+            if ($request->name) {
+                $data = $data->appends('name', $request->name);
             }
 
-            if (request()->parent_id) {
-                $data = $data->appends('parent_id', request()->parent_id);
+            if ($request->parent_id) {
+                $data = $data->appends('parent_id', $request->parent_id);
             }
             return $data;
         }

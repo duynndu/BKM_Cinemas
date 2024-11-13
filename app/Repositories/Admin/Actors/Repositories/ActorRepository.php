@@ -11,21 +11,20 @@ class ActorRepository extends BaseRepository implements ActorInterface
         return \App\Models\Actor::class;
     }
 
-    public function getAll()
+    public function filter($request)
     {
         $data = $this->model->newQuery();
-        $data = $this->filterByName($data);
-        $data = $this->applyOrdering($data);
-        $data = $this->filterByNationality($data);
+        $data = $this->filterByName($data, $request);
+        $data = $this->applyOrdering($data, $request);
+        $data = $this->filterByNationality($data, $request);
         $data = $data->paginate(self::PAGINATION);
 
         return $data->appends([
-            'name' => request()->name,
-            'order_with' => request()->order_with,
-            'nationality' => request()->nationality,
+            'name' => $request->name,
+            'order_with' => $request->order_with,
+            'nationality' => $request->nationality,
         ]);
     }
-
 
     public function createMany($data, $role)
     {
@@ -68,10 +67,10 @@ class ActorRepository extends BaseRepository implements ActorInterface
         return $query;
     }
 
-    protected function applyOrdering($query)
+    protected function applyOrdering($query, $request)
     {
-        if (!empty(request()->order_with)) {
-            switch (request()->order_with) {
+        if (!empty($request->order_with)) {
+            switch ($request->order_with) {
                 case 'dateASC':
                     return $query->orderBy('created_at', 'asc');
                 case 'dateDESC':
@@ -85,10 +84,10 @@ class ActorRepository extends BaseRepository implements ActorInterface
         return $query;
     }
 
-    protected function filterByNationality($query)
+    protected function filterByNationality($query, $request)
     {
-        if (!empty(request()->nationality)) {
-            return $query->where('nationality', 'like', '%' . request()->nationality . '%');
+        if (!empty($request->nationality)) {
+            return $query->where('nationality', 'like', '%' . $request->nationality . '%');
         }
         return $query;
     }

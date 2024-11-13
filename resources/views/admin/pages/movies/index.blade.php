@@ -78,8 +78,8 @@
                                                         </option>
                                                         @if ($listGenre)
                                                             @foreach ($listGenre as $genre)
-                                                                <option
-                                                                    value="{{ $genre->id }}" @selected(in_array($genre->id, request()->genres ?? []))>
+                                                                <option value="{{ $genre->id }}"
+                                                                    @selected(in_array($genre->id, request()->genres ?? []))>
                                                                     {{ $genre->name }}
                                                                 </option>
                                                                 @if (count($genre->childrenRecursive) > 0)
@@ -89,7 +89,7 @@
                                                                             'children' =>
                                                                                 $genre->childrenRecursive,
                                                                             'depth' => 1,
-                                                                            'cateData' => $selectedGenre,
+                                                                            'cateData' => request()->genres,
                                                                         ]
                                                                     )
                                                                 @endif
@@ -308,9 +308,10 @@
                                                                                 aria-label="{{ __('language.admin.movies.close') }}"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <img style="height:300px"
-                                                                                src="{{ $movie->banner_movie ?? '' }}"
-                                                                                alt="">
+                                                                        
+                                                                                <img style="height:300px"
+                                                                                    src="{{ $movie->banner_movie ?? '' }}"
+                                                                                    alt="Banner"> 
                                                                             <p><strong>{{ __('language.admin.movies.description') }}
                                                                                     :
                                                                                 </strong>{{ $movie->description }}</p>
@@ -341,35 +342,40 @@
                                                                             <p> <strong>{{ __('language.admin.movies.Subtitles') }}
                                                                                     : </strong>
                                                                                 {{ $movie->language }}</p>
-
                                                                             <div class="actor-movie-detail">
                                                                                 <h4>{{ __('language.admin.movies.actor') }}
                                                                                 </h4>
-                                                                                <div class="list-actor_detail">
-                                                                                    <div class="swiper-container">
-                                                                                        <div class="swiper-wrapper">
+                                                                                @if ($movie->actors->isNotEmpty())
+                                                                                    <div class="list-actor_detail">
+                                                                                        <div class="swiper-container">
+                                                                                            <div class="swiper-wrapper">
 
-                                                                                            @if ($movie->actors->isNotEmpty())
+
                                                                                                 @foreach ($movie->actors as $actor)
                                                                                                     <div
-                                                                                                        class="swiper-slide">
-                                                                                                        <img src="{{ $actor->avatar  }}" alt="">
-                                                                                                        <p
-                                                                                                            style="font-weight: 500">
-                                                                                                            {{ $actor->name }}
+                                                                                                        class="swiper-slide actor-slide">
+                                                                                                        <img src="{{ $actor->image }}"
+                                                                                                            alt="">
+                                                                                                        <p>{{ $actor->name }}
                                                                                                         </p>
                                                                                                     </div>
                                                                                                 @endforeach
-                                                                                            @endif
-                                                                                            <div
-                                                                                                class="swiper-button-prev">
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="swiper-button-next">
+                                                                                                <div
+                                                                                                    class="swiper-button-prev">
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="swiper-button-next">
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
+                                                                                @else
+                                                                                    <div class="text-center">
+                                                                                        <h4 class="text-center">Chưa có dữ
+                                                                                            liệu</h4>
+
+                                                                                    </div>
+                                                                                @endif
 
                                                                             </div>
                                                                         </div>

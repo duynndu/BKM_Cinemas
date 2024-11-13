@@ -16,11 +16,18 @@ class ModuleRepository extends BaseRepository implements ModuleInterface
         return Module::class;
     }
 
-    public function getAll()
+    public function filter($request)
     {
-        return $this->model->with(['permissions'])
-            ->orderBy('id', 'DESC')
-            ->paginate(self::PAGINATION);
+        $data = $this->model->newQuery();
+        $data = $data->with('permissions');
+        if ($request->name) {
+            $data = $data->where('name', 'like', '%' . $request->name . '%');
+        }
+        $data = $data->paginate(self::PAGINATION);
+
+        return $data->appends([
+            'name' => $request->name,
+        ]);
     }
 
     public function createPermission($record, $data)

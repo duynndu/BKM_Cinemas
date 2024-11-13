@@ -12,26 +12,26 @@ class GenreRepository extends BaseRepository implements GenreInterface
         return \App\Models\Genre::class;
     }
 
-    public function getAll()
+    public function filter($request)
     {
         $query = $this->model->newQuery();
 
-        $parentId = request()->query('parent_id', 0);
+        $parentId = $request->query('parent_id', 0);
 
-        if (request()->has('name') && !is_null(request()->name)) {
+        if ($request->has('name') && !is_null($request->name)) {
 
-            $query->where('name', 'like', '%' . request()->name . '%');
+            $query->where('name', 'like', '%' . $request->name . '%');
 
             $query->where('parent_id', $parentId)->orderBy('order');
 
             $data = $query->paginate(self::PAGINATION);
 
-            if (request()->name) {
-                $data = $data->appends('name', request()->name);
+            if ($request->name) {
+                $data = $data->appends('name', $request->name);
             }
 
-            if (request()->parent_id) {
-                $data = $data->appends('parent_id', request()->parent_id);
+            if ($request->parent_id) {
+                $data = $data->appends('parent_id', $request->parent_id);
             }
             return $data;
         }
@@ -41,7 +41,9 @@ class GenreRepository extends BaseRepository implements GenreInterface
         $data = $query->withCount('childs')->paginate(self::PAGINATION);
 
         return $data;
+
     }
+
 
     public function delete($id)
     {

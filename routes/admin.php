@@ -424,7 +424,7 @@ Route::prefix('admin')->middleware(['web'])
 
                     Route::get('/create', 'create')
                         ->name('create');
-
+                        
                     Route::post('/store', 'store')
                         ->name('store');
 

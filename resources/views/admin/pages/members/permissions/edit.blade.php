@@ -29,7 +29,7 @@
                                     <div class="row mb-4">
                                         <div class="col-12">
                                             <label class="form-label mb-2">{{ __('language.admin.members.permissions.name') }}</label>
-                                            <input type="text" id="name" name="name" class="form-control"
+                                            <input type="text" id="name" name="permission[name]" class="form-control"
                                                    placeholder="{{ __('language.admin.members.permissions.inputName') }}" value="{{ old('permission.name', $data['permission']->name) }}">
                                             @error('permission.name')
                                             <div class="mt-2">

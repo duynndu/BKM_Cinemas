@@ -27,9 +27,9 @@ class ActorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->actorService->getAll();
+        $data = $this->actorService->filter($request);
         return view('admin.pages.actors.index', compact('data'));
     }
 

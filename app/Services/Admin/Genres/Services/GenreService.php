@@ -21,6 +21,10 @@ class GenreService extends BaseService implements GenreServiceInterface
         return GenreInterface::class;
     }
 
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
 
     public function create(&$request)
     {

@@ -17,10 +17,20 @@ class UserRepository extends BaseRepository implements UserInterface
         return User::class;
     }
 
-    public function getAll()
+    public function filter($request)
     {
-        return $this->model->select('id', 'name', 'first_name', 'last_name', 'email', 'image', 'role_id','status')
-            ->with(['role'])
-            ->paginate(self::PAGINATION);
+        $data = $this->model->newQuery();
+        $data = $data->select('id', 'name', 'first_name', 'last_name', 'email', 'image', 'role_id','status')->with('role');
+        if ($request->name) {
+            $data = $data->where(function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->name . '%')
+                      ->orWhere('email', 'like', '%' . $request->name . '%');
+            });
+        }
+        $data = $data->paginate(self::PAGINATION);
+
+        return $data->appends([
+            'name' => $request->name,
+        ]);
     }
 }

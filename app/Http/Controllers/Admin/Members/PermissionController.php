@@ -30,7 +30,7 @@ class PermissionController extends Controller
             'page' => $currentPage ?? null,
         ]);
 
-        $data['permissions'] = $this->permissionService->getAll();
+        $data['permissions'] = $this->permissionService->filter($request);
 
         return view('admin.pages.members.permissions.index', compact('data'));
     }

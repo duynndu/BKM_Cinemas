@@ -15,7 +15,9 @@ class FoodTypeService extends BaseService implements FoodTypeServiceInterFace
     {
         return FoodTypeInterface::class;
     }
-
+    public function filter($request){
+        return $this->repository->filter($request);
+    }
     public function deleteMultipleChecked($request)
     {
         if (count($request->selectedIds) < 0) {

@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Areas\AreaRequest;
 use App\Services\Admin\Areas\Interfaces\AreaServiceInterface;
 use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -21,9 +22,9 @@ class AreaController extends Controller
         $this->cityService = $cityService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $areas = $this->areaService->getAll();
+        $areas = $this->areaService->filter($request);
         $cities = $this->cityService->getAll();
 
         return view('admin.pages.areas.index', compact('areas', 'cities'));

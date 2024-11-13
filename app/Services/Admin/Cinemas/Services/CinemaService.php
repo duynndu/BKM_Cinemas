@@ -11,6 +11,10 @@ class CinemaService extends BaseService implements CinemaServiceInterface
     {
         return CinemaInterface::class;
     }
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
 
     public function create(&$data)
     {
