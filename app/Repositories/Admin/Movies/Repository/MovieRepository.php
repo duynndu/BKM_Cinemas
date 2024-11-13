@@ -13,22 +13,22 @@ class MovieRepository extends BaseRepository implements MovieInterface
     {
         return Movie::class;
     }
-    public function getAll()
+
+    public function filter($request)
     {
         $data = $this->model->newQuery();
-        $data = $this->filterByTitle($data);
-        $data = $this->filterByStatus($data);
-        $data = $this->applyOrdering($data);
-        $data = $this->filterByGenres($data);
+        $data = $this->filterByTitle($data, $request);
+        $data = $this->filterByStatus($data, $request);
+        $data = $this->applyOrdering($data, $request);
+        $data = $this->filterByGenres($data, $request);
 
         $data = $data->paginate(self::PAGINATION);
         return $data->appends([
-            'title' => request()->title,
-            'order_with' => request()->order_with,
-            'genres' => request()->genres,
-            'fill_action' => request()->fill_action
+            'title' => $request->title,
+            'order_with' => $request->order_with,
+            'genres' => $request->genres,
+            'fill_action' => $request->fill_action
         ]);
-
     }
 
     public function find($id)
@@ -127,17 +127,17 @@ class MovieRepository extends BaseRepository implements MovieInterface
         });
         return true;
     }
-    private function filterByTitle($query)
+    private function filterByTitle($query, $request)
     {
-        if (!empty(request()->title)) {
-            return $query->where('title', 'like', '%' . request()->title . '%');
+        if (!empty($request->title)) {
+            return $query->where('title', 'like', '%' . $request->title . '%');
         }
         return $query;
     }
 
-    private function filterByGenres($query)
+    private function filterByGenres($query, $request)
     {
-        $genres = request()->genres;
+        $genres = $request->genres;
         if (!empty($genres)) {
             return $query->whereHas('movieGenre', function ($q) use ($genres) {
                 $q->whereIn('id', $genres);
@@ -146,10 +146,10 @@ class MovieRepository extends BaseRepository implements MovieInterface
         return $query;
     }
 
-    private function filterByStatus($query)
+    private function filterByStatus($query, $request)
     {
-        if (!empty(request()->fill_action)) {
-            switch (request()->fill_action) {
+        if (!empty($request->fill_action)) {
+            switch ($request->fill_action) {
                 case 'active':
                     return $query->where('active', 1);
                 case 'noActive':
@@ -163,10 +163,10 @@ class MovieRepository extends BaseRepository implements MovieInterface
         return $query;
     }
 
-    private function applyOrdering($query)
+    private function applyOrdering($query, $request)
     {
-        if (!empty(request()->order_with)) {
-            switch (request()->order_with) {
+        if (!empty($request->order_with)) {
+            switch ($request->order_with) {
                 case 'postedDateASC':
                     return $query->orderBy('created_at', 'asc');
                 case 'postedDateDESC':

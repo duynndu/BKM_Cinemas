@@ -17,7 +17,10 @@ class BlockService extends BaseService implements BlockServiceInterface
     {
         return $this->repository->countBlock();
     }
-
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
     public function create(&$data)
     {
         $block = $this->repository->create($data);

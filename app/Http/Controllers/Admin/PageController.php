@@ -32,7 +32,7 @@ class PageController extends Controller
 
         $countPage = $this->pageService->countPage();
 
-        $pages = $this->pageService->getAll();
+        $pages = $this->pageService->filter($request);
 
         return view('admin.pages.pages.index', compact('pages', 'countPage'));
     }

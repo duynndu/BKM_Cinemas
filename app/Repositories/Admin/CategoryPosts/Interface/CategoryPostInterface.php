@@ -8,8 +8,7 @@ interface CategoryPostInterface extends RepositoryInterface
 {
     public function getListCategoryPost();
     public function getListCategoryPostEdit($id);
-    public function getAll();
-    public function delete($id);
+    public function filter($request);
     public function checkPosition($positionValue);
     public function changeOrder($id, $order);
 }

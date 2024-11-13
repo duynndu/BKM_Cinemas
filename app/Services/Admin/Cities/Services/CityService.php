@@ -11,6 +11,11 @@ class CityService extends BaseService implements CityServiceInterface
         parent::__construct();
     }
 
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
+
     public function getRepository()
     {
         return CityInterface::class;

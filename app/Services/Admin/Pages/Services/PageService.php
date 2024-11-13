@@ -13,6 +13,11 @@ class PageService extends BaseService implements PageServiceInterface
     {
         return PageInterface::class;
     }
+    
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
 
     public function countPage()
     {

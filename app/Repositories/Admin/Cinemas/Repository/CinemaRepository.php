@@ -11,18 +11,18 @@ class CinemaRepository extends BaseRepository implements CinemaInterface
         return \App\Models\Cinema::class;
     }
 
-    public function getAll()
+    public function filter($request)
     {
         $data = $this->model->newQuery();
-        $data = $this->filterByName($data);
-        $data = $this->filterByArea($data);
-        $data = $this->applyOrdering($data);
+        $data = $this->filterByName($data, $request);
+        $data = $this->filterByArea($data, $request);
+        $data = $this->applyOrdering($data, $request);
         $data = $data->with('area')->paginate(self::PAGINATION);
 
         return $data->appends([
-            'name' => request()->name,
-            'order_with' => request()->order_with,
-            'area_id' => request()->area_id,
+            'name' => $request->name,
+            'order_with' => $request->order_with,
+            'area_id' => $request->area_id,
         ]);
     }
 
@@ -38,26 +38,26 @@ class CinemaRepository extends BaseRepository implements CinemaInterface
         return true;
     }
 
-    private function filterByName($query)
+    private function filterByName($query, $request)
     {
-        if (!empty(request()->name)) {
-            return $query->where('name', 'like', '%' . request()->name . '%');
+        if (!empty($request->name)) {
+            return $query->where('name', 'like', '%' . $request->name . '%');
         }
         return $query;
     }
 
-    private function filterByArea($query)
+    private function filterByArea($query, $request)
     {
-        if (!empty(request()->area_id)) {
-            return $query->where('area_id', request()->area_id);
+        if (!empty($request->area_id)) {
+            return $query->where('area_id', $request->area_id);
         }
         return $query;
     }
 
-    private function applyOrdering($query)
+    private function applyOrdering($query, $request)
     {
-        if (!empty(request()->order_with)) {
-            switch (request()->order_with) {
+        if (!empty($request->order_with)) {
+            switch ($request->order_with) {
                 case 'dateASC':
                     return $query->orderBy('created_at', 'asc');
                 case 'dateDESC':

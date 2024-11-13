@@ -32,11 +32,11 @@ class PostController extends Controller
         $this->categoryPostService = $categoryPostService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $listCategoryPost = $this->categoryPostService->getAll();
 
-        $results = $this->postService->getAll();
+        $results = $this->postService->filter($request);
 
         return view('admin.pages.posts.index', [
             'data' => $results['data'],

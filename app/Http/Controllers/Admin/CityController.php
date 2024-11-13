@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cities\CityRequest;
 use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -19,9 +20,9 @@ class CityController extends Controller
         $this->cityService =  $cityService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $cities = $this->cityService->getAll();
+        $cities = $this->cityService->filter($request);
         return view('admin.pages.cities.index', compact('cities'));
     }
 

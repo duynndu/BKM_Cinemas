@@ -10,38 +10,37 @@ class PaymentRepository extends BaseRepository implements PaymentInterface
 {
     public function getModel()
     {
-        return \App\Models\Payment::class;
+        return Payment::class;
     }
 
-    public function getAll()
+    public function filter($request)
     {
         $data = $this->model->newQuery();
 
-        $data = $this->filterByName($data);
+        $data = $this->filterByName($data, $request);
 
-        $data = $this->filterByStatus($data);
+        $data = $this->filterByStatus($data, $request);
 
         $data = $data->paginate(self::PAGINATION);
 
         return $data->appends([
-            'name' => request()->payment_name,
-            'fill_action' => request()->fill_action,
+            'name' => $request->payment_name,
+            'fill_action' => $request->fill_action,
         ]);
-
     }
 
-    protected function filterByName($query)
+    protected function filterByName($query, $request)
     {
-        if (!empty(request()->payment_name)) {
-            return $query->where('name', 'like', '%' . request()->payment_name . '%');
+        if (!empty($request->payment_name)) {
+            return $query->where('name', 'like', '%' . $request->payment_name . '%');
         }
         return $query;
     }
 
-    protected function filterByStatus($query)
+    protected function filterByStatus($query, $request)
     {
-        if (!empty(request()->fill_action)) {
-            switch (request()->fill_action) {
+        if (!empty($request->fill_action)) {
+            switch ($request->fill_action) {
                 case 'active':
                     return $query->where('active', 1);
                 case 'noActive':

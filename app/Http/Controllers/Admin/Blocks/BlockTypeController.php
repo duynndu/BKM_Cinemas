@@ -30,7 +30,7 @@ class BlockTypeController extends Controller
 
         $pages = $this->pageService->getAllActive();
 
-        $blockTypes = $this->blockTypeService->getAll();
+        $blockTypes = $this->blockTypeService->filter($request);
 
         return view('admin.pages.blockTypes.index', compact(
                 'pages',
