@@ -39,12 +39,12 @@ class BlockRepository extends BaseRepository implements BlockInterface
         return $count;
     }
 
-    public function getAll()
+    public function filter($request)
     {
         $blocks = $this->model->newQuery();
 
-        if (!empty(request()->name)) {
-            $blocks = $blocks->where('name', 'like', '%' . request()->name . '%');
+        if (!empty($request->name)) {
+            $blocks = $blocks->where('name', 'like', '%' . $request->name . '%');
         }
         $blocks = $blocks->orderBy('order');
         $blocks = $blocks->paginate(self::PAGINATION);

@@ -38,7 +38,7 @@ class GenreController extends Controller
             'parent_id' => $parentId ?? null
         ]);
 
-        $data = $this->genreService->getAll();
+        $data = $this->genreService->filter($request);
 
         return view('admin.pages.genres.index', compact('data'));
     }

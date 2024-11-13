@@ -18,6 +18,10 @@ class ActorService extends BaseService implements ActorServiceInterface
     {
         return ActorInterface::class;
     }
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
 
     public function create(&$data)
     {

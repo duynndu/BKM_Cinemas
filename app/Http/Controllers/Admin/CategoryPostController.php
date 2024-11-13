@@ -37,7 +37,7 @@ class CategoryPostController extends Controller
             'parent_id' => $parentId ?? null
         ]);
 
-        $data = $this->categoryPostService->getAll();
+        $data = $this->categoryPostService->filter($request);
 
 
         return view('admin.pages.categoryPosts.index', compact('data'));

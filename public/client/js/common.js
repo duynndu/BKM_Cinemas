@@ -48,7 +48,10 @@ $(function() {
         autoplayTimeout: 5000,
         autoplayHoverPause: true,
         loop: true,
-        responsive: { 0: { items: 2, } },
+        responsive: {
+            0: { items: 4, }, 420: { items: 2, }, 620: { items: 3, },
+            768: { items: 3, }, 980: { items: 3 }, 1010: { items: 3 }, 1100: { items: 4 }
+        },
         nav: true,
         dots: false
     });

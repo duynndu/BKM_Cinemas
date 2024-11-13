@@ -7,5 +7,5 @@ interface BlockTypeServiceInterface extends BaseServiceInterface
 {
     public function countBlockType();
     public function getAllActive();
-
+    public function filter($request);
 }

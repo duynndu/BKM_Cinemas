@@ -18,12 +18,12 @@ class BlockTypeRepository extends BaseRepository implements BlockTypeInterface
         return $this->model->count();
     }
 
-    public function getAll()
+    public function filter($request)
     {
         $blockTypes = $this->model->orderBy('order');
 
-        if(request()->name) {
-            $blockTypes = $blockTypes->where('name', 'like', '%' . request()->name . '%');
+        if($request->name) {
+            $blockTypes = $blockTypes->where('name', 'like', '%' . $request->name . '%');
         }
 
         $blockTypes = $blockTypes->paginate(self::PAGINATION);

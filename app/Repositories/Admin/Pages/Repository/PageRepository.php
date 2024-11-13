@@ -17,12 +17,12 @@ class PageRepository extends BaseRepository implements PageInterface
         return $this->model->count();
     }
 
-    public function getAll()
+    public function filter($request)
     {
         $pages = $this->model->orderBy('order');
 
-        if (request()->name) {
-            $pages = $pages->where('name', 'like', '%' . request()->name . '%');
+        if ($request->name) {
+            $pages = $pages->where('name', 'like', '%' . $request->name . '%');
         }
 
         $pages = $pages->paginate(self::PAGINATION);
