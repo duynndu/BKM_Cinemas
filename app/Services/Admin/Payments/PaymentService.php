@@ -1,6 +1,6 @@
 <?php
 namespace App\Services\Admin\Payments;
-use App\Repositories\Admin\Payments\Interface\PaymentInterface;
+use App\Repositories\Admin\Payments\Interfaces\PaymentInterface;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,7 +24,7 @@ class PaymentService {
 
     public function store(&$data)
     {
-        
+
         if (isset($data['image']) && $data['image']) {
             $uploadData = $this->uploadFile($data['image'], 'public/payments');
             $data['image'] = $uploadData['path'];

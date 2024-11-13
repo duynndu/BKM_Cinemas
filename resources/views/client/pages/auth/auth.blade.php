@@ -95,7 +95,7 @@
                                 <div class="row flex">
                                     <div class="col-md-8 col-sm-6">
                                         <div>
-                                            <form data-image="{{ asset('client/images/register_success.jpg') }}" role="form"
+                                            <form data-image="{{ asset('client/images/register_success.png') }}" role="form"
                                                 method="POST" class="form-register" action="{{ route('register') }}">
                                                 @csrf
 
@@ -206,8 +206,8 @@
                                                                 style="color: red;">*</span></label>
                                                         <select name="city_id" id="city" class="select2 w-100">
                                                             <option value="">Chọn thành phố</option>
-                                                            @if (!empty($cities))
-                                                                @foreach ($cities as $city)
+                                                            @if (!empty($data['cities']))
+                                                                @foreach ($data['cities'] as $city)
                                                                     <option value="{{ $city->id }}">{{ $city->name }}
                                                                     </option>
                                                                 @endforeach
@@ -292,9 +292,9 @@
                                 <div class="box-body">
                                     <div class="account-group">
                                         <div class="avatar" id="current-avatar">
-                                            <img src="https://lh3.googleusercontent.com/a/ACg8ocJAvH10FCuGdV1qa00xLUfc1gRaHRZTWYXe7SuoAb4ihOfbAdg=s96-c"
-                                                alt="tranvietanhph39998" class="img-responsive img-circle">
-                                            <a href="javascript:;" id="change-avatar">Đổi ảnh đại diện</a>
+                                            <img src="{{ !empty(Auth::user()->image) ? Auth::user()->image : asset('client/images/1.jpg') }}"
+                                                alt="tranvietanhph39998" class="img-responsive img-circle img-member">
+                                            <a href="javascript:;" data-modal="#modalAvatarImage" class="open-modal">Đổi ảnh đại diện</a>
                                         </div>
                                         <div class="account-info">
                                             <p style="color: #dc0000;font-weight: normal;">Bạn cần xác thực số điện thoại để
@@ -341,13 +341,51 @@
                                 </div>
                                 <div class="box-body" style="border-top: none">
                                     <h3>Giao dịch gần nhất</h3>
-                                    <div class="clearfix"></div>
-                                    <div class="alert alert-danger">
-                                        <button type="button" class="close" data-dismiss="alert"
-                                            aria-hidden="true">×</button>
-                                        Chưa có giao dịch nào
-                                    </div>
+                                    @if ($data['transactions']->isNotEmpty())
+                                        <div class="transaction-main">
+                                            @php
+                                                $lastDate = null;
+                                            @endphp
+                                            @foreach($data['transactions'] as $key => $transaction)
+                                                @php
+                                                    $transactionDate = date('d/m/Y', strtotime($transaction->created_at));
+                                                @endphp
+                                                <div class="border-box">
+                                                    @if ($transactionDate != $lastDate)
+                                                        <div class="transaction-date">
+                                                            {{ $transactionDate }}
+                                                        </div>
+                                                        @php
+                                                            $lastDate = $transactionDate;
+                                                        @endphp
+                                                    @endif
+                                                    <div class="transaction-list" style="border-bottom: {{ $loop->last ? '1px solid #91b5d7' : 'none' }}">
+                                                        <div class="transaction-content">
+                                                            <h4>Thông báo giao dịch</h4>
+                                                            <ul>
+                                                                <li>{{ !empty($transaction->description) ? $transaction->description : '' }}</li>
+                                                                <li>
+                                                                    Giao dịch:
+                                                                    @if($transaction->status == 'completed')
+                                                                        +
+                                                                    @endif
+                                                                    {{ number_format($transaction->amount, 0, '.', ',') }} VND |
+                                                                    {{ date('d/m/Y H:i:s', strtotime($transaction->created_at)) }} |
+                                                                    Số dư: {{ number_format($transaction->balance_after, 0, '.', ',') }} VND
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div class="alert alert-info">
+                                            Chưa có giao dịch nào
+                                        </div>
+                                    @endif
                                 </div>
+
                             </div>
                         </div>
 
@@ -474,13 +512,13 @@
         <div class="custom-modal-content">
             <span class="custom-close">&times;</span>
             <div class="d-flex flex-column justify-content-center">
-                <h3 class="title-payment">Nạp tiền vào tài khoản</h3>
+                <h3 class="title-payment">Nạp tiền vào ví thành viên</h3>
                 <div class="content-p">
-                    <p>Để nạp tiền vào tài khoản thành viên BKM Cinemas.</p>
+                    <p>Để nạp tiền vào ví thành viên BKM Cinemas.</p>
                     <p>Quý khách vui lòng chọn phương thức thanh toán và nhập số tiền cần nạp.</p>
                 </div>
             </div>
-            <form data-error="{{ asset('client/images/error-image.png') }}" action="{{ route('processDeposit') }}"
+            <form data-error="{{ asset('client/images/error.png') }}" action="{{ route('processDeposit') }}"
                 id="depositForm" method="post">
                 @csrf
                 <div class="main-modal">
@@ -516,13 +554,10 @@
                                                     <div
                                                         class="input-group-wrap input-default input-size-default input-group-vertical">
                                                         <label class="input-inner-wrap">
-                                                            <input type="text"
+                                                            <input type="number"
                                                                 class="input input-label-change input-has-clear"
                                                                 placeholder="Nhập số tiền cần nạp..." name="amount[vnpay]"
                                                                 autocorrect="off" id="searchPayMethod2">
-                                                            <div class="input-extend input-extend-right">
-                                                                <div class="input-box input-ic-clear"></div>
-                                                            </div>
                                                             <div class="input-frame"></div>
                                                         </label>
                                                     </div>
@@ -565,13 +600,10 @@
                                                     <div
                                                         class="input-group-wrap input-default input-size-default input-group-vertical">
                                                         <label class="input-inner-wrap">
-                                                            <input type="text"
+                                                            <input type="number"
                                                                 class="input input-label-change input-has-clear"
                                                                 placeholder="Nhập số tiền cần nạp..." name="amount[momo]"
                                                                 autocorrect="off" id="searchPayMethod2">
-                                                            <div class="input-extend input-extend-right">
-                                                                <div class="input-box input-ic-clear"></div>
-                                                            </div>
                                                             <div class="input-frame"></div>
                                                         </label>
                                                     </div>
@@ -615,14 +647,11 @@
                                                     <div
                                                         class="input-group-wrap input-default input-size-default input-group-vertical">
                                                         <label class="input-inner-wrap">
-                                                            <input type="text"
+                                                            <input type="number"
                                                                 class="input input-label-change input-has-clear"
                                                                 placeholder="Nhập số tiền cần nạp..."
                                                                 name="amount[zalopay]" autocorrect="off"
                                                                 id="searchPayMethod2">
-                                                            <div class="input-extend input-extend-right">
-                                                                <div class="input-box input-ic-clear"></div>
-                                                            </div>
                                                             <div class="input-frame"></div>
                                                         </label>
                                                     </div>
@@ -657,33 +686,41 @@
             </div>
         </div>
     </div>
+
+    <div id="modalAvatarImage" style="height: 100%;" class="custom-modal">
+        <div class="custom-modal-content">
+            <span class="custom-close">&times;</span>
+            <div class="d-flex flex-column justify-content-center">
+                <h3 class="title-payment">Chọn ảnh đại diện</h3>
+            </div>
+            <form
+                data-error="{{ asset('client/images/error.png') }}"
+                data-image="{{ asset('client/images/1.jpg') }}"
+                data-success="{{ asset('client/images/success.png') }}"
+                action="{{ route('updateAvatar') }}"
+                id="updateAvatarForm" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="main-modal" style="margin-top: 33px;">
+                    <div class="body_modal_image">
+                        <div class="">
+                            <input type="hidden" name="image" id="avatar" value="">
+                            <label class="input-inner-wrap-image">
+                                <input type="file" class="" name="user[image]" accept=".jpg, .jpeg, .png, .webp" id="avatarInput">
+                                <div class="input-extend input-extend-right">
+                                    <div class="input-box-image input-ic-clear"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="submit-modal">Lưu</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @section('js')
     <script src="{{ asset('js/client/auth/auth.js') }}"></script>
-    @if (session()->has('transaction_succeed'))
-        <script>
-            Swal.fire({
-                imageUrl: '{{ asset("client/images/success.png") }}',
-                imageWidth: 100,
-                imageHeight: 100,
-                title: 'Nạp tiền thành công',
-                text: 'Chúc mừng bạn đã nạp thành công số tiền: '  + '{{ number_format(session()->get("amount"), 0, ',', '.') }}' + ' VND',
-                showConfirmButton: true,
-                width: "400px",
-            });
-        </script>
-    @endif
-    @if (session()->has('transaction_failed'))
-        <script>
-            Swal.fire({
-                imageUrl: '{{ asset("client/images/error-image.png") }}',
-                imageWidth: 100,
-                imageHeight: 100,
-                title: 'Giao dịch của bạn đã bị hủy!',
-                showConfirmButton: true,
-                width: "400px",
-            });
-        </script>
-    @endif
 @endsection

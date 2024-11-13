@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\PaymentRequest;
 use App\Models\Payment;
-use App\Repositories\Admin\Payments\Interface\PaymentInterface;
+use App\Repositories\Admin\Payments\Interfaces\PaymentInterface;
 use App\Services\Admin\Payments\PaymentService;
 use Illuminate\Http\Request;
 use App\Traits\RemoveImageTrait;

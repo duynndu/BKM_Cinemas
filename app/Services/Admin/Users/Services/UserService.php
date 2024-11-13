@@ -2,8 +2,8 @@
 
 namespace App\Services\Admin\Users\Services;
 
-use App\Repositories\Admin\Users\Interface\UserInterface;
-use App\Repositories\Admin\Users\Repository\UserRepository;
+use App\Repositories\Admin\Users\Interfaces\UserInterface;
+use App\Repositories\Admin\Users\Repositories\UserRepository;
 use App\Services\Admin\Users\Interfaces\UserServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\RemoveImageTrait;

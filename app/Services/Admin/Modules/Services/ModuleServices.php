@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Modules\Services;
 
-use App\Repositories\Admin\Modules\Interface\ModuleInterface;
+use App\Repositories\Admin\Modules\Interfaces\ModuleInterface;
 use App\Services\Admin\Modules\Interfaces\ModuleServiceInterface;
 use App\Services\Base\BaseService;
 

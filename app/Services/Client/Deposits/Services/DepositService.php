@@ -2,7 +2,7 @@
 
 namespace App\Services\Client\Deposits\Services;
 
-use App\Repositories\Client\Deposits\Interface\DepositInterface;
+use App\Repositories\Client\Deposits\Interfaces\DepositInterface;
 use App\Services\Base\BaseService;
 use App\Services\Client\Deposits\Interfaces\DepositServiceInterface;
 
@@ -21,11 +21,11 @@ class DepositService extends BaseService implements DepositServiceInterface
         }
 
         if (isset($data['vnp_Amount'])) {
-            $dataNew['balance'] = ($data['vnp_Amount'] / 100) + $record->balance;
+            $dataNew['balance'] = $data['vnp_Amount'] + $record->balance;
         }
 
-        if (isset($data['zaloPay_Amount'])) {
-            $dataNew['balance'] = $data['zaloPay_Amount'] + $record->balance;
+        if (isset($data['momo_Amount'])) {
+            $dataNew['balance'] = $data['momo_Amount'] + $record->balance;
         }
 
         if (isset($data['zaloPay_Amount'])) {

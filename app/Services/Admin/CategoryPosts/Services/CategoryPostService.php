@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\CategoryPosts\Services;
 
-use App\Repositories\Admin\CategoryPosts\Interface\CategoryPostInterface;
+use App\Repositories\Admin\CategoryPosts\Interfaces\CategoryPostInterface;
 use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;

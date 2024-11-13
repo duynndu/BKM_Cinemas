@@ -2,8 +2,8 @@
 
 namespace App\Services\Client\Cities\Services;
 
-use App\Repositories\Client\Cities\Interface\CityInterface;
-use App\Repositories\Client\Cities\Repository\CityRepository;
+use App\Repositories\Client\Cities\Interfaces\CityInterface;
+use App\Repositories\Client\Cities\Repositories\CityRepository;
 use App\Services\Base\BaseService;
 use App\Services\Client\Cities\Interfaces\CityServiceInterface;
 

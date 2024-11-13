@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Menus\Services;
 
-use App\Repositories\Admin\Menus\Interface\MenuInterface;
+use App\Repositories\Admin\Menus\Interfaces\MenuInterface;
 use App\Services\Admin\Menus\Interfaces\MenuServiceInterface;
 use App\Services\Base\BaseService;
 

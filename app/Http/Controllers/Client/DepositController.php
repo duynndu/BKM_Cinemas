@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Events\Client\DepositSucceeded;
 use App\Http\Controllers\Controller;
 use App\Services\Client\Deposits\Interfaces\DepositServiceInterface;
+use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,11 +15,15 @@ class DepositController extends Controller
 {
     protected $depositService;
 
+    protected $transactionService;
+
     public function __construct(
-        DepositServiceInterface $depositService
-    )
-    {
+        DepositServiceInterface     $depositService,
+        TransactionServiceInterface $transactionService
+    ) {
         $this->depositService = $depositService;
+
+        $this->transactionService = $transactionService;
     }
 
     public function generateRandomOrderCode($length = 8)
@@ -59,7 +65,7 @@ class DepositController extends Controller
         $vnp_Returnurl = route('vnpayReturn');
 
         $vnp_TxnRef = $orderCode;
-        $vnp_OrderInfo = "Nạp tiền vào tài khoản thành viên - BKM Cinemas";
+        $vnp_OrderInfo = "Nạp tiền vào ví thành viên - BKM Cinemas";
         $vnp_OrderType = "billpayment";
         $vnp_Amount = $amount * 100;
         $vnp_Locale = "vn";
@@ -130,11 +136,32 @@ class DepositController extends Controller
             DB::beginTransaction();
             try {
                 if ($vnp_ResponseCode == '00') {
+
+                    if (!Auth::check()) {
+                        return redirect()->route('account')->with('status_failed', 0);
+                    }
+
                     $data = [
                         'vnp_Amount' => $inputData['vnp_Amount'] / 100
                     ];
 
+                    // update ví tiền
                     $this->depositService->update($data, Auth::user()->id);
+
+                    $dataTransaction = [
+                        'user_id' => Auth::user()->id,
+                        'payment_method' => 'vnpay',
+                        'amount' => $inputData['vnp_Amount'] / 100,
+                        'type' => 'deposit',
+                        'description' => 'Nạp tiền vào ví thành viên - BKM Cinemas',
+                        'balance_after' => ($inputData['vnp_Amount'] / 100) + Auth::user()->balance,
+                        'status' => 'completed'
+                    ];
+
+                    // thêm lịch sử giao dịch
+                    $this->transactionService->create($dataTransaction);
+
+                    DepositSucceeded::dispatch(Auth::user(), $inputData['vnp_Amount'] / 100, 'vnpay');
 
                     DB::commit();
 
@@ -143,13 +170,41 @@ class DepositController extends Controller
                         'amount' => $inputData['vnp_Amount'] / 100
                     ]);
                 } else {
+                    // Giao dịch bị hủy
+                    $dataTransaction = [
+                        'user_id' => Auth::user()->id,
+                        'payment_method' => 'vnpay',
+                        'amount' => $inputData['vnp_Amount'] / 100,
+                        'type' => 'deposit',
+                        'description' => 'Giao dịch bị hủy - Nạp tiền vào ví thành viên',
+                        'balance_after' => Auth::user()->balance,
+                        'status' => 'cancelled'
+                    ];
+
+                    $this->transactionService->create($dataTransaction);
+
                     DB::commit();
+
                     return redirect()->route('account')->with([
-                        'transaction_failed' => false
+                        'transaction_failed' => 0
                     ]);
                 }
             } catch (\Exception $e) {
+                // Lỗi giao dịch
+                $dataTransaction = [
+                    'user_id' => Auth::user()->id,
+                    'payment_method' => 'vnpay',
+                    'amount' => $inputData['vnp_Amount'] / 100,
+                    'type' => 'deposit',
+                    'description' => 'Lỗi giao dịch - Nạp tiền vào ví thành viên',
+                    'balance_after' => Auth::user()->balance,
+                    'status' => 'failed'
+                ];
+
+                $this->transactionService->create($dataTransaction);
+
                 DB::rollBack();
+
                 return response()->json([
                     'error' => $e->getMessage(),
                     'status' => 'error'
@@ -175,7 +230,7 @@ class DepositController extends Controller
         $notifyUrl = $momoConfig['momo_notify_url'];
         $returnUrl = route('momoReturn');
 
-        $orderInfo = "Nạp tiền vào tài khoản thành viên - BKM Cinemas";
+        $orderInfo = "Nạp tiền vào ví thành viên - BKM Cinemas";
         $requestId = time() . "";
         $requestType = "payWithMoMoATM";
         $extraData = "";
@@ -218,11 +273,32 @@ class DepositController extends Controller
             DB::beginTransaction();
             try {
                 if ($request->errorCode == '0') {
+
+                    if (!Auth::check()) {
+                        return redirect()->route('account')->with('status_failed', 0);
+                    }
+
                     $data = [
-                        'zaloPay_Amount' => $request->amount
+                        'momo_Amount' => $request->amount
                     ];
 
+                    // Update số dư ví tiền
                     $this->depositService->update($data, Auth::user()->id);
+
+                    $dataTransaction = [
+                        'user_id' => Auth::user()->id,
+                        'payment_method' => 'momo',
+                        'amount' => $request->amount,
+                        'type' => 'deposit',
+                        'description' => 'Nạp tiền vào ví thành viên - BKM Cinemas',
+                        'balance_after' => $request->amount + Auth::user()->balance,
+                        'status' => 'completed'
+                    ];
+
+                    // thêm lịch sử giao dịch
+                    $this->transactionService->create($dataTransaction);
+
+                    DepositSucceeded::dispatch(Auth::user(), $request->amount, 'momo');
 
                     DB::commit();
 
@@ -231,14 +307,39 @@ class DepositController extends Controller
                         'amount' => $request->amount
                     ]);
                 } else {
+                    // Lỗi giao dịch
+                    $dataTransaction = [
+                        'user_id' => Auth::user()->id,
+                        'payment_method' => 'momo',
+                        'amount' => $request->amount,
+                        'type' => 'deposit',
+                        'description' => 'Giao dịch bị hủy - Nạp tiền vào ví thành viên',
+                        'balance_after' => Auth::user()->balance,
+                        'status' => 'cancelled'
+                    ];
+
+                    $this->transactionService->create($dataTransaction);
+
                     DB::commit();
-                    
+
                     return redirect()->route('account')->with([
-                        'transaction_failed' => false
+                        'transaction_failed' => 0
                     ]);
                 }
             } catch (\Exception $e) {
+                // Lỗi giao dịch, cập nhật trạng thái giao dịch
+                $dataTransaction = [
+                    'user_id' => Auth::user()->id,
+                    'payment_method' => 'momo',
+                    'amount' => $request->amount,
+                    'type' => 'deposit',
+                    'description' => 'Lỗi giao dịch - Nạp tiền vào ví thành viên',
+                    'balance_after' => Auth::user()->balance,
+                    'status' => 'failed'
+                ];
+
                 DB::rollBack();
+
                 return response()->json([
                     'error' => $e->getMessage(),
                     'status' => 'error'
@@ -263,7 +364,7 @@ class DepositController extends Controller
         $app_trans_id = date("ymd") . "_" . uniqid();
         $app_user = 'demo';
         $bank_code = '';
-        $description = "Nạp tiền vào tài khoản - BKM Cinemas";
+        $description = "Nạp tiền vào ví thành viên - BKM Cinemas";
         $embed_data = json_encode(['redirecturl' => route('zaloPayReturn')]);
         $item = json_encode([["itemid" => "knb", "itemname" => "kim nguyen bao", "itemprice" => 198400, "itemquantity" => 1]]);
 
@@ -280,12 +381,12 @@ class DepositController extends Controller
         ];
 
         $dataValue = $data['app_id'] . '|' .
-            $data['app_trans_id'] . '|' .
-            $data['app_user'] . '|' .
-            $data['amount'] . '|' .
-            $data['app_time'] . '|' .
-            $data['embed_data'] . '|' .
-            $data['item'];
+        $data['app_trans_id'] . '|' .
+        $data['app_user'] . '|' .
+        $data['amount'] . '|' .
+        $data['app_time'] . '|' .
+        $data['embed_data'] . '|' .
+        $data['item'];
 
         $data['mac'] = hash_hmac('sha256', $dataValue, $config['zalopay_Key1']);
 
@@ -318,23 +419,77 @@ class DepositController extends Controller
             // Bắt đầu giao dịch
             DB::beginTransaction();
             try {
-                dd('Nạp tiền thành công');
+                if (!Auth::check()) {
+                    return redirect()->route('account')->with('status_failed', 0);
+                }
+
+                $data = [
+                    'zaloPay_Amount' => $amount
+                ];
+
+                // update số dư ví tiền
+                $this->depositService->update($data, Auth::user()->id);
+
+                $dataTransaction = [
+                    'user_id' => Auth::user()->id,
+                    'payment_method' => 'zalopay',
+                    'amount' => $amount,
+                    'type' => 'deposit',
+                    'description' => 'Nạp tiền vào ví thành viên - BKM Cinemas',
+                    'balance_after' => $amount + Auth::user()->balance,
+                    'status' => 'completed'
+                ];
+
+                // thêm lịch sử giao dịch
+                $this->transactionService->create($dataTransaction);
+
+                DepositSucceeded::dispatch(Auth::user(), $amount, 'zalopay');
 
                 // Commit giao dịch
                 DB::commit();
 
-                // Trả về phản hồi thành công
-                return response()->json(['message' => 'Đăng ký thành công!'], 200);
+                return redirect()->route('account')->with([
+                    'transaction_succeed' => true,
+                    'amount' => $request->amount
+                ]);
             } catch (\Exception $e) {
+                // Giao dịch thất bại, cập nhật trạng thái giao dịch
+                $dataTransaction = [
+                    'user_id' => Auth::user()->id,
+                    'payment_method' => 'zalopay',
+                    'amount' => $amount,
+                    'type' => 'deposit',
+                    'description' => 'Lỗi giao dịch - Nạp tiền vào ví thành viên',
+                    'balance_after' => Auth::user()->balance,
+                    'status' => 'failed'
+                ];
+
+                $this->transactionService->create($dataTransaction);
+
                 // Rollback giao dịch nếu có lỗi
                 DB::rollback();
 
-                // Trả về phản hồi lỗi
-                return response()->json(['message' => 'Có lỗi xảy ra, vui lòng thử lại sau.'], 500);
+                return redirect()->route('account')->with([
+                    'status_failed' => 0
+                ]);
             }
         } else {
-            dd('Giao dịch đã bị hủy');
-            return response()->json(['message' => 'Đăng ký không thành công, mã trả về: ' . $return_code], 400);
+            // Giao dịch thất bại, cập nhật trạng thái giao dịch
+            $dataTransaction = [
+                'user_id' => Auth::user()->id,
+                'payment_method' => 'zalopay',
+                'amount' => $amount,
+                'type' => 'deposit',
+                'description' => 'Giao dịch bị hủy - Nạp tiền vào ví thành viên',
+                'balance_after' => Auth::user()->balance,
+                'status' => 'cancelled'
+            ];
+
+            $this->transactionService->create($dataTransaction);
+
+            return redirect()->route('account')->with([
+                'transaction_failed' => 0
+            ]);
         }
     }
     // End Zalo pay

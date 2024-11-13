@@ -1,6 +1,6 @@
 <?php
 namespace App\Services\Admin\Areas\Services;
-use App\Repositories\Admin\Areas\Interface\AreaInterface;
+use App\Repositories\Admin\Areas\Interfaces\AreaInterface;
 use App\Services\Admin\Areas\Interfaces\AreaServiceInterface;
 use App\Services\Base\BaseService;
 

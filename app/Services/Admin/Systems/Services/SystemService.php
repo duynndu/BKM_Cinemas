@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Systems\Services;
 
-use App\Repositories\Admin\Systems\Interface\SystemInterface;
+use App\Repositories\Admin\Systems\Interfaces\SystemInterface;
 use App\Services\Admin\Systems\Interfaces\SystemServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;

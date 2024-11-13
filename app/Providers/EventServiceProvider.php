@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\Client\DepositSucceeded;
 use App\Events\Client\ForgotPasswordRequested;
 use App\Events\Client\PasswordChanged;
 use App\Events\Client\UserRegistered;
+use App\Listeners\Client\SendDepositSuccessEmail;
 use App\Listeners\Client\SendPasswordChangeNotification;
 use App\Listeners\Client\SendPasswordResetEmail;
 use App\Listeners\Client\SendRegisterEmail;
@@ -29,6 +31,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         PasswordChanged::class => [
             SendPasswordChangeNotification::class
+        ],
+        DepositSucceeded::class => [
+            SendDepositSuccessEmail::class
         ]
     ];
 

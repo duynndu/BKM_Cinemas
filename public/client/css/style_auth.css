@@ -120,6 +120,11 @@ a {
     height: auto;
 }
 
+.img-member {
+    border: 1px dashed;
+    object-fit: cover;
+}
+
 .img-responsive,
 .img-thumbnail,
 .table,
@@ -203,13 +208,12 @@ label {
     left: 50%;
     z-index: 1060;
     transform: translate(-50%, -50%);
-    z-index: 1060;
     display: none;
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     outline: 0;
-    background-color: rgba(0, 0, 0, 0.5);   
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .custom-modal-content {
@@ -225,7 +229,6 @@ label {
     position: absolute;
     top: -2px;
     right: 20px;
-    font-size: 24px;
     cursor: pointer;
     font-size: 35px;
 }
@@ -234,7 +237,7 @@ label {
     display: flex;
     justify-content: end;
     margin-top: 20px;
-    padding: 15px 0 15px 15px;
+    padding: 15px 0 0 15px;
     text-align: right;
     border-top: 1px solid #e5e5e5;
 }
@@ -595,4 +598,94 @@ textarea {
 
 .content-p>p {
     font-size: 12px;
+}
+
+.transaction-container {
+    background-color: #7d777a14;
+    border: 1px solid #91b5d7;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.transaction-list {
+    color: #252525;
+    padding: 5px 15px 10px 15px;
+}
+
+.transaction-date {
+    padding: 9px 15px;
+    background: #c0e1ff;
+    border-bottom: 1px solid #91b5d7;
+}
+
+.transaction-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-content ul {
+    padding: 0;
+}
+
+.transaction-content ul li {
+    list-style: none;
+    font-size: 14px;
+}
+
+.transaction-main {
+    position: relative;
+    height: 386px;
+    margin-top: .5rem;
+    overflow: auto;
+}
+
+.border-box {
+    border: 1px solid #91b5d7;
+    border-bottom: 0;
+}
+
+#avatarPreview {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.input-inner-wrap-image {
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
+    position: relative;
+}
+
+.input-box-image {
+    background-image: url('../images/1.jpg');
+    background-size: cover;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+}
+
+#avatarInput {
+    display: none;
+}
+
+.body_modal_image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

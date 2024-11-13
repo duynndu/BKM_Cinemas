@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\BlockTypes\Services;
 
-use App\Repositories\Admin\BlockTypes\Interface\BlockTypeInterface;
+use App\Repositories\Admin\BlockTypes\Interfaces\BlockTypeInterface;
 use App\Services\Admin\BlockTypes\Interfaces\BlockTypeServiceInterface;
 use App\Services\Base\BaseService;
 
