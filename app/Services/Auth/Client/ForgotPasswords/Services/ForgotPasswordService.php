@@ -2,7 +2,7 @@
 
 namespace App\Services\Auth\Client\ForgotPasswords;
 
-use App\Repositories\Auth\Client\ForgotPasswords\Interface\ForgotPasswordInterface;
+use App\Repositories\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordInterface;
 use App\Services\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordServicesInterface;
 use App\Services\Base\BaseService;
 
@@ -38,4 +38,4 @@ class ForgotPasswordService extends BaseService implements ForgotPasswordService
     {
         return $this->repository->deleteByToken($token);
     }
-} 
+}

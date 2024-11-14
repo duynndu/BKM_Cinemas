@@ -2,7 +2,7 @@
 
 namespace App\Services\Auth\Admin\Logins\Services;
 
-use App\Repositories\Auth\Admin\Logins\Interface\LoginInterface;
+use App\Repositories\Auth\Admin\Logins\Interfaces\LoginInterface;
 use App\Repositories\Auth\Admin\Logins\Repository\LoginRepository;
 use App\Services\Auth\Admin\Logins\Interfaces\LoginServiceInterface;
 use App\Services\Base\BaseService;

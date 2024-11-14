@@ -3,7 +3,7 @@
 namespace App\Repositories\Auth\Admin\Logins\Repositories;
 
 use App\Models\User;
-use App\Repositories\Auth\Admin\Logins\Interface\LoginInterface;
+use App\Repositories\Auth\Admin\Logins\Interfaces\LoginInterface;
 use App\Repositories\Base\BaseRepository;
 
 class LoginRepository extends BaseRepository implements LoginInterface

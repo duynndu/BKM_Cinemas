@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Auth\Client\ChangePasswords\Interface;
+namespace App\Repositories\Auth\Client\ChangePasswords\Interfaces;
 
 use App\Repositories\Base\RepositoryInterface;
 

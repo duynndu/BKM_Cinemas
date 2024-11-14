@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Auth\Client\ForgotPasswords\Repository;
+namespace App\Repositories\Auth\Client\ForgotPasswords\Repositories;
 
 use App\Models\PasswordResetToken;
 use App\Models\User;
-use App\Repositories\Auth\Client\ForgotPasswords\Interface\ForgotPasswordInterface;
+use App\Repositories\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordInterface;
 use App\Repositories\Base\BaseRepository;
 
 class ForgotPasswordRepository extends BaseRepository implements ForgotPasswordInterface
