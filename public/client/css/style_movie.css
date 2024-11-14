@@ -12599,9 +12599,7 @@ body.open-main-popup {
     .menu-mobile {
         display: none;
     }
-<<<<<<< HEAD
 }
-
 
 #venom-popup {
     position: fixed;
@@ -12629,6 +12627,4 @@ body.open-main-popup {
     color: #222;
     font-size: 14px;
     line-height: 18px;
-=======
->>>>>>> aac24e5964125c4ada925afb86c8cf32c15f7763
 }

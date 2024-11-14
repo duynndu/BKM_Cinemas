@@ -3,12 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\PostController;
-use App\Http\Controllers\Client\CategoryPostController;
 use App\Http\Controllers\Auth\Client\AuthController;
-use App\Http\Controllers\Auth\Client\FacebookController;
 use App\Http\Controllers\Auth\Client\GoogleController;
-use App\Http\Controllers\Client\DepositController;
 use App\Http\Controllers\Client\MovieDetailController;
+use App\Http\Controllers\Client\CategoryPostController;
+use App\Http\Controllers\Auth\Client\FacebookController;
+use App\Http\Controllers\Client\DepositController;
 
 /*
 |--------------------------------------------------------------------------

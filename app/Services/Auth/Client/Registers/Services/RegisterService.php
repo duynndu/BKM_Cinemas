@@ -3,7 +3,7 @@
 namespace App\Services\Auth\Client\Registers\Services;
 
 use App\Models\User;
-use App\Repositories\Auth\Client\Registers\Interface\RegisterInterface;
+use App\Repositories\Auth\Client\Registers\Interfaces\RegisterInterface;
 use App\Services\Auth\Client\Registers\Interfaces\RegisterServiceInterface;
 use App\Services\Base\BaseService;
 use Carbon\Carbon;
@@ -29,7 +29,7 @@ class RegisterService extends BaseService implements RegisterServiceInterface
             'date_birth' => Carbon::createFromFormat('d/m/Y', $request->date_birth)->format('Y-m-d'),
             'gender' => $request->gender,
             'password' => Hash::make($request->password),
-            'type' => User::TYPE_MEMBER,    
+            'type' => User::TYPE_MEMBER,
             'is_terms_accepted' => $request->is_terms_accepted ?? 0,
             'is_subscribed_promotions' => $request->is_subscribed_promotions ?? 0
         ];

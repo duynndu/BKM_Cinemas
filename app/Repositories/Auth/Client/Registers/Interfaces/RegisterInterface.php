@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Auth\Client\Registers\Interface;
+namespace App\Repositories\Auth\Client\Registers\Interfaces;
 
 use App\Repositories\Base\RepositoryInterface;
 

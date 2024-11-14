@@ -17,7 +17,7 @@ class PaymentService extends BaseService implements PaymentServiceInterface
     {
         return $this->repository->filter($request);
     }
-   
+
     public function getRepository()
     {
         return PaymentInterface::class;
@@ -44,7 +44,7 @@ class PaymentService extends BaseService implements PaymentServiceInterface
         return $this->repository->find($id);
     }
 
-    public function update(&$data,$id)
+    public function update(&$data, $id)
     {
         $record = $this->find($id);
 

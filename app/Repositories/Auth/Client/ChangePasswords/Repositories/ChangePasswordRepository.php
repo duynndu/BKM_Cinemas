@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories\Auth\Client\ChangePasswords\Repository;
+namespace App\Repositories\Auth\Client\ChangePasswords\Repositories;
 
 use App\Models\User;
-use App\Repositories\Auth\Client\ChangePasswords\Interface\ChangePasswordInterface;
+use App\Repositories\Auth\Client\ChangePasswords\Interfaces\ChangePasswordInterface;
 use App\Repositories\Base\BaseRepository;
 
 class ChangePasswordRepository extends BaseRepository implements ChangePasswordInterface

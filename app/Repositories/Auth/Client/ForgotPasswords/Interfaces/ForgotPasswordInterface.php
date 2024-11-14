@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Auth\Client\ForgotPasswords\Interface;
+namespace App\Repositories\Auth\Client\ForgotPasswords\Interfaces;
 
 use App\Repositories\Base\RepositoryInterface;
 

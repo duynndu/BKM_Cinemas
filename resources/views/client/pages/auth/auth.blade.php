@@ -3,6 +3,8 @@
 @section('title', Auth::check() ? 'Thông tin tài khoản' : 'Đăng ký - Đăng nhập | BKM Cinemas')
 
 @section('css')
+    <style>
+    </style>
 @endsection
 
 @section('content')
@@ -284,6 +286,9 @@
                     @else
                         <div id="thanhvien" class="mbox tab-pane fade active in">
                             <div class="mbox mbox-2">
+                                <div class="title">
+                                    <h2>Thông tin tài khoản</h2>
+                                </div>
                                 <div class="box-body">
                                     <div class="account-group">
                                         <div class="avatar" id="current-avatar">
@@ -718,29 +723,4 @@
 
 @section('js')
     <script src="{{ asset('js/client/auth/auth.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('.open-modal').click(function() {
-                const modalId = $(this).data('modal');
-                $(modalId).show();
-            });
-
-            $('.custom-close, .close-modal, .custom-modal').click(function(e) {
-                if ($(e.target).is('.custom-close, .close-modal, .custom-modal')) {
-                    $(this).closest('.custom-modal').hide();
-                }
-            });
-
-            $('.submit-top-up').click(function() {
-                const modal = $(this).closest('.custom-modal');
-                const amount = modal.find('input[type="number"]').val();
-                if (amount) {
-                    alert(`Nạp tiền thành công với số tiền: ${amount}`);
-                    modal.hide();
-                } else {
-                    alert('Vui lòng nhập số tiền!');
-                }
-            });
-        });
-    </script>
 @endsection

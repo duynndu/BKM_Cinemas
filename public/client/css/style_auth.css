@@ -120,14 +120,11 @@ a {
     height: auto;
 }
 
-<<<<<<< HEAD
 .img-member {
     border: 1px dashed;
     object-fit: cover;
 }
 
-=======
->>>>>>> aac24e5964125c4ada925afb86c8cf32c15f7763
 .img-responsive,
 .img-thumbnail,
 .table,
@@ -202,7 +199,6 @@ label {
     text-decoration: none;
     background: linear-gradient(45deg, #ff0089bf, #ff7a35);
     color: #FFF;
-<<<<<<< HEAD
 }
 
 
@@ -693,6 +689,3 @@ input[type="file"] {
     justify-content: center;
     align-items: center;
 }
-=======
-}
->>>>>>> aac24e5964125c4ada925afb86c8cf32c15f7763
