@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class ShowtimeController extends Controller
 {
@@ -57,7 +58,7 @@ class ShowtimeController extends Controller
     public function getShowtimeDetailById(Showtime $showtime)
     {
         $seats = Cache::get("showtime.$showtime->id.seats");
-        if($seats){
+        if ($seats) {
             $seats = $seats->values();
         }
         // $seats = null;
@@ -140,8 +141,6 @@ class ShowtimeController extends Controller
     public function bookSeat(Request $request, Showtime $showtime)
     {
         $response = BookSeat::dispatch($showtime->id, $request->seat_number);
-
-
         return response()->json($response);
     }
 }
