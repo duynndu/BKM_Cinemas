@@ -11,6 +11,7 @@ use App\Http\Requests\Auth\Client\ForgotPasswordRequest;
 use App\Http\Requests\Auth\Client\LoginRequest;
 use App\Http\Requests\Auth\Client\RegisterRequest;
 use App\Http\Requests\Auth\Client\ResetPasswordRequest;
+use App\Http\Requests\Auth\Client\UpdateProfileRequest;
 use App\Models\Transaction;
 use App\Repositories\Auth\Client\ChangePasswords\Interfaces\ChangePasswordInterface;
 use App\Repositories\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordInterface;
@@ -286,6 +287,40 @@ class AuthController extends Controller
 
             return response()->json([
                 'code' => 0,
+                'status' => false,
+            ]);
+        }
+    }
+
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $data = [
+                'name' => $request->name,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => Auth::user()->email ?? null,
+                'phone' => Auth::user()->phone ?? null,
+                'gender' => $request->gender,
+                'date_birth' => $request->date_birth,
+                'city_id' => $request->city_id,
+            ];
+
+            $this->userService->updateProfile($data, Auth::user()->id);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
                 'status' => false,
             ]);
         }
