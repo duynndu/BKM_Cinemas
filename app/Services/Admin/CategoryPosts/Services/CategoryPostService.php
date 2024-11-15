@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\CategoryPosts\Services;
 
-use App\Repositories\Admin\CategoryPosts\Interface\CategoryPostInterface;
+use App\Repositories\Admin\CategoryPosts\Interfaces\CategoryPostInterface;
 use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
@@ -20,7 +20,10 @@ class CategoryPostService extends BaseService implements CategoryPostServiceInte
     {
         return CategoryPostInterface::class;
     }
-
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
     public function create(&$request)
     {
         $data = [

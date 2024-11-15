@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Repositories\Admin\Systems\Repository\SystemRepository;
+use App\Repositories\Admin\Systems\Repositories\SystemRepository;
 
 class Helper
 {

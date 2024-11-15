@@ -1,6 +1,6 @@
 <?php
 namespace App\Services\Admin\Cinemas\Services;
-use App\Repositories\Admin\Cinemas\Interface\CinemaInterface;
+use App\Repositories\Admin\Cinemas\Interfaces\CinemaInterface;
 use App\Services\Admin\Cinemas\Interfaces\CinemaServiceInterface;
 use App\Services\Base\BaseService;
 use Illuminate\Support\Facades\Storage;
@@ -10,6 +10,10 @@ class CinemaService extends BaseService implements CinemaServiceInterface
     public function getRepository()
     {
         return CinemaInterface::class;
+    }
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
     }
 
     public function create(&$data)

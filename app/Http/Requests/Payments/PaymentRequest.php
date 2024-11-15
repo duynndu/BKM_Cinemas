@@ -21,12 +21,29 @@ class PaymentRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'payment.name' => 'required|min:3|max:255',
-            'payment.image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
+        $rules =  [
+            'payment.name' => 'required|min:3|max:255', 
             'payment.description' => 'nullable|string|max:500',
             "payment.active" => 'integer|numeric'
         ];
+
+        if ($this->isMethod('post')) {
+            $rules['payment.image'] = [
+                "required",
+                "image",
+                "mimes:jpeg,png,jpg,gif,webp",
+                "max:2048",
+            ];
+        } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
+            $rules['payment.image'] = [
+                "nullable",
+                "image",
+                "mimes:jpeg,png,jpg,webp",
+                "max:2048",
+            ];
+        }
+
+        return $rules;
     }
 
     public function messages(): array

@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Blocks\Services;
 
-use App\Repositories\Admin\Blocks\Interface\BlockInterface;
+use App\Repositories\Admin\Blocks\Interfaces\BlockInterface;
 use App\Services\Admin\Blocks\Interfaces\BlockServiceInterface;
 use App\Services\Base\BaseService;
 
@@ -17,7 +17,10 @@ class BlockService extends BaseService implements BlockServiceInterface
     {
         return $this->repository->countBlock();
     }
-
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
     public function create(&$data)
     {
         $block = $this->repository->create($data);

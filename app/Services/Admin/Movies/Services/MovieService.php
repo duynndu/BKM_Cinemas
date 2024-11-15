@@ -2,8 +2,8 @@
 
 namespace App\Services\Admin\Movies\Services;
 
-use App\Repositories\Admin\Actors\Interface\ActorInterface;
-use App\Repositories\Admin\Movies\Interface\MovieInterface;
+use App\Repositories\Admin\Actors\Interfaces\ActorInterface;
+use App\Repositories\Admin\Movies\Interfaces\MovieInterface;
 use App\Services\Admin\Movies\Interfaces\MovieServiceInterface;
 use App\Services\Base\BaseService;
 use Illuminate\Support\Facades\Storage;
@@ -22,6 +22,12 @@ class MovieService extends BaseService implements MovieServiceInterface
     {
         return MovieInterface::class;
     }
+
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
+
 
     public function create(&$data)
     {

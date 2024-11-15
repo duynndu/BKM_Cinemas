@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Roles\Services;
 
-use App\Repositories\Admin\Roles\Interface\RoleInterface;
+use App\Repositories\Admin\Roles\Interfaces\RoleInterface;
 use App\Services\Admin\Roles\Interfaces\RoleServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\RemoveImageTrait;

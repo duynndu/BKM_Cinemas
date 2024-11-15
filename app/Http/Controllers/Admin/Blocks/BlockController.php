@@ -35,7 +35,7 @@ class BlockController extends Controller
 
         $blockTypes = $this->blockTypeService->getAllActive();
 
-        $blocks = $this->blockService->getAll();
+        $blocks = $this->blockService->filter($request);
 
         return view('admin.pages.blocks.index', compact(
                 'countBlock',
