@@ -9105,12 +9105,13 @@ span.card.payoo {
 }
 
 span.card.momo {
-    background-image: url(https://touchcinema.com/images/icons/vnpay.png);
+    background-image: url(https://touchcinema.com/images/icons/momo-logo.png);
     background-size: 100% 100% !important;
 }
 
 span.card.vnpay {
-    background-image: url(https://touchcinema.com/images/icons/momo-logo.png);
+    background-image: url(https://touchcinema.com/images/icons/vnpay.png);
+
     background-size: contain !important;
     background-repeat: no-repeat;
 }

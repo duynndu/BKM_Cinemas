@@ -174,6 +174,16 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        User::create([
+            'cinema_id' => 1,
+            'name' => 'duynnz',
+            'email' => 'duynnz@gmail.com',
+            'password' => bcrypt('1111'),
+            'type' => 'admin',
+            'role_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
         $foodTypes = ['Combo', 'Đồ ăn', 'Đồ uống'];
         foreach ($foodTypes as $foodType) {
             FoodType::create([

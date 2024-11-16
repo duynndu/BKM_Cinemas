@@ -12,7 +12,10 @@ class AuthController extends Controller
      */
     public function index()
     {
-        return response()->json(auth()->user());
+        if (auth()->user() != null) {
+            return response()->json(auth()->user());
+        }
+        return response("null");
     }
 
     /**

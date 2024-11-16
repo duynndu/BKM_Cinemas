@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\SeatController;
 use App\Http\Controllers\Api\SeatLayoutController;
 use App\Http\Controllers\Api\SeatTypeController;
 use App\Http\Controllers\Api\ShowtimeController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 Route::name('api.')->group(function () {
     Route::resource('seats', SeatController::class);
@@ -58,5 +60,13 @@ Route::name('api.')->group(function () {
     });
     Route::controller(AuthController::class)->prefix('user')->name('user.')->group(function () {
         Route::get('', 'index');
+    });
+    Route::post('/webhook', function (Request $request) {
+        $payload = $request->all();
+        if ($payload['event'] === 'member_removed') {
+            $userId = $payload['user_id'];
+            $channel = $payload['channel'];
+            Log::info("User {$userId} disconnected from {$channel}");
+        }
     });
 });
