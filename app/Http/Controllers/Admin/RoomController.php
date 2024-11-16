@@ -14,9 +14,12 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.room-manager.room.index', [
-            'rooms' => Room::paginate(3)
-        ]);
+        $rooms = Room::with('seats')
+            ->when(auth()->user()->cinema_id, function ($query, $cinemaId) {
+                $query->where('cinema_id', $cinemaId);
+            })
+            ->paginate(10);
+        return view('admin.pages.room-manager.room.index', compact('rooms'));
     }
 
     /**
@@ -48,6 +51,9 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
+        if (!empty(auth()->user()->cinema_id) && $room->cinema_id != auth()->user()->cinema_id) {
+            abort(403);
+        }
         return view('admin.pages.room-manager.room.edit', [
             'room' => $room->load('seats')
         ]);

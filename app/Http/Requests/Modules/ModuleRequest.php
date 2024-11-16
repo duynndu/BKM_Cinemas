@@ -29,7 +29,6 @@ class ModuleRequest extends FormRequest
                 "max:255",
                 new CheckRuleName($id, 'modules', false)
             ],
-            'permissions'=>'required'
         ];
     }
 
@@ -38,7 +37,6 @@ class ModuleRequest extends FormRequest
         return [
             "module.name.required" => __('validation.required', ['attribute' => __('language.admin.name')]),
             "module.name.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
-            "permissions"=>__('validation.required', ['attribute' => __('language.admin.permissions')]),
         ];
     }
 }

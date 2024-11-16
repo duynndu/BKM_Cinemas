@@ -119,12 +119,15 @@
                     </ul>
                 </li>
             @endif
-            <li>
-                <a class="" href="{{ route('admin.cinemas.index') }}" aria-expanded="false">
-                    <i class="material-icons">theaters</i>
-                    <span class="nav-text">Rạp chiếu phim</span>
-                </a>
-            </li>
+            @can('viewAny', App\Models\Cinema::class)
+                <li>
+                    <a class="" href="{{ route('admin.cinemas.index') }}" aria-expanded="false">
+                        <i class="material-icons">theaters</i>
+                        <span class="nav-text">Rạp chiếu phim</span>
+                    </a>
+                </li>
+            @endcan
+
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">movie</i>
@@ -207,7 +210,7 @@
                 </li>
             @endif
 
-            @if(auth()->user()->can('viewAny', App\Models\User::class) || auth()->user()->can('viewAny', App\Models\Role::class) || auth()->user()->can('viewAny', App\Models\Module::class) || auth()->user()->can('viewAny', App\Models\Permission::class))
+            @if(auth()->user()->can('viewAny', App\Models\User::class) || auth()->user()->can('viewAny', App\Models\Role::class) || auth()->user()->can('viewAny', App\Models\Module::class))
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">person</i>
@@ -232,12 +235,7 @@
                                 aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>
                             </li>
                         @endcan
-                        @can('viewAny', App\Models\Permission::class)
-                            <li>
-                                <a href="{{ route('admin.permissions.index') }}"
-                                aria-expanded="false">{{ __('language.admin.members.permissions.title') }}</a>
-                            </li>
-                        @endcan
+
                     </ul>
                 </li>
             @endif
