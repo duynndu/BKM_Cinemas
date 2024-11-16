@@ -23,8 +23,9 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="note">
-                    <div class="seat selected"><span class="list-style"></span> Ghế đang chọn</div>
-                    <div class="seat occupied"><span class="list-style"></span> Ghế đã có người đặt</div>
+                    <div class="seat selected"><span class="list-style"></span> Ghế bạn đang chọn</div>
+                    <div class="seat booking"><span class="list-style"></span> Ghế nguời khác chọn</div>
+                    <div class="seat booked"><span class="list-style"></span> Ghế đã có người đặt</div>
                     <template x-for="seatType in seatTypes" :key="seatType.id">
                         <div class="seat" :class="seatType.code"><span class="list-style"></span> <span class="tw-inline" x-text="seatType.text"></span></div>
                     </template>

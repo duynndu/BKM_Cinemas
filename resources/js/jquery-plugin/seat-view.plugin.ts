@@ -6,6 +6,7 @@ import { ISeatType } from "@/types/seat-type.interface";
 import { ISeat, SEAT_STATUS_VALUES } from "@/types/seat.interface";
 
 $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, seat_types: ISeatType[] }, onChange?: (data: any) => any) {
+  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
   let { seats, col_count, row_count, base_price = 0, seat_types = [] } = seatLayout;
   let seatErrors = {
     typeError: false,
@@ -26,7 +27,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
   addEventListeners();
   this.append(rowLabels, seatTable, rowLabels.clone());
 
-  function generateSeats(seats: any[]) {
+  function generateSeats(seats: ISeat[]) {
     seatTable.removeClass();
     seatTable.empty().addClass(`seat-table tw-grid tw-gap-2 tw-p-4 tw-rounded-xl tw-grid-cols-${col_count}`);
     const labels = rowLabels.empty();
@@ -40,9 +41,10 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
     }
 
     seats.forEach((seat, index) => {
+      const isUserSelectSeat = user.id == seat.user_id && seat.status == SEAT_STATUS.BOOKING;
       seatTable.append($('<div>', {
-        style: `${seat.status !== SEAT_STATUS.AVAILABLE ? 'cursor: not-allowed' : ''}`,
-        class: `tw-cursor-pointer seat seat-lg tw-col-span-${seat.slot} tw-border-solid tw-text-white tw-border-2 tw-border-${seat.type} ${!seat.visible ? 'tw-hidden' : 'tw-visible'} ${seat.status}`,
+        style: `${isUserSelectSeat || seat.status == SEAT_STATUS.AVAILABLE ? 'cursor: pointer' : 'cursor: not-allowed'}`,
+        class: `seat seat-lg tw-col-span-${seat.slot} tw-border-solid tw-text-white tw-border-2 tw-border-${seat.type} ${!seat.visible ? 'tw-hidden' : 'tw-visible'} ${isUserSelectSeat ? SEAT_STATUS.SELECTED : seat.status}`,
         id: seat.seat_number,
         'data-id': seat.id,
         'data-slot': seat.slot,
@@ -52,6 +54,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         'data-price': seat.price ?? 0,
         'data-status': seat.status ?? SEAT_STATUS.AVAILABLE,
         'data-order': seat.order,
+        'data-user-id': seat.user_id,
         ...(seat.type !== SEAT_TYPE.EMPTY_SEAT && { 'x-tooltip': `"${seat.seat_number} - ${price(seat.price ?? 0)}"` }),
       }));
       $(seatTable.children()[index]).data('merged-seats', seat.merged_seats ?? []);
@@ -85,6 +88,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         price: $(this).data('price'),
         merged_seats: $(this).data('merged-seats'),
         status: $(this).data('status'),
+        user_id: $(this).data('user-id')
       };
       seats.push(seat);
     });
@@ -95,7 +99,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
     seatTable.on('click', function (e) {
       if ($(e.target).hasClass('seat')) {
         const seatElement = $(e.target);
-        const isSelected = seatElement.data('status') !== SEAT_STATUS.SELECTED;
+        const isSelected = seatElement.data('status') !== SEAT_STATUS.BOOKING;
         const seat = {
           id: seatElement.data('id'),
           seat_number: seatElement.data('seat-number'),
@@ -106,17 +110,19 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
           price: seatElement.data('price'),
           merged_seats: seatElement.data('merged-seats'),
           status: seatElement.data('status') as SEAT_STATUS_VALUES,
+          user_id: seatElement.data('user-id')
         }
-        if (seatElement.data('status') === SEAT_STATUS.AVAILABLE || seatElement.data('status') === SEAT_STATUS.SELECTED) {
+        const isUserSelectSeat = user.id == seat.user_id && seat.status == SEAT_STATUS.BOOKING;
+        if (isUserSelectSeat || seat.status == SEAT_STATUS.AVAILABLE) {
           seatElement.removeClass(seatElement.data('status'));
 
           if (isSelected) {
-            seatElement.data('status', SEAT_STATUS.SELECTED);
-            seatElement.addClass(SEAT_STATUS.SELECTED);
-            seatsSelected.push(seat);
+            seatElement.data('status', SEAT_STATUS.BOOKING);
+            // seatElement.addClass(SEAT_STATUS.BOOKING);
+            seatsSelected.push(seat as unknown as ISeat);
           } else {
             seatElement.data('status', SEAT_STATUS.AVAILABLE);
-            seatElement.addClass(SEAT_STATUS.AVAILABLE);
+            // seatElement.addClass(SEAT_STATUS.AVAILABLE);
             seatsSelected = seatsSelected.filter(seat => seat.seat_number !== seatElement.data('seat-number')) ?? [];
           }
           seats = getSeatsFromDOM();
@@ -129,7 +135,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
             }
             seatElement.removeClass(seatElement.data('status'));
             seatElement.data('status', SEAT_STATUS.AVAILABLE);
-            seatElement.addClass(SEAT_STATUS.AVAILABLE);
+            // seatElement.addClass(SEAT_STATUS.AVAILABLE);
             seatsSelected = seatsSelected.filter(seat => seat.seat_number !== seatElement.data('seat-number')) ?? [];
 
           }
@@ -137,7 +143,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
           window.checkSeatMapping = () => {
             console.log(checkSeatMapping(seatElement));
           };
-          onChange?.({ seatsSelected, seatErrors });
+          onChange?.({ seatsSelected, seatErrors, seat });
         }
       }
     });
@@ -180,8 +186,8 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         seatMatrix.push(rowSeats);
       }
 
-      let firstSelectedIndex = seatMatrix[selectedPos.rowIndex].findIndex(seat => seat.status === SEAT_STATUS.SELECTED);
-      let lastSelectedIndex = seatMatrix[selectedPos.rowIndex].findLastIndex(seat => seat.status === SEAT_STATUS.SELECTED);
+      let firstSelectedIndex = seatMatrix[selectedPos.rowIndex].findIndex(seat => seat.status === SEAT_STATUS.BOOKING);
+      let lastSelectedIndex = seatMatrix[selectedPos.rowIndex].findLastIndex(seat => seat.status === SEAT_STATUS.BOOKING);
 
       if (seatsSelected.some(seat => seatsSelected[0].type !== seat.type)) {
         seatErrors.typeError = true;

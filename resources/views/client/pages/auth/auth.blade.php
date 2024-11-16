@@ -389,6 +389,108 @@
                             </div>
                         </div>
 
+                        <div id="doithongtin" class="mbox tab-pane fade">
+                            <div class="title">
+                                <h2>Thông tin thành viên</h2>
+                            </div>
+                            <div style="padding: 20px 20px;">
+                                <div class="row flex">
+                                    <div class="col-md-7 col-sm-7">
+                                        <form id="form-updateProfile"
+                                            data-image="{{ asset('client/images/success.png') }}"
+                                            action="{{ route('updateProfile') }}" method="POST">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label for="name">Nickname</label>
+                                                <input id="name" type="name" class="form-control name"
+                                                    name="name" value="{{ old('name', Auth::user()->name) }}">
+                                                <div class="name_error"></div>
+                                            </div>
+
+                                            <div class="row flex form-group">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="first_name">Họ</label>
+                                                    <input id="first_name" type="text" class="form-control first_name"
+                                                        name="first_name" value="{{ old('first_name', Auth::user()->first_name) }}">
+                                                    <div class="first_name_error"></div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="last_name">Tên đệm và tên</label>
+                                                    <input id="last_name" type="text" class="form-control last_name"
+                                                        name="last_name" value="{{ old('last_name', Auth::user()->last_name) }}">
+                                                    <div class="last_name_error"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="email">Địa chỉ email</label>
+                                                <input id="email" type="email" disabled class="form-control email"
+                                                    name="email" value="{{ old('email', Auth::user()->email) }}">
+                                                <div class="email_error"></div>
+                                            </div>
+
+                                            <div class="row flex form-group">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="gender">Giới tính</label>
+                                                    <div class="radio-group">
+                                                        <label class="radio-label">
+                                                            <input type="radio" name="gender" value="male" {{ old('gender', Auth::user()->gender) == 'male' ? 'checked' : '' }}> Nam
+                                                        </label>
+                                                        <label class="radio-label">
+                                                            <input type="radio" name="gender" value="female" {{ old('gender', Auth::user()->gender) == 'female' ? 'checked' : '' }}> Nữ
+                                                        </label>
+                                                    </div>
+                                                    <div class="gender_error"></div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="name">Số điện thoại</label>
+                                                    <input id="phone" type="text" disabled class="form-control phone"
+                                                        name="phone" value="{{ old('phone', Auth::user()->phone) }}">
+                                                    <div class="phone_error"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row flex form-group">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="birthday">Ngày sinh</label>
+                                                    <input id="date_birth" value="{{ old('date_birth', date('d/m/Y', strtotime(Auth::user()->date_birth))) }}" placeholder="-- Ngày Sinh --" type="text"
+                                                        class="form-control datepicker" name="date_birth">
+                                                    <div class="date_birth_error"></div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="birthday">Tỉnh/Thành phố</label>
+                                                    <select name="city_id" id="city" class="select2 w-100">
+                                                        <option value="">Chọn thành phố</option>
+                                                        @if (!empty($data['cities']))
+                                                            @foreach ($data['cities'] as $city)
+                                                                <option @selected(old('city_id', Auth::user()->city_id) == $city->id) value="{{ $city->id }}">{{ $city->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                    <div class="city_id_error"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="center">
+                                                <input type="submit" name="submit" value="Lưu"
+                                                    class="btn btn-success btn-login">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5">
+                                        <div style="padding: 55px;">
+                                            <img src="https://cdn.moveek.com/bundles/ornweb/img/mascot.png" width="100%"
+                                                alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div id="doimatkhau" class="mbox tab-pane fade">
                             <div class="title">
                                 <h2>Đổi mật khẩu</h2>

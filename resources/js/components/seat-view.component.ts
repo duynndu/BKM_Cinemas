@@ -11,6 +11,10 @@ import { price } from "@/utils/common";
 import { IMovie } from "@/types/movie.interface";
 import moment from "moment";
 import { ICinema } from "@/types/cinema.interface";
+import { authService } from "@/services/auth.service";
+import { IUser } from "@/types/user.interface";
+import { IRoom } from "@/types/room.interface";
+import { SEAT_STATUS } from "@/define/seat.define";
 
 Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
   errors: {} as Record<string, string>,
@@ -27,14 +31,18 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
   price: price,
   movie: null as IMovie | null,
   cinema: null as ICinema | null,
+  room: null as IRoom | null,
   moment: moment,
   seatErrors: {
     typeError: false,
     quantityError: false,
     slotError: false,
   },
+  user: null as IUser | null,
 
   async init() {
+    this.user = await authService.getCurrentUser();
+    localStorage.setItem('currentUser', JSON.stringify(this.user));
     showtimeId = "1";
     await this.getShowtimeDetailById(showtimeId);
     this.renderSeatLayout();
@@ -47,6 +55,7 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
       this.seatTypes = this.showtimeDetail?.room?.seat_types ?? [];
       this.movie = this.showtimeDetail.movie ?? null;
       this.cinema = this.showtimeDetail.cinema ?? null;
+      this.room = this.showtimeDetail.room ?? null;
     }
   },
   toggleModal() {
@@ -66,17 +75,17 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
     }
   },
   renderSeatLayout() {
-    const room = this.showtimeDetail?.room;
-    if (room) {
+    if (this.room) {
       $("#seatingArea").seatview({
-        col_count: room.col_count,
-        row_count: room.row_count,
-        seats: room.seats,
+        col_count: this.room.col_count,
+        row_count: this.room.row_count,
+        seats: this.room.seats,
         seat_types: this.seatTypes,
-        base_price: room.base_price,
-      }, ({ seatsSelected, seatErrors }: { seatsSelected: ISeat[], seatErrors: any }) => {
-        this.seatsSelected = [...seatsSelected];
+        base_price: this.room.base_price,
+      }, ({ seatsSelected, seatErrors, seat }: { seatsSelected: ISeat[], seatErrors: any, seat: ISeat }) => {
         this.seatErrors = seatErrors;
+        showtimeService.bookSeat('1', seat.seat_number);
+
         this.calculateTotalPrice();
       });
     }
@@ -100,6 +109,32 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
         return false;
       }
     });
+    window.Echo.join(`showtime.1`)
+      .here((users: any) => {
+        console.log("Người dùng hiện tại:", users);
+        this.setSeatsSelected();
+      })
+      .joining((user: any) => {
+        console.log("Người dùng đã tham gia:", user);
+      })
+      .leaving((user: any) => {
+        console.log("Người dùng đã rời:", user);
+      }).listen('BookSeat', (e: { showtimeId: string, seat: ISeat }) => {
+        console.log(e);
+        //@ts-ignore
+        this.room.seats = this.room?.seats.map(seat => {
+          if (seat.seat_number === e.seat.seat_number) {
+            return e.seat;
+          }
+          return seat;
+        });
+        this.setSeatsSelected();
+        this.renderSeatLayout();
+      });
+  },
+  setSeatsSelected() {
+    const seatsSelected = this.room?.seats?.filter(seat => seat.user_id == this.user?.id && seat.status == SEAT_STATUS.BOOKING) ?? [];
+    this.seatsSelected = seatsSelected;
   },
   calculateTotalPrice() {
     this.totalPriceSeats = this.seatsSelected.reduce((total, seat) => {

@@ -130,18 +130,36 @@
   border: 2px dashed #ff0000 !important;
 }
 
-.seat.selected>span{
-  background-color: #ff0000 !important;
-}
-
 .seat-table .seat.selected {
   background-color: #ff0000 !important;
 }
 
-.seat.occupied>.list-style{
-  background-color: #bbb !important;
+.seat-table .seat.booking {
+  background-color: #00ff00 !important;
 }
 
+.seat-table .seat.unavailable {
+  visibility: hidden;
+}
+
+.seat.selected>.list-style{
+  background-color: #ff0000 !important;
+}
+.seat.booking>.list-style { 
+  background-color: #00ff00 !important;
+  animation: colorChange 1s forwards;
+}
+@keyframes colorChange {
+  0% {
+    background-color: #ff0000 !important; /* Start with red */
+  }
+  100% {
+    background-color: #00ff00 !important; /* End with green */
+  }
+}
+.seat.booked>.list-style{
+  background-color: #bbb !important;
+}
 .seat.standard-seat>.list-style{
   background-color: #FFFFFF !important;
 }
@@ -154,13 +172,10 @@
   background-color: #ffd700 !important;
 }
 
-.seat-table .seat.occupied {
+.seat-table .seat.booked {
   background-color: #bbb !important;
 }
 
-.seat-table .seat.unavailable {
-  visibility: hidden;
-}
 
 #seatingArea {
   position: relative;

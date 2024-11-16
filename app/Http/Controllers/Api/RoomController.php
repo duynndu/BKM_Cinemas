@@ -76,7 +76,7 @@ class RoomController extends Controller
             return response()->json($room);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'An error occurred while creating the room.'], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 

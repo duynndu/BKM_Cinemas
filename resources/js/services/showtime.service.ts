@@ -54,6 +54,12 @@ class Showtime extends BaseService {
     const response = await axios.put<IShowtime>(`/showtimes/${id}/update-movie`, { movie_id: movieId });
     return response.data;
   }
+
+  async bookSeat(id: string, seatNumber: string){
+    const response = await axios.post(`/showtimes/${id}/book-seat`, {
+      seat_number: seatNumber
+    })
+  }
 }
 
 

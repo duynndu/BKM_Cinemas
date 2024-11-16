@@ -59,6 +59,9 @@ Route::post('/changePassword',      [AuthController::class, 'changePassword'])
 
 Route::post('/updateAvatar',        [AuthController::class, 'updateAvatar'])
     ->name('updateAvatar');
+
+Route::post('/updateProfile',        [AuthController::class, 'updateProfile'])
+    ->name('updateProfile');
 // End Tài khoản
 
 // Đăng nhập facebook

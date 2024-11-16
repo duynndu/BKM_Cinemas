@@ -14,6 +14,9 @@
             <a data-toggle="tab" href="#thanhvien" aria-expanded="true">Thành viên</a>
         </li>
         <li class="">
+            <a data-toggle="tab" href="#doithongtin" aria-expanded="false">Đổi thông tin</a>
+        </li>
+        <li class="">
             <a data-toggle="tab" href="#doimatkhau" aria-expanded="false">Đổi mật khẩu</a>
         </li>
         <li class="">
