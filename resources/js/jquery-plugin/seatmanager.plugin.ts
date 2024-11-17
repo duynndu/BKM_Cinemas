@@ -63,10 +63,10 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout & { base_price: any, 
       } else if (seat?.price) {
         calculatorPrice = seat.price
       } else {
-        calculatorPrice = seatTypes[seat.type].bonus_price * seat.slot
+        calculatorPrice = (seatTypes[seat.type]?.bonus_price || 0) * seat.slot
       }
       seatTable.append($('<div>', {
-        style: `background-color: ${seatTypes[seat.type].color}`,
+        style: `background-color: ${seatTypes[seat.type]?.color}`,
         class: `draggable seat seat-lg tw-col-span-${seat.slot} tw-bg-${seat.type} ${!seat.visible ? 'tw-hidden' : 'tw-visible'}`,
         id: seat.seat_number,
         draggable: true,
