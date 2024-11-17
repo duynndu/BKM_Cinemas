@@ -120,7 +120,7 @@ class DatabaseSeeder extends Seeder
         foreach (range(0, 4) as $dayOffset) {
             $date = Carbon::now()->addDays($dayOffset);
             foreach ($timeSlots as $slot) {
-                $numberOfRecords = rand(3, 5);
+                $numberOfRecords = rand(1, 2);
                 foreach (range(0, $numberOfRecords - 1) as $i) {
                     $startTime = $date->copy()->setTimeFromTimeString($slot[0])->addMinutes($i * 30); // Adjust start time
                     $endTime = $startTime->copy()->addHours(2);
@@ -147,7 +147,7 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'title' => 'Phế vật chuyển sinh thành súc sinh',
             'slug' => 'movie-slug',
-            'image' => 'path/to/movie/image.jpg',
+            'image' => 'https://touchcinema.com/uploads/slider-app/300wx450h-cam-1-poster.jpg',
             'banner_movie' => 'path/to/movie/banner.jpg',
             'description' => 'Movie description',
             'content' => 'Movie content',
@@ -168,6 +168,16 @@ class DatabaseSeeder extends Seeder
             'cinema_id' => 1,
             'name' => 'admin',
             'email' => 'demo@gmail.com',
+            'password' => bcrypt('1111'),
+            'type' => 'admin',
+            'role_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        User::create([
+            'cinema_id' => 1,
+            'name' => 'duynnz',
+            'email' => 'duynnz@gmail.com',
             'password' => bcrypt('1111'),
             'type' => 'admin',
             'role_id' => 1,

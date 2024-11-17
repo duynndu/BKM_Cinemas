@@ -34,6 +34,8 @@ use App\Repositories\Admin\Foods\Interfaces\FoodInterface;
 use App\Repositories\Admin\Menus\Interfaces\MenuInterface;
 use App\Repositories\Admin\Pages\Interfaces\PageInterface;
 use App\Repositories\Admin\Posts\Interfaces\PostInterface;
+use App\Repositories\Client\Posts\Interface\PostInterface as PostInterfaceClient;
+use App\Repositories\Client\Posts\Repository\PostRepository as PostRepositoryClient;
 use App\Repositories\Admin\Roles\Interfaces\RoleInterface;
 use App\Repositories\Admin\Users\Interfaces\UserInterface;
 use App\Repositories\Admin\Cities\Interfaces\CityInterface;
@@ -56,6 +58,8 @@ use App\Services\Admin\Foods\Interfaces\FoodServiceInterface;
 use App\Services\Admin\Menus\Interfaces\MenuServiceInterface;
 use App\Services\Admin\Pages\Interfaces\PageServiceInterface;
 use App\Services\Admin\Posts\Interfaces\PostServiceInterface;
+use App\Services\Client\Posts\Interface\PostServiceInterface as PostServiceInterfaceClient;
+use App\Services\Client\Posts\Services\PostService as PostServiceClient;
 use App\Services\Admin\Roles\Interfaces\RoleServiceInterface;
 use App\Services\Admin\Users\Interfaces\UserServiceInterface;
 use App\Services\Client\Home\Interfaces\HomeServiceInterface;
@@ -91,6 +95,8 @@ use App\Services\Admin\Systems\Interfaces\SystemServiceInterface;
 use App\Services\Client\Transactions\Services\TransactionService;
 use App\Repositories\Admin\Foods\Repositories\FoodComboRepository;
 use App\Services\Admin\CategoryPosts\Services\CategoryPostService;
+use App\Services\Client\CategoryPosts\Services\CategoryPostService as CategoryPostServiceClient;
+
 use App\Services\Admin\Foods\Interfaces\FoodComboServiceInterface;
 use App\Repositories\Admin\Payments\Repositories\PaymentRepository;
 use App\Services\Admin\Payments\Interfaces\PaymentServiceInterface;
@@ -112,13 +118,16 @@ use App\Repositories\Client\Transactions\Interfaces\TransactionInterface;
 use App\Services\Admin\Permissions\Interfaces\PermissionServiceInterface;
 use App\Services\Client\Cities\Services\CityService as ClientCityService;
 use App\Repositories\Admin\CategoryPosts\Interfaces\CategoryPostInterface;
+use App\Repositories\Client\CategoryPosts\Interface\CategoryPostInterface as CategoryPostInterfaceClient;
 use App\Repositories\Auth\Client\Registers\Repositories\RegisterRepository;
 use App\Services\Auth\Client\Registers\Interfaces\RegisterServiceInterface;
 use App\Repositories\Client\Transactions\Repositories\TransactionRepository;
 use App\Services\Auth\Client\ChangePasswords\Services\ChangePasswordService;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use App\Repositories\Admin\CategoryPosts\Repositories\CategoryPostRepository;
+use App\Repositories\Client\CategoryPosts\Repository\CategoryPostRepository as CategoryPostRepositoryClient;
 use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
+use App\Services\Client\CategoryPosts\Interface\CategoryPostServiceInterface as CategoryPostServiceInterfaceClient;
 use App\Repositories\Client\ListMovies\Interface\ListMoviesRepositoryInterface;
 use App\Repositories\Client\Users\Interfaces\UserInterface as ClientUserInterface;
 use App\Repositories\Client\Cities\Interfaces\CityInterface as ClientCityInterface;
@@ -199,6 +208,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(HomeServiceInterface               ::class, HomeService                ::class);
         $this->app->bind(ListMovieServiceInterface          ::class, ListMovieService           ::class);
         $this->app->bind(ListMoviesRepositoryInterface      ::class, ListMoviesRepository       ::class);
+        $this->app->bind(PostServiceInterfaceClient         ::class, PostServiceClient          ::class);
+        $this->app->bind(PostInterfaceClient                ::class, PostRepositoryClient          ::class);
+        $this->app->bind(CategoryPostServiceInterfaceClient ::class, CategoryPostServiceClient  ::class);
+        $this->app->bind(CategoryPostInterfaceClient ::class, CategoryPostRepositoryClient  ::class);
 
 
 

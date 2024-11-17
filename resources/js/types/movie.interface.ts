@@ -1,3 +1,6 @@
+import { IActor } from "./actor.interfaces";
+import { IGenre } from "./genre";
+import { IShowtime } from "./showtime.interface";
 
 export interface IMovie {
   id: string;
@@ -22,4 +25,7 @@ export interface IMovie {
   created_at: string;
   updated_at: string;
   deleted_at?: string | null;
+  actors: IActor[];
+  movie_genre: IGenre[],
+  showtimes: IShowtime[],
 }

@@ -28,9 +28,17 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $identifier)
     {
-        return response()->json(Movie::find($id));
+        $movie = Movie::where('id', $identifier)
+            ->orWhere('slug', $identifier)
+            ->with(['actors', 'movieGenre', 'showtimes'])
+            ->first();
+
+        if (!$movie) {
+            return response()->json(['error' => 'Movie not found'], 404);
+        }
+        return response()->json($movie);
     }
 
     /**

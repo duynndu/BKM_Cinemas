@@ -173,7 +173,6 @@
         </form>
     </div>
 
-
     {{-- modal trailer --}}
     @if (isset($movieIsShowing) && $movieIsShowing->count() > 0)
         @foreach ($movieIsShowing as $isShowing)
@@ -218,6 +217,27 @@
     @endif
 
 
+    {{-- modal trailer full --}}
+    @if (isset($upComingMovie) && $upComingMovie->count() > 0)
+        @foreach ($upComingMovie as $coming)
+            <div class="modal fade in" id="modal-trailer-{{ $coming->id }}" style="display: none;">
+                <div class="modal-dialog modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" title="Đóng"
+                                aria-hidden="true">×
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="video-container video-trailer--home">
+                                {!! $coming->trailer_url !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
 @endsection
 
 @section('js')

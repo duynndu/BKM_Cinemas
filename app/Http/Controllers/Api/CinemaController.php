@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cinema;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller
+class CinemaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function index()
+    {
+        return response()->json(Cinema::all());
+    }
 
-    public function index() {}
     /**
      * Store a newly created resource in storage.
      */
@@ -42,12 +46,5 @@ class AuthController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-    public function getCurrentUser()
-    {
-        if (auth()->user() != null) {
-            return response()->json(auth()->user());
-        }
-        return response("null");
     }
 }

@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { getRecoil, setRecoil } from 'recoil-nexus';
 import environment from '@/React/environment';
 import { tokenSelectorState, userState } from '@/React/state';
 import { IUser } from '../interfaces/user.interface';
+import { apiBase } from '@/api/api-base';
 
 export const logout = () => {
   localStorage.clear();
@@ -15,13 +15,13 @@ export const RefreshTokenAction = () => {
   const dataRequest = {
     refreshToken: token?.RefreshToken
   };
-  return axios.post<{ JwtToken: string }>(`${environment.baseUrl}/refreshToken`, dataRequest);
+  return apiBase.post<{ JwtToken: string }>(`${environment.baseUrl}/refreshToken`, dataRequest);
 };
 
 export const login = (data: { email: string; password: string }) => {
-  return axios.post<IUser>(`${environment.baseUrl}/login`, data);
+  return apiBase.post<IUser>(`${environment.baseUrl}/login`, data);
 };
 
 export const registerAction = (data: { name: string; phone: string; email: string; password: string }) => {
-  return axios.post(`${environment.baseUrl}/register`, data);
+  return apiBase.post(`${environment.baseUrl}/register`, data);
 };

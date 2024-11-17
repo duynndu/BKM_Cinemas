@@ -9104,7 +9104,115 @@ label:hover:before {
 }
 
 .list-post .post-item .post-thumbnail img {
-    width: 100%
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+
+
+
+
+
+
+
+
+
+
+    !;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    !;
+    !0;
+    !00;
+    !0;
+    !;
 }
 
 @media screen and (max-width: 1200px) {
@@ -9122,7 +9230,7 @@ label:hover:before {
 }
 
 .list-post .post-item .post-detail {
-    padding: 5px 10px
+    padding: 5px 10px;
 }
 
 .list-post .post-item .post-detail h3 {
@@ -10195,6 +10303,23 @@ label:hover:before {
     margin-bottom: 20px;
     margin-top: 10px;
     background-color: #640d9a
+}
+
+#page-movie .showtime-section .showtime-cinema {
+    color: white;
+    border: 1px solid #f29438;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12pt;
+    font-weight: 500;
+    text-decoration: none;
+    margin: 0 8px;
+    cursor: pointer;
+    display: inline;
+}
+
+#page-movie .showtime-section input:checked + label {
+    background-color: #eb1689;
 }
 
 #page-movie .showtime-section .showtime-date:after {
@@ -11378,7 +11503,8 @@ label:hover:before {
 }
 
 .post-page .list-post .post-item .post-thumbnail {
-    border: none
+    border: none;
+    height: 400px;
 }
 
 .post-page .list-post .post-item .description {

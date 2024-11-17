@@ -13,8 +13,6 @@ class PostRepository implements PostInterface
     const PAGINATION = 10;
     const LIMIT = 8;
 
-
-
     private $categoryPost;
     private $post;
     private $postCategory;
@@ -34,17 +32,22 @@ class PostRepository implements PostInterface
     public function getPostRelated($slug)
     {
         $post = $this->post->where('slug', $slug)->select("id")->first();
-        $categoryId = $this->postCategory
-            ->where('post_id', $post->id)->select('category_id')
-            ->first();
+        if ($post) {
 
-        $postIds = $this->postCategory
-            ->where('category_id', $categoryId->category_id)
-            ->where('post_id', '<>', $post->id)
-            ->pluck('post_id')
-            ->toArray();
+            $categoryId = $this->postCategory
+                ->where('post_id', $post->id)->select('category_id')
+                ->first();
 
-        $postRelated = $this->post->whereIn('id', $postIds)->select("name", "slug", "description", "content", "avatar", "created_at")->limit(self::LIMIT)->get();
-        return $postRelated;
+            $postIds = $this->postCategory
+                ->where('category_id', $categoryId->category_id)
+                ->where('post_id', '<>', $post->id)
+                ->pluck('post_id')
+                ->toArray();
+
+            $postRelated = $this->post->whereIn('id', $postIds)->select("name", "slug", "description", "content", "avatar", "created_at")->limit(self::LIMIT)->get();
+            return $postRelated;
+        }else{
+            return null;
+        }
     }
 }

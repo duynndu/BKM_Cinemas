@@ -12,6 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class BookSeat implements ShouldBroadcast
 {
@@ -25,10 +26,13 @@ class BookSeat implements ShouldBroadcast
     {
         $this->seats = Cache::get("showtime.$showtimeId.seats");
         $this->seat = $this->seats[$seatNumber];
+        $userId = optional(auth()->user())->id;
         if ($this->seat->status == SeatStatus::AVAILABLE) {
+            $currentOrder = collect($this->seats)->where('user_id', $userId)->max('selected_order') ?? 0;
+            $this->seat->selected_order = $currentOrder + 1;
             $this->seat->status = SeatStatus::BOOKING;
-            $this->seat->user_id = auth()->user()->id;
-            ResetSeatStatus::dispatch($showtimeId, $seatNumber)->delay(now()->addSeconds(10));
+            $this->seat->user_id = $userId;
+            ResetSeatStatus::dispatch($showtimeId, $seatNumber)->delay(now()->addSeconds(30));
         } else {
             $this->seat->status = SeatStatus::AVAILABLE;
             $this->seat->user_id = null;
