@@ -25,7 +25,6 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        dd(1);
         $validatedData = $request->validate([
             'room_name' => 'required|string|max:255',
             'base_price' => 'required|numeric|min:0',

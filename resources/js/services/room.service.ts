@@ -2,6 +2,7 @@ import { IRoom } from "@/types/room.interface";
 import { ISeatType } from "@/types/seat-type.interface";
 import { BaseService } from "./base.service";
 import axios from "axios";
+import { log } from "console";
 
 export class Room extends BaseService {
 
