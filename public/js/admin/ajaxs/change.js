@@ -3,7 +3,15 @@ $(document).ready(function () {
         var itemId = button.data("id");
         var url = button.data("url");
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
-
+        if (!url) {
+            Swal.fire({
+                title: "Bạn không có quyền truy cập!",
+                icon: "warning",
+                showConfirmButton: false,
+                timer: 3000
+            });
+            return;
+        }
         $.ajax({
             url: url,
             type: "POST",
@@ -12,9 +20,6 @@ $(document).ready(function () {
                 _token: csrfToken,
             },
             success: function (response) {
-                // Kiểm tra giá trị trả về từ server
-                // console.log(response);
-
                 var newStatus = '';
 
                 if(statusType === "active") {

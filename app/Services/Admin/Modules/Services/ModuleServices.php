@@ -20,11 +20,14 @@ class ModuleServices extends BaseService implements ModuleServiceInterface
     {
         $module = $this->repository->create($data['module']);
 
-        foreach ($data['permissions'] as $permission) {
-            $this->repository->createPermission($module, [
-                'module_id' => $module->id,
-                'name' => $permission
-            ]);
+        if (!empty($data['permissions'])) {
+            $filteredPermissions = array_filter($data['permissions'], function ($permission) {
+                return !empty($permission['name']) || !empty($permission['value']);
+            });
+
+            if (!empty($filteredPermissions)) {
+                $this->repository->createManyPermission($module, $filteredPermissions);
+            }
         }
 
         return true;
@@ -32,31 +35,44 @@ class ModuleServices extends BaseService implements ModuleServiceInterface
 
     public function update(&$data, $id)
     {
-        $module = $this->repository->find($id);
+        $mod = $this->repository->find($id);
 
-        if (!$module) {
+        if (!$mod) {
             return redirect()->route('admin.modules.index')->with('status_failed', 'Không tìm thấy module');
         }
 
-        $selectedPermissions = $data['permissions']; // Các permissions được chọn từ form
-
         $this->repository->update($id, $data['module']);
 
-        $existingPermissions = $module->permissions->pluck('id')->toArray();
+        $existingPerms = $mod->permissions->pluck('id')->toArray();
+        if (!empty($existingPerms)) {
+            if (!empty($data['old_permissions'])) {
+                $oldPermIds       = array_column($data['old_permissions'], 'id');
+                $permsToDelete    = array_diff($existingPerms, $oldPermIds);
 
-        $permissionsToDelete = array_diff($existingPermissions, $selectedPermissions);
-        if (!empty($permissionsToDelete)) {
-            $this->repository->deletePermissionsByModuleId($module, $permissionsToDelete);
+                $filteredOldPerms = array_filter($data['old_permissions'], function ($oldPerm) use (&$permsToDelete) {
+                    if (empty($oldPerm['name']) && empty($oldPerm['value'])) {
+                        $permsToDelete[] = $oldPerm['id'];
+                        return false;
+                    }
+                    return true;
+                });
+
+                if (!empty($permsToDelete)) {
+                    $this->repository->deletePermissionsByModuleId($mod, $permsToDelete);
+                }
+                $this->repository->updatePermissionsByModuleId($mod, $filteredOldPerms);
+            } else {
+                $this->repository->deletePermissionsByModuleId($mod, $existingPerms);
+            }
         }
 
-        $permissionsToAdd = array_diff($selectedPermissions, $existingPermissions);
+        if (!empty($data['permissions'])) {
+            $filteredPerms = array_filter($data['permissions'], function ($perm) {
+                return !empty($perm['name']) || !empty($perm['value']);
+            });
 
-        if (!empty($permissionsToAdd)) {
-            foreach ($permissionsToAdd as $permission) {
-                $this->repository->createPermission($module, [
-                    'module_id' => $module->id,
-                    'name' => $permission,
-                ]);
+            if (!empty($filteredPerms)) {
+                $this->repository->createManyPermission($mod, $filteredPerms);
             }
         }
 

@@ -35,6 +35,20 @@ class ModuleRepository extends BaseRepository implements ModuleInterface
         return $record->permissions()->create($data);
     }
 
+    public function createManyPermission($record, $data)
+    {
+        return $record->permissions()->createMany($data);
+    }
+
+    public function updatePermissionsByModuleId($record, $data)
+    {
+        foreach ($data as $value) {
+            $record->permissions()->where('id', $value['id'])->update($value);
+        }
+
+        return true;
+    }
+
     public function find($id)
     {
         $result = $this->model->with('permissions')->find($id);
@@ -48,11 +62,7 @@ class ModuleRepository extends BaseRepository implements ModuleInterface
 
     public function deletePermissionsByModuleId($module, $permissionsIds)
     {
-        $permissionsToDelete = $module->permissions()->whereIn('id', $permissionsIds)->pluck('id')->toArray();
-
-        if (!empty($permissionsToDelete)) {
-            return $module->permissions()->whereIn('id', $permissionsToDelete)->delete();
-        }
+        return $module->permissions()->whereIn('id', $permissionsIds)->delete();
     }
 
     public function delete($id)

@@ -9,6 +9,7 @@ use App\Services\Client\Home\Interfaces\HomeServiceInterface;
 class HomeService  implements HomeServiceInterface
 {
     protected $homeRepository;
+
     public function __construct(HomeRepository $homeRepository)
     {
         $this->homeRepository = $homeRepository;
@@ -33,5 +34,5 @@ class HomeService  implements HomeServiceInterface
         return $this->homeRepository->promotionEvent();
     }
 
-  
+
 }

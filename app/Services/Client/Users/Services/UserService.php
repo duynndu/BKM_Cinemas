@@ -5,6 +5,7 @@ namespace App\Services\Client\Users\Services;
 use App\Repositories\Client\Users\Interfaces\UserInterface;
 use App\Services\Base\BaseService;
 use App\Services\Client\Users\Interfaces\UserServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class UserService extends BaseService implements UserServiceInterface
@@ -25,6 +26,7 @@ class UserService extends BaseService implements UserServiceInterface
         if (!$record) {
             return false;
         }
+
         if (isset($data['image']) && $data['image']) {
             if ($record->image) {
                 $this->deleteAvatar($record->image, 'users');
@@ -36,6 +38,18 @@ class UserService extends BaseService implements UserServiceInterface
         $this->repository->update($id, $data);
 
         return $data['image'];
+    }
+
+    public function updateProfile(&$data, $id)
+    {
+        $record = $this->find($id);
+        if (!$record) {
+            return false;
+        }
+
+        $data['date_birth'] = Carbon::createFromFormat('d/m/Y', $data['date_birth'])->format('Y-m-d');
+
+        return $this->repository->update($id, $data);
     }
 
     private function deleteAvatar($avatar, $folderName)

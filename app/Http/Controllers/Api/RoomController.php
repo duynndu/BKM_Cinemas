@@ -16,7 +16,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::with('seats')->paginate(10); // Adjust the number 10 to your desired items per page
+        $rooms = Room::with('seats')->where('cinema_id', auth()->user()->cinema_id)->paginate(10); // Adjust the number 10 to your desired items per page
         return response()->json($rooms);
     }
 
