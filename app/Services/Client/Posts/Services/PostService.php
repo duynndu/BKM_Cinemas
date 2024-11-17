@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Services\Client\Posts;
 
+namespace App\Services\Client\Posts\Services;
 
-use Stichoza\GoogleTranslate\GoogleTranslate;
 use App\Repositories\Client\Posts\Repository\PostRepository;
+use App\Services\Client\Posts\Interface\PostServiceInterface;
 
-class PostService
+class PostService implements PostServiceInterface
 {
-
     protected $postRepository;
 
     public function __construct(
-       PostRepository $postRepository
+        PostRepository $postRepository
     ) {
         $this->postRepository = $postRepository;
     }
@@ -25,5 +24,4 @@ class PostService
     {
         return $this->postRepository->getPostRelated($slug);
     }
-  
 }

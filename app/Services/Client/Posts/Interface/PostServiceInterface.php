@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Repositories\Client\Posts\Interface;
+namespace App\Services\Client\Posts\Interface;
 
-interface PostInterface
-{
+interface PostServiceInterface {
     public function getPostFirst($slug);
     public function getPostRelated($slug);
 }

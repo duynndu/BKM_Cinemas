@@ -10,8 +10,7 @@ use App\Repositories\Client\CategoryPosts\Interface\CategoryPostInterface;
 
 class CategoryPostRepository implements CategoryPostInterface
 {
-
-    const PAGINATION = 10;
+    const PAGINATION = 9;
     private $categoryPost;
     private $post;
     private $postCategory;
@@ -27,14 +26,16 @@ class CategoryPostRepository implements CategoryPostInterface
     {
 
         $categoryPostsBySlug = $this->categoryPost->where('slug', $slug)->select('id', 'name', 'slug')->first();
-        $postIds = $this->postCategory
-            ->where('category_id', $categoryPostsBySlug->id)
-            ->pluck('post_id')
-            ->toArray();
 
+        if ($categoryPostsBySlug) {
+            $postIds = $this->postCategory
+                ->where('category_id', $categoryPostsBySlug->id)
+                ->pluck('post_id')
+                ->toArray();
 
-        $postByCategory = $this->post->whereIn("id", $postIds)->paginate(self::PAGINATION);
-        return $postByCategory;
+            $postByCategory = $this->post->whereIn("id", $postIds)->paginate(self::PAGINATION);
+            return $postByCategory;
+        }
     }
 
     public function getCategoryPostFirst($slug)
@@ -42,6 +43,4 @@ class CategoryPostRepository implements CategoryPostInterface
         $categoryPostsBySlug = $this->categoryPost->where('slug', $slug)->select('id', 'name', 'slug')->first();
         return $categoryPostsBySlug;
     }
-
-
 }
