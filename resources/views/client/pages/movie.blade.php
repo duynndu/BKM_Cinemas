@@ -173,7 +173,6 @@
         </form>
     </div>
 
-
     {{-- modal trailer --}}
     @if (isset($movieIsShowing) && $movieIsShowing->count() > 0)
         @foreach ($movieIsShowing as $isShowing)
