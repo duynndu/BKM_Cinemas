@@ -4,14 +4,13 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Client\CategoryPosts\CategoryPostService;
+use App\Services\Client\CategoryPosts\Interface\CategoryPostServiceInterface;
 
 class CategoryPostController extends Controller
 {
-
     private $categoryPostService;
 
-    public function __construct(CategoryPostService $categoryPostService)
+    public function __construct(CategoryPostServiceInterface $categoryPostService)
     {
         $this->categoryPostService = $categoryPostService;
     }
@@ -26,6 +25,10 @@ class CategoryPostController extends Controller
                 'categoryPost' => $categoryPost,
                 'posts' => $posts,
             ];
+
+            if(empty($posts && $categoryPost)) {
+                abort(404);
+            }
    
             return view('client.pages.promotion', $data);
         } else {
