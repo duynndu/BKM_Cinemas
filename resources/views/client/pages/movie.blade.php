@@ -10,90 +10,117 @@
         <div class="container">
             <h1 style="display: block;margin-top: -46px;text-align: left;color: #FFF;">Danh sách phim</h1>
             <ul class="nav nav-tabs" style="margin-top: 0;">
-                <li class="nowshowing">
+                <li class="nowshowing active">
                     <a data-toggle="tab" href="#phimdangchieu" aria-expanded="false">
-                        <img src="https://touchcinema.com/images/icons/icon-ticket.png" alt="Phim đang chiếu">
+                        <img src="{{ asset('client/images/icons/icon-ticket.png') }}" alt="Phim đang chiếu" />
                         <span>Phim đang chiếu</span>
                     </a>
                     <span class="border"></span>
                 </li>
-                <li class="comingsoon active">
+                <li class="comingsoon ">
                     <a data-toggle="tab" href="#phimsapchieu" aria-expanded="true">
                         <span>Phim sắp chiếu</span>
-                        <img src="https://touchcinema.com/images/icons/icon-sap-chieu.png" alt="Phim đang chiếu">
+                        <img src="{{ asset('client/images/icons/icon-sap-chieu.png') }}" alt="Phim đang chiếu" />
                     </a>
                     <span class="border"></span>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <div id="phimdangchieu" class="tab-pane fade">
+                <div id="phimdangchieu" class="tab-pane active fade in">
                     <div class="row row-eq-height">
-                        @for ($i = 0; $i <= 10; $i++)
-                            <div class="col-md-3 col-sm-4 col-xs-6">
-                                <div class="movie" style="padding-top: 30px;">
-                                    <div class="poster">
-                                        <a href="{{ url('phim-chi-tiet') }}">
-                                            <img class="img-responsive"
-                                                src="https://touchcinema.com/uploads/slider-app/1200wx1800h-1-1726123853-poster.jpg"
-                                                alt="Không Nói Điều Dữ">
-                                        </a>
-                                        <div class="info">
-                                            <a href="{{ url('phim-chi-tiet') }}" class="button detail">
-                                                &gt; Chi tiết
+                        @if (isset($movieIsShowing) && $movieIsShowing->count() > 0)
+                            @foreach ($movieIsShowing as $item)
+                                <div class="col-md-3 col-sm-4 col-xs-6">
+                                    <div class="movie" style="padding-top: 30px;">
+                                        <div class="poster">
+                                            <a href="{{ route('movie.detail', $item->slug) }}">
+                                                <img class="img-responsive" src="{{ asset($item->image) }}"
+                                                    alt="{{ $item->title }}">
                                             </a>
-                                            <a href="{{ url('phim-chi-tiet') }}#showtime" class="button ticket">
-                                                Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png"
-                                                    alt="Mua vé">
-                                            </a>
-                                            <p class="button duration"><b>Thời lượng:</b> 110 phút</p>
-                                            <p class="button category"><b>Thể loại:</b> Kinh Dị, Hồi Hộp, Tâm Lý</p>
-                                            <p class="button format"><b>Định dạng</b> 2D </p>
+                                            <div class="info">
+                                                <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
+                                                    Chi tiết
+                                                </a>
+                                                <a class="button ticket video-play-button" data-toggle="modal"
+                                                    href="#modal-trailer-{{ $item->id }}">
+                                                    Trailer
+                                                </a>
+                                                <p class="button duration"><b>Thời lượng:</b> {{ $item->duration }} phút</p>
+                                                <p class="button category">
+                                                    <b>Thể loại:
+                                                        @if ($item->movieGenre->count() > 0)
+                                                            @foreach ($item->movieGenre as $genre)
+                                                                {{ $loop->index > 0 ? ', ' : '' }}{{ $genre->genres->name }}
+                                                            @endforeach
+                                                        @else
+                                                            Chưa cập nhật
+                                                        @endif
+                                                    </b>
+                                                </p>
+                                                <p class="button format"><b>Định dạng:</b> {{ $item->format }} </p>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h2><a href="{{ route('movie.detail', $item->slug) }}">{{ $item->title }}</a>
+                                            </h2>
+                                            <p class="release">Khởi chiếu 13/09/2024</p>
                                         </div>
                                     </div>
-                                    <div class="detail">
-                                        <h2><a href="{{ url('phim-chi-tiet') }}">Không Nói Điều Dữ</a>
-                                        </h2>
-                                        <p class="release">Khởi chiếu 13/09/2024</p>
-                                    </div>
                                 </div>
-                            </div>
-                        @endfor
-
+                            @endforeach
+                        @endif
                         <div class="clearfix"></div>
+
+                        <div class="center">
+                            {{-- {{ $movieIsShowing->links('vendor.pagination.bootstrap-4') }} --}}
+                        </div>
                     </div>
                 </div>
-                <div id="phimsapchieu" class="tab-pane fade active in">
+                <div id="phimsapchieu" class="tab-pane fade in">
                     <div class="row row-eq-height">
-                        @for ($i = 0; $i < 15; $i++)
-                            <div class="col-md-3 col-sm-4 col-xs-6">
-                                <div class="movie" style="padding-top: 30px;">
-                                    <div class="poster">
-                                        <a href="{{ url('phim-chi-tiet') }}">
-                                            <img class="img-responsive"
-                                                src="https://touchcinema.com/uploads/slider-app/300wx450h-cam-1-poster.jpg"
-                                                alt="Cám">
-                                        </a>
-                                        <div class="info">
-                                            <a href="{{ url('phim-chi-tiet') }}" class="button detail">
-                                                &gt; Chi tiết
+                        @if (isset($upComingMovie) && $upComingMovie->count() > 0)
+                            @foreach ($upComingMovie as $item)
+                                <div class="col-md-3 col-sm-4 col-xs-6">
+                                    <div class="movie" style="padding-top: 30px;">
+                                        <div class="poster">
+                                            <a href="{{ route('movie.detail', $item->slug) }}">
+                                                <img class="img-responsive" src="{{ asset($item->image) }}"
+                                                    alt="{{ $item->title }}">
                                             </a>
-                                            <a href="{{ url('phim-chi-tiet') }}#showtime" class="button ticket">
-                                                Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png"
-                                                    alt="Mua vé">
-                                            </a>
-                                            <p class="button duration"><b>Thời lượng:</b> </p>
-                                            <p class="button category"><b>Thể loại:</b> Kinh Dị</p>
-                                            <p class="button format"><b>Định dạng</b> 2D </p>
+                                            <div class="info">
+                                                <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
+                                                    Chi tiết
+                                                </a>
+                                                <a class="button ticket video-play-button" data-toggle="modal"
+                                                    href="#modal-trailer-{{ $item->id }}">
+                                                    Trailer
+                                                </a>
+                                                <p class="button duration"><b>Thời lượng:</b> {{ $item->duration }} phút
+                                                </p>
+                                                <p class="button category">
+                                                    <b>Thể loại:
+                                                        @if ($item->movieGenre->count() > 0)
+                                                            @foreach ($item->movieGenre as $genre)
+                                                                {{ $loop->index > 0 ? ', ' : '' }}{{ $genre->genres->name }}
+                                                            @endforeach
+                                                        @else
+                                                            Chưa cập nhật
+                                                        @endif
+                                                    </b>
+                                                </p>
+                                                <p class="button format"><b>Định dạng:</b> {{ $item->format }} </p>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h2><a href="{{ route('movie.detail', $item->slug) }}">{{ $item->title }}</a>
+                                            </h2>
+                                            <p class="release">Khởi chiếu 13/09/2024</p>
                                         </div>
                                     </div>
-                                    <div class="detail">
-                                        <h2><a href="https://touchcinema.com/phim/con-cam">Cám</a></h2>
-                                        <p class="release">Khởi chiếu 20/09/2024</p>
-                                    </div>
                                 </div>
-                            </div>
-                        @endfor
+                            @endforeach
+                        @endif
 
                         <div class="clearfix"></div>
                     </div>
@@ -147,7 +174,49 @@
     </div>
 
 
- 
+    {{-- modal trailer --}}
+    @if (isset($movieIsShowing) && $movieIsShowing->count() > 0)
+        @foreach ($movieIsShowing as $isShowing)
+            <div class="modal fade in" id="modal-trailer-{{ $isShowing->id }}" style="display: none;">
+                <div class="modal-dialog modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" title="Đóng"
+                                aria-hidden="true">×
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="video-container video-trailer--home">
+                                {!! $isShowing->trailer_url !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
+
+    @if (isset($upComingMovie) && $upComingMovie->count() > 0)
+        @foreach ($upComingMovie as $coming)
+            <div class="modal fade in" id="modal-trailer-{{ $coming->id }}" style="display: none;">
+                <div class="modal-dialog modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" title="Đóng"
+                                aria-hidden="true">×
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="video-container video-trailer--home">
+                                {!! $coming->trailer_url !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
+
 
 @endsection
 
