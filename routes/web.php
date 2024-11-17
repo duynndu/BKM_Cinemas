@@ -10,6 +10,7 @@ use App\Http\Controllers\Client\MovieDetailController;
 use App\Http\Controllers\Client\CategoryPostController;
 use App\Http\Controllers\Auth\Client\FacebookController;
 use App\Http\Controllers\Client\DepositController;
+use App\Models\Showtime;
 
 /*
 |--------------------------------------------------------------------------
@@ -145,8 +146,8 @@ Route::get('/lich-chieu', function () {
     return view('client.pages.showtime');
 });
 
-Route::get('/dat-ve', function () {
-    return view('client.pages.buy-ticket');
+Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
+    return view('client.pages.buy-ticket', ['showtimeId' => $showtime->id]);
 });
 Route::get('/dat-ve/xac-nhan', function () {
     return view('client.pages.payment-verification');

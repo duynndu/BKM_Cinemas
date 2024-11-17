@@ -17,7 +17,7 @@ import { IRoom } from "@/types/room.interface";
 import { SEAT_STATUS } from "@/define/seat.define";
 import { IFood } from "@/types/food.interface";
 
-Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
+Alpine.data('SeatViewComponent', (showtimeId: string) => ({
   errors: {} as Record<string, string>,
   seatTable: null as JQuery<HTMLElement> | null,
   showModal: false,
@@ -51,7 +51,6 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
       window.user = this.user;
     }
     localStorage.setItem('currentUser', JSON.stringify(this.user));
-    showtimeId = "1";
     await this.getShowtimeDetailById(showtimeId);
     this.renderSeatLayout();
     await this.getFoodTypes();
@@ -114,7 +113,7 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
         if (this.seatErrors.quantityError || this.seatErrors.typeError) {
           return;
         };
-        showtimeService.bookSeat('1', seat?.seat_number);
+        showtimeService.bookSeat(showtimeId, seat?.seat_number);
         this.calculateTotalPrice();
       });
     }
@@ -137,7 +136,7 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
         return false;
       }
     });
-    window.Echo.join(`showtime.1`)
+    window.Echo.join(`showtime.${showtimeId}`)
       .here((users: any) => {
         console.log("Người dùng hiện tại:", users);
         this.setSeatsSelected();

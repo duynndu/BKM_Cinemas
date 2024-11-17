@@ -180,36 +180,50 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         seatMatrix.push(rowSeats);
       }
 
-      let firstSelectedIndex = seatMatrix[selectedPos.rowIndex].findIndex(seat => seat.status === SEAT_STATUS.BOOKING);
-      let lastSelectedIndex = seatMatrix[selectedPos.rowIndex].findLastIndex(seat => seat.status === SEAT_STATUS.BOOKING);
-      if (seatMatrix[selectedPos.rowIndex].some(seat => seat.slot > 1)) {
-        return;
-      }
-      for (let i = firstSelectedIndex; i <= lastSelectedIndex; i++) {
-        if (seatMatrix[selectedPos.rowIndex][i]?.status && (seatMatrix[selectedPos.rowIndex][i]?.status !== SEAT_STATUS.BOOKING)) {
-          seatErrors.slotError = true;
+      for (let row = 0; row < row_count; row++) {
+        let firstSelectedIndex = seatMatrix[row].findIndex(seat => seat.status === SEAT_STATUS.BOOKING);
+        let lastSelectedIndex = seatMatrix[row].findLastIndex(seat => seat.status === SEAT_STATUS.BOOKING);
 
+        // Nếu hàng không có ghế được chọn, bỏ qua
+        if (firstSelectedIndex === -1 || lastSelectedIndex === -1) continue;
+
+        // Kiểm tra ghế không liên tục trong hàng
+        let prevSelectedIndex = -1;
+        for (let i = 0; i < col_count; i++) {
+          if (seatMatrix[row][i]?.status === SEAT_STATUS.BOOKING) {
+            if (prevSelectedIndex !== -1 && i - prevSelectedIndex > 1) {
+              seatErrors.slotError = true;
+              break;
+            }
+            prevSelectedIndex = i;
+          }
         }
-      }
-      if (
-        firstSelectedIndex === 1 &&
-        seatMatrix[selectedPos.rowIndex][0]?.status === SEAT_STATUS.AVAILABLE &&
-        seatMatrix[selectedPos.rowIndex][lastSelectedIndex + 1]?.status === SEAT_STATUS.AVAILABLE
-      ) {
-        seatErrors.slotError = true;
+
+        // Kiểm tra các điều kiện mép cho hàng này
+        if (
+          firstSelectedIndex === 1 &&
+          seatMatrix[row][0]?.status === SEAT_STATUS.AVAILABLE &&
+          seatMatrix[row][lastSelectedIndex + 1]?.status === SEAT_STATUS.AVAILABLE
+        ) {
+          seatErrors.slotError = true;
+        }
+
+        if (
+          lastSelectedIndex === (col_count - 1) - 1 &&
+          seatMatrix[row][col_count - 1]?.status === SEAT_STATUS.AVAILABLE &&
+          seatMatrix[row][firstSelectedIndex - 1]?.status === SEAT_STATUS.AVAILABLE
+        ) {
+          seatErrors.slotError = true;
+        }
+
+        // Nếu phát hiện lỗi ở hàng này, dừng kiểm tra
+        if (seatErrors.slotError) break;
       }
 
-      if (
-        lastSelectedIndex === (col_count - 1) - 1 &&
-        seatMatrix[selectedPos.rowIndex][col_count - 1]?.status === SEAT_STATUS.AVAILABLE &&
-        seatMatrix[selectedPos.rowIndex][firstSelectedIndex - 1]?.status === SEAT_STATUS.AVAILABLE
-      ) {
-        seatErrors.slotError = true;
-      }
       onChange?.({ seatErrors });
-      
     }
   }
+
 
   function getPositionSeat(seatNumber: string) {
     const rowIndex = getRowIndex(seatNumber);

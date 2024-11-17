@@ -9,7 +9,7 @@
 @vite(['resources/js/app.js', 'resources/css/app.css'])
 
 @section('content')
-<div x-data="SeatViewComponent" id="main-left">
+<div x-data="SeatViewComponent({{$showtimeId}})" id="main-left">
 
     <div id="header">
         <div class="header-content">
@@ -28,7 +28,7 @@
                 <ul class="nav navbar-nav navbar-left nav-step">
                     <li :class="{'active': step == 1}"><a href="javascript:;" @click="setStep(1)">01 CHỌN GHẾ</a></li>
                     <li :class="{'active': step == 2}"><a href="javascript:;">02 XÁC THỰC & THANH TOÁN</a></li>
-                    <li :class="{'active': step == 3}"><a href="javascript:;">03 HOÀN ẤT</a></li>
+                    <li :class="{'active': step == 3}"><a href="javascript:;">03 HOÀN TẤT</a></li>
                 </ul>
             </div>
         </div>
@@ -194,7 +194,7 @@
                             </div>
                             <div id="time">
                                 Thời gian còn lại
-                                <span id="count-time">00:44</span>
+                                <span id="count-time" x-text="formatMinuteSecond()"></span>
                             </div>
                         </div>
                         <div class="row">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CinemaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\FoodController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Api\SeatController;
 use App\Http\Controllers\Api\SeatLayoutController;
 use App\Http\Controllers\Api\SeatTypeController;
 use App\Http\Controllers\Api\ShowtimeController;
+use App\Models\Cinema;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -58,15 +60,10 @@ Route::name('api.')->group(function () {
         Route::put('{movie}', 'update');
         Route::delete('{movie}', 'destroy');
     });
-    Route::controller(AuthController::class)->prefix('user')->name('user.')->group(function () {
-        Route::get('', 'index');
+    Route::controller(AuthController::class)->prefix('users')->name('users.')->group(function () {
+        Route::get('getCurrentUser', 'getCurrentUser');
     });
-    Route::post('/webhook', function (Request $request) {
-        $payload = $request->all();
-        if ($payload['event'] === 'member_removed') {
-            $userId = $payload['user_id'];
-            $channel = $payload['channel'];
-            Log::info("User {$userId} disconnected from {$channel}");
-        }
+    Route::controller(CinemaController::class)->prefix('cinemas')->name('cinemas.')->group(function () {
+        Route::get('', 'index');
     });
 });
