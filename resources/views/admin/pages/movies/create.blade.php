@@ -332,7 +332,8 @@
                                                                 <label
                                                                     class="form-label">{{ __('language.admin.movies.hot') }}</label><br>
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="hot" name="movie[hot]" value="{{ old('movie.hot', 0) }}">
+                                                                    id="hot" name="movie[hot]" value="1"
+                                                                    @checked(old('movie.hot', 0) == 1)>
                                                             </div>
                                                         </div>
                                                     </div>
