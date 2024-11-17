@@ -44,7 +44,6 @@ class ListMoviesRepository implements ListMoviesRepositoryInterface
             ->orderBy('order', 'asc')
             ->orderBy('id', 'desc')
             ->get();
-
         // ->paginate(PAGINATE_LIST_MOVIE);
     }
 }

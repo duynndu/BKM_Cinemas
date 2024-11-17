@@ -3,12 +3,12 @@
 namespace App\Services\Client\ListMovies\Services;
 
 use App\Services\Client\ListMovies\Interface\ListMovieServiceInterface;
-use App\Repositories\Client\ListMovies\Repository\ListMoviesRepository;
+use App\Repositories\Client\ListMovies\Interface\ListMoviesRepositoryInterface;
 
 class ListMovieService implements ListMovieServiceInterface
 {
     protected $listMovieRepository;
-    public function __construct(ListMoviesRepository $listMovieRepository)
+    public function __construct(ListMoviesRepositoryInterface $listMovieRepository)
     {
         $this->listMovieRepository = $listMovieRepository;
     }
