@@ -21,42 +21,6 @@ window.axios = axios;
 window.route = route;
 window.Alpine = Alpine;
 
-window.axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content') ?? '';
-window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-window.axios.defaults.baseURL = "/api";
-
-// Request interceptor
-window.axios.interceptors.request.use(
-  (config) => {
-    const methodsToOverride = ['delete', 'put', 'patch'];
-
-    if (methodsToOverride.includes(config.method ?? '')) {
-      config.headers['X-HTTP-Method-Override'] = config.method;
-      config.method = 'post';
-    }
-
-    return config;
-  },
-  (error) => {
-    console.error('Request interceptor error:', error);
-    return Promise.reject(error);
-  }
-);
-
-// Response interceptor
-window.axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-
-    if (error.response && error.response.status === 401) {
-
-    }
-    return Promise.reject(error);
-  }
-);
-
 // custom
 window.utils = utils;
 window.Services = Services;
@@ -77,12 +41,12 @@ import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
 window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: import.meta.env.VITE_PUSHER_APP_KEY,
-    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER ?? 'mt1',
-    wsHost: import.meta.env.VITE_PUSHER_HOST ? import.meta.env.VITE_PUSHER_HOST : `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
-    wsPort: import.meta.env.VITE_PUSHER_PORT ?? 80,
-    wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
-    forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
-    enabledTransports: ['ws', 'wss'],
+  broadcaster: 'pusher',
+  key: import.meta.env.VITE_PUSHER_APP_KEY,
+  cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER ?? 'mt1',
+  wsHost: import.meta.env.VITE_PUSHER_HOST ? import.meta.env.VITE_PUSHER_HOST : `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
+  wsPort: import.meta.env.VITE_PUSHER_PORT ?? 80,
+  wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
+  forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
+  enabledTransports: ['ws', 'wss'],
 });

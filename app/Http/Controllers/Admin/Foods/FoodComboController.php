@@ -94,8 +94,11 @@ class FoodComboController extends Controller
      */
     public function edit(string $id)
     {
+        $combo  = $this->foodComboService->find($id);
+        if (!$combo) {
+            return redirect()->route('admin.foodCombos.index')->with(['status_failed' => 'Không tìm thấy!']);
+        }
         $listFoods = $this->foodService->getAllActive();
-        $combo     = $this->foodComboService->find($id);
         return view('admin.pages.foodCombos.edit', compact('listFoods', 'combo'));
     }
 
@@ -107,8 +110,9 @@ class FoodComboController extends Controller
         $data = $request->all();
         try {
             DB::beginTransaction();
-
-            $this->foodComboService->update($data, $id);
+            if (!$this->foodComboService->update($data, $id)) {
+                return redirect()->route('admin.foodCombos.index')->with(['status_failed' => 'Không tìm thấy!']);
+            }
 
             DB::commit();
 

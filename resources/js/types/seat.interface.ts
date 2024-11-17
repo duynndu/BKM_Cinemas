@@ -13,6 +13,7 @@ export interface ISeat {
   selected?: boolean;
   status: SEAT_STATUS_VALUES;
   user_id: string;
+  selected_order: number;
 }
 
 export type SEAT_STATUS_VALUES =

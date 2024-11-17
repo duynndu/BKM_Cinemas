@@ -8,6 +8,7 @@ import Services from "@/services";
 import Swal from "sweetalert2";
 import Pusher from "pusher-js/types/src/core/pusher";
 import Echo from "laravel-echo";
+import { IUser } from "./user.interface";
 
 declare global {
   interface Window {
@@ -18,7 +19,8 @@ declare global {
     Alpine: typeof Alpine;
     utils: typeof utils;
     Echo: Echo<'pusher'>;
-    Pusher: typeof Pusher
+    Pusher: typeof Pusher;
+    user: IUser
   }
   interface JQuery {
     filemanager(type: string, options: IOption): any;

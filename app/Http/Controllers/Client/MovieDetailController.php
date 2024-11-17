@@ -9,6 +9,8 @@ class MovieDetailController extends Controller
 {
     public function movieDetail($slug)
     {
-        return view('client.movie-detail');
+        return view('client.pages.movie-detail', [
+            'slug' => $slug
+        ]);
     }
 }

@@ -71,6 +71,7 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
       }
       return;
     }
+
     const formData = new FormData();
     formData.set('room_name', this.formData.room_name);
     formData.set('col_count', this.formData.col_count.toString());
@@ -86,10 +87,14 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
       } else {
         await roomService.postRoom(formData);
       }
-      toastr.success('Thao tác thành công');
-      setTimeout(() => {
-        redirect().route('admin.rooms.index');
-      }, 500);
+      swal.fire({
+        title: 'Thao tác thành công!',
+        icon: 'success',
+        showCancelButton: false,
+        showConfirmButton: false,
+        timer: 1000,
+        reverseButtons: false
+      }).then(() => redirect().route('admin.rooms.index'));
     } catch (error: any) {
       console.error(error);
       toastr.error(error.message);

@@ -107,13 +107,15 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Danh sách rạp</h4>
-                                <div class="compose-btn">
-                                    <a href="{{ route('admin.cinemas.create') }}">
-                                        <button class="btn btn-secondary btn-sm light">
-                                            + Thêm mới
-                                        </button>
-                                    </a>
-                                </div>
+                                @can('create', \App\Models\Cinema::class)
+                                    <div class="compose-btn">
+                                        <a href="{{ route('admin.cinemas.create') }}">
+                                            <button class="btn btn-secondary btn-sm light">
+                                                + Thêm mới
+                                            </button>
+                                        </a>
+                                    </div>
+                                @endcan
                             </div>
                             <div class="card-body">
                                 @if ($data->count() > 0)
@@ -205,28 +207,34 @@
                                                                 class="toggle-active-btn btn btn-xs {{ $cinema->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
                                                                 data-id="{{ $cinema->id }}"
                                                                 data-status="{{ $cinema->active }}"
-                                                                data-url="{{ route('admin.cinemas.changeActive') }}">
+                                                                @can('changeActive', \App\Models\Cinema::class)
+                                                                    data-url="{{ route('admin.cinemas.changeActive') }}"
+                                                                @endcan >
                                                                 {{ $cinema->active == 1 ? 'Hiện' : 'Ẩn' }}
                                                             </button>
                                                         </td>
                                                         <td>
                                                             <div
                                                                 style="padding-right: 20px; display: flex; justify-content: end">
-                                                                <a href="{{ route('admin.cinemas.edit', $cinema->id) }}"
-                                                                    class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                    <i class="fa fa-pencil"></i>
-                                                                </a>
-                                                                <form
-                                                                    action="{{ route('admin.cinemas.delete', $cinema->id) }}"
-                                                                    class="formDelete" method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button
-                                                                        class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
-                                                                        data-type="DELETE" href="">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </form>
+                                                                @can('update', \App\Models\Cinema::class)
+                                                                    <a href="{{ route('admin.cinemas.edit', $cinema->id) }}"
+                                                                        class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                        <i class="fa fa-pencil"></i>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('delete', \App\Models\Cinema::class)
+                                                                    <form
+                                                                        action="{{ route('admin.cinemas.delete', $cinema->id) }}"
+                                                                        class="formDelete" method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button
+                                                                            class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                            data-type="DELETE" href="">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                @endcan
                                                             </div>
                                                         </td>
                                                     </tr>

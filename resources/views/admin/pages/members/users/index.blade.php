@@ -126,28 +126,33 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end" style="">
                                                         @can('changeStatus', App\Models\User::class)
-                                                            <button type="button"
-                                                                    data-url="{{ route('admin.users.changeStatus') }}"
-                                                                    data-status="{{ $user->status }}"
-                                                                    data-id="{{ $user->id }}"
-                                                                    class="dropdown-item changeStatusUser">
-                                                                {{ $user->status == 1 ? __('language.admin.members.users.blockUser') : __('language.admin.members.users.unblockUser') }}
-                                                            </button>
+                                                            @if(Auth::user()->id !== $user->id)
+                                                                <button type="button"
+                                                                        data-url="{{ route('admin.users.changeStatus') }}"
+                                                                        data-status="{{ $user->status }}"
+                                                                        data-id="{{ $user->id }}"
+                                                                        class="dropdown-item changeStatusUser">
+                                                                    {{ $user->status == 1 ? __('language.admin.members.users.blockUser') : __('language.admin.members.users.unblockUser') }}
+                                                                </button>
+                                                            @endif
                                                         @endcan
                                                         @can('update', App\Models\User::class)
                                                             <a class="dropdown-item"
                                                                href="{{ route('admin.users.edit', $user->id) }}">{{ __('language.admin.members.users.editDrop') }}</a>
                                                         @endcan
                                                         @can('delete', App\Models\User::class)
-                                                            <form class="formDelete"
-                                                                  action="{{ route('admin.users.delete', $user->id) }}"
-                                                                  method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item btnDelete">
-                                                                    {{ __('language.admin.members.users.deleteDrop') }}
-                                                                </button>
-                                                            </form>
+                                                            @if(Auth::user()->id !== $user->id)
+                                                                <form class="formDelete"
+                                                                    action="{{ route('admin.users.delete', $user->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <input type="hidden" name="page" value="{{ request()->page > 0 ? request()->page : 0 }}">
+                                                                    <button type="submit" class="dropdown-item btnDelete">
+                                                                        {{ __('language.admin.members.users.deleteDrop') }}
+                                                                    </button>
+                                                                </form>
+                                                            @endif
                                                         @endcan
                                                     </div>
                                                 </div>
