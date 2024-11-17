@@ -3,13 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\PostController;
+use App\Http\Controllers\Client\DepositController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Auth\Client\AuthController;
+use App\Http\Controllers\Client\ListMoviesController;
 use App\Http\Controllers\Auth\Client\GoogleController;
 use App\Http\Controllers\Client\MovieDetailController;
 use App\Http\Controllers\Client\CategoryPostController;
 use App\Http\Controllers\Auth\Client\FacebookController;
-use App\Http\Controllers\Client\DepositController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,9 +118,12 @@ Route::get('/profile-history-ticket', function () {
     return view('client.pages.profile.history-ticket');
 });
 
-Route::get('/phim', function () {
-    return view('client.pages.movie');
-});
+Route::get('/phim', [ListMoviesController::class, 'movies'])->name('movie');
+
+// Route::get('/phim', function () {
+//     return view('client.pages.movie');
+// });
+
 // Route::get('/phim-chi-tiet', function () {
 //     return view('client.pages.movie-detail');
 // });
