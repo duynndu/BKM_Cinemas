@@ -333,7 +333,24 @@
                                                 </a>
                                             </p>
                                             <p>Ví thành viên: <span class="point">{{ !empty(Auth::user()->balance) ? number_format(Auth::user()->balance, 0, '.', ',') : 0 }}</span> VND</p>
-                                            <p>EXP: <span class="point">0</span> </p>
+                                            <p>Cấp bậc thành viên:
+                                                <span class="point">
+                                                    @switch(Auth::user()->membership_level)
+                                                        @case('normal')
+                                                            <span class="sparkle-normal">🥈 Hạng Thường</span>
+                                                            @break
+                                                        @case('vip')
+                                                            <span class="sparkle-vip">🌟 Hạng VIP</span>
+                                                            @break
+                                                        @case('svip')
+                                                            <span class="sparkle-svip">👑 Hạng Siêu VIP</span>
+                                                            @break
+                                                        @default
+                                                            Không xác định
+                                                    @endswitch
+                                                </span>
+                                            </p>
+                                            <p>EXP: <span class="point">{{ !empty(Auth::user()->exp) ? Auth::user()->exp : 0 }}</span> điểm</p>
                                             <p>Tổng chi tiêu: <span class="point">0</span> VND</p>
                                         </div>
                                     </div>
@@ -616,8 +633,10 @@
             <div class="d-flex flex-column justify-content-center">
                 <h3 class="title-payment">Nạp tiền vào ví thành viên</h3>
                 <div class="content-p">
-                    <p>Để nạp tiền vào ví thành viên BKM Cinemas.</p>
                     <p>Quý khách vui lòng chọn phương thức thanh toán và nhập số tiền cần nạp.</p>
+                    <p>
+                        Thành viên mới nạp tiền vào ví thành viên từ 50.000đ được tặng ngay 50 EXP vào tài khoản thành viên.
+                    </p>
                 </div>
             </div>
             <form data-error="{{ asset('client/images/error.png') }}" action="{{ route('processDeposit') }}"

@@ -689,3 +689,24 @@ input[type="file"] {
     justify-content: center;
     align-items: center;
 }
+
+.sparkle-normal {
+    background: linear-gradient(45deg, #808080, #4b4b4b);
+    padding: 5px 8px 5px 5px;
+    border-radius: 3px;
+    color: #fff;
+}
+
+.sparkle-vip {
+    background: linear-gradient(45deg, #ce00ff99, #00b6ff);
+    padding: 5px 8px 5px 5px;
+    border-radius: 3px;
+    color: #fff;
+}
+
+.sparkle-svip {
+    background: linear-gradient(45deg, #913aff, #ec28ff);
+    padding: 5px 8px 5px 5px;
+    border-radius: 3px;
+    color: #fff;
+}
