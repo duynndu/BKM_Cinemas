@@ -77,7 +77,9 @@ class ModuleController extends Controller
     public function edit($id)
     {
         $data['module'] = $this->moduleServices->find($id);
-
+        if (!$data['module']) {
+            return redirect()->route('admin.modules.index')->with(['status_failed' => 'Không tìm thấy!']);
+        }
         $data['permissions'] = $this->permissionServices->getAll();
 
         return view('admin.pages.members.modules.edit', compact('data'));
@@ -89,7 +91,9 @@ class ModuleController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->moduleServices->update($data, $id);
+            if (!$this->moduleServices->update($data, $id)) {
+                return redirect()->route('admin.modules.index')->with(['status_failed' => 'Không tìm thấy!']);
+            }
 
             DB::commit();
 

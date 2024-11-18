@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Services\Client\CategoryPosts;
+namespace App\Services\Client\CategoryPosts\Services;
 
 
-use App\Repositories\Client\CategoryPosts\Repository\CategoryPostRepository;
-use Stichoza\GoogleTranslate\GoogleTranslate;
+use App\Repositories\Client\CategoryPosts\Interface\CategoryPostInterface;
+use App\Services\Client\CategoryPosts\Interface\CategoryPostServiceInterface;
 
-class CategoryPostService
+class CategoryPostService implements CategoryPostServiceInterface
 {
-
     protected $categoryPostRepository;
 
     public function __construct(
-        CategoryPostRepository $categoryPostRepository
+        CategoryPostInterface $categoryPostRepository
     ) {
         $this->categoryPostRepository = $categoryPostRepository;
     }
-
 
     public function getCategoryPostFirst($slug){
         return $this->categoryPostRepository->getCategoryPostFirst($slug);

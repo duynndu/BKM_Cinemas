@@ -8,9 +8,9 @@
     <meta name="transaction_succeed" content="{{ session('transaction_succeed') }}">
     <meta name="transaction_failed" content="{{ session('transaction_failed') }}">
     <meta name="status_failed" content="{{ session('status_failed') }}">
-    <meta name="amount" content="{{ number_format(session()->get("amount"), 0, '.', ',') }}">
-    <meta name="image-success" content="{{ asset("client/images/success.png") }}">
-    <meta name="image-error" content="{{ asset("client/images/error.png") }}">
+    <meta name="amount" content="{{ number_format(session()->get('amount'), 0, '.', ',') }}">
+    <meta name="image-success" content="{{ asset('client/images/success.png') }}">
+    <meta name="image-error" content="{{ asset('client/images/error.png') }}">
     <title>@yield('title')</title>
     <meta name="description"
         content="Rạp chiếu phim Touch Cinema với chất lượng âm thanh & hình ảnh đạt chuẩn quốc tế đầu tiên tại Pleiku, Gia Lai. Đặt vé ngay hôm nay để nhận được nhiều ưu đãi!">
@@ -88,8 +88,8 @@
                                                 placeholder="Mật khẩu" required />
                                         </div>
                                         <div class="form-group">
-                                            <input name="remember" class="rememberme" type="checkbox" checked="checked"
-                                                value="forever" /> Nhớ mật khẩu
+                                            <input name="remember" class="rememberme" type="checkbox"
+                                                checked="checked" value="forever" /> Nhớ mật khẩu
                                             <span>
                                                 <a href="password/reset.html">Quên mật khẩu</a>
                                             </span>
@@ -183,7 +183,7 @@
     <div id="venom-popup" style="display: none;">
         <div class="venom-content">
             <button type="button" id="fragmentClose">close</button>
-            <img src="{{ asset("client/images/V3_Popcorn-min.gif") }}" />
+            <img src="{{ asset('client/images/V3_Popcorn-min.gif') }}" />
         </div>
     </div>
 
@@ -195,6 +195,9 @@
 
 </body>
 
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v21.0">
+</script>
+
 <!-- Scripts -->
 <script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('client/js/statics/js/jquery.js') }}"></script>
@@ -204,7 +207,8 @@
 <script src="{{ asset('vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/statics/js/scripts.js') }}"></script>
 <script src="{{ asset('client/js/statics/js/showtime-widget.js') }}"></script>
-<script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}">
+</script>
 <script src="{{ asset('js/client/commons/common.js') }}"></script>
 
 @yield('js')

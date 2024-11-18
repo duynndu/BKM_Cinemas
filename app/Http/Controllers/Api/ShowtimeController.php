@@ -140,7 +140,8 @@ class ShowtimeController extends Controller
 
     public function bookSeat(Request $request, Showtime $showtime)
     {
-        $response = BookSeat::dispatch($showtime->id, $request->seat_number);
-        return response()->json($response);
+        if ($request->seat_number) {
+            BookSeat::dispatch($showtime->id, $request->seat_number);
+        }
     }
 }

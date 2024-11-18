@@ -1,19 +1,19 @@
-import axios from "axios";
+import { apiBase } from "@/api/api-base";
 import { BaseService } from "./base.service";
 
 class Movie extends BaseService {
   async getMovies() {
-    const response = await axios.get('/movies');
+    const response = await apiBase.get('/movies');
     return response.data;
   }
 
-  async getMovie(id: number) {
-    const response = await axios.get(`/movies/${id}`);
+  async getMovie(id: string) {
+    const response = await apiBase.get(`/movies/${id}`);
     return response.data;
   }
 
   async postMovie(data: FormData) {
-    const response = await axios.post('/movies', data, {
+    const response = await apiBase.post('/movies', data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -22,7 +22,7 @@ class Movie extends BaseService {
   }
 
   async putMovie(id: number, data: FormData) {
-    const response = await axios.put(`/movies/${id}`, data, {
+    const response = await apiBase.put(`/movies/${id}`, data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -31,7 +31,7 @@ class Movie extends BaseService {
   }
 
   async deleteMovie(id: number) {
-    const response = await axios.delete(`/movies/${id}`);
+    const response = await apiBase.delete(`/movies/${id}`);
     return response.data;
   }
 }

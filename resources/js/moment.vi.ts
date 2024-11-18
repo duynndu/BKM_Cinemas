@@ -9,7 +9,7 @@ moment.locale('vi', {
       '_'
     ),
   monthsParseExact: true,
-  weekdays: 'chủ nhật_thứ hai_thứ ba_thứ tư_thứ năm_thứ sáu_thứ bảy'.split(
+  weekdays: 'Chủ nhật_Thứ hai_Thứ ba_Thứ tư_Thứ năm_Thứ sáu_Thứ bảy'.split(
     '_'
   ),
   weekdaysShort: 'CN_T2_T3_T4_T5_T6_T7'.split('_'),

@@ -6,17 +6,21 @@ import { ISeatType } from "@/types/seat-type.interface";
 import { ISeat, SEAT_STATUS_VALUES } from "@/types/seat.interface";
 
 $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, seat_types: ISeatType[] }, onChange?: (data: any) => any) {
-  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  const user = window.user;
   let { seats, col_count, row_count, base_price = 0, seat_types = [] } = seatLayout;
   let seatErrors = {
-    typeError: false,
-    slotError: false,
-    quantityError: false,
+    typeError: true,
+    slotError: true,
+    quantityError: true,
   }
-  let seatsSelected: ISeat[] = [];
+  let seatsSelected: ISeat[] = seats?.filter(seat => seat.status === SEAT_STATUS.BOOKING) as unknown as ISeat[];
   const rowLabels = $("<div>", {
     class: "row-labels tw-py-4",
   });
+  seatErrors.quantityError = seatsSelected.length > 9;
+  //@ts-ignore
+  seatErrors.typeError = seatsSelected.some(seat => seats[0].type != seat.type)
+
 
   const seatTable = $("<div>", {
     class: "seat-table tw-grid tw-gap-2 tw-p-4 tw-rounded-xl",
@@ -26,6 +30,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
   generateSeats(seats ?? []);
   addEventListeners();
   this.append(rowLabels, seatTable, rowLabels.clone());
+  checkSeatMapping();
 
   function generateSeats(seats: ISeat[]) {
     seatTable.removeClass();
@@ -41,7 +46,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
     }
 
     seats.forEach((seat, index) => {
-      const isUserSelectSeat = user.id == seat.user_id && seat.status == SEAT_STATUS.BOOKING;
+      const isUserSelectSeat = user?.id == seat.user_id && seat.status == SEAT_STATUS.BOOKING;
       seatTable.append($('<div>', {
         style: `${isUserSelectSeat || seat.status == SEAT_STATUS.AVAILABLE ? 'cursor: pointer' : 'cursor: not-allowed'}`,
         class: `seat seat-lg tw-col-span-${seat.slot} tw-border-solid tw-text-white tw-border-2 tw-border-${seat.type} ${!seat.visible ? 'tw-hidden' : 'tw-visible'} ${isUserSelectSeat ? SEAT_STATUS.SELECTED : seat.status}`,
@@ -57,6 +62,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         'data-user-id': seat.user_id,
         ...(seat.type !== SEAT_TYPE.EMPTY_SEAT && { 'x-tooltip': `"${seat.seat_number} - ${price(seat.price ?? 0)}"` }),
       }));
+
       $(seatTable.children()[index]).data('merged-seats', seat.merged_seats ?? []);
     });
 
@@ -115,114 +121,113 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         const isUserSelectSeat = user.id == seat.user_id && seat.status == SEAT_STATUS.BOOKING;
         if (isUserSelectSeat || seat.status == SEAT_STATUS.AVAILABLE) {
           seatElement.removeClass(seatElement.data('status'));
-
-          if (isSelected) {
-            seatElement.data('status', SEAT_STATUS.BOOKING);
-            // seatElement.addClass(SEAT_STATUS.BOOKING);
-            seatsSelected.push(seat as unknown as ISeat);
-          } else {
-            seatElement.data('status', SEAT_STATUS.AVAILABLE);
-            // seatElement.addClass(SEAT_STATUS.AVAILABLE);
-            seatsSelected = seatsSelected.filter(seat => seat.seat_number !== seatElement.data('seat-number')) ?? [];
+          if (seatsSelected.length == 9) {
+            seatErrors.quantityError = true;
+            alert('Nếu bạn muốn đặt trên 9 ghế, vui lòng thực hiện giao dịch nhiều lần hoặc liên hệ tại quầy!');
+            return;
           }
-          seats = getSeatsFromDOM();
-          checkSeatMapping(seatElement)
-          if (seatErrors.typeError || seatErrors.quantityError) {
-            if (seatErrors.typeError) {
-              alert('Không được chọn 2 loại ghế khác nhau');
-            } else if (seatErrors.quantityError) {
-              alert('Nếu bạn muốn đặt trên 9 ghế, vui lòng thực hiện giao dịch nhiều lần hoặc liên hệ tại quầy!');
-            }
-            seatElement.removeClass(seatElement.data('status'));
-            seatElement.data('status', SEAT_STATUS.AVAILABLE);
-            // seatElement.addClass(SEAT_STATUS.AVAILABLE);
-            seatsSelected = seatsSelected.filter(seat => seat.seat_number !== seatElement.data('seat-number')) ?? [];
-
+          if (seatsSelected[0] && seatsSelected[0]?.type !== seat.type) {
+            seatErrors.typeError = true;
+            alert('Không được chọn 2 loại ghế khác nhau');
           }
-          //@ts-ignore
-          window.checkSeatMapping = () => {
-            console.log(checkSeatMapping(seatElement));
-          };
-          onChange?.({ seatsSelected, seatErrors, seat });
+          // if (isSelected) {
+          // seatElement.data('status', SEAT_STATUS.BOOKING);
+          // seatElement.addClass(SEAT_STATUS.BOOKING);
+          // seatsSelected.push(seat as unknown as ISeat);
+          // } else {
+          // seatElement.data('status', SEAT_STATUS.AVAILABLE);
+          // seatElement.addClass(SEAT_STATUS.AVAILABLE);
+          // seatsSelected = seatsSelected.filter(seat => seat.seat_number !== seatElement.data('seat-number')) ?? [];
+          // }
+          // seats = getSeatsFromDOM();
+          // checkSeatMapping();
+          // if (seatErrors.typeError || seatErrors.quantityError) {
+
+          //   seatElement.removeClass(seatElement.data('status'));
+          //   seatElement.data('status', SEAT_STATUS.AVAILABLE);
+          //   // seatElement.addClass(SEAT_STATUS.AVAILABLE);
+          //   seatsSelected = seatsSelected.filter(seat => seat.seat_number !== seatElement.data('seat-number')) ?? [];
+
+          // }
+          onChange?.({ seatErrors, seat });
         }
       }
     });
   }
 
-  function getColIndex(seatElement: JQuery<HTMLElement>) {
-    const colIndex = $(seatElement).index() % col_count;
+  function getColIndex(seatNumber: string) {
+    const colIndex = $(`#${seatNumber}`).index() % col_count;
     return colIndex;
   }
 
-  function getRowIndex(seatElement: JQuery<HTMLElement>) {
-    const rowIndex = Math.floor($(seatElement).index() / col_count);
+  function getRowIndex(seatNumber: string) {
+    const rowIndex = Math.floor($(`#${seatNumber}`).index() / col_count);
     return rowIndex;
   }
 
-  function getSeatPrev(seatElement: JQuery<HTMLElement>) {
-    if (getColIndex(seatElement) > 0) {
-      return seatElement.prev();
-    }
-    return null;
-  }
+  function checkSeatMapping() {
+    if (seatsSelected.length > 0) {
+      const seatNumber = seatsSelected.sort((a, b) => b.selected_order - a.selected_order)[0].seat_number;
+      seatErrors.slotError = false;
 
-  function getSeatNext(seatElement: JQuery<HTMLElement>) {
-    if (getColIndex(seatElement) < col_count - 1) {
-      return seatElement.next();
-    }
-    return null;
-  }
+      if (!seatNumber) return;
+      if (!seats) return;
+      const selectedPos = getPositionSeat(seatNumber);
 
-  function checkSeatMapping(seatElementSelected: JQuery<HTMLElement>) {
-    seatErrors.slotError = false;
-    seatErrors.typeError = false;
-    seatErrors.quantityError = false;
-
-    const selectedPos = getPositionSeat(seatElementSelected);
-    if (seats) {
       const seatMatrix: ISeat[][] = [];
       for (let row = 0; row < row_count; row++) {
         const rowSeats = seats.slice(row * col_count, (row + 1) * col_count);
         seatMatrix.push(rowSeats);
       }
 
-      let firstSelectedIndex = seatMatrix[selectedPos.rowIndex].findIndex(seat => seat.status === SEAT_STATUS.BOOKING);
-      let lastSelectedIndex = seatMatrix[selectedPos.rowIndex].findLastIndex(seat => seat.status === SEAT_STATUS.BOOKING);
+      for (let row = 0; row < row_count; row++) {
+        let firstSelectedIndex = seatMatrix[row].findIndex(seat => seat.status === SEAT_STATUS.BOOKING);
+        let lastSelectedIndex = seatMatrix[row].findLastIndex(seat => seat.status === SEAT_STATUS.BOOKING);
 
-      if (seatsSelected.some(seat => seatsSelected[0].type !== seat.type)) {
-        seatErrors.typeError = true;
-      }
-      if (seatsSelected.length > 9) {
-        seatErrors.quantityError = true;
-      }
-      if (seatMatrix[selectedPos.rowIndex].some(seat => seat.slot > 1)) {
-        return;
-      }
-      for (let i = firstSelectedIndex; i <= lastSelectedIndex; i++) {
-        if (seatMatrix[selectedPos.rowIndex][i]?.status && (seatMatrix[selectedPos.rowIndex][i]?.status !== SEAT_STATUS.SELECTED)) {
+        // Nếu hàng không có ghế được chọn, bỏ qua
+        if (firstSelectedIndex === -1 || lastSelectedIndex === -1) continue;
+
+        // Kiểm tra ghế không liên tục trong hàng
+        let prevSelectedIndex = -1;
+        for (let i = 0; i < col_count; i++) {
+          if (seatMatrix[row][i]?.status === SEAT_STATUS.BOOKING) {
+            if (prevSelectedIndex !== -1 && i - prevSelectedIndex > 1) {
+              seatErrors.slotError = true;
+              break;
+            }
+            prevSelectedIndex = i;
+          }
+        }
+
+        // Kiểm tra các điều kiện mép cho hàng này
+        if (
+          firstSelectedIndex === 1 &&
+          seatMatrix[row][0]?.status === SEAT_STATUS.AVAILABLE &&
+          seatMatrix[row][lastSelectedIndex + 1]?.status === SEAT_STATUS.AVAILABLE
+        ) {
           seatErrors.slotError = true;
         }
+
+        if (
+          lastSelectedIndex === (col_count - 1) - 1 &&
+          seatMatrix[row][col_count - 1]?.status === SEAT_STATUS.AVAILABLE &&
+          seatMatrix[row][firstSelectedIndex - 1]?.status === SEAT_STATUS.AVAILABLE
+        ) {
+          seatErrors.slotError = true;
+        }
+
+        // Nếu phát hiện lỗi ở hàng này, dừng kiểm tra
+        if (seatErrors.slotError) break;
       }
-      if (
-        firstSelectedIndex === 1 &&
-        seatMatrix[selectedPos.rowIndex][0]?.status === SEAT_STATUS.AVAILABLE &&
-        seatMatrix[selectedPos.rowIndex][lastSelectedIndex + 1]?.status === SEAT_STATUS.AVAILABLE
-      ) {
-        seatErrors.slotError = true;
-      }
-      if (
-        lastSelectedIndex === (col_count - 1) - 1 &&
-        seatMatrix[selectedPos.rowIndex][col_count - 1]?.status === SEAT_STATUS.AVAILABLE &&
-        seatMatrix[selectedPos.rowIndex][firstSelectedIndex - 1]?.status === SEAT_STATUS.AVAILABLE
-      ) {
-        seatErrors.slotError = true;
-      }
+
+      onChange?.({ seatErrors });
     }
   }
 
-  function getPositionSeat(seat: JQuery<HTMLElement>) {
-    const rowIndex = getRowIndex(seat);
-    const colIndex = getColIndex(seat);
+
+  function getPositionSeat(seatNumber: string) {
+    const rowIndex = getRowIndex(seatNumber);
+    const colIndex = getColIndex(seatNumber);
     return { rowIndex, colIndex };
   }
 

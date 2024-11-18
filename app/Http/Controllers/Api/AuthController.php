@@ -10,11 +10,8 @@ class AuthController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return response()->json(auth()->user());
-    }
 
+    public function index() {}
     /**
      * Store a newly created resource in storage.
      */
@@ -45,5 +42,12 @@ class AuthController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function getCurrentUser()
+    {
+        if (auth()->user() != null) {
+            return response()->json(auth()->user());
+        }
+        return response("null");
     }
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->integer('duration'); // Vd: 120 phút (Thời lượng phim)
             $table->string('director'); // Đạo diễn
-            $table->string('trailer_url'); // trailer
+            $table->string('trailer_url', 500); // trailer
             $table->string('format'); // Định dạng phim: 2D, 3D,...
             $table->integer('age');
             $table->date('release_date'); // Ngày phát hành

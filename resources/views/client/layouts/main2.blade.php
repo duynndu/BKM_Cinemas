@@ -46,15 +46,7 @@
 <body>
     <div id="fb-root"></div>
     <div id="app">
-        <div id="main-left">
-            <div id="header">
-                @include('client.partials.header2')
-            </div>
-            <div id="app-content">
-                @yield('content')
-            </div>
-        </div>
-
+        @yield('content')
         <div id="layer">
         </div>
     </div>

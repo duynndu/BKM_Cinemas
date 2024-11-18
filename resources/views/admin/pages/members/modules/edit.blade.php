@@ -38,22 +38,86 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <div class="row mb-4">
-                                        <label class="form-label mb-2">{{ __('language.admin.members.modules.permissions') }}</label>
-                                        <select id="multi-value-select" name="permissions[]" style="width:100%;" multiple="multiple">
-                                            <option value="" disabled>{{ __('language.admin.members.modules.selectAction') }}</option>
-                                            @if($data['permissions']->isNotEmpty())
-                                                @php
-                                                    $permissions = $data['module']->permissions->pluck('id')->toArray();
-                                                @endphp
-                                                @foreach($data['permissions'] as $permission)
-                                                    <option
-                                                        value="{{ $permission->id ?? '' }}"
-                                                        @selected(in_array($permission->id, old('permissions', $permissions)))>{{ $permission->name ?? '' }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
+                                    <button type="button" class="btn btn-primary mb-4" id="add-permission">
+                                        Thêm chức năng
+                                    </button>
+                                    <div id="list-permission">
+                                        @if (!empty(old('old_permissions')))
+                                            @foreach (old('old_permissions') as $key => $oldPermission)
+                                                @if (empty($oldPermission['name']) && empty($oldPermission['value']))
+                                                    @continue
+                                                @endif
+                                                <div class="row mb-4 permission" data-index="{{ $key }}">
+                                                    <input type="hidden" name="old_permissions[{{ $key }}][id]" value="{{ $oldPermission['id'] }}">
+                                                    <div class="col-5">
+                                                        <label class="form-label mb-2">Tên chức năng</label>
+                                                        <input type="text" id="name" name="old_permissions[{{ $key }}][name]"
+                                                            class="form-control" placeholder="Nhập tên chức năng (Thêm bài viết)"
+                                                            value="{{ $oldPermission['name'] }}">
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <label class="form-label mb-2">Giá trị chức năng</label>
+                                                        <input type="text" id="name" name="old_permissions[{{ $key }}][value]"
+                                                            class="form-control" placeholder="Nhập giá trị chức năng (create-post)"
+                                                            value="{{ $oldPermission['value'] }}">
+                                                    </div>
+                                                    <div class="col-2 d-flex flex-column justify-content-end">
+                                                        <button class="btn btn-danger delete-permission" type="button">
+                                                            Xóa
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @elseif (!empty($data['module']->permissions))
+                                            @foreach ($data['module']->permissions as $key => $oldPermission)
+                                                <div class="row mb-4 permission" data-index="{{ $key }}">
+                                                    <input type="hidden" name="old_permissions[{{ $key }}][id]" value="{{ $oldPermission->id }}">
+                                                    <div class="col-5">
+                                                        <label class="form-label mb-2">Tên chức năng</label>
+                                                        <input type="text" id="name" name="old_permissions[{{ $key }}][name]"
+                                                            class="form-control" placeholder="Nhập tên chức năng (Thêm bài viết)"
+                                                            value="{{ $oldPermission->name }}">
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <label class="form-label mb-2">Giá trị chức năng</label>
+                                                        <input type="text" id="name" name="old_permissions[{{ $key }}][value]"
+                                                            class="form-control" placeholder="Nhập giá trị chức năng (create-post)"
+                                                            value="{{ $oldPermission->value }}">
+                                                    </div>
+                                                    <div class="col-2 d-flex flex-column justify-content-end">
+                                                        <button class="btn btn-danger delete-permission" type="button">
+                                                            Xóa
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                        @if (!empty(old('permissions')))
+                                            @foreach (old('permissions') as $key => $permission)
+                                                @if (empty($permission['name']) && empty($permission['value']))
+                                                    @continue
+                                                @endif
+                                                <div class="row mb-4 permission" data-index="{{ $key }}">
+                                                    <div class="col-5">
+                                                        <label class="form-label mb-2">Tên chức năng</label>
+                                                        <input type="text" id="name" name="permissions[{{ $key }}][name]"
+                                                            class="form-control" placeholder="Nhập tên chức năng (Thêm bài viết)"
+                                                            value="{{ $permission['name'] }}">
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <label class="form-label mb-2">Giá trị chức năng</label>
+                                                        <input type="text" id="name" name="permissions[{{ $key }}][value]"
+                                                            class="form-control" placeholder="Nhập giá trị chức năng (create-post)"
+                                                            value="{{ $permission['value'] }}">
+                                                    </div>
+                                                    <div class="col-2 d-flex flex-column justify-content-end">
+                                                        <button class="btn btn-danger delete-permission" type="button">
+                                                            Xóa
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label mb-2">{{ __('language.admin.members.modules.description') }}</label>
@@ -84,4 +148,5 @@
 @endsection
 
 @section('js')
+    <script src=" {{ asset('/js/admin/ajaxs/module.js') }} "></script>
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CinemaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\FoodController;
@@ -10,6 +11,9 @@ use App\Http\Controllers\Api\SeatController;
 use App\Http\Controllers\Api\SeatLayoutController;
 use App\Http\Controllers\Api\SeatTypeController;
 use App\Http\Controllers\Api\ShowtimeController;
+use App\Models\Cinema;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 Route::name('api.')->group(function () {
     Route::resource('seats', SeatController::class);
@@ -17,11 +21,11 @@ Route::name('api.')->group(function () {
     Route::resource('seat-types', SeatTypeController::class);
     Route::get('seat-types-key-by-code', [SeatTypeController::class, 'getSeatTypesKeyByCode']);
     Route::controller(RoomController::class)->prefix('rooms')->name('rooms.')->group(function () {
-        Route::get('', 'index');
-        Route::get('{room}', 'show');
-        Route::post('', 'store');
-        Route::put('{room}', 'update');
-        Route::delete('{room}', 'destroy');
+        Route::get('', 'index')->name('index');
+        Route::get('{room}', 'show')->name('show');
+        Route::post('', 'store')->name('store');
+        Route::put('{room}', 'update')->name('update');
+        Route::delete('{room}', 'destroy')->name('destroy');
     });
     Route::controller(ShowtimeController::class)->prefix('showtimes')->name('showtimes.')->group(function () {
         Route::get('getShowtimesByDayAndRoomId', 'getShowtimesByDayAndRoomId');
@@ -56,7 +60,10 @@ Route::name('api.')->group(function () {
         Route::put('{movie}', 'update');
         Route::delete('{movie}', 'destroy');
     });
-    Route::controller(AuthController::class)->prefix('user')->name('user.')->group(function () {
+    Route::controller(AuthController::class)->prefix('users')->name('users.')->group(function () {
+        Route::get('getCurrentUser', 'getCurrentUser');
+    });
+    Route::controller(CinemaController::class)->prefix('cinemas')->name('cinemas.')->group(function () {
         Route::get('', 'index');
     });
 });

@@ -14,4 +14,5 @@ import "./seat-layout.component";
 import "./room.component";
 import "./seat-type.component";
 import "./seat-view.component";
+import "./movie-page.component";
 //#endregion

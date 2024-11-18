@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Members;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Permissions\PermissionRequest;
+use App\Services\Admin\Modules\Interfaces\ModuleServiceInterface;
 use App\Services\Admin\Permissions\Interfaces\PermissionServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,12 +13,15 @@ use Illuminate\Support\Facades\Log;
 class PermissionController extends Controller
 {
     protected $permissionService;
+    protected $moduleService;
 
     public function __construct(
         PermissionServiceInterface $permissionService,
+        ModuleServiceInterface     $moduleService,
     )
     {
         $this->permissionService = $permissionService;
+        $this->moduleService = $moduleService;
     }
 
     public function index(Request $request)
@@ -37,7 +41,7 @@ class PermissionController extends Controller
 
     public function create()
     {
-        $data['modules'] = $this->permissionService->getAll();
+        $data['modules'] = $this->moduleService->getAll();
 
         return view('admin.pages.members.permissions.create', compact('data'));
     }
@@ -74,7 +78,7 @@ class PermissionController extends Controller
     {
         $data['permission'] = $this->permissionService->find($id);
 
-        $data['modules'] = $this->permissionService->getAll();
+        $data['modules'] = $this->moduleService->getAll();
 
         return view('admin.pages.members.permissions.edit', compact('data'));
     }
