@@ -348,6 +348,7 @@ $(function() {
         const transactionFailed = $('meta[name="transaction_failed"]').attr('content');
         const statusFailed = $('meta[name="status_failed"]').attr('content');
         const amount = $('meta[name="amount"]').attr('content');
+        const exp = $('meta[name="exp"]').attr('content');
 
         const image = $('meta[name="image-success"]').attr('content');
         const imageError = $('meta[name="image-error"]').attr('content');
@@ -358,7 +359,7 @@ $(function() {
                 imageWidth: 100,
                 imageHeight: 100,
                 title: 'Thanh toán thành công!',
-                text: `Số tiền nạp: ${amount} VND`,
+                html: `Số tiền nạp: ${amount} VND<br>Bạn nhận được: ${exp} exp`, // Sử dụng html thay vì text
                 confirmButtonText: 'OK',
                 width: "400px",
             });

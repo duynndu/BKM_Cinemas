@@ -33,6 +33,16 @@ return new class extends Migration
             $table->string('password');
             $table->tinyInteger('status')->default(1);  // 1: Hoạt động, 0: Bị khóa
             $table->decimal('balance', 30, 2)->default(0); // Số dư ban đầu là 0
+            $table->integer('exp')->default(0)
+                ->comment('Điểm kinh nghiệm của người dùng');
+                //  Thành viên bình thường: EXP từ 0 - 500.
+                //  Thành viên VIP: EXP từ 501 - 1000.
+                //  Thành viên VVIP: EXP > 1000.
+            $table->enum('membership_level', ['normal', 'vip', 'svip'])
+                ->default('normal')
+                ->comment('Cấp độ thành viên: normal: thường, vip: víp, svip: siêu víp');
+            $table->tinyInteger('is_new_member')->default(1)
+                ->comment('1: Thành viên mới, 0: Thành viên cũ');
             $table->string('type')->default(\App\Models\User::TYPE_MEMBER);
             $table->tinyInteger('is_terms_accepted')->default(0); // Tôi đồng ý với điều khoản
             $table->tinyInteger('is_subscribed_promotions')->default(0); // Nhận thông tin chương trình khuyến mãi
