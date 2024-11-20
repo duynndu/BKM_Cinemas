@@ -315,21 +315,22 @@
                                             </p>
                                             <p>Email: {{ Auth::check() ? Auth::user()->email : '' }}</p>
                                             <p>SĐT:
-                                                {{ Auth::check() ? Auth::user()->phone : '' }}
-                                                <i class="fa fa-check-circle" aria-hidden="true"></i>
-                                                <a href="javascript:;" title="Tài khoản chưa được xác thực" class="no-verify"
-                                                    id="verify">
-                                                    Xác thực SMS
-                                                </a>
+                                                @if (!empty(Auth::user()->phone))
+                                                    {{ Auth::check() ? Auth::user()->phone : '' }}
+                                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                                @else
+                                                    Chưa có thông tin
+                                                    <a href="javascript:;" title="Tài khoản chưa được xác thực" class="no-verify"
+                                                        id="verify">
+                                                        Xác thực SMS
+                                                    </a>
+                                                @endif
+                                                
                                             </p>
                                             <p>Dịch vụ:
                                                 <a href="javascript:;" data-modal="#topUpModal"
                                                     title="Nạp tiền vào tài khoản" class="no-verify open-modal">
                                                     Nạp tiền
-                                                </a>
-                                                <a href="javascript:;" data-modal="#otherModal" title="Liên kết thẻ khác"
-                                                    class="no-verify open-modal">
-                                                    Liên kết thẻ khác
                                                 </a>
                                             </p>
                                             <p>Ví thành viên: <span class="point">{{ !empty(Auth::user()->balance) ? number_format(Auth::user()->balance, 0, '.', ',') : 0 }}</span> VND</p>
@@ -790,21 +791,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <div id="otherModal" class="custom-modal">
-        <div class="custom-modal-content">
-            <span class="custom-close">&times;</span>
-            <h3>Nạp tiền khác</h3>
-            <form>
-                <label for="amount2">Số tiền cần nạp</label>
-                <input type="number" id="amount2" placeholder="Nhập số tiền" required>
-            </form>
-            <div class="modal-footer">
-                <button class="close-modal">Đóng</button>
-                <button class="submit-modal">Nạp tiền</button>
-            </div>
         </div>
     </div>
 
