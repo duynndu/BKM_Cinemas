@@ -3,6 +3,19 @@
 @section('title', 'Sửa phim')
 
 @section('css')
+    <style>
+        .actor-upload .avatar-preview>div {
+            width: 90px;
+            height: 90px;
+            border-radius: 5px;
+        }
+        .actor-upload .avatar-preview {
+            padding: 2px;
+            width: 95px;
+            height: 95px;
+            margin: 0;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -441,9 +454,12 @@
                                                 <div id="actor-list" class="row mt-4">
                                                     @if (!empty(old('actors')))
                                                         @foreach (old('actors') as $index => $actor)
+                                                            @if (empty($actor['name']))
+                                                                @continue
+                                                            @endif
                                                             <div class="actor-row row mt-3"
                                                                 data-index="{{ $index }}">
-                                                                <div class="col-3">
+                                                                <div class="col-2">
                                                                     <label class="form-label mb-2">Tên:</label>
                                                                     <input type="text" value="{{ $actor['name'] }}"
                                                                         name="actors[{{ $index }}][name]"
@@ -463,12 +479,31 @@
                                                                         name="actors[{{ $index }}][nationality]"
                                                                         class="form-control">
                                                                 </div>
-                                                                <div class="col-3">
+                                                                <div class="col-2">
                                                                     <label class="form-label mb-2">Vai trò:</label>
                                                                     <input type="text"
                                                                         value="{{ old('role')[$index] }}"
                                                                         name="role[{{ $index }}]"
                                                                         class="form-control">
+                                                                </div>
+                                                                <div class="col-2">
+                                                                    <label
+                                                                        class="form-label mb-2 d-flex justify-content-center align-items-center">
+                                                                        Ảnh diễn viên:
+                                                                    </label>
+                                                                    <div class="avatar-upload actor-upload">
+                                                                        <div class="position-relative d-flex justify-content-center align-items-center">
+                                                                            <div class="avatar-preview">
+                                                                                <div class="imagePreview"
+                                                                                    style="background-image: url({{ asset('images/no-img-avatar.png') }});">
+                                                                                </div>
+                                                                            </div>
+                                                                            <input type="file"
+                                                                                class="form-control d-none uploadImage"
+                                                                                id="actorImage{{$index}}" name="actors[{{$index}}][image]"
+                                                                                accept=".png, .jpg, .jpeg">
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-1 mt-4">
                                                                     <a href="#" class="btn btn-danger"

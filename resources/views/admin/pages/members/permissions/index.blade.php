@@ -99,9 +99,12 @@
                                         @foreach($data['permissions'] as $key => $permission)
                                             <tr class="btn-reveal-trigger">
                                                 <td><input  type="checkbox" data-id="{{ $permission->id }}"
-                                                    class="item-checked"></td>
-
-                                                <td class="py-2">{{ $key + 1 }}</td>
+                                                    class="item-checked">
+                                                </td>
+                                                <td class="py-2">
+                                                    <strong
+                                                        class="text-black">{{ ($data['permissions']->currentPage() - 1) * $data['permissions']->perPage() + $key + 1 }}</strong>
+                                                </td>
                                                 <td class="py-2">{{ $permission->name ?? '' }}</td>
                                                 <td class="py-2">{{ $permission->value ?? '' }}</td>
                                                 @if(Auth()->user()->can('update', App\Models\Permission::class) || Auth()->user()->can('delete', App\Models\Permission::class))

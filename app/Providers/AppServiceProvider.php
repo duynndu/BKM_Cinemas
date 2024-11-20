@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\Client\Home\Interface\HomeRepositoryInterface;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -137,6 +138,7 @@ use App\Repositories\Client\Users\Repositories\UserRepository as ClientUserRepos
 use App\Repositories\Auth\Client\ChangePasswords\Repositories\ChangePasswordRepository;
 use App\Repositories\Auth\Client\ForgotPasswords\Repositories\ForgotPasswordRepository;
 use App\Repositories\Client\Cities\Repositories\CityRepository as ClientCityRepository;
+use App\Repositories\Client\Home\Repository\HomeRepository;
 use App\Services\Auth\Client\ChangePasswords\Interfaces\ChangePasswordServiceInterface;
 use App\Services\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordServicesInterface;
 use App\Services\Client\Users\Interfaces\UserServiceInterface as ClientUserServiceInterface;
@@ -199,30 +201,31 @@ class AppServiceProvider extends ServiceProvider
         // End admin
 
         // Client
-        $this->app->bind(RegisterInterface                  ::class, RegisterRepository         ::class);
-        $this->app->bind(RegisterServiceInterface           ::class, RegisterService            ::class);
-        $this->app->bind(ForgotPasswordInterface            ::class, ForgotPasswordRepository   ::class);
-        $this->app->bind(ForgotPasswordServicesInterface    ::class, ForgotPasswordService      ::class);
-        $this->app->bind(ChangePasswordInterface            ::class, ChangePasswordRepository   ::class);
-        $this->app->bind(ChangePasswordServiceInterface     ::class, ChangePasswordService      ::class);
-        $this->app->bind(HomeServiceInterface               ::class, HomeService                ::class);
-        $this->app->bind(ListMovieServiceInterface          ::class, ListMovieService           ::class);
-        $this->app->bind(ListMoviesRepositoryInterface      ::class, ListMoviesRepository       ::class);
-        $this->app->bind(PostServiceInterfaceClient         ::class, PostServiceClient          ::class);
-        $this->app->bind(PostInterfaceClient                ::class, PostRepositoryClient          ::class);
-        $this->app->bind(CategoryPostServiceInterfaceClient ::class, CategoryPostServiceClient  ::class);
-        $this->app->bind(CategoryPostInterfaceClient ::class, CategoryPostRepositoryClient  ::class);
+        $this->app->bind(RegisterInterface                  ::class, RegisterRepository           ::class);
+        $this->app->bind(RegisterServiceInterface           ::class, RegisterService              ::class);
+        $this->app->bind(ForgotPasswordInterface            ::class, ForgotPasswordRepository     ::class);
+        $this->app->bind(ForgotPasswordServicesInterface    ::class, ForgotPasswordService        ::class);
+        $this->app->bind(ChangePasswordInterface            ::class, ChangePasswordRepository     ::class);
+        $this->app->bind(ChangePasswordServiceInterface     ::class, ChangePasswordService        ::class);
+        $this->app->bind(HomeServiceInterface               ::class, HomeService                  ::class);
+        $this->app->bind(HomeRepositoryInterface            ::class, HomeRepository               ::class);
+        $this->app->bind(ListMovieServiceInterface          ::class, ListMovieService             ::class);
+        $this->app->bind(ListMoviesRepositoryInterface      ::class, ListMoviesRepository         ::class);
+        $this->app->bind(PostServiceInterfaceClient         ::class, PostServiceClient            ::class);
+        $this->app->bind(PostInterfaceClient                ::class, PostRepositoryClient         ::class);
+        $this->app->bind(CategoryPostServiceInterfaceClient ::class, CategoryPostServiceClient    ::class);
+        $this->app->bind(CategoryPostInterfaceClient        ::class, CategoryPostRepositoryClient ::class);
 
 
 
-        $this->app->bind(ClientCityInterface                ::class, ClientCityRepository       ::class);
-        $this->app->bind(ClientCityServiceInterface         ::class, ClientCityService          ::class);
-        $this->app->bind(DepositInterface                   ::class, DepositRepository          ::class);
-        $this->app->bind(DepositServiceInterface            ::class, DepositService             ::class);
-        $this->app->bind(TransactionInterface               ::class, TransactionRepository      ::class);
-        $this->app->bind(TransactionServiceInterface        ::class, TransactionService         ::class);
-        $this->app->bind(ClientUserInterface                ::class, ClientUserRepository       ::class);
-        $this->app->bind(ClientUserServiceInterface         ::class, ClientUserService          ::class);
+        $this->app->bind(ClientCityInterface                ::class, ClientCityRepository         ::class);
+        $this->app->bind(ClientCityServiceInterface         ::class, ClientCityService            ::class);
+        $this->app->bind(DepositInterface                   ::class, DepositRepository            ::class);
+        $this->app->bind(DepositServiceInterface            ::class, DepositService               ::class);
+        $this->app->bind(TransactionInterface               ::class, TransactionRepository        ::class);
+        $this->app->bind(TransactionServiceInterface        ::class, TransactionService           ::class);
+        $this->app->bind(ClientUserInterface                ::class, ClientUserRepository         ::class);
+        $this->app->bind(ClientUserServiceInterface         ::class, ClientUserService            ::class);
 
 
         // End client

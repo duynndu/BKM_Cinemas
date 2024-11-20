@@ -183,7 +183,7 @@
                                                     <th>{{ __('language.admin.posts.hot') }}</th>
                                                 @endcan
 
-                                              
+
                                                 <th style="text-align: start">{{ __('language.admin.posts.category') }}</th>
                                                 @can('changeOrder', \App\Models\Post::class)
                                                     <th>{{ __('language.admin.posts.order') }}</th>
@@ -201,7 +201,8 @@
                                                                class="item-checked">
                                                     </td>
                                                     <td>
-                                                        <strong class="text-black">{{ $key + 1 }}</strong>
+                                                        <strong
+                                                            class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
                                                     </td>
                                                     <td style="max-width: 155px !important;">
                                                         <b class="text-style">
@@ -269,7 +270,7 @@
                                                     @if(Auth()->user()->can('copy', \App\Models\Post::class) || Auth()->user()->can('update', \App\Models\Post::class) || Auth()->user()->can('delete', \App\Models\Post::class))
                                                         <td>
                                                             <div
-                                                                style="padding-right: 20px; display: flex; justify-content: end">                        
+                                                                style="padding-right: 20px; display: flex; justify-content: end">
                                                                 @can('update', \App\Models\Post::class)
                                                                     <a href="{{ route('admin.posts.edit', $post->id) }}"
                                                                        class="btn btn-primary shadow btn-xs sharp me-1">

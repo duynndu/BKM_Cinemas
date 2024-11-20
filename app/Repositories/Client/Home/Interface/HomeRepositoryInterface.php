@@ -8,4 +8,5 @@ interface HomeRepositoryInterface
     public function sliders();
     public function movieIsShowing();
     public function upcomingMovie();
+    public function promotionEvent();
 }

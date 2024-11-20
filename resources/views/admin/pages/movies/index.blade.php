@@ -199,7 +199,8 @@
                                                                 class="item-checked">
                                                         </td>
                                                         <td>
-                                                            <strong class="text-black">{{ $key + 1 }}</strong>
+                                                            <strong
+                                                                class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
                                                         </td>
                                                         <td style="max-width: 155px !important;">
                                                             <b class="text-style">
@@ -308,10 +309,10 @@
                                                                                 aria-label="{{ __('language.admin.movies.close') }}"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                        
+
                                                                                 <img style="height:300px"
                                                                                     src="{{ $movie->banner_movie ?? '' }}"
-                                                                                    alt="Banner"> 
+                                                                                    alt="Banner">
                                                                             <p><strong>{{ __('language.admin.movies.description') }}
                                                                                     :
                                                                                 </strong>{{ $movie->description }}</p>
