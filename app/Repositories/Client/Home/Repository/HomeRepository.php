@@ -38,17 +38,20 @@ class HomeRepository implements HomeRepositoryInterface
 
     public function movieIsShowing()
     {
-        return $this->movie->select('id', 'title', 'slug', 'image', 'duration', 'trailer_url', 'format', 'release_date')
-            ->where([['release_date', '<=', date('Y-m-d')], ['active', 1], ['deleted_at', null]])
+        return $this->movie->select('id', 'title', 'slug', 'image', 'duration', 'trailer_url', 'format', 'release_date', 'premiere_date')
+            ->where('premiere_date', '<=', date('Y-m-d'))
+            ->where('active', 1)
             ->orderBy('order', 'asc')
             ->get();
     }
 
     public function upcomingMovie()
     {
-        return $this->movie->select('id', 'title', 'slug', 'image', 'duration', 'trailer_url', 'format', 'release_date')
-            ->where([['release_date', '>', date('Y-m-d')], ['active', 1], ['deleted_at', null]])
-            ->orderBy('order', 'asc')->get();
+        return $this->movie->select('id', 'title', 'slug', 'image', 'duration', 'trailer_url', 'format', 'release_date', 'premiere_date')
+            ->where('premiere_date', '>', date('Y-m-d'))
+            ->where('active', 1)
+            ->orderBy('order', 'asc')
+            ->get();
     }
 
     public function promotionEvent()

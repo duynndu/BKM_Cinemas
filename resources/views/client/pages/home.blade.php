@@ -61,7 +61,9 @@
                                                 href="#modal-trailer-{{ $item->id }}">
                                                 Trailer
                                             </a>
-                                            <p class="button duration"><b>Thời lượng:</b> {{ $item->duration }} phút</p>
+                                            <p class="button duration">
+                                                <b>Thời lượng:</b> {{ $item->duration }} phút
+                                            </p>
                                             <p class="button category">
                                                 <b>Thể loại:
                                                     @if ($item->movieGenre->count() > 0)
@@ -73,13 +75,18 @@
                                                     @endif
                                                 </b>
                                             </p>
-                                            <p class="button format"><b>Định dạng:</b> {{ $item->format }} </p>
+                                            <p class="button format">
+                                                <b>Định dạng:</b> {{ $item->format }}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="detail">
-                                        <h2><a href="{{ route('movie.detail', $item->slug) }}">{{ $item->title }}</a>
+                                        <h2>
+                                            <a href="{{ route('movie.detail', $item->slug) }}">
+                                                {{ $item->title }}
+                                            </a>
                                         </h2>
-                                        <p class="release">Khởi chiếu {{ $item->release_date }}</p>
+                                        <p class="release">Khởi chiếu {{ $item->premiere_date }}</p>
                                     </div>
                                 </div>
                             @endforeach
@@ -104,8 +111,12 @@
                                                 href="#modal-trailer-{{ $item->id }}">
                                                 Trailer
                                             </a>
-                                            <p class="button duration"><b>Thời lượng:</b> </p>
-                                            <p class="button category"><b>Thể loại:
+                                            <p class="button duration">
+                                                <b>Thời lượng:</b> {{ $item->duration }} phút
+                                            </p>
+                                            <div>
+                                            <p class="button category">
+                                                <b>Thể loại:
                                                     @if ($item->movieGenre->count() > 0)
                                                         @foreach ($item->movieGenre as $genre)
                                                             {{ $loop->index > 0 ? ', ' : '' }}{{ $genre->genres->name }}
@@ -115,21 +126,23 @@
                                                     @endif
                                                 </b>
                                             </p>
-                                            <p class="button format"><b style="text-transform: uppercase;">Định dạng:</b>
-                                                {{ $item->format }} </p>
 
+                                            </div>
+                                            <p class="button format">
+                                                <b style="text-transform: uppercase;">Định dạng:</b>
+                                                {{ $item->format }}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="detail">
                                         <h2>
                                             <a href="{{ route('movie.detail', $item->slug) }}">{{ $item->title }}</a>
                                         </h2>
-                                        <p class="release">Khởi chiếu {{ $item->release_date }}</p>
+                                        <p class="release">Khởi chiếu {{ $item->premiere_date }}</p>
                                     </div>
                                 </div>
                             @endforeach
                         @endif
-
                     </div>
                 </div>
             </div>
@@ -150,15 +163,16 @@
                                     <div class="post-item">
                                         <div class="post-thumbnail">
                                             <a href="{{ route('post.detail', ['slug' => $item->slug]) }}">
-                                                <img class="img-responsive" style="height: 300px" src="{{ asset($item->avatar) }}"
-                                                    alt="{{ $item->name }}">
+                                                <img class="img-responsive" style="height: 300px"
+                                                    src="{{ asset($item->avatar) }}" alt="{{ $item->name }}">
                                             </a>
                                         </div>
-                                        <h3 class="text-center" >
+                                        <h3 class="text-center">
                                             <a style="font-size: 25px"
                                                 href="{{ route('post.detail', ['slug' => $item->slug]) }}">{{ $item->name }}</a>
                                         </h3>
-                                        <p class="text-center text-justify" style="color: #fff">{{ Str::limit($item->description, 55, '...') }}</p>
+                                        <p class="text-center text-justify" style="color: #fff">
+                                            {{ Str::limit($item->description, 55, '...') }}</p>
                                     </div>
                                 @endforeach
                             </div>

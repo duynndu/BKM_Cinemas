@@ -31,7 +31,7 @@ class MovieService extends BaseService implements MovieServiceInterface
 
     public function create(&$data)
     {
-        $data['movie_actors'] ?? [];
+        $data['movie_actors'] = $data['movie_actors'] ?? [];
         if (!empty($data['movie']['image'])) {
             $uploadData = $this->uploadFile($data['movie']['image'], 'public/movies');
             $data['movie']['image'] = $uploadData['path'];
@@ -46,8 +46,20 @@ class MovieService extends BaseService implements MovieServiceInterface
             $this->repository->createGenre($record, $data['genre_id']);
         }
         if (!empty($data['actors'])) {
-            $actors = $this->actorRepository->createMany($data['actors'], $data['role']);
-            $data['movie_actors'] = array_merge($data['movie_actors'], $actors);
+            $filteredActors = array_filter($data['actors'], function ($actor) {
+                return !empty($actor['name']);
+            });
+
+            if (!empty($filteredActors)) {
+                foreach ($filteredActors   as $key => $value) {
+                    if (!empty($value['image'])) {
+                        $uploadData = $this->uploadFile($value['image'], 'public/actors');
+                        $filteredActors[$key]['image'] = $uploadData['path'];
+                    }
+                }
+                $actors = $this->actorRepository->createMany($filteredActors, $data['role']);
+                $data['movie_actors'] = array_merge($data['movie_actors'], $actors);
+            }
         }
         if (!empty($data['movie_actors'])) {
 
@@ -78,8 +90,21 @@ class MovieService extends BaseService implements MovieServiceInterface
         }
 
         if (!empty($data['actors'])) {
-            $newActors = $this->createNewActors($data['actors'], $data['role']);
-            $filteredActorsCreate = array_merge($filteredActorsCreate ?? [], $newActors);
+            $filteredActors = array_filter($data['actors'], function ($actor) {
+                return !empty($actor['name']);
+            });
+
+            if (!empty($filteredActors)) {
+                foreach ($filteredActors   as $key => $value) {
+                    if (!empty($value['image'])) {
+                        $uploadData = $this->uploadFile($value['image'], 'public/actors');
+                        $filteredActors[$key]['image'] = $uploadData['path'];
+                    }
+                }
+                $newActors = $this->createNewActors($filteredActors, $data['role']);
+                $filteredActorsCreate = array_merge($filteredActorsCreate ?? [], $newActors);
+            }
+
         }
 
         if (!empty($filteredActorsCreate)) {

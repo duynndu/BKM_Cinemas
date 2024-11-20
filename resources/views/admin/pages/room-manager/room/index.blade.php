@@ -41,32 +41,36 @@
                             </thead>
                             <tbody class="fs-4">
                                 @foreach($rooms as $index => $room)
-                                <tr>
-                                    <td><strong class="text-black">{{ $index + 1 }}</strong></td>
-                                    <td>
-                                        <a class="fw-bolder " href="{{ route('admin.rooms.edit', $room->id) }}">
-                                            {{ $room->room_name }}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        @if($room->image)
-                                        <img width="100" src="{{ Storage::url($room->image) }}" alt="{{ $room->room_name }}">
-                                        @else
-                                        Không có hình ảnh
-                                        @endif
-                                    </td>
-                                    <td>{{ number_format($room->base_price, 0, ',', '.') }} VNĐ</td>
-                                    <td>{{ $room->col_count }}</td>
-                                    <td>{{ $room->row_count }}</td>
-                                    <td>
-                                        <div>
-                                            <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
-                                                <i class="fa fa-pencil"></i>
+                                    <tr>
+                                        <td>
+                                            <strong
+                                                class="text-black">{{ ($rooms->currentPage() - 1) * $rooms->perPage() + $key + 1 }}
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <a class="fw-bolder " href="{{ route('admin.rooms.edit', $room->id) }}">
+                                                {{ $room->room_name }}
                                             </a>
-                                            <x-destroy-button route="admin.rooms.destroy" id="{{ $room->id }}" />
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            @if($room->image)
+                                            <img width="100" src="{{ Storage::url($room->image) }}" alt="{{ $room->room_name }}">
+                                            @else
+                                            Không có hình ảnh
+                                            @endif
+                                        </td>
+                                        <td>{{ number_format($room->base_price, 0, ',', '.') }} VNĐ</td>
+                                        <td>{{ $room->col_count }}</td>
+                                        <td>{{ $room->row_count }}</td>
+                                        <td>
+                                            <div>
+                                                <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <x-destroy-button route="admin.rooms.destroy" id="{{ $room->id }}" />
+                                            </div>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
