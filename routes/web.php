@@ -134,6 +134,9 @@ Route::get('/phim/{slug}', [MovieDetailController::class, 'movieDetail'])->name(
 Route::get('/chi-tiet-tin', function () {
     return view('client.pages.post-detail');
 });
+Route::get('/gioi-thieu', function () {
+    return view('client.pages.about');
+})->name('about');
 Route::get('/gia-ve', function () {
     return view('client.pages.ticket-price');
 });

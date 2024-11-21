@@ -54,15 +54,13 @@
                                             <img src="{{ asset('client/images/icons/sneak.png') }}">
                                         </div> --}}
                                         <div class="info">
-                                            <div class="d-flex ">
-                                                <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
-                                                    Chi tiết<table></table>
-                                                </a>
-                                                <a class="button ticket video-play-button" data-toggle="modal"
-                                                    href="#modal-trailer-{{ $item->id }}">
-                                                    Trailer
-                                                </a>
-                                            </div>
+                                            <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
+                                                Chi tiết<table></table>
+                                            </a>
+                                            <a class="button ticket video-play-button" data-toggle="modal"
+                                                href="#modal-trailer-{{ $item->id }}">
+                                                Trailer
+                                            </a>
                                             <p class=" duration">
                                                 <b>Thời lượng:</b> {{ $item->duration }} phút
                                             </p>

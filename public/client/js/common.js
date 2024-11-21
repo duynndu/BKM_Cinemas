@@ -43,7 +43,17 @@ $(function () {
         nav: true,
         dots: true
     });
-    
+    $("#carousel-id").owlCarousel({
+        autoplay: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        smartSpeed: 800,
+        video: true,
+        loop: true,
+        items: 1,
+        nav: true,
+        dots: true
+    });
     $("#promotion-slider").owlCarousel({
         autoplay: true,
         autoplayTimeout: 5000,
@@ -57,6 +67,8 @@ $(function () {
             768: { items: 3, }, 980: { items: 3 }, 1010: { items: 3 }, 1100: { items: 4 }
         }
     });
+
+
 
     $("#nowshowing-slider, #comingsoon-slider").owlCarousel({
         autoplay: true,

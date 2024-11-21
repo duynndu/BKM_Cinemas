@@ -91,7 +91,7 @@
                                             <li>
                                                 <a href="{{ route('account') }}">Thông tin tài khoản</a>
                                             </li>
-                                            @if(Auth::check() && Auth::user()->type !== 'member')
+                                            @if (Auth::check() && Auth::user()->type !== 'member')
                                                 <li>
                                                     <a href="{{ route('admin.dashboard') }}">Vào trang quản trị</a>
                                                 </li>
@@ -128,14 +128,17 @@
                 <div id="primary-menu">
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-left">
-                            <li class="active"><a href="index.html">Trang chủ</a></li>
-                            <li class=""><a href="{{ url('phim') }}">Phim</a></li>
+                            <li class="{{ request()->routeIs('home') ? 'active' : '' }}"><a
+                                    href="{{ route('home') }}">Trang chủ</a></li>
+                            <li class="{{ request()->routeIs('movie') ? 'active' : '' }}"><a
+                                    href="{{ route('movie') }}">Phim</a></li>
                             <li class=""><a href="lich-chieu.html">Lịch chiếu</a></li>
                             <li class=""><a href="gia-ve.html">giá vé</a></li>
                             <li class=""><a href="thanh-vien.html">Thành viên</a></li>
                             <li class=""><a href="khuyen-mai.html">Ưu đãi - Sự kiện</a></li>
                             <li class=""><a href="danh-gia-phim.html">Đánh giá phim</a></li>
-                            <li class=""><a href="gioi-thieu.html">Giới thiệu</a></li>
+                            <li class="{{ request()->routeIs('about') ? 'active' : '' }}"><a href="{{ route('about') }}">Giới
+                                    thiệu</a></li>
                             <li class="dropdown ">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                                     aria-haspopup="true" aria-expanded="false">
@@ -305,7 +308,7 @@
                         <a href="danh-gia-phim.html">Đánh giá phim</a>
                     </li>
                     <li>
-                        <a href="gioi-thieu.html">Giờ thiệu</a>
+                        <a href="{{ request()->routeIs('about') ? 'active' : '' }}">Giới thiệu</a>
                     </li>
                     <li>
                         <a href="lien-he.html">Lien hệ</a>
@@ -316,4 +319,3 @@
 
     </div>
 </div>
-
