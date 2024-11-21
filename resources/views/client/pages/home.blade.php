@@ -54,17 +54,19 @@
                                             <img src="{{ asset('client/images/icons/sneak.png') }}">
                                         </div> --}}
                                         <div class="info">
-                                            <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
-                                                Chi tiết<table></table>
-                                            </a>
-                                            <a class="button ticket video-play-button" data-toggle="modal"
-                                                href="#modal-trailer-{{ $item->id }}">
-                                                Trailer
-                                            </a>
-                                            <p class="button duration">
+                                            <div class="d-flex ">
+                                                <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
+                                                    Chi tiết<table></table>
+                                                </a>
+                                                <a class="button ticket video-play-button" data-toggle="modal"
+                                                    href="#modal-trailer-{{ $item->id }}">
+                                                    Trailer
+                                                </a>
+                                            </div>
+                                            <p class=" duration">
                                                 <b>Thời lượng:</b> {{ $item->duration }} phút
                                             </p>
-                                            <p class="button category">
+                                            <p class=" category">
                                                 <b>Thể loại:
                                                     @if ($item->movieGenre->count() > 0)
                                                         @foreach ($item->movieGenre as $genre)
@@ -75,7 +77,7 @@
                                                     @endif
                                                 </b>
                                             </p>
-                                            <p class="button format">
+                                            <p class=" format">
                                                 <b>Định dạng:</b> {{ $item->format }}
                                             </p>
                                         </div>
@@ -115,17 +117,26 @@
                                                 <b>Thời lượng:</b> {{ $item->duration }} phút
                                             </p>
                                             <div>
-                                            <p class="button category">
-                                                <b>Thể loại:
-                                                    @if ($item->movieGenre->count() > 0)
-                                                        @foreach ($item->movieGenre as $genre)
-                                                            {{ $loop->index > 0 ? ', ' : '' }}{{ $genre->genres->name }}
-                                                        @endforeach
-                                                    @else
-                                                        Chưa cập nhật
-                                                    @endif
-                                                </b>
-                                            </p>
+                                                <p class="button category">
+                                                    <b>Thể loại:
+                                                        @if ($item->movieGenre->count() > 0)
+                                                            @foreach ($item->movieGenre as $genre)
+                                                                {{ $loop->index > 0 ? ', ' : '' }}{{ $genre->genres->name }}
+                                                            @endforeach
+                                                        @else
+                                                            Chưa cập nhật
+                                                        @endif
+                                                    </b>
+                                                    <b>Thể loại:
+                                                        @if ($item->movieGenre->count() > 0)
+                                                            @foreach ($item->movieGenre as $genre)
+                                                                {{ $loop->index > 0 ? ', ' : '' }}{{ $genre->genres->name }}
+                                                            @endforeach
+                                                        @else
+                                                            Chưa cập nhật
+                                                        @endif
+                                                    </b>
+                                                </p>
 
                                             </div>
                                             <p class="button format">

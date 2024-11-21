@@ -8932,15 +8932,17 @@ label:hover:before {
     transition: all .5s ease 0s
 }
 
+.movie .poster .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
 .movie .poster .info .button {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
+    margin: 8px auto;
+    display: block;
     width: 140px;
-    height: 40px;
     color: #fff;
     font-size: 20px;
     line-height: 40px;
@@ -9107,112 +9109,6 @@ label:hover:before {
     width: 100%;
     height: 100%;
     object-fit: cover;
-
-
-
-
-
-
-
-
-
-
-
-    !;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    !;
-    !0;
-    !00;
-    !0;
-    !;
 }
 
 @media screen and (max-width: 1200px) {
@@ -9518,7 +9414,7 @@ label:hover:before {
 
 .widget-ticket {
     position: relative;
-    padding-bottom: 20px
+    /* padding-bottom: 20px */
 }
 
 #main-slider .owl-nav>div.owl-prev {
@@ -9558,7 +9454,7 @@ label:hover:before {
     -ms-transition: all .3 ease;
     -o-transition: all .3 ease;
     box-shadow: 2px 5px 3px rgba(0, 0, 0, .9);
-    margin-bottom: 25px
+    margin-bottom: 25px;
 }
 
 .widget-ticket h2 img {
@@ -9585,17 +9481,19 @@ label:hover:before {
 
 .widget-ticket h2:after {
     content: '';
-    transform: skewX(-15deg);
-    -webkit-transform: skewX(-15deg);
-    background: #281a3a;
     position: absolute;
     top: 0;
-    width: 35px;
-    bottom: 0;
-    right: -10px;
+    right: -32px;
+    /* Đặt tam giác vào góc trái */
+    border-width: 0px 0px 76px 33px;
+    /* Điều chỉnh chiều cao và chiều rộng */
+    border-style: solid;
+    border-color: transparent transparent transparent rgb(40 25 58);
+    /* Màu ở cạnh trái tam giác */
     z-index: 1;
-    box-shadow: 3px 0 3px rgba(0, 0, 0, .9)
 }
+
+
 
 .widget-ticket form {
     position: relative;
@@ -10318,7 +10216,7 @@ label:hover:before {
     display: inline;
 }
 
-#page-movie .showtime-section input:checked + label {
+#page-movie .showtime-section input:checked+label {
     background-color: #eb1689;
 }
 
@@ -12753,4 +12651,9 @@ body.open-main-popup {
     color: #222;
     font-size: 14px;
     line-height: 18px;
+}
+
+.col-lg-4.col-md-4.col-sm-4.sidebar {
+    position: sticky;
+    top: 8%;
 }

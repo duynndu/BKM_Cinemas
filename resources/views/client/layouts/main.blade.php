@@ -193,7 +193,6 @@
 
     <!-- Your Plugin chat code -->
     <div id="fb-customer-chat" class="fb-customerchat"></div>
-
 </body>
 
 <!-- Scripts -->
@@ -206,7 +205,7 @@
 <script type="text/javascript" src="{{ asset('client/js/statics/js/scripts.js') }}"></script>
 <script src="{{ asset('client/js/statics/js/showtime-widget.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('js/client/commons/common.js') }}"></script>
+<script src="{{ asset('client/js/common.js') }}"></script>
 
 @yield('js')
 
