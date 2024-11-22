@@ -11,6 +11,9 @@ use App\Http\Controllers\Auth\Client\GoogleController;
 use App\Http\Controllers\Client\MovieDetailController;
 use App\Http\Controllers\Client\CategoryPostController;
 use App\Http\Controllers\Auth\Client\FacebookController;
+use App\Http\Controllers\Client\DetailController;
+use App\Http\Controllers\Client\ListController;
+use App\Http\Controllers\Client\TestController;
 use App\Models\Showtime;
 
 /*
@@ -26,8 +29,9 @@ use App\Models\Showtime;
 
 
 Route::get('/',                     [HomeController::class, 'index'])->name('home');
-Route::get('/danh-muc/{slug}',      [CategoryPostController::class, 'categoryPost'])->name('category.post');
-Route::get('/tin-tuc/{slug}',       [PostController::class, 'postDetail'])->name('post.detail');
+// Route::get('/danh-muc/{slug}',      [CategoryPostController::class, 'categoryPost'])->name('category.post');
+// Route::get('/tin-tuc/{slug}',       [PostController::class, 'postDetail'])->name('post.detail');
+
 
 
 // Tài khoản
@@ -137,9 +141,9 @@ Route::get('/chi-tiet-tin', function () {
 Route::get('/gia-ve', function () {
     return view('client.pages.ticket-price');
 });
-Route::get('/khuyen-mai', function () {
-    return view('client.pages.promotion');
-});
+// Route::get('/khuyen-mai', function () {
+//     return view('client.pages.promotion');
+// });
 
 Route::get('/danh-gia', function () {
     return view('client.pages.review');
@@ -163,4 +167,7 @@ Route::get('/dat-ve/xac-nhan', function () {
 Route::get('/dat-ve/thanh-toan', function () {
     return view('client.pages.payment-verification-step2');
 });
+
+Route::get('/{slug}',    [ListController::class, 'index']);
+Route::get('/{slug}/{slug2}',    [DetailController::class, 'index']);
 

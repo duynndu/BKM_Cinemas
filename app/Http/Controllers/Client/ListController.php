@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Client;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Client\CategoryPosts\Interface\CategoryPostServiceInterface;
+use Illuminate\Http\Request;
 
-class CategoryPostController extends Controller
+class ListController extends Controller
 {
     private $categoryPostService;
 
@@ -14,25 +14,15 @@ class CategoryPostController extends Controller
     {
         $this->categoryPostService = $categoryPostService;
     }
-
-    public function categoryPost($slug)
-    {
-        if ($slug) {
-            $categoryPost = $this->categoryPostService->getCategoryPostFirst($slug);
+    public function index($slug) {
+        $categoryPost = $this->categoryPostService->getCategoryPostFirst($slug);
+        if(!empty($categoryPost)) {
             $posts = $this->categoryPostService->getCategoryPostBySlug($slug);
-
             $data = [
                 'categoryPost' => $categoryPost,
                 'posts' => $posts,
             ];
-
-            if(empty($posts && $categoryPost)) {
-                abort(404);
-            }
-
             return view('client.pages.promotion', $data);
-        } else {
-            abort(404);
         }
     }
 }
