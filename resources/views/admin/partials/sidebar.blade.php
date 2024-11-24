@@ -165,6 +165,18 @@
             </li>
 
             <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">card_giftcard</i>
+                    <span class="nav-text">Sự kiện</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
                 <a href="{{ route('admin.payments.index') }}">
                     <i class="material-icons">payment</i>
                     <span class="nav-text">Phương thức thanh toán</span>

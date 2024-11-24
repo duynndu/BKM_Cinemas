@@ -123,6 +123,7 @@ a {
 .img-member {
     border: 1px dashed;
     object-fit: cover;
+    height: 208px !important;
 }
 
 .img-responsive,

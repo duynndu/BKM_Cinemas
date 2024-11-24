@@ -10,6 +10,7 @@
     <meta name="status_failed" content="{{ session('status_failed') }}">
     <meta name="amount" content="{{ number_format(session()->get("amount"), 0, '.', ',') }}">
     <meta name="exp" content="{{ session()->get("exp") }}">
+    <meta name="points" content="{{ session()->get("points") }}">
     <meta name="image-success" content="{{ asset("client/images/success.png") }}">
     <meta name="image-error" content="{{ asset("client/images/error.png") }}">
     <title>@yield('title')</title>
