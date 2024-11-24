@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -33,14 +32,17 @@ return new class extends Migration
             $table->string('password');
             $table->tinyInteger('status')->default(1);  // 1: Hoạt động, 0: Bị khóa
             $table->decimal('balance', 30, 2)->default(0); // Số dư ban đầu là 0
+            $table->bigInteger('points')->default(0)
+                ->comment('Điểm tích lũy của người dùng');
             $table->integer('exp')->default(0)
                 ->comment('Điểm kinh nghiệm của người dùng');
                 //  Thành viên bình thường: EXP từ 0 - 500.
                 //  Thành viên VIP: EXP từ 501 - 1000.
                 //  Thành viên VVIP: EXP > 1000.
-            $table->enum('membership_level', ['normal', 'vip', 'svip'])
-                ->default('normal')
-                ->comment('Cấp độ thành viên: normal: thường, vip: víp, svip: siêu víp');
+            $table->enum('membership_level', ['member', 'vip', 'vvip'])
+                ->default('member')
+                ->comment('member: thường, vip: víp, vvip: very víp')
+                ->change();
             $table->tinyInteger('is_new_member')->default(1)
                 ->comment('1: Thành viên mới, 0: Thành viên cũ');
             $table->string('type')->default(\App\Models\User::TYPE_MEMBER);
