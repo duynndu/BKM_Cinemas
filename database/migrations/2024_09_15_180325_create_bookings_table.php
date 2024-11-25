@@ -26,19 +26,19 @@ return new class extends Migration
                 'completed',
                 'failed',
                 'cancelled',
-            ])->nullable();
+            ])->default('pending');
             $table->enum('payment_status', [
                 'pending',
                 'completed',
                 'failed',
                 'cancelled'
-            ])->nullable();
+            ])->default('pending');
             $table->enum('refund_status', [
                 'pending',
                 'completed',
                 'failed',
                 'cancelled'
-            ])->nullable();
+            ])->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });
