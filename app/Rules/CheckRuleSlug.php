@@ -24,20 +24,18 @@ class CheckRuleSlug implements ValidationRule
     {
         $id = $this->id;
 
-        $tables = ['blocks', 'category_posts', 'pages', 'posts', 'systems'];
+        $tables = ['blocks', 'category_posts', 'pages', 'posts', 'systems', 'genres', 'menus', 'movies', 'notifications', 'tags'];
 
         foreach ($tables as $table) {
             $query = DB::table($table)->where('slug', $value)->whereNull('deleted_at');
 
-            // Bỏ qua bản ghi hiện tại
             if ($id !== null && is_int($id) && $id > 0) {
                 $query->where('id', '!=', $id);
             }
 
-            // Kiểm tra xem slug có tồn tại không
             if ($query->exists()) {
                 $fail(__('validation.unique', ['attribute' => __('language.admin.slug')]));
-                return; // Dừng lại khi tìm thấy slug tồn tại
+                return;
             }
         }
     }

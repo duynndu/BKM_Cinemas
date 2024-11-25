@@ -1,19 +1,21 @@
 <?php
 
+use App\Http\Controllers\Client\PostByCategoryController;
 use App\Jobs\ResetSeatStatus;
 use App\WebSockets\CustomWebSocketHandler;
 use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\HomeController;
-use App\Http\Controllers\Client\PostController;
 use App\Http\Controllers\Client\DepositController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Auth\Client\AuthController;
 use App\Http\Controllers\Client\ListMoviesController;
 use App\Http\Controllers\Auth\Client\GoogleController;
 use App\Http\Controllers\Client\MovieDetailController;
-use App\Http\Controllers\Client\CategoryPostController;
 use App\Http\Controllers\Auth\Client\FacebookController;
+use App\Http\Controllers\Client\AboutController;
+use App\Http\Controllers\Client\PostController;
+use App\Http\Controllers\Client\PostDetailController;
 use App\Models\Showtime;
 use Illuminate\Support\Facades\DB;
 
@@ -30,9 +32,6 @@ use Illuminate\Support\Facades\DB;
 
 
 Route::get('/',                     [HomeController::class, 'index'])->name('home');
-Route::get('/danh-muc/{slug}',      [CategoryPostController::class, 'categoryPost'])->name('category.post');
-Route::get('/tin-tuc/{slug}',       [PostController::class, 'postDetail'])->name('post.detail');
-
 
 // Tài khoản
 Route::get('/account',              [AuthController::class, 'account'])->name('account');
@@ -106,10 +105,6 @@ Route::get('/zaloPayReturn', [DepositController::class, 'zaloPayReturn'])->name(
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/danh-muc/{slug}', [CategoryPostController::class, 'categoryPost'])->name('category.post');
-
-Route::get('/tin-tuc/{slug}', [PostController::class, 'postDetail'])->name('post.detail');
-
 Route::get('/profile', function () {
     return view('client.pages.profile.info');
 });
@@ -125,35 +120,11 @@ Route::get('/profile-history-ticket', function () {
 
 Route::get('/phim', [ListMoviesController::class, 'movies'])->name('movie');
 
-// Route::get('/phim', function () {
-//     return view('client.pages.movie');
-// });
-
-// Route::get('/phim-chi-tiet', function () {
-//     return view('client.pages.movie-detail');
-// });
-
 Route::get('/phim/{slug}', [MovieDetailController::class, 'movieDetail'])->name('movie.detail');
 
-Route::get('/chi-tiet-tin', function () {
-    return view('client.pages.post-detail');
-});
-Route::get('/gioi-thieu', function () {
-    return view('client.pages.about');
-})->name('about');
+Route::get('/gioi-thieu', [AboutController::class, 'index'])->name('about');
 Route::get('/gia-ve', function () {
     return view('client.pages.ticket-price');
-});
-Route::get('/khuyen-mai', function () {
-    return view('client.pages.promotion');
-});
-
-Route::get('/danh-gia', function () {
-    return view('client.pages.review');
-});
-
-Route::get('/dich-vu', function () {
-    return view('client.pages.service');
 });
 
 Route::get('/lich-chieu', function () {
@@ -185,3 +156,8 @@ Route::get('/dat-ve/xac-nhan', function () {
 Route::get('/dat-ve/thanh-toan', function () {
     return view('client.pages.payment-verification-step2');
 });
+
+Route::get('/{slug}',[PostController::class, 'list'])->name('post.list');
+
+Route::get('/{cate_slug}/{slug}',[PostController::class, 'detail'])->name('post.detail');
+

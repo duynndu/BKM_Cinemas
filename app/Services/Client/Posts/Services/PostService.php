@@ -3,8 +3,7 @@
 
 namespace App\Services\Client\Posts\Services;
 
-use App\Repositories\Client\Home\Repository\HomeRepository;
-use App\Repositories\Client\Posts\Repository\PostRepository;
+use App\Repositories\Client\Posts\Interface\PostInterface;
 use App\Services\Client\Posts\Interface\PostServiceInterface;
 
 class PostService implements PostServiceInterface
@@ -13,23 +12,29 @@ class PostService implements PostServiceInterface
     protected $homeRepository;
 
     public function __construct(
-        PostRepository $postRepository,
-        HomeRepository $homeRepository
+        PostInterface $postRepository,
     ) {
         $this->postRepository = $postRepository;
-        $this->homeRepository = $homeRepository;
     }
 
     public function getPostFirst($slug)
     {
         return $this->postRepository->getPostFirst($slug);
     }
-    public function getPostRelated($slug)
+
+    public function getPostFirstByCateSlug($slugCate, $slug)
     {
-        return $this->postRepository->getPostRelated($slug);
+        return $this->postRepository->getPostFirstByCateSlug($slugCate, $slug);
     }
 
-    public function movieIsShowing() {
-        return $this->homeRepository->movieIsShowing();
+    public function getPostRelated($slugCate, $slug)
+    {
+        return $this->postRepository->getPostRelated($slugCate, $slug);
     }
+
+    public function getPostByCategory($slug)
+    {
+        return $this->postRepository->getPostByCategory($slug);
+    }
+
 }

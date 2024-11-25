@@ -28,6 +28,9 @@
         <li class="">
             <a data-toggle="tab" href="#dkdoithuong" aria-expanded="false">Điều kiện đổi thưởng</a>
         </li>
+        <li class="">
+            <a data-toggle="tab" href="#lichsugiaodich" aria-expanded="false">Lịch sử giao dịch</a>
+        </li>
     @endguest
 </ul>
 <div class="member-card">

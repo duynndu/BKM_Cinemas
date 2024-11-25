@@ -50,15 +50,15 @@
                                         $backgroundColor = $colors[$user->id % count($colors)];
                                     @endphp
 
-                                    <a class="account" href="{{ route('account') }}">
+                                    <a class="account-header" href="{{ route('account') }}">
                                         @if ($avatarUrl)
                                             <img class="avatar" src="{{ $avatarUrl }}"
                                                 alt="{{ $user->first_name . ' ' . $user->last_name }}">
                                         @else
-                                            <div class="avatar-placeholder"
+                                            <div class="avatar-placeholder-header"
                                                 style="background-color: {{ $backgroundColor }};">
                                                 {{ !empty($firstLetter) ? $firstLetter : strtoupper(substr($user->name, 0, 1)) }}
-                                            </div>
+                                            </div>  
                                         @endif
                                         <span class="name">
                                             @auth
@@ -128,29 +128,61 @@
                 <div id="primary-menu">
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-left">
-                            <li class="{{ request()->routeIs('home') ? 'active' : '' }}"><a
-                                    href="{{ route('home') }}">Trang chủ</a></li>
-                            <li class="{{ request()->routeIs('movie') ? 'active' : '' }}"><a
-                                    href="{{ route('movie') }}">Phim</a></li>
-                            <li class=""><a href="lich-chieu.html">Lịch chiếu</a></li>
-                            <li class=""><a href="gia-ve.html">giá vé</a></li>
-                            <li class=""><a href="thanh-vien.html">Thành viên</a></li>
-                            <li class=""><a href="khuyen-mai.html">Ưu đãi - Sự kiện</a></li>
-                            <li class=""><a href="danh-gia-phim.html">Đánh giá phim</a></li>
-                            <li class="{{ request()->routeIs('about') ? 'active' : '' }}"><a href="{{ route('about') }}">Giới
-                                    thiệu</a></li>
+                            <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
+                                <a href="{{ route('home') }}">
+                                    Trang chủ
+                                </a>
+                            </li>
+                            <li class="{{ request()->routeIs('movie') ? 'active' : '' }}">
+                                <a
+                                    href="{{ route('movie') }}">
+                                    Phim
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="lich-chieu">
+                                    Lịch chiếu
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="gia-ve">
+                                    giá vé
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="thanh-vien">
+                                    Thành viên
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="khuyen-mai">
+                                    Ưu đãi - Sự kiện
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="danh-gia-phim">
+                                    Đánh giá phim
+                                </a>
+                            </li>
+                            <li class="{{ request()->routeIs('about') ? 'active' : '' }}">
+                                <a
+                                    href="{{ route('about') }}">
+                                    Giới thiệu
+                                </a>
+                            </li>
                             <li class="dropdown ">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                                     aria-haspopup="true" aria-expanded="false">
-                                    Dịch vụ</a>
+                                    Dịch vụ
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="dich-vu/quang-cao-su-kien.html">
+                                        <a href="{{ route('post.detail', ['cate_slug' => 'dich-vu', 'slug' => 'quang-cao-su-kien']) }}">
                                             Dịch vụ quảng cáo - sự kiện
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="dich-vu/touch-voucher.html">
+                                        <a href="{{ route('post.detail', ['cate_slug' => 'dich-vu', 'slug' => 'bkm-voucher']) }}">
                                             Touch Voucher
                                         </a>
                                     </li>

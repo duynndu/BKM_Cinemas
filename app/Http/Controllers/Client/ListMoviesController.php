@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Models\Movie;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Client\ListMovies\Interface\ListMovieServiceInterface;
+use App\Services\Client\Movies\Interfaces\MovieServiceInterface;
 
 class ListMoviesController extends Controller
 {
-    protected $listMovieService;
+    protected $movieService;
 
-    public function __construct(ListMovieServiceInterface $listMovieService)
+    public function __construct(MovieServiceInterface $movieService)
     {
-        $this->listMovieService = $listMovieService;
+        $this->movieService = $movieService;
     }
 
     public function movies()
     {
-        $movieIsShowing = $this->listMovieService->movieIsShowing();
-        $upComingMovie = $this->listMovieService->upcomingMovie();
+        $movieIsShowing = $this->movieService->movieIsShowing();
+        $upComingMovie = $this->movieService->upcomingMovie();
 
-        // dd($movieIsShowing, $upComingMovie);
         return view('client.pages.movie', [
             'movieIsShowing' => $movieIsShowing,
             'upComingMovie' => $upComingMovie

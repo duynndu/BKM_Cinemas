@@ -29,7 +29,7 @@
 
                 <div class="box-comment">
                     <div class="fb-comments fb_iframe_widget fb_iframe_widget_fluid_desktop" colorscheme="light"
-                        width="100%" data-href="{{ route('post.detail', ['slug' => $post->slug]) }}" data-numposts="20"
+                        width="100%" data-href="{{ route('post.detail', ['cate_slug' => $cateSlug, 'slug' => $post->slug]) }}" data-numposts="20"
                         fb-xfbml-state="rendered" style="width: 100%;"><span
                             style="vertical-align: bottom; width: 100%; height: 500px;"><iframe name="f55fca7c4c800dd66"
                                 width="1000px" height="100px" data-testid="fb:comments Facebook Social Plugin"
@@ -85,22 +85,22 @@
                         </div>
                     </form>
                 </div>
-                @empty(!$movieIsShowing)
+                @if ($movieIsShowing->isNotEmpty())
                     <div class="related-movie">
                         <h2>Phim đang chiếu</h2>
                         <div class="list">
-                            @forelse ($movieIsShowing as $item)
+                            @foreach ($movieIsShowing as $item)
                                 <a href="{{ route('movie.detail', $item->slug) }}">
                                     <div class="poster"
-                                        style="background-image: url('https://touchcinema.com/storage/slider-app/1920x1080-16.jpg')">
+                                        style="background-image: url({{ asset($item->banner_movie) }})">
                                     </div>
-                                    <p style="color: #000"> {{ $item->title }}</p>
                                 </a>
-                            @empty
-                                Chưa có phim
-                            @endforelse
+                                @if ($loop->index == 3)
+                                    @break
+                                @endif
+                            @endforeach
                         </div>
-                        @if (isset($movieIsShowing) && count($movieIsShowing) > 6)
+                        @if ($movieIsShowing->count() > 4)
                             <div class="view-more">
                                 <a href="{{ route('movie') }}">
                                     <div class="text">xem thêm</div>
@@ -108,25 +108,24 @@
                                 </a>
                             </div>
                         @endif
-
                     </div>
-                @endempty
+                @endif
             </div>
         </div>
         <div class="clearfix"></div>
         <div class="related-post">
             <h2>Tin liên quan</h2>
             <div class="row">
-                @if (count($postRelated) > 0)
+                @if ($postRelated->isNotEmpty())
                     @foreach ($postRelated as $item)
                         <div class="col-md-3 col-sm-4">
                             <div class="poster">
-                                <a href="{{ route('post.detail', $item->slug) }}">
+                                <a href="{{ route('post.detail', ['cate_slug' => $cateSlug, 'slug' => $item->slug]) }}">
                                     <img class="img-responsive" src=" {{ asset($item->avatar) }}" alt="{{ $item->name }}">
                                 </a>
                             </div>
                             <h3>
-                                <a href="{{ route('post.detail', $item->slug) }}">{{ $item->name }}</a>
+                                <a href="{{ route('post.detail', ['cate_slug' => $cateSlug, 'slug' => $item->slug]) }}">{{ $item->name }}</a>
                             </h3>
                         </div>
                     @endforeach
