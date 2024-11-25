@@ -15,6 +15,7 @@ const seatTypeSchema = yup.object().shape({
 });
 
 Alpine.data('SeatTypeComponent', (seatTypeId?: number) => ({
+  //@ts-ignore
   formData: {
     id: null as number | null,
     code: '',
@@ -51,7 +52,7 @@ Alpine.data('SeatTypeComponent', (seatTypeId?: number) => ({
       }
       toastr.success('Thao tác thành công');
       setTimeout(() => {
-        redirect().route('admin.seat-types.index');
+        redirect().to('admin/room-manager/seat-types');
       }, 500);
     } catch (error: any) {
       console.error(error);
