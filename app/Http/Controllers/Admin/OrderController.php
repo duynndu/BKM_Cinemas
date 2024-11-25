@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Services\Admin\Orders\Interfaces\OrderServiceInterface;
+use Illuminate\Http\Request;
+
+class OrderController extends Controller
+{
+    private $orderService;
+    public function __construct(
+        OrderServiceInterface $orderService
+    ){
+        $this->orderService = $orderService;
+    }
+    public function index()
+    {
+        dd($this->orderService->getAll());
+        return view('admin.order.index');
+    }
+}

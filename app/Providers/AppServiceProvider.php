@@ -5,6 +5,7 @@ namespace App\Providers;
 
 use App\Repositories\Client\Movies\Interfaces\MoviesRepositoryInterface;
 use App\Repositories\Client\Movies\Repositories\MoviesRepository;
+use App\Services\Admin\Orders\Services\OrderService;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -67,7 +68,6 @@ use App\Services\Client\Posts\Services\PostService as PostServiceClient;
 use App\Services\Admin\Roles\Interfaces\RoleServiceInterface;
 use App\Services\Admin\Users\Interfaces\UserServiceInterface;
 use App\Services\Client\Home\Interfaces\HomeServiceInterface;
-use App\Services\Client\ListMovies\Services\ListMovieService;
 use App\Repositories\Admin\Cinemas\Interfaces\CinemaInterface;
 use App\Repositories\Admin\Cities\Repositories\CityRepository;
 use App\Repositories\Admin\Foods\Interfaces\FoodTypeInterface;
@@ -112,9 +112,7 @@ use App\Services\Auth\Admin\Logins\Interfaces\LoginServiceInterface;
 use App\Services\Client\Deposits\Interfaces\DepositServiceInterface;
 use App\Repositories\Admin\Permissions\Interfaces\PermissionInterface;
 use App\Repositories\Admin\BlockTypes\Repositories\BlockTypeRepository;
-use App\Repositories\Client\ListMovies\Repository\ListMoviesRepository;
 use App\Services\Admin\BlockTypes\Interfaces\BlockTypeServiceInterface;
-use App\Services\Client\ListMovies\Interface\ListMovieServiceInterface;
 use App\Repositories\Auth\Client\Registers\Interfaces\RegisterInterface;
 use App\Services\Client\Users\Services\UserService as ClientUserService;
 use App\Repositories\Admin\Permissions\Repositories\PermissionRepository;
@@ -129,10 +127,11 @@ use App\Repositories\Client\Transactions\Repositories\TransactionRepository;
 use App\Services\Auth\Client\ChangePasswords\Services\ChangePasswordService;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use App\Repositories\Admin\CategoryPosts\Repositories\CategoryPostRepository;
+use App\Repositories\Admin\Orders\Interfaces\OrderInterface;
+use App\Repositories\Admin\Orders\Repositories\OrderRepository;
 use App\Repositories\Client\CategoryPosts\Repository\CategoryPostRepository as CategoryPostRepositoryClient;
 use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
 use App\Services\Client\CategoryPosts\Interface\CategoryPostServiceInterface as CategoryPostServiceInterfaceClient;
-use App\Repositories\Client\ListMovies\Interface\ListMoviesRepositoryInterface;
 use App\Repositories\Client\Users\Interfaces\UserInterface as ClientUserInterface;
 use App\Repositories\Client\Cities\Interfaces\CityInterface as ClientCityInterface;
 use App\Repositories\Auth\Client\ChangePasswords\Interfaces\ChangePasswordInterface;
@@ -144,6 +143,7 @@ use App\Repositories\Client\Cities\Repositories\CityRepository as ClientCityRepo
 use App\Repositories\Client\Home\Repository\HomeRepository;
 use App\Repositories\Client\Systems\Interfaces\SystemInterface as InterfacesSystemInterface;
 use App\Repositories\Client\Systems\Repositories\SystemRepository as RepositoriesSystemRepository;
+use App\Services\Admin\Orders\Interfaces\OrderServiceInterface;
 use App\Services\Auth\Client\ChangePasswords\Interfaces\ChangePasswordServiceInterface;
 use App\Services\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordServicesInterface;
 use App\Services\Client\Abouts\Interfaces\AboutServiceInterface;
@@ -207,6 +207,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RoleServiceInterface        ::class, RoleService           ::class);
         $this->app->bind(LoginInterface              ::class, LoginRepository       ::class);
         $this->app->bind(LoginServiceInterface       ::class, LoginService          ::class);
+        $this->app->bind(OrderInterface              ::class, OrderRepository       ::class);
+        $this->app->bind(OrderServiceInterface       ::class, OrderService          ::class);
         // End admin
 
         // Client
@@ -218,8 +220,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ChangePasswordServiceInterface     ::class, ChangePasswordService        ::class);
         $this->app->bind(HomeServiceInterface               ::class, HomeService                  ::class);
         $this->app->bind(HomeRepositoryInterface            ::class, HomeRepository               ::class);
-        $this->app->bind(ListMovieServiceInterface          ::class, ListMovieService             ::class);
-        $this->app->bind(ListMoviesRepositoryInterface      ::class, ListMoviesRepository         ::class);
         $this->app->bind(InterfacesMovieServiceInterface    ::class, ServicesMovieService         ::class);
         $this->app->bind(MoviesRepositoryInterface          ::class, MoviesRepository             ::class);
         $this->app->bind(PostServiceInterfaceClient         ::class, PostServiceClient            ::class);

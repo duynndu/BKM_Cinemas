@@ -73,6 +73,7 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
     }
 
     const formData = new FormData();
+    let repoData:{ url: string };
     formData.set('room_name', this.formData.room_name);
     formData.set('col_count', this.formData.col_count.toString());
     formData.set('row_count', this.formData.row_count.toString());
@@ -83,9 +84,9 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
     }
     try {
       if (roomId) {
-        await roomService.putRoom(roomId, formData);
+        repoData = await roomService.putRoom(roomId, formData);
       } else {
-        await roomService.postRoom(formData);
+        repoData = await roomService.postRoom(formData);
       }
       swal.fire({
         title: 'Thao tác thành công!',
@@ -94,7 +95,7 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
         showConfirmButton: false,
         timer: 1000,
         reverseButtons: false
-      }).then(() => redirect().to('admin/room-manager/rooms'));
+      }).then(() => redirect().to(repoData.url));
     } catch (error: any) {
       console.error(error);
       toastr.error(error.message);
