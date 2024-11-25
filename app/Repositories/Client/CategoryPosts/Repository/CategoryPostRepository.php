@@ -24,23 +24,10 @@ class CategoryPostRepository implements CategoryPostInterface
 
     public function getCategoryPostBySlug($slug)
     {
-
-        $categoryPostsBySlug = $this->categoryPost->where('slug', $slug)->select('id', 'name', 'slug')->first();
-
-        if ($categoryPostsBySlug) {
-            $postIds = $this->postCategory
-                ->where('category_id', $categoryPostsBySlug->id)
-                ->pluck('post_id')
-                ->toArray();
-
-            $postByCategory = $this->post->whereIn("id", $postIds)->paginate(self::PAGINATION);
-            return $postByCategory;
-        }
-    }
-
-    public function getCategoryPostFirst($slug)
-    {
-        $categoryPostsBySlug = $this->categoryPost->where('slug', $slug)->select('id', 'name', 'slug')->first();
+        $categoryPostsBySlug = $this->categoryPost
+            ->where('slug', $slug)
+            ->select('id', 'name', 'slug')
+            ->first();
         return $categoryPostsBySlug;
     }
 }

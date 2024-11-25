@@ -10,7 +10,7 @@
                                 <div class="footer-content">
                                     <p><b>Hotline:</b> 0269 3838 999</p>
                                     <p><b>Giờ làm việc:</b> 8h00-22h00 tất cả các ngày trong tuần</p>
-                                    <p><b>Email:</b> contact@touchcinema.com</p>
+                                    <p><b>Email:</b> contact@bkmcinema.com</p>
                                 </div>
                             </div>
                             <div class="col-md-6 col-xs-6 connect-us ">

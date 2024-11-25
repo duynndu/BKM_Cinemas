@@ -61,7 +61,7 @@
     <div id="fb-root"></div>
     <div id="app">
         @include('client.partials.header')
-        <div id="wrap" style="margin-bottom: 30px;">
+        <div id="wrap">
             @yield('content')
         </div>
         @include('client.partials.footer')

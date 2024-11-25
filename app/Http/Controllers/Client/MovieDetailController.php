@@ -13,4 +13,5 @@ class MovieDetailController extends Controller
             'slug' => $slug
         ]);
     }
+
 }

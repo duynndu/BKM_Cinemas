@@ -46,7 +46,7 @@ Route::prefix('error')
         Route::get('/authorize-error', 'authorizeError')->name('authorize-error');
     });
 
-Route::prefix('admin')->middleware(['web'])
+Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
 
@@ -61,14 +61,16 @@ Route::prefix('admin')->middleware(['web'])
         Route::post('/logout', [LoginController::class, 'logout'])
             ->name('logout');
 
-        Route::middleware('admin')->group(function () {
+        Route::middleware('admin')
+            ->group(function () {
             Route::get('/', [DashboardController::class, 'dashboard'])
                 ->name('dashboard')
                 ->middleware('authorizeAction:viewAny,Dashboard');
 
             Route::prefix('systems')
                 ->controller(SystemController::class)
-                ->name('systems.')->group(function () {
+                ->name('systems.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\System');
@@ -109,10 +111,12 @@ Route::prefix('admin')->middleware(['web'])
                         ->middleware('authorizeAction:deleteMultiple,App\Models\System');
                 });
 
-            Route::prefix('room-manager')->group(function () {
+            Route::prefix('room-manager')
+                ->group(function () {
                 Route::prefix('rooms')
                     ->controller(RoomController::class)
-                    ->name('rooms.')->group(function () {
+                    ->name('rooms.')
+                    ->group(function () {
                         Route::get('/', 'index')->name('index');
                         Route::get('/create', 'create')->name('create');
                         Route::post('/store', 'store')->name('store');
@@ -123,7 +127,8 @@ Route::prefix('admin')->middleware(['web'])
 
                 Route::prefix('seat-layouts')
                     ->controller(SeatLayoutController::class)
-                    ->name('seat-layouts.')->group(function () {
+                    ->name('seat-layouts.')
+                    ->group(function () {
                         Route::get('/', 'index')->name('index');
                         Route::get('/create', 'create')->name('create');
                         Route::post('/store', 'store')->name('store');
@@ -134,7 +139,8 @@ Route::prefix('admin')->middleware(['web'])
 
                 Route::prefix('seat-types')
                     ->controller(SeatTypeController::class)
-                    ->name('seat-types.')->group(function () {
+                    ->name('seat-types.')
+                    ->group(function () {
                         Route::get('/', 'index')->name('index');
                         Route::get('/create', 'create')->name('create');
                         Route::post('/store', 'store')->name('store');
@@ -146,7 +152,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('menus')
                 ->controller(MenuController::class)
-                ->name('menus.')->group(function () {
+                ->name('menus.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\Menu');
@@ -166,7 +173,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('pages')
                 ->controller(PageController::class)
-                ->name('pages.')->group(function () {
+                ->name('pages.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\Page');
@@ -198,7 +206,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('blocks')
                 ->controller(BlockController::class)
-                ->name('blocks.')->group(function () {
+                ->name('blocks.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\Block');
@@ -230,7 +239,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('blockTypes')
                 ->controller(BlockTypeController::class)
-                ->name('blockTypes.')->group(function () {
+                ->name('blockTypes.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\BlockType');
@@ -262,7 +272,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('categoryPosts')
                 ->controller(CategoryPostController::class)
-                ->name('categoryPosts.')->group(function () {
+                ->name('categoryPosts.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\CategoryPost');
@@ -305,7 +316,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('posts')
                 ->controller(PostController::class)
-                ->name('posts.')->group(function () {
+                ->name('posts.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\Post');
@@ -376,7 +388,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('tags')
                 ->controller(TagController::class)
-                ->name('tags.')->group(function () {
+                ->name('tags.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\Tag');
@@ -414,10 +427,10 @@ Route::prefix('admin')->middleware(['web'])
                         ->middleware('authorizeAction:deleteMultiple,App\Models\Tag');
                 });
 
-
             Route::prefix('genres-movie')
                 ->controller(GenreController::class)
-                ->name('genres.')->group(function () {
+                ->name('genres.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index');
 
@@ -450,7 +463,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('movie')
                 ->controller(MovieController::class)
-                ->name('movies.')->group(function () {
+                ->name('movies.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index');
 
@@ -488,10 +502,10 @@ Route::prefix('admin')->middleware(['web'])
                         ->name('deleteItemMultipleChecked');
                 });
 
-
             Route::prefix('users')
                 ->controller(UserController::class)
-                ->name('users.')->group(function () {
+                ->name('users.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\User');
@@ -526,7 +540,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('roles')
                 ->controller(RoleController::class)
-                ->name('roles.')->group(function () {
+                ->name('roles.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\Role');
@@ -557,7 +572,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('modules')
                 ->controller(ModuleController::class)
-                ->name('modules.')->group(function () {
+                ->name('modules.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\Module');
@@ -589,7 +605,8 @@ Route::prefix('admin')->middleware(['web'])
 
             Route::prefix('foods')
                 ->controller(FoodController::class)
-                ->name('foods.')->group(function () {
+                ->name('foods.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\Food');
@@ -622,7 +639,8 @@ Route::prefix('admin')->middleware(['web'])
                 });
             Route::prefix('food-types')
                 ->controller(FoodTypeController::class)
-                ->name('food-types.')->group(function () {
+                ->name('food-types.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\FoodType');
@@ -653,7 +671,8 @@ Route::prefix('admin')->middleware(['web'])
                 });
             Route::prefix('food-combos')
                 ->controller(FoodComboController::class)
-                ->name('food-combos.')->group(function () {
+                ->name('food-combos.')
+                ->group(function () {
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\FoodCombo');
@@ -684,227 +703,115 @@ Route::prefix('admin')->middleware(['web'])
                         ->name('deleteItemMultipleChecked')
                         ->middleware('authorizeAction:deleteMultiple,App\Models\FoodCombo');
                 });
+                Route::prefix('cities')
+                ->controller(CityController::class)
+                ->name('cities.')
+                ->group(function () {
+                    Route::get('/', 'index')
+                         ->name('index');
+                    Route::get('/create', 'create')
+                        ->name('create');
+                    Route::post('/store', 'store')
+                        ->name('store');
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit');
+                    Route::put('/{id}/update', 'update')
+                        ->name('update');
+                    Route::delete('/{id}/delete', 'destroy')
+                        ->name('delete');
+                });
+
+            Route::prefix('areas')
+                ->controller(AreaController::class)
+                ->name('areas.')
+                ->group(function () {
+                    Route::get('/', 'index')
+                        ->name('index');
+                    Route::get('/create', 'create')
+                        ->name('create');
+                    Route::post('/store', 'store')
+                        ->name('store');
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit');
+                    Route::put('/{id}/update', 'update')
+                        ->name('update');
+                    Route::delete('/{id}/delete', 'destroy')
+                        ->name('delete');
+                });
+
+            Route::prefix('payments')
+                ->controller(PaymentController::class)
+                ->name('payments.')
+                ->group(function () {
+                    Route::get('/', 'index')
+                        ->name('index');
+                    Route::get('/create', 'create')
+                        ->name('create');
+                    Route::post('/store', 'store')
+                        ->name('store');
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit');
+                    Route::put('/{id}/update', 'update')
+                        ->name('update');
+                    Route::delete('/{id}/delete', 'delete')
+                        ->name('delete');
+                    Route::post('/change-active', 'changeActive')
+                        ->name('changeActive');
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')
+                        ->name('removeAvatarImage');
+                });
+
+            Route::prefix('actors')
+                ->controller(ActorController::class)
+                ->name('actors.')
+                ->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/create', 'create')
+                        ->name('create');
+                    Route::post('/store', 'store')
+                        ->name('store');
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit');
+                    Route::put('/{id}/update', 'update')
+                        ->name('update');
+                    Route::delete('/{id}/delete', 'destroy')
+                        ->name('delete');
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')
+                        ->name('removeAvatarImage');
+                    Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                        ->name('deleteItemMultipleChecked');
+                });
+
+            Route::prefix('cinemas')
+                ->controller(CinemaController::class)
+                ->name('cinemas.')
+                ->group(function () {
+                    Route::get('/', 'index')
+                        ->name('index')
+                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                    Route::get('/create', 'create')
+                        ->name('create')
+                        ->middleware('authorizeAction:create,App\Models\Cinema');
+                    Route::post('/store', 'store')
+                        ->name('store')
+                        ->middleware('authorizeAction:create,App\Models\Cinema');
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit')
+                        ->middleware('authorizeAction:update,App\Models\Cinema');
+                    Route::put('/{id}/update', 'update')
+                        ->name('update')
+                        ->middleware('authorizeAction:update,App\Models\Cinema');
+                    Route::delete('/{id}/delete', 'destroy')
+                        ->name('delete')
+                        ->middleware('authorizeAction:delete,App\Models\Cinema');
+                    Route::post('/change-active', 'changeActive')
+                        ->name('changeActive')
+                        ->middleware('authorizeAction:changeActive,App\Models\Cinema');
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')
+                        ->name('removeAvatarImage');
+                    Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                        ->name('deleteItemMultipleChecked')
+                        ->middleware('authorizeAction:delete,App\Models\Cinema');
+                });
         });
-
-        Route::prefix('systems')
-            ->controller(SystemController::class)
-            ->name('systems.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::post('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'delete')->name('delete');
-                Route::post('/change-order', 'changeOrder')->name('changeOrder');
-                Route::post('/change-active', 'changeActive')->name('changeActive');
-                Route::post('/removeAvatarImage', 'removeAvatarImage')->name('removeAvatarImage');
-            });
-
-
-        Route::prefix('menus')
-            ->controller(MenuController::class)
-            ->name('menus.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::post('/{id}/update', 'update')->name('update');
-                Route::get('/delete', 'delete')->name('delete');
-                Route::post('/change-order', 'changeOrder')->name('changeOrder');
-                Route::post('/change-active', 'changeActive')->name('changeActive');
-            });
-
-
-        Route::prefix('pages')
-            ->controller(PageController::class)
-            ->name('pages.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::post('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'delete')->name('delete');
-                Route::post('/change-order', 'changeOrder')->name('changeOrder');
-                Route::post('/change-active', 'changeActive')->name('changeActive');
-            });
-
-
-        Route::prefix('blocks')
-            ->controller(BlockController::class)
-            ->name('blocks.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::post('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'delete')->name('delete');
-                Route::post('/change-order', 'changeOrder')->name('changeOrder');
-                Route::post('/change-active', 'changeActive')->name('changeActive');
-            });
-
-
-        Route::prefix('blockTypes')
-            ->controller(BlockTypeController::class)
-            ->name('blockTypes.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::post('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'delete')->name('delete');
-                Route::post('/change-order', 'changeOrder')->name('changeOrder');
-                Route::post('/change-active', 'changeActive')->name('changeActive');
-            });
-
-
-        Route::prefix('posts')
-            ->controller(PostController::class)
-            ->name('posts.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::post('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'delete')->name('delete');
-                Route::post('/change-order', 'changeOrder')->name('changeOrder');
-                Route::post('/change-hot', 'changeHot')->name('changeHot');
-                Route::post('/change-active', 'changeActive')->name('changeActive');
-                Route::post('/removeAvatarImage', 'removeAvatarImage')->name('removeAvatarImage');
-            });
-
-        Route::prefix('categoryPosts')
-            ->controller(CategoryPostController::class)
-            ->name('categoryPosts.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::post('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'delete')->name('delete');
-                Route::post('/change-order', 'changeOrder')->name('changeOrder');
-                Route::post('/change-hot', 'changeHot')->name('changeHot');
-                Route::post('/change-active', 'changeActive')->name('changeActive');
-                Route::post('/removeAvatarImage', 'removeAvatarImage')->name('removeAvatarImage');
-            });
-
-        Route::prefix('tags')
-            ->controller(TagController::class)
-            ->name('tags.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/store', 'store')->name('store');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::post('/{id}/update', 'update')->name('update');
-                Route::delete('/{id}/delete', 'delete')->name('delete');
-                Route::post('/change-order', 'changeOrder')->name('changeOrder');
-                Route::post('/change-active', 'changeActive')->name('changeActive');
-            });
-
-        Route::prefix('cities')
-            ->controller(CityController::class)
-            ->name('cities.')
-            ->group(function () {
-                Route::get('/', 'index')
-                     ->name('index');
-                Route::get('/create', 'create')
-                    ->name('create');
-                Route::post('/store', 'store')
-                    ->name('store');
-                Route::get('/{id}/edit', 'edit')
-                    ->name('edit');
-                Route::put('/{id}/update', 'update')
-                    ->name('update');
-                Route::delete('/{id}/delete', 'destroy')
-                    ->name('delete');
-            });
-
-        Route::prefix('areas')
-            ->controller(AreaController::class)
-            ->name('areas.')
-            ->group(function () {
-                Route::get('/', 'index')
-                    ->name('index');
-                Route::get('/create', 'create')
-                    ->name('create');
-                Route::post('/store', 'store')
-                    ->name('store');
-                Route::get('/{id}/edit', 'edit')
-                    ->name('edit');
-                Route::put('/{id}/update', 'update')
-                    ->name('update');
-                Route::delete('/{id}/delete', 'destroy')
-                    ->name('delete');
-            });
-
-        Route::prefix('payments')
-            ->controller(PaymentController::class)
-            ->name('payments.')->group(function () {
-                Route::get('/', 'index')
-                    ->name('index');
-                Route::get('/create', 'create')
-                    ->name('create');
-                Route::post('/store', 'store')
-                    ->name('store');
-                Route::get('/{id}/edit', 'edit')
-                    ->name('edit');
-                Route::put('/{id}/update', 'update')
-                    ->name('update');
-                Route::delete('/{id}/delete', 'delete')
-                    ->name('delete');
-                Route::post('/change-active', 'changeActive')
-                    ->name('changeActive');
-                Route::post('/removeAvatarImage', 'removeAvatarImage')
-                    ->name('removeAvatarImage');
-            });
-
-        Route::prefix('actors')
-            ->controller(ActorController::class)
-            ->name('actors.')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')
-                    ->name('create');
-                Route::post('/store', 'store')
-                    ->name('store');
-                Route::get('/{id}/edit', 'edit')
-                    ->name('edit');
-                Route::put('/{id}/update', 'update')
-                    ->name('update');
-                Route::delete('/{id}/delete', 'destroy')
-                    ->name('delete');
-                Route::post('/removeAvatarImage', 'removeAvatarImage')
-                    ->name('removeAvatarImage');
-                Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
-                    ->name('deleteItemMultipleChecked');
-            });
-
-        Route::prefix('cinemas')
-            ->controller(CinemaController::class)
-            ->name('cinemas.')->group(function () {
-                Route::get('/', 'index')
-                    ->name('index')
-                    ->middleware('authorizeAction:viewAny,App\Models\Cinema');
-                Route::get('/create', 'create')
-                    ->name('create')
-                    ->middleware('authorizeAction:create,App\Models\Cinema');
-                Route::post('/store', 'store')
-                    ->name('store')
-                    ->middleware('authorizeAction:create,App\Models\Cinema');
-                Route::get('/{id}/edit', 'edit')
-                    ->name('edit')
-                    ->middleware('authorizeAction:update,App\Models\Cinema');
-                Route::put('/{id}/update', 'update')
-                    ->name('update')
-                    ->middleware('authorizeAction:update,App\Models\Cinema');
-                Route::delete('/{id}/delete', 'destroy')
-                    ->name('delete')
-                    ->middleware('authorizeAction:delete,App\Models\Cinema');
-                Route::post('/change-active', 'changeActive')
-                    ->name('changeActive')
-                    ->middleware('authorizeAction:changeActive,App\Models\Cinema');
-                Route::post('/removeAvatarImage', 'removeAvatarImage')
-                    ->name('removeAvatarImage');
-                Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
-                    ->name('deleteItemMultipleChecked')
-                    ->middleware('authorizeAction:delete,App\Models\Cinema');
-            });
     });

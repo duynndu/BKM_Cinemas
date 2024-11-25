@@ -2566,7 +2566,7 @@ pre code {
     }
 
     .col-md-3 {
-        width: 25%
+        width: 24.5%
     }
 
     .col-md-4 {
@@ -9107,7 +9107,6 @@ label:hover:before {
 
 .list-post .post-item .post-thumbnail img {
     width: 100%;
-    height: 100%;
     object-fit: cover;
 }
 
@@ -11402,7 +11401,6 @@ label:hover:before {
 
 .post-page .list-post .post-item .post-thumbnail {
     border: none;
-    height: 400px;
 }
 
 .post-page .list-post .post-item .description {
@@ -11964,8 +11962,9 @@ body {
     font-weight: 500;
     color: #000;
     background-image: url(images/bg.jpg);
-    background-size: contain !important;
     background-position: top center;
+    background-repeat: no-repeat;
+
 }
 
 .page-post-detail .post-detail .post-content {

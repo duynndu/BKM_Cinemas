@@ -16,9 +16,6 @@ class CategoryPostService implements CategoryPostServiceInterface
         $this->categoryPostRepository = $categoryPostRepository;
     }
 
-    public function getCategoryPostFirst($slug){
-        return $this->categoryPostRepository->getCategoryPostFirst($slug);
-    }
     public function getCategoryPostBySlug($slug){
         return $this->categoryPostRepository->getCategoryPostBySlug($slug);
     }
