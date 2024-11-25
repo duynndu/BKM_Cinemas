@@ -485,7 +485,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#form-updateProfile').on('submit', function(e) {
+    $(document).on('submit', '#form-updateProfile', function(e) {
         e.preventDefault();
     
         let form = $(this);

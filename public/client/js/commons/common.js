@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     window.dataLayer = window.dataLayer || [];
     function gtag() {
         dataLayer.push(arguments);
@@ -43,15 +43,32 @@ $(function() {
         nav: true,
         dots: true
     });
+    $("#carousel-id").owlCarousel({
+        autoplay: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        smartSpeed: 800,
+        video: true,
+        loop: true,
+        items: 1,
+        nav: true,
+        dots: true
+    });
     $("#promotion-slider").owlCarousel({
         autoplay: true,
         autoplayTimeout: 5000,
         autoplayHoverPause: true,
         loop: true,
-        responsive: { 0: { items: 2, } },
         nav: true,
-        dots: false
+        dots: false,
+        margin: 20,
+        responsive: {
+            0: { items: 4, }, 420: { items: 2, }, 620: { items: 3, },
+            768: { items: 3, }, 980: { items: 3 }, 1010: { items: 3 }, 1100: { items: 4 }
+        }
     });
+
+
 
     $("#nowshowing-slider, #comingsoon-slider").owlCarousel({
         autoplay: true,
@@ -152,18 +169,18 @@ $(function() {
     });
 
     function modal_deposit() {
-        $('.open-modal').click(function() {
+        $('.open-modal').click(function () {
             const modalId = $(this).data('modal');
             $(modalId).show();
         });
 
-        $('.custom-close, .close-modal, .custom-modal').click(function(e) {
+        $('.custom-close, .close-modal, .custom-modal').click(function (e) {
             if ($(e.target).is('.custom-close, .close-modal, .custom-modal')) {
                 $(this).closest('.custom-modal').hide();
             }
         });
 
-        $('.submit-top-up').click(function() {
+        $('.submit-top-up').click(function () {
             const modal = $(this).closest('.custom-modal');
             const amount = modal.find('input[type="number"]').val();
             if (amount) {
@@ -273,7 +290,7 @@ $(function() {
                 });
             }
 
-            if(amountInput && amountInput.val() < 10000) {
+            if (amountInput && amountInput.val() < 10000) {
                 Swal.fire({
                     position: "center",
                     imageUrl: imageError,
@@ -326,8 +343,7 @@ $(function() {
         });
     }
 
-    function icon_venom()
-    {
+    function icon_venom() {
         const popup = $("#venom-popup");
         const closeButton = $("#fragmentClose");
 
@@ -337,7 +353,7 @@ $(function() {
         }
 
         // Xử lý khi bấm nút close
-        closeButton.click(function() {
+        closeButton.click(function () {
             popup.hide(); // Ẩn popup ngay lập tức
             localStorage.setItem("venomPopupHidden", "true"); // Lưu trạng thái đã đóng
         });
@@ -359,9 +375,9 @@ $(function() {
                 imageWidth: 100,
                 imageHeight: 100,
                 title: 'Thanh toán thành công!',
-                html: `Số tiền nạp: ${amount} VND<br>Bạn nhận được: ${exp} exp`,
+                html: `Số tiền nạp: ${amount} VND<br>Bạn nhận được: ${exp} exp`, // Sử dụng html thay vì text
                 confirmButtonText: 'OK',
-                width: "400px", 
+                width: "400px",
             });
         } else if (transactionFailed === '0') {
             Swal.fire({
@@ -386,12 +402,12 @@ $(function() {
     }
 
     function change_avatar() {
-        $('input[type="file"]').on('change', function(event) {
+        $('input[type="file"]').on('change', function (event) {
             const input = event.target;
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
 
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     // Thiết lập ảnh làm background cho div.input-box.input-ic-clear
                     $('.input-box-image.input-ic-clear').css('background-image', 'url(' + e.target.result + ')');
                     $('.input-box-image.input-ic-clear').css('background-size', 'cover'); // Đảm bảo ảnh phủ đầy div
@@ -423,7 +439,7 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    if(response.status) {
+                    if (response.status) {
                         Swal.fire({
                             position: "center",
                             imageUrl: imageSuccess,
@@ -437,8 +453,6 @@ $(function() {
                         }).then(() => {
                             $('#modalAvatarImage').hide();
                             $('#current-avatar img').attr('src', response.imageUrl);
-                            $('#current-avatar img').css('display', 'block');
-                            $('.avatar-placeholder').css('display', 'none');
                             $('.input-box-image').css('background-image', 'url(' + image + ')');
                             $('#avatarInput').val('');
                             $('#avatar').val('');
@@ -453,6 +467,46 @@ $(function() {
         });
     }
 
+    function exp() 
+    {
+        const exp = $('.expData').attr('data-exp') ?? 0; // Điểm EXP hiện tại của người dùng
+        const thresholds = [0, 4000000, 8000000]; // Các mốc EXP
+        const $progress = $('.progress');
+        const $progressText = $('.progress-text');
+
+        // Xác định mốc hiện tại và tính % EXP
+        let percentage = 0; // Phần trăm tiến trình
+        let nextRankExp = 0; // Mốc EXP tiếp theo
+        let currentRankExp = 0; // Mốc EXP hiện tại
+
+        if (exp <= thresholds[1]) {
+            // Nếu EXP trong khoảng 0 -> 4,000,000
+            currentRankExp = thresholds[0];
+            nextRankExp = thresholds[1];
+            percentage = (exp / thresholds[1]) * 55; // Tính theo tỷ lệ phần trăm (0 -> 50%)
+        } else if (exp <= thresholds[2]) {
+            // Nếu EXP trong khoảng 4,000,000 -> 8,000,000
+            currentRankExp = thresholds[1];
+            nextRankExp = thresholds[2];
+            percentage = ((exp - thresholds[1]) / (thresholds[2] - thresholds[1])) * 50 + 55; // (50% -> 100%)
+        } else {
+            // Nếu EXP vượt qua 8,000,000
+            percentage = 100; // Đầy thanh
+            currentRankExp = thresholds[2];
+            nextRankExp = thresholds[2];
+        }
+
+        // Cập nhật thanh tiến trình
+        $progress.css('width', percentage + '%');
+        $progressText.text(`${exp.toLocaleString()} / ${nextRankExp.toLocaleString()}`);
+
+        // Kiểm tra và gán màu khác nhau nếu muốn
+        if (percentage === 100) {
+            $progress.css('background', '#ff5722'); // Đổi màu nếu đạt tối đa
+        }
+    }
+
+    exp();
     updateAvatar();
     change_avatar();
     payment_alert();
