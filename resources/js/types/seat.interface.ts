@@ -1,4 +1,5 @@
 import { SEAT_STATUS } from "@/define/seat.define";
+import { IBooking } from "./booking.interfaces";
 
 export interface ISeat {
   id?: string | null;
@@ -14,6 +15,8 @@ export interface ISeat {
   status: SEAT_STATUS_VALUES;
   user_id: string;
   selected_order: number;
+  booking_id?: string;
+  booking?: IBooking
 }
 
 export type SEAT_STATUS_VALUES =

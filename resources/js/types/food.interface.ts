@@ -1,3 +1,4 @@
+import { IBooking } from "./booking.interfaces";
 import { IFoodType } from "./food-type.interface";
 
 export interface IFood {
@@ -14,4 +15,6 @@ export interface IFood {
   deleted_at: string | null;
   type: IFoodType;
   quantity: number;
+  booking_id?: string;
+  booking?: IBooking
 }

@@ -359,9 +359,9 @@ $(function() {
                 imageWidth: 100,
                 imageHeight: 100,
                 title: 'Thanh toán thành công!',
-                html: `Số tiền nạp: ${amount} VND<br>Bạn nhận được: ${exp} exp`, // Sử dụng html thay vì text
+                html: `Số tiền nạp: ${amount} VND<br>Bạn nhận được: ${exp} exp`,
                 confirmButtonText: 'OK',
-                width: "400px",
+                width: "400px", 
             });
         } else if (transactionFailed === '0') {
             Swal.fire({
@@ -437,6 +437,8 @@ $(function() {
                         }).then(() => {
                             $('#modalAvatarImage').hide();
                             $('#current-avatar img').attr('src', response.imageUrl);
+                            $('#current-avatar img').css('display', 'block');
+                            $('.avatar-placeholder').css('display', 'none');
                             $('.input-box-image').css('background-image', 'url(' + image + ')');
                             $('#avatarInput').val('');
                             $('#avatar').val('');

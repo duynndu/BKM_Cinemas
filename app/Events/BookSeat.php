@@ -12,34 +12,99 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Queue;
 
 class BookSeat implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $seats;
-    public $seat;
-
+    public $seats;
     public $showtimeId;
-    public function __construct($showtimeId, $seatNumber)
+    private $seatsNumber;
+    private $seatsStorage;
+    public function __construct($showtimeId, $seatsNumber, $option = [
+        'action' => 'toggle',
+        'value' => SeatStatus::AVAILABLE,
+    ])
     {
-        $this->seats = Cache::get("showtime.$showtimeId.seats");
-        $this->seat = $this->seats[$seatNumber];
-        $userId = optional(auth()->user())->id;
-        if ($this->seat->status == SeatStatus::AVAILABLE) {
-            $currentOrder = collect($this->seats)->where('user_id', $userId)->max('selected_order') ?? 0;
-            $this->seat->selected_order = $currentOrder + 1;
-            $this->seat->status = SeatStatus::BOOKING;
-            $this->seat->user_id = $userId;
-            ResetSeatStatus::dispatch($showtimeId, $seatNumber)->delay(now()->addSeconds(30));
-        } else {
-            $this->seat->status = SeatStatus::AVAILABLE;
-            $this->seat->user_id = null;
-        }
-        $this->seats[$seatNumber] = $this->seat;
+        $this->seatsNumber = $seatsNumber;
         $this->showtimeId = $showtimeId;
-        Cache::put("showtime.$showtimeId.seats", $this->seats);
+        $this->seatsStorage = Cache::get("showtime.$this->showtimeId.seats");
+
+        switch ($option['action']) {
+            case 'toggle': {
+                    $this->toggle();
+                    break;
+                }
+            case 'set': {
+                    $this->set($option['value']);
+                    break;
+                }
+        }
+        Cache::put("showtime.$this->showtimeId.seats", $this->seatsStorage);
+    }
+
+    public function toggle()
+    {
+        $userId = optional(auth()->user())->id;
+        foreach ($this->seatsNumber as $index => $seatNumber) {
+            $this->seats[$index] = $this->seatsStorage[$seatNumber];
+            if ($this->seats[$index]->status == SeatStatus::AVAILABLE) {
+                $currentOrder = collect($this->seatsStorage)->where('user_id', $userId)->max('selected_order') ?? 0;
+                $this->seats[$index]->selected_order = $currentOrder + 1;
+                $this->seats[$index]->status = SeatStatus::BOOKING;
+                $this->seats[$index]->user_id = $userId;
+            } else if ($this->seats[$index]->status == SeatStatus::BOOKING) {
+                $this->seats[$index]->status = SeatStatus::AVAILABLE;
+                $this->seats[$index]->user_id = null;
+            }
+            $this->seatsStorage[$seatNumber] = $this->seats[$index];
+        }
+        $seatsSelected = collect($this->seatsStorage)
+            ->where('user_id', '=', $userId)
+            ->where('status', '=', SeatStatus::BOOKING)
+            ->map(function ($seat) {
+                return $seat->seat_number;
+            })->values();
+        // if (count($seatsSelected) == 1) {
+        //     DB::table('jobs')
+        //         ->where('queue', 'default') // Chỉ định queue nếu cần
+        //         ->whereNotNull('payload') // Đảm bảo rằng payload không rỗng
+        //         ->get()
+        //         ->each(function ($job) use ($userId) {
+        //             $payload = json_decode($job->payload, true);
+        //             if (
+        //                 isset($payload['data']['showtimeId']) && $payload['data']['showtimeId'] == $this->showtimeId &&
+        //                 isset($payload['data']['userId']) && $payload['data']['userId'] == $userId
+        //             ) {
+        //                 DB::table('jobs')->where('id', $job->id)->delete();
+        //             }
+        //         });
+        //     ResetSeatStatus::dispatch($this->showtimeId, $userId)->delay(now()->addSeconds(300));
+        // }
+    }
+
+    public function set($seatStatus)
+    {
+        $userId = optional(auth()->user())->id;
+        foreach ($this->seatsNumber as $index => $seatNumber) {
+            $this->seats[$index] = $this->seatsStorage[$seatNumber];
+            if ($seatStatus == SeatStatus::BOOKING) {
+                $currentOrder = collect($this->seatsStorage)->where('user_id', $userId)->max('selected_order') ?? 0;
+                $this->seats[$index]->selected_order = $currentOrder + 1;
+                $this->seats[$index]->status = SeatStatus::BOOKING;
+                $this->seats[$index]->user_id = $userId;
+            } else if ($seatStatus == SeatStatus::AVAILABLE) {
+                $this->seats[$index]->status = SeatStatus::AVAILABLE;
+                $this->seats[$index]->user_id = null;
+            } else if ($seatStatus == SeatStatus::BOOKED) {
+                $this->seats[$index]->status = SeatStatus::BOOKED;
+                $this->seats[$index]->user_id = $userId;
+            }
+            $this->seatsStorage[$seatNumber] = $this->seats[$index];
+        }
     }
 
     public function broadcastOn(): array
