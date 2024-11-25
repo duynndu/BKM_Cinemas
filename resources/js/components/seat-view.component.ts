@@ -114,8 +114,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
         });
         console.log(this.booking);
         this.seatsSelected = this.booking.seats_booking.map(seat_booking=>seat_booking.seat);
-        
-
+        this.calculateTotalPrice();
       } catch (error) {
         console.log(error);
         return;

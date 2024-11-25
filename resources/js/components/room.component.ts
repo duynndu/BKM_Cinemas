@@ -139,7 +139,7 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
   },
   renderSelectDay() {
     $("#selectDay").selectDay({
-      daysFromNow: 1,
+      daysFromNow: 0,
       numberOfDays: 24,
     }, (date: string | null) => {
       this.dateSelected = moment(date).format('YYYY-MM-DD');

@@ -203,7 +203,7 @@
                                     <h3 class="title">Thông tin vé</h3>
                                     <div class="info">
                                         <p>Phim: <b x-text="movie?.title"></b></p>
-                                        <p>Thời gian: <b x-text="moment(movie?.release_date).format('dddd, [ngày] DD/MM HH:mm').replace('thứ', 'Thứ') + ' - ' + cinema?.name"></b></p>
+                                        <p>Thời gian: <b x-text="moment(showtimeDetail?.start_time).format('dddd, [ngày] DD/MM HH:mm').replace('thứ', 'Thứ') + ' - ' + cinema?.name"></b></p>
                                         <p>Phòng chiếu: <b x-text="room?.room_name"> </b></p>
                                         <p>Ghế đã chọn: <b x-text="seatsSelected.map(seat => seat.seat_number).join(',')"></b></p>
                                     </div>

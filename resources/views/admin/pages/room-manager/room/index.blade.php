@@ -44,7 +44,7 @@
                                     <tr>
                                         <td>
                                             <strong
-                                                class="text-black">{{ ($rooms->currentPage() - 1) * $rooms->perPage() + $key + 1 }}
+                                                class="text-black">{{ ($rooms->currentPage() - 1) * $rooms->perPage() + $index + 1 }}
                                             </strong>
                                         </td>
                                         <td>
