@@ -3,8 +3,6 @@
 @section('title', Auth::check() ? 'Thông tin tài khoản' : 'Đăng ký - Đăng nhập | BKM Cinemas')
 
 @section('css')
-    <style>
-    </style>
 @endsection
 
 @section('content')
@@ -393,8 +391,61 @@
                                                     @endswitch
                                                 </span>
                                             </p>
-                                            <p>EXP: <span class="point">{{ !empty(Auth::user()->exp) ? Auth::user()->exp : 0 }}</span> điểm</p>
-                                            <p>Tổng chi tiêu: <span class="point">0</span> VND</p>
+                                            <p>Điểm tích lũy: <span
+                                                    class="point">{{ !empty(Auth::user()->points) ? Auth::user()->points : 0 }}</span>
+                                                điểm
+                                                <a href="javascript:;" data-modal="#modalPoints" title="Xem quy tắc đổi điểm"
+                                                    class="no-verify open-modal">
+                                                    Quy tắc & Đổi thưởng
+                                                </a>
+                                            </p>
+                                            <p>Tổng chi tiêu {{ date('Y') }}: <span class="point">0</span> VND</p>
+                                            <!-- EXP và Progress Bar -->
+                                            <div class="exp-container mb-15">
+                                                <p class="mb-4">EXP: <span
+                                                        class="point expData" data-exp="{{ Auth::user()->exp ?? 0 }}">{{ !empty(Auth::user()->exp) ? number_format(Auth::user()->exp, 0, ',', '.') : 0 }}</span>
+                                                    exp</p>
+                                                <div class="rank-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress">
+                                                            <span class="progress-text">0/4,000,000</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="milestones">
+                                                        <div class="upgrade-card">
+                                                            <span class="milestone" style="left: -15px;">
+                                                                <img class="rank_member"
+                                                                    src="{{ asset('client/images/rank_member.png') }}"
+                                                                    alt="">
+                                                            </span>
+                                                            <div class="rank-number-member">
+                                                                <b>0</b>
+                                                            </div>
+                                                        </div>
+                                                        <div class="upgrade-card">
+                                                            <span class="milestone" style="left: 50%;">
+                                                                <img class="rank_vip"
+                                                                    src="{{ asset('client/images/rank_vip.png') }}"
+                                                                    alt="">
+                                                            </span>
+                                                            <div class="line-center-grade"></div>
+                                                            <div class="rank-number-vip">
+                                                                <b>4.000.000</b>
+                                                            </div>
+                                                        </div>
+                                                        <div class="upgrade-card">
+                                                            <span class="milestone" style="right: -61px;">
+                                                                <img class="rank_vvip"
+                                                                    src="{{ asset('client/images/rank_vvip.png') }}"
+                                                                    alt="">
+                                                            </span>
+                                                            <div class="rank-number-vvip">
+                                                                <b>8.000.000</b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -1129,5 +1180,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/client/auth/auth.js') }}"></script>
+    <script src="{{ asset('client/js/auth/auth.js') }}"></script>
 @endsection
