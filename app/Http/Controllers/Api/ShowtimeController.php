@@ -6,6 +6,8 @@ use App\Constants\SeatType as ConstantsSeatType;
 use App\Events\BookSeat;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResetSeatStatus;
+use App\Models\Area;
+use App\Models\Cinema;
 use App\Models\Room;
 use App\Models\SeatType;
 use App\Models\Showtime;
@@ -61,15 +63,20 @@ class ShowtimeController extends Controller
         if ($seats) {
             $seats = $seats->values();
         }
-        // $seats = null;
-        if ($seats == null) {
+        if (!$seats) {
             $seats = DB::select("
-            SELECT seats.*, IF(seats.type = ?, 'unavailable', IF(bs.booking_id is null, 'available', 'occupied')) as status, b.user_id
-            FROM seats
-            LEFT JOIN booking_seats as bs ON seats.id = bs.seat_id
-            LEFT JOIN bookings as b ON bs.booking_id = b.id
-            WHERE seats.room_id = ? AND seats.deleted_at IS NULL
-            ", [ConstantsSeatType::EMPTY_SEAT, $showtime->room_id]);
+            SELECT s.*,
+            IF(s.type = 'empty-seat', 'unavailable',
+                IF(
+                    EXISTS (SELECT 1
+                    FROM bookings b
+                    JOIN booking_seats bs ON bs.booking_id = b.id
+                    WHERE b.showtime_id = st.id AND b.payment_status = 'completed'
+                    AND bs.seat_id = s.id), 'booked', 'available')
+            ) AS status,
+            (SELECT b.user_id FROM bookings b JOIN booking_seats bs ON bs.booking_id = b.id WHERE b.showtime_id = st.id AND bs.seat_id = s.id LIMIT 1) AS user_id FROM showtimes st JOIN rooms r ON r.id = st.room_id LEFT JOIN seats s ON s.room_id = r.id
+            WHERE st.id = ?;
+            ", [$showtime->id]);
             Cache::put("showtime.$showtime->id.seats", collect($seats)->keyBy('seat_number'));
         }
 
@@ -141,7 +148,28 @@ class ShowtimeController extends Controller
     public function bookSeat(Request $request, Showtime $showtime)
     {
         if ($request->seat_number) {
-            BookSeat::dispatch($showtime->id, $request->seat_number);
+            BookSeat::dispatch($showtime->id, [$request->seat_number]);
         }
+    }
+
+    public function getShowtimeDetailForMovie(Request $request)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'movie_id' => 'required|integer',
+            'city_id' => 'required|integer'
+        ]);
+        $cinemas = Cinema::whereHas('area.city', function ($query) use ($request) {
+            $query->where('id', $request->city_id);
+        })
+            ->whereHas('showtimes', function ($query) use ($request) {
+                $query->where('movie_id', $request->movie_id)
+                    ->whereDate('start_time', Carbon::parse($request->date)->toDateString());
+            })
+            ->with(['area', 'city', 'showtimes' => function ($query) use ($request) {
+                $query->where('movie_id', $request->movie_id)
+                    ->whereDate('start_time', Carbon::parse($request->date)->toDateString());
+            }])->get();
+        return response()->json($cinemas);
     }
 }

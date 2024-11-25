@@ -13,4 +13,9 @@ class BookingSeat extends Model
     protected $table = 'booking_seats';
 
     protected $guarded = [];
+
+    public function seat()
+    {
+        return $this->belongsTo(Seat::class);
+    }
 }

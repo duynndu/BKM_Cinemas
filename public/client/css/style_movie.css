@@ -10197,23 +10197,6 @@ label:hover:before {
     background-color: #640d9a
 }
 
-#page-movie .showtime-section .showtime-cinema {
-    color: white;
-    border: 1px solid #f29438;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 12pt;
-    font-weight: 500;
-    text-decoration: none;
-    margin: 0 8px;
-    cursor: pointer;
-    display: inline;
-}
-
-#page-movie .showtime-section input:checked + label {
-    background-color: #eb1689;
-}
-
 #page-movie .showtime-section .showtime-date:after {
     position: absolute;
     content: ' ';

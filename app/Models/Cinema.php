@@ -24,6 +24,17 @@ class Cinema extends Model
         return $this->belongsTo(Area::class);
     }
 
+    public function city(){
+        return $this->hasOneThrough(
+            City::class,
+            Area::class,
+            'id',
+            'id',
+            'area_id',
+            'city_id'
+        );
+    }
+
     public function showtimes()
     {
         return $this->hasMany(Showtime::class);

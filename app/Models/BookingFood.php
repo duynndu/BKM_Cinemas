@@ -13,4 +13,8 @@ class BookingFood extends Model
     protected $table = 'booking_foods';
 
     protected $guarded = [];
+
+    public function food(){
+        return $this->belongsTo(Food::class);
+    }
 }

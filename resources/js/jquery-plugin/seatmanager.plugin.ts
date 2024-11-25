@@ -10,6 +10,7 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout & { base_price: any, 
     seats = [];
     for (let row = 0; row < row_count; row++) {
       for (let col = 0; col < col_count; col++) {
+        //@ts-ignore
         seats.push({
           type: SEAT_TYPE.STANDARD_SEAT,
           slot: 1,
@@ -482,6 +483,7 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout & { base_price: any, 
 
     row_count++;
     for (let col = 0; col < col_count; col++) {
+      //@ts-ignore
       seats?.splice(position * col_count + col, 0, {
         type: SEAT_TYPE.STANDARD_SEAT,
         slot: 1,
@@ -506,6 +508,7 @@ $.fn.seatmanager = async function (seatLayout: ISeatLayout & { base_price: any, 
     }
     col_count++;
     for (let row = 0; row < row_count; row++) {
+      //@ts-ignore
       seats?.splice(row * col_count + position, 0, {
         type: SEAT_TYPE.STANDARD_SEAT,
         slot: 1,

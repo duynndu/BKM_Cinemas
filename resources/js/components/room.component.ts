@@ -94,7 +94,7 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
         showConfirmButton: false,
         timer: 1000,
         reverseButtons: false
-      }).then(() => redirect().route('admin.rooms.index'));
+      }).then(() => redirect().to('admin/room-manager/rooms'));
     } catch (error: any) {
       console.error(error);
       toastr.error(error.message);

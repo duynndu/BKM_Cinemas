@@ -121,10 +121,14 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         const isUserSelectSeat = user.id == seat.user_id && seat.status == SEAT_STATUS.BOOKING;
         if (isUserSelectSeat || seat.status == SEAT_STATUS.AVAILABLE) {
           seatElement.removeClass(seatElement.data('status'));
-          if (seatsSelected.length == 9) {
+          console.log(seat.status != SEAT_STATUS.BOOKING && !seat.user_id);
+
+          if (seatsSelected.length > 9 && (seat.status != SEAT_STATUS.BOOKING && !seat.user_id)) {
             seatErrors.quantityError = true;
             alert('Nếu bạn muốn đặt trên 9 ghế, vui lòng thực hiện giao dịch nhiều lần hoặc liên hệ tại quầy!');
-            return;
+            // return;
+          } else {
+            seatErrors.quantityError = false;
           }
           if (seatsSelected[0] && seatsSelected[0]?.type !== seat.type) {
             seatErrors.typeError = true;
