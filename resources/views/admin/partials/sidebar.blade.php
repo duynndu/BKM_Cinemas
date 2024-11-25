@@ -171,7 +171,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>
-                        <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
+                        <a href="" aria-expanded="false">Quà tặng</a>
                     </li>
                     <li>
                         <a href="" aria-expanded="false">Voucher</a>
