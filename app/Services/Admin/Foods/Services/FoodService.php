@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services\Admin\Foods\Services;
-use App\Repositories\Admin\Foods\Interface\FoodInterface;
+use App\Repositories\Admin\Foods\Interfaces\FoodInterface;
 use App\Services\Admin\Foods\Interfaces\FoodServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
@@ -19,7 +19,9 @@ class FoodService extends BaseService implements FoodServiceInterface
     {
         return FoodInterface::class;
     }
-
+    public function filter($request){
+        return $this->repository->filter($request);
+    }
     public function create(&$data)
     {
         if (isset($data['image']) && $data['image']) {

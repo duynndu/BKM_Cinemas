@@ -3,111 +3,7 @@
 @section('title', Auth::check() ? 'Thông tin tài khoản' : 'Đăng ký - Đăng nhập | BKM Cinemas')
 
 @section('css')
-    <!-- CSS -->
     <style>
-        /* Modal Background */
-        .custom-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        /* Modal Content */
-        .custom-modal-content {
-            background-color: #f5f7f9;
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 900px;
-            position: relative;
-        }
-
-        /* Close Button */
-        .custom-close {
-            position: absolute;
-            top: -2px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            font-size: 35px;
-        }
-
-        /* Footer */
-        .modal-footer {
-            display: flex;
-            justify-content: end;
-            margin-top: 20px;
-            padding: 15px 0 15px 15px;
-            text-align: right;
-            border-top: 1px solid #e5e5e5;
-        }
-
-        .custom-modal {
-            display: none;
-        }
-
-        .close-modal,
-        .submit-modal {
-            color: #fff;
-        }
-
-        .close-modal {
-            background: #aaa;
-            margin-right: 15px;
-            border: none;
-            border-radius: 3px;
-            width: 90px;
-            height: 40px;
-        }
-
-        .submit-modal {
-            position: relative;
-            border: none;
-            border-radius: 3px;
-            width: 90px;
-            height: 40px;
-            color: white;
-            background: linear-gradient(45deg, #ff0089a8, #ff7a35f0);
-            overflow: hidden;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .submit-modal:hover {
-            background: linear-gradient(45deg, #ff0069, #ff5a15);
-        }
-
-        .submit-modal::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.5);
-            transition: left 0.3s ease;
-        }
-
-        .submit-modal:hover::before {
-            left: 100%;
-            transition: left 0.2s ease
-        }
-
-        .main-modal {
-            display: flex;
-            flex-direction: column;
-            padding-top: 24px;
-        }
-
-        .body_modal {
-            position: relative;
-            padding: 15px;
-        }
     </style>
 @endsection
 
@@ -145,7 +41,7 @@
                                             <div class="form-group">
                                                 <label for="password">Mật khẩu:</label>
                                                 <div class="input-group">
-                                                    <input id="password" type="password" name="password"
+                                                    <input id="passwordLogin" type="password" name="password"
                                                         class="form-control password passwordLogin">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text toggle-password" style="cursor: pointer;">
@@ -199,7 +95,7 @@
                                 <div class="row flex">
                                     <div class="col-md-8 col-sm-6">
                                         <div>
-                                            <form data-image="{{ asset('client/images/register_success.jpg') }}" role="form"
+                                            <form data-image="{{ asset('client/images/register_success.png') }}" role="form"
                                                 method="POST" class="form-register" action="{{ route('register') }}">
                                                 @csrf
 
@@ -266,7 +162,7 @@
                                                         <label for="password">Mật khẩu <span
                                                                 style="color: red;">*</span></label>
                                                         <div class="input-group">
-                                                            <input id="password" type="password" class="form-control"
+                                                            <input id="passwordRegister" type="password" class="form-control"
                                                                 name="password">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text toggle-password"
@@ -310,8 +206,8 @@
                                                                 style="color: red;">*</span></label>
                                                         <select name="city_id" id="city" class="select2 w-100">
                                                             <option value="">Chọn thành phố</option>
-                                                            @if (!empty($cities))
-                                                                @foreach ($cities as $city)
+                                                            @if (!empty($data['cities']))
+                                                                @foreach ($data['cities'] as $city)
                                                                     <option value="{{ $city->id }}">{{ $city->name }}
                                                                     </option>
                                                                 @endforeach
@@ -396,9 +292,9 @@
                                 <div class="box-body">
                                     <div class="account-group">
                                         <div class="avatar" id="current-avatar">
-                                            <img src="https://lh3.googleusercontent.com/a/ACg8ocJAvH10FCuGdV1qa00xLUfc1gRaHRZTWYXe7SuoAb4ihOfbAdg=s96-c"
-                                                alt="tranvietanhph39998" class="img-responsive img-circle">
-                                            <a href="javascript:;" id="change-avatar">Đổi ảnh đại diện</a>
+                                            <img src="{{ !empty(Auth::user()->image) ? Auth::user()->image : asset('client/images/1.jpg') }}"
+                                                alt="tranvietanhph39998" class="img-responsive img-circle img-member">
+                                            <a href="javascript:;" data-modal="#modalAvatarImage" class="open-modal">Đổi ảnh đại diện</a>
                                         </div>
                                         <div class="account-info">
                                             <p style="color: #dc0000;font-weight: normal;">Bạn cần xác thực số điện thoại để
@@ -419,25 +315,43 @@
                                             </p>
                                             <p>Email: {{ Auth::check() ? Auth::user()->email : '' }}</p>
                                             <p>SĐT:
-                                                {{ Auth::check() ? Auth::user()->phone : '' }}
-                                                <i class="fa fa-check-circle" aria-hidden="true"></i>
-                                                <a href="javascript:;" title="Tài khoản chưa được xác thực" class="no-verify"
-                                                    id="verify">
-                                                    Xác thực SMS
-                                                </a>
+                                                @if (!empty(Auth::user()->phone))
+                                                    {{ Auth::check() ? Auth::user()->phone : '' }}
+                                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                                @else
+                                                    Chưa có thông tin
+                                                    <a href="javascript:;" title="Tài khoản chưa được xác thực" class="no-verify"
+                                                        id="verify">
+                                                        Xác thực SMS
+                                                    </a>
+                                                @endif
+                                                
                                             </p>
                                             <p>Dịch vụ:
                                                 <a href="javascript:;" data-modal="#topUpModal"
                                                     title="Nạp tiền vào tài khoản" class="no-verify open-modal">
                                                     Nạp tiền
                                                 </a>
-                                                <a href="javascript:;" data-modal="#otherModal" title="Liên kết thẻ khác"
-                                                    class="no-verify open-modal">
-                                                    Liên kết thẻ khác
-                                                </a>
                                             </p>
-                                            <p>Số dư tài khoản: <span class="point">0</span> VND</p>
-                                            <p>EXP: <span class="point">0</span> </p>
+                                            <p>Ví thành viên: <span class="point">{{ !empty(Auth::user()->balance) ? number_format(Auth::user()->balance, 0, '.', ',') : 0 }}</span> VND</p>
+                                            <p>Cấp bậc thành viên:
+                                                <span class="point">
+                                                    @switch(Auth::user()->membership_level)
+                                                        @case('normal')
+                                                            <span class="sparkle-normal">🥈 Hạng Thường</span>
+                                                            @break
+                                                        @case('vip')
+                                                            <span class="sparkle-vip">🌟 Hạng VIP</span>
+                                                            @break
+                                                        @case('svip')
+                                                            <span class="sparkle-svip">👑 Hạng Siêu VIP</span>
+                                                            @break
+                                                        @default
+                                                            Không xác định
+                                                    @endswitch
+                                                </span>
+                                            </p>
+                                            <p>EXP: <span class="point">{{ !empty(Auth::user()->exp) ? Auth::user()->exp : 0 }}</span> điểm</p>
                                             <p>Tổng chi tiêu: <span class="point">0</span> VND</p>
                                         </div>
                                     </div>
@@ -445,11 +359,151 @@
                                 </div>
                                 <div class="box-body" style="border-top: none">
                                     <h3>Giao dịch gần nhất</h3>
-                                    <div class="clearfix"></div>
-                                    <div class="alert alert-danger">
-                                        <button type="button" class="close" data-dismiss="alert"
-                                            aria-hidden="true">×</button>
-                                        Chưa có giao dịch nào
+                                    @if ($data['transactions']->isNotEmpty())
+                                        <div class="transaction-main">
+                                            @php
+                                                $lastDate = null;
+                                            @endphp
+                                            @foreach($data['transactions'] as $key => $transaction)
+                                                @php
+                                                    $transactionDate = date('d/m/Y', strtotime($transaction->created_at));
+                                                @endphp
+                                                <div class="border-box">
+                                                    @if ($transactionDate != $lastDate)
+                                                        <div class="transaction-date">
+                                                            {{ $transactionDate }}
+                                                        </div>
+                                                        @php
+                                                            $lastDate = $transactionDate;
+                                                        @endphp
+                                                    @endif
+                                                    <div class="transaction-list" style="border-bottom: {{ $loop->last ? '1px solid #91b5d7' : 'none' }}">
+                                                        <div class="transaction-content">
+                                                            <h4>Thông báo giao dịch</h4>
+                                                            <ul>
+                                                                <li>{{ !empty($transaction->description) ? $transaction->description : '' }}</li>
+                                                                <li>
+                                                                    Giao dịch:
+                                                                    @if($transaction->status == 'completed')
+                                                                        +
+                                                                    @endif
+                                                                    {{ number_format($transaction->amount, 0, '.', ',') }} VND |
+                                                                    {{ date('d/m/Y H:i:s', strtotime($transaction->created_at)) }} |
+                                                                    Số dư: {{ number_format($transaction->balance_after, 0, '.', ',') }} VND
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div class="alert alert-info">
+                                            Chưa có giao dịch nào
+                                        </div>
+                                    @endif
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div id="doithongtin" class="mbox tab-pane fade">
+                            <div class="title">
+                                <h2>Thông tin thành viên</h2>
+                            </div>
+                            <div style="padding: 20px 20px;">
+                                <div class="row flex">
+                                    <div class="col-md-7 col-sm-7">
+                                        <form id="form-updateProfile"
+                                            data-image="{{ asset('client/images/success.png') }}"
+                                            action="{{ route('updateProfile') }}" method="POST">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label for="name">Nickname</label>
+                                                <input id="name" type="name" class="form-control name"
+                                                    name="name" value="{{ old('name', Auth::user()->name) }}">
+                                                <div class="name_error"></div>
+                                            </div>
+
+                                            <div class="row flex form-group">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="first_name">Họ</label>
+                                                    <input id="first_name" type="text" class="form-control first_name"
+                                                        name="first_name" value="{{ old('first_name', Auth::user()->first_name) }}">
+                                                    <div class="first_name_error"></div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="last_name">Tên đệm và tên</label>
+                                                    <input id="last_name" type="text" class="form-control last_name"
+                                                        name="last_name" value="{{ old('last_name', Auth::user()->last_name) }}">
+                                                    <div class="last_name_error"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="email">Địa chỉ email</label>
+                                                <input id="email" type="email" disabled class="form-control email"
+                                                    name="email" value="{{ old('email', Auth::user()->email) }}">
+                                                <div class="email_error"></div>
+                                            </div>
+
+                                            <div class="row flex form-group">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="gender">Giới tính</label>
+                                                    <div class="radio-group">
+                                                        <label class="radio-label">
+                                                            <input type="radio" name="gender" value="male" {{ old('gender', Auth::user()->gender) == 'male' ? 'checked' : '' }}> Nam
+                                                        </label>
+                                                        <label class="radio-label">
+                                                            <input type="radio" name="gender" value="female" {{ old('gender', Auth::user()->gender) == 'female' ? 'checked' : '' }}> Nữ
+                                                        </label>
+                                                    </div>
+                                                    <div class="gender_error"></div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="name">Số điện thoại</label>
+                                                    <input id="phone" type="text" disabled class="form-control phone"
+                                                        name="phone" value="{{ old('phone', Auth::user()->phone) }}">
+                                                    <div class="phone_error"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row flex form-group">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="birthday">Ngày sinh</label>
+                                                    <input id="date_birth" value="{{ old('date_birth', date('d/m/Y', strtotime(Auth::user()->date_birth))) }}" placeholder="-- Ngày Sinh --" type="text"
+                                                        class="form-control datepicker" name="date_birth">
+                                                    <div class="date_birth_error"></div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label for="birthday">Tỉnh/Thành phố</label>
+                                                    <select name="city_id" id="city" class="select2 w-100">
+                                                        <option value="">Chọn thành phố</option>
+                                                        @if (!empty($data['cities']))
+                                                            @foreach ($data['cities'] as $city)
+                                                                <option @selected(old('city_id', Auth::user()->city_id) == $city->id) value="{{ $city->id }}">{{ $city->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                    <div class="city_id_error"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="center">
+                                                <input type="submit" name="submit" value="Lưu"
+                                                    class="btn btn-success btn-login">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5">
+                                        <div style="padding: 55px;">
+                                            <img src="https://cdn.moveek.com/bundles/ornweb/img/mascot.png" width="100%"
+                                                alt="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -574,169 +628,29 @@
         </div>
     </div>
 
-    <style>
-        .list-last-mb>:last-child {
-            margin-bottom: 0;
-        }
-
-        .list-method-item {
-            background-color: #fff;
-            border-radius: 3px;
-            -webkit-box-shadow: 0 0 2px rgba(33, 38, 44, .16);
-            box-shadow: 0 0 2px rgba(33, 38, 44, .16);
-            -webkit-transition: .15s all linear;
-            -o-transition: .15s all linear;
-            transition: .15s all linear;
-            border: 0;
-        }
-
-        .list-method-item:hover {
-            box-shadow: 0 4px 8px rgba(33, 38, 44, .16);
-        }
-
-        [type=button]:not(:disabled),
-        [type=reset]:not(:disabled),
-        [type=submit]:not(:disabled),
-        button:not(:disabled) {
-            cursor: pointer;
-        }
-
-        .list-method-button {
-            padding: 20px 16px;
-            display: block;
-            cursor: pointer;
-            width: 100%;
-            text-align: left;
-            border: 0;
-            outline: 0;
-            background-color: #fff;
-        }
-
-        .list-mb8>* {
-            margin-bottom: 8px;
-        }
-
-        @media (min-width: 768px) {
-            .list-method-button .title {
-                padding-left: 8px;
-            }
-        }
-
-        .title {
-            word-break: break-word;
-        }
-
-        .b {
-            font-weight: 700;
-        }
-
-        .h3 {
-            margin: 0;
-            font-size: 16px;
-            line-height: 1.5;
-            font-weight: 500;
-            text-align: start;
-        }
-
-        .color-default {
-            color: #21262c;
-        }
-
-        @media (min-width: 1200px) {
-            .h3 {
-                font-size: 1.75rem;
-            }
-        }
-
-        .vnpay-logo {
-            display: inline-flex;
-            -webkit-box-align: end;
-            align-items: flex-end;
-        }
-
-        .vnpay-red {
-            color: #e50019;
-        }
-
-        .vnpay-blue {
-            color: #004a9c;
-        }
-
-        .list-method-button .icon {
-            width: 56px;
-            height: 56px;
-        }
-
-        img {
-            vertical-align: middle;
-            max-width: 100%;
-            height: auto;
-        }
-
-        button::after,
-        button::before {
-            content: "";
-            -webkit-box-flex: 1;
-            -ms-flex: 1 0 auto;
-            flex: 1 0 auto;
-        }
-
-        .col-auto {
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 auto;
-            flex: 0 0 auto;
-            width: auto;
-        }
-
-        .row-16>* {
-            vertical-align: top;
-            padding-left: 8px;
-            padding-right: 8px;
-        }
-
-        .main-payment {
-            display: flex;
-            align-items: center;
-        }
-
-        .title-payment {
-            text-transform: uppercase;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .col {
-            -webkit-box-flex: 1;
-            -ms-flex: 1 0 0%;
-            flex: 1 0 0%;
-        }
-
-        .zalopay-blue {
-            color: rgb(0, 51, 201);
-        }
-
-        .zalopay-green {
-            color: rgb(0, 207, 106);
-        }
-
-        .momo-ping {
-            color: #d82d8b;
-        }
-    </style>
-
     <div id="topUpModal" class="custom-modal">
         <div class="custom-modal-content">
             <span class="custom-close">&times;</span>
-            <h3 class="title-payment">Nạp tiền vào tài khoản</h3>
-            <div class="main-modal">
-                <div class="body_modal">
-                    <form>
+            <div class="d-flex flex-column justify-content-center">
+                <h3 class="title-payment">Nạp tiền vào ví thành viên</h3>
+                <div class="content-p">
+                    <p>Quý khách vui lòng chọn phương thức thanh toán và nhập số tiền cần nạp.</p>
+                    <p>
+                        Thành viên mới nạp tiền vào ví thành viên từ 50.000đ được tặng ngay 50 EXP vào tài khoản thành viên.
+                    </p>
+                </div>
+            </div>
+            <form data-error="{{ asset('client/images/error.png') }}" action="{{ route('processDeposit') }}"
+                id="depositForm" method="post">
+                @csrf
+                <div class="main-modal">
+                    <div class="body_modal">
                         <div class="list-method-item list-mb8">
-                            <button type="submit" value="VNMART" id="VNMART" name="paymethod"
-                                class="list-method-button">
+                            <div class="list-method-button" data-tab="1">
                                 <div class="row row-16 main-payment">
-                                    <div class="col">
+                                    <div class="col" style="padding-top: 20px;">
+                                        <input type="radio" name="payment_method" style="display: none;"
+                                            class="payment_method" id="payment_method" value="vnpay">
                                         <div class="title h3 color-default">
                                             Ví điện tử
                                             <span class="vnpay-logo b">
@@ -744,21 +658,45 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto" style="padding-top: 20px;">
                                         <div class="icon">
-                                            <img width="100%" src="https://sandbox.vnpayment.vn/paymentv2/images/icons/mics/64x64-vi-vnpay.svg"
+                                            <img width="100%"
+                                                src="https://sandbox.vnpayment.vn/paymentv2/images/icons/mics/64x64-vi-vnpay.svg"
                                                 alt="">
                                         </div>
                                     </div>
                                 </div>
-                            </button>
+                            </div>
+                            <div class="list-method-item-content" data-content="1" style="display: none;">
+                                <div>
+                                    <div class="list-bank list-bank-grid-4">
+                                        <div class="list-mb24 list-last-mb">
+                                            <div class="list-bank-search">
+                                                <div class="form-group">
+                                                    <div
+                                                        class="input-group-wrap input-default input-size-default input-group-vertical">
+                                                        <label class="input-inner-wrap">
+                                                            <input type="number"
+                                                                class="input input-label-change input-has-clear"
+                                                                placeholder="Nhập số tiền cần nạp..." name="amount[vnpay]"
+                                                                autocorrect="off" id="searchPayMethod2">
+                                                            <div class="input-frame"></div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="list-method-item list-mb8">
-                            <button type="submit" value="VNMART" id="VNMART" name="paymethod"
-                                class="list-method-button">
+                            <div class="list-method-button" data-tab="2">
                                 <div class="row row-16 main-payment">
-                                    <div class="col">
+                                    <div class="col" style="padding-top: 20px;">
+                                        <input type="radio" name="payment_method" style="display: none;"
+                                            class="payment_method" id="payment_method" value="momo">
                                         <div class="title h3 color-default">
                                             Ví điện tử
                                             <span class="vnpay-logo b">
@@ -766,88 +704,130 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto" style="padding-top: 20px;">
                                         <div class="icon">
-                                            <img width="100%" src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png"
+                                            <img width="100%"
+                                                src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png"
                                                 alt="">
                                         </div>
                                     </div>
                                 </div>
-                            </button>
+                            </div>
+                            <div class="list-method-item-content" data-content="2" style="display: none;">
+                                <div>
+                                    <div class="list-bank list-bank-grid-4">
+                                        <div class="list-mb24 list-last-mb">
+                                            <div class="list-bank-search">
+                                                <div class="form-group">
+                                                    <div
+                                                        class="input-group-wrap input-default input-size-default input-group-vertical">
+                                                        <label class="input-inner-wrap">
+                                                            <input type="number"
+                                                                class="input input-label-change input-has-clear"
+                                                                placeholder="Nhập số tiền cần nạp..." name="amount[momo]"
+                                                                autocorrect="off" id="searchPayMethod2">
+                                                            <div class="input-frame"></div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="list-method-item">
-                            <button type="submit" value="VNMART" id="VNMART" name="paymethod"
-                                class="list-method-button">
+                        <div class="list-method-item list-mb8">
+                            <div class="list-method-button" data-tab="3">
                                 <div class="row row-16 main-payment">
-                                    <div class="col">
+                                    <div class="col" style="padding-top: 20px;">
+                                        <input type="radio" name="payment_method" style="display: none;"
+                                            class="payment_method" id="payment_method" value="zalopay">
                                         <div class="title h3 color-default">
                                             Ví điện tử
                                             <span class="vnpay-logo b">
-                                                <span class="zalopay-blue">ZALO</span><span class="zalopay-green">PAY</span>
+                                                <span class="zalopay-blue">ZALO</span><span
+                                                    class="zalopay-green">PAY</span>
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto" style="padding-top: 20px;">
                                         <div class="icon">
-                                            <img width="100%" src="https://qcgateway.zalopay.vn/pay/v2/images/icon-zpapp-2.svg"
+                                            <img width="100%"
+                                                src="https://qcgateway.zalopay.vn/pay/v2/images/icon-zpapp-2.svg"
                                                 alt="">
                                         </div>
                                     </div>
                                 </div>
-                            </button>
+                            </div>
+                            <div class="list-method-item-content" data-content="3" style="display: none;">
+                                <div>
+                                    <div class="list-bank list-bank-grid-4">
+                                        <div class="list-mb24 list-last-mb">
+                                            <div class="list-bank-search">
+                                                <div class="form-group">
+                                                    <div
+                                                        class="input-group-wrap input-default input-size-default input-group-vertical">
+                                                        <label class="input-inner-wrap">
+                                                            <input type="number"
+                                                                class="input input-label-change input-has-clear"
+                                                                placeholder="Nhập số tiền cần nạp..."
+                                                                name="amount[zalopay]" autocorrect="off"
+                                                                id="searchPayMethod2">
+                                                            <div class="input-frame"></div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="close-modal" type="button">Đóng</button>
+                        <button class="submit-modal">Nạp tiền</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="close-modal">Đóng</button>
-                    <button class="submit-modal">Nạp tiền</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
-    <div id="otherModal" class="custom-modal">
+    <div id="modalAvatarImage" style="height: 100%;" class="custom-modal">
         <div class="custom-modal-content">
             <span class="custom-close">&times;</span>
-            <h3>Nạp tiền khác</h3>
-            <form>
-                <label for="amount2">Số tiền cần nạp</label>
-                <input type="number" id="amount2" placeholder="Nhập số tiền" required>
-            </form>
-            <div class="modal-footer">
-                <button class="close-modal">Đóng</button>
-                <button class="submit-modal">Nạp tiền</button>
+            <div class="d-flex flex-column justify-content-center">
+                <h3 class="title-payment">Chọn ảnh đại diện</h3>
             </div>
+            <form
+                data-error="{{ asset('client/images/error.png') }}"
+                data-image="{{ asset('client/images/1.jpg') }}"
+                data-success="{{ asset('client/images/success.png') }}"
+                action="{{ route('updateAvatar') }}"
+                id="updateAvatarForm" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="main-modal" style="margin-top: 33px;">
+                    <div class="body_modal_image">
+                        <div class="">
+                            <input type="hidden" name="image" id="avatar" value="">
+                            <label class="input-inner-wrap-image">
+                                <input type="file" class="" name="user[image]" accept=".jpg, .jpeg, .png, .webp" id="avatarInput">
+                                <div class="input-extend input-extend-right">
+                                    <div class="input-box-image input-ic-clear"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="submit-modal">Lưu</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
 
 @section('js')
     <script src="{{ asset('js/client/auth/auth.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('.open-modal').click(function() {
-                const modalId = $(this).data('modal');
-                $(modalId).show();
-            });
-
-            $('.custom-close, .close-modal, .custom-modal').click(function(e) {
-                if ($(e.target).is('.custom-close, .close-modal, .custom-modal')) {
-                    $(this).closest('.custom-modal').hide();
-                }
-            });
-
-            $('.submit-top-up').click(function() {
-                const modal = $(this).closest('.custom-modal');
-                const amount = modal.find('input[type="number"]').val();
-                if (amount) {
-                    alert(`Nạp tiền thành công với số tiền: ${amount}`);
-                    modal.hide();
-                } else {
-                    alert('Vui lòng nhập số tiền!');
-                }
-            });
-        });
-    </script>
 @endsection

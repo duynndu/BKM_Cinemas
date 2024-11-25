@@ -13,6 +13,7 @@
                     'breadcrumbs' => $breadcrumbs
                 ])
             </nav>
+
             <div class="right-area folder-layout-tab">
                 @can('create', App\Models\User::class)
                     <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
@@ -29,7 +30,59 @@
                 @endcan
             </div>
         </div>
+        <div class="col-12">
+            <div class="filter cm-content-box box-primary">
+                <div class="content-title SlideToolHeader">
+                    <div class="cpa">
+                        <i class="fa-sharp fa-solid fa-filter me-2"></i>Bộ lọc
+                    </div>
+                </div>
+                <div class="cm-content-body form excerpt" style="">
+                    <form action="{{ route('admin.users.index') }}" method="GET">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-3 col-sm-6">
+                                    <label
+                                        class="form-label">Tên chức năng</label>
+                                    <input id="name" value="{{ request()->name }}" name="name" type="text"
+                                        class="form-control mb-xl-0 mb-3"
+                                        placeholder="Nhập tên chức năng">
+                                </div>
+                                <div class="col-xl-5">
+                                    <label class="form-label mb-2">{{ __('language.admin.members.roles.type') }}</label><br>
+                                    <select name="type" class="form-control w-50 selectRoles" id="">
+                                        <option value="">-- {{ __('language.admin.members.roles.select') }} --</option>
+                                        <option value="{{ \App\Models\User::TYPE_ADMIN }}" {{ request()->type == \App\Models\User::TYPE_ADMIN ? 'selected' : '' }}>
+                                            {{ __('language.admin.members.roles.admin') }}
+                                        </option>
+                                        <option value="{{ \App\Models\User::TYPE_MANAGE }}" {{ request()->type == \App\Models\User::TYPE_MANAGE ? 'selected' : '' }}>
+                                            {{ __('language.admin.members.roles.manage') }}
+                                        </option>
+                                        <option value="{{ \App\Models\User::TYPE_STAFF }}" {{ request()->type == \App\Models\User::TYPE_STAFF ? 'selected' : '' }}>
+                                            {{ __('language.admin.members.roles.staff') }}
+                                        </option>
+                                        <option value="{{ \App\Models\User::TYPE_MEMBER }}" {{ request()->type == \App\Models\User::TYPE_MEMBER ? 'selected' : '' }}>
+                                            {{ __('language.admin.members.roles.member') }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-xl-3 col-sm-6 align-self-end">
+                                    <div>
+                                        <button class="btn btn-primary me-2" title="Click here to Search"
+                                            type="submit"><i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm
+                                            kiếm nâng cao
+                                        </button>
 
+                                        <button type="reset" class="btn btn-danger light"
+                                            title="Click here to remove filter">Xóa trống</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="row">
             @if(!empty($data['users']))
                 <div class="col-xl-12">
@@ -73,28 +126,33 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end" style="">
                                                         @can('changeStatus', App\Models\User::class)
-                                                            <button type="button"
-                                                                    data-url="{{ route('admin.users.changeStatus') }}"
-                                                                    data-status="{{ $user->status }}"
-                                                                    data-id="{{ $user->id }}"
-                                                                    class="dropdown-item changeStatusUser">
-                                                                {{ $user->status == 1 ? __('language.admin.members.users.blockUser') : __('language.admin.members.users.unblockUser') }}
-                                                            </button>
+                                                            @if(Auth::user()->id !== $user->id)
+                                                                <button type="button"
+                                                                        data-url="{{ route('admin.users.changeStatus') }}"
+                                                                        data-status="{{ $user->status }}"
+                                                                        data-id="{{ $user->id }}"
+                                                                        class="dropdown-item changeStatusUser">
+                                                                    {{ $user->status == 1 ? __('language.admin.members.users.blockUser') : __('language.admin.members.users.unblockUser') }}
+                                                                </button>
+                                                            @endif
                                                         @endcan
                                                         @can('update', App\Models\User::class)
                                                             <a class="dropdown-item"
                                                                href="{{ route('admin.users.edit', $user->id) }}">{{ __('language.admin.members.users.editDrop') }}</a>
                                                         @endcan
                                                         @can('delete', App\Models\User::class)
-                                                            <form class="formDelete"
-                                                                  action="{{ route('admin.users.delete', $user->id) }}"
-                                                                  method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item btnDelete">
-                                                                    {{ __('language.admin.members.users.deleteDrop') }}
-                                                                </button>
-                                                            </form>
+                                                            @if(Auth::user()->id !== $user->id)
+                                                                <form class="formDelete"
+                                                                    action="{{ route('admin.users.delete', $user->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <input type="hidden" name="page" value="{{ request()->page > 0 ? request()->page : 0 }}">
+                                                                    <button type="submit" class="dropdown-item btnDelete">
+                                                                        {{ __('language.admin.members.users.deleteDrop') }}
+                                                                    </button>
+                                                                </form>
+                                                            @endif
                                                         @endcan
                                                     </div>
                                                 </div>

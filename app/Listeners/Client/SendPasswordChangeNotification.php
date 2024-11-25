@@ -8,9 +8,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendPasswordChangeNotification
+class SendPasswordChangeNotification implements ShouldQueue
 {
-    
+
     public function __construct()
     {
         //

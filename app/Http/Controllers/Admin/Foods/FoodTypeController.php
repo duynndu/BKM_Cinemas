@@ -23,9 +23,9 @@ class FoodTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->foodTypeService->getAll();
+        $data = $this->foodTypeService->filter($request);
         return view('admin.pages.foodTypes.index', compact('data'));
     }
 

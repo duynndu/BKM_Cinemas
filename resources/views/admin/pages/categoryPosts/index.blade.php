@@ -111,7 +111,10 @@
                                                     <tr>
                                                         <td><input type="checkbox" data-id="{{ $categoryPost->id }}"
                                                             class="item-checked"></td>
-                                                        <td>{{ $key + 1 }}</td>
+                                                        <td>
+                                                            <strong
+                                                                class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
+                                                        </td>
                                                         <td>
                                                             @if ($categoryPost->childs->count() > 0)
                                                                 <i class="nav-icon fas fa-folder"></i>

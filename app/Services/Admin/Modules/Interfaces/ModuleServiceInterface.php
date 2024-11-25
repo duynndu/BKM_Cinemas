@@ -7,4 +7,5 @@ use App\Services\Base\BaseServiceInterface;
 interface ModuleServiceInterface extends BaseServiceInterface
 {
     public function deleteMultipleChecked($request);
+    public function filter($request);
 }

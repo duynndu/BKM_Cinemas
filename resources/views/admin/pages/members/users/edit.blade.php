@@ -115,6 +115,7 @@
                                                 <label
                                                     class="form-label mb-2">{{ __('language.admin.members.users.role') }}</label><br>
                                                 <select name="role_id" class="form-control role_id" id="">
+                                                    <option data-type="member" value="">-- Chọn --</option>
                                                     @if ($data['roles']->isNotEmpty())
                                                         @foreach ($data['roles'] as $role)
                                                             <option @selected($role->id === $data['user']->role_id)
@@ -124,16 +125,8 @@
                                                         @endforeach
                                                     @endif
                                                 </select>
-                                                <br>
-
                                                 <input type="hidden" name="type" class="type"
                                                     value="{{ $data['user']->type ?? '' }}">
-
-                                                @error('role_id')
-                                                    <div class="mt-2">
-                                                        <span class="text-red">{{ $message }}</span>
-                                                    </div>
-                                                @enderror
                                             </div>
 
                                             <div class="col-6">

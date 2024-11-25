@@ -1,27 +1,4 @@
 $(document).ready(function () {
-
-    function togglePasswordVisibility(passwordInput, icon) {
-        const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
-        passwordInput.attr('type', type);
-
-        icon.toggleClass('fa-eye fa-eye-slash');
-    }
-
-    $(document).on('click', '.toggle-old-password-icon', function() {
-        const passwordInput = $('input[name="old_password"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
-    $(document).on('click', '.toggle-password-change-icon', function() {
-        const passwordInput = $('input[name="password"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
-    $(document).on('click', '.toggle-confirm-password-icon', function() {
-        const passwordInput = $('input[name="confirm_password"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
     $(document).on("submit", ".form-login", function (e) {
         e.preventDefault();
     
@@ -507,4 +484,53 @@ $(document).ready(function () {
             });
         }
     });
+
+    $('#form-updateProfile').on('submit', function(e) {
+        e.preventDefault();
+    
+        let form = $(this);
+        let url = form.attr('action');
+        let image = form.data('image');
+        let data = form.serialize();
+        
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.status) {
+                    Swal.fire({
+                        position: "center",
+                        imageUrl: image,
+                        imageWidth: 100,
+                        imageHeight: 100,
+                        width: "400px",
+                        title: "Thông tin đã được cập nhật!",
+                        showConfirmButton: false,
+                        timerProgressBar: true,
+                        timer: 2500,
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    $.each(errors, function (key, messages) {
+                        let errorContainer = form.find("." + key + "_error");
+                        if (errorContainer.length) {
+                            errorContainer.html(messages[0]).css("color", "red");
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: `${xhr.responseJSON.message}`,
+                        showConfirmButton: false,
+                        timer: 2500,
+                    });
+                }
+            },    
+        });
+    })
 });

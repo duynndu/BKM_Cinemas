@@ -13,7 +13,6 @@ use App\Http\Controllers\Admin\Foods\FoodComboController;
 use App\Http\Controllers\Admin\Foods\FoodController;
 use App\Http\Controllers\Admin\Foods\FoodTypeController;
 use App\Http\Controllers\Admin\Members\ModuleController;
-use App\Http\Controllers\Admin\Members\PermissionController;
 use App\Http\Controllers\Admin\Members\RoleController;
 use App\Http\Controllers\Admin\Members\UserController;
 use App\Http\Controllers\Admin\MenuController;
@@ -588,37 +587,6 @@ Route::prefix('admin')->middleware(['web'])
                         ->middleware('authorizeAction:deleteMultiple,App\Models\Module');
                 });
 
-            Route::prefix('permissions')
-                ->controller(PermissionController::class)
-                ->name('permissions.')->group(function () {
-                    Route::get('/', 'index')
-                        ->name('index')
-                        ->middleware('authorizeAction:viewAny,App\Models\Permission');
-
-                    Route::get('/create', 'create')
-                        ->name('create')
-                        ->middleware('authorizeAction:create,App\Models\Permission');
-
-                    Route::post('/store', 'store')
-                        ->name('store')
-                        ->middleware('authorizeAction:create,App\Models\Permission');
-
-                    Route::get('/{id}/edit', 'edit')
-                        ->name('edit')
-                        ->middleware('authorizeAction:update,App\Models\Permission');
-
-                    Route::post('/{id}/update', 'update')
-                        ->name('update')
-                        ->middleware('authorizeAction:update,App\Models\Permission');
-
-                    Route::delete('/{id}/delete', 'delete')
-                        ->name('delete')
-                        ->middleware('authorizeAction:delete,App\Models\Permission');
-
-                    Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
-                        ->name('deleteItemMultipleChecked')
-                        ->middleware('authorizeAction:deleteMultiple,App\Models\Permission');
-                });
             Route::prefix('foods')
                 ->controller(FoodController::class)
                 ->name('foods.')->group(function () {
@@ -913,22 +881,30 @@ Route::prefix('admin')->middleware(['web'])
             ->controller(CinemaController::class)
             ->name('cinemas.')->group(function () {
                 Route::get('/', 'index')
-                    ->name('index');
+                    ->name('index')
+                    ->middleware('authorizeAction:viewAny,App\Models\Cinema');
                 Route::get('/create', 'create')
-                    ->name('create');
+                    ->name('create')
+                    ->middleware('authorizeAction:create,App\Models\Cinema');
                 Route::post('/store', 'store')
-                    ->name('store');
+                    ->name('store')
+                    ->middleware('authorizeAction:create,App\Models\Cinema');
                 Route::get('/{id}/edit', 'edit')
-                    ->name('edit');
+                    ->name('edit')
+                    ->middleware('authorizeAction:update,App\Models\Cinema');
                 Route::put('/{id}/update', 'update')
-                    ->name('update');
+                    ->name('update')
+                    ->middleware('authorizeAction:update,App\Models\Cinema');
                 Route::delete('/{id}/delete', 'destroy')
-                    ->name('delete');
+                    ->name('delete')
+                    ->middleware('authorizeAction:delete,App\Models\Cinema');
                 Route::post('/change-active', 'changeActive')
-                    ->name('changeActive');
+                    ->name('changeActive')
+                    ->middleware('authorizeAction:changeActive,App\Models\Cinema');
                 Route::post('/removeAvatarImage', 'removeAvatarImage')
                     ->name('removeAvatarImage');
                 Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
-                    ->name('deleteItemMultipleChecked');
+                    ->name('deleteItemMultipleChecked')
+                    ->middleware('authorizeAction:delete,App\Models\Cinema');
             });
     });

@@ -2,8 +2,8 @@
 
 namespace App\Services\Admin\Tags\Services;
 
-use App\Repositories\Admin\Tags\Interface\TagInterface;
-use App\Repositories\Admin\Tags\Repository\TagRepository;
+use App\Repositories\Admin\Tags\Interfaces\TagInterface;
+use App\Repositories\Admin\Tags\Repositories\TagRepository;
 use App\Services\Admin\Tags\Interfaces\TagServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;

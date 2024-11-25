@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Constants\SeatType as ConstantsSeatType;
+use App\Events\BookSeat;
 use App\Http\Controllers\Controller;
+use App\Jobs\ResetSeatStatus;
 use App\Models\Room;
 use App\Models\SeatType;
 use App\Models\Showtime;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class ShowtimeController extends Controller
 {
@@ -53,12 +57,22 @@ class ShowtimeController extends Controller
 
     public function getShowtimeDetailById(Showtime $showtime)
     {
-        $seats = DB::select("
-        SELECT seats.*, IF(seats.type = ?, 'unavailable', IF(bs.booking_id is null, 'available', 'occupied')) as status
-        FROM seats
-        LEFT JOIN booking_seats as bs ON seats.id = bs.seat_id
-        WHERE seats.room_id = ? AND seats.deleted_at IS NULL
-    ", [ConstantsSeatType::EMPTY_SEAT, $showtime->room_id]);
+        $seats = Cache::get("showtime.$showtime->id.seats");
+        if ($seats) {
+            $seats = $seats->values();
+        }
+        // $seats = null;
+        if ($seats == null) {
+            $seats = DB::select("
+            SELECT seats.*, IF(seats.type = ?, 'unavailable', IF(bs.booking_id is null, 'available', 'occupied')) as status, b.user_id
+            FROM seats
+            LEFT JOIN booking_seats as bs ON seats.id = bs.seat_id
+            LEFT JOIN bookings as b ON bs.booking_id = b.id
+            WHERE seats.room_id = ? AND seats.deleted_at IS NULL
+            ", [ConstantsSeatType::EMPTY_SEAT, $showtime->room_id]);
+            Cache::put("showtime.$showtime->id.seats", collect($seats)->keyBy('seat_number'));
+        }
+
         $seatTypes = collect($seats)
             ->filter(fn($seat) => $seat->type !== ConstantsSeatType::EMPTY_SEAT)
             ->map(fn($seat) => $seat->type)->unique()->values()->toArray();
@@ -122,5 +136,12 @@ class ShowtimeController extends Controller
         $showtime->save();
         $showtime->load('movie');
         return response()->json($showtime, 200);
+    }
+
+    public function bookSeat(Request $request, Showtime $showtime)
+    {
+        if ($request->seat_number) {
+            BookSeat::dispatch($showtime->id, $request->seat_number);
+        }
     }
 }

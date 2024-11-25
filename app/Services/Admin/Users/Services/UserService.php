@@ -2,8 +2,8 @@
 
 namespace App\Services\Admin\Users\Services;
 
-use App\Repositories\Admin\Users\Interface\UserInterface;
-use App\Repositories\Admin\Users\Repository\UserRepository;
+use App\Repositories\Admin\Users\Interfaces\UserInterface;
+use App\Repositories\Admin\Users\Repositories\UserRepository;
 use App\Services\Admin\Users\Interfaces\UserServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\RemoveImageTrait;
@@ -14,11 +14,13 @@ class UserService extends BaseService implements UserServiceInterface
 {
     use StorageImageTrait, RemoveImageTrait;
 
-   public function getRepository()
-   {
-       return UserInterface::class;
-   }
-
+    public function getRepository()
+    {
+        return UserInterface::class;
+    }
+    public function filter($request){
+        return $this->repository->filter($request);
+    }
     public function create(&$request)
     {
         $data = [

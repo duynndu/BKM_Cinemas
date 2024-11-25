@@ -5,6 +5,13 @@
 
 <head>
     <meta name="csrf_token" content="{{ csrf_token() }}">
+    <meta name="transaction_succeed" content="{{ session('transaction_succeed') }}">
+    <meta name="transaction_failed" content="{{ session('transaction_failed') }}">
+    <meta name="status_failed" content="{{ session('status_failed') }}">
+    <meta name="amount" content="{{ number_format(session()->get("amount"), 0, '.', ',') }}">
+    <meta name="exp" content="{{ session()->get("exp") }}">
+    <meta name="image-success" content="{{ asset("client/images/success.png") }}">
+    <meta name="image-error" content="{{ asset("client/images/error.png") }}">
     <title>@yield('title')</title>
     <meta name="description"
         content="Rạp chiếu phim Touch Cinema với chất lượng âm thanh & hình ảnh đạt chuẩn quốc tế đầu tiên tại Pleiku, Gia Lai. Đặt vé ngay hôm nay để nhận được nhiều ưu đãi!">
@@ -174,6 +181,13 @@
         </div>
     </div>
 
+    <div id="venom-popup" style="display: none;">
+        <div class="venom-content">
+            <button type="button" id="fragmentClose">close</button>
+            <img src="{{ asset("client/images/V3_Popcorn-min.gif") }}" />
+        </div>
+    </div>
+
     <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
 
@@ -192,8 +206,7 @@
 <script type="text/javascript" src="{{ asset('client/js/statics/js/scripts.js') }}"></script>
 <script src="{{ asset('client/js/statics/js/showtime-widget.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
-
-<script src="{{ asset('client/js/common.js') }}"></script>
+<script src="{{ asset('js/client/commons/common.js') }}"></script>
 
 @yield('js')
 

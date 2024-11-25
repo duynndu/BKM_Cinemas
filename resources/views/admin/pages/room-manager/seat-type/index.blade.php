@@ -44,11 +44,13 @@
                                     toastr.warning('Loại ghế của hệ thống không thể chỉnh sửa')
                                 }
                             }">
-                                @foreach($seatTypes as $index => $seatType)
+                                @foreach($seatTypes as $key => $seatType)
                                 <tr>
                                     <td>
                                         <div class="tw-flex tw-items-center tw-gap-2">
-                                            <strong class="text-black">{{ $index + 1 }}</strong>
+                                            <strong
+                                                class="text-black">{{ ($seatTypes->currentPage() - 1) * $seatTypes->perPage() + $key + 1 }}
+                                            </strong>
                                             @if($seatType->is_system)
                                             <svg @click="editSeatType()" xmlns="http://www.w3.org/2000/svg" class="tw-h-5 tw-w-5 tw-ml-2" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v2H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-1V6a4 4 0 00-4-4zm-2 6V6a2 2 0 114 0v2H8z" clip-rule="evenodd" />

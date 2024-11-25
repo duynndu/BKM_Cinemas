@@ -11,8 +11,13 @@ import { price } from "@/utils/common";
 import { IMovie } from "@/types/movie.interface";
 import moment from "moment";
 import { ICinema } from "@/types/cinema.interface";
+import { authService } from "@/services/auth.service";
+import { IUser } from "@/types/user.interface";
+import { IRoom } from "@/types/room.interface";
+import { SEAT_STATUS } from "@/define/seat.define";
+import { IFood } from "@/types/food.interface";
 
-Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
+Alpine.data('SeatViewComponent', (showtimeId: string) => ({
   errors: {} as Record<string, string>,
   seatTable: null as JQuery<HTMLElement> | null,
   showModal: false,
@@ -27,19 +32,30 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
   price: price,
   movie: null as IMovie | null,
   cinema: null as ICinema | null,
+  room: null as IRoom | null,
   moment: moment,
   seatErrors: {
-    typeError: false,
-    quantityError: false,
-    slotError: false,
+    typeError: true,
+    quantityError: true,
+    slotError: true,
   },
+  user: null as IUser | null,
+  step: 1,
+  foodsSelected: [] as IFood[],
+  seconds: 30,
 
   async init() {
-    showtimeId = "1";
+    this.countdownTimer();
+    this.user = await authService.getCurrentUser();
+    if (this.user) {
+      window.user = this.user;
+    }
+    localStorage.setItem('currentUser', JSON.stringify(this.user));
     await this.getShowtimeDetailById(showtimeId);
     this.renderSeatLayout();
     await this.getFoodTypes();
     this.addEventListeners();
+    this.setSeatsSelected();
   },
   async getShowtimeDetailById(showtimeId?: string) {
     if (showtimeId) {
@@ -47,6 +63,7 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
       this.seatTypes = this.showtimeDetail?.room?.seat_types ?? [];
       this.movie = this.showtimeDetail.movie ?? null;
       this.cinema = this.showtimeDetail.cinema ?? null;
+      this.room = this.showtimeDetail.room ?? null;
     }
   },
   toggleModal() {
@@ -61,29 +78,48 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
     });
   },
   async submit() {
+    if (this.seatErrors.quantityError) return;
     if (this.seatErrors.slotError) {
       alert('Vui lòng không chừa 1 ghế trống bên trái hoặc bên phải của các ghế bạn đã chọn.');
+      return;
     }
+    if (this.seatErrors.quantityError || this.seatErrors.typeError) {
+      return;
+    }
+    this.foodsSelected = [];
+    this.foodTypes.forEach(foodType => {
+      foodType.foods.forEach(food => {
+        if (food.quantity > 0) {
+          this.foodsSelected.push(food);
+        }
+      })
+    })
+
+    this.step = 2;
+
   },
   renderSeatLayout() {
-    const room = this.showtimeDetail?.room;
-    if (room) {
+    if (this.room) {
       $("#seatingArea").seatview({
-        col_count: room.col_count,
-        row_count: room.row_count,
-        seats: room.seats,
+        col_count: this.room.col_count,
+        row_count: this.room.row_count,
+        seats: this.room.seats,
         seat_types: this.seatTypes,
-        base_price: room.base_price,
-      }, ({ seatsSelected, seatErrors }: { seatsSelected: ISeat[], seatErrors: any }) => {
-        this.seatsSelected = [...seatsSelected];
+        base_price: this.room.base_price,
+      }, ({ seatErrors, seat }: { seatsSelected: ISeat[], seatErrors: any, seat: ISeat }) => {
         this.seatErrors = seatErrors;
+        console.log(this.seatErrors);
+
+        if (this.seatErrors.quantityError || this.seatErrors.typeError) {
+          return;
+        };
+        showtimeService.bookSeat(showtimeId, seat?.seat_number);
         this.calculateTotalPrice();
       });
     }
   },
   addEventListeners() {
-    const isLogin = true;
-    if (!isLogin) {
+    if (this.user == null) {
       $("#seatingArea").addClass("event-none");
       $("#login").removeClass("tw-hidden");
       $("#combo").addClass("tw-hidden");
@@ -93,13 +129,39 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
       $("#combo").removeClass("tw-hidden");
     }
     $("#seatingArea").on("click", (e) => {
-      if (!isLogin) {
+      if (this.user == null) {
         e.stopPropagation();
         e.preventDefault();
         $("#tab-combo").toggleClass("slide");
         return false;
       }
     });
+    window.Echo.join(`showtime.${showtimeId}`)
+      .here((users: any) => {
+        console.log("Người dùng hiện tại:", users);
+        this.setSeatsSelected();
+      })
+      .joining((user: any) => {
+        console.log("Người dùng đã tham gia:", user);
+      })
+      .leaving((user: any) => {
+        console.log("Người dùng đã rời:", user);
+      }).listen('BookSeat', (e: { showtimeId: string, seat: ISeat }) => {
+        console.log(e);
+        //@ts-ignore
+        this.room.seats = this.room?.seats.map(seat => {
+          if (seat.seat_number === e.seat.seat_number) {
+            return e.seat;
+          }
+          return seat;
+        });
+        this.setSeatsSelected();
+        this.renderSeatLayout();
+      });
+  },
+  setSeatsSelected() {
+    const seatsSelected = this.room?.seats?.filter(seat => seat.user_id == this.user?.id && seat.status == SEAT_STATUS.BOOKING) ?? [];
+    this.seatsSelected = seatsSelected;
   },
   calculateTotalPrice() {
     this.totalPriceSeats = this.seatsSelected.reduce((total, seat) => {
@@ -108,5 +170,32 @@ Alpine.data('SeatViewComponent', (showtimeId?: string) => ({
     this.totalPriceFoods = this.foodTypes.reduce((total, foodType) => {
       return total + foodType.foods.reduce((sum, food) => sum + (Number(food.price) * Number(food.quantity)), 0);
     }, 0);
+  },
+  setStep(i: number) {
+    this.step = i;
+    if (this.step == 1) {
+      setTimeout(() => {
+        this.renderSeatLayout();
+        this.addEventListeners();
+      });
+    }
+  },
+  toggleCombo() {
+    $("#tab-combo").toggleClass("slide");
+  },
+  countdownTimer() {
+    const interval = setInterval(() => {
+      this.seconds--;
+      if (this.seconds == 0) {
+        clearInterval(interval);
+        alert("Hết thời gian đặt ghế");
+      }
+    }, 1000)
+  },
+  formatMinuteSecond() {
+    const minute = Math.floor(this.seconds / 60);
+    const second = this.seconds % 60;
+    return `${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`
   }
+
 }));

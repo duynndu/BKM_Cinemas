@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Actors\Services;
 
-use App\Repositories\Admin\Actors\Interface\ActorInterface;
+use App\Repositories\Admin\Actors\Interfaces\ActorInterface;
 use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
 use App\Services\Base\BaseService;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +17,10 @@ class ActorService extends BaseService implements ActorServiceInterface
     public function getRepository()
     {
         return ActorInterface::class;
+    }
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
     }
 
     public function create(&$data)

@@ -26,9 +26,9 @@ class CinemaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->cinemaService->getAll();
+        $data = $this->cinemaService->filter($request);
         $areas = $this->areaService->getAll();
         return view('admin.pages.cinemas.index', compact('data', 'areas'));
     }

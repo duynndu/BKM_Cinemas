@@ -11,10 +11,14 @@ use App\Http\Requests\Auth\Client\ForgotPasswordRequest;
 use App\Http\Requests\Auth\Client\LoginRequest;
 use App\Http\Requests\Auth\Client\RegisterRequest;
 use App\Http\Requests\Auth\Client\ResetPasswordRequest;
-use App\Repositories\Auth\Client\ChangePasswords\Interface\ChangePasswordInterface;
-use App\Repositories\Auth\Client\ForgotPasswords\Interface\ForgotPasswordInterface;
-use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
+use App\Http\Requests\Auth\Client\UpdateProfileRequest;
+use App\Models\Transaction;
+use App\Repositories\Auth\Client\ChangePasswords\Interfaces\ChangePasswordInterface;
+use App\Repositories\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordInterface;
 use App\Services\Auth\Client\Registers\Interfaces\RegisterServiceInterface;
+use App\Services\Client\Cities\Interfaces\CityServiceInterface;
+use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
+use App\Services\Client\Users\Interfaces\UserServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -33,22 +37,34 @@ class AuthController extends Controller
 
     protected $changePassword;
 
+    protected $transactionService;
+    protected $userService;
+
     public function __construct(
-        CityServiceInterface           $cityService,
-        RegisterServiceInterface       $registerService,
-        ForgotPasswordInterface        $forgotPassword,
-        ChangePasswordInterface        $changePassword
+        CityServiceInterface            $cityService,
+        RegisterServiceInterface        $registerService,
+        ForgotPasswordInterface         $forgotPassword,
+        ChangePasswordInterface         $changePassword,
+        TransactionServiceInterface     $transactionService,
+        UserServiceInterface            $userService
     ) {
         $this->cityService = $cityService;
         $this->registerService = $registerService;
         $this->forgotPassword = $forgotPassword;
         $this->changePassword = $changePassword;
+        $this->transactionService = $transactionService;
+        $this->userService = $userService;
     }
 
     public function account()
     {
-        $cities = $this->cityService->getAll();
-        return view('client.pages.auth.auth', compact('cities'));
+        $data['cities'] = $this->cityService->getAll();
+
+        if(Auth::check()) {
+            $data['transactions'] = $this->transactionService->getTransactionByUser(Auth::user()->id);
+        }
+
+        return view('client.pages.auth.auth', compact('data'));
     }
 
     public function login(LoginRequest $request)
@@ -95,7 +111,7 @@ class AuthController extends Controller
         try {
             $user = $this->registerService->create($request);
 
-            event(new UserRegistered($user));
+            UserRegistered::dispatch($user);
 
             DB::commit();
 
@@ -153,7 +169,7 @@ class AuthController extends Controller
                 ['token' => $token, 'created_at' => now()]
             );
 
-            event(new ForgotPasswordRequested($token, $user));
+            ForgotPasswordRequested::dispatch($token, $user);
 
             return response()->json([
                 'sendResetLink' => true,
@@ -235,7 +251,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            event(new PasswordChanged(Auth::user()));
+            PasswordChanged::dispatch(Auth::user());
 
             return response()->json([
                 'status' => true,
@@ -246,6 +262,67 @@ class AuthController extends Controller
                 'status' => false,
                 'message' => 'Đã xảy ra lỗi: ' . $e->getMessage(),
             ], 500);
+        }
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        $data = $request->user;
+        try {
+            DB::beginTransaction();
+
+            $data['image'] = $this->userService->update($data, Auth::user()->id);
+
+            DB::commit();
+
+            return response()->json([
+                'code' => 1,
+                'status' => true,
+                'imageUrl' => $data['image']
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'code' => 0,
+                'status' => false,
+            ]);
+        }
+    }
+
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $data = [
+                'name' => $request->name,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => Auth::user()->email ?? null,
+                'phone' => Auth::user()->phone ?? null,
+                'gender' => $request->gender,
+                'date_birth' => $request->date_birth,
+                'city_id' => $request->city_id,
+            ];
+
+            $this->userService->updateProfile($data, Auth::user()->id);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'status' => false,
+            ]);
         }
     }
 }

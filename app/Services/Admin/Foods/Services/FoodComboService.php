@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services\Admin\Foods\Services;
-use App\Repositories\Admin\Foods\Interface\FoodComboInterface;
+use App\Repositories\Admin\Foods\Interfaces\FoodComboInterface;
 use App\Services\Admin\Foods\Interfaces\FoodComboServiceInterface;
 use App\Services\Base\BaseService;
 use App\Traits\StorageImageTrait;
@@ -18,6 +18,9 @@ class FoodComboService extends BaseService implements FoodComboServiceInterface
     public function getRepository()
     {
         return FoodComboInterface::class;
+    }
+    public function filter($request){
+        return $this->repository->filter($request);
     }
 
     public function create(&$data)

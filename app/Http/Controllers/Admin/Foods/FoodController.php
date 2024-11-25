@@ -30,9 +30,9 @@ class FoodController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->foodService->getAll();
+        $data = $this->foodService->filter($request);
         $listFoodTypes = $this->foodTypeService->getAllActive();
         return view('admin.pages.foods.index', compact('data', 'listFoodTypes'));
     }
@@ -88,10 +88,10 @@ class FoodController extends Controller
     public function edit(string $id)
     {
         $data = $this->foodService->find($id);
-        $listFoodTypes = $this->foodTypeService->getAllActive();
         if (!$data) {
             return redirect()->route('admin.foods.index')->with(['status_failed' => 'Không tìm thấy!']);
         }
+        $listFoodTypes = $this->foodTypeService->getAllActive();
         return view('admin.pages.foods.edit', compact('data', 'listFoodTypes'));
     }
 

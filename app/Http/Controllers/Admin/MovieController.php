@@ -37,7 +37,7 @@ class MovieController extends Controller
     public function index(Request $request)
     {
         $listGenre = $this->genreService->getAll();
-        $data = $this->movieService->getAll();
+        $data = $this->movieService->filter($request);
 
         return view('admin.pages.movies.index', compact('data','listGenre'));
     }

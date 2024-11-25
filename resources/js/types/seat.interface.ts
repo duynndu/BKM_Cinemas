@@ -11,10 +11,13 @@ export interface ISeat {
   merged_seats?: number[] | null;
   order: number;
   selected?: boolean;
-  status?: SEAT_STATUS_VALUES;
+  status: SEAT_STATUS_VALUES;
+  user_id: string;
+  selected_order: number;
 }
 
 export type SEAT_STATUS_VALUES =
   | typeof SEAT_STATUS.AVAILABLE
   | typeof SEAT_STATUS.SELECTED
-  | typeof SEAT_STATUS.OCCUPIED
+  | typeof SEAT_STATUS.BOOKED
+  | typeof SEAT_STATUS.BOOKING

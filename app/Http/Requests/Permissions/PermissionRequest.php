@@ -24,7 +24,7 @@ class PermissionRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'permission.module_id' => 'required',
+            // 'permission.module_id' => 'required',
             'permission.name' => [
                 "required",
                 "max:255",
@@ -37,7 +37,7 @@ class PermissionRequest extends FormRequest
     public function messages()
     {
         return [
-            "permission.module_id.required" => __('validation.module', ['attribute' => __('language.admin.module')]),
+            // "permission.module_id.required" => __('validation.module', ['attribute' => __('language.admin.module')]),
             "permission.name.required" => __('validation.required', ['attribute' => __('language.admin.name')]),
             "permission.name.max" => __('validation.max', ['attribute' => __('language.admin.name'), 'max' => 255]),
             "permission.value.required" => __('validation.required', ['attribute' => __('language.admin.value')]),

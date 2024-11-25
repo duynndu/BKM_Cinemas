@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services\Admin\Foods\Services;
-use App\Repositories\Admin\Foods\Interface\FoodTypeInterface;
+use App\Repositories\Admin\Foods\Interfaces\FoodTypeInterface;
 use App\Services\Admin\Foods\Interfaces\FoodTypeServiceInterFace;
 use App\Services\Base\BaseService;
 
@@ -15,7 +15,9 @@ class FoodTypeService extends BaseService implements FoodTypeServiceInterFace
     {
         return FoodTypeInterface::class;
     }
-
+    public function filter($request){
+        return $this->repository->filter($request);
+    }
     public function deleteMultipleChecked($request)
     {
         if (count($request->selectedIds) < 0) {

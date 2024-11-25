@@ -6,7 +6,8 @@ export class SEAT_TYPE {
   static readonly ACCESSIBLE_SEAT = 'accessible-seat';
 }
 export class SEAT_STATUS {
+  static readonly BOOKING = 'booking';
   static readonly SELECTED = 'selected';
   static readonly AVAILABLE = 'available';
-  static readonly OCCUPIED = 'occupied';
+  static readonly BOOKED = 'booked';
 }
