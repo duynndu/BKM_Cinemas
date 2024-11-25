@@ -4,6 +4,108 @@
 
 @section('css')
     <style>
+        .card-container {
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .level-card {
+            display: flex;
+            align-items: center;
+            border-radius: 3px;
+            gap: 10px;
+            padding: 13px 27px 13px 15px;
+        }
+
+        .level-card .icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        .level-card span {
+            color: #ffffffd9;
+        }
+
+        .stats p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .card-body {
+            padding: 15px 20px;
+        }
+
+        .info {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .info div {
+            flex: 1;
+        }
+
+        .info div:not(:last-child) {
+            border-right: 1px solid #ddd;
+        }
+
+        .info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .info-bkm-card {
+            max-width: 76px !important;
+        }
+
+        .info-bkm-card a.btn-login {
+            font-size: 13px;
+            padding: 6px 20px;
+            border-radius: 3px;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .info-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mt-25 {
+            margin-top: 25px;
+        }
+
+        .body-account {
+            border-top: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .h3-body-account {
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
     </style>
 @endsection
 
@@ -52,8 +154,8 @@
                                                 <div class="password_error"></div>
                                             </div>
                                             <div class="form-group">
-                                                <input name="remember" id="remember" type="checkbox" value="true"> <label
-                                                    for="remember" class="italic">Ghi nhớ đăng
+                                                <input name="remember" id="remember" type="checkbox" value="true">
+                                                <label for="remember" class="italic">Ghi nhớ đăng
                                                     nhập</label>
                                             </div>
                                             <button type="submit" class="btn btn-primary btn-login">
@@ -219,9 +321,11 @@
 
                                                 <div class="form-group flex">
                                                     <input name="is_terms_accepted" id="is_terms_accepted" type="checkbox"
-                                                        value="1"> <label for="is_terms_accepted" class="italic">Tôi đã
+                                                        value="1"> <label for="is_terms_accepted" class="italic">Tôi
+                                                        đã
                                                         đọc, hiểu và đồng ý với các <a target="_blank"
-                                                            href="/quy-dinh-thanh-vien">điều khoản</a></label>
+                                                            href="/quy-dinh-thanh-vien">điều
+                                                            khoản</a></label>
                                                     <div style="margin-left: 10px">
                                                         <div style="position: absolute; width: 100%;transform: translateY(-50%);"
                                                             class="is_terms_accepted_error"></div>
@@ -291,14 +395,49 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="account-group">
-                                        <div class="avatar" id="current-avatar">
-                                            <img src="{{ !empty(Auth::user()->image) ? Auth::user()->image : asset('client/images/1.jpg') }}"
-                                                alt="tranvietanhph39998" class="img-responsive img-circle img-member">
-                                            <a href="javascript:;" data-modal="#modalAvatarImage" class="open-modal">Đổi ảnh đại diện</a>
+                                        @php
+                                            $user = Auth::user();
+                                            $avatarUrl = $user->image ?? '';
+                                            $firstLetter = strtoupper(
+                                                substr($user->last_name ?? $user->first_name, 0, 1),
+                                            );
+                                            $colors = [
+                                                '#FF5733',
+                                                '#3374ff',
+                                                '#3357FF',
+                                                '#FF33A6',
+                                                '#4ec1bc',
+                                                '#7c8484',
+                                            ];
+                                            $backgroundColor = $colors[$user->id % count($colors)];
+                                        @endphp
+
+                                        <div>
+                                            <div class="avatar" id="current-avatar">
+                                                @if (!empty($avatarUrl))
+                                                    <!-- Hiển thị ảnh nếu có -->
+                                                    <img src="{{ $avatarUrl }}" alt="{{ $user->name ?? 'avatar' }}"
+                                                        class="img-responsive img-circle img-member">
+                                                @else
+                                                    <!-- Hiển thị chữ cái đầu với màu nền ngẫu nhiên nếu không có ảnh -->
+                                                    <div class="avatar-placeholder"
+                                                        style="background-color: {{ $backgroundColor }};">
+                                                        {{ $firstLetter }}
+                                                    </div>
+                                                    <img src="{{ $avatarUrl }}" alt="{{ $user->name ?? 'avatar' }}"
+                                                        class="img-responsive img-circle img-member img-block">
+                                                @endif
+                                                <a href="javascript:;" data-modal="#modalAvatarImage" class="open-modal">Đổi
+                                                    ảnh đại diện</a>
+                                            </div>
                                         </div>
+
                                         <div class="account-info">
-                                            <p style="color: #dc0000;font-weight: normal;">Bạn cần xác thực số điện thoại để
-                                                xem chính xác thông tin </p>
+                                            @if (Auth::user()->status == 0)
+                                                <p style="color: #dc0000;font-weight: normal;">Tài khoản của bạn đang bị khóa
+                                                    vui
+                                                    lòng liên hệ tới bộ phận </p>
+                                            @endif
                                             <p>Họ tên:
                                                 {{ Auth::check() ? Auth::user()->first_name . ' ' . Auth::user()->last_name : '' }}
                                                 <small class="level">
@@ -320,12 +459,12 @@
                                                     <i class="fa fa-check-circle" aria-hidden="true"></i>
                                                 @else
                                                     Chưa có thông tin
-                                                    <a href="javascript:;" title="Tài khoản chưa được xác thực" class="no-verify"
-                                                        id="verify">
+                                                    <a href="javascript:;" title="Tài khoản chưa được xác thực"
+                                                        class="no-verify" id="verify">
                                                         Xác thực SMS
                                                     </a>
                                                 @endif
-                                                
+
                                             </p>
                                             <p>Dịch vụ:
                                                 <a href="javascript:;" data-modal="#topUpModal"
@@ -333,75 +472,150 @@
                                                     Nạp tiền
                                                 </a>
                                             </p>
-                                            <p>Ví thành viên: <span class="point">{{ !empty(Auth::user()->balance) ? number_format(Auth::user()->balance, 0, '.', ',') : 0 }}</span> VND</p>
+                                            <p>Ví thành viên: <span
+                                                    class="point">{{ !empty(Auth::user()->balance) ? number_format(Auth::user()->balance, 0, '.', ',') : 0 }}</span>
+                                                đ</p>
                                             <p>Cấp bậc thành viên:
                                                 <span class="point">
                                                     @switch(Auth::user()->membership_level)
-                                                        @case('normal')
-                                                            <span class="sparkle-normal">🥈 Hạng Thường</span>
-                                                            @break
+                                                        @case('member')
+                                                            <span class="sparkle-normal">🥈 BKM Member</span>
+                                                        @break
+
                                                         @case('vip')
-                                                            <span class="sparkle-vip">🌟 Hạng VIP</span>
-                                                            @break
-                                                        @case('svip')
-                                                            <span class="sparkle-svip">👑 Hạng Siêu VIP</span>
-                                                            @break
+                                                            <span class="sparkle-vip">🌟 BKM VIP</span>
+                                                        @break
+
+                                                        @case('vvip')
+                                                            <span class="sparkle-svip">👑 BKM VVIP</span>
+                                                        @break
+
                                                         @default
                                                             Không xác định
                                                     @endswitch
                                                 </span>
                                             </p>
-                                            <p>EXP: <span class="point">{{ !empty(Auth::user()->exp) ? Auth::user()->exp : 0 }}</span> điểm</p>
-                                            <p>Tổng chi tiêu: <span class="point">0</span> VND</p>
+                                            <p>Điểm tích lũy: <span
+                                                    class="point">{{ !empty(Auth::user()->points) ? Auth::user()->points : 0 }}</span>
+                                                điểm
+                                                <a href="javascript:;" data-modal="#modalPoints" title="Xem quy tắc đổi điểm"
+                                                    class="no-verify open-modal">
+                                                    Quy tắc & Đổi thưởng
+                                                </a>
+                                            </p>
+
+                                            <!-- EXP và Progress Bar -->
+                                            <div class="exp-container mb-15 mt-25">
+                                                <p class="mb-4">EXP: <span class="point expData"
+                                                        data-exp="{{ Auth::user()->exp ?? 0 }}">{{ !empty(Auth::user()->exp) ? number_format(Auth::user()->exp, 0, ',', '.') : 0 }}</span>
+                                                    exp</p>
+                                                <div class="rank-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress">
+                                                            <span class="progress-text">0/4,000,000</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="milestones">
+                                                        <div class="upgrade-card">
+                                                            <span class="milestone" style="left: -15px;">
+                                                                <img class="rank_member"
+                                                                    src="{{ asset('client/images/rank_member.png') }}"
+                                                                    alt="">
+                                                            </span>
+                                                            <div class="rank-number-member">
+                                                                <b>0</b>
+                                                            </div>
+                                                        </div>
+                                                        <div class="upgrade-card">
+                                                            <span class="milestone" style="left: 50%;">
+                                                                <img class="rank_vip"
+                                                                    src="{{ asset('client/images/rank_vip.png') }}"
+                                                                    alt="">
+                                                            </span>
+                                                            <div class="line-center-grade"></div>
+                                                            <div class="rank-number-vip">
+                                                                <b>4.000.000</b>
+                                                            </div>
+                                                        </div>
+                                                        <div class="upgrade-card">
+                                                            <span class="milestone" style="right: -61px;">
+                                                                <img class="rank_vvip"
+                                                                    src="{{ asset('client/images/rank_vvip.png') }}"
+                                                                    alt="">
+                                                            </span>
+                                                            <div class="rank-number-vvip">
+                                                                <b>8.000.000</b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="box-body" style="border-top: none">
-                                    <h3>Giao dịch gần nhất</h3>
-                                    @if ($data['transactions']->isNotEmpty())
-                                        <div class="transaction-main">
-                                            @php
-                                                $lastDate = null;
-                                            @endphp
-                                            @foreach($data['transactions'] as $key => $transaction)
-                                                @php
-                                                    $transactionDate = date('d/m/Y', strtotime($transaction->created_at));
-                                                @endphp
-                                                <div class="border-box">
-                                                    @if ($transactionDate != $lastDate)
-                                                        <div class="transaction-date">
-                                                            {{ $transactionDate }}
-                                                        </div>
-                                                        @php
-                                                            $lastDate = $transactionDate;
-                                                        @endphp
+
+                                <div class="box-body body-account">
+                                    <h3 class="h3-body-account">Thông tin chi tiết</h3>
+                                    <div class="card-container">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="stats">
+                                                    <p>Tổng chi tiêu <strong>{{ date('Y') }}</strong>: <span
+                                                            class="point">0</span> đ</p>
+                                                </div>
+                                                <div
+                                                    class="level-card @if (Auth::user()->membership_level == 'member') rank-member @elseif(Auth::user()->membership_level == 'vip') rank-vip @else rank-vvip @endif">
+                                                    @if (Auth::user()->membership_level == 'member')
+                                                        <img class="rank_member"
+                                                            src="{{ asset('client/images/level-member.png') }}"
+                                                            alt="">
+                                                        <span>BKM Member</span>
+                                                    @elseif(Auth::user()->membership_level == 'vip')
+                                                        <img class="rank_vip"
+                                                            src="{{ asset('client/images/level-vip.png') }}" alt="">
+                                                        <span>BKM VIP</span>
+                                                    @else
+                                                        <img class="rank_vvip"
+                                                            src="{{ asset('client/images/level-vvip.png') }}" alt="">
+                                                        <span>BKM VVIP</span>
                                                     @endif
-                                                    <div class="transaction-list" style="border-bottom: {{ $loop->last ? '1px solid #91b5d7' : 'none' }}">
-                                                        <div class="transaction-content">
-                                                            <h4>Thông báo giao dịch</h4>
-                                                            <ul>
-                                                                <li>{{ !empty($transaction->description) ? $transaction->description : '' }}</li>
-                                                                <li>
-                                                                    Giao dịch:
-                                                                    @if($transaction->status == 'completed')
-                                                                        +
-                                                                    @endif
-                                                                    {{ number_format($transaction->amount, 0, '.', ',') }} VND |
-                                                                    {{ date('d/m/Y H:i:s', strtotime($transaction->created_at)) }} |
-                                                                    Số dư: {{ number_format($transaction->balance_after, 0, '.', ',') }} VND
-                                                                </li>
-                                                            </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="info">
+                                                    <div class="info-content">
+                                                        <p>Thẻ quà tặng</p>
+                                                        <p>0 đ</p>
+                                                        <div class="info-bkm-card">
+                                                            <a class="btn-login">Xem</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="info-content">
+                                                        <p>Voucher</p>
+                                                        <p>0</p>
+                                                        <div class="info-bkm-card">
+                                                            <a class="btn-login">Xem</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="info-content">
+                                                        <p>Quà tặng</p>
+                                                        <p>0</p>
+                                                        <div class="info-bkm-card">
+                                                            <a class="btn-login">Xem</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="info-content">
+                                                        <p>Thẻ Thành Viên</p>
+                                                        <p>1</p>
+                                                        <div class="info-bkm-card">
+                                                            <a class="btn-login">Xem</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endforeach
+                                            </div>
                                         </div>
-                                    @else
-                                        <div class="alert alert-info">
-                                            Chưa có giao dịch nào
-                                        </div>
-                                    @endif
+                                    </div>
                                 </div>
 
                             </div>
@@ -414,8 +628,7 @@
                             <div style="padding: 20px 20px;">
                                 <div class="row flex">
                                     <div class="col-md-7 col-sm-7">
-                                        <form id="form-updateProfile"
-                                            data-image="{{ asset('client/images/success.png') }}"
+                                        <form id="form-updateProfile" data-image="{{ asset('client/images/success.png') }}"
                                             action="{{ route('updateProfile') }}" method="POST">
                                             @csrf
                                             <div class="form-group">
@@ -429,14 +642,16 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <label for="first_name">Họ</label>
                                                     <input id="first_name" type="text" class="form-control first_name"
-                                                        name="first_name" value="{{ old('first_name', Auth::user()->first_name) }}">
+                                                        name="first_name"
+                                                        value="{{ old('first_name', Auth::user()->first_name) }}">
                                                     <div class="first_name_error"></div>
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6">
                                                     <label for="last_name">Tên đệm và tên</label>
                                                     <input id="last_name" type="text" class="form-control last_name"
-                                                        name="last_name" value="{{ old('last_name', Auth::user()->last_name) }}">
+                                                        name="last_name"
+                                                        value="{{ old('last_name', Auth::user()->last_name) }}">
                                                     <div class="last_name_error"></div>
                                                 </div>
                                             </div>
@@ -453,10 +668,14 @@
                                                     <label for="gender">Giới tính</label>
                                                     <div class="radio-group">
                                                         <label class="radio-label">
-                                                            <input type="radio" name="gender" value="male" {{ old('gender', Auth::user()->gender) == 'male' ? 'checked' : '' }}> Nam
+                                                            <input type="radio" name="gender" value="male"
+                                                                {{ old('gender', Auth::user()->gender) == 'male' ? 'checked' : '' }}>
+                                                            Nam
                                                         </label>
                                                         <label class="radio-label">
-                                                            <input type="radio" name="gender" value="female" {{ old('gender', Auth::user()->gender) == 'female' ? 'checked' : '' }}> Nữ
+                                                            <input type="radio" name="gender" value="female"
+                                                                {{ old('gender', Auth::user()->gender) == 'female' ? 'checked' : '' }}>
+                                                            Nữ
                                                         </label>
                                                     </div>
                                                     <div class="gender_error"></div>
@@ -473,7 +692,9 @@
                                             <div class="row flex form-group">
                                                 <div class="col-md-6 col-sm-6">
                                                     <label for="birthday">Ngày sinh</label>
-                                                    <input id="date_birth" value="{{ old('date_birth', date('d/m/Y', strtotime(Auth::user()->date_birth))) }}" placeholder="-- Ngày Sinh --" type="text"
+                                                    <input id="date_birth"
+                                                        value="{{ old('date_birth', date('d/m/Y', strtotime(Auth::user()->date_birth))) }}"
+                                                        placeholder="-- Ngày Sinh --" type="text"
                                                         class="form-control datepicker" name="date_birth">
                                                     <div class="date_birth_error"></div>
                                                 </div>
@@ -484,7 +705,8 @@
                                                         <option value="">Chọn thành phố</option>
                                                         @if (!empty($data['cities']))
                                                             @foreach ($data['cities'] as $city)
-                                                                <option @selected(old('city_id', Auth::user()->city_id) == $city->id) value="{{ $city->id }}">{{ $city->name }}
+                                                                <option @selected(old('city_id', Auth::user()->city_id) == $city->id)
+                                                                    value="{{ $city->id }}">{{ $city->name }}
                                                                 </option>
                                                             @endforeach
                                                         @endif
@@ -588,10 +810,61 @@
                             <div class="title">
                                 <h2>Tích lũy điểm</h2>
                             </div>
-                            <div class="box-body">
+                            <div style="padding: 20px 20px;">
                                 <div class="row flex">
-                                    <div class="col-md-12 col-sm-12">
+                                    <!-- Phần thông tin và đổi thưởng -->
+                                    <div class="col-md-7 col-sm-7">
+                                        <div class="user-points">
+                                            <h3>Chào mừng bạn, {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
+                                            </h3>
+                                            <p>Bạn hiện đang có:
+                                                <span class="highlight-points">{{ Auth::user()->exp }} điểm</span>
+                                            </p>
+                                            <p>Cấp bậc hiện tại:
+                                                <span class="point">
+                                                    @switch(Auth::user()->membership_level)
+                                                        @case('member')
+                                                            <span class="sparkle-normal">🥈 BKM Member</span>
+                                                        @break
 
+                                                        @case('vip')
+                                                            <span class="sparkle-vip">🌟 BKM VIP</span>
+                                                        @break
+
+                                                        @case('vvip')
+                                                            <span class="sparkle-svip">👑 BKM VVIP</span>
+                                                        @break
+
+                                                        @default
+                                                            Không xác định
+                                                    @endswitch
+                                                </span>
+                                            </p>
+                                            <p>Quy tắc & Đổi thưởng:
+                                                <a href="javascript:;" data-modal="#modalPoints" title="Xem quy tắc đổi điểm"
+                                                    class="no-verify open-modal">
+                                                    Xem
+                                                </a>
+                                            </p>
+                                            <hr>
+                                            <h4>Quy đổi điểm:</h4>
+                                            <ul class="list-points">
+                                                <li>🎁 <strong>BKM Member:</strong> 1 điểm = 1.000 đ</li>
+                                                <li>🎁 <strong>BKM VIP:</strong> 2 điểm = 2.000 đ</li>
+                                                <li>🎁 <strong>BKM VVIP:</strong> 3 điểm = 3.000 đ</li>
+                                                <li>🎁 Các phần quà hấp dẫn khác 👇</li>
+                                            </ul>
+                                            <button class="btn btn-primary btn-redeem btn-login open-modal"
+                                                data-modal="#modalExchangeExp">Đổi thưởng</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Phần hình ảnh minh họa -->
+                                    <div class="col-md-5 col-sm-5">
+                                        <div style="padding: 55px;">
+                                            <img src="https://cdn.moveek.com/bundles/ornweb/img/mascot.png" width="100%"
+                                                alt="Mascot">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -622,13 +895,77 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="lichsugiaodich" class="mbox tab-pane fade">
+                            <div class="title">
+                                <h2>Lịch sử giao dịch</h2>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col"></div>
+                                </div>
+                                <div class="row flex">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="transaction-deposit">
+                                            <div class="transaction-main">
+                                                @php
+                                                    $lastDate = null;
+                                                @endphp
+                                                @foreach ($data['transactions'] as $key => $transaction)
+                                                    @php
+                                                        $transactionDate = date(
+                                                            'd/m/Y',
+                                                            strtotime($transaction->created_at),
+                                                        );
+                                                    @endphp
+                                                    <div class="border-box">
+                                                        @if ($transactionDate != $lastDate)
+                                                            <div class="transaction-date">
+                                                                {{ $transactionDate }}
+                                                            </div>
+                                                            @php
+                                                                $lastDate = $transactionDate;
+                                                            @endphp
+                                                        @endif
+                                                        <div class="transaction-list"
+                                                            style="border-bottom: {{ $loop->last ? '1px solid #91b5d7' : 'none' }}">
+                                                            <div class="transaction-content">
+                                                                <h4>Thông báo giao dịch</h4>
+                                                                <ul>
+                                                                    <li>{{ !empty($transaction->description) ? $transaction->description : '' }}
+                                                                    </li>
+                                                                    <li>
+                                                                        Giao dịch:
+                                                                        @if ($transaction->status == 'completed')
+                                                                            +
+                                                                        @endif
+                                                                        {{ number_format($transaction->amount, 0, '.', ',') }}
+                                                                        đ |
+                                                                        {{ date('d/m/Y H:i:s', strtotime($transaction->created_at)) }}
+                                                                        |
+                                                                        Số
+                                                                        dư:
+                                                                        {{ number_format($transaction->balance_after, 0, '.', ',') }}
+                                                                        đ
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endguest
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="topUpModal" class="custom-modal">
+    <div id="topUpModal" style="height: 100%;" class="custom-modal">
         <div class="custom-modal-content">
             <span class="custom-close">&times;</span>
             <div class="d-flex flex-column justify-content-center">
@@ -636,7 +973,8 @@
                 <div class="content-p">
                     <p>Quý khách vui lòng chọn phương thức thanh toán và nhập số tiền cần nạp.</p>
                     <p>
-                        Thành viên mới nạp tiền vào ví thành viên từ 50.000đ được tặng ngay 50 EXP vào tài khoản thành viên.
+                        Thành viên mới nạp tiền vào ví thành viên từ 50.000đ được tặng ngay 50 EXP vào tài khoản thành
+                        viên.
                     </p>
                 </div>
             </div>
@@ -794,17 +1132,203 @@
         </div>
     </div>
 
+    <div id="modalPoints" class="custom-modal" style="height: 100%;">
+        <div class="custom-modal-content">
+            <span class="custom-close">&times;</span>
+            <div class="d-flex flex-column justify-content-center">
+                <h3 class="title-payment">Quy tắc & đổi thưởng bằng điểm</h3>
+            </div>
+            <div class="main-modal" style="margin-top: 20px;">
+                <div class="body_modal_image">
+                    <div>
+                        <div>
+                            <table class="reward-table">
+                                <thead>
+                                    <tr>
+                                        <th>Điểm thưởng</th>
+                                        <th>Member</th>
+                                        <th>VIP</th>
+                                        <th>VVIP</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Tại Quầy Vé</td>
+                                        <td>5%</td>
+                                        <td>7%</td>
+                                        <td>10%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="highlight">VD: 100.000 đ</td>
+                                        <td>5 Điểm</td>
+                                        <td>7 Điểm</td>
+                                        <td>10 Điểm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quầy Bắp Nước</td>
+                                        <td>3%</td>
+                                        <td>4%</td>
+                                        <td>5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="highlight">VD: 100.000 đ</td>
+                                        <td>3 Điểm</td>
+                                        <td>4 Điểm</td>
+                                        <td>5 Điểm</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h4>1. Điều kiện để đổi thưởng</h4>
+                        <ul>
+                            <li>Thành viên phải đăng ký tài khoản và tài khoản <strong>Đang hoạt động</strong> không bị
+                                khóa.</li>
+                            <li>Tài khoản cần có đủ số điểm thưởng tối thiểu để đổi thưởng.</li>
+                            <li>Điểm thưởng tối thiểu được sử dụng cho mỗi giao dịch là 20 điểm trở lên.</li>
+                            <li>Không vi phạm bất kỳ quy định hoặc điều khoản nào của hệ thống CGV.</li>
+                        </ul>
+
+                        <h4>2. Cách làm tròn điểm thưởng</h4>
+                        <ul>
+                            <li>1 Điểm BKM = <strong>1.000 đ</strong> giá trị quy đổi.</li>
+                            <li>Từ <strong>0.1</strong> đến <strong>0.4</strong>: làm tròn xuống (Ví dụ: <strong>3.2
+                                    điểm</strong> sẽ được tích vào tài khoản <strong>3 điểm</strong>).
+                                Lưu ý: giao dịch có điểm tích lũy từ <strong>0.1</strong> đến <strong>0.4</strong> sẽ không
+                                được tích lũy điểm do làm tròn xuống <strong>0</strong>, và đồng nghĩa với không được tích
+                                lũy chi tiêu.</li>
+                            <li>Từ <strong>0.5</strong> đến <strong>0.9</strong>: làm tròn lên (Ví dụ: <strong>3.6
+                                    điểm</strong> sẽ được tích vào tài khoản <strong>4 điểm</strong>)</li>
+                        </ul>
+
+                        <h4>3. Hạng thành viên và tỷ lệ ưu đãi</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #ddd; padding: 8px;">Hạng thành viên</th>
+                                    <th style="border: 1px solid #ddd; padding: 8px;">Tỷ lệ quy đổi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM Member 🥈</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">1 Điểm = 1.000 đ</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM VIP 🌟</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">2 Điểm = 2.000 đ</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM VVIP 👑</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">3 Điểm = 3.000 đ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>4. Thời gian xử lý yêu cầu</h4>
+                        <ul>
+                            <li>Thời gian xử lý: <strong>24-48 giờ</strong> kể từ khi gửi yêu cầu.</li>
+                            <li>Trường hợp bảo trì, hệ thống sẽ thông báo thời gian xử lý qua email hoặc tin nhắn.</li>
+                        </ul>
+
+                        <h4>5. Quy định bổ sung</h4>
+                        <ul>
+                            <li>Mỗi tài khoản được đổi tối đa <strong>10 giao dịch/ngày</strong>.</li>
+                            <li>Điểm thưởng tối thiểu cho mỗi giao dịch: <strong>20 điểm</strong>.</li>
+                            <li>Hệ thống có quyền thu hồi thưởng khi phát hiện gian lận.</li>
+                            <li>BKM Việt Nam sẽ không hoàn và/hoặc giải quyết đối với điểm thưởng đã được sử dụng nếu Khách
+                                Hàng không chứng minh được Khách Hàng không phải là người sử dụng điểm thưởng và quyết định
+                                của BKM Việt Nam là quyết định cuối cùng.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="close-modal" type="button">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalExchangeExp" style="height: 100%;" class="custom-modal">
+        <div class="custom-modal-content">
+            <!-- Nút đóng -->
+            <span class="custom-close">&times;</span>
+
+            <!-- Tiêu đề -->
+            <div class="modal-header d-flex justify-content-center">
+                <h3 class="title-payment">🎁 Quy tắc & Đổi thưởng 🎉</h3>
+            </div>
+
+            <!-- Nội dung chính -->
+            <div class="main-modal">
+                <div class="modal-body">
+                    <p><strong>Quy tắc đổi thưởng:</strong></p>
+                    <ul class="list-points">
+                        <li>🎁 1. Điểm tích lũy được dùng để đổi quà tặng hấp dẫn.</li>
+                        <li>🎁 2. Số điểm của bạn sẽ được đổi tương ứng với phần quà.</li>
+                        <li>🎁 3. Không hoàn lại điểm sau khi đổi.</li>
+                    </ul>
+
+                    <hr>
+
+                    <div class="text-center">
+                        <h3><b>CHỌN QUÀ</b></h3>
+                    </div>
+                    <div class="reward-options">
+                        <div class="reward-item">
+                            <div class="reward-image">
+                                <img src="https://via.placeholder.com/100" alt="Quà 1">
+                                <p>Quà Tặng A</p>
+                            </div>
+                            <div class="reward-button">
+                                <button class="btn btn-success btn-redeem btn-login">Đổi ngay</button>
+                            </div>
+                        </div>
+                        <div class="reward-item">
+                            <div class="reward-image">
+                                <img src="https://via.placeholder.com/100" alt="Quà 1">
+                                <p>Quà Tặng B</p>
+                            </div>
+                            <div class="reward-button">
+                                <button class="btn btn-success btn-redeem btn-login">Đổi ngay</button>
+                            </div>
+                        </div>
+                        <div class="reward-item">
+                            <div class="reward-image">
+                                <img src="https://via.placeholder.com/100" alt="Quà 1">
+                                <p>Quà Tặng B</p>
+                            </div>
+                            <div class="reward-button">
+                                <button class="btn btn-success btn-redeem btn-login">Đổi ngay</button>
+                            </div>
+                        </div>
+                        <div class="reward-item">
+                            <div class="reward-image">
+                                <img src="https://via.placeholder.com/100" alt="Quà 1">
+                                <p>Quà Tặng B</p>
+                            </div>
+                            <div class="reward-button">
+                                <button class="btn btn-success btn-redeem btn-login">Đổi ngay</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="close-modal" type="button">Đóng</button>
+            </div>
+        </div>
+    </div>
+
     <div id="modalAvatarImage" style="height: 100%;" class="custom-modal">
         <div class="custom-modal-content">
             <span class="custom-close">&times;</span>
             <div class="d-flex flex-column justify-content-center">
                 <h3 class="title-payment">Chọn ảnh đại diện</h3>
             </div>
-            <form
-                data-error="{{ asset('client/images/error.png') }}"
-                data-image="{{ asset('client/images/1.jpg') }}"
-                data-success="{{ asset('client/images/success.png') }}"
-                action="{{ route('updateAvatar') }}"
+            <form data-error="{{ asset('client/images/error.png') }}" data-image="{{ asset('client/images/1.jpg') }}"
+                data-success="{{ asset('client/images/success.png') }}" action="{{ route('updateAvatar') }}"
                 id="updateAvatarForm" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="main-modal" style="margin-top: 33px;">
@@ -812,7 +1336,8 @@
                         <div class="">
                             <input type="hidden" name="image" id="avatar" value="">
                             <label class="input-inner-wrap-image">
-                                <input type="file" class="" name="user[image]" accept=".jpg, .jpeg, .png, .webp" id="avatarInput">
+                                <input type="file" class="" name="user[image]"
+                                    accept=".jpg, .jpeg, .png, .webp" id="avatarInput">
                                 <div class="input-extend input-extend-right">
                                     <div class="input-box-image input-ic-clear"></div>
                                 </div>
@@ -829,5 +1354,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/client/auth/auth.js') }}"></script>
+    <script src="{{ asset('client/js/auth/auth.js') }}"></script>
 @endsection

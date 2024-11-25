@@ -24,6 +24,7 @@ class DepositService extends BaseService implements DepositServiceInterface
             $dataNew = [
                 'balance' => $data['vnp_Amount'] + $record->balance,
                 'exp' => $data['exp'],
+                'points' => $data['points'],
                 'membership_level' => $data['membership_level'],
                 'is_new_member' => $data['is_new_member'],
             ];
@@ -33,6 +34,7 @@ class DepositService extends BaseService implements DepositServiceInterface
             $dataNew = [
                 'balance' => $data['momo_Amount'] + $record->balance,
                 'exp' => $data['exp'],
+                'points' => $data['points'],
                 'membership_level' => $data['membership_level'],
                 'is_new_member' => $data['is_new_member'],
             ];
@@ -42,6 +44,7 @@ class DepositService extends BaseService implements DepositServiceInterface
             $dataNew = [
                 'balance' => $data['zaloPay_Amount'] + $record->balance,
                 'exp' => $data['exp'],
+                'points' => $data['points'],
                 'membership_level' => $data['membership_level'],
                 'is_new_member' => $data['is_new_member'],
             ];

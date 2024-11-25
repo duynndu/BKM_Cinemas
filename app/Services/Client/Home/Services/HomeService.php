@@ -3,16 +3,21 @@
 namespace App\Services\Client\Home\Services;
 
 use App\Repositories\Client\Home\Interface\HomeRepositoryInterface;
+use App\Services\Client\CategoryPosts\Interface\CategoryPostServiceInterface;
 use App\Services\Client\Home\Interfaces\HomeServiceInterface;
 
 
 class HomeService  implements HomeServiceInterface
 {
     protected $homeRepository;
+    protected $categoryPostRepository;
 
-    public function __construct(HomeRepositoryInterface $homeRepository)
-    {
+    public function __construct(
+        CategoryPostServiceInterface $categoryPostRepository,
+        HomeRepositoryInterface $homeRepository
+    ){
         $this->homeRepository = $homeRepository;
+        $this->categoryPostRepository = $categoryPostRepository;
     }
 
     public function sliders()
@@ -29,10 +34,10 @@ class HomeService  implements HomeServiceInterface
     {
         return $this->homeRepository->upcomingMovie();
     }
-    public function promotionEvent()
+    public function getCategoryPostBySlug($slug)
     {
-        return $this->homeRepository->promotionEvent();
+        return $this->categoryPostRepository->getCategoryPostBySlug($slug);
     }
-
+    
 
 }

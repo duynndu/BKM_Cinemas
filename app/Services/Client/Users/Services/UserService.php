@@ -26,7 +26,7 @@ class UserService extends BaseService implements UserServiceInterface
         if (!$record) {
             return false;
         }
-
+        
         if (isset($data['image']) && $data['image']) {
             if ($record->image) {
                 $this->deleteAvatar($record->image, 'users');
@@ -63,7 +63,6 @@ class UserService extends BaseService implements UserServiceInterface
     private function uploadFile($data, $folderName)
     {
         $path = $data->store($folderName);
-
         return [
             'name' => $data->getClientOriginalName(),
             'path' => Storage::url($path),

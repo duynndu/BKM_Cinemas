@@ -10,6 +10,7 @@
     <meta name="status_failed" content="{{ session('status_failed') }}">
     <meta name="amount" content="{{ number_format(session()->get("amount"), 0, '.', ',') }}">
     <meta name="exp" content="{{ session()->get("exp") }}">
+    <meta name="points" content="{{ session()->get("points") }}">
     <meta name="image-success" content="{{ asset("client/images/success.png") }}">
     <meta name="image-error" content="{{ asset("client/images/error.png") }}">
     <title>@yield('title')</title>
@@ -60,7 +61,7 @@
     <div id="fb-root"></div>
     <div id="app">
         @include('client.partials.header')
-        <div id="wrap" style="margin-bottom: 30px;">
+        <div id="wrap">
             @yield('content')
         </div>
         @include('client.partials.footer')
@@ -193,7 +194,6 @@
 
     <!-- Your Plugin chat code -->
     <div id="fb-customer-chat" class="fb-customerchat"></div>
-
 </body>
 
 <!-- Scripts -->
@@ -206,7 +206,7 @@
 <script type="text/javascript" src="{{ asset('client/js/statics/js/scripts.js') }}"></script>
 <script src="{{ asset('client/js/statics/js/showtime-widget.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('js/client/commons/common.js') }}"></script>
+<script src="{{ asset('client/js/commons/common.js') }}"></script>
 
 @yield('js')
 

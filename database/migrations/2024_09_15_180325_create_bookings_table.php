@@ -14,18 +14,32 @@ return new class extends Migration
         // Bảng đặt vé
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->nullable();
             $table->bigInteger('movie_id'); // id phim
             $table->bigInteger('cinema_id'); // id cinema
             $table->bigInteger('showtime_id'); // Thời điểm chiếu (khung giờ chiếu)
             $table->bigInteger('user_id'); // Người đặt vé
             $table->bigInteger('payment_id'); // id hình thức thanh toán
-            $table->decimal('total_price', 10, 2); // Tổng tiền
+            $table->decimal('total_price', 10, 2)->default(0); // Tổng tiền
             $table->enum('status', [
-                'paid',         // Đã thanh toán, vé được xác nhận
-                'cancelled',    // Đã hủy (Hủy theo điều kiện)
-                'refunded',     // Hoàn tiền cho khách hàng
-            ]);
-            $table->timestamps();   
+                'pending',
+                'completed',
+                'failed',
+                'cancelled',
+            ])->default('pending');
+            $table->enum('payment_status', [
+                'pending',
+                'completed',
+                'failed',
+                'cancelled'
+            ])->default('pending');
+            $table->enum('refund_status', [
+                'pending',
+                'completed',
+                'failed',
+                'cancelled'
+            ])->default('pending');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

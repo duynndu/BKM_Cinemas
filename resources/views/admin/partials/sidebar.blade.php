@@ -130,6 +130,21 @@
 
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">local_play</i>
+                    <span class="nav-text">Quản lý vé</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="#">Đơn hàng</a>
+                    </li>
+                    <li>
+                        <a href="#">Báo cáo</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">movie</i>
                     <span class="nav-text">Phim</span>
                 </a>
@@ -165,6 +180,21 @@
             </li>
 
             <li>
+                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">card_giftcard</i>
+                    <span class="nav-text">Sự kiện</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
+                    </li>
+                    <li>
+                        <a href="#" aria-expanded="false">Voucher</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
                 <a href="{{ route('admin.payments.index') }}">
                     <i class="material-icons">payment</i>
                     <span class="nav-text">Phương thức thanh toán</span>
@@ -172,8 +202,8 @@
             </li>
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">apartment</i>
-                    <span class="nav-text">Thành Phố</span>
+                    <i class="material-icons">location_on</i>
+                    <span class="nav-text">Vị trí</span>
                 </a>
                 <ul aria-expanded="false">
                     <li>

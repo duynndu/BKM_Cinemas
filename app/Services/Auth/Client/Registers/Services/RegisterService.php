@@ -30,6 +30,7 @@ class RegisterService extends BaseService implements RegisterServiceInterface
             'gender' => $request->gender,
             'password' => Hash::make($request->password),
             'type' => User::TYPE_MEMBER,
+            'membership_level' => 'member',
             'is_terms_accepted' => $request->is_terms_accepted ?? 0,
             'is_subscribed_promotions' => $request->is_subscribed_promotions ?? 0
         ];

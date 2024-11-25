@@ -7,7 +7,7 @@ import { IShowtime } from "@/types/showtime.interface";
 import { showtimeService } from "@/services/showtime.service";
 import { IFoodType } from "@/types/food-type.interface";
 import { foodService } from "@/services/food.service";
-import { price } from "@/utils/common";
+import { price, redirect } from "@/utils/common";
 import { IMovie } from "@/types/movie.interface";
 import moment from "moment";
 import { ICinema } from "@/types/cinema.interface";
@@ -16,6 +16,9 @@ import { IUser } from "@/types/user.interface";
 import { IRoom } from "@/types/room.interface";
 import { SEAT_STATUS } from "@/define/seat.define";
 import { IFood } from "@/types/food.interface";
+import { IBooking } from "@/types/booking.interfaces";
+import { paymentService } from "@/services/payment.service";
+import { bookingService } from "@/services/booking.service";
 
 Alpine.data('SeatViewComponent', (showtimeId: string) => ({
   errors: {} as Record<string, string>,
@@ -30,7 +33,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
   totalPriceFoods: 0,
   totalPrice: 0,
   price: price,
-  movie: null as IMovie | null,
+  movie: {} as IMovie,
   cinema: null as ICinema | null,
   room: null as IRoom | null,
   moment: moment,
@@ -42,7 +45,10 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
   user: null as IUser | null,
   step: 1,
   foodsSelected: [] as IFood[],
-  seconds: 30,
+  seconds: 300,
+  paymentMethod: '',
+  booking: {} as IBooking,
+  interval: null as ReturnType<typeof setInterval> | null,
 
   async init() {
     this.countdownTimer();
@@ -51,16 +57,17 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
       window.user = this.user;
     }
     localStorage.setItem('currentUser', JSON.stringify(this.user));
-    await this.getShowtimeDetailById(showtimeId);
+    await this.getShowtimeDetailById();
+    this.setSeatsSelected();
     this.renderSeatLayout();
     await this.getFoodTypes();
     this.addEventListeners();
-    this.setSeatsSelected();
   },
-  async getShowtimeDetailById(showtimeId?: string) {
+  async getShowtimeDetailById() {
     if (showtimeId) {
       this.showtimeDetail = await showtimeService.getShowtimeDetailById(showtimeId);
       this.seatTypes = this.showtimeDetail?.room?.seat_types ?? [];
+      //@ts-ignore
       this.movie = this.showtimeDetail.movie ?? null;
       this.cinema = this.showtimeDetail.cinema ?? null;
       this.room = this.showtimeDetail.room ?? null;
@@ -78,24 +85,57 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
     });
   },
   async submit() {
-    if (this.seatErrors.quantityError) return;
-    if (this.seatErrors.slotError) {
-      alert('Vui lòng không chừa 1 ghế trống bên trái hoặc bên phải của các ghế bạn đã chọn.');
-      return;
-    }
-    if (this.seatErrors.quantityError || this.seatErrors.typeError) {
-      return;
-    }
-    this.foodsSelected = [];
-    this.foodTypes.forEach(foodType => {
-      foodType.foods.forEach(food => {
-        if (food.quantity > 0) {
-          this.foodsSelected.push(food);
-        }
+    if (this.step == 1) {
+      if (this.seatErrors.quantityError) return;
+      if (this.seatErrors.slotError) {
+        alert('Vui lòng không chừa 1 ghế trống bên trái hoặc bên phải của các ghế bạn đã chọn.');
+        return;
+      }
+      if (this.seatErrors.typeError) {
+        return;
+      }
+      this.foodsSelected = [];
+      this.foodTypes.forEach(foodType => {
+        foodType.foods.forEach(food => {
+          if (food.quantity > 0) {
+            this.foodsSelected.push(food);
+          }
+        })
       })
-    })
+      console.log(this.seatsSelected);
+      console.log(this.foodsSelected);
+      try {
+        this.booking = await bookingService.postBooking({
+          seats: this.seatsSelected,
+          foods: this.foodsSelected,
+          movie_id: this.movie.id,
+          showtime_id: showtimeId,
+          payment_id: 1
+        });
+        console.log(this.booking);
+        this.seatsSelected = this.booking.seats_booking.map(seat_booking=>seat_booking.seat);
+        this.calculateTotalPrice();
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+      this.step = 2;
+      this.seconds = 180;
+    } else if (this.step == 2) {
+      if (!this.paymentMethod) {
+        // toastr.error("Vưi lòng chọn phương thức thanh toán", "cảnh báo")
+        alert("Vưi lòng chọn phương thức thanh toán. Cảnh báo");
+        return;
+      }
+      const { code, message, vnp_Url } = await paymentService.processDeposit({
+        amount: 100000,
+        payment: this.paymentMethod,
+        booking_id: this.booking.id
+      });
+      window.location.href = vnp_Url;
 
-    this.step = 2;
+    }
+
 
   },
   renderSeatLayout() {
@@ -109,7 +149,6 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
       }, ({ seatErrors, seat }: { seatsSelected: ISeat[], seatErrors: any, seat: ISeat }) => {
         this.seatErrors = seatErrors;
         console.log(this.seatErrors);
-
         if (this.seatErrors.quantityError || this.seatErrors.typeError) {
           return;
         };
@@ -146,12 +185,14 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
       })
       .leaving((user: any) => {
         console.log("Người dùng đã rời:", user);
-      }).listen('BookSeat', (e: { showtimeId: string, seat: ISeat }) => {
+      }).listen('BookSeat', (e: { showtimeId: string, seats: ISeat[] }) => {
         console.log(e);
+        this.calculateTotalPrice();
         //@ts-ignore
         this.room.seats = this.room?.seats.map(seat => {
-          if (seat.seat_number === e.seat.seat_number) {
-            return e.seat;
+          const updatedSeat = e.seats?.find(updated => updated.seat_number === seat.seat_number);
+          if (updatedSeat) {
+            return updatedSeat;
           }
           return seat;
         });
@@ -162,6 +203,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
   setSeatsSelected() {
     const seatsSelected = this.room?.seats?.filter(seat => seat.user_id == this.user?.id && seat.status == SEAT_STATUS.BOOKING) ?? [];
     this.seatsSelected = seatsSelected;
+    this.calculateTotalPrice();
   },
   calculateTotalPrice() {
     this.totalPriceSeats = this.seatsSelected.reduce((total, seat) => {
@@ -184,13 +226,22 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
     $("#tab-combo").toggleClass("slide");
   },
   countdownTimer() {
-    const interval = setInterval(() => {
-      this.seconds--;
-      if (this.seconds == 0) {
-        clearInterval(interval);
-        alert("Hết thời gian đặt ghế");
+    if (this.interval) return;
+
+    this.interval = setInterval(() => {
+      if (this.seconds <= 0) {
+        if (this.interval) {
+          clearInterval(this.interval);
+          if (this.step == 1) {
+            alert("Hết thời gian đặt ghế");
+          } else if (this.step == 2) {
+            alert("Hết thời gian đặt lịch");
+          }
+          redirect().to(`/phim/${this.movie.slug}`);
+        }
       }
-    }, 1000)
+      this.seconds--;
+    }, 1000);
   },
   formatMinuteSecond() {
     const minute = Math.floor(this.seconds / 60);

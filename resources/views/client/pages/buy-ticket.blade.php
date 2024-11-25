@@ -203,7 +203,7 @@
                                     <h3 class="title">Thông tin vé</h3>
                                     <div class="info">
                                         <p>Phim: <b x-text="movie?.title"></b></p>
-                                        <p>Thời gian: <b x-text="moment(movie?.release_date).format('dddd, [ngày] DD/MM HH:mm').replace('thứ', 'Thứ') + ' - ' + cinema?.name"></b></p>
+                                        <p>Thời gian: <b x-text="moment(showtimeDetail?.start_time).format('dddd, [ngày] DD/MM HH:mm').replace('thứ', 'Thứ') + ' - ' + cinema?.name"></b></p>
                                         <p>Phòng chiếu: <b x-text="room?.room_name"> </b></p>
                                         <p>Ghế đã chọn: <b x-text="seatsSelected.map(seat => seat.seat_number).join(',')"></b></p>
                                     </div>
@@ -286,13 +286,19 @@
                                         <div class="select payment">
                                             <p>Chọn phương thức thanh toán</p>
                                             <div class="input-group">
-                                                <input type="radio" name="payment_method" value="vnpay" id="vnpay">
+                                                <input type="radio" x-model="paymentMethod" name="payment_method" value="zalopay" id="zalopay">
+                                                <label for="zalopay">
+                                                    <span></span>
+                                                    <span class="card zalopay"></span>Thanh toán qua ZaloPay</label>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="radio" x-model="paymentMethod" name="payment_method" value="vnpay" id="vnpay">
                                                 <label for="vnpay">
                                                     <span></span>
                                                     <span class="card vnpay"></span>Thẻ nội địa/ Thẻ quốc tế/ QRcode</label>
                                             </div>
                                             <div class="input-group">
-                                                <input type="radio" name="payment_method" value="momo" id="momo">
+                                                <input type="radio" x-model="paymentMethod" name="payment_method" value="momo" id="momo">
                                                 <label for="momo">
                                                     <span></span>
                                                     <span class="card momo"></span>Ví điện tử MoMo</label>
@@ -307,7 +313,7 @@
                                         <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 100px;"></div>
                                     </div>
                                 </div>
-                                <a href="javascript:;" class="btn btn-checkout pay">
+                                <a @click="submit()" href="javascript:;" class="btn btn-checkout pay">
                                     <span class="loading hidden">
                                         <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
                                         <span class="sr-only">Loading...</span>

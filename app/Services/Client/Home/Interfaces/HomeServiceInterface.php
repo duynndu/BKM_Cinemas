@@ -10,6 +10,6 @@ interface HomeServiceInterface
 
     public function  upcomingMovie();
 
-    public function promotionEvent();
+    public function getCategoryPostBySlug($slug);
 
 }

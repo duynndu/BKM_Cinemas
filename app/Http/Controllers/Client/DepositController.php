@@ -18,7 +18,7 @@ class DepositController extends Controller
     protected $transactionService;
 
     public function __construct(
-        DepositServiceInterface     $depositService,
+        DepositServiceInterface $depositService,
         TransactionServiceInterface $transactionService
     ) {
         $this->depositService = $depositService;
@@ -136,79 +136,80 @@ class DepositController extends Controller
             DB::beginTransaction();
             try {
                 if ($vnp_ResponseCode == '00') {
-
                     if (!Auth::check()) {
                         return redirect()->route('account')->with('status_failed', 0);
                     }
 
-                    $amount = $inputData['vnp_Amount'] / 100; // Số tiền nạp (VNĐ)
+                    $amount = $inputData['vnp_Amount'] / 100;
                     $expIncrement = 0;
 
-                    // Thành viên mới
+                    $membershipLevel = Auth::user()->membership_level;
+
                     if ($amount >= 50000 && Auth::user()->is_new_member === 1) {
-                        $expIncrement = 50; // Thành viên mới nhận thêm 50 EXP
-                        $data['is_new_member'] = 0; // Chuyển thành thành viên cũ
+                        $expIncrement = 150;
+                        $data['is_new_member'] = 0;
                     } else {
-                        // Thành viên cũ: Tăng EXP theo mức tiền nạp
-                        if ($amount >= 200000 && $amount < 500000) {
-                            $expIncrement = 100; // Mức nạp 200.000 - 499.999
-                        } elseif ($amount >= 500000 && $amount < 1000000) {
-                            $expIncrement = 300; // Mức nạp 500.000 - 999.999
-                        } elseif ($amount >= 1000000 && $amount < 2000000) {
-                            $expIncrement = 700; // Mức nạp 1.000.000 - 1.999.999
-                        } elseif ($amount >= 2000000 && $amount < 5000000) {
-                            $expIncrement = 1500; // Mức nạp 2.000.000 - 4.999.999
-                        } elseif ($amount >= 5000000) {
-                            $expIncrement = 4000; // Mức nạp ≥ 5.000.000
-                        } else {
-                            // Mức nạp < 200.000: Cộng EXP theo công thức
-                            $expIncrement = floor($amount / 1000) * 2; // 2 EXP mỗi 1.000đ
+                        $baseExpPer1000 = 2;
+                        $membershipLevel = Auth::user()->membership_level;
+
+                        switch ($membershipLevel) {
+                            case 'member':
+                                $expIncrement = round(floor($amount / 1000) * $baseExpPer1000);
+                                break;
+                            case 'vip':
+                                $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.75));
+                                break;
+                            case 'vvip':
+                                $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.5));
+                                break;
+                            default:
+                                $expIncrement = 0;
                         }
                     }
 
-                    // Tính EXP mới
                     $newExp = Auth::user()->exp + $expIncrement;
 
-                    // Xác định cấp độ thành viên mới
-                    $membershipLevel = 'normal'; // Mặc định là normal
-                    if ($newExp > 1000) {
-                        $membershipLevel = 'svip'; // Siêu VIP
-                    } elseif ($newExp >= 501) {
-                        $membershipLevel = 'vip'; // VIP
+                    if ($newExp >= 8000000) {
+                        $membershipLevel = 'vvip';
+                    } elseif ($newExp >= 4000000) {
+                        $membershipLevel = 'vip';
+                    } elseif ($newExp >= 2000000) {
+                        $membershipLevel = 'member';
                     }
 
-                    // Cập nhật số dư, EXP và cấp độ thành viên
+                    // Cập nhật dữ liệu thành viên
                     $data = [
-                        'vnp_Amount' => $inputData['vnp_Amount'] / 100,
+                        'vnp_Amount' => $amount,
                         'balance' => Auth::user()->balance + $amount,
                         'exp' => $newExp,
-                        'membership_level' => $membershipLevel ?? Auth::user()->membership_level, // Cập nhật cấp độ
-                        'is_new_member' => $data['is_new_member'] ?? Auth::user()->is_new_member
+                        'points' => Auth::user()->points,
+                        'membership_level' => $membershipLevel ?? Auth::user()->membership_level,
+                        'is_new_member' => $data['is_new_member'] ?? Auth::user()->is_new_member,
                     ];
 
-                    // update ví tiền
+                    // Cập nhật thông tin vào database
                     $this->depositService->update($data, Auth::user()->id);
 
                     $dataTransaction = [
                         'user_id' => Auth::user()->id,
                         'payment_method' => 'vnpay',
-                        'amount' => $inputData['vnp_Amount'] / 100,
+                        'amount' => $amount,
                         'type' => 'deposit',
                         'description' => 'Nạp tiền vào ví thành viên - BKM Cinemas',
-                        'balance_after' => ($inputData['vnp_Amount'] / 100) + Auth::user()->balance,
-                        'status' => 'completed'
+                        'balance_after' => $amount + Auth::user()->balance,
+                        'status' => 'completed',
                     ];
 
-                    // thêm lịch sử giao dịch
+                    // Ghi lịch sử giao dịch
                     $this->transactionService->create($dataTransaction);
 
-                    DepositSucceeded::dispatch(Auth::user(), $inputData['vnp_Amount'] / 100, 'vnpay');
+                    DepositSucceeded::dispatch(Auth::user(), $amount, 'vnpay');
 
                     DB::commit();
 
                     return redirect()->route('account')->with([
                         'transaction_succeed' => true,
-                        'amount' => $inputData['vnp_Amount'] / 100,
+                        'amount' => $amount,
                         'exp' => $expIncrement
                     ]);
                 } else {
@@ -315,54 +316,54 @@ class DepositController extends Controller
             DB::beginTransaction();
             try {
                 if ($request->errorCode == '0') {
-
                     if (!Auth::check()) {
                         return redirect()->route('account')->with('status_failed', 0);
                     }
 
-                    $amount = $request->amount; // Số tiền nạp (VNĐ)
+                    $amount = $request->amount;
                     $expIncrement = 0;
 
-                    // Thành viên mới
+                    $membershipLevel = Auth::user()->membership_level;
+
                     if ($amount >= 50000 && Auth::user()->is_new_member === 1) {
-                        $expIncrement = 50; // Thành viên mới nhận thêm 50 EXP
-                        $data['is_new_member'] = 0; // Chuyển thành thành viên cũ
+                        $expIncrement = 150;
+                        $data['is_new_member'] = 0;
                     } else {
-                        // Thành viên cũ: Tăng EXP theo mức tiền nạp
-                        if ($amount >= 200000 && $amount < 500000) {
-                            $expIncrement = 100; // Mức nạp 200.000 - 499.999
-                        } elseif ($amount >= 500000 && $amount < 1000000) {
-                            $expIncrement = 300; // Mức nạp 500.000 - 999.999
-                        } elseif ($amount >= 1000000 && $amount < 2000000) {
-                            $expIncrement = 700; // Mức nạp 1.000.000 - 1.999.999
-                        } elseif ($amount >= 2000000 && $amount < 5000000) {
-                            $expIncrement = 1500; // Mức nạp 2.000.000 - 4.999.999
-                        } elseif ($amount >= 5000000) {
-                            $expIncrement = 4000; // Mức nạp ≥ 5.000.000
-                        } else {
-                            // Mức nạp < 200.000: Cộng EXP theo công thức
-                            $expIncrement = floor($amount / 1000) * 2; // 2 EXP mỗi 1.000đ
+                        $baseExpPer1000 = 2;
+                        $membershipLevel = Auth::user()->membership_level;
+
+                        switch ($membershipLevel) {
+                            case 'member':
+                                $expIncrement = round(floor($amount / 1000) * $baseExpPer1000);
+                                break;
+                            case 'vip':
+                                $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.75));
+                                break;
+                            case 'vvip':
+                                $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.5));
+                                break;
+                            default:
+                                $expIncrement = 0;
                         }
                     }
 
-                    // Tính EXP mới
                     $newExp = Auth::user()->exp + $expIncrement;
 
-                    // Xác định cấp độ thành viên mới
-                    $membershipLevel = 'normal'; // Mặc định là normal
-                    if ($newExp > 1000) {
-                        $membershipLevel = 'svip'; // Siêu VIP
-                    } elseif ($newExp >= 501) {
-                        $membershipLevel = 'vip'; // VIP
+                    if ($newExp >= 8000000) {
+                        $membershipLevel = 'vvip';
+                    } elseif ($newExp >= 4000000) {
+                        $membershipLevel = 'vip';
+                    } elseif ($newExp >= 2000000) {
+                        $membershipLevel = 'member';
                     }
 
-                    // Cập nhật số dư, EXP và cấp độ thành viên
                     $data = [
                         'momo_Amount' => $amount,
                         'balance' => Auth::user()->balance + $amount,
                         'exp' => $newExp,
-                        'membership_level' => $membershipLevel ?? Auth::user()->membership_level, // Cập nhật cấp độ
-                        'is_new_member' => $data['is_new_member'] ?? Auth::user()->is_new_member
+                        'points' => Auth::user()->points,
+                        'membership_level' => $membershipLevel ?? Auth::user()->membership_level,
+                        'is_new_member' => $data['is_new_member'] ?? Auth::user()->is_new_member,
                     ];
 
                     // Update số dư ví tiền
@@ -375,7 +376,7 @@ class DepositController extends Controller
                         'type' => 'deposit',
                         'description' => 'Nạp tiền vào ví thành viên - BKM Cinemas',
                         'balance_after' => $amount + Auth::user()->balance,
-                        'status' => 'completed'
+                        'status' => 'completed',
                     ];
 
                     // thêm lịch sử giao dịch
@@ -388,7 +389,7 @@ class DepositController extends Controller
                     return redirect()->route('account')->with([
                         'transaction_succeed' => true,
                         'amount' => $amount,
-                        'exp' => $expIncrement
+                        'exp' => $expIncrement,
                     ]);
                 } else {
                     // Lỗi giao dịch
@@ -465,12 +466,12 @@ class DepositController extends Controller
         ];
 
         $dataValue = $data['app_id'] . '|' .
-        $data['app_trans_id'] . '|' .
-        $data['app_user'] . '|' .
-        $data['amount'] . '|' .
-        $data['app_time'] . '|' .
-        $data['embed_data'] . '|' .
-        $data['item'];
+            $data['app_trans_id'] . '|' .
+            $data['app_user'] . '|' .
+            $data['amount'] . '|' .
+            $data['app_time'] . '|' .
+            $data['embed_data'] . '|' .
+            $data['item'];
 
         $data['mac'] = hash_hmac('sha256', $dataValue, $config['zalopay_Key1']);
 
@@ -509,44 +510,45 @@ class DepositController extends Controller
 
                 $expIncrement = 0;
 
-                // Thành viên mới
+                $membershipLevel = Auth::user()->membership_level;
+
                 if ($amount >= 50000 && Auth::user()->is_new_member === 1) {
-                    $expIncrement = 50; // Thành viên mới nhận thêm 50 EXP
-                    $data['is_new_member'] = 0; // Chuyển thành thành viên cũ
+                    $expIncrement = 150;
+                    $data['is_new_member'] = 0;
                 } else {
-                    // Thành viên cũ: Tăng EXP theo mức tiền nạp
-                    if ($amount >= 200000 && $amount < 500000) {
-                        $expIncrement = 100; // Mức nạp 200.000 - 499.999
-                    } elseif ($amount >= 500000 && $amount < 1000000) {
-                        $expIncrement = 300; // Mức nạp 500.000 - 999.999
-                    } elseif ($amount >= 1000000 && $amount < 2000000) {
-                        $expIncrement = 700; // Mức nạp 1.000.000 - 1.999.999
-                    } elseif ($amount >= 2000000 && $amount < 5000000) {
-                        $expIncrement = 1500; // Mức nạp 2.000.000 - 4.999.999
-                    } elseif ($amount >= 5000000) {
-                        $expIncrement = 4000; // Mức nạp ≥ 5.000.000
-                    } else {
-                        // Mức nạp < 200.000: Cộng EXP theo công thức
-                        $expIncrement = floor($amount / 1000) * 2; // 2 EXP mỗi 1.000đ
+                    $baseExpPer1000 = 2;
+                    $membershipLevel = Auth::user()->membership_level;
+
+                    switch ($membershipLevel) {
+                        case 'member':
+                            $expIncrement = round(floor($amount / 1000) * $baseExpPer1000);
+                            break;
+                        case 'vip':
+                            $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.75));
+                            break;
+                        case 'vvip':
+                            $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.5));
+                            break;
+                        default:
+                            $expIncrement = 0;
                     }
                 }
 
-                // Tính EXP mới
                 $newExp = Auth::user()->exp + $expIncrement;
 
-                // Xác định cấp độ thành viên mới
-                $membershipLevel = 'normal'; // Mặc định là normal
-                if ($newExp > 1000) {
-                    $membershipLevel = 'svip'; // Siêu VIP
-                } elseif ($newExp >= 501) {
-                    $membershipLevel = 'vip'; // VIP
+                if ($newExp >= 8000000) {
+                    $membershipLevel = 'vvip';
+                } elseif ($newExp >= 4000000) {
+                    $membershipLevel = 'vip';
+                } elseif ($newExp >= 2000000) {
+                    $membershipLevel = 'member';
                 }
 
-                // Cập nhật số dư, EXP và cấp độ thành viên
                 $data = [
                     'zaloPay_Amount' => $amount,
                     'balance' => Auth::user()->balance + $amount,
                     'exp' => $newExp,
+                    'points' => Auth::user()->points,
                     'membership_level' => $membershipLevel ?? Auth::user()->membership_level, // Cập nhật cấp độ
                     'is_new_member' => $data['is_new_member'] ?? Auth::user()->is_new_member
                 ];
@@ -564,18 +566,16 @@ class DepositController extends Controller
                     'status' => 'completed'
                 ];
 
-                // thêm lịch sử giao dịch
                 $this->transactionService->create($dataTransaction);
 
                 DepositSucceeded::dispatch(Auth::user(), $amount, 'zalopay');
 
-                // Commit giao dịch
                 DB::commit();
 
                 return redirect()->route('account')->with([
                     'transaction_succeed' => true,
                     'amount' => $request->amount,
-                    'exp' => $expIncrement
+                    'exp' => $expIncrement,
                 ]);
             } catch (\Exception $e) {
                 // Giao dịch thất bại, cập nhật trạng thái giao dịch

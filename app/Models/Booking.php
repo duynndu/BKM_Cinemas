@@ -13,4 +13,35 @@ class Booking extends Model
     protected $table = 'bookings';
 
     protected $guarded = [];
+
+    public function foodsBooking()
+    {
+        return $this->hasMany(BookingFood::class);
+    }
+
+    public function seatsBooking()
+    {
+        return $this->hasMany(BookingSeat::class);
+    }
+
+    public function totalSeatsPrice()
+    {
+        return $this->seatsBooking->sum(function ($seatBooking) {
+            $seat = $seatBooking->seat;
+            $basePrice = $seat->room->base_price;
+            $bonusPrice = $seat->seatType->bonus_price;
+            return $basePrice + $bonusPrice;
+        });
+    }
+
+    public function totalFoodsPrice()
+    {
+        return $this->foodsBooking->sum(function ($foodBooking) {
+            return $foodBooking->quantity + $foodBooking->food->price;
+        });
+    }
+
+    public function totalPrice(){
+        return $this->totalSeatsPrice() + $this->totalFoodsPrice();
+    }
 }

@@ -16,7 +16,7 @@ export default defineConfig({
           file.includes("resources/views/") ||
           file.includes("config/")
         ) {
-          exec("php artisan optimize && php artisan ziggy:generate", (error, stdout, stderr) => {
+          exec("php artisan optimize", (error, stdout, stderr) => {
             if (error) {
               console.error(`exec error: ${error}`);
               return;

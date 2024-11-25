@@ -86,7 +86,7 @@
 												<div x-show="showtimeSelected?.movie_id" x-cloak>
 													<div class="movie-info tw-grid tw-grid-cols-12 tw-gap-2">
 														<div class="tw-col-span-5">
-															{{-- <img class="tw-block tw-w-full tw-h-[276px] tw-w-[190px] tw-rounded tw-object-cover" :src="showtimeSelected?.movie?.image" alt="Movie Image" class="movie-image"> --}}
+														<img class="tw-block tw-w-full tw-h-full tw-rounded tw-object-cover" :src="showtimeSelected?.movie?.image" alt="Movie Image" class="movie-image">
 														</div>
 														<div class="tw-col-span-7">
 															<h3 x-text="showtimeSelected?.movie?.title"></h3>

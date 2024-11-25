@@ -12391,3 +12391,8 @@ body.open-main-popup {
 img {
     max-width: 100% !important;
 }
+
+.col-lg-4.col-md-4.col-sm-4.sidebar {
+    position: sticky;
+    top: 0;
+}

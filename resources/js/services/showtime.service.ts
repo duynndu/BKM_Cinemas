@@ -60,6 +60,13 @@ class Showtime extends BaseService {
       seat_number: seatNumber
     })
   }
+
+  async getShowtimeDetailForMovie(data: any) {
+    const response = await apiBase.get<IShowtime[]>('/showtimes/getShowtimeDetailForMovie', {
+      params: data
+    });
+    return response.data;
+  }
 }
 
 

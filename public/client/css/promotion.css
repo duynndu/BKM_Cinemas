@@ -64,3 +64,17 @@
  img {
      max-width: 100% !important;
  }
+
+ .sidebar {
+     background: #f8f4f7;
+     padding: 15px;
+ }
+
+ .list-post .post-item .post-thumbnail {
+     float: left;
+     width: 335px;
+     overflow: hidden;
+     border: 2px solid #ea3b92;
+     border-radius: 3px;
+     margin-right: 10px;
+ }
