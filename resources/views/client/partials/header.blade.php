@@ -50,15 +50,15 @@
                                         $backgroundColor = $colors[$user->id % count($colors)];
                                     @endphp
 
-                                    <a class="account" href="{{ route('account') }}">
+                                    <a class="account-header" href="{{ route('account') }}">
                                         @if ($avatarUrl)
                                             <img class="avatar" src="{{ $avatarUrl }}"
                                                 alt="{{ $user->first_name . ' ' . $user->last_name }}">
                                         @else
-                                            <div class="avatar-placeholder"
+                                            <div class="avatar-placeholder-header"
                                                 style="background-color: {{ $backgroundColor }};">
                                                 {{ !empty($firstLetter) ? $firstLetter : strtoupper(substr($user->name, 0, 1)) }}
-                                            </div>
+                                            </div>  
                                         @endif
                                         <span class="name">
                                             @auth

@@ -3,6 +3,110 @@
 @section('title', Auth::check() ? 'Thông tin tài khoản' : 'Đăng ký - Đăng nhập | BKM Cinemas')
 
 @section('css')
+    <style>
+        .card-container {
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .level-card {
+            display: flex;
+            align-items: center;
+            border-radius: 3px;
+            gap: 10px;
+            padding: 13px 27px 13px 15px;
+        }
+
+        .level-card .icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        .level-card span {
+            color: #ffffffd9;
+        }
+
+        .stats p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .card-body {
+            padding: 15px 20px;
+        }
+
+        .info {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .info div {
+            flex: 1;
+        }
+
+        .info div:not(:last-child) {
+            border-right: 1px solid #ddd;
+        }
+
+        .info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .info-bkm-card {
+            max-width: 76px !important;
+        }
+
+        .info-bkm-card a.btn-login {
+            font-size: 13px;
+            padding: 6px 20px;
+            border-radius: 3px;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .info-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mt-25 {
+            margin-top: 25px;
+        }
+
+        .body-account {
+            border-top: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .h3-body-account {
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -370,7 +474,7 @@
                                             </p>
                                             <p>Ví thành viên: <span
                                                     class="point">{{ !empty(Auth::user()->balance) ? number_format(Auth::user()->balance, 0, '.', ',') : 0 }}</span>
-                                                VND</p>
+                                                đ</p>
                                             <p>Cấp bậc thành viên:
                                                 <span class="point">
                                                     @switch(Auth::user()->membership_level)
@@ -399,11 +503,11 @@
                                                     Quy tắc & Đổi thưởng
                                                 </a>
                                             </p>
-                                            <p>Tổng chi tiêu {{ date('Y') }}: <span class="point">0</span> VND</p>
+
                                             <!-- EXP và Progress Bar -->
-                                            <div class="exp-container mb-15">
-                                                <p class="mb-4">EXP: <span
-                                                        class="point expData" data-exp="{{ Auth::user()->exp ?? 0 }}">{{ !empty(Auth::user()->exp) ? number_format(Auth::user()->exp, 0, ',', '.') : 0 }}</span>
+                                            <div class="exp-container mb-15 mt-25">
+                                                <p class="mb-4">EXP: <span class="point expData"
+                                                        data-exp="{{ Auth::user()->exp ?? 0 }}">{{ !empty(Auth::user()->exp) ? number_format(Auth::user()->exp, 0, ',', '.') : 0 }}</span>
                                                     exp</p>
                                                 <div class="rank-container">
                                                     <div class="progress-bar">
@@ -451,61 +555,67 @@
                                     <div class="clearfix"></div>
                                 </div>
 
-                                <div class="box-body" style="border-top: none">
-                                    <h3>Giao dịch gần nhất</h3>
-                                    @if ($data['transactions']->isNotEmpty())
-                                        <div class="transaction-main">
-                                            @php
-                                                $lastDate = null;
-                                            @endphp
-                                            @foreach ($data['transactions'] as $key => $transaction)
-                                                @php
-                                                    $transactionDate = date(
-                                                        'd/m/Y',
-                                                        strtotime($transaction->created_at),
-                                                    );
-                                                @endphp
-                                                <div class="border-box">
-                                                    @if ($transactionDate != $lastDate)
-                                                        <div class="transaction-date">
-                                                            {{ $transactionDate }}
-                                                        </div>
-                                                        @php
-                                                            $lastDate = $transactionDate;
-                                                        @endphp
+                                <div class="box-body body-account">
+                                    <h3 class="h3-body-account">Thông tin chi tiết</h3>
+                                    <div class="card-container">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="stats">
+                                                    <p>Tổng chi tiêu <strong>{{ date('Y') }}</strong>: <span
+                                                            class="point">0</span> đ</p>
+                                                </div>
+                                                <div
+                                                    class="level-card @if (Auth::user()->membership_level == 'member') rank-member @elseif(Auth::user()->membership_level == 'vip') rank-vip @else rank-vvip @endif">
+                                                    @if (Auth::user()->membership_level == 'member')
+                                                        <img class="rank_member"
+                                                            src="{{ asset('client/images/level-member.png') }}"
+                                                            alt="">
+                                                        <span>BKM Member</span>
+                                                    @elseif(Auth::user()->membership_level == 'vip')
+                                                        <img class="rank_vip"
+                                                            src="{{ asset('client/images/level-vip.png') }}" alt="">
+                                                        <span>BKM VIP</span>
+                                                    @else
+                                                        <img class="rank_vvip"
+                                                            src="{{ asset('client/images/level-vvip.png') }}" alt="">
+                                                        <span>BKM VVIP</span>
                                                     @endif
-                                                    <div class="transaction-list"
-                                                        style="border-bottom: {{ $loop->last ? '1px solid #91b5d7' : 'none' }}">
-                                                        <div class="transaction-content">
-                                                            <h4>Thông báo giao dịch</h4>
-                                                            <ul>
-                                                                <li>{{ !empty($transaction->description) ? $transaction->description : '' }}
-                                                                </li>
-                                                                <li>
-                                                                    Giao dịch:
-                                                                    @if ($transaction->status == 'completed')
-                                                                        +
-                                                                    @endif
-                                                                    {{ number_format($transaction->amount, 0, '.', ',') }}
-                                                                    VND |
-                                                                    {{ date('d/m/Y H:i:s', strtotime($transaction->created_at)) }}
-                                                                    |
-                                                                    Số
-                                                                    dư:
-                                                                    {{ number_format($transaction->balance_after, 0, '.', ',') }}
-                                                                    VND
-                                                                </li>
-                                                            </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="info">
+                                                    <div class="info-content">
+                                                        <p>Thẻ quà tặng</p>
+                                                        <p>0 đ</p>
+                                                        <div class="info-bkm-card">
+                                                            <a class="btn-login">Xem</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="info-content">
+                                                        <p>Voucher</p>
+                                                        <p>0</p>
+                                                        <div class="info-bkm-card">
+                                                            <a class="btn-login">Xem</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="info-content">
+                                                        <p>Quà tặng</p>
+                                                        <p>0</p>
+                                                        <div class="info-bkm-card">
+                                                            <a class="btn-login">Xem</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="info-content">
+                                                        <p>Thẻ Thành Viên</p>
+                                                        <p>1</p>
+                                                        <div class="info-bkm-card">
+                                                            <a class="btn-login">Xem</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endforeach
+                                            </div>
                                         </div>
-                                    @else
-                                        <div class="alert alert-info">
-                                            Chưa có giao dịch nào
-                                        </div>
-                                    @endif
+                                    </div>
                                 </div>
 
                             </div>
@@ -739,9 +849,9 @@
                                             <hr>
                                             <h4>Quy đổi điểm:</h4>
                                             <ul class="list-points">
-                                                <li>🎁 <strong>BKM Member:</strong> 1 điểm = 1.000 VNĐ</li>
-                                                <li>🎁 <strong>BKM VIP:</strong> 2 điểm = 2.000 VNĐ</li>
-                                                <li>🎁 <strong>BKM VVIP:</strong> 3 điểm = 3.000 VNĐ</li>
+                                                <li>🎁 <strong>BKM Member:</strong> 1 điểm = 1.000 đ</li>
+                                                <li>🎁 <strong>BKM VIP:</strong> 2 điểm = 2.000 đ</li>
+                                                <li>🎁 <strong>BKM VVIP:</strong> 3 điểm = 3.000 đ</li>
                                                 <li>🎁 Các phần quà hấp dẫn khác 👇</li>
                                             </ul>
                                             <button class="btn btn-primary btn-redeem btn-login open-modal"
@@ -781,6 +891,70 @@
                                 <div class="row flex">
                                     <div class="col-md-12 col-sm-12">
 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="lichsugiaodich" class="mbox tab-pane fade">
+                            <div class="title">
+                                <h2>Lịch sử giao dịch</h2>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col"></div>
+                                </div>
+                                <div class="row flex">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="transaction-deposit">
+                                            <div class="transaction-main">
+                                                @php
+                                                    $lastDate = null;
+                                                @endphp
+                                                @foreach ($data['transactions'] as $key => $transaction)
+                                                    @php
+                                                        $transactionDate = date(
+                                                            'd/m/Y',
+                                                            strtotime($transaction->created_at),
+                                                        );
+                                                    @endphp
+                                                    <div class="border-box">
+                                                        @if ($transactionDate != $lastDate)
+                                                            <div class="transaction-date">
+                                                                {{ $transactionDate }}
+                                                            </div>
+                                                            @php
+                                                                $lastDate = $transactionDate;
+                                                            @endphp
+                                                        @endif
+                                                        <div class="transaction-list"
+                                                            style="border-bottom: {{ $loop->last ? '1px solid #91b5d7' : 'none' }}">
+                                                            <div class="transaction-content">
+                                                                <h4>Thông báo giao dịch</h4>
+                                                                <ul>
+                                                                    <li>{{ !empty($transaction->description) ? $transaction->description : '' }}
+                                                                    </li>
+                                                                    <li>
+                                                                        Giao dịch:
+                                                                        @if ($transaction->status == 'completed')
+                                                                            +
+                                                                        @endif
+                                                                        {{ number_format($transaction->amount, 0, '.', ',') }}
+                                                                        đ |
+                                                                        {{ date('d/m/Y H:i:s', strtotime($transaction->created_at)) }}
+                                                                        |
+                                                                        Số
+                                                                        dư:
+                                                                        {{ number_format($transaction->balance_after, 0, '.', ',') }}
+                                                                        đ
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -985,7 +1159,7 @@
                                         <td>10%</td>
                                     </tr>
                                     <tr>
-                                        <td class="highlight">VD: 100.000 VNĐ</td>
+                                        <td class="highlight">VD: 100.000 đ</td>
                                         <td>5 Điểm</td>
                                         <td>7 Điểm</td>
                                         <td>10 Điểm</td>
@@ -997,7 +1171,7 @@
                                         <td>5%</td>
                                     </tr>
                                     <tr>
-                                        <td class="highlight">VD: 100.000 VNĐ</td>
+                                        <td class="highlight">VD: 100.000 đ</td>
                                         <td>3 Điểm</td>
                                         <td>4 Điểm</td>
                                         <td>5 Điểm</td>
@@ -1016,7 +1190,7 @@
 
                         <h4>2. Cách làm tròn điểm thưởng</h4>
                         <ul>
-                            <li>1 Điểm BKM = <strong>1.000 VNĐ</strong> giá trị quy đổi.</li>
+                            <li>1 Điểm BKM = <strong>1.000 đ</strong> giá trị quy đổi.</li>
                             <li>Từ <strong>0.1</strong> đến <strong>0.4</strong>: làm tròn xuống (Ví dụ: <strong>3.2
                                     điểm</strong> sẽ được tích vào tài khoản <strong>3 điểm</strong>).
                                 Lưu ý: giao dịch có điểm tích lũy từ <strong>0.1</strong> đến <strong>0.4</strong> sẽ không
@@ -1037,15 +1211,15 @@
                             <tbody>
                                 <tr>
                                     <td style="border: 1px solid #ddd; padding: 8px;">BKM Member 🥈</td>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">1 Điểm = 1.000 VNĐ</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">1 Điểm = 1.000 đ</td>
                                 </tr>
                                 <tr>
                                     <td style="border: 1px solid #ddd; padding: 8px;">BKM VIP 🌟</td>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">2 Điểm = 2.000 VNĐ</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">2 Điểm = 2.000 đ</td>
                                 </tr>
                                 <tr>
                                     <td style="border: 1px solid #ddd; padding: 8px;">BKM VVIP 👑</td>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">3 Điểm = 3.000 VNĐ</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">3 Điểm = 3.000 đ</td>
                                 </tr>
                             </tbody>
                         </table>
