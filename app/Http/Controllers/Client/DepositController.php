@@ -349,11 +349,11 @@ class DepositController extends Controller
 
                     $newExp = Auth::user()->exp + $expIncrement;
 
-                    if ($newExp >= 2000) {
+                    if ($newExp >= 8000000) {
                         $membershipLevel = 'vvip';
-                    } elseif ($newExp >= 1000) {
+                    } elseif ($newExp >= 4000000) {
                         $membershipLevel = 'vip';
-                    } elseif ($newExp >= 500) {
+                    } elseif ($newExp >= 2000000) {
                         $membershipLevel = 'member';
                     }
 
@@ -536,11 +536,11 @@ class DepositController extends Controller
 
                 $newExp = Auth::user()->exp + $expIncrement;
 
-                if ($newExp >= 2000) {
+                if ($newExp >= 8000000) {
                     $membershipLevel = 'vvip';
-                } elseif ($newExp >= 1000) {
+                } elseif ($newExp >= 4000000) {
                     $membershipLevel = 'vip';
-                } elseif ($newExp >= 500) {
+                } elseif ($newExp >= 2000000) {
                     $membershipLevel = 'member';
                 }
 

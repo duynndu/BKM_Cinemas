@@ -13,7 +13,6 @@
         }
 
         .exp-container {
-            max-width: 400px;
             padding: 10px;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
@@ -61,7 +60,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #fff;
-            font-size: 14px;
+            font-size: 11px;
             font-weight: bold;
             white-space: nowrap;
         }
@@ -547,16 +546,160 @@
                                                     Quy tắc & Đổi thưởng
                                                 </a>
                                             </p>
+                                            <style>
+                                                .exp-container {
+                                                    width: 100%;
+                                                    font-family: Arial, sans-serif;
+                                                    text-align: center;
+                                                }
+
+                                                .rank-container {
+                                                    position: relative;
+                                                    width: 80%;
+                                                    margin: 10px auto;
+                                                }
+
+                                                .progress-bar {
+                                                    background: #ccc;
+                                                    height: 15px;
+                                                    border-radius: 10px;
+                                                    position: relative;
+                                                    overflow: hidden;
+                                                }
+
+                                                .progress {
+                                                    height: 100%;
+                                                    background: #4caf50;
+                                                    width: 0%;
+                                                    transition: width 0.5s ease-in-out;
+                                                    position: relative;
+                                                }
+
+                                                .progress-text {
+                                                    position: absolute;
+                                                    top: -25px;
+                                                    right: 0;
+                                                    font-size: 12px;
+                                                    font-weight: bold;
+                                                    color: #333;
+                                                }
+
+                                                .milestones {
+                                                    position: relative;
+                                                    margin-top: 10px;
+                                                    font-size: 12px;
+                                                    color: #555;
+                                                }
+
+                                                .mb-15 {
+                                                    margin-bottom: 15px !important;
+                                                }
+
+                                                .mb-4 {
+                                                    margin-bottom: 48px !important;
+                                                }
+
+                                                .milestone {
+                                                    position: absolute;
+                                                    bottom: -6px;
+                                                    font-size: 10px;
+                                                    font-weight: bold;
+                                                    color: #000;
+                                                }
+
+                                                img.rank_member,
+                                                img.rank_vip,
+                                                img.rank_vvip {
+                                                    display: block;
+                                                    margin: auto;
+                                                }
+
+                                                img.rank_member {
+                                                    width: 32px;
+                                                }
+
+                                                img.rank_vip {
+                                                    width: 43px;
+                                                }
+
+                                                img.rank_vvip {
+                                                    width: 40px;
+                                                    transform: translateX(-100%);
+                                                }
+
+                                                .rank-number-member,
+                                                .rank-number-vip,
+                                                .rank-number-vvip {
+                                                    position: absolute;
+                                                }
+
+                                                .rank-number-member {
+                                                    left: 0%;
+                                                    bottom: -35px;
+                                                }
+
+                                                .rank-number-vip {
+                                                    left: 50%;
+                                                    bottom: -35px;
+                                                }
+
+                                                .rank-number-vvip {
+                                                    right: 0px;
+                                                    bottom: -35px;
+                                                }
+
+                                                .line-center-grade {
+                                                    position: absolute;
+                                                    left: 54.90%;
+                                                    border-left: 1px dashed #fff;
+                                                    width: 1px;
+                                                    float: left;
+                                                    height: 15px;
+                                                }
+                                            </style>
                                             <p>Tổng chi tiêu {{ date('Y') }}: <span class="point">0</span> VND</p>
                                             <!-- EXP và Progress Bar -->
-                                            <div class="exp-container">
-                                                <p>EXP: <span
-                                                        class="point">{{ !empty(Auth::user()->exp) ? Auth::user()->exp : 0 }}</span>
+                                            <div class="exp-container mb-15">
+                                                <p class="mb-4">EXP: <span
+                                                        class="point">{{ !empty(Auth::user()->exp) ? number_format(Auth::user()->exp, 0, ',', '.') : 0 }}</span>
                                                     exp</p>
                                                 <div class="rank-container">
                                                     <div class="progress-bar">
                                                         <div class="progress">
-                                                            <span class="progress-text">0/500</span>
+                                                            <span class="progress-text">0/4,000,000</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="milestones">
+                                                        <div class="upgrade-card">
+                                                            <span class="milestone" style="left: -15px;">
+                                                                <img class="rank_member"
+                                                                    src="{{ asset('client/images/rank_member.png') }}"
+                                                                    alt="">
+                                                            </span>
+                                                            <div class="rank-number-member">
+                                                                <b>0</b>
+                                                            </div>
+                                                        </div>
+                                                        <div class="upgrade-card">
+                                                            <span class="milestone" style="left: 50%;">
+                                                                <img class="rank_vip"
+                                                                    src="{{ asset('client/images/rank_vip.png') }}"
+                                                                    alt="">
+                                                            </span>
+                                                            <div class="line-center-grade"></div>
+                                                            <div class="rank-number-vip">
+                                                                <b>4.000.000</b>
+                                                            </div>
+                                                        </div>
+                                                        <div class="upgrade-card">
+                                                            <span class="milestone" style="right: -61px;">
+                                                                <img class="rank_vvip"
+                                                                    src="{{ asset('client/images/rank_vvip.png') }}"
+                                                                    alt="">
+                                                            </span>
+                                                            <div class="rank-number-vvip">
+                                                                <b>8.000.000</b>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1298,46 +1441,41 @@
     <script src="{{ asset('js/client/auth/auth.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const exp = {{ Auth::user()->exp ?? 0 }};
-            const thresholds = [500, 1000];
+            const exp = {{ Auth::user()->exp ?? 0 }}; // Điểm EXP hiện tại của người dùng
+            const thresholds = [0, 4000000, 8000000]; // Các mốc EXP
             const $progress = $('.progress');
             const $progressText = $('.progress-text');
-            const $milestonesContainer = $('.milestones');
-            const $rankName = $('.rank-name');
-            const $rankPoints = $('.rank-points');
 
-            let percentage = 0;
-            let nextRankExp = 0;
-            let currentRank = '';
-            let milestonesHTML = '';
+            // Xác định mốc hiện tại và tính % EXP
+            let percentage = 0; // Phần trăm tiến trình
+            let nextRankExp = 0; // Mốc EXP tiếp theo
+            let currentRankExp = 0; // Mốc EXP hiện tại
 
-            if (exp <= thresholds[0]) {
-                percentage = (exp / thresholds[0]) * 100;
-                nextRankExp = thresholds[0];
-                currentRank = 'BKM Member';
-                milestonesHTML = `<span class="milestone" style="left: 0%;">📍</span>`;
-            } else if (exp <= thresholds[1]) {
-                percentage = ((exp - thresholds[0]) / (thresholds[1] - thresholds[0])) * 100;
+            if (exp <= thresholds[1]) {
+                // Nếu EXP trong khoảng 0 -> 4,000,000
+                currentRankExp = thresholds[0];
                 nextRankExp = thresholds[1];
-                currentRank = 'BKM VIP';
-                milestonesHTML = `
-                    <span class="milestone" style="left: 0%;">📍</span>
-                    <span class="milestone" style="left: 100%;">📍</span>
-                `;
+                percentage = (exp / thresholds[1]) * 55; // Tính theo tỷ lệ phần trăm (0 -> 50%)
+            } else if (exp <= thresholds[2]) {
+                // Nếu EXP trong khoảng 4,000,000 -> 8,000,000
+                currentRankExp = thresholds[1];
+                nextRankExp = thresholds[2];
+                percentage = ((exp - thresholds[1]) / (thresholds[2] - thresholds[1])) * 50 + 55; // (50% -> 100%)
             } else {
-                percentage = 100;
-                nextRankExp = exp + 1;
-                currentRank = 'BKM VVIP';
-                milestonesHTML = `
-                    <span class="milestone" style="left: 0%;">📍</span>
-                    <span class="milestone" style="left: 100%;">📍</span>
-                `;
+                // Nếu EXP vượt qua 8,000,000
+                percentage = 100; // Đầy thanh
+                currentRankExp = thresholds[2];
+                nextRankExp = thresholds[2];
             }
 
+            // Cập nhật thanh tiến trình
             $progress.css('width', percentage + '%');
-            $progressText.text(`${exp}/${nextRankExp}`);
-            $milestonesContainer.html(milestonesHTML);
-            $rankPoints.css('left', percentage + '%').text(`${exp}/${nextRankExp}`); // Điểm ở giữa thanh progress
+            $progressText.text(`${exp.toLocaleString()} / ${nextRankExp.toLocaleString()}`);
+
+            // Kiểm tra và gán màu khác nhau nếu muốn
+            if (percentage === 100) {
+                $progress.css('background', '#ff5722'); // Đổi màu nếu đạt tối đa
+            }
         });
     </script>
 @endsection
