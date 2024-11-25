@@ -45,9 +45,6 @@ export const redirect = (url?: string) => {
     window.location.href = url;
   }
   return {
-    route: (url: string, options?: any) => {
-      window.location.href = route(url, options);
-    },
     to: (url: string, options?: any) => {
       if (options) {
         const params = new URLSearchParams(options);

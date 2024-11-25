@@ -36,6 +36,7 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
     this.getSeatLayoutById();
     this.renderSeatLayout();
     if (seatLayoutId) {
+      //@ts-ignore
       this.formData.id = seatLayoutId;
     }
   },
@@ -73,7 +74,7 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
       }
       toastr.success('Thao tác thành công');
       setTimeout(() => {
-        redirect().route('admin.seat-layouts.index');
+        redirect().to('admin/room-manager/seat-layouts');
       }, 500);
     } catch (error: any) {
       console.error(error);
