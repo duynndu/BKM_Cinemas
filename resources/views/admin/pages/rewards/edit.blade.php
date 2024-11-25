@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Sửa diễn viên')
+@section('title', 'Sửa quà tặng')
 
 @section('css')
 @endsection
