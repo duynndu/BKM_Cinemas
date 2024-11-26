@@ -43,7 +43,7 @@ class OrderController extends Controller
         $record->status = $validated['status'];
         $record->save();
 
-        broadcast(new OrderStatusUpdated($record));
+        broadcast(new OrderStatusUpdated(['id' => $id, 'status' => $record->status]))->toOthers();
 
         return response()->json(['success' => 'Thành công!'], 200);
     }

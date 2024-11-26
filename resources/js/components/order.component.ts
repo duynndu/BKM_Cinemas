@@ -1,19 +1,26 @@
 import ApiBase from '@/React/shared/Api';
 import Alpine from 'alpinejs';
 import Swal from 'sweetalert2';
+import { echo } from '@/echo/Echo';
+import $ from 'jquery';
 
 Alpine.data('OrderComponent', () => ({
     isSubmitting: false,
 
     async init() {
+        echo.channel('change_status_order')
+            .listen('OrderStatusUpdated', (data: any) => {
+                console.log(data);
 
-            console.log(window.Echo);
+                const selectElement = $(`#status-${data.order.id}`);
 
-            window.Echo.channel('change_status_order')
-                .listen('OrderStatusUpdated', (data: any) => {
-                    console.log('Data received:', data);
-                });
+                    selectElement.val(data.order.status);
 
+                    selectElement.trigger('change')
+                    console.log($(`#status-${data.order.id}`).val());
+
+
+            });
     },
 
     onChangeStatus(e: any) {
