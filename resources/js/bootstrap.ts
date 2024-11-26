@@ -10,7 +10,6 @@ import $ from "jquery";
 import Alpine from "alpinejs";
 import * as utils from "@/utils/common";
 import Services from "./services";
-import "./components";
 import moment from "moment";
 import "./moment.vi";
 import Echo from "laravel-echo";
@@ -50,3 +49,6 @@ window.Echo = new Echo({
   forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
   enabledTransports: ['ws', 'wss'],
 });
+
+import "./components";
+

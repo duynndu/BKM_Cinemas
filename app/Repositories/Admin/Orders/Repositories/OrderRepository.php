@@ -23,7 +23,8 @@ class OrderRepository extends BaseRepository implements OrderInterface
                 ->with([
                     'user:id,name',
                     'cinema:id,name',
-                    'movie:id,title'
+                    'movie:id,title',
+                    'showtime:id,start_time'
                 ])
                 ->orderBy('id', 'desc')
                 ->paginate(self::PAGINATION);

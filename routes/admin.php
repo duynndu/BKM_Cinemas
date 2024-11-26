@@ -846,7 +846,7 @@ Route::prefix('admin')
                     Route::get('/{id}/detail', 'detail')
                         ->name('detail')
                         ->middleware('authorizeAction:viewAny,App\Models\Cinema');
-                    Route::post('/change-status', 'changeStatus')
+                    Route::post('/{id}/change-status', 'changeStatus')
                         ->name('changeStatus')
                         ->middleware('authorizeAction:changeActive,App\Models\Cinema');
                 });

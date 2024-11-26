@@ -57,4 +57,9 @@ class Booking extends Model
     {
         return $this->belongsTo(Movie::class);
     }
+
+    public function showtime()
+    {
+        return $this->belongsTo(ShowTime::class);
+    }
 }

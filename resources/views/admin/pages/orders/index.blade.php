@@ -3,10 +3,12 @@
 @section('title', 'Danh sách Loại Đồ Ăn')
 
 @section('css')
+
 @endsection
+@vite(['resources/js/app.js', 'resources/css/app.css'])
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid" x-data="OrderComponent">
         <div class="row">
             <div class="col-xl-12">
                 <div class="row">
@@ -140,57 +142,58 @@
                                                             {{ $order->user->name }}
                                                         </td>
                                                         <td>
-                                                            <select name="status" class="form-control" id="">
-                                                                <option value="pending">
+                                                            <select name="status" class="form-control order_status" data-url="{{ route('admin.orders.changeStatus', $order->id) }}" @change="onChangeStatus($event)">
+                                                                <option value="pending" @selected($order->status == 'pending')>
                                                                     Chờ xác nhân
                                                                 </option>
-                                                                <option value="completed">
+                                                                <option value="completed" @selected($order->status == 'completed')>
                                                                     Hoàn thành
                                                                 </option>
-                                                                <option value="failed">
+                                                                <option value="failed" @selected($order->status == 'failed')>
                                                                     Lỗi
                                                                 </option>
-                                                                <option value="cancelled">
+                                                                <option value="cancelled" @selected($order->status == 'cancelled')>
                                                                     Hủy
                                                                 </option>
-                                                                <option value="waiting_for_cancellation">
+                                                                <option value="waiting_for_cancellation" @selected($order->status == 'waiting_for_cancellation')>
                                                                     Chờ hủy
                                                                 </option>
-                                                                <option value="rejected">
+                                                                <option value="rejected" @selected($order->status == 'rejected')>
                                                                     Từ chối hủy
                                                                 </option>
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <select name="payment_status" class="form-control"
-                                                                id="">
-                                                                <option value="pending">
-                                                                    Chờ xác nhân
-                                                                </option>
-                                                                <option value="completed">
+                                                            @switch($order->payment_status)
+                                                                @case('pending')
+                                                                    Chờ xác nhận
+                                                                    @break
+                                                                @case('completed')
                                                                     Hoàn thành
-                                                                </option>
-                                                                <option value="failed">
-                                                                    lỗi
-                                                                </option>
-                                                                <option value="cancelled">
+                                                                    @break
+                                                                @case('failed')
+                                                                    Lỗi
+                                                                    @break
+                                                                @case('cancelled')
                                                                     Hủy
-                                                                </option>
-                                                            </select>
+                                                                    @break
+                                                                @default
+                                                                    Không xác định
+                                                            @endswitch
                                                         </td>
                                                         <td>
                                                             <select name="refund_status" class="form-control"
                                                                 id="">
-                                                                <option value="pending">
+                                                                <option value="pending" @selected($order->refund_status == 'pending')>
                                                                     Chờ xác nhân
                                                                 </option>
-                                                                <option value="completed">
+                                                                <option value="completed" @selected($order->refund_status == 'completed')>
                                                                     Hoàn thành
                                                                 </option>
-                                                                <option value="failed">
+                                                                <option value="failed" @selected($order->refund_status == 'failed')>
                                                                     lỗi
                                                                 </option>
-                                                                <option value="cancelled">
+                                                                <option value="cancelled" @selected($order->refund_status == 'cancelled')>
                                                                     Hủy
                                                                 </option>
                                                             </select>
