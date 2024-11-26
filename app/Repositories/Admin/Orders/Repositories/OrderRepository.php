@@ -13,4 +13,14 @@ class OrderRepository extends BaseRepository implements OrderInterface
         return Booking::class;
     }
 
+    public function getAll()
+    {
+        return $this->model
+                ->where('code' , '!=', null)
+                ->when(auth()->user()->cinema_id, function ($query, $cinemaId) {
+                    $query->where('cinema_id', $cinemaId);
+                })
+                ->orderBy('id', 'desc')
+                ->paginate(self::PAGINATION);
+    }
 }
