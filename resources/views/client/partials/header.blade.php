@@ -139,11 +139,11 @@
                                     Phim
                                 </a>
                             </li>
-                            <li class="">
+                            {{-- <li class="">
                                 <a href="lich-chieu">
                                     Lịch chiếu
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="">
                                 <a href="gia-ve">
                                     giá vé
