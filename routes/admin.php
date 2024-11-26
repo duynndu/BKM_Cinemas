@@ -438,7 +438,7 @@ Route::prefix('admin')
 
                     Route::get('/create', 'create')
                         ->name('create');
-                        
+
                     Route::post('/store', 'store')
                         ->name('store');
 
@@ -845,7 +845,7 @@ Route::prefix('admin')
                         ->middleware('authorizeAction:viewAny,App\Models\Cinema');
                     Route::get('/{id}/detail', 'detail')
                         ->name('detail')
-                        ->middleware('authorizeAction:detail,App\Models\Cinema');
+                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
                     Route::post('/change-status', 'changeStatus')
                         ->name('changeStatus')
                         ->middleware('authorizeAction:changeActive,App\Models\Cinema');

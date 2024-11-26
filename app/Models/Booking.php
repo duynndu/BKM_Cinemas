@@ -44,4 +44,17 @@ class Booking extends Model
     public function totalPrice(){
         return $this->totalSeatsPrice() + $this->totalFoodsPrice();
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function cinema(){
+        return $this->belongsTo(Cinema::class);
+    }
+
+    public function movie()
+    {
+        return $this->belongsTo(Movie::class);
+    }
 }

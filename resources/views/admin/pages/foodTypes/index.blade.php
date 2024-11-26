@@ -157,10 +157,7 @@
                                                         </td>
                                                         <td>
                                                             <b>
-                                                                <a
-                                                                    href="{{ route('admin.food-types.index') }}">
-                                                                    {{ $type->name }}
-                                                                </a>
+                                                                {{ $type->name }}
                                                             </b>
                                                         </td>
                                                         @can('changeActive', \App\Models\FoodType::class)

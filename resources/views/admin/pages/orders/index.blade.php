@@ -25,8 +25,7 @@
                         <div class="filter cm-content-box box-primary">
                             <div class="content-title SlideToolHeader">
                                 <div class="cpa">
-                                    <i
-                                        class="fa-sharp fa-solid fa-filter me-2"></i>Bộ lọc
+                                    <i class="fa-sharp fa-solid fa-filter me-2"></i>Bộ lọc
                                 </div>
                             </div>
                             <div class="col-12">
@@ -37,30 +36,28 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-xl-3 col-sm-6">
-                                                        <label
-                                                            class="form-label">Tên loại đồ ăn</label>
-                                                        <input id="" value="{{ request()->name }}" name="name"
+                                                        <label class="form-label">Tên mã</label>
+                                                        <input id="" value="{{ request()->code }}" name="code"
                                                             type="text" class="form-control mb-xl-0 mb-3"
-                                                            placeholder="Nhập tên loại đồ ăn">
+                                                            placeholder="Nhập mã đơn">
                                                     </div>
                                                     <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
-                                                        <label
-                                                            class="form-label">Sắp xếp</label>
+                                                        <label class="form-label">Sắp xếp</label>
                                                         <div id="order" class="dropdown bootstrap-select form-control">
                                                             <select name="order_with" class="form-control">
                                                                 <option value="">
                                                                     --chọn--
                                                                 </option>
-                                                                <option @selected( request()->order_with == 'dateASC' ) value="dateASC">
+                                                                <option @selected(request()->order_with == 'dateASC') value="dateASC">
                                                                     Ngày tạo tăng dần
                                                                 </option>
-                                                                <option @selected( request()->order_with == 'dateDESC' ) value="dateDESC">
+                                                                <option @selected(request()->order_with == 'dateDESC') value="dateDESC">
                                                                     Ngày tạo giảm dần
                                                                 </option>
-                                                                <option @selected( request()->order_with == 'priceASC' ) value="priceASC">
+                                                                <option @selected(request()->order_with == 'priceASC') value="priceASC">
                                                                     Giá tăng dần
                                                                 </option>
-                                                                <option @selected( request()->order_with == 'priceDESC' ) value="priceDESC">
+                                                                <option @selected(request()->order_with == 'priceDESC') value="priceDESC">
                                                                     Giá giảm dần
                                                                 </option>
                                                             </select>
@@ -72,10 +69,10 @@
                                                             <option value="">
                                                                 --chọn--
                                                             </option>
-                                                            <option @selected(request()->fill_action == "active") value="active">
+                                                            <option @selected(request()->fill_action == 'active') value="active">
                                                                 Hiện
                                                             </option>
-                                                            <option @selected(request()->fill_action == "noActive") value="noActive">
+                                                            <option @selected(request()->fill_action == 'noActive') value="noActive">
                                                                 Ẩn
                                                             </option>
                                                         </select>
@@ -84,7 +81,8 @@
                                                         <div class="">
                                                             <button class="btn btn-primary me-2"
                                                                 title="Click here to Search" type="submit"><i
-                                                                    class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm nâng cao
+                                                                    class="fa-sharp fa-solid fa-filter me-2"></i>Tìm kiếm
+                                                                nâng cao
                                                             </button>
                                                             <button type="reset" class="btn btn-danger light"
                                                                 title="Click here to remove filter">Xóa trống</button>
@@ -109,76 +107,99 @@
                                         <table class="table table-responsive-md" id="data-table">
                                             <thead>
                                                 <tr>
-                                                    <th style="width:80px;">#</th>
-                                                    <th>Mã đơn hàng</th>
+                                                    <th>#</th>
+                                                    <th>Mã đơn</th>
+                                                    <th>Phim</th>
+                                                    <th>Rạp phim</th>
+                                                    <th>Người đặt</th>
                                                     <th>Trạng thái</th>
-                                                    <th>Số thứ tự</th>
+                                                    <th>Trạng thái thanh toán</th>
+                                                    <th>Trạng thái hoàn tiền</th>
                                                     <th>Hành động</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($data as $key => $type)
+                                                @foreach ($data as $key => $order)
                                                     <tr>
-                                                        @can('deleteMultiple', \App\Models\FoodType::class)
-                                                            <td>
-                                                                <input type="checkbox" data-id="{{ $type->id }}"
-                                                                    class="item-checked">
-                                                            </td>
-                                                        @endcan
                                                         <td>
-                                                            <strong class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
+                                                            <strong
+                                                                class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
                                                         </td>
                                                         <td>
-                                                            <b>
-                                                                <a
-                                                                    href="{{ route('admin.food-types.index') }}">
-                                                                    {{ $type->name }}
-                                                                </a>
+                                                            <b class="text-black">
+                                                                {{ $order->code }}
                                                             </b>
                                                         </td>
-                                                        @can('changeActive', \App\Models\FoodType::class)
-                                                            <td>
-                                                                <button
-                                                                    class="toggle-active-btn btn btn-xs {{ $type->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
-                                                                    data-id="{{ $type->id }}"
-                                                                    data-status="{{ $type->active }}"
-                                                                    data-url="{{ route('admin.food-types.changeActive') }}">
-                                                                    {{ $type->active == 1 ? 'Hiển thị' : 'Ẩn' }}
-                                                                </button>
-                                                            </td>
-                                                        @endcan
-                                                        @can('changeOrder', \App\Models\FoodType::class)
-                                                            <td>
-                                                                <input type="number" min="0" name="order"
-                                                                    value="{{ $type->order }}"
-                                                                    data-id="{{ $type->id }}"
-                                                                    data-url="{{ route('admin.food-types.changeOrder') }}"
-                                                                    class="form-control changeOrder" style="width: 67px;">
-                                                            </td>
-                                                        @endcan
                                                         <td>
-                                                            <div
-                                                            style="padding-right: 20px; display: flex; justify-content: end">
-                                                                @can('update', \App\Models\FoodType::class)
-                                                                    <a href="{{ route('admin.food-types.edit', $type->id) }}"
-                                                                        class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                        <i class="fa fa-pencil"></i>
-                                                                    </a>
-                                                                @endcan
-                                                                @can('delete', \App\Models\FoodType::class)
-                                                                    <form
-                                                                        action="{{ route('admin.food-types.delete', $type->id) }}"
-                                                                        class="formDelete" method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button
-                                                                            class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
-                                                                            data-type="DELETE" href="">
-                                                                            <i class="fa fa-trash"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                @endcan
-                                                            </div>
+                                                            {{ $order->movie->title }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $order->cinema->name }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $order->user->name }}
+                                                        </td>
+                                                        <td>
+                                                            <select name="status" class="form-control" id="">
+                                                                <option value="pending">
+                                                                    Chờ xác nhân
+                                                                </option>
+                                                                <option value="completed">
+                                                                    Hoàn thành
+                                                                </option>
+                                                                <option value="failed">
+                                                                    Lỗi
+                                                                </option>
+                                                                <option value="cancelled">
+                                                                    Hủy
+                                                                </option>
+                                                                <option value="waiting_for_cancellation">
+                                                                    Chờ hủy
+                                                                </option>
+                                                                <option value="rejected">
+                                                                    Từ chối hủy
+                                                                </option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select name="payment_status" class="form-control"
+                                                                id="">
+                                                                <option value="pending">
+                                                                    Chờ xác nhân
+                                                                </option>
+                                                                <option value="completed">
+                                                                    Hoàn thành
+                                                                </option>
+                                                                <option value="failed">
+                                                                    lỗi
+                                                                </option>
+                                                                <option value="cancelled">
+                                                                    Hủy
+                                                                </option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select name="refund_status" class="form-control"
+                                                                id="">
+                                                                <option value="pending">
+                                                                    Chờ xác nhân
+                                                                </option>
+                                                                <option value="completed">
+                                                                    Hoàn thành
+                                                                </option>
+                                                                <option value="failed">
+                                                                    lỗi
+                                                                </option>
+                                                                <option value="cancelled">
+                                                                    Hủy
+                                                                </option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('admin.orders.detail', $order->id) }}"
+                                                                class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

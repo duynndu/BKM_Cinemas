@@ -17,6 +17,12 @@ class OrderController extends Controller
     public function index()
     {
         $data = $this->orderService->getAll();
-        return view('admin.order.index', compact('data'));
+        return view('admin.pages.orders.index', compact('data'));
+    }
+
+    public function detail($id)
+    {
+        $data = $this->orderService->find($id);
+        dd($data);
     }
 }

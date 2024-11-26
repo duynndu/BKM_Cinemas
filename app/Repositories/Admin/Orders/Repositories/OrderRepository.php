@@ -20,6 +20,11 @@ class OrderRepository extends BaseRepository implements OrderInterface
                 ->when(auth()->user()->cinema_id, function ($query, $cinemaId) {
                     $query->where('cinema_id', $cinemaId);
                 })
+                ->with([
+                    'user:id,name',
+                    'cinema:id,name',
+                    'movie:id,title'
+                ])
                 ->orderBy('id', 'desc')
                 ->paginate(self::PAGINATION);
     }
