@@ -904,7 +904,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div>
-                                            <input type="text" id="datepicker" class="form-control dateCheck" placeholder="Select Date">
+                                            <input type="text" id="datepicker" class="form-control dateCheck" placeholder="Chọn tháng">
                                         </div>
                                     </div>
                                 </div>
