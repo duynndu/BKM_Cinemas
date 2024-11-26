@@ -902,7 +902,33 @@
                             </div>
                             <div class="box-body">
                                 <div class="row">
-                                    <div class="col"></div>
+                                    <div class="col">
+                                        <div>
+                                            <input type="text" id="datepicker" class="form-control dateCheck" placeholder="Select Date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row flex">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="transaction-deposit">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="lichsugiaodich" class="mbox tab-pane fade">
+                            <div class="title">
+                                <h2>Lịch sử giao dịch</h2>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div>
+                                            <input type="text" id="datepicker" class="form-control dateCheck" placeholder="Select Date">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row flex">
                                     <div class="col-md-12 col-sm-12">
@@ -1355,4 +1381,13 @@
 
 @section('js')
     <script src="{{ asset('client/js/auth/auth.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.vi.min.js"></script>
+    <script>
+        $('.dateCheck').datepicker({
+            format: 'yyyy-mm',
+            minViewMode: 1, 
+            autoclose: true,
+            language: 'vi' 
+        });
+    </script>
 @endsection
