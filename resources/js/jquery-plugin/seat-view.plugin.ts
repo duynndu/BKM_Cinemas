@@ -130,9 +130,13 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
           } else {
             seatErrors.quantityError = false;
           }
+          console.log(seatsSelected[0]?.type, seat.type);
+
           if (seatsSelected[0] && seatsSelected[0]?.type !== seat.type) {
             seatErrors.typeError = true;
             alert('Không được chọn 2 loại ghế khác nhau');
+          } else {
+            seatErrors.typeError = false;
           }
           // if (isSelected) {
           // seatElement.data('status', SEAT_STATUS.BOOKING);
