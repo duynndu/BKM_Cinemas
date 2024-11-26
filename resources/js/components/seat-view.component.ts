@@ -19,6 +19,7 @@ import { IFood } from "@/types/food.interface";
 import { IBooking } from "@/types/booking.interfaces";
 import { paymentService } from "@/services/payment.service";
 import { bookingService } from "@/services/booking.service";
+import { echo } from "@/echo/Echo";
 
 Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   errors: {} as Record<string, string>,
@@ -126,7 +127,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
     } else if (this.step == 2) {
       if (!this.paymentMethod) {
         // toastr.error("Vưi lòng chọn phương thức thanh toán", "cảnh báo")
-        alert("Vưi lòng chọn phương thức thanh toán. Cảnh báo");
+        alert("Vui lòng chọn phương thức thanh toán. Cảnh báo");
         return;
       }
       const { code, message, payment_url } = await paymentService.processDeposit({
@@ -178,7 +179,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
         return false;
       }
     });
-    window.Echo.join(`showtime.${showtimeId}`)
+    echo.join(`showtime.${showtimeId}`)
       .here((users: any) => {
         console.log("Người dùng hiện tại:", users);
         this.setSeatsSelected();
