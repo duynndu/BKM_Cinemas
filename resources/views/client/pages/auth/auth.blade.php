@@ -896,6 +896,28 @@
                             </div>
                         </div>
 
+                        <div id="vedadat" class="mbox tab-pane fade">
+                            <div class="title">
+                                <h2>Lịch sử mua vé</h2>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div>
+                                            <input type="text" id="datepicker" class="form-control dateCheck" placeholder="Select Date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row flex">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="transaction-deposit">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div id="lichsugiaodich" class="mbox tab-pane fade">
                             <div class="title">
                                 <h2>Lịch sử giao dịch</h2>
