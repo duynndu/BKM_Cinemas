@@ -123,11 +123,11 @@
         </div>
     </div>
 
-    <div class="main-popup">
+    {{-- <div class="main-popup">
         <div class="main-popup-content">
             <img src="https://touchcinema.com/storage/slide-web/1920wx1080h-13-1729583438.jpg" />
         </div>
-    </div>
+    </div> --}}
 
     <div id="notification">
         <div class="setting-content">
@@ -191,10 +191,9 @@
 
     <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
-
-    <!-- Your Plugin chat code -->
-    <div id="fb-customer-chat" class="fb-customerchat"></div>
 </body>
+
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v21.0"></script>
 
 <!-- Scripts -->
 <script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"></script>

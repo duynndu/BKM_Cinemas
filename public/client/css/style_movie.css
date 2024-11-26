@@ -12024,10 +12024,10 @@ body {
     max-height: 100%;
 }
 
-body.open-main-popup {
+/* body.open-main-popup {
     height: 100vh;
     overflow-y: hidden;
-}
+} */
 
 .open-main-popup .main-popup-layout,
 .open-main-popup .main-popup {
