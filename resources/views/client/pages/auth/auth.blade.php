@@ -4,109 +4,414 @@
 
 @section('css')
     <style>
-        .card-container {
-            width: 90%;
-            max-width: 800px;
+        .btn-cancelled-ticket {
+            padding: 5px 10px;
+            background-color: #eb1689;
+            color: #fff;
+            box-shadow: -2px 0 4px #000;
+            border-radius: 0;
+            font-size: 12px;
         }
 
-        .card {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+        .transaction-reward th {
+            padding: 7px;
+            font-size: 13px;
         }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: #f7f7f7;
-            border-bottom: 1px solid #ddd;
+        .transaction-reward td {
+            padding: 7px;
+            font-size: 13px;
         }
 
-        .level-card {
-            display: flex;
-            align-items: center;
-            border-radius: 3px;
-            gap: 10px;
-            padding: 13px 27px 13px 15px;
+        @media screen and (min-width: 850px) {
+            .col:first-child .col-inner {
+                margin-left: auto;
+                margin-right: 0;
+            }
         }
 
-        .level-card .icon {
-            width: 30px;
-            height: 30px;
+        .col-inner {
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            flex: 1 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            width: 100%;
         }
 
-        .level-card span {
-            color: #ffffffd9;
+        .order-view-container .order-view-content, .order-view-container .order-view-content p, .order-view-container .order-view-content td, .order-view-container .order-view-content h1, .order-view-container .order-view-content h2, .order-view-container .order-view-content h3, .order-view-container .order-view-content h4, .order-view-container .order-view-content h5, .order-view-container .order-view-content h6, .order-view-container .order-view-content .heading-font {
+            color: black;
         }
 
-        .stats p {
+        .order-view-container .order-view-content {
+            height: 100%;
+        }
+
+        .order-view-container .order-view-content > .row {
+            height: 100%;
+        }
+
+        .row-collapse > .col, .row-collapse > .flickity-viewport > .flickity-slider > .col {
+            padding: 0 !important;
+        }
+
+        @media screen and (min-width: 850px) {
+            .gallery-columns-1 .gallery-item, .large-12, .large-columns-1 .flickity-slider > .col, .large-columns-1 > .col {
+                flex-basis: 100%;
+                max-width: 100%;
+            }
+        }
+
+        @media screen and (min-width: 550px) {
+            .medium-12, .medium-columns-1 .flickity-slider > .col, .medium-columns-1 > .col {
+                flex-basis: 100%;
+                max-width: 100%;
+            }
+        }
+
+        .small-12, .small-columns-1 .flickity-slider > .col, .small-columns-1 > .col {
+            flex-basis: 100%;
+            max-width: 100%;
+        }
+
+        .col, .columns, .gallery-item {
             margin: 0;
-            font-size: 14px;
-            color: #555;
+            padding: 0 15px 30px;
+            position: relative;
+            width: 100%;
         }
 
-        .card-body {
-            padding: 15px 20px;
+        .col-inner {
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            flex: 1 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            width: 100%;
         }
 
-        .info {
+        @media screen and (min-width: 850px) {
+            .col:first-child .col-inner {
+                margin-left: auto;
+                margin-right: 0;
+            }
+        }
+
+        .order-view-container .order-view-content > .row > .col.content-col > .col-inner {
+            position: relative;
+            background-color: #f4f5f6;
+            border-radius: 20px;
+        }
+
+        .gallery, .row {
             display: flex;
-            justify-content: space-between;
+            flex-flow: row wrap;
+            width: 100%;
+        }
+
+        .row-collapse {
+            padding: 0;
+        }
+
+        .row.row-collapse {
+            max-width: 1300px;
+        }
+
+        @media screen and (min-width: 550px) {
+            .medium-3 {
+                flex-basis: 25%;
+                max-width: 25%;
+            }
+        }
+
+        @media screen and (min-width: 850px) {
+            .large-3 {
+                flex-basis: 25%;
+                max-width: 25%;
+            }
+        }
+
+        .row-collapse > .col, .row-collapse > .flickity-viewport > .flickity-slider > .col {
+            padding: 0 !important;
+        }
+
+        .col-inner {
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            flex: 1 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            width: 100%;
+        }
+
+        @media screen and (min-width: 850px) {
+            .col:first-child .col-inner {
+                margin-left: auto;
+                margin-right: 0;
+            }
+        }
+
+        .order-details-row > .col > .col-inner {
+            padding: 20px;
+        }
+
+        .text-center {
             text-align: center;
         }
 
-        .info div {
-            flex: 1;
+        .order-details-row .qrcode-image {
+            max-width: 160px;
+            margin: auto;
         }
 
-        .info div:not(:last-child) {
-            border-right: 1px solid #ddd;
+        .text-center .is-divider, .text-center .is-star-rating, .text-center .star-rating, .text-center > div, .text-center > div > div {
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .info p {
-            margin: 5px 0;
-            font-size: 14px;
+        .order-details-row .qrcode-image > div {
+            line-height: 1.2em;
+            margin-bottom: 7px;
         }
 
-        .info-bkm-card {
-            max-width: 76px !important;
+        .order-details-row .qrcode-image > div:last-child {
+            margin-bottom: 0px;
         }
 
-        .info-bkm-card a.btn-login {
-            font-size: 13px;
-            padding: 6px 20px;
-            border-radius: 3px;
-            margin-top: 10px;
-            text-decoration: none;
-            color: #fff;
+        .order-details-row .code {
+            color: #72be43;
+            font-weight: bold;
         }
 
-        .info-content {
+        @media screen and (min-width: 550px) {
+            .medium-9 {
+                flex-basis: 75%;
+                max-width: 75%;
+            }
+        }
+
+        @media screen and (min-width: 850px) {
+            .large-9 {
+                flex-basis: 75%;
+                max-width: 75%;
+            }
+        }
+
+        .row-collapse > .col, .row-collapse > .flickity-viewport > .flickity-slider > .col {
+            padding: 0 !important;
+        }
+
+        @media screen and (min-width: 850px) {
+            .row-divided > .col + .col:not(.large-12) {
+                border-left: 1px solid #eb1689;
+            }
+        }
+
+        .order-view-container .row-divided > .col + .col:not(.large-12) {
+            border-left-style: dashed;
+            border-left-color: rgb(0 0 0 / 30%);
+        }
+
+        .col-inner {
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            flex: 1 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            width: 100%;
+        }
+
+        @media screen and (min-width: 850px) {
+            .col:first-child .col-inner {
+                margin-left: auto;
+                margin-right: 0;
+            }
+        }
+
+        @media screen and (min-width: 850px) {
+            .col + .col .col-inner {
+                margin-left: 0;
+                margin-right: auto;
+            }
+        }
+
+        .order-details-row > .col > .col-inner {
+            padding: 20px;
+        }
+
+        .align-middle {
+            align-items: center !important;
+            align-self: center !important;
+            vertical-align: middle !important;
+        }
+
+        .icon-box-left, .icon-box-right {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-flow: row wrap;
+            width: 100%;
         }
 
-        .mt-25 {
-            margin-top: 25px;
+        .text-left {
+            text-align: left;
         }
 
-        .body-account {
-            border-top: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .icon-box .icon-box-img {
+            margin-bottom: 1em;
+            max-width: 100%;
+            position: relative;
         }
 
-        .h3-body-account {
-            margin-top: 10px;
-            margin-bottom: 25px;
+        .icon-box-left .icon-box-img, .icon-box-right .icon-box-img {
+            flex: 0 0 auto;
+            margin-bottom: 0;
+            max-width: 200px;
+        }
+
+        .icon-box-left .icon-box-text, .icon-box-right .icon-box-text {
+            flex: 1 1 0px;
+        }
+
+        .icon-box-left .icon-box-img + .icon-box-text {
+            padding-left: 1em;
+        }
+
+        .order-film-box .title {
+            font-size: 1.3em;
+            line-height: 1.3em;
+            margin-bottom: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .order-film-box .metas ul {
+            margin: 0px 0px 15px;
+            padding: 0px;
+            list-style: none;
+            font-size: 0.9em;
+        }
+
+        .col-inner ol li, .col-inner ul li, .entry-content ol li, .entry-content ul li, .entry-summary ol li, .entry-summary ul li {
+            margin-left: 1.3em;
+        }
+
+        .order-film-box .metas ul li {
+            margin: 0px 0px 10px;
+        }
+
+        .modal-tikets {
+            width: 1300px;
+        }
+
+        img {
+            border-style: none;
+        }
+
+        img {
+            display: inline-block;
+            height: auto;
+            max-width: 100%;
+            vertical-align: middle;
+        }
+
+        img {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        .order-film-box .metas ul li img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            float: left;
+            margin-top: 3px;
+        }
+
+        .row.ticket-row {
+            font-size: 0.9em;
+            margin-bottom: 15px ! Important;
+        }
+
+        .row.row-small {
+            max-width: 1322.5px;
+        }
+
+        .container .row:not(.row-collapse), .lightbox-content .row:not(.row-collapse), .row .gallery, .row .row:not(.row-collapse) {
+            margin-left: -15px;
+            margin-right: -15px;
+            padding-left: 0;
+            padding-right: 0;
+            width: auto;
+        }
+
+        .container .row-small:not(.row-collapse), .row .row-small:not(.row-collapse) {
+            margin-bottom: 0;
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+
+        @media screen and (min-width: 550px) {
+            .medium-12, .medium-columns-1 .flickity-slider > .col, .medium-columns-1 > .col {
+                flex-basis: 100%;
+                max-width: 100%;
+            }
+        }
+
+        @media screen and (min-width: 850px) {
+            .large-3 {
+                flex-basis: 25%;
+                max-width: 25%;
+            }
+        }
+
+        .row-small > .col, .row-small > .flickity-viewport > .flickity-slider > .col {
+            margin-bottom: 0;
+            padding: 0 9.8px 19.6px;
+        }
+
+        .ticket-row .col {
+            padding-bottom: 0px;
+        }
+
+        @media screen and (min-width: 850px) {
+            .col:first-child .col-inner {
+                margin-left: auto;
+                margin-right: 0;
+            }
+        }
+
+        @media screen and (min-width: 850px) {
+            .col + .col .col-inner {
+                margin-left: 0;
+                margin-right: auto;
+            }
+        }
+
+        .ticket-row p {
+            margin-bottom: 5px;
+        }
+
+        .order-film-box .total {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .order-film-box .total span {
+            color: #72be43;
+        }
+
+        .mt-0 {
+            margin-top: 0 !important;
         }
     </style>
+
 @endsection
 
 @section('content')
@@ -473,7 +778,7 @@
                                                 </a>
                                             </p>
                                             <p>Ví thành viên: <span
-                                                    class="point">{{ !empty(Auth::user()->balance) ? number_format(Auth::user()->balance, 0, '.', ',') : 0 }}</span>
+                                                    class="point">{{ !empty(Auth::user()->balance) ? number_format(Auth::user()->balance, 0, ',', '.') : 0 }}</span>
                                                 đ</p>
                                             <p>Cấp bậc thành viên:
                                                 <span class="point">
@@ -903,16 +1208,87 @@
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col">
-                                        <div>
-                                            <input type="text" id="datepicker" class="form-control dateCheck" placeholder="Chọn tháng">
+                                        <div class="date-content">
+                                            <div class="date-box">
+                                                <div class="date-box-content">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                                                        fill="currentColor" aria-hidden="true"
+                                                        class="dp__icon dp__input_icon dp__input_icons">
+                                                        <path
+                                                            d="M29.333 8c0-2.208-1.792-4-4-4h-18.667c-2.208 0-4 1.792-4 4v18.667c0 2.208 1.792 4 4 4h18.667c2.208 0 4-1.792 4-4v-18.667zM26.667 8v18.667c0 0.736-0.597 1.333-1.333 1.333 0 0-18.667 0-18.667 0-0.736 0-1.333-0.597-1.333-1.333 0 0 0-18.667 0-18.667 0-0.736 0.597-1.333 1.333-1.333 0 0 18.667 0 18.667 0 0.736 0 1.333 0.597 1.333 1.333z">
+                                                        </path>
+                                                        <path
+                                                            d="M20 2.667v5.333c0 0.736 0.597 1.333 1.333 1.333s1.333-0.597 1.333-1.333v-5.333c0-0.736-0.597-1.333-1.333-1.333s-1.333 0.597-1.333 1.333z">
+                                                        </path>
+                                                        <path
+                                                            d="M9.333 2.667v5.333c0 0.736 0.597 1.333 1.333 1.333s1.333-0.597 1.333-1.333v-5.333c0-0.736-0.597-1.333-1.333-1.333s-1.333 0.597-1.333 1.333z">
+                                                        </path>
+                                                        <path
+                                                            d="M4 14.667h24c0.736 0 1.333-0.597 1.333-1.333s-0.597-1.333-1.333-1.333h-24c-0.736 0-1.333 0.597-1.333 1.333s0.597 1.333 1.333 1.333z">
+                                                        </path>
+                                                    </svg>
+                                                    <input type="text" value="{{ \Carbon\Carbon::now()->format('m/Y') }}"
+                                                        class="form-control date-filter date-input" placeholder="Chọn tháng">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row flex">
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="transaction-deposit">
-                                            
+                                    <div class="col">
+                                        @if($data['tickets']->isNotEmpty())
+                                            <div class="transaction-booking">
+                                            <table class="reward-table transaction-reward">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Thời gian giao dịch</th>
+                                                        <th>Mã lấy vé</th>
+                                                        <th>Thông tin rạp</th>
+                                                        <th>Tổng tiền</th>
+                                                        <th>Điểm thưởng</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($data['tickets'] as $key => $ticket)
+                                                    <tr>
+                                                        <td>{{ $key + 1 }}</td>
+                                                        <td>{{ date('d/m/Y H:i:s', strtotime($ticket->created_at)) }}</td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" data-modal="#modalTikets" class="open-modal">Vé đặt online</a>
+                                                        </td>
+                                                        <td>{{ $ticket->cinema->name }}</td>
+                                                        <td>{{ number_format($ticket->total_price, 0, ',', '.') }}đ</td>
+                                                        <td>20</td>
+                                                        <td>
+                                                            @if($ticket->getCanCancelAttribute())
+                                                                <a class="btn btn-danger btn-cancelled-ticket">Hủy vé</a>
+                                                            @else
+                                                                <span class="text-danger">Không thể hủy vé</span>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+
+
+                                                <tr>
+                                                    <td class="highlight text-right" colspan="4">Tổng</td>
+                                                    <td>300.200đ</td>
+                                                    <td>5 Điểm</td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                                {{ $data['tickets']->links('pagination::bootstrap-4') }}
+                                            </div>
                                         </div>
+                                        @else
+                                            <div class="d-flex justify-content-center align-items-center p-5">
+                                                Chưa có vé nào
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -995,8 +1371,7 @@
                 <div class="content-p">
                     <p>Quý khách vui lòng chọn phương thức thanh toán và nhập số tiền cần nạp.</p>
                     <p>
-                        Thành viên mới nạp tiền vào ví thành viên từ 50.000đ được tặng ngay 50 EXP vào tài khoản thành
-                        viên.
+                        Thành viên mới nạp tiền vào ví thành viên từ 50.000đ được tặng ngay 150 EXP.
                     </p>
                 </div>
             </div>
@@ -1371,6 +1746,100 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div id="modalTikets" style="height: 100%;" class="custom-modal">
+        <div class="custom-modal-content modal-tikets">
+            <!-- Nút đóng -->
+            <span class="custom-close">&times;</span>
+
+            <!-- Tiêu đề -->
+            <div class="modal-header d-flex justify-content-center">
+                <h3 class="title-payment">Thông tin vé đã đặt</h3>
+            </div>
+
+            <!-- Nội dung chính -->
+            <div class="main-modal">
+                <div class="col-inner">
+                    <div class="order-view-container">
+                        <div class="order-view-content">
+                            <div class="row align-center align-middle row-collapse">
+                                <div class="col content-col medium-12 small-12 large-12">
+                                    <div class="col-inner">
+                                        <div class="row align-middle row-divided order-details-row row-collapse">
+                                            <div class="col medium-3 small-12 large-3">
+                                                <div class="col-inner">
+                                                    <div class="qrcode-image text-center">
+                                                        <div>Thông tin vé</div>
+                                                        <div>
+                                                            <img src="{{ asset('client/images/offline-ticket.jpg') }}">
+                                                        </div>
+                                                        <div><span class="code">Vé đặt online</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col medium-9 small-12 large-9">
+                                                <div class="col-inner">
+                                                    <div class="icon-box icon-box-left align-middle text-left order-film-box">
+                                                        <div class="icon-box-img">
+                                                            <img src="https://bhdstar.vn/wp-content/uploads/2024/10/referenceSchemeHeadOfficeallowPlaceHoldertrueheight700ldapp-19.jpg">
+                                                        </div>
+                                                        <div class="icon-box-text p-last-0">
+                                                            <h4 class="title">TEE YOD: QUY AN TANG 2 (T18)</h4>
+                                                            <div class="metas">
+                                                                <ul>
+                                                                    <li>
+                                                                        <img src="{{ asset('client/images/helpIcon.png') }}">
+                                                                        <span>Phụ đề, 2D</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <img src="{{ asset('client/images/calendarIcon.png') }}">
+                                                                        <span>19/10/2024</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <img src="{{ asset('client/images/clockIcon.png') }}"> Suất chiếu: <span>18:25</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <img src="{{ asset('client/images/locationIcon.png') }}">
+                                                                        <span>BHD Star Discovery</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="row row-small ticket-row row-divided">
+                                                                <div class="col medium-12 small-12 large-3">
+                                                                    <div class="col-inner text-center">
+                                                                        <p>Ghế</p>
+                                                                        <div></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col medium-12 small-12 large-3">
+                                                                    <div class="col-inner text-center">
+                                                                        <p>Phòng chiếu</p>
+                                                                        <div>Vui lòng liên hệ rạp.</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="total">Tổng tiền: <span>300,200 VNĐ</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer mt-0">
+                <button class="close-modal" type="button">Đóng</button>
+            </div>
         </div>
     </div>
 @endsection

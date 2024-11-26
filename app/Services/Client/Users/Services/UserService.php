@@ -52,6 +52,11 @@ class UserService extends BaseService implements UserServiceInterface
         return $this->repository->update($id, $data);
     }
 
+    public function bookedTickets($id)
+    {
+        
+    }
+
     private function deleteAvatar($avatar, $folderName)
     {
         $path = "public/$folderName/" . basename($avatar);

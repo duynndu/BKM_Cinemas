@@ -144,6 +144,14 @@ $(function () {
         todayHighlight: true   // Nổi bật ngày hôm nay
     });
 
+    $('.date-filter').datepicker({
+        format: 'mm/yyyy',
+        minViewMode: 1,
+        autoclose: true,
+        language: 'vi',
+        endDate: new Date(),
+    });
+
     function togglePasswordVisibility(passwordInput, icon) {
         const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
         passwordInput.attr('type', type);

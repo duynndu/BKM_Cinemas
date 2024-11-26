@@ -16,6 +16,7 @@ use App\Models\Transaction;
 use App\Repositories\Auth\Client\ChangePasswords\Interfaces\ChangePasswordInterface;
 use App\Repositories\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordInterface;
 use App\Services\Auth\Client\Registers\Interfaces\RegisterServiceInterface;
+use App\Services\Client\Bookings\Interfaces\BookingServiceInterface;
 use App\Services\Client\Cities\Interfaces\CityServiceInterface;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use App\Services\Client\Users\Interfaces\UserServiceInterface;
@@ -39,6 +40,7 @@ class AuthController extends Controller
 
     protected $transactionService;
     protected $userService;
+    protected $bookingService;
 
     public function __construct(
         CityServiceInterface            $cityService,
@@ -46,7 +48,8 @@ class AuthController extends Controller
         ForgotPasswordInterface         $forgotPassword,
         ChangePasswordInterface         $changePassword,
         TransactionServiceInterface     $transactionService,
-        UserServiceInterface            $userService
+        UserServiceInterface            $userService,
+        BookingServiceInterface         $bookingService
     ) {
         $this->cityService = $cityService;
         $this->registerService = $registerService;
@@ -54,6 +57,7 @@ class AuthController extends Controller
         $this->changePassword = $changePassword;
         $this->transactionService = $transactionService;
         $this->userService = $userService;
+        $this->bookingService = $bookingService;
     }
 
     public function account()
@@ -61,7 +65,9 @@ class AuthController extends Controller
         $data['cities'] = $this->cityService->getAll();
 
         if(Auth::check()) {
-            $data['transactions'] = $this->transactionService->getTransactionByUser(Auth::user()->id);
+            $data['transactions'] = $this->transactionService->getTransactionByUser(Auth::user()->id ?? 0);
+
+            $data['tickets'] = $this->bookingService->getTicketsByUserId(Auth::user()->id ?? 0);
         }
 
         return view('client.pages.auth.auth', compact('data'));

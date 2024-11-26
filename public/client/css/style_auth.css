@@ -998,3 +998,138 @@ img.rank_vvip {
 .rank-vvip {
   background: linear-gradient(45deg, #913aff, #ec28ff);
 }
+
+.card-container {
+  width: 90%;
+  max-width: 800px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ddd;
+}
+
+.level-card {
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  gap: 10px;
+  padding: 13px 27px 13px 15px;
+}
+
+.level-card .icon {
+  width: 30px;
+  height: 30px;
+}
+
+.level-card span {
+  color: #ffffffd9;
+}
+
+.stats p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.card-body {
+  padding: 15px 20px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.info div {
+  flex: 1;
+}
+
+.info div:not(:last-child) {
+  border-right: 1px solid #ddd;
+}
+
+.info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.info-bkm-card {
+  max-width: 76px !important;
+}
+
+.info-bkm-card a.btn-login {
+  font-size: 13px;
+  padding: 6px 20px;
+  border-radius: 3px;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mt-25 {
+  margin-top: 25px;
+}
+
+.body-account {
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.h3-body-account {
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.date-content {
+  display: flex;
+  align-content: center;
+}
+
+.date-box-content {
+  position: relative;
+}
+
+.date-box-content .date-input {
+  text-align: center;
+  width: 108px;
+  border-radius: 4px;
+  padding-left: 23px;
+}
+
+.date-box-content .dp__input_icons {
+  position: absolute;
+  width: 34px;
+  height: 14px;
+  stroke-width: 0;
+  font-size: 1rem;
+  line-height: calc(1rem* 1.5);
+  cursor: pointer;
+  top: 50%;
+  inset-inline-start: 0;
+  transform: translateY(-50%);
+  color: #959595;
+  stroke: currentcolor;
+  fill: currentcolor;
+}
