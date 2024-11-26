@@ -32,6 +32,7 @@ class ResetSeatStatus implements ShouldQueue
 
     public function handle()
     {
+        Log::info($this->action);
         switch ($this->action) {
             case 'SEAT_BOOKING': {
                     if ($this->userId) {
@@ -48,11 +49,11 @@ class ResetSeatStatus implements ShouldQueue
                     break;
                 }
             case 'SEAT_AWAITING_PAYMENT_ACTION': {
-                    $latestBooking = Booking::where('user_id', 1)
+                    $latestBooking = Booking::where('user_id', $this->userId)
                         ->where('showtime_id', $this->showtimeId)
                         ->whereNull('payment_status')
                         ->orderBy('created_at', 'desc')
-                        ->with('seatsBooking')
+                        ->with('seatsBooking.seat')
                         ->first();
                     Log::info($latestBooking);
                     if ($latestBooking && $latestBooking->seatsBooking) {
@@ -65,11 +66,11 @@ class ResetSeatStatus implements ShouldQueue
                     break;
                 }
             case 'SEAT_WAITING_PAYMENT': {
-                    $latestBooking = Booking::where('user_id', 1)
+                    $latestBooking = Booking::where('user_id', $this->userId)
                         ->where('showtime_id', $this->showtimeId)
                         ->where('payment_status', '!=', Status::COMPLETED)
                         ->orderBy('created_at', 'desc')
-                        ->with('seatsBooking')
+                        ->with('seatsBooking.seat')
                         ->first();
                     Log::info($latestBooking);
                     if ($latestBooking && $latestBooking->seatsBooking) {

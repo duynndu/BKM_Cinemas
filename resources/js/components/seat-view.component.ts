@@ -111,7 +111,8 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
           foods: this.foodsSelected,
           movie_id: this.movie.id,
           showtime_id: showtimeId,
-          payment_id: 1
+          payment_id: 1,
+          cinema_id: this.showtimeDetail?.cinema?.id,
         });
         console.log(this.booking);
         endTime = this.booking.endTime;
@@ -166,6 +167,8 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
       $("#seatingArea").addClass("event-none");
       $("#login").removeClass("tw-hidden");
       $("#combo").addClass("tw-hidden");
+      alert('Bạn phải đăng nhập để đặt vé');
+      redirect().to('/account');
     } else {
       $("#seatingArea").removeClass("event-none");
       $("#login").addClass("tw-hidden");

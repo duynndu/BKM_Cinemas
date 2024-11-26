@@ -30,14 +30,15 @@ class Booking extends Model
             $seat = $seatBooking->seat;
             $basePrice = $seat->room->base_price;
             $bonusPrice = $seat->seatType->bonus_price;
-            return $basePrice + $bonusPrice;
+            $slot = $seat->slot;
+            return ($basePrice + $bonusPrice) * $slot;
         });
     }
 
     public function totalFoodsPrice()
     {
         return $this->foodsBooking->sum(function ($foodBooking) {
-            return $foodBooking->quantity + $foodBooking->food->price;
+            return $foodBooking->quantity * $foodBooking->food->price;
         });
     }
 

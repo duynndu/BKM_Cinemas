@@ -31,7 +31,8 @@ class BookingController extends Controller
             'foods' => 'nullable',
             'movie_id' => 'required|integer',
             'showtime_id' => 'required|integer',
-            'payment_id' => 'required|integer'
+            'payment_id' => 'required|integer',
+            'cinema_id' => 'required|integer'
         ]);
 
         $seats = collect($request->seats)->map(function ($seat) {
@@ -49,7 +50,7 @@ class BookingController extends Controller
         DB::beginTransaction();
         try {
             $booking = new Booking();
-            $booking->cinema_id = auth()->user()->cinema_id;
+            $booking->cinema_id = $request->cinema_id;
             $booking->user_id = auth()->id();
             $booking->movie_id = $request->movie_id;
             $booking->showtime_id = $request->showtime_id;
