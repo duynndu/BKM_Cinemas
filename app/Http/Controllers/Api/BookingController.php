@@ -64,7 +64,13 @@ class BookingController extends Controller
                 'action' => 'set',
                 'value' => SeatStatus::BOOKED
             ]);
-            ResetSeatStatus::dispatch($request->showtime_id, auth()->id(), 'SEAT_AWAITING_PAYMENT_ACTION')->delay(now()->addSeconds(180));
+            DB::table('jobs')
+                ->where('payload', 'LIKE', '%' . $booking->showtime_id . '%')
+                ->where('payload', 'LIKE', '%' . $booking->user_id . '%')
+                ->delete();
+            $endTime = now()->addSeconds(180);
+            ResetSeatStatus::dispatch($request->showtime_id, auth()->id(), 'SEAT_AWAITING_PAYMENT_ACTION')->delay($endTime);
+            $booking->endTime = $endTime->toIso8601String();
             return response()->json($booking, 201);
         } catch (\Exception $error) {
             DB::rollBack();

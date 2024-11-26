@@ -9,7 +9,7 @@
 @vite(['resources/js/app.js', 'resources/css/app.css'])
 
 @section('content')
-<div x-data="SeatViewComponent({{$showtimeId}})" id="main-left">
+<div x-data="SeatViewComponent({{$showtimeId}}, '{{$endTime}}')" id="main-left">
 
     <div id="header">
         <div class="header-content">

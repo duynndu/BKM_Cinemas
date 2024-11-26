@@ -32,7 +32,7 @@ return new class extends Migration
                 'completed',
                 'failed',
                 'cancelled'
-            ])->default('pending');
+            ])->nullable();
             $table->enum('refund_status', [
                 'pending',
                 'completed',

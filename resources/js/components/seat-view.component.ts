@@ -20,7 +20,7 @@ import { IBooking } from "@/types/booking.interfaces";
 import { paymentService } from "@/services/payment.service";
 import { bookingService } from "@/services/booking.service";
 
-Alpine.data('SeatViewComponent', (showtimeId: string) => ({
+Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   errors: {} as Record<string, string>,
   seatTable: null as JQuery<HTMLElement> | null,
   showModal: false,
@@ -51,7 +51,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
   interval: null as ReturnType<typeof setInterval> | null,
 
   async init() {
-    this.countdownTimer();
+    this.countdownTimer(endTime);
     this.user = await authService.getCurrentUser();
     if (this.user) {
       window.user = this.user;
@@ -113,7 +113,9 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
           payment_id: 1
         });
         console.log(this.booking);
-        this.seatsSelected = this.booking.seats_booking.map(seat_booking=>seat_booking.seat);
+        endTime = this.booking.endTime;
+        this.countdownTimer(endTime);
+        this.seatsSelected = this.booking.seats_booking.map(seat_booking => seat_booking.seat);
         this.calculateTotalPrice();
       } catch (error) {
         console.log(error);
@@ -127,12 +129,13 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
         alert("Vưi lòng chọn phương thức thanh toán. Cảnh báo");
         return;
       }
-      const { code, message, vnp_Url } = await paymentService.processDeposit({
-        amount: 100000,
+      const { code, message, payment_url } = await paymentService.processDeposit({
         payment: this.paymentMethod,
         booking_id: this.booking.id
       });
-      window.location.href = vnp_Url;
+      console.log(payment_url);
+      
+      window.location.href = payment_url;
 
     }
 
@@ -225,23 +228,33 @@ Alpine.data('SeatViewComponent', (showtimeId: string) => ({
   toggleCombo() {
     $("#tab-combo").toggleClass("slide");
   },
-  countdownTimer() {
-    if (this.interval) return;
+  countdownTimer(et: string) {
+    if (this.interval) {
+      clearInterval(this.interval);
+      this.interval = null;  // Reset interval
+    }
 
-    this.interval = setInterval(() => {
+    // Hàm này sẽ tính lại thời gian còn lại mỗi lần gọi, thay vì đếm ngược từng giây
+    const updateTime = () => {
+      const remainingTime = moment(et).diff(moment(), 'seconds');
+      this.seconds = remainingTime > 0 ? remainingTime : 0;
       if (this.seconds <= 0) {
         if (this.interval) {
           clearInterval(this.interval);
-          if (this.step == 1) {
-            alert("Hết thời gian đặt ghế");
-          } else if (this.step == 2) {
-            alert("Hết thời gian đặt lịch");
-          }
-          redirect().to(`/phim/${this.movie.slug}`);
+          this.interval = null;
         }
+
+        if (this.step === 1) {
+          alert("Hết thời gian đặt ghế");
+        } else if (this.step === 2) {
+          alert("Hết thời gian đặt lịch");
+        }
+
+        redirect().to(`/phim/${this.movie.slug}`);
       }
-      this.seconds--;
-    }, 1000);
+    };
+    updateTime();
+    this.interval = setInterval(updateTime, 10);
   },
   formatMinuteSecond() {
     const minute = Math.floor(this.seconds / 60);
