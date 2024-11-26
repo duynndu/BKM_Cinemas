@@ -129,6 +129,8 @@ use App\Repositories\Client\Transactions\Repositories\TransactionRepository;
 use App\Services\Auth\Client\ChangePasswords\Services\ChangePasswordService;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use App\Repositories\Admin\CategoryPosts\Repositories\CategoryPostRepository;
+use App\Repositories\Admin\Rewards\Interfaces\RewardInterface;
+use App\Repositories\Admin\Rewards\Repositories\RewardRepository;
 use App\Repositories\Client\CategoryPosts\Repository\CategoryPostRepository as CategoryPostRepositoryClient;
 use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
 use App\Services\Client\CategoryPosts\Interface\CategoryPostServiceInterface as CategoryPostServiceInterfaceClient;
@@ -144,6 +146,8 @@ use App\Repositories\Client\Cities\Repositories\CityRepository as ClientCityRepo
 use App\Repositories\Client\Home\Repository\HomeRepository;
 use App\Repositories\Client\Systems\Interfaces\SystemInterface as InterfacesSystemInterface;
 use App\Repositories\Client\Systems\Repositories\SystemRepository as RepositoriesSystemRepository;
+use App\Services\Admin\Rewards\Services\RewardService;
+use App\Services\Admin\Rewards\Interfaces\RewardServiceInterface;
 use App\Services\Auth\Client\ChangePasswords\Interfaces\ChangePasswordServiceInterface;
 use App\Services\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordServicesInterface;
 use App\Services\Client\Abouts\Interfaces\AboutServiceInterface;
@@ -163,6 +167,8 @@ class AppServiceProvider extends ServiceProvider
         // Admin
         $this->app->bind(ActorInterface              ::class, ActorRepository       ::class);
         $this->app->bind(ActorServiceInterface       ::class, ActorService          ::class);
+        $this->app->bind(RewardInterface              ::class, RewardRepository       ::class);
+        $this->app->bind(RewardServiceInterface       ::class, RewardService          ::class);
         $this->app->bind(AreaInterface               ::class, AreaRepository        ::class);
         $this->app->bind(AreaServiceInterface        ::class, AreaService           ::class);
         $this->app->bind(BlockTypeInterface          ::class, BlockTypeRepository   ::class);
