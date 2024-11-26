@@ -59,7 +59,7 @@
         "rc-picker": "^4.6.11",
         "recoil": "^0.7.7",
         "recoil-nexus": "^0.5.1",
-        "sweetalert2": "^11.14.4",
+        "sweetalert2": "^11.6.13",
         "swiper": "^11.1.9",
         "vite-plugin-run": "^0.5.2",
         "yup": "^1.4.0"

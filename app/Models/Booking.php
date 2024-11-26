@@ -62,4 +62,15 @@ class Booking extends Model
     {
         return $this->belongsTo(ShowTime::class);
     }
+
+    public function getCanCancelAttribute()
+    {
+        $now = \Carbon\Carbon::now();
+
+        $startTime = \Carbon\Carbon::parse($this->showtime->start_time);
+
+        $timeDifferenceInMinutes = $now->diffInMinutes($startTime, false);
+
+        return $timeDifferenceInMinutes >= 120;
+    }
 }

@@ -144,6 +144,14 @@ $(function () {
         todayHighlight: true   // Nổi bật ngày hôm nay
     });
 
+    $('.date-filter').datepicker({
+        format: 'mm/yyyy',
+        minViewMode: 1,
+        autoclose: true,
+        language: 'vi',
+        endDate: new Date(),
+    });
+
     function togglePasswordVisibility(passwordInput, icon) {
         const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
         passwordInput.attr('type', type);
@@ -466,6 +474,8 @@ $(function () {
                         }).then(() => {
                             $('#modalAvatarImage').hide();
                             $('#current-avatar img').attr('src', response.imageUrl);
+                            $('#current-avatar img').css('display', 'block');
+                            $('.avatar-placeholder').css('display', 'none');
                             $('.input-box-image').css('background-image', 'url(' + image + ')');
                             $('#avatarInput').val('');
                             $('#avatar').val('');
@@ -480,7 +490,7 @@ $(function () {
         });
     }
 
-    function exp() 
+    function exp()
     {
         const exp = $('.expData').attr('data-exp') ?? 0; // Điểm EXP hiện tại của người dùng
         const thresholds = [0, 4000000, 8000000]; // Các mốc EXP

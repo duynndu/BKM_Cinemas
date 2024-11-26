@@ -3,9 +3,13 @@
 namespace App\Providers;
 
 
+use App\Repositories\Client\Bookings\Interfaces\BookingInterface;
+use App\Repositories\Client\Bookings\Repositories\BookingRepository;
 use App\Repositories\Client\Movies\Interfaces\MoviesRepositoryInterface;
 use App\Repositories\Client\Movies\Repositories\MoviesRepository;
 use App\Services\Admin\Orders\Services\OrderService;
+use App\Services\Client\Bookings\Interfaces\BookingServiceInterface;
+use App\Services\Client\Bookings\Services\BookingService;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -244,6 +248,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TransactionServiceInterface        ::class, TransactionService           ::class);
         $this->app->bind(ClientUserInterface                ::class, ClientUserRepository         ::class);
         $this->app->bind(ClientUserServiceInterface         ::class, ClientUserService            ::class);
+        $this->app->bind(BookingInterface                   ::class, BookingRepository            ::class);
+        $this->app->bind(BookingServiceInterface            ::class, BookingService               ::class);
 
 
         // End client
