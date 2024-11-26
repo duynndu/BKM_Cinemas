@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('name'); // Tên quà tặng
             $table->text('description')->nullable(); // Mô tả quà tặng
             $table->integer('points_required'); // Số điểm cần để đổi quà
-            $table->string('image_path')->nullable(); // Đường dẫn hình ảnh của quà tặng (nếu có)
+            $table->string('image')->nullable(); // Đường dẫn hình ảnh của quà tặng (nếu có)
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -309,10 +309,10 @@
                                                                                 aria-label="{{ __('language.admin.movies.close') }}"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-
+                                                                        
                                                                                 <img style="height:300px"
                                                                                     src="{{ $movie->banner_movie ?? '' }}"
-                                                                                    alt="Banner">
+                                                                                    alt="Banner"> 
                                                                             <p><strong>{{ __('language.admin.movies.description') }}
                                                                                     :
                                                                                 </strong>{{ $movie->description }}</p>
