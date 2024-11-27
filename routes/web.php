@@ -144,7 +144,7 @@ Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
     $endTime = now()->addSeconds(300);
     ResetSeatStatus::dispatch($showtime->id, $userId);
     ResetSeatStatus::dispatch($showtime->id, $userId)->delay($endTime);
-    
+
     return view('client.pages.buy-ticket', [
         'showtimeId' => $showtime->id,
         'endTime' => $endTime->toIso8601String()

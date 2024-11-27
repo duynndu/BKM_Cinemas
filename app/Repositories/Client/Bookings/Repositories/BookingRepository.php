@@ -12,18 +12,25 @@ class BookingRepository extends BaseRepository
         return Booking::class;
     }
 
-    public function getTicketsByUserId($id)
+    public function getTicketsByUserId($userId, $date = null)
     {
-        return $this->model->with([
+        $query = $this->model->with([
             'user',
             'cinema',
             'movie',
             'showtime',
             'seats',
             'seatsBooking.seat',
-        ])
-            ->where('user_id', $id ?? 0)
-            ->orderBy('id', 'DESC')
-            ->paginate(10);
+        ])->where('user_id', $userId)
+            ->orderBy('id', 'DESC');
+
+        if ($date) {
+            $parsedDate = \Carbon\Carbon::createFromFormat('m/Y', $date);
+
+            $query->whereMonth('created_at', $parsedDate->month)
+                ->whereYear('created_at', $parsedDate->year);
+        }
+
+        return $query->paginate(1);
     }
 }

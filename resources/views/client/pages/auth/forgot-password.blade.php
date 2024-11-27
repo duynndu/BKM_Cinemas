@@ -50,7 +50,7 @@
                                                 class="form-control password">
                                             <div class="input-group-append">
                                                 <span class="input-group-text toggle-password" style="cursor: pointer;">
-                                                    <i class="fas fa-eye" id="toggle-password-icon"></i>
+                                                    <i class="fas fa-eye" id="toggle-password-icon-forgot"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -89,5 +89,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/client/auth/auth.js') }}"></script>
+    <script src="{{ asset('client/js/auth/auth.js') }}"></script>
 @endsection
