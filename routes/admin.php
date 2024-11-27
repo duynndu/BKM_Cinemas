@@ -8,7 +8,8 @@ use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\CinemaController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\RewardController;
+use App\Http\Controllers\Admin\Events\VoucherController;
+use App\Http\Controllers\Admin\Events\RewardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\Foods\FoodComboController;
 use App\Http\Controllers\Admin\Foods\FoodController;
@@ -786,6 +787,46 @@ Route::prefix('admin')
                 Route::prefix('rewards')
                 ->controller(RewardController::class)
                 ->name('rewards.')
+                ->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/create', 'create')
+                        ->name('create');
+                    Route::post('/store', 'store')
+                        ->name('store');
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit');
+                    Route::put('/{id}/update', 'update')
+                        ->name('update');
+                    Route::delete('/{id}/delete', 'destroy')
+                        ->name('delete');
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')
+                        ->name('removeAvatarImage');
+                    Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                        ->name('deleteItemMultipleChecked');
+                });
+                Route::prefix('rewards')
+                ->controller(RewardController::class)
+                ->name('rewards.')
+                ->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/create', 'create')
+                        ->name('create');
+                    Route::post('/store', 'store')
+                        ->name('store');
+                    Route::get('/{id}/edit', 'edit')
+                        ->name('edit');
+                    Route::put('/{id}/update', 'update')
+                        ->name('update');
+                    Route::delete('/{id}/delete', 'destroy')
+                        ->name('delete');
+                    Route::post('/removeAvatarImage', 'removeAvatarImage')
+                        ->name('removeAvatarImage');
+                    Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                        ->name('deleteItemMultipleChecked');
+                });
+                Route::prefix('vouchers')
+                ->controller(VoucherController::class)
+                ->name('vouchers.')
                 ->group(function () {
                     Route::get('/', 'index')->name('index');
                     Route::get('/create', 'create')

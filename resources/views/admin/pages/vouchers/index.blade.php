@@ -1,8 +1,14 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Danh sách quà tặng')
+@section('title', 'Danh sách vouchers')
 
 @section('css')
+    <style>
+        .table tbody tr td {
+            vertical-align: top !important;
+        }
+    </style>
+
 @endsection
 
 @section('content')
@@ -32,16 +38,16 @@
                                 <div class="filter cm-content-box box-primary">
 
                                     <div class="cm-content-body form excerpt" style="">
-                                        <form action="{{ route('admin.rewards.index') }}" method="GET">
+                                        <form action="{{ route('admin.vouchers.index') }}" method="GET">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-xl-3 col-sm-6">
-                                                        <label class="form-label">Tên quà tặng</label>
+                                                    <div class="col-xl-4 col-sm-6">
+                                                        <label class="form-label">Tên voucher hoặc mã code:</label>
                                                         <input id="" value="{{ request()->name }}" name="name"
                                                             type="text" class="form-control mb-xl-0 mb-3"
-                                                            placeholder="Nhập tên quà tặng">
+                                                            placeholder="Nhập voucher hoặc mã code">
                                                     </div>
-                                                    <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
+                                                    <div class="col-xl-4  col-sm-4 mb-3 mb-xl-0">
                                                         <label class="form-label">Sắp xếp</label>
                                                         <div id="order" class="dropdown bootstrap-select form-control">
                                                             <select name="order_with" class="form-control">
@@ -54,11 +60,11 @@
                                                                 <option @selected(request()->order_with == 'dateDESC') value="dateDESC">
                                                                     Ngày tạo giảm dần
                                                                 </option>
+
                                                             </select>
                                                         </div>
                                                     </div>
-                                                   
-                                                    <div class="col-xl-5 col-sm-5 align-self-end">
+                                                    <div class="col-xl-4 col-sm-5 align-self-end">
                                                         <div class="">
                                                             <button class="btn btn-primary me-2"
                                                                 title="Click here to Search" type="submit"><i
@@ -80,9 +86,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Danh sách quà tặng</h4>
+                                <h4 class="card-title">Danh sách voucher</h4>
                                 <div class="compose-btn">
-                                    <a href="{{ route('admin.rewards.create') }}">
+                                    <a href="{{ route('admin.vouchers.create') }}">
                                         <button class="btn btn-secondary btn-sm light">
                                             + Thêm mới
                                         </button>
@@ -99,7 +105,7 @@
                                                         <div class="box-delete-item">
                                                             <input type="checkbox" id="item-all-checked">
                                                             <button id="btn-delete-all"
-                                                                data-url="{{ route('admin.rewards.deleteItemMultipleChecked') }}"
+                                                                data-url="{{ route('admin.vouchers.deleteItemMultipleChecked') }}"
                                                                 class="btn btn-sm btn-danger btn-delete-multiple_item">
                                                                 <svg width="15" height="15"
                                                                     xmlns="http://www.w3.org/2000/svg"
@@ -112,54 +118,114 @@
                                                         </div>
                                                     </th>
                                                     <th style="width:80px;">#</th>
-                                                    <th>Tên</th>
-                                                    <th>Điểm</th>
+                                                    <th>Thông tin cơ bản</th>
+                                                    <th>Áp dụng</th>
                                                     <th>Hình ảnh</th>
+                                                    <th>Hiệu lực</th>
+                                                    <th>Ngày đăng</th>
                                                     <th>Hành động</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($data as $key => $reward)
-                                                    <tr>
+                                                @foreach ($data as $key => $voucher)
+                                                    <tr data-id-tr="{{ $voucher->id }}"
+                                                        data-end-date="{{ $voucher->end_date }}">
                                                         <td>
-                                                            <input type="checkbox" data-id="{{ $reward->id }}"
+                                                            <input type="checkbox" data-id="{{ $voucher->id }}"
                                                                 class="item-checked">
                                                         </td>
                                                         <td>
-                                                            <strong class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
+                                                            <strong
+                                                                class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
                                                         </td>
                                                         <td>
                                                             <b>
-                                                                <a href="{{ route('admin.rewards.index') }}">
-                                                                    {{ $reward->name }}
+                                                                <a href="{{ route('admin.vouchers.index') }}">
+                                                                    <p><b>Tên:</b> {{ $voucher->name }}</p>
+                                                                    <p><b>Số lượng:</b> {{ $voucher->quantity }}</p>
+                                                                    <p><b>Mã code:</b> {{ $voucher->code }}</p>
+                                                                    <p><b> Giá trị giảm:</b>
+                                                                        @if ($voucher->discount_type == 'percent')
+                                                                            {{ $voucher->discount_value }}%
+                                                                        @else
+                                                                            {{ number_format($voucher->discount_value, 0, ',', '.') }}
+                                                                            VND
+                                                                        @endif
+
+                                                                    </p>
+                                                                    <p>
+                                                                        @if (!empty($voucher->condition_type))
+                                                                            @if ($voucher->condition_type == 'new_member')
+                                                                                <b>Áp dụng: </b> cho người mới
+                                                                            @elseif($voucher->condition_type == 'birthday')
+                                                                                <b>Áp dụng: </b> cho sự kiện sinh nhật
+                                                                            @elseif($voucher->condition_type == 'level_up')
+                                                                                <b>Áp dụng:</b> cho hạng tài khoản
+                                                                            @endif
+                                                                        @endif
+                                                                    </p>
+                                                                    <p>
+                                                                        @if (!empty($voucher->level_type))
+                                                                            @if ($voucher->level_type == 'vip')
+                                                                                <b>Thành viên:</b> vip
+                                                                            @elseif($voucher->level_type == 'vvip')
+                                                                                <b>Thành viên:</b> Vvip
+                                                                            @endif
+                                                                        @endif
+                                                                    </p>
+
+
                                                                 </a>
                                                             </b>
                                                         </td>
                                                         <td>
-                                                            <b>
-                                                                {{ $reward->points_required }}
-                                                            </b>
+                                                            @if ($voucher->discount_condition == 'all')
+                                                                Áp dụng tất cả
+                                                            @elseif($voucher->discount_condition == 'condition')
+                                                                Áp dụng 1 số tài khoản
+                                                            @endif
                                                         </td>
                                                         <td>
-                                                            @if (!empty($reward->image) && file_exists(public_path($reward->image)))
-                                                                <img src="{{ asset($reward->image) }}"
+
+                                                            @if (!empty($voucher->image) && file_exists(public_path($voucher->image)))
+                                                                <img src="{{ asset($voucher->image) }}"
                                                                     style="width:80px; height:100px; object-fit:cover">
                                                             @else
                                                                 <img src="#" alt="No image"
                                                                     style="width:80px; height:100px; object-fit:cover">
                                                             @endif
                                                         </td>
-                                                        
-                                                        
+
+                                                        @php
+                                                            $startDate = \Carbon\Carbon::parse($voucher->start_date);
+                                                            $endDate = \Carbon\Carbon::parse($voucher->end_date);
+                                                            $now = \Carbon\Carbon::now();
+                                                            $timeLeft = $endDate->diffForHumans($now, true);
+                                                        @endphp
+
+                                                        @if ($startDate->isSameDay($now))
+                                                            <td class="time-left text-success"
+                                                                id="time-left-{{ $voucher->id }}">
+                                                                Còn {{ $timeLeft }}
+                                                            </td>
+                                                        @elseif ($startDate->gt($now))
+                                                            <td>
+                                                                <p class="text-warning">Chờ phát hành</p>
+                                                            </td>
+                                                        @endif
+
+                                                        <td>
+                                                            {{ \Carbon\Carbon::parse($voucher->created_at)->format('d-m-Y') }}
+                                                        </td>
                                                         <td>
                                                             <div
                                                                 style="padding-right: 20px; display: flex; justify-content: end">
-                                                                <a href="{{ route('admin.rewards.edit', $reward->id) }}"
+                                                                <a href="{{ route('admin.vouchers.edit', $voucher->id) }}"
                                                                     class="btn btn-primary shadow btn-xs sharp me-1">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </a>
                                                                 <form
-                                                                    action="{{ route('admin.rewards.delete', $reward->id) }}"
+                                                                    action="{{ route('admin.vouchers.delete', $voucher->id) }}"
                                                                     class="formDelete" method="post">
                                                                     @csrf
                                                                     @method('DELETE')
@@ -185,7 +251,7 @@
                                     <div class="d-flex justify-content-center align-items-center p-5">
                                         <div>
                                             <h3 class="text-center">
-                                                {{ request()->name ? 'Chưa tìm thấy:'. request()->name : 'Không có dữ liệu' }}
+                                                {{ request()->name ? 'Chưa tìm thấy:' . request()->name : 'Không có dữ liệu' }}
                                             </h3>
                                         </div>
                                     </div>
@@ -201,4 +267,5 @@
 @endsection
 
 @section('js')
+    <script src="{{ asset('js/admin/commons/vouchers/index.js') }}"></script>
 @endsection
