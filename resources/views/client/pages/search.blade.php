@@ -61,12 +61,1665 @@
                                 </div>
                             </div>
                         @empty
-                            <p class="text-center">Không tìm thấy phim nào phù hợp với từ khóa: <strong>{{ request()->k ?? '' }}</strong></p>
+                            <p class="text-center">Không tìm thấy phim nào phù hợp với từ khóa:
+                                <strong>{{ request()->k ?? '' }}</strong></p>
                         @endforelse ($movies as $item)
                     @endif
 
                 </div>
             </div>
         </section>
+    </div>
+
+    {{-- // --}}
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="movie" style="padding-top: 30px;">
+            <div class="poster">
+                <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">
+                    <img class="img-responsive" src="https://touchcinema.com/uploads/chi-tro-ly-cua-anh-1-zewe-poster.jpg"
+                        alt="Chị Trợ Lý Của Anh">
+                </a>
+                <div class="info">
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh" class="button detail">
+                        &gt; Chi tiết
+                    </a>
+                    <a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh#showtime" class="button ticket">
+                        Mua vé <img src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="Mua vé">
+                    </a>
+                    <p class="button duration"><b>Thời lượng:</b> 115 phút</p>
+                    <p class="button category"><b>Thể loại:</b> Tình Cảm</p>
+                    <p class="button format"><b>Định dạng</b> 2D </p>
+                </div>
+            </div>
+            <div class="detail">
+                <h2><a href="https://touchcinema.com/phim/chi-tro-ly-cua-anh">Chị Trợ Lý Của Anh</a></h2>
+                <p class="release">Khởi chiếu 04/01/2019</p>
+            </div>
+        </div>
     </div>
 @endsection
