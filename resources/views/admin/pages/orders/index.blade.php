@@ -236,5 +236,7 @@
 @endsection
 
 @section('js')
-
+<script type="module">
+    
+</script>
 @endsection
