@@ -1293,4 +1293,7 @@
 
 @section('js')
     <script type="module" src="{{ asset('client/js/auth/auth.js') }}"></script>
+    <script>
+
+    </script>
 @endsection

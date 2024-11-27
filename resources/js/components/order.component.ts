@@ -11,13 +11,15 @@ Alpine.data('OrderComponent', () => ({
         echo.channel('change_status_order')
             .listen('OrderStatusUpdated', (data: any) => {
                 if (data.order.status === 'waiting_for_cancellation') {
-                    const selectElement = $(`#status-${data.order.id}`);
+                    const selectElement = $(`.order_status_${data.order.id}`);
                     selectElement.val(data.order.status);
-                // selectElement.selectpicker('refresh');
+                    selectElement.trigger('change');
                 }
+
                 if (data.order.status === 'cancelled') {
                     const selectElement = $(`#refund_status-${data.order.id}`);
                     selectElement.val('pending');
+                    selectElement.trigger('change');
                 }
 
             });
