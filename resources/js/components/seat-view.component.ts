@@ -20,6 +20,7 @@ import { IBooking } from "@/types/booking.interfaces";
 import { paymentService } from "@/services/payment.service";
 import { bookingService } from "@/services/booking.service";
 import { echo } from "@/echo/Echo";
+import { Status } from "@/define/status";
 
 Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   errors: {} as Record<string, string>,
@@ -131,13 +132,20 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
         alert("Vui lòng chọn phương thức thanh toán. Cảnh báo");
         return;
       }
-      const { code, message, payment_url } = await paymentService.processDeposit({
+      const res = await paymentService.processDeposit({
         payment: this.paymentMethod,
         booking_id: this.booking.id
-      });
-      console.log(payment_url);
-      
-      window.location.href = payment_url;
+      }) as unknown as any;
+
+      if (this.paymentMethod != 'customer') {
+        window.location.href = res.payment_url;
+      }
+      if (res.status == Status.FAILED) {
+        alert('Lỗi giao dịch hoặc không đủ số dư vui nạp thêm tiền vào tài khoản.')
+      }
+      if (res.status == Status.COMPLETED) {
+        alert('Giao dịch thành công.')
+      }
 
     }
 
@@ -193,7 +201,6 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
       .leaving((user: any) => {
         console.log("Người dùng đã rời:", user);
       }).listen('BookSeat', (e: { showtimeId: string, seats: ISeat[] }) => {
-        console.log(e);
         this.calculateTotalPrice();
         //@ts-ignore
         this.room.seats = this.room?.seats.map(seat => {
