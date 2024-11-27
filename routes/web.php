@@ -154,6 +154,11 @@ Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
         'endTime' => $endTime->toIso8601String()
     ]);
 })->name("buy-ticket");
+
+Route::get('/thanh-cong', function () {
+    return view('client.pages.payment-success');
+});
+
 Route::get('/dat-ve/xac-nhan', function () {
     return view('client.pages.payment-verification');
 });
