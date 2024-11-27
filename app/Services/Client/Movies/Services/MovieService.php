@@ -26,4 +26,9 @@ class MovieService implements MovieServiceInterface
     {
         return $this->movieRepository->sliders();
     }
+
+    public function searchMovies($keyword)
+    {
+        return $this->movieRepository->searchMovies($keyword);
+    }
 }
