@@ -27,24 +27,4 @@ class OrderController extends Controller
         $data = $this->orderService->find($id);
         dd($data);
     }
-
-    public function changeStatus(Request $request, $id)
-    {
-        $validated = $request->validate([
-            'status' => ['required', 'in:pending,confirmed,cancelled'],
-        ]);
-
-        $record = $this->orderService->find($id);
-
-        if (empty($record)) {
-            return response()->json(['failed' => 'Không tìm thấy!'], 404);
-        }
-
-        $record->status = $validated['status'];
-        $record->save();
-
-        broadcast(new OrderStatusUpdated(['id' => $id, 'status' => $record->status]))->toOthers();
-
-        return response()->json(['success' => 'Thành công!'], 200);
-    }
 }

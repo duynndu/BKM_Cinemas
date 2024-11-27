@@ -134,7 +134,7 @@
                     <td>20</td>
                     <td>
                         @if($ticket->getCanCancelAttribute())
-                            <a class="btn btn-danger btn-cancelled-ticket">Hủy vé</a>
+                            <a @click="onChangeStatus($event)" data-url="{{ route('api.orders.changeStatus', $ticket->id) }}" class="btn btn-danger btn-cancelled-ticket">Hủy vé</a>
                         @else
                             <span class="text-danger">Không thể hủy vé</span>
                         @endif

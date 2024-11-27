@@ -142,7 +142,7 @@
                                                             {{ $order->user->name }}
                                                         </td>
                                                         <td>
-                                                            <select name="status" id="status-{{ $order->id }}" class="form-control order_status" data-url="{{ route('admin.orders.changeStatus', $order->id) }}" @change="onChangeStatus($event)">
+                                                            <select name="status" id="status-{{ $order->id }}" class="form-control order_status" data-url="{{ route('api.orders.changeStatus', $order->id) }}" @change="onChangeStatus($event)">
                                                                 <option value="pending" @selected($order->status == 'pending')>
                                                                     Chờ xác nhân
                                                                 </option>

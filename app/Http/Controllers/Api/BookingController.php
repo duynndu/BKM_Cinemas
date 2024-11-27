@@ -5,14 +5,22 @@ namespace App\Http\Controllers\Api;
 use App\Constants\SeatStatus;
 use App\Constants\Status;
 use App\Events\BookSeat;
+use App\Events\OrderStatusUpdated;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResetSeatStatus;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Services\Admin\Orders\Interfaces\OrderServiceInterface;
 
 class BookingController extends Controller
 {
+    private $orderService;
+    public function __construct(
+        OrderServiceInterface $orderService
+    ){
+        $this->orderService = $orderService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -104,5 +112,25 @@ class BookingController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function changeStatus(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => ['required', 'in:pending,completed,failed,cancelled,waiting_for_cancellation,rejected'],
+        ]);
+
+        $record = $this->orderService->find($id);
+
+        if (empty($record)) {
+            return response()->json(['failed' => 'Không tìm thấy!'], 404);
+        }
+
+        $record->status = $validated['status'];
+        $record->save();
+
+        broadcast(new OrderStatusUpdated(['id' => $id, 'status' => $record->status]))->toOthers();
+
+        return response()->json(['success' => 'Thành công!'], 200);
     }
 }
