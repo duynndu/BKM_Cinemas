@@ -94,6 +94,9 @@ Route::prefix('google')
     });
 // End đăng nhập google
 
+Route::get('tim-kiem', [ListMoviesController::class, 'searchMovies'])->name('search');
+
+
 // Nạp tiền
 Route::post('/processDeposit', [DepositController::class, 'processDeposit'])->name('processDeposit');
 
@@ -145,7 +148,7 @@ Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
     ResetSeatStatus::dispatch($showtime->id, $userId)->delay($endTime);
     ResetSeatStatus::dispatch($showtime->id, $userId, 'SEAT_AWAITING_PAYMENT_ACTION');
     ResetSeatStatus::dispatch($showtime->id, $userId, 'SEAT_WAITING_PAYMENT');
-    
+
     return view('client.pages.buy-ticket', [
         'showtimeId' => $showtime->id,
         'endTime' => $endTime->toIso8601String()

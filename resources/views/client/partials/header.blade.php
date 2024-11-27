@@ -13,12 +13,12 @@
                     <div class="col-md-8 col-sm-7">
                         <a class="buy-ticket" href="#"><img class="img-responsive"
                                 src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
-                        <a class="flags" href="#"><img class="img-responsive"
-                                src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a>
+                        {{-- <a class="flags" href="#"><img class="img-responsive"
+                                src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a> --}}
                         <a class="hidden-lg btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
-                        <form action="https://touchcinema.com/tim-kiem" class="form-search visible-lg">
+                        <form action="{{ route('search') }}" class="form-search visible-lg" method="get">
                             <div class="input-group">
-                                <input class="form-control" name="k" value="" type="search"
+                                <input class="form-control" name="k" required value="{{ request()->get('k') }}" type="search"
                                     placeholder="Tìm kiếm">
                                 <button type="submit" class="submit"><i class="fa fa-search"></i></button>
                             </div>
@@ -58,7 +58,7 @@
                                             <div class="avatar-placeholder-header"
                                                 style="background-color: {{ $backgroundColor }};">
                                                 {{ !empty($firstLetter) ? $firstLetter : strtoupper(substr($user->name, 0, 1)) }}
-                                            </div>  
+                                            </div>
                                         @endif
                                         <span class="name">
                                             @auth
@@ -97,20 +97,20 @@
                                                 </li>
                                             @endif
                                             <li>
-                                                <a href="https://touchcinema.com/account/transaction">Lịch sử mua vé</a>
+                                                <a href="">Lịch sử mua vé</a>
                                             </li>
                                             <li>
-                                                <a href="https://touchcinema.com/account/profile">Đổi thông tin</a>
+                                                <a href="">Đổi thông tin</a>
                                             </li>
                                             <li>
-                                                <a href="https://touchcinema.com/account/password">Đổi mật khẩu</a>
+                                                <a href="">Đổi mật khẩu</a>
                                             </li>
                                             <li>
                                                 <a href="javascript:;">Đổi thưởng</a>
                                             </li>
                                             <li role="presentation" class="divider"></li>
                                             <li>
-                                                <form action="{{ route('logout') }}" method="POST">
+                                                <form action="{{ route('logout') }}" method="post">
                                                     @csrf
                                                     <button type="submit">Đăng xuất</button>
                                                 </form>
@@ -134,8 +134,7 @@
                                 </a>
                             </li>
                             <li class="{{ request()->routeIs('movie') ? 'active' : '' }}">
-                                <a
-                                    href="{{ route('movie') }}">
+                                <a href="{{ route('movie') }}">
                                     Phim
                                 </a>
                             </li>
@@ -144,6 +143,7 @@
                                     Lịch chiếu
                                 </a>
                             </li> --}}
+
                             <li class="">
                                 <a href="gia-ve">
                                     giá vé
@@ -165,8 +165,7 @@
                                 </a>
                             </li>
                             <li class="{{ request()->routeIs('about') ? 'active' : '' }}">
-                                <a
-                                    href="{{ route('about') }}">
+                                <a href="{{ route('about') }}">
                                     Giới thiệu
                                 </a>
                             </li>
@@ -177,12 +176,14 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="{{ route('post.detail', ['cate_slug' => 'dich-vu', 'slug' => 'quang-cao-su-kien']) }}">
+                                        <a
+                                            href="{{ route('post.detail', ['cate_slug' => 'dich-vu', 'slug' => 'quang-cao-su-kien']) }}">
                                             Dịch vụ quảng cáo - sự kiện
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('post.detail', ['cate_slug' => 'dich-vu', 'slug' => 'bkm-voucher']) }}">
+                                        <a
+                                            href="{{ route('post.detail', ['cate_slug' => 'dich-vu', 'slug' => 'bkm-voucher']) }}">
                                             Touch Voucher
                                         </a>
                                     </li>
@@ -285,8 +286,8 @@
             {{-- <div class="menu-mobile-background "></div> --}}
             <div class="menu-mobile-content ">
                 <div class="menu-mobile-search">
-                    <form action="" method="post">
-                        <input type="text" placeholder="Tìm kiếm..." class=" menu-search--mobile">
+                    <form action="{{ route('search') }}" method="get">
+                        <input type="text" name="k" value="{{ request()->get('k') }}" required placeholder="Tìm kiếm..." class=" menu-search--mobile">
                     </form>
                 </div>
                 <button class="btn-close-menu">
