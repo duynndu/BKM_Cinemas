@@ -21,7 +21,19 @@ class Booking extends Model
 
     public function seatsBooking()
     {
-        return $this->hasMany(BookingSeat::class);
+        return $this->hasMany(BookingSeat::class, 'booking_id');
+    }
+
+    public function seats()
+    {
+        return $this->hasManyThrough(
+            Seat::class, // Model liên quan (seats)
+            BookingSeat::class, // Bảng trung gian (booking_seats)
+            'booking_id', // Khóa ngoại trong bảng booking_seats
+            'id', // Khóa ngoại trong bảng seats
+            'id', // Khóa chính trong bảng bookings
+            'seat_id' // Khóa chính trong bảng booking_seats
+        );
     }
 
     public function totalSeatsPrice()

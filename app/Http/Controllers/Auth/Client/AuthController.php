@@ -60,14 +60,36 @@ class AuthController extends Controller
         $this->bookingService = $bookingService;
     }
 
-    public function account()
+    public function account(Request $request)
     {
         $data['cities'] = $this->cityService->getAll();
 
-        if(Auth::check()) {
-            $data['transactions'] = $this->transactionService->getTransactionByUser(Auth::user()->id ?? 0);
+        if (Auth::check()) {
+            $userId = Auth::user()->id ?? 0;
+            $date = $request->date;
 
-            $data['tickets'] = $this->bookingService->getTicketsByUserId(Auth::user()->id ?? 0);
+            $data['transactions'] = $this->transactionService->getTransactionByUser($userId);
+
+            $data['tickets'] = $this->bookingService->getTicketsByUserId($userId, $date);
+
+            if ($request->ajax()) {
+                if ($data['tickets']->isEmpty()) {
+                    return response()->json([
+                        'tbody' => view('client.ajax.tickets.no-ticket', [
+                            'date' => $date
+                        ])->render()
+                    ]);
+                }
+
+                return response()->json([
+                    'tbody' => view('client.ajax.tickets.ticket', [
+                        'tickets' => $data['tickets'],
+                    ])->render(),
+                    'pagination' => view('client.ajax.tickets.pagination', [
+                        'tickets' => $data['tickets'],
+                    ])->render(),
+                ]);
+            }
         }
 
         return view('client.pages.auth.auth', compact('data'));

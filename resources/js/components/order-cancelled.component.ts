@@ -1,43 +1,40 @@
+import ApiBase from '@/React/shared/Api';
 import Alpine from 'alpinejs';
 import Swal from 'sweetalert2';
 import { echo } from '@/echo/Echo';
 import $ from 'jquery';
 
-Alpine.data('OrderComponent', () => ({
+Alpine.data('OrderCancelledComponent', () => ({
     isSubmitting: false,
-    orderStatus: '',
 
     async init() {
         echo.channel('change_status_order')
             .listen('OrderStatusUpdated', (data: any) => {
-                if (data.order.status === 'waiting_for_cancellation') {
-                    const selectElement = $(`#status-${data.order.id}`);
-                    selectElement.val(data.order.status);
-                // selectElement.selectpicker('refresh');
-                }
                 if (data.order.status === 'cancelled') {
-                    const selectElement = $(`#refund_status-${data.order.id}`);
-                    selectElement.val('pending');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Hủy thành công!',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(()=> this.isSubmitting = false);
                 }
-
             });
     },
 
     onChangeStatus(e: any) {
-
         if (this.isSubmitting) return;
         this.isSubmitting = true;
 
-        const select = $(e.target);
-        const status: string = select.val() as string;
-        const url: string = select.data('url') as string;
-
+        const a = $(e.target);
+        const url: string = a.data('url') as string;
+        console.log(url);
+        console.log(a);
         $.ajax({
             url: url,
             type: 'POST',
             data: {
-                _token: $('meta[name="csrf-token"]').attr('content'),
-                status: status
+                _token: $('meta[name="csrf_token"]').attr('content'),
+                status: 'waiting_for_cancellation'
             },
             success: (response: { message: string }) => {
                 Swal.fire({
@@ -58,8 +55,6 @@ Alpine.data('OrderComponent', () => ({
         });
     }
 }));
-
-
 
 
 

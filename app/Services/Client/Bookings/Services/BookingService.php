@@ -13,8 +13,8 @@ class BookingService extends BaseService implements BookingServiceInterface
         return BookingInterface::class;
     }
 
-    public function getTicketsByUserId($id)
+    public function getTicketsByUserId($id, $date = null)
     {
-        return $this->repository->getTicketsByUserId($id);
+        return $this->repository->getTicketsByUserId($id, $date);
     }
 }

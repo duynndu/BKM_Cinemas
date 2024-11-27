@@ -134,6 +134,7 @@ Route::get('/lich-chieu', function () {
 
 Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
     $userId = optional(auth()->user())->id;
+    $jobName = \App\Jobs\ResetSeatStatus::class;
 
     // Tìm và xóa job có payload khớp
     DB::table('jobs')
@@ -145,7 +146,7 @@ Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
     ResetSeatStatus::dispatch($showtime->id, $userId)->delay($endTime);
     ResetSeatStatus::dispatch($showtime->id, $userId, 'SEAT_AWAITING_PAYMENT_ACTION');
     ResetSeatStatus::dispatch($showtime->id, $userId, 'SEAT_WAITING_PAYMENT');
-    
+
     return view('client.pages.buy-ticket', [
         'showtimeId' => $showtime->id,
         'endTime' => $endTime->toIso8601String()

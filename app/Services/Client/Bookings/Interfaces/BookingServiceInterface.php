@@ -6,5 +6,5 @@ use App\Services\Base\BaseServiceInterface;
 
 interface BookingServiceInterface extends BaseServiceInterface
 {
-    public function getTicketsByUserId($id);
+    public function getTicketsByUserId($id, $date);
 }

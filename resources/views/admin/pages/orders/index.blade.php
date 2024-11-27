@@ -143,18 +143,26 @@
                                                             {{ $order->user->name }}
                                                         </td>
                                                         <td>
-                                                            <select name="status" id="status-{{ $order->id }}"
-                                                                class="form-control order_status"
-                                                                data-url="{{ route('admin.orders.changeStatus', $order->id) }}"
-                                                                @change="onChangeStatus($event)">
-                                                            <option value="pending" @selected($order->status == 'pending')>Chờ xác nhận</option>
-                                                            <option value="completed" @selected($order->status == 'completed')>Hoàn thành</option>
-                                                            <option value="failed" @selected($order->status == 'failed')>Lỗi</option>
-                                                            <option value="cancelled" @selected($order->status == 'cancelled')>Hủy</option>
-                                                            <option value="waiting_for_cancellation" @selected($order->status == 'waiting_for_cancellation')>Chờ hủy</option>
-                                                            <option value="rejected" @selected($order->status == 'rejected')>Từ chối hủy</option>
-                                                        </select>
-
+                                                            <select name="status" id="status-{{ $order->id }}" class="form-control order_status" data-url="{{ route('api.orders.changeStatus', $order->id) }}" @change="onChangeStatus($event)">
+                                                                <option value="pending" @selected($order->status == 'pending')>
+                                                                    Chờ xác nhân
+                                                                </option>
+                                                                <option value="completed" @selected($order->status == 'completed')>
+                                                                    Hoàn thành
+                                                                </option>
+                                                                <option value="failed" @selected($order->status == 'failed')>
+                                                                    Lỗi
+                                                                </option>
+                                                                <option value="cancelled" @selected($order->status == 'cancelled')>
+                                                                    Hủy
+                                                                </option>
+                                                                <option value="waiting_for_cancellation" @selected($order->status == 'waiting_for_cancellation')>
+                                                                    Chờ hủy
+                                                                </option>
+                                                                <option value="rejected" @selected($order->status == 'rejected')>
+                                                                    Từ chối hủy
+                                                                </option>
+                                                            </select>
                                                         </td>
                                                         <td>
                                                             @switch($order->payment_status)
@@ -175,8 +183,9 @@
                                                             @endswitch
                                                         </td>
                                                         <td>
-                                                            <select name="refund_status" class="form-control"
+                                                            <select name="refund_status" class="form-control" {{ $order->refund_status == null ? 'disabled' : '' }}
                                                                 id="">
+                                                                <option value="" hidden {{ $order->refund_status == null ? 'selected' : '' }}></option>
                                                                 <option value="pending" @selected($order->refund_status == 'pending')>
                                                                     Chờ xác nhân
                                                                 </option>
