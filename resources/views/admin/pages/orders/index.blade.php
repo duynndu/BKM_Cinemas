@@ -5,6 +5,7 @@
 @section('css')
 
 @endsection
+
 @vite(['resources/js/app.js', 'resources/css/app.css'])
 
 @section('content')
@@ -142,26 +143,18 @@
                                                             {{ $order->user->name }}
                                                         </td>
                                                         <td>
-                                                            <select name="status" id="status-{{ $order->id }}" class="form-control order_status" data-url="{{ route('admin.orders.changeStatus', $order->id) }}" @change="onChangeStatus($event)">
-                                                                <option value="pending" @selected($order->status == 'pending')>
-                                                                    Chờ xác nhân
-                                                                </option>
-                                                                <option value="completed" @selected($order->status == 'completed')>
-                                                                    Hoàn thành
-                                                                </option>
-                                                                <option value="failed" @selected($order->status == 'failed')>
-                                                                    Lỗi
-                                                                </option>
-                                                                <option value="cancelled" @selected($order->status == 'cancelled')>
-                                                                    Hủy
-                                                                </option>
-                                                                <option value="waiting_for_cancellation" @selected($order->status == 'waiting_for_cancellation')>
-                                                                    Chờ hủy
-                                                                </option>
-                                                                <option value="rejected" @selected($order->status == 'rejected')>
-                                                                    Từ chối hủy
-                                                                </option>
-                                                            </select>
+                                                            <select name="status" id="status-{{ $order->id }}"
+                                                                class="form-control order_status"
+                                                                data-url="{{ route('admin.orders.changeStatus', $order->id) }}"
+                                                                @change="onChangeStatus($event)">
+                                                            <option value="pending" @selected($order->status == 'pending')>Chờ xác nhận</option>
+                                                            <option value="completed" @selected($order->status == 'completed')>Hoàn thành</option>
+                                                            <option value="failed" @selected($order->status == 'failed')>Lỗi</option>
+                                                            <option value="cancelled" @selected($order->status == 'cancelled')>Hủy</option>
+                                                            <option value="waiting_for_cancellation" @selected($order->status == 'waiting_for_cancellation')>Chờ hủy</option>
+                                                            <option value="rejected" @selected($order->status == 'rejected')>Từ chối hủy</option>
+                                                        </select>
+
                                                         </td>
                                                         <td>
                                                             @switch($order->payment_status)
@@ -234,4 +227,5 @@
 @endsection
 
 @section('js')
+
 @endsection

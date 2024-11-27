@@ -30,6 +30,7 @@ class OrderController extends Controller
 
     public function changeStatus(Request $request, $id)
     {
+        dd($request->all());
         $validated = $request->validate([
             'status' => ['required', 'in:pending,confirmed,cancelled'],
         ]);

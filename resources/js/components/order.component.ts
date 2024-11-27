@@ -1,4 +1,3 @@
-import ApiBase from '@/React/shared/Api';
 import Alpine from 'alpinejs';
 import Swal from 'sweetalert2';
 import { echo } from '@/echo/Echo';
@@ -6,24 +5,25 @@ import $ from 'jquery';
 
 Alpine.data('OrderComponent', () => ({
     isSubmitting: false,
+    orderStatus: '',
 
     async init() {
+        console.log(1);
+
         echo.channel('change_status_order')
             .listen('OrderStatusUpdated', (data: any) => {
-                console.log(data);
-
                 const selectElement = $(`#status-${data.order.id}`);
+                selectElement.val(data.order.status);
+                // selectElement.selectpicker('refresh');
 
-                    selectElement.val(data.order.status);
-
-                    selectElement.trigger('change')
-                    console.log($(`#status-${data.order.id}`).val());
-
+                console.log(selectElement.val());
 
             });
     },
 
     onChangeStatus(e: any) {
+        console.log(1);
+
         if (this.isSubmitting) return;
         this.isSubmitting = true;
 
@@ -56,9 +56,9 @@ Alpine.data('OrderComponent', () => ({
             }
         });
     }
-
-
 }));
+
+
 
 
 
