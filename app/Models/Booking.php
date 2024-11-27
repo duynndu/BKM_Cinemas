@@ -42,7 +42,15 @@ class Booking extends Model
         });
     }
 
-    public function totalPrice(){
+    public function totalPrice()
+    {
         return $this->totalSeatsPrice() + $this->totalFoodsPrice();
+    }
+
+    public function movie() {
+        return $this->belongsTo(Movie::class);
+    }
+    public function showtime() {
+        return $this->belongsTo(Showtime::class);
     }
 }

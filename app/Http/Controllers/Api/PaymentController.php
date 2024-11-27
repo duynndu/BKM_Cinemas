@@ -192,7 +192,12 @@ class PaymentController extends Controller
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
-            return response()->json($booking);
+            if ($dataTransaction['status'] == Status::COMPLETED) {
+                return redirect()->route('thanh-cong', [
+                    'code' => $booking->code
+                ]);
+            }
+            return response()->json($dataTransaction);
         }
     }
 
@@ -286,6 +291,11 @@ class PaymentController extends Controller
                 BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                     'action' => 'set',
                     'value' => SeatStatus::AVAILABLE
+                ]);
+            }
+            if ($dataTransaction['status'] == Status::COMPLETED) {
+                redirect()->route('thanh-cong', [
+                    'code' => $booking->code
                 ]);
             }
             return response()->json($booking);
@@ -420,6 +430,7 @@ class PaymentController extends Controller
         }
         $this->transactionService->create($dataTransaction);
         $booking->update(['payment_status' => $dataTransaction['status']]);
+        $dataTransaction['code'] = $booking->code;
         return $dataTransaction;
     }
 
