@@ -25,7 +25,7 @@ class MoviesRepository implements MoviesRepositoryInterface
         return $this->movie->select('slug', 'title', 'banner_movie')
             ->where([['hot', 1], ['active', 1], ['deleted_at', null]])
             ->orderBy('order', 'asc')
-            ->paginate(LIMIT_SLIDER);
+            ->limit(LIMIT_SLIDER);
     }
 
     public function movieIsShowing()
@@ -46,5 +46,13 @@ class MoviesRepository implements MoviesRepositoryInterface
             ->get();
     }
 
+    public function searchMovies($keyword){
+
+        return $this->movie->select('id', 'title', 'slug', 'image', 'banner_movie', 'duration', 'trailer_url', 'format', 'release_date', 'premiere_date')
+            ->where('title', 'like', '%' . $keyword . '%')
+            ->where('active', 1)
+            ->orderBy('order', 'asc')
+            ->paginate(PAGINATE_SEARCH);
+    }
 
 }
