@@ -26,7 +26,7 @@ class UserService extends BaseService implements UserServiceInterface
         if (!$record) {
             return false;
         }
-        
+
         if (isset($data['image']) && $data['image']) {
             if ($record->image) {
                 $this->deleteAvatar($record->image, 'users');
@@ -50,11 +50,6 @@ class UserService extends BaseService implements UserServiceInterface
         $data['date_birth'] = Carbon::createFromFormat('d/m/Y', $data['date_birth'])->format('Y-m-d');
 
         return $this->repository->update($id, $data);
-    }
-
-    public function bookedTickets($id)
-    {
-        
     }
 
     private function deleteAvatar($avatar, $folderName)

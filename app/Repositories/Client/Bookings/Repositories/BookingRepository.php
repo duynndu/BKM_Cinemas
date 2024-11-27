@@ -14,7 +14,14 @@ class BookingRepository extends BaseRepository
 
     public function getTicketsByUserId($id)
     {
-        return $this->model->with(['user','cinema','movie','showtime'])
+        return $this->model->with([
+            'user',
+            'cinema',
+            'movie',
+            'showtime',
+            'seats',
+            'seatsBooking.seat',
+        ])
             ->where('user_id', $id ?? 0)
             ->orderBy('id', 'DESC')
             ->paginate(10);
