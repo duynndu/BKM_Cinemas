@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vé Xem Phim</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4c1b7b, #ff8906);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        .ticket {
+            width: 350px;
+            border: 2px dashed #ffcc00;
+            border-radius: 10px;
+            background: #5a2168;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .ticket::before,
+        .ticket::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #5a2168;
+            border: 2px dashed #ffcc00;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .ticket::before {
+            left: -20px;
+        }
+
+        .ticket::after {
+            right: -20px;
+        }
+
+        .ticket .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+
+        .ticket .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .ticket .info {
+            font-size: 1rem;
+            text-align: left;
+            margin: 10px 0;
+        }
+
+        .ticket .info p {
+            margin: 5px 0;
+        }
+
+        .ticket .qr-code {
+            margin-top: 20px;
+        }
+
+        .ticket .qr-code img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .ticket .footer {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: #ffcc00;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ticket">
+        <div class="title">Vé Xem Phim</div>
+        <div class="subtitle">Chiến Địa Tử Thi</div>
+        <div class="info">
+            <p><strong>Thời gian:</strong> 29/11/2024 - 20:00</p>
+            <p><strong>Rạp:</strong> Touch Cinema - Hà Nội</p>
+            <p><strong>Ghế:</strong> A1, A2, A3</p>
+        </div>
+        <div class="qr-code">
+            <img src="https://via.placeholder.com/100" alt="QR Code">
+            <p>Mã vé: 12345ABC</p>
+        </div>
+        <div class="footer">Cảm ơn bạn đã đặt vé tại Touch Cinema!</div>
+    </div>
+</body>
+
+</html>
