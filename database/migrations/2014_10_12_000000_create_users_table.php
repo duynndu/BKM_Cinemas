@@ -41,8 +41,7 @@ return new class extends Migration {
                 //  Thành viên VVIP: EXP > 1000.
             $table->enum('membership_level', ['member', 'vip', 'vvip'])
                 ->default('member')
-                ->comment('member: thường, vip: víp, vvip: very víp')
-                ->change();
+                ->comment('member: thường, vip: víp, vvip: very víp');
             $table->tinyInteger('is_new_member')->default(1)
                 ->comment('1: Thành viên mới, 0: Thành viên cũ');
             $table->string('type')->default(\App\Models\User::TYPE_MEMBER);
