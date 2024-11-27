@@ -41,7 +41,16 @@
             width: 100%;
         }
 
-        .order-view-container .order-view-content, .order-view-container .order-view-content p, .order-view-container .order-view-content td, .order-view-container .order-view-content h1, .order-view-container .order-view-content h2, .order-view-container .order-view-content h3, .order-view-container .order-view-content h4, .order-view-container .order-view-content h5, .order-view-container .order-view-content h6, .order-view-container .order-view-content .heading-font {
+        .order-view-container .order-view-content,
+        .order-view-container .order-view-content p,
+        .order-view-container .order-view-content td,
+        .order-view-container .order-view-content h1,
+        .order-view-container .order-view-content h2,
+        .order-view-container .order-view-content h3,
+        .order-view-container .order-view-content h4,
+        .order-view-container .order-view-content h5,
+        .order-view-container .order-view-content h6,
+        .order-view-container .order-view-content .heading-font {
             color: black;
         }
 
@@ -49,35 +58,48 @@
             height: 100%;
         }
 
-        .order-view-container .order-view-content > .row {
+        .order-view-container .order-view-content>.row {
             height: 100%;
         }
 
-        .row-collapse > .col, .row-collapse > .flickity-viewport > .flickity-slider > .col {
+        .row-collapse>.col,
+        .row-collapse>.flickity-viewport>.flickity-slider>.col {
             padding: 0 !important;
         }
 
         @media screen and (min-width: 850px) {
-            .gallery-columns-1 .gallery-item, .large-12, .large-columns-1 .flickity-slider > .col, .large-columns-1 > .col {
+
+            .gallery-columns-1 .gallery-item,
+            .large-12,
+            .large-columns-1 .flickity-slider>.col,
+            .large-columns-1>.col {
                 flex-basis: 100%;
                 max-width: 100%;
             }
         }
 
         @media screen and (min-width: 550px) {
-            .medium-12, .medium-columns-1 .flickity-slider > .col, .medium-columns-1 > .col {
+
+            .medium-12,
+            .medium-columns-1 .flickity-slider>.col,
+            .medium-columns-1>.col {
                 flex-basis: 100%;
                 max-width: 100%;
             }
         }
 
-        .small-12, .small-columns-1 .flickity-slider > .col, .small-columns-1 > .col {
+        .small-12,
+        .small-columns-1 .flickity-slider>.col,
+        .small-columns-1>.col {
             flex-basis: 100%;
             max-width: 100%;
         }
 
-        .col, .columns, .gallery-item {
+        .col,
+        .columns,
+        .gallery-item {
             margin: 0;
+            padding: 0 15px 30px;
             position: relative;
             width: 100%;
         }
@@ -100,13 +122,14 @@
             }
         }
 
-        .order-view-container .order-view-content > .row > .col.content-col > .col-inner {
+        .order-view-container .order-view-content>.row>.col.content-col>.col-inner {
             position: relative;
             background-color: #f4f5f6;
             border-radius: 20px;
         }
 
-        .gallery, .row {
+        .gallery,
+        .row {
             display: flex;
             flex-flow: row wrap;
             width: 100%;
@@ -134,7 +157,8 @@
             }
         }
 
-        .row-collapse > .col, .row-collapse > .flickity-viewport > .flickity-slider > .col {
+        .row-collapse>.col,
+        .row-collapse>.flickity-viewport>.flickity-slider>.col {
             padding: 0 !important;
         }
 
@@ -156,7 +180,7 @@
             }
         }
 
-        .order-details-row > .col > .col-inner {
+        .order-details-row>.col>.col-inner {
             padding: 20px;
         }
 
@@ -169,17 +193,21 @@
             margin: auto;
         }
 
-        .text-center .is-divider, .text-center .is-star-rating, .text-center .star-rating, .text-center > div, .text-center > div > div {
+        .text-center .is-divider,
+        .text-center .is-star-rating,
+        .text-center .star-rating,
+        .text-center>div,
+        .text-center>div>div {
             margin-left: auto;
             margin-right: auto;
         }
 
-        .order-details-row .qrcode-image > div {
+        .order-details-row .qrcode-image>div {
             line-height: 1.2em;
             margin-bottom: 7px;
         }
 
-        .order-details-row .qrcode-image > div:last-child {
+        .order-details-row .qrcode-image>div:last-child {
             margin-bottom: 0px;
         }
 
@@ -202,17 +230,18 @@
             }
         }
 
-        .row-collapse > .col, .row-collapse > .flickity-viewport > .flickity-slider > .col {
+        .row-collapse>.col,
+        .row-collapse>.flickity-viewport>.flickity-slider>.col {
             padding: 0 !important;
         }
 
         @media screen and (min-width: 850px) {
-            .row-divided > .col + .col:not(.large-12) {
+            .row-divided>.col+.col:not(.large-12) {
                 border-left: 1px solid #eb1689;
             }
         }
 
-        .order-view-container .row-divided > .col + .col:not(.large-12) {
+        .order-view-container .row-divided>.col+.col:not(.large-12) {
             border-left-style: dashed;
             border-left-color: rgb(0 0 0 / 30%);
         }
@@ -236,13 +265,13 @@
         }
 
         @media screen and (min-width: 850px) {
-            .col + .col .col-inner {
+            .col+.col .col-inner {
                 margin-left: 0;
                 margin-right: auto;
             }
         }
 
-        .order-details-row > .col > .col-inner {
+        .order-details-row>.col>.col-inner {
             padding: 20px;
         }
 
@@ -252,7 +281,8 @@
             vertical-align: middle !important;
         }
 
-        .icon-box-left, .icon-box-right {
+        .icon-box-left,
+        .icon-box-right {
             display: flex;
             flex-flow: row wrap;
             width: 100%;
@@ -268,17 +298,19 @@
             position: relative;
         }
 
-        .icon-box-left .icon-box-img, .icon-box-right .icon-box-img {
+        .icon-box-left .icon-box-img,
+        .icon-box-right .icon-box-img {
             flex: 0 0 auto;
             margin-bottom: 0;
             max-width: 200px;
         }
 
-        .icon-box-left .icon-box-text, .icon-box-right .icon-box-text {
+        .icon-box-left .icon-box-text,
+        .icon-box-right .icon-box-text {
             flex: 1 1 0px;
         }
 
-        .icon-box-left .icon-box-img + .icon-box-text {
+        .icon-box-left .icon-box-img+.icon-box-text {
             padding-left: 1em;
         }
 
@@ -297,7 +329,12 @@
             font-size: 0.9em;
         }
 
-        .col-inner ol li, .col-inner ul li, .entry-content ol li, .entry-content ul li, .entry-summary ol li, .entry-summary ul li {
+        .col-inner ol li,
+        .col-inner ul li,
+        .entry-content ol li,
+        .entry-content ul li,
+        .entry-summary ol li,
+        .entry-summary ul li {
             margin-left: 1.3em;
         }
 
@@ -342,7 +379,10 @@
             max-width: 1322.5px;
         }
 
-        .container .row:not(.row-collapse), .lightbox-content .row:not(.row-collapse), .row .gallery, .row .row:not(.row-collapse) {
+        .container .row:not(.row-collapse),
+        .lightbox-content .row:not(.row-collapse),
+        .row .gallery,
+        .row .row:not(.row-collapse) {
             margin-left: -15px;
             margin-right: -15px;
             padding-left: 0;
@@ -350,14 +390,18 @@
             width: auto;
         }
 
-        .container .row-small:not(.row-collapse), .row .row-small:not(.row-collapse) {
+        .container .row-small:not(.row-collapse),
+        .row .row-small:not(.row-collapse) {
             margin-bottom: 0;
             margin-left: -10px;
             margin-right: -10px;
         }
 
         @media screen and (min-width: 550px) {
-            .medium-12, .medium-columns-1 .flickity-slider > .col, .medium-columns-1 > .col {
+
+            .medium-12,
+            .medium-columns-1 .flickity-slider>.col,
+            .medium-columns-1>.col {
                 flex-basis: 100%;
                 max-width: 100%;
             }
@@ -370,7 +414,8 @@
             }
         }
 
-        .row-small > .col, .row-small > .flickity-viewport > .flickity-slider > .col {
+        .row-small>.col,
+        .row-small>.flickity-viewport>.flickity-slider>.col {
             margin-bottom: 0;
             padding: 0 9.8px 19.6px;
         }
@@ -387,7 +432,7 @@
         }
 
         @media screen and (min-width: 850px) {
-            .col + .col .col-inner {
+            .col+.col .col-inner {
                 margin-left: 0;
                 margin-right: auto;
             }
@@ -465,19 +510,19 @@
                                 <div class="row flex">
                                     <div class="col-md-7 col-sm-6">
                                         <form data-image="{{ asset('client/images/success.png') }}" class="form-login"
-                                              action="{{ route('login') }}" method="post">
+                                            action="{{ route('login') }}" method="post">
                                             @csrf
                                             <div class="form-group">
                                                 <label for="emailOrPhone">Email hoặc Số điện thoại:</label>
                                                 <input id="emailOrPhone" type="text" name="emailOrPhone"
-                                                       class="form-control emailOrPhone">
+                                                    class="form-control emailOrPhone">
                                                 <div class="emailOrPhone_error"></div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="password">Mật khẩu:</label>
                                                 <div class="input-group">
                                                     <input id="passwordLogin" type="password" name="password"
-                                                           class="form-control password passwordLogin">
+                                                        class="form-control password passwordLogin">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text toggle-password" style="cursor: pointer;">
                                                             <i class="fas fa-eye toggle-password-login-icon"></i>
@@ -909,7 +954,7 @@
                                                              src="{{ asset('client/images/level-vip.png') }}" alt="">
                                                         <span>BKM VIP</span>
                                                     @else
-                                                        <img class="rank_vvip"
+                                                        <img class="img_rank_vvip"
                                                              src="{{ asset('client/images/level-vvip.png') }}" alt="">
                                                         <span>BKM VVIP</span>
                                                     @endif

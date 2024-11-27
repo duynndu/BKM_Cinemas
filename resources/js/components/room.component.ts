@@ -30,6 +30,7 @@ const roomSchema = yup.object().shape({
 
 Alpine.data('RoomComponent', (roomId: string | null = null) => ({
   errors: {} as Record<string, string>,
+  isSubmitting: false,
   formData: {
     id: null as any,
     room_name: '',
@@ -60,6 +61,8 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
     this.renderSelectDay();
   },
   async onSubmit() {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
     try {
       await roomSchema.validate(this.formData, { abortEarly: false });
     } catch (error: any) {
@@ -69,6 +72,7 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
           this.errors[err.path] = err.message;
         });
       }
+      this.isSubmitting = false;
       return;
     }
 
@@ -99,6 +103,8 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
     } catch (error: any) {
       console.error(error);
       toastr.error(error.message);
+    } finally {
+        this.isSubmitting = false; 
     }
   },
   async getRoomById(roomId: string) {

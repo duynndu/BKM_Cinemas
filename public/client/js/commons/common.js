@@ -601,12 +601,12 @@ $(function () {
 
     function exp()
     {
-        const exp = $('.expData').attr('data-exp') ?? 0; // Điểm EXP hiện tại của người dùng
+        const exp = parseInt($('.expData').attr('data-exp')) || 0; // Chuyển giá trị EXP thành số
         const thresholds = [0, 4000000, 8000000]; // Các mốc EXP
         const $progress = $('.progress');
         const $progressText = $('.progress-text');
 
-        // Xác định mốc hiện tại và tính % EXP
+// Xác định mốc hiện tại và tính % EXP
         let percentage = 0; // Phần trăm tiến trình
         let nextRankExp = 0; // Mốc EXP tiếp theo
         let currentRankExp = 0; // Mốc EXP hiện tại
@@ -628,14 +628,13 @@ $(function () {
             nextRankExp = thresholds[2];
         }
 
-        // Cập nhật thanh tiến trình
         $progress.css('width', percentage + '%');
-        $progressText.text(`${exp.toLocaleString()} / ${nextRankExp.toLocaleString()}`);
+        $progressText.text(`${exp.toLocaleString('vi-VN')} / ${nextRankExp.toLocaleString('vi-VN')}`);
 
-        // Kiểm tra và gán màu khác nhau nếu muốn
         if (percentage === 100) {
             $progress.css('background', '#ff5722'); // Đổi màu nếu đạt tối đa
         }
+
     }
 
     exp();
