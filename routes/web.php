@@ -14,6 +14,7 @@ use App\Http\Controllers\Client\ListMoviesController;
 use App\Http\Controllers\Auth\Client\GoogleController;
 use App\Http\Controllers\Client\MovieDetailController;
 use App\Http\Controllers\Auth\Client\FacebookController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Client\AboutController;
 use App\Http\Controllers\Client\PostController;
 use App\Http\Controllers\Client\PostDetailController;
@@ -155,9 +156,7 @@ Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
     ]);
 })->name("buy-ticket");
 
-Route::get('/thanh-cong', function () {
-    return view('client.pages.payment-success');
-});
+Route::get('/thanh-cong', [BookingController::class, 'paymentSuccess'])->name('thanh-cong');
 
 Route::get('/dat-ve/xac-nhan', function () {
     return view('client.pages.payment-verification');

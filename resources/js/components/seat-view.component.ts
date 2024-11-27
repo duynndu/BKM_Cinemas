@@ -144,7 +144,10 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
         alert('Lỗi giao dịch hoặc không đủ số dư vui nạp thêm tiền vào tài khoản.')
       }
       if (res.status == Status.COMPLETED) {
-        alert('Giao dịch thành công.')
+        alert('Giao dịch thành công.');
+        redirect().to('/thanh-cong', {
+          'code': res.code
+        });
       }
 
     }
