@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Repositories\Admin\Dashboards\Interfaces;
+namespace App\Services\Admin\Dashboards\Interfaces;
 
-interface DashboardInterface
+use App\Services\Base\BaseServiceInterface;
+
+interface DashboardServiceInterface extends BaseServiceInterface
 {
     public function posts();
 

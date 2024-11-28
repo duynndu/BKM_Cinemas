@@ -36,7 +36,7 @@
                             <div class="card-body">
                                 <div class="courses-bx">
                                     <div class="dlab-media overlay-main position-relative" style="height: 300px;">
-                                        <img style="height: 100%; object-fit: cover" src="{{ $role->image ?? '#' }}" class="w-100 rounded" alt="">
+                                        <img style="height: 100%; object-fit: cover" src="{{ $role->image ?? asset('client/images/1.jpg') }}" class="w-100 rounded" alt="">
                                         @can('view', App\Models\Role::class)
                                             <div class="overlay-bx">
                                                 <div class="overlay-icon">

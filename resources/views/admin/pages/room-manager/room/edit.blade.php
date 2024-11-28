@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', $title['create'] ?? null)
+@section('title', $title['create'] ?? 'Cập nhật phòng chiếu')
 
 @section('css')
 @endsection

@@ -89,5 +89,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('client/js/auth/auth.js') }}"></script>
+    <script type="module" src="{{ asset('client/js/auth/auth.js') }}"></script>
 @endsection
