@@ -8,5 +8,9 @@ interface VoucherInterface extends RepositoryInterface
 {
     public function deleteMultiple(array $ids);
     public function filter($request);
+
+    public function getAccountByVoucher($request);
+    public function  getAccountByKeyword($request);
+    public function giftVoucherToAccount($request);
     // public function createMany($data, $role);
 }

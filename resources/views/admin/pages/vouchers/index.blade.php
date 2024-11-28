@@ -7,6 +7,17 @@
         .table tbody tr td {
             vertical-align: top !important;
         }
+
+        .voucher-item {
+            width: 90px;
+            height: 30px;
+            display: flex;
+        }
+
+        .voucher-image {
+            width: 100%;
+            border-radius: 7px;
+        }
     </style>
 
 @endsection
@@ -43,8 +54,8 @@
                                                 <div class="row">
                                                     <div class="col-xl-4 col-sm-6">
                                                         <label class="form-label">Tên voucher hoặc mã code:</label>
-                                                        <input id="" value="{{ request()->name }}" name="name"
-                                                            type="text" class="form-control mb-xl-0 mb-3"
+                                                        <input value="{{ request()->name }}" name="name" type="text"
+                                                            class="form-control mb-xl-0 mb-3"
                                                             placeholder="Nhập voucher hoặc mã code">
                                                     </div>
                                                     <div class="col-xl-4  col-sm-4 mb-3 mb-xl-0">
@@ -157,8 +168,6 @@
                                                                         @if (!empty($voucher->condition_type))
                                                                             @if ($voucher->condition_type == 'new_member')
                                                                                 <b>Áp dụng: </b> cho người mới
-                                                                            @elseif($voucher->condition_type == 'birthday')
-                                                                                <b>Áp dụng: </b> cho sự kiện sinh nhật
                                                                             @elseif($voucher->condition_type == 'level_up')
                                                                                 <b>Áp dụng:</b> cho hạng tài khoản
                                                                             @endif
@@ -212,6 +221,10 @@
                                                             <td>
                                                                 <p class="text-warning">Chờ phát hành</p>
                                                             </td>
+                                                        @else
+                                                        <td>
+                                                            <p class="text-warning">Chờ phát hành</p>
+                                                        </td>
                                                         @endif
 
                                                         <td>
@@ -235,6 +248,72 @@
                                                                         <i class="fa fa-trash"></i>
                                                                     </button>
                                                                 </form>
+
+
+                                                                <button type="button" id="show_modal"
+                                                                    class="btn btn-success mb-2 shadow btn-xs sharp me-1 giftButton"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#basicModal_{{ $voucher->id }}"
+                                                                    data-voucher-id="{{ $voucher->id }}"
+                                                                    data-url="{{ route('admin.vouchers.getAccountByVoucher') }}">
+                                                                    <i class="fa-solid fa-gift"></i>
+                                                                </button>
+
+
+                                                                <div class="modal fade"
+                                                                    id="basicModal_{{ $voucher->id }}" aria-modal="true"
+                                                                    role="dialog">
+
+                                                                    <div class="modal-dialog modal-lg" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">Tặng voucher</h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal">
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body text-start">
+                                                                                <div
+                                                                                    class="d-flex justify-content-between align-items-center mb-4">
+                                                                                    <div class="form-check">
+                                                                                        <input class="form-check-input"
+                                                                                            type="checkbox" value="all"
+                                                                                            id="checked_all_account"
+                                                                                            id="flexCheckDefault">
+                                                                                        <label class="form-check-label"
+                                                                                            for="flexCheckDefault">
+                                                                                            Chọn tất cả
+                                                                                        </label>
+                                                                                    </div>
+
+                                                                                    <input style="width:330px;"
+                                                                                        id="searchUserInput_{{ $voucher->id }}"
+                                                                                        data-url="{{ route('admin.vouchers.searchUser') }}"
+                                                                                        placeholder="Tên người dùng hoặc email ..."
+                                                                                        type="text"
+                                                                                        class="form-control">
+                                                                                </div>
+
+
+                                                                                <div class="d-flex flex-wrap overflow-auto"
+                                                                                    style="max-height: 200px;gap:7px 15px;">
+                                                                                    {{-- hiển thi tài khoản ở đây --}}
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-danger light"
+                                                                                    data-bs-dismiss="modal">Hủy</button>
+                                                                                <button type="button"
+                                                                                    data-url="{{ route('admin.vouchers.giftVoucherAccount') }}"
+                                                                                    class="btn btn-primary giftVoucher">Lưu
+                                                                                    thay
+                                                                                    đổi</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -264,8 +343,10 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('js')
     <script src="{{ asset('js/admin/commons/vouchers/index.js') }}"></script>
+    <script src="{{ asset('js/admin/ajaxs/voucher.js') }}"></script>
 @endsection

@@ -65,8 +65,7 @@
                                                 <option
                                                     {{ old('voucher.condition_type') == 'new_member' ? 'selected' : '' }}
                                                     value="new_member">Thành viên mới</option>
-                                                <option {{ old('voucher.condition_type') == 'birthday' ? 'selected' : '' }}
-                                                    value="birthday">Sự kiện sinh nhật</option>
+                                                
                                                 <option {{ old('voucher.condition_type') == 'level_up' ? 'selected' : '' }}
                                                     value="level_up">Thăng hạng</option>
                                             </select>

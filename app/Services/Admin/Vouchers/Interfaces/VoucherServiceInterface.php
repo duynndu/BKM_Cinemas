@@ -7,4 +7,7 @@ interface VoucherServiceInterface extends BaseServiceInterface
 {
     public function deleteMultipleChecked($request);
     public function filter($request);
+    public function getAccountByVoucher($request);
+    public function  getAccountByKeyword($request);
+    public function giftVoucherToAccount($request);
 }

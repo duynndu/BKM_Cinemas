@@ -46,7 +46,6 @@ class VoucherController extends Controller
      */
     public function store(VoucherRequest $request)
     {
-        // dd($request->all());
         $data = $request->voucher;
         try {
             DB::beginTransaction();
@@ -67,7 +66,6 @@ class VoucherController extends Controller
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
             return back()->with(['status_failed' => 'Đã xảy ra lỗi, vui lòng thử lại sau.']);
-            
         }
     }
 
@@ -97,7 +95,7 @@ class VoucherController extends Controller
     public function update(VoucherRequest $request, string $id)
     {
         $data = $request->voucher;
-      
+
         try {
             DB::beginTransaction();
             if (!$this->voucherService->update($data, $id)) {
@@ -163,6 +161,74 @@ class VoucherController extends Controller
             return response()->json(['message' => 'Xóa thành công!'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
+    }
+
+    public function getAccountByVoucher(Request $request)
+    {
+        $id = $request->id;
+
+        try {
+            if (empty($id)) {
+                return response()->json(['message' => 'Không tìm thấy voucher'], 400);
+            }
+            $users =  $this->voucherService->getAccountByVoucher($request);
+
+            return response()->json([
+                'message' => 'Lấy dữ liệu thành công!',
+                'data' => $users,
+                ''
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
+    }
+
+    public function searchUser(Request $request)
+    {
+        $id = $request->id;
+
+        try {
+            if (empty($id)) {
+                return response()->json(['message' => 'Không tìm thấy voucher'], 400);
+            }
+            $users =  $this->voucherService->getAccountByKeyword($request);
+
+            return response()->json([
+                'message' => 'Lấy dữ liệu thành công!',
+                'data' => $users
+
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
+    }
+    public function giftVoucherAccount(Request $request)
+    {
+        try {
+
+            $data = $this->voucherService->giftVoucherToAccount($request);
+
+            return response()->json([
+                'data' => $data
+            ], 201);
+        } catch (\Exception $e) {
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
             return response()->json([

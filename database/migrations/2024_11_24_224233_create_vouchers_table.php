@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->decimal('discount_value', 30, 0); // Giá trị giảm giá
             $table->enum('discount_condition', ['all', 'condition'])
                 ->default('all'); // Điều kiện áp dụng: tất cả hoặc có điều kiện
-            $table->enum('condition_type', ['new_member', 'birthday', 'level_up'])
+            $table->enum('condition_type', ['new_member', 'level_up'])
                 ->nullable();
                 // Loại điều kiện: new_member: Thành viên mới, birthday: Sinh nhật, level_up: Lên Hạng
             $table->enum('level_type', ['vip', 'vvip']) // chỉ áp dụng cho tài khoản nạp v
