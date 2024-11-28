@@ -9122,6 +9122,12 @@ span.card.zalopay {
     background-repeat: no-repeat;
 }
 
+span.card.customer {
+    background-image: url(http://bkm_cinemas.test/client/images/logo.png);
+    background-size: contain !important;
+    background-repeat: no-repeat;
+}
+
 span.card.shopeepay {
     background-image: url(https://touchcinema.com/images/icons/shopeepay-logo.png);
     background-size: contain !important;

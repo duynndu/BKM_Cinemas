@@ -133,11 +133,19 @@
                     <td>{{ number_format($ticket->total_price, 0, ',', '.') }}đ</td>
                     <td>20</td>
                     <td>
-                        {{-- @if($ticket->getCanCancelAttribute()) --}}
-                            <a @click="onChangeStatus($event)" data-url="{{ route('api.orders.changeStatus', $ticket->id) }}" class="btn btn-danger btn-cancelled-ticket">Hủy vé</a>
-                        {{-- @else --}}
-                            {{-- <span class="text-danger">Không thể hủy vé</span> --}}
-                        {{-- @endif --}}
+                        @if ($ticket->status == 'waiting_for_cancellation')
+                            <span class="text-danger" id="order_text_{{ $ticket->id }}">Chờ xác nhận hủy!</span>
+                        @elseif($ticket->status == 'rejected')
+                            <span class="text-danger" id="order_text_{{ $ticket->id }}">Từ chối hủy!</span>
+                        @elseif($ticket->status == 'cancelled' && $ticket->refund_status == 'pending')
+                            <span class="text-danger" id="order_text_{{ $ticket->id }}">Chờ hoàn tiền!</span>
+                        @elseif($ticket->status == 'cancelled' && $ticket->refund_status == 'completed')
+                            <span class="text-danger" id="order_text_{{ $ticket->id }}">Hoàn tiền thành công!</span>
+                        @elseif($ticket->getCanCancelAttribute() && $ticket->status == 'completed')
+                            <a data-url="{{ route('api.orders.changeStatus', $ticket->id) }}" class="btn btn-danger btn-cancelled-ticket" id="cancelled_ticket_{{ $ticket->id }}">Hủy</a>
+                        @else
+                            <span class="text-danger" id="order_text_{{ $ticket->id }}">Không thể hủy vé</span>
+                        @endif
                     </td>
                 </tr>
             @endforeach

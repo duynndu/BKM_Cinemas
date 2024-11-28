@@ -14,6 +14,7 @@ use App\Http\Controllers\Client\ListMoviesController;
 use App\Http\Controllers\Auth\Client\GoogleController;
 use App\Http\Controllers\Client\MovieDetailController;
 use App\Http\Controllers\Auth\Client\FacebookController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Client\AboutController;
 use App\Http\Controllers\Client\PostController;
 use App\Http\Controllers\Client\PostDetailController;
@@ -94,6 +95,9 @@ Route::prefix('google')
     });
 // End đăng nhập google
 
+Route::get('tim-kiem', [ListMoviesController::class, 'searchMovies'])->name('search');
+
+
 // Nạp tiền
 Route::post('/processDeposit', [DepositController::class, 'processDeposit'])->name('processDeposit');
 
@@ -152,6 +156,9 @@ Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
         'endTime' => $endTime->toIso8601String()
     ]);
 })->name("buy-ticket");
+
+Route::get('/thanh-cong', [BookingController::class, 'paymentSuccess'])->name('thanh-cong');
+
 Route::get('/dat-ve/xac-nhan', function () {
     return view('client.pages.payment-verification');
 });

@@ -303,6 +303,12 @@
                                                     <span></span>
                                                     <span class="card momo"></span>Ví điện tử MoMo</label>
                                             </div>
+                                            <div class="input-group">
+                                                <input type="radio" x-model="paymentMethod" name="payment_customer" value="customer" id="customer">
+                                                <label for="customer">
+                                                    <span></span>
+                                                    <span class="card customer"></span>Ví thành viên</label>
+                                            </div>
                                         </div>
                                     </div>
 

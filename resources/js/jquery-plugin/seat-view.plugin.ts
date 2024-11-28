@@ -19,8 +19,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
   });
   seatErrors.quantityError = seatsSelected.length > 9;
   //@ts-ignore
-  seatErrors.typeError = seatsSelected.some(seat => seats[0].type != seat.type)
-
+  seatErrors.typeError = seatsSelected.some(seat => seatsSelected[0].type != seat.type);
 
   const seatTable = $("<div>", {
     class: "seat-table tw-grid tw-gap-2 tw-p-4 tw-rounded-xl",
@@ -121,7 +120,6 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         const isUserSelectSeat = user.id == seat.user_id && seat.status == SEAT_STATUS.BOOKING;
         if (isUserSelectSeat || seat.status == SEAT_STATUS.AVAILABLE) {
           seatElement.removeClass(seatElement.data('status'));
-          console.log(seat.status != SEAT_STATUS.BOOKING && !seat.user_id);
 
           if (seatsSelected.length > 9 && (seat.status != SEAT_STATUS.BOOKING && !seat.user_id)) {
             seatErrors.quantityError = true;
@@ -130,7 +128,6 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
           } else {
             seatErrors.quantityError = false;
           }
-          console.log(seatsSelected[0]?.type, seat.type);
 
           if (seatsSelected[0] && seatsSelected[0]?.type !== seat.type) {
             seatErrors.typeError = true;
@@ -138,6 +135,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
           } else {
             seatErrors.typeError = false;
           }
+
           // if (isSelected) {
           // seatElement.data('status', SEAT_STATUS.BOOKING);
           // seatElement.addClass(SEAT_STATUS.BOOKING);
@@ -194,7 +192,7 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
 
         // Nếu hàng không có ghế được chọn, bỏ qua
         if (firstSelectedIndex === -1 || lastSelectedIndex === -1) continue;
-
+        if (seatMatrix[row].some(seat => seat.slot > 1)) continue;
         // Kiểm tra ghế không liên tục trong hàng
         let prevSelectedIndex = -1;
         for (let i = 0; i < col_count; i++) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Constants\MemberLevel;
 use App\Constants\SeatStatus;
 use App\Constants\Status;
 use App\Events\BookSeat;
@@ -63,6 +64,9 @@ class PaymentController extends Controller
                 $zaloPayUrl = $this->zaloPay_payment($amount);
 
                 return response()->json($zaloPayUrl);
+            } elseif ($request->payment == 'customer') {
+                $customerResponse = $this->customer_payment($amount, $booking);
+                return response()->json($customerResponse);
             }
         }
     }
@@ -169,6 +173,8 @@ class PaymentController extends Controller
                         'action' => 'set',
                         'value' => SeatStatus::AVAILABLE
                     ]);
+                } else {
+                    $this->updatePoints($booking->total_price);
                 }
 
                 $booking->update(['payment_status' => $dataTransaction['status']]);
@@ -186,7 +192,12 @@ class PaymentController extends Controller
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
-            return response()->json($booking);
+            if ($dataTransaction['status'] == Status::COMPLETED) {
+                return redirect()->route('thanh-cong', [
+                    'code' => $booking->code
+                ]);
+            }
+            return response()->json($dataTransaction);
         }
     }
 
@@ -264,6 +275,8 @@ class PaymentController extends Controller
                         'action' => 'set',
                         'value' => SeatStatus::AVAILABLE
                     ]);
+                } else {
+                    $this->updatePoints($booking->total_price);
                 }
                 $booking->update(['payment_status' => $dataTransaction['status']]);
                 $this->transactionService->create($dataTransaction);
@@ -278,6 +291,11 @@ class PaymentController extends Controller
                 BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                     'action' => 'set',
                     'value' => SeatStatus::AVAILABLE
+                ]);
+            }
+            if ($dataTransaction['status'] == Status::COMPLETED) {
+                redirect()->route('thanh-cong', [
+                    'code' => $booking->code
                 ]);
             }
             return response()->json($booking);
@@ -382,6 +400,62 @@ class PaymentController extends Controller
                 'action' => 'set',
                 'value' => SeatStatus::AVAILABLE
             ]);
+        }
+    }
+
+    public function customer_payment($amount, Booking $booking)
+    {
+        $userPoints = auth()->user()->balance;
+        $balance_after = $userPoints - $amount;
+        $dataTransaction = [
+            'user_id' => $booking->user_id,
+            'payment_method' => 'customer',
+            'amount' => -$amount,
+            'type' => 'deposit',
+            'description' => 'Giao dịch thành công - Đặt vé',
+            'balance_after' => $balance_after,
+            'status' => Status::COMPLETED
+        ];
+        if ($balance_after < 0) {
+            $dataTransaction['status'] = Status::FAILED;
+            $dataTransaction['description'] = 'Số điểm không đủ để đặt vé';
+            $dataTransaction['balance_after'] = $userPoints;
+            BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
+                'action' => 'set',
+                'value' => SeatStatus::AVAILABLE
+            ]);
+        } else {
+            auth()->user()->update(['balance' => $balance_after]);
+            $this->updatePoints($booking->total_price);
+        }
+        $this->transactionService->create($dataTransaction);
+        $booking->update(['payment_status' => $dataTransaction['status']]);
+        $dataTransaction['code'] = $booking->code;
+        return $dataTransaction;
+    }
+
+    public function updatePoints($totalPrice)
+    {
+        $user = auth()->user(); // Lấy người dùng hiện tại
+        if ($user) {
+            $memberLevel = $user->membership_level;
+            $rateMap = [
+                MemberLevel::MEMBER => 0.00005,
+                MemberLevel::VIP    => 0.00007,
+                MemberLevel::VVIP   => 0.00010,
+            ];
+
+            // Kiểm tra nếu membership_level có trong $rateMap
+            if (isset($rateMap[$memberLevel])) {
+                $point = $user->points;
+                // Tính toán điểm dựa trên giá trị totalPrice và tỷ lệ
+                $point += round($totalPrice * $rateMap[$memberLevel]);
+
+                // Cập nhật điểm thưởng
+                $user->update([
+                    'points' => $point,
+                ]);
+            }
         }
     }
 }

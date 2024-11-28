@@ -20,6 +20,7 @@ import { IBooking } from "@/types/booking.interfaces";
 import { paymentService } from "@/services/payment.service";
 import { bookingService } from "@/services/booking.service";
 import { echo } from "@/echo/Echo";
+import { Status } from "@/define/status";
 
 Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   errors: {} as Record<string, string>,
@@ -111,7 +112,8 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
           foods: this.foodsSelected,
           movie_id: this.movie.id,
           showtime_id: showtimeId,
-          payment_id: 1
+          payment_id: 1,
+          cinema_id: this.showtimeDetail?.cinema?.id,
         });
         console.log(this.booking);
         endTime = this.booking.endTime;
@@ -130,13 +132,23 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
         alert("Vui lòng chọn phương thức thanh toán. Cảnh báo");
         return;
       }
-      const { code, message, payment_url } = await paymentService.processDeposit({
+      const res = await paymentService.processDeposit({
         payment: this.paymentMethod,
         booking_id: this.booking.id
-      });
-      console.log(payment_url);
-      
-      window.location.href = payment_url;
+      }) as unknown as any;
+
+      if (this.paymentMethod != 'customer') {
+        window.location.href = res.payment_url;
+      }
+      if (res.status == Status.FAILED) {
+        alert('Lỗi giao dịch hoặc không đủ số dư vui nạp thêm tiền vào tài khoản.')
+      }
+      if (res.status == Status.COMPLETED) {
+        alert('Giao dịch thành công.');
+        redirect().to('/thanh-cong', {
+          'code': res.code
+        });
+      }
 
     }
 
@@ -166,6 +178,8 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
       $("#seatingArea").addClass("event-none");
       $("#login").removeClass("tw-hidden");
       $("#combo").addClass("tw-hidden");
+      alert('Bạn phải đăng nhập để đặt vé');
+      redirect().to('/account');
     } else {
       $("#seatingArea").removeClass("event-none");
       $("#login").addClass("tw-hidden");
@@ -190,7 +204,6 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
       .leaving((user: any) => {
         console.log("Người dùng đã rời:", user);
       }).listen('BookSeat', (e: { showtimeId: string, seats: ISeat[] }) => {
-        console.log(e);
         this.calculateTotalPrice();
         //@ts-ignore
         this.room.seats = this.room?.seats.map(seat => {
