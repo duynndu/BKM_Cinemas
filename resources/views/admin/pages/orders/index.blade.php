@@ -143,7 +143,7 @@
                                                             {{ $order->user->name }}
                                                         </td>
                                                         <td>
-                                                            @if ($order->status == 'cancelled' || $order->status == 'completed' || $order->status == 'rejected')
+                                                            @if ($order->status == 'cancelled' || $order->status == 'completed')
                                                                 <p id="status-{{ $order->id }}">
                                                                     @switch($order->status)
                                                                         @case('completed')
@@ -174,26 +174,30 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <p id="payment_status-{{ $order->id }}">
-                                                                @switch($order->payment_status)
-                                                                    @case('pending')
-                                                                        Chờ xác nhận
-                                                                        @break
-                                                                    @case('completed')
-                                                                        Hoàn thành
-                                                                        @break
-                                                                    @default
-                                                                        Không xác định
-                                                                @endswitch
-                                                            </p>
+                                                            @switch($order->payment_status)
+                                                                @case('pending')
+                                                                    Chờ xác nhận
+                                                                    @break
+                                                                @case('completed')
+                                                                    Hoàn thành
+                                                                    @break
+                                                                @case('failed')
+                                                                    Lỗi
+                                                                    @break
+                                                                @case('cancelled')
+                                                                    Hủy
+                                                                    @break
+                                                                @default
+                                                                    Không xác định
+                                                            @endswitch
                                                         </td>
                                                         <td>
                                                             @if (is_null($order->refund_status))
                                                                 <p id="refund_status-{{ $order->id }}">Không có</p>
-                                                            @elseif($order->refund_status == 'completed')
+                                                            @elseif ($order->refund_status == 'completed')
                                                                 <p id="refund_status-{{ $order->id }}">Hoàn tiền thành công</p>
                                                             @else
-                                                                <select name="refund_status" data-url="{{ route('api.orders.changeRefundStatus', $order->id) }}" class="refund_status form-control"
+                                                                <select name="refund_status" data-url="{{ route('api.orders.changeRefundStatus', $order->id) }}" class="form-control refund_status"
                                                                     id="refund_status-{{ $order->id }}">
                                                                     <option value="pending" @selected($order->refund_status == 'pending')>
                                                                         Chờ hoàn tiền

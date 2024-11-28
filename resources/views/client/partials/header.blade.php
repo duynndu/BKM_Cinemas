@@ -145,22 +145,22 @@
                             </li> --}}
 
                             <li class="">
-                                <a href="gia-ve">
+                                <a href="{{ route('post.list', 'gia-ve') }}">
                                     giá vé
                                 </a>
                             </li>
                             <li class="">
-                                <a href="thanh-vien">
+                                <a href="{{ route('post.list', 'thanh-vien') }}">
                                     Thành viên
                                 </a>
                             </li>
                             <li class="">
-                                <a href="khuyen-mai">
+                                <a href="{{ route('post.list', 'khuyen-mai') }}">
                                     Ưu đãi - Sự kiện
                                 </a>
                             </li>
                             <li class="">
-                                <a href="danh-gia-phim">
+                                <a href="{{ route('post.list', 'danh-gia-phim') }}">
                                     Đánh giá phim
                                 </a>
                             </li>

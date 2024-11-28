@@ -77,7 +77,7 @@ echo.channel('change_status_order')
 
         if (data.order.status === 'cancelled') {
             $(`#refund_status-${data.order.id}`).replaceWith(`
-                <select name="refund_status" data-url="${data.order.urlChangeRefundStatus}" class="order_status form-control"
+                <select name="refund_status" data-url="${data.order.urlChangeRefundStatus}" class="refund_status form-control"
                     id="refund_status-${data.order.id}">
                     <option value="pending">
                         Chờ hoàn tiền

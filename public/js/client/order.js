@@ -40,7 +40,7 @@ function changeOrder(e) {
     });
 }
 
-$('.btn-cancelled-ticket').on('click', changeOrder);
+ $(document).on('click', '.btn-cancelled-ticket', changeOrder);
 
 echo.channel('change_status_order')
     .listen('OrderStatusUpdated', (data) => {

@@ -1,6 +1,6 @@
 @extends('client.layouts.main')
 
-@section('title', 'Giới thiệu')
+@section('title', 'Đặt Vé Thành Công')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('client/css/payment_success.css') }}">
