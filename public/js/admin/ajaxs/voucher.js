@@ -48,7 +48,8 @@
                         modalBody.find(".overflow-auto").html(accountsHtml);
 
                         // Lắng nghe sự kiện nhập từ khóa tìm kiếm
-                        $("#searchUserInput").on("input", function() {
+                        $("[id^='searchUserInput_']").on("input", function() {
+                            var idVoucher = $(this).attr("id").split("_")[1]; // Lấy ID của voucher
                             var url = $(this).attr("data-url");
                             var query = $(this).val(); // Lấy từ khóa tìm kiếm
                             var csrfToken = $('meta[name="csrf-token"]').attr(
@@ -61,11 +62,11 @@
                                 data: {
                                     _token: csrfToken, // Thêm token bảo mật
                                     keyword: query, // Truyền từ khóa tìm kiếm
-                                    id: voucherId // Truyền voucherId
+                                    id: idVoucher // Truyền voucherId
                                 },
                                 success: function(response) {
                                     var modalBody = $("#basicModal_" +
-                                        voucherId + " .modal-body");
+                                        idVoucher + " .modal-body");
                                     var accountsHtml = "";
 
                                     // Kiểm tra nếu có dữ liệu trả về từ tìm kiếm

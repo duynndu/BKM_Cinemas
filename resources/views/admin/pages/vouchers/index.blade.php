@@ -283,7 +283,7 @@
                                                                                     </div>
 
                                                                                     <input style="width:330px;"
-                                                                                        id="searchUserInput"
+                                                                                        id="searchUserInput_{{ $voucher->id }}"
                                                                                         data-url="{{ route('admin.vouchers.searchUser') }}"
                                                                                         placeholder="Tên người dùng hoặc email ..."
                                                                                         type="text"

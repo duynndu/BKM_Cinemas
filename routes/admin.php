@@ -463,7 +463,7 @@ Route::prefix('admin')
                             ->name('deleteItemMultipleChecked');
                     });
 
-                Route::prefix('movie')
+                Route::prefix('movies')
                     ->controller(MovieController::class)
                     ->name('movies.')
                     ->group(function () {
