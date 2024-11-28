@@ -22,23 +22,23 @@ return new class extends Migration
             $table->bigInteger('payment_id'); // id hình thức thanh toán
             $table->decimal('total_price', 10, 2)->default(0); // Tổng tiền
             $table->enum('status', [
-                'pending',
+                'pending', 
                 'completed',
                 'failed',
                 'cancelled',
-            ])->default('pending');
+                'waiting_for_cancellation',
+                'rejected'
+            ])->nullable();
             $table->enum('payment_status', [
                 'pending',
                 'completed',
                 'failed',
                 'cancelled'
-            ])->default('pending');
+            ])->nullable();
             $table->enum('refund_status', [
-                'pending',
                 'completed',
-                'failed',
                 'cancelled'
-            ])->default('pending');
+            ])->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

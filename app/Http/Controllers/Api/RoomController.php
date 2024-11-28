@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\SeatType;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
@@ -72,9 +73,10 @@ class RoomController extends Controller
             }
 
             DB::commit();
-            return response()->json($room);
+            return response()->json(['data' => $room, 'url' => route('admin.rooms.index')], 201);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
@@ -141,9 +143,10 @@ class RoomController extends Controller
             }
 
             DB::commit();
-            return response()->json($room->load('seats'));
+            return response()->json([$room->load('seats'), 'url' => route('admin.rooms.index')]);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
             return response()->json(['error' => 'An error occurred while updating the room.'], 500);
         }
     }

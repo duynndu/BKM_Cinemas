@@ -47,13 +47,13 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="{{ asset('client/js/statics/plugins/owl-carousel/assets/owl.carousel.min.css') }}">
-    {{-- @vite(['resources/js/app.js']) --}}
+
     <link rel="stylesheet" href="{{ asset('client/css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/style_movie.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/style_auth.css') }}">
     <!-- CSRF Token -->
 
-    {{-- @vite(['resources/js/app.js']) --}}
+
     @yield('css')
 </head>
 
@@ -123,11 +123,11 @@
         </div>
     </div>
 
-    <div class="main-popup">
+    {{-- <div class="main-popup">
         <div class="main-popup-content">
             <img src="https://touchcinema.com/storage/slide-web/1920wx1080h-13-1729583438.jpg" />
         </div>
-    </div>
+    </div> --}}
 
     <div id="notification">
         <div class="setting-content">
@@ -191,10 +191,9 @@
 
     <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
-
-    <!-- Your Plugin chat code -->
-    <div id="fb-customer-chat" class="fb-customerchat"></div>
 </body>
+
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v21.0"></script>
 
 <!-- Scripts -->
 <script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"></script>
@@ -203,11 +202,12 @@
 <script src="{{ asset('libs/bootstrap/3.3.6/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('vendor/datepicker/js/bootstrap-datepicker.vi.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/statics/js/scripts.js') }}"></script>
 <script src="{{ asset('client/js/statics/js/showtime-widget.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('client/js/commons/common.js') }}"></script>
-
+<script type="module" src="{{ asset('client/js/commons/common.js') }}"></script>
+ @vite(['resources/js/app.js'])
 @yield('js')
 
 </html>

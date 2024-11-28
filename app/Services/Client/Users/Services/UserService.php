@@ -26,7 +26,7 @@ class UserService extends BaseService implements UserServiceInterface
         if (!$record) {
             return false;
         }
-        
+
         if (isset($data['image']) && $data['image']) {
             if ($record->image) {
                 $this->deleteAvatar($record->image, 'users');

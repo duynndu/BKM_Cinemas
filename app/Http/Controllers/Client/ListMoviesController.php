@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Services\Client\Movies\Interfaces\MovieServiceInterface;
+use Illuminate\Http\Request;
 
 class ListMoviesController extends Controller
 {
@@ -22,6 +23,14 @@ class ListMoviesController extends Controller
         return view('client.pages.movie', [
             'movieIsShowing' => $movieIsShowing,
             'upComingMovie' => $upComingMovie
+        ]);
+    }
+
+    public function searchMovies(Request $request)
+    {
+        $movies = $this->movieService->searchMovies($request->k);
+        return view('client.pages.search', [
+            'movies' => $movies 
         ]);
     }
 }

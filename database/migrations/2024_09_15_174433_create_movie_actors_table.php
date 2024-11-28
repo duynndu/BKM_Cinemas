@@ -17,7 +17,6 @@ return new class extends Migration
             $table->bigInteger('movie_id');
             $table->bigInteger('actor_id');
             $table->string('role')->nullable(); // Vai diễn của diễn viên trong phim
-            $table->bigInteger('order')->default(0); // Thứ tự xuất hiện của diễn viên trong phim
             $table->timestamps();
             $table->softDeletes();
         });

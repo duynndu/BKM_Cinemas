@@ -75,7 +75,7 @@ class ShowtimeController extends Controller
                     AND bs.seat_id = s.id), 'booked', 'available')
             ) AS status,
             (SELECT b.user_id FROM bookings b JOIN booking_seats bs ON bs.booking_id = b.id WHERE b.showtime_id = st.id AND bs.seat_id = s.id LIMIT 1) AS user_id FROM showtimes st JOIN rooms r ON r.id = st.room_id LEFT JOIN seats s ON s.room_id = r.id
-            WHERE st.id = ?;
+            WHERE st.id = ? and s.deleted_at is null;
             ", [$showtime->id]);
             Cache::put("showtime.$showtime->id.seats", collect($seats)->keyBy('seat_number'));
         }

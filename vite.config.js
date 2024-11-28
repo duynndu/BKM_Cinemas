@@ -31,5 +31,8 @@ export default defineConfig({
     alias: {
       'jquery.inputmask': path.resolve('node_modules/inputmask/dist/jquery.inputmask.js')
     }
-  }
+  },
+    optimizeDeps: {
+        include: ['jquery', 'bootstrap-select'],
+    },
 });
