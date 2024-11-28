@@ -24,8 +24,6 @@ return new class extends Migration
             $table->enum('status', [
                 'pending', 
                 'completed',
-                'failed',
-                'cancelled',
                 'waiting_for_cancellation',
                 'rejected'
             ])->default('pending');
@@ -38,8 +36,6 @@ return new class extends Migration
             $table->enum('refund_status', [
                 'pending',
                 'completed',
-                'failed',
-                'cancelled'
             ])->nullable();
             $table->timestamps();
             $table->softDeletes();

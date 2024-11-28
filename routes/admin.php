@@ -65,10 +65,18 @@ Route::prefix('admin')
 
         Route::middleware('admin')
             ->group(function () {
+
             Route::get('/', [DashboardController::class, 'dashboard'])
                 ->name('dashboard')
                 ->middleware('authorizeAction:viewAny,Dashboard');
 
+            Route::controller(DashboardController::class)
+                ->name('dashboards.')
+                ->group(function () {
+                    Route::get('/getRevenueAndTicketData', 'getRevenueAndTicketData')
+                        ->name('getRevenueAndTicketData');
+                });
+        
             Route::prefix('systems')
                 ->controller(SystemController::class)
                 ->name('systems.')
@@ -843,6 +851,7 @@ Route::prefix('admin')
                     Route::get('/', 'index')
                         ->name('index')
                         ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+
                     Route::get('/{id}/detail', 'detail')
                         ->name('detail')
                         ->middleware('authorizeAction:viewAny,App\Models\Cinema');

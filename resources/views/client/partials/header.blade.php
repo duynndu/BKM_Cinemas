@@ -193,7 +193,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <div class="notification-box">
-                                    <div id="noti_Button" class=" notifications">
+                                    <div id="noti_Button" class="d-flex align-items-center justify-content-center notifications">
                                         <i class="fa fa-bell" aria-hidden="true"></i>
                                     </div>
                                     <!--THE NOTIFICAIONS DROPDOWN BOX.-->

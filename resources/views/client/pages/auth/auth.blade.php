@@ -3,6 +3,9 @@
 @section('title', Auth::check() ? 'Thông tin tài khoản' : 'Đăng ký - Đăng nhập | BKM Cinemas')
 
 @section('css')
+    <style>
+        
+    </style>
 @endsection
 
 @vite(['resources/js/app.js', 'resources/css/app.css'])
@@ -72,15 +75,15 @@
                                     </div>
                                     <div class="col-md-4 col-sm-5">
                                         <a class="login-social" href="{{ route('facebook.redirectToFacebook') }}"
-                                           title="Đăng nhập bằng facebook">
+                                            title="Đăng nhập bằng facebook">
                                             <img class="img-responsive" src="{{ asset('client/images/fb.png') }}"
-                                                 alt="Facebook">
+                                                alt="Facebook">
                                         </a>
 
                                         <a class="login-social" href="{{ route('google.redirectToGoogle') }}"
-                                           title="Đăng nhập bằng google">
+                                            title="Đăng nhập bằng google">
                                             <img class="img-responsive" src="{{ asset('client/images/gp.png') }}"
-                                                 alt="Google">
+                                                alt="Google">
                                         </a>
                                     </div>
                                 </div>
@@ -96,14 +99,14 @@
                                     <div class="col-md-8 col-sm-6">
                                         <div>
                                             <form data-image="{{ asset('client/images/register_success.png') }}" role="form"
-                                                  method="POST" class="form-register" action="{{ route('register') }}">
+                                                method="POST" class="form-register" action="{{ route('register') }}">
                                                 @csrf
 
                                                 <div class="form-group">
                                                     <label for="email">Tên đăng nhập <span
                                                             style="color: red;">*</span></label>
                                                     <input id="name" type="name" class="form-control name"
-                                                           name="name" value="">
+                                                        name="name" value="">
                                                     <div class="name_error"></div>
                                                 </div>
 
@@ -111,7 +114,7 @@
                                                     <div class="col-md-6 col-sm-6">
                                                         <label for="name">Họ <span style="color: red;">*</span></label>
                                                         <input id="first_name" type="text" class="form-control first_name"
-                                                               name="first_name" value="">
+                                                            name="first_name" value="">
                                                         <div class="first_name_error"></div>
                                                     </div>
 
@@ -119,7 +122,7 @@
                                                         <label for="name">Tên đệm và tên <span
                                                                 style="color: red;">*</span></label>
                                                         <input id="last_name" type="text" class="form-control last_name"
-                                                               name="last_name" value="">
+                                                            name="last_name" value="">
                                                         <div class="last_name_error"></div>
                                                     </div>
                                                 </div>
@@ -128,7 +131,7 @@
                                                     <label for="email">Địa chỉ email <span
                                                             style="color: red;">*</span></label>
                                                     <input id="text" type="email" class="form-control email"
-                                                           name="email" value="">
+                                                        name="email" value="">
                                                     <div class="email_error"></div>
                                                 </div>
 
@@ -152,7 +155,7 @@
                                                         <label for="name">Số điện thoại <span
                                                                 style="color: red;">*</span></label>
                                                         <input id="phone" type="text" class="form-control phone"
-                                                               name="phone" value="">
+                                                            name="phone" value="">
                                                         <div class="phone_error"></div>
                                                     </div>
                                                 </div>
@@ -163,10 +166,10 @@
                                                                 style="color: red;">*</span></label>
                                                         <div class="input-group">
                                                             <input id="passwordRegister" type="password" class="form-control"
-                                                                   name="password">
+                                                                name="password">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text toggle-password"
-                                                                      style="cursor: pointer;">
+                                                                    style="cursor: pointer;">
                                                                     <i class="fas fa-eye" id="toggle-password-icon"></i>
                                                                 </span>
                                                             </div>
@@ -179,12 +182,12 @@
                                                                 style="color: red;">*</span></label>
                                                         <div class="input-group">
                                                             <input id="password-confirm" type="password" class="form-control"
-                                                                   name="password_confirmation">
+                                                                name="password_confirmation">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text toggle-password"
-                                                                      style="cursor: pointer;">
+                                                                    style="cursor: pointer;">
                                                                     <i class="fas fa-eye"
-                                                                       id="toggle-confirm-password-icon"></i>
+                                                                        id="toggle-confirm-password-icon"></i>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -197,7 +200,7 @@
                                                         <label for="birthday">Ngày sinh <span
                                                                 style="color: red;">*</span></label>
                                                         <input id="date_birth" placeholder="-- Ngày Sinh --" type="text"
-                                                               class="form-control datepicker" name="date_birth">
+                                                            class="form-control datepicker" name="date_birth">
                                                         <div class="date_birth_error"></div>
                                                     </div>
 
@@ -219,20 +222,20 @@
 
                                                 <div class="form-group flex">
                                                     <input name="is_terms_accepted" id="is_terms_accepted" type="checkbox"
-                                                           value="1"> <label for="is_terms_accepted" class="italic">Tôi
+                                                        value="1"> <label for="is_terms_accepted" class="italic">Tôi
                                                         đã
                                                         đọc, hiểu và đồng ý với các <a target="_blank"
-                                                                                       href="/quy-dinh-thanh-vien">điều
+                                                            href="/quy-dinh-thanh-vien">điều
                                                             khoản</a></label>
                                                     <div style="margin-left: 10px">
                                                         <div style="position: absolute; width: 100%;transform: translateY(-50%);"
-                                                             class="is_terms_accepted_error"></div>
+                                                            class="is_terms_accepted_error"></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group flex position-relative">
                                                     <input name="is_subscribed_promotions" id="is_subscribed_promotions"
-                                                           type="checkbox" value="1"> <label for="is_subscribed_promotions"
-                                                                                             class="italic">Nhận thông tin chương trình khuyến mãi</label>
+                                                        type="checkbox" value="1"> <label for="is_subscribed_promotions"
+                                                        class="italic">Nhận thông tin chương trình khuyến mãi</label>
                                                     <div style="margin-left: 10px;">
                                                         <div class="is_subscribed_promotions_error"></div>
                                                     </div>
@@ -247,7 +250,7 @@
                                     <div class="col-md-4 col-sm-6">
                                         <div>
                                             <img src="https://cdn.moveek.com/bundles/ornweb/img/mascot.png" width="100%"
-                                                 alt="">
+                                                alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -267,7 +270,7 @@
                                             <div class="form-group">
                                                 <label for="email">Email:</label>
                                                 <input id="email" type="text" name="email"
-                                                       class="form-control email">
+                                                    class="form-control email">
                                                 <div class="email_error"></div>
                                             </div>
 
@@ -279,7 +282,7 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div style="padding: 55px;">
                                             <img src="https://cdn.moveek.com/bundles/ornweb/img/mascot.png" width="100%"
-                                                 alt="">
+                                                alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -315,15 +318,15 @@
                                                 @if (!empty($avatarUrl))
                                                     <!-- Hiển thị ảnh nếu có -->
                                                     <img src="{{ $avatarUrl }}" alt="{{ $user->name ?? 'avatar' }}"
-                                                         class="img-responsive img-circle img-member">
+                                                        class="img-responsive img-circle img-member">
                                                 @else
                                                     <!-- Hiển thị chữ cái đầu với màu nền ngẫu nhiên nếu không có ảnh -->
                                                     <div class="avatar-placeholder"
-                                                         style="background-color: {{ $backgroundColor }};">
+                                                        style="background-color: {{ $backgroundColor }};">
                                                         {{ $firstLetter }}
                                                     </div>
                                                     <img src="{{ $avatarUrl }}" alt="{{ $user->name ?? 'avatar' }}"
-                                                         class="img-responsive img-circle img-member img-block">
+                                                        class="img-responsive img-circle img-member img-block">
                                                 @endif
                                                 <a href="javascript:;" data-modal="#modalAvatarImage" class="open-modal">Đổi
                                                     ảnh đại diện</a>
@@ -358,7 +361,7 @@
                                                 @else
                                                     Chưa có thông tin
                                                     <a href="javascript:;" title="Tài khoản chưa được xác thực"
-                                                       class="no-verify" id="verify">
+                                                        class="no-verify" id="verify">
                                                         Xác thực SMS
                                                     </a>
                                                 @endif
@@ -366,7 +369,7 @@
                                             </p>
                                             <p>Dịch vụ:
                                                 <a href="javascript:;" data-modal="#topUpModal"
-                                                   title="Nạp tiền vào tài khoản" class="no-verify open-modal">
+                                                    title="Nạp tiền vào tài khoản" class="no-verify open-modal">
                                                     Nạp tiền
                                                 </a>
                                             </p>
@@ -378,15 +381,15 @@
                                                     @switch(Auth::user()->membership_level)
                                                         @case('member')
                                                             <span class="sparkle-normal">🥈 BKM Member</span>
-                                                            @break
+                                                        @break
 
                                                         @case('vip')
                                                             <span class="sparkle-vip">🌟 BKM VIP</span>
-                                                            @break
+                                                        @break
 
                                                         @case('vvip')
                                                             <span class="sparkle-svip">👑 BKM VVIP</span>
-                                                            @break
+                                                        @break
 
                                                         @default
                                                             Không xác định
@@ -397,7 +400,7 @@
                                                     class="point">{{ !empty(Auth::user()->points) ? Auth::user()->points : 0 }}</span>
                                                 điểm
                                                 <a href="javascript:;" data-modal="#modalPoints" title="Xem quy tắc đổi điểm"
-                                                   class="no-verify open-modal">
+                                                    class="no-verify open-modal">
                                                     Quy tắc & Đổi thưởng
                                                 </a>
                                             </p>
@@ -405,7 +408,7 @@
                                             <!-- EXP và Progress Bar -->
                                             <div class="exp-container mb-15 mt-25">
                                                 <p class="mb-4">EXP: <span class="point expData"
-                                                                           data-exp="{{ Auth::user()->exp ?? 0 }}">{{ !empty(Auth::user()->exp) ? number_format(Auth::user()->exp, 0, ',', '.') : 0 }}</span>
+                                                        data-exp="{{ Auth::user()->exp ?? 0 }}">{{ !empty(Auth::user()->exp) ? number_format(Auth::user()->exp, 0, ',', '.') : 0 }}</span>
                                                     exp</p>
                                                 <div class="rank-container">
                                                     <div class="progress-bar">
@@ -417,8 +420,8 @@
                                                         <div class="upgrade-card">
                                                             <span class="milestone" style="left: -15px;">
                                                                 <img class="rank_member"
-                                                                     src="{{ asset('client/images/rank_member.png') }}"
-                                                                     alt="">
+                                                                    src="{{ asset('client/images/rank_member.png') }}"
+                                                                    alt="">
                                                             </span>
                                                             <div class="rank-number-member">
                                                                 <b>0</b>
@@ -427,8 +430,8 @@
                                                         <div class="upgrade-card">
                                                             <span class="milestone" style="left: 50%;">
                                                                 <img class="rank_vip"
-                                                                     src="{{ asset('client/images/rank_vip.png') }}"
-                                                                     alt="">
+                                                                    src="{{ asset('client/images/rank_vip.png') }}"
+                                                                    alt="">
                                                             </span>
                                                             <div class="line-center-grade"></div>
                                                             <div class="rank-number-vip">
@@ -438,8 +441,8 @@
                                                         <div class="upgrade-card">
                                                             <span class="milestone" style="right: -61px;">
                                                                 <img class="rank_vvip"
-                                                                     src="{{ asset('client/images/rank_vvip.png') }}"
-                                                                     alt="">
+                                                                    src="{{ asset('client/images/rank_vvip.png') }}"
+                                                                    alt="">
                                                             </span>
                                                             <div class="rank-number-vvip">
                                                                 <b>8.000.000</b>
@@ -466,16 +469,16 @@
                                                     class="level-card @if (Auth::user()->membership_level == 'member') rank-member @elseif(Auth::user()->membership_level == 'vip') rank-vip @else rank-vvip @endif">
                                                     @if (Auth::user()->membership_level == 'member')
                                                         <img class="rank_member"
-                                                             src="{{ asset('client/images/level-member.png') }}"
-                                                             alt="">
+                                                            src="{{ asset('client/images/level-member.png') }}"
+                                                            alt="">
                                                         <span>BKM Member</span>
                                                     @elseif(Auth::user()->membership_level == 'vip')
                                                         <img class="rank_vip"
-                                                             src="{{ asset('client/images/level-vip.png') }}" alt="">
+                                                            src="{{ asset('client/images/level-vip.png') }}" alt="">
                                                         <span>BKM VIP</span>
                                                     @else
                                                         <img class="img_rank_vvip"
-                                                             src="{{ asset('client/images/level-vvip.png') }}" alt="">
+                                                            src="{{ asset('client/images/level-vvip.png') }}" alt="">
                                                         <span>BKM VVIP</span>
                                                     @endif
                                                 </div>
@@ -527,12 +530,12 @@
                                 <div class="row flex">
                                     <div class="col-md-7 col-sm-7">
                                         <form id="form-updateProfile" data-image="{{ asset('client/images/success.png') }}"
-                                              action="{{ route('updateProfile') }}" method="POST">
+                                            action="{{ route('updateProfile') }}" method="POST">
                                             @csrf
                                             <div class="form-group">
                                                 <label for="name">Nickname</label>
                                                 <input id="name" type="name" class="form-control name"
-                                                       name="name" value="{{ old('name', Auth::user()->name) }}">
+                                                    name="name" value="{{ old('name', Auth::user()->name) }}">
                                                 <div class="name_error"></div>
                                             </div>
 
@@ -540,16 +543,16 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <label for="first_name">Họ</label>
                                                     <input id="first_name" type="text" class="form-control first_name"
-                                                           name="first_name"
-                                                           value="{{ old('first_name', Auth::user()->first_name) }}">
+                                                        name="first_name"
+                                                        value="{{ old('first_name', Auth::user()->first_name) }}">
                                                     <div class="first_name_error"></div>
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6">
                                                     <label for="last_name">Tên đệm và tên</label>
                                                     <input id="last_name" type="text" class="form-control last_name"
-                                                           name="last_name"
-                                                           value="{{ old('last_name', Auth::user()->last_name) }}">
+                                                        name="last_name"
+                                                        value="{{ old('last_name', Auth::user()->last_name) }}">
                                                     <div class="last_name_error"></div>
                                                 </div>
                                             </div>
@@ -557,7 +560,7 @@
                                             <div class="form-group">
                                                 <label for="email">Địa chỉ email</label>
                                                 <input id="email" type="email" disabled class="form-control email"
-                                                       name="email" value="{{ old('email', Auth::user()->email) }}">
+                                                    name="email" value="{{ old('email', Auth::user()->email) }}">
                                                 <div class="email_error"></div>
                                             </div>
 
@@ -582,7 +585,7 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <label for="name">Số điện thoại</label>
                                                     <input id="phone" type="text" disabled class="form-control phone"
-                                                           name="phone" value="{{ old('phone', Auth::user()->phone) }}">
+                                                        name="phone" value="{{ old('phone', Auth::user()->phone) }}">
                                                     <div class="phone_error"></div>
                                                 </div>
                                             </div>
@@ -591,9 +594,9 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <label for="birthday">Ngày sinh</label>
                                                     <input id="date_birth"
-                                                           value="{{ old('date_birth', date('d/m/Y', strtotime(Auth::user()->date_birth))) }}"
-                                                           placeholder="-- Ngày Sinh --" type="text"
-                                                           class="form-control datepicker" name="date_birth">
+                                                        value="{{ old('date_birth', date('d/m/Y', strtotime(Auth::user()->date_birth))) }}"
+                                                        placeholder="-- Ngày Sinh --" type="text"
+                                                        class="form-control datepicker" name="date_birth">
                                                     <div class="date_birth_error"></div>
                                                 </div>
 
@@ -604,7 +607,7 @@
                                                         @if (!empty($data['cities']))
                                                             @foreach ($data['cities'] as $city)
                                                                 <option @selected(old('city_id', Auth::user()->city_id) == $city->id)
-                                                                        value="{{ $city->id }}">{{ $city->name }}
+                                                                    value="{{ $city->id }}">{{ $city->name }}
                                                                 </option>
                                                             @endforeach
                                                         @endif
@@ -615,14 +618,14 @@
 
                                             <div class="center">
                                                 <input type="submit" name="submit" value="Lưu"
-                                                       class="btn btn-success btn-login">
+                                                    class="btn btn-success btn-login">
                                             </div>
                                         </form>
                                     </div>
                                     <div class="col-md-5 col-sm-5">
                                         <div style="padding: 55px;">
                                             <img src="https://cdn.moveek.com/bundles/ornweb/img/mascot.png" width="100%"
-                                                 alt="">
+                                                alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -637,21 +640,21 @@
                                 <div class="row flex">
                                     <div class="col-md-6 col-sm-6">
                                         <form id="form-changepassword" data-url-logout="{{ route('logout') }}"
-                                              data-url-redirect="{{ route('account') }}"
-                                              data-image="{{ asset('client/images/success.png') }}"
-                                              action="{{ route('changePassword') }}" method="POST">
+                                            data-url-redirect="{{ route('account') }}"
+                                            data-image="{{ asset('client/images/success.png') }}"
+                                            action="{{ route('changePassword') }}" method="POST">
                                             @csrf
                                             <div class="form-group">
                                                 <label for="old-password">Mật khẩu hiện tại</label>
                                                 <div class="input-group">
                                                     <input type="password" name="old_password" value=""
-                                                           autocomplete="false" class="form-control old_password"
-                                                           id="old_password">
+                                                        autocomplete="false" class="form-control old_password"
+                                                        id="old_password">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text toggle-password"
-                                                              style="cursor: pointer;">
+                                                            style="cursor: pointer;">
                                                             <i class="fas fa-eye toggle-old-password-icon"
-                                                               id="toggle-old-password-icon"></i>
+                                                                id="toggle-old-password-icon"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -661,12 +664,12 @@
                                                 <label for="password">Mật khẩu mới</label>
                                                 <div class="input-group">
                                                     <input type="password" name="password" value=""
-                                                           autocomplete="false" class="form-control password" id="password">
+                                                        autocomplete="false" class="form-control password" id="password">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text toggle-password"
-                                                              style="cursor: pointer;">
+                                                            style="cursor: pointer;">
                                                             <i class="fas fa-eye toggle-password-change-icon"
-                                                               id="toggle-password-change-icon"></i>
+                                                                id="toggle-password-change-icon"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -676,11 +679,11 @@
                                                 <label for="re-password">Nhập lại mật khẩu mới</label>
                                                 <div class="input-group">
                                                     <input type="password" name="confirm_password" value=""
-                                                           autocomplete="false" class="form-control confirm_password"
-                                                           id="confirm_password">
+                                                        autocomplete="false" class="form-control confirm_password"
+                                                        id="confirm_password">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text toggle-password"
-                                                              style="cursor: pointer;">
+                                                            style="cursor: pointer;">
                                                             <i class="fas fa-eye toggle-confirm-password-icon"></i>
                                                         </span>
                                                     </div>
@@ -690,14 +693,14 @@
 
                                             <div class="center">
                                                 <input type="submit" name="submit" value="Lưu"
-                                                       class="btn btn-success btn-login">
+                                                    class="btn btn-success btn-login">
                                             </div>
                                         </form>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div style="padding: 55px;">
                                             <img src="https://cdn.moveek.com/bundles/ornweb/img/mascot.png" width="100%"
-                                                 alt="">
+                                                alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -716,22 +719,24 @@
                                             <h3>Chào mừng bạn, {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
                                             </h3>
                                             <p>Bạn hiện đang có:
-                                                <span class="highlight-points">{{ number_format(Auth::user()->exp, 0, ',', '.') }} điểm</span>
+                                                <span
+                                                    class="highlight-points">{{ number_format(Auth::user()->exp, 0, ',', '.') }}
+                                                    điểm</span>
                                             </p>
                                             <p>Cấp bậc hiện tại:
                                                 <span class="point">
                                                     @switch(Auth::user()->membership_level)
                                                         @case('member')
                                                             <span class="sparkle-normal">🥈 BKM Member</span>
-                                                            @break
+                                                        @break
 
                                                         @case('vip')
                                                             <span class="sparkle-vip">🌟 BKM VIP</span>
-                                                            @break
+                                                        @break
 
                                                         @case('vvip')
                                                             <span class="sparkle-svip">👑 BKM VVIP</span>
-                                                            @break
+                                                        @break
 
                                                         @default
                                                             Không xác định
@@ -740,7 +745,7 @@
                                             </p>
                                             <p>Quy tắc & Đổi thưởng:
                                                 <a href="javascript:;" data-modal="#modalPoints" title="Xem quy tắc đổi điểm"
-                                                   class="no-verify open-modal">
+                                                    class="no-verify open-modal">
                                                     Xem
                                                 </a>
                                             </p>
@@ -753,7 +758,7 @@
                                                 <li>🎁 Các phần quà hấp dẫn khác 👇</li>
                                             </ul>
                                             <button class="btn btn-primary btn-redeem btn-login open-modal"
-                                                    data-modal="#modalExchangeExp">Đổi thưởng</button>
+                                                data-modal="#modalExchangeExp">Đổi thưởng</button>
                                         </div>
                                     </div>
 
@@ -761,7 +766,7 @@
                                     <div class="col-md-5 col-sm-5">
                                         <div style="padding: 55px;">
                                             <img src="https://cdn.moveek.com/bundles/ornweb/img/mascot.png" width="100%"
-                                                 alt="Mascot">
+                                                alt="Mascot">
                                         </div>
                                     </div>
                                 </div>
@@ -805,8 +810,8 @@
                                             <div class="date-box">
                                                 <div class="date-box-content">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-                                                         fill="currentColor" aria-hidden="true"
-                                                         class="dp__icon dp__input_icon dp__input_icons">
+                                                        fill="currentColor" aria-hidden="true"
+                                                        class="dp__icon dp__input_icon dp__input_icons">
                                                         <path
                                                             d="M29.333 8c0-2.208-1.792-4-4-4h-18.667c-2.208 0-4 1.792-4 4v18.667c0 2.208 1.792 4 4 4h18.667c2.208 0 4-1.792 4-4v-18.667zM26.667 8v18.667c0 0.736-0.597 1.333-1.333 1.333 0 0-18.667 0-18.667 0-0.736 0-1.333-0.597-1.333-1.333 0 0 0-18.667 0-18.667 0-0.736 0.597-1.333 1.333-1.333 0 0 18.667 0 18.667 0 0.736 0 1.333 0.597 1.333 1.333z">
                                                         </path>
@@ -820,11 +825,9 @@
                                                             d="M4 14.667h24c0.736 0 1.333-0.597 1.333-1.333s-0.597-1.333-1.333-1.333h-24c-0.736 0-1.333 0.597-1.333 1.333s0.597 1.333 1.333 1.333z">
                                                         </path>
                                                     </svg>
-                                                    <input type="text"
-                                                           value="{{ \Carbon\Carbon::now()->format('m/Y') }}"
-                                                           class="form-control date-filter date-input"
-                                                           data-url="{{ route('account') }}"
-                                                           placeholder="Chọn tháng">
+                                                    <input type="text" value="{{ \Carbon\Carbon::now()->format('m/Y') }}"
+                                                        class="form-control date-filter date-input"
+                                                        data-url="{{ route('account') }}" placeholder="Chọn tháng">
                                                 </div>
                                             </div>
                                         </div>
@@ -832,7 +835,9 @@
                                 </div>
                                 <div class="row flex">
                                     <div class="col" id="ticket-main">
-                                        @include('client.ajax.tickets.ticket', ['tickets' => $data['tickets']])
+                                        @include('client.ajax.tickets.ticket', [
+                                            'tickets' => $data['tickets'],
+                                        ])
                                     </div>
                                 </div>
                             </div>
@@ -870,7 +875,7 @@
                                                             @endphp
                                                         @endif
                                                         <div class="transaction-list"
-                                                             style="border-bottom: {{ $loop->last ? '1px solid #91b5d7' : 'none' }}">
+                                                            style="border-bottom: {{ $loop->last ? '1px solid #91b5d7' : 'none' }}">
                                                             <div class="transaction-content">
                                                                 <h4>Thông báo giao dịch</h4>
                                                                 <ul>
@@ -920,7 +925,7 @@
                 </div>
             </div>
             <form data-error="{{ asset('client/images/error.png') }}" action="{{ route('processDeposit') }}"
-                  id="depositForm" method="post">
+                id="depositForm" method="post">
                 @csrf
                 <div class="main-modal">
                     <div class="body_modal">
@@ -929,7 +934,7 @@
                                 <div class="row row-16 main-payment">
                                     <div class="col" style="padding-top: 20px;">
                                         <input type="radio" name="payment_method" style="display: none;"
-                                               class="payment_method" value="vnpay">
+                                            class="payment_method" value="vnpay">
                                         <div class="title h3 color-default">
                                             Ví điện tử
                                             <span class="vnpay-logo b">
@@ -940,8 +945,8 @@
                                     <div class="col-auto" style="padding-top: 20px;">
                                         <div class="icon">
                                             <img width="100%"
-                                                 src="https://sandbox.vnpayment.vn/paymentv2/images/icons/mics/64x64-vi-vnpay.svg"
-                                                 alt="">
+                                                src="https://sandbox.vnpayment.vn/paymentv2/images/icons/mics/64x64-vi-vnpay.svg"
+                                                alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -956,8 +961,9 @@
                                                         class="input-group-wrap input-default input-size-default input-group-vertical">
                                                         <label class="input-inner-wrap">
                                                             <input type="number"
-                                                                   class="input input-label-change input-has-clear"
-                                                                   placeholder="Nhập số tiền cần nạp..." name="amount[vnpay]">
+                                                                class="input input-label-change input-has-clear"
+                                                                placeholder="Nhập số tiền cần nạp..."
+                                                                name="amount[vnpay]">
                                                             <div class="input-frame"></div>
                                                         </label>
                                                     </div>
@@ -974,7 +980,7 @@
                                 <div class="row row-16 main-payment">
                                     <div class="col" style="padding-top: 20px;">
                                         <input type="radio" name="payment_method" style="display: none;"
-                                               class="payment_method" value="momo">
+                                            class="payment_method" value="momo">
                                         <div class="title h3 color-default">
                                             Ví điện tử
                                             <span class="vnpay-logo b">
@@ -985,8 +991,8 @@
                                     <div class="col-auto" style="padding-top: 20px;">
                                         <div class="icon">
                                             <img width="100%"
-                                                 src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png"
-                                                 alt="">
+                                                src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png"
+                                                alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -1001,8 +1007,8 @@
                                                         class="input-group-wrap input-default input-size-default input-group-vertical">
                                                         <label class="input-inner-wrap">
                                                             <input type="number"
-                                                                   class="input input-label-change input-has-clear"
-                                                                   placeholder="Nhập số tiền cần nạp..." name="amount[momo]">
+                                                                class="input input-label-change input-has-clear"
+                                                                placeholder="Nhập số tiền cần nạp..." name="amount[momo]">
                                                             <div class="input-frame"></div>
                                                         </label>
                                                     </div>
@@ -1019,7 +1025,7 @@
                                 <div class="row row-16 main-payment">
                                     <div class="col" style="padding-top: 20px;">
                                         <input type="radio" name="payment_method" style="display: none;"
-                                               class="payment_method" value="zalopay">
+                                            class="payment_method" value="zalopay">
                                         <div class="title h3 color-default">
                                             Ví điện tử
                                             <span class="vnpay-logo b">
@@ -1031,8 +1037,8 @@
                                     <div class="col-auto" style="padding-top: 20px;">
                                         <div class="icon">
                                             <img width="100%"
-                                                 src="https://qcgateway.zalopay.vn/pay/v2/images/icon-zpapp-2.svg"
-                                                 alt="">
+                                                src="https://qcgateway.zalopay.vn/pay/v2/images/icon-zpapp-2.svg"
+                                                alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -1047,9 +1053,9 @@
                                                         class="input-group-wrap input-default input-size-default input-group-vertical">
                                                         <label class="input-inner-wrap">
                                                             <input type="number"
-                                                                   class="input input-label-change input-has-clear"
-                                                                   placeholder="Nhập số tiền cần nạp..."
-                                                                   name="amount[zalopay]">
+                                                                class="input input-label-change input-has-clear"
+                                                                placeholder="Nhập số tiền cần nạp..."
+                                                                name="amount[zalopay]">
                                                             <div class="input-frame"></div>
                                                         </label>
                                                     </div>
@@ -1082,38 +1088,38 @@
                         <div>
                             <table class="reward-table">
                                 <thead>
-                                <tr>
-                                    <th>Điểm thưởng</th>
-                                    <th>Member</th>
-                                    <th>VIP</th>
-                                    <th>VVIP</th>
-                                </tr>
+                                    <tr>
+                                        <th>Điểm thưởng</th>
+                                        <th>Member</th>
+                                        <th>VIP</th>
+                                        <th>VVIP</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Tại Quầy Vé</td>
-                                    <td>5%</td>
-                                    <td>7%</td>
-                                    <td>10%</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight">VD: 100.000 đ</td>
-                                    <td>5 Điểm</td>
-                                    <td>7 Điểm</td>
-                                    <td>10 Điểm</td>
-                                </tr>
-                                <tr>
-                                    <td>Quầy Bắp Nước</td>
-                                    <td>3%</td>
-                                    <td>4%</td>
-                                    <td>5%</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight">VD: 100.000 đ</td>
-                                    <td>3 Điểm</td>
-                                    <td>4 Điểm</td>
-                                    <td>5 Điểm</td>
-                                </tr>
+                                    <tr>
+                                        <td>Tại Quầy Vé</td>
+                                        <td>5%</td>
+                                        <td>7%</td>
+                                        <td>10%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="highlight">VD: 100.000 đ</td>
+                                        <td>5 Điểm</td>
+                                        <td>7 Điểm</td>
+                                        <td>10 Điểm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quầy Bắp Nước</td>
+                                        <td>3%</td>
+                                        <td>4%</td>
+                                        <td>5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="highlight">VD: 100.000 đ</td>
+                                        <td>3 Điểm</td>
+                                        <td>4 Điểm</td>
+                                        <td>5 Điểm</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1141,24 +1147,24 @@
                         <h4>3. Hạng thành viên và tỷ lệ ưu đãi</h4>
                         <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
                             <thead>
-                            <tr>
-                                <th style="border: 1px solid #ddd; padding: 8px;">Hạng thành viên</th>
-                                <th style="border: 1px solid #ddd; padding: 8px;">Tỷ lệ quy đổi</th>
-                            </tr>
+                                <tr>
+                                    <th style="border: 1px solid #ddd; padding: 8px;">Hạng thành viên</th>
+                                    <th style="border: 1px solid #ddd; padding: 8px;">Tỷ lệ quy đổi</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 8px;">BKM Member 🥈</td>
-                                <td style="border: 1px solid #ddd; padding: 8px;">1 Điểm = 1.000 đ</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 8px;">BKM VIP 🌟</td>
-                                <td style="border: 1px solid #ddd; padding: 8px;">2 Điểm = 2.000 đ</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 8px;">BKM VVIP 👑</td>
-                                <td style="border: 1px solid #ddd; padding: 8px;">3 Điểm = 3.000 đ</td>
-                            </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM Member 🥈</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">1 Điểm = 1.000 đ</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM VIP 🌟</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">2 Điểm = 2.000 đ</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM VVIP 👑</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">3 Điểm = 3.000 đ</td>
+                                </tr>
                             </tbody>
                         </table>
 
@@ -1266,8 +1272,8 @@
                 <h3 class="title-payment">Chọn ảnh đại diện</h3>
             </div>
             <form data-error="{{ asset('client/images/error.png') }}" data-image="{{ asset('client/images/1.jpg') }}"
-                  data-success="{{ asset('client/images/success.png') }}" action="{{ route('updateAvatar') }}"
-                  id="updateAvatarForm" method="post" enctype="multipart/form-data">
+                data-success="{{ asset('client/images/success.png') }}" action="{{ route('updateAvatar') }}"
+                id="updateAvatarForm" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="main-modal" style="margin-top: 33px;">
                     <div class="body_modal_image">
@@ -1275,7 +1281,7 @@
                             <input type="hidden" name="image" id="avatar" value="">
                             <label class="input-inner-wrap-image">
                                 <input type="file" class="" name="user[image]"
-                                       accept=".jpg, .jpeg, .png, .webp" id="avatarInput">
+                                    accept=".jpg, .jpeg, .png, .webp" id="avatarInput">
                                 <div class="input-extend input-extend-right">
                                     <div class="input-box-image input-ic-clear"></div>
                                 </div>
@@ -1293,7 +1299,4 @@
 
 @section('js')
     <script type="module" src="{{ asset('client/js/auth/auth.js') }}"></script>
-    <script>
-
-    </script>
 @endsection
