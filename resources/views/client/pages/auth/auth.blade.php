@@ -3,9 +3,6 @@
 @section('title', Auth::check() ? 'Thông tin tài khoản' : 'Đăng ký - Đăng nhập | BKM Cinemas')
 
 @section('css')
-    <style>
-        
-    </style>
 @endsection
 
 @vite(['resources/js/app.js', 'resources/css/app.css'])

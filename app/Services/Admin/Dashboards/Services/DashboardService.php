@@ -28,4 +28,9 @@ class DashboardService extends BaseService implements DashboardServiceInterface
     {
         return $this->repository->getRevenueAndTicketData($request);
     }
+
+    public function getTop5MoviesByViewCount()
+    {
+        return $this->repository->getTop5MoviesByViewCount();
+    }
 }

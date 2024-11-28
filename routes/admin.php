@@ -76,7 +76,7 @@ Route::prefix('admin')
                     Route::get('/getRevenueAndTicketData', 'getRevenueAndTicketData')
                         ->name('getRevenueAndTicketData');
                 });
-        
+
             Route::prefix('systems')
                 ->controller(SystemController::class)
                 ->name('systems.')
@@ -471,7 +471,7 @@ Route::prefix('admin')
                         ->name('deleteItemMultipleChecked');
                 });
 
-            Route::prefix('movie')
+            Route::prefix('movies')
                 ->controller(MovieController::class)
                 ->name('movies.')
                 ->group(function () {

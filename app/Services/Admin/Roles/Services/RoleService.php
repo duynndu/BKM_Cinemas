@@ -26,7 +26,7 @@ class RoleService extends BaseService implements RoleServiceInterface
         }
         $role = $this->repository->create($data['role']);
 
-        if (is_array($data['permissions']) && count($data['permissions']) > 0) {
+        if (!empty($data['permissions']) && is_array($data['permissions']) && count($data['permissions']) > 0) {
             $role->permissions()->attach($data['permissions']);
         }
 

@@ -9,4 +9,6 @@ interface DashboardInterface
     public function top10PostLatest();
 
     public function getRevenueAndTicketData($request);
+
+    public function getTop5MoviesByViewCount();
 }

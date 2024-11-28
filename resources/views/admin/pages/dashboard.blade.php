@@ -397,25 +397,6 @@
                                 <div class="card-body d-flex align-items-center">
                                     <div class="card-box-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                            viewBox="0 0 576 512">
-                                            <path fill="var(--primary)" stroke="var(--primary)"
-                                                d="M64 64C28.7 64 0 92.7 0 128L0 384c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64L64 64zM272 192l224 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-224 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zM256 304c0-8.8 7.2-16 16-16l224 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-224 0c-8.8 0-16-7.2-16-16zM164 152l0 13.9c7.5 1.2 14.6 2.9 21.1 4.7c10.7 2.8 17 13.8 14.2 24.5s-13.8 17-24.5 14.2c-11-2.9-21.6-5-31.2-5.2c-7.9-.1-16 1.8-21.5 5c-4.8 2.8-6.2 5.6-6.2 9.3c0 1.8 .1 3.5 5.3 6.7c6.3 3.8 15.5 6.7 28.3 10.5l.7 .2c11.2 3.4 25.6 7.7 37.1 15c12.9 8.1 24.3 21.3 24.6 41.6c.3 20.9-10.5 36.1-24.8 45c-7.2 4.5-15.2 7.3-23.2 9l0 13.8c0 11-9 20-20 20s-20-9-20-20l0-14.6c-10.3-2.2-20-5.5-28.2-8.4c0 0 0 0 0 0s0 0 0 0c-2.1-.7-4.1-1.4-6.1-2.1c-10.5-3.5-16.1-14.8-12.6-25.3s14.8-16.1 25.3-12.6c2.5 .8 4.9 1.7 7.2 2.4c13.6 4.6 24 8.1 35.1 8.5c8.6 .3 16.5-1.6 21.4-4.7c4.1-2.5 6-5.5 5.9-10.5c0-2.9-.8-5-5.9-8.2c-6.3-4-15.4-6.9-28-10.7l-1.7-.5c-10.9-3.3-24.6-7.4-35.6-14c-12.7-7.7-24.6-20.5-24.7-40.7c-.1-21.1 11.8-35.7 25.8-43.9c6.9-4.1 14.5-6.8 22.2-8.5l0-14c0-11 9-20 20-20s20 9 20 20z" />
-                                        </svg>
-                                    </div>
-                                    <div class="chart-num">
-                                        <h2 class="mb-0">932</h2>
-                                        <p class="mb-0">
-                                            Tổng doanh thu
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card counter">
-                                <div class="card-body d-flex align-items-center">
-                                    <div class="card-box-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                             fill="none" viewBox="0 0 448 512">
                                             <path fill="#9568FF"
                                                 d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z" />
@@ -574,87 +555,127 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="swiper mySwiper-counter position-relative overflow-hidden">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="swiper-slide">
+                                <div class="widget-stat card bg-info">
+                                    <div class="card-body p-4">
+                                        <div class="media">
+                                            <span class="me-3">
+                                                <i class="la la-dollar"></i>
+                                            </span>
+                                            <div class="media-body text-white">
+                                                <p class="mb-1 text-white">Doanh thu</p>
+                                                <h3 class="text-white revenuaData">0</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-xl-12 wow fadeInUp" data-wow-delay="1.5s">
                         <div class="card crypto-chart" style="padding: 0 0 20px 0;">
                             <div class="card-header pb-0 border-0 flex-wrap">
-                                <div class="p-static">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <form id="revenueAndTicketForm"
-                                            action="{{ route('admin.dashboards.getRevenueAndTicketData') }}"
-                                            method="post">
-                                            @csrf
-                                            <div class="d-flex align-items-center">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <select class="select2" name="filter" id="filter">
-                                                            <option value="">-- Chọn bộ lọc --</option>
-                                                            <option value="day">Thống kê theo ngày</option>
-                                                            <option value="month">Thống kê theo tháng</option>
-                                                            <option value="year">Thống kê theo năm</option>
-                                                            <option value="range">Thống kê theo khoảng thời gian</option>
-                                                        </select>
-                                                    </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <form id="revenueAndTicketForm"
+                                        action="{{ route('admin.dashboards.getRevenueAndTicketData') }}"
+                                        method="post">
+                                        @csrf
+                                        <div class="d-flex align-items-center">
+                                            <div class="row">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <select class="select2" name="filter" id="filter">
+                                                                <option value="">-- Tất cả --</option>
+                                                                <option value="day">Thống kê theo ngày</option>
+                                                                <option value="month">Thống kê theo tháng</option>
+                                                                <option value="year">Thống kê theo năm</option>
+                                                                <option value="range">Thống kê theo khoảng thời gian</option>
+                                                            </select>
+                                                        </div>
 
-                                                    <!-- Lọc theo ngày cụ thể -->
-                                                    <div class="col" id="dayFilter" style="display: none;">
-                                                        <input type="date" id="dateFilter" name="date" class="form-control" max="{{ \Carbon\Carbon::today()->toDateString() }}">
-                                                    </div>
+                                                        <!-- Lọc theo ngày cụ thể -->
+                                                        <div class="col" id="dayFilter" style="display: none;">
+                                                            <input type="date" id="dateFilter" name="date" class="form-control" max="{{ \Carbon\Carbon::today()->toDateString() }}">
+                                                        </div>
 
-                                                    <div class="col" id="monthFilter" style="display: none;">
-                                                        <div class="d-flex align-items-center">
-                                                            <div style="margin-right: 20px">
-                                                                <select id="monthSelect" class="select2"
-                                                                    name="month">
-                                                                    @for ($i = 1; $i <= 12; $i++)
-                                                                        <option value="{{ $i }}">Tháng
-                                                                            {{ $i }}</option>
-                                                                    @endfor
-                                                                </select>
+                                                        <div class="col" id="monthFilter" style="display: none;">
+                                                            <div class="d-flex align-items-center">
+                                                                <div style="margin-right: 20px;">
+                                                                    <select id="monthSelect" class="select2"
+                                                                            name="month">
+                                                                        @for ($i = 1; $i <= 12; $i++)
+                                                                            <option value="{{ $i }}">Tháng
+                                                                                {{ $i }}</option>
+                                                                        @endfor
+                                                                    </select>
+                                                                </div>
+                                                                <div >
+                                                                    <select id="yearSelect" class="select2"
+                                                                            name="yearMonth">
+                                                                        @for ($i = 2000; $i <= \Carbon\Carbon::now()->year; $i++)
+                                                                            <option value="{{ $i }}">
+                                                                                {{ $i }}</option>
+                                                                        @endfor
+                                                                    </select>
+                                                                </div>
                                                             </div>
-                                                            <div>
-                                                                <select id="yearSelect" class="select2"
-                                                                    name="yearMonth">
-                                                                    @for ($i = 2000; $i <= \Carbon\Carbon::now()->year; $i++)
-                                                                        <option value="{{ $i }}">
-                                                                            {{ $i }}</option>
-                                                                    @endfor
-                                                                </select>
-                                                            </div>
+                                                        </div>
+
+                                                        <!-- Lọc theo năm -->
+                                                        <div class="col" id="yearFilter" style="display: none;">
+                                                            <select id="yearSelect2" class="select2" name="year_filter">
+                                                                <option value="">-- Chọn Năm --</option>
+                                                                @for ($i = 2000; $i <= \Carbon\Carbon::now()->year; $i++)
+                                                                    <option value="{{ $i }}">
+                                                                        {{ $i }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+
+                                                        <!-- Lọc theo khoảng thời gian -->
+                                                        <div class="col" id="rangeFilter" style="display: none;">
+                                                            <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="start_date" class="form-control"
+                                                                   id="start_date">
+                                                        </div>
+
+                                                        <div class="col" id="rangeFilterEnd" style="display: none;">
+                                                            <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="end_date" class="form-control"
+                                                                   id="end_date">
                                                         </div>
                                                     </div>
 
-                                                    <!-- Lọc theo năm -->
-                                                    <div class="col" id="yearFilter" style="display: none;">
-                                                        <select id="yearSelect2" class="select2" name="year_filter">
-                                                            <option value="">-- Chọn Năm --</option>
-                                                            @for ($i = 2000; $i <= \Carbon\Carbon::now()->year; $i++)
-                                                                <option value="{{ $i }}">
-                                                                    {{ $i }}</option>
-                                                            @endfor
-                                                        </select>
-                                                    </div>
-
-                                                    <!-- Lọc theo khoảng thời gian -->
-                                                    <div class="col" id="rangeFilter" style="display: none;">
-                                                        <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="start_date" class="form-control"
-                                                            id="start_date">
-                                                    </div>
-
-                                                    <div class="col" id="rangeFilterEnd" style="display: none;">
-                                                        <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="end_date" class="form-control"
-                                                            id="end_date">
-                                                    </div>
-                                                </div>
-                                                <div class="row" style="margin-left: 10px">
-                                                    <div class="col text-end">
-                                                        <button type="button" class="btn btn-primary"
-                                                            id="btnFilter">Lọc</button>
+                                                    <div class="row">
+                                                        @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
+                                                            <div class="col" style="margin-left: 20px;">
+                                                                @if($data['cinemas']->isNotEmpty())
+                                                                    <select class="select2" name="cinema_id" id="cinema_id">
+                                                                        <option value="">-- Chọn rạp --</option>
+                                                                        @foreach($data['cinemas'] as $key => $cinema)
+                                                                            <option value="{{ $cinema->id }}">{{ $cinema->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                @endif
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
-                                    </div>
+                                            <div class="row" style="margin-left: 10px">
+                                                <div class="col text-end">
+                                                    <button type="button" class="btn btn-primary"
+                                                            id="btnFilter">Lọc</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="card-body pt-2 custome-tooltip pb-0">
@@ -664,90 +685,92 @@
                     </div>
                     <!--column-->
                 </div>
-                <div class="row">
-                    <div class="col-xl-8">
-                        <div class="col-xl-4 wow fadeInUp" data-wow-delay="1s">
-                            <div class="card">
-                                <div class="card-header border-0">
-                                    <h2 class="card-title">{{ __('language.admin.dashboards.statisticalStatusOrder') }}
-                                    </h2>
-                                </div>
-                                <div class="card-body text-center pt-0 pb-2">
-                                    <div id="pieChart" class="d-inline-block">
+{{--                <div class="row">--}}
+{{--                    <div class="col-xl-8">--}}
+{{--                        <div class="col-xl-4 wow fadeInUp" data-wow-delay="1s">--}}
+{{--                            <div class="card">--}}
+{{--                                <div class="card-header border-0">--}}
+{{--                                    <h2 class="card-title">--}}
+{{--                                        Thống kê--}}
+{{--                                    </h2>--}}
+{{--                                </div>--}}
+{{--                                <div class="card-body text-center pt-0 pb-2">--}}
+{{--                                    <div id="pieChart" class="d-inline-block">--}}
 
-                                    </div>
-                                    <div class="chart-items">
-                                        <!--row-->
-                                        <div class="row">
-                                            <!--column-->
-                                            <div class=" col-xl-12 col-sm-12">
-                                                <div class="text-start mt-2">
-                                                    <h6>{{ __('language.admin.dashboards.suggest') }}</h6>
-                                                    <div class="color-picker">
-                                                        <p class="mb-0  text-gray">
-                                                            <svg class="me-2" width="14" height="14"
-                                                                viewBox="0 0 14 14" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <rect width="14" height="14" rx="4"
-                                                                    fill="#9568FF" />
-                                                            </svg>
-                                                            Primary (27%)
-                                                        </p>
-                                                        <h6 class="mb-0">763</h6>
-                                                    </div>
-                                                    <div class="color-picker">
-                                                        <p class="mb-0 text-gray">
-                                                            <svg class="me-2" width="14" height="14"
-                                                                viewBox="0 0 14 14" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <rect width="14" height="14" rx="4"
-                                                                    fill="#000" />
-                                                            </svg>
-                                                            Promotion (11%)
-                                                        </p>
-                                                        <h6 class="mb-0">321</h6>
-                                                    </div>
-                                                    <div class="color-picker">
-                                                        <p class="mb-0 text-gray">
-                                                            <svg class="me-2" width="14" height="14"
-                                                                viewBox="0 0 14 14" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <rect width="14" height="14" rx="4"
-                                                                    fill="var(--primary)" />
-                                                            </svg>
-                                                            Forum (22%)
-                                                        </p>
-                                                        <h6 class="mb-0">154</h6>
-                                                    </div>
-                                                    <div class="color-picker">
-                                                        <p class="mb-0 text-gray">
-                                                            <svg class="me-2" width="14" height="14"
-                                                                viewBox="0 0 14 14" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <rect width="14" height="14" rx="4"
-                                                                    fill="#2BC844" />
-                                                            </svg>
-                                                            Socials (15%)
-                                                        </p>
-                                                        <h6 class="mb-0">154</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/column-->
-                                        </div>
-                                        <!--/row-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{--                                    </div>--}}
+{{--                                    <div class="chart-items">--}}
+{{--                                        <!--row-->--}}
+{{--                                        <div class="row">--}}
+{{--                                            <!--column-->--}}
+{{--                                            <div class=" col-xl-12 col-sm-12">--}}
+{{--                                                <div class="text-start mt-2">--}}
+{{--                                                    <h6>{{ __('language.admin.dashboards.suggest') }}</h6>--}}
+{{--                                                    <div class="color-picker">--}}
+{{--                                                        <p class="mb-0  text-gray">--}}
+{{--                                                            <svg class="me-2" width="14" height="14"--}}
+{{--                                                                viewBox="0 0 14 14" fill="none"--}}
+{{--                                                                xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                                                <rect width="14" height="14" rx="4"--}}
+{{--                                                                    fill="#9568FF" />--}}
+{{--                                                            </svg>--}}
+{{--                                                            Primary (27%)--}}
+{{--                                                        </p>--}}
+{{--                                                        <h6 class="mb-0">763</h6>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="color-picker">--}}
+{{--                                                        <p class="mb-0 text-gray">--}}
+{{--                                                            <svg class="me-2" width="14" height="14"--}}
+{{--                                                                viewBox="0 0 14 14" fill="none"--}}
+{{--                                                                xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                                                <rect width="14" height="14" rx="4"--}}
+{{--                                                                    fill="#000" />--}}
+{{--                                                            </svg>--}}
+{{--                                                            Promotion (11%)--}}
+{{--                                                        </p>--}}
+{{--                                                        <h6 class="mb-0">321</h6>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="color-picker">--}}
+{{--                                                        <p class="mb-0 text-gray">--}}
+{{--                                                            <svg class="me-2" width="14" height="14"--}}
+{{--                                                                viewBox="0 0 14 14" fill="none"--}}
+{{--                                                                xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                                                <rect width="14" height="14" rx="4"--}}
+{{--                                                                    fill="var(--primary)" />--}}
+{{--                                                            </svg>--}}
+{{--                                                            Forum (22%)--}}
+{{--                                                        </p>--}}
+{{--                                                        <h6 class="mb-0">154</h6>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="color-picker">--}}
+{{--                                                        <p class="mb-0 text-gray">--}}
+{{--                                                            <svg class="me-2" width="14" height="14"--}}
+{{--                                                                viewBox="0 0 14 14" fill="none"--}}
+{{--                                                                xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                                                <rect width="14" height="14" rx="4"--}}
+{{--                                                                    fill="#2BC844" />--}}
+{{--                                                            </svg>--}}
+{{--                                                            Socials (15%)--}}
+{{--                                                        </p>--}}
+{{--                                                        <h6 class="mb-0">154</h6>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <!--/column-->--}}
+{{--                                        </div>--}}
+{{--                                        <!--/row-->--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
                 <div class="row">
                     <!--column-->
                     <div class="col-xl-6">
                         <div class="card overflow-hidden">
                             <div class="card-body p-4">
-                                <h4 class="mb-0">{{ __('language.admin.dashboards.recentOrders') }}</h4>
+                                <h4 class="mb-0">Top 5 phim nhiều người xem nhất</h4>
                                 <div class="mail-img">
                                     <svg width="120" height="84" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 448 512">
@@ -756,10 +779,41 @@
                                     </svg>
                                 </div>
                                 <div class="card-body p-0">
-
+                                    @if (!empty($data['top5Movies']))
+                                        @foreach ($data['top5Movies'] as $movie)
+                                            <div class="quick-info mt-3"
+                                                 style="padding: 20px 10px !important; border-radius: 4px;">
+                                                <div class="quick-content">
+                                                    <img src="{{ $movie->image ?? '' }}" class="avatar me-2"
+                                                         alt="">
+                                                    <div class="user-name">
+                                                        <h6 class="mb-0">{{ $movie->title }}</h6>
+                                                        <div class="row">
+                                                            <span>
+                                                                Ngày khởi chiếu: {{ date('d-m-Y', strtotime($movie->release_date)) }}
+                                                            </span>
+                                                        </div>
+                                                        <div class="row">
+                                                            <span>
+                                                                Định dạng: {{ $movie->format }} | Tuổi: {{ $movie->age }}
+                                                            </span>
+                                                        </div>
+                                                        <div class="row">
+                                                            <span>
+                                                                Quốc gia: {{ $movie->country }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="count">
+                                                    <span>{{ date('d/m/Y', strtotime($movie->created_at)) }}</span>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                                 <div class="card-footer border-0" style="padding: 30px 0 0 0;">
-                                    <a href=""
+                                    <a href="{{ route('admin.movies.index') }}"
                                         class="btn btn-primary w-100 btn-login">{{ __('language.admin.dashboards.viewAll') }}</a>
                                 </div>
                             </div>
@@ -770,7 +824,7 @@
                     <div class="col-xl-6">
                         <div class="card overflow-hidden">
                             <div class="card-body p-4">
-                                <h4 class="mb-0">{{ __('language.admin.dashboards.postNew') }}</h4>
+                                <h4 class="mb-0">Top 5 bài viết nổi bật</h4>
                                 <div class="mail-img">
                                     <svg width="120" height="84" fill="none" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 512 512">
@@ -837,16 +891,30 @@
 
             const ctx = $('#myChart')[0].getContext('2d');
             const myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'bar',  // Biểu đồ cột
                 data: {
-                    labels: [],
-                    datasets: [{
-                        label: 'Doanh thu (VNĐ)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1,
-                        data: []
-                    }]
+                    labels: [],  // Nhãn X
+                    datasets: [
+                        {
+                            label: 'Doanh thu (VNĐ)',
+                            backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                            borderColor: 'rgba(255, 165, 0, 1)',
+                            borderWidth: 1,
+                            data: [],
+                            barThickness: 70,
+                            maxBarThickness: 80,
+                        },
+                        {
+                            label: 'Tên phim',
+                            data: [],
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            type: 'line',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: false  // Không tô màu dưới đường line
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
@@ -865,6 +933,9 @@
                             title: {
                                 display: true,
                                 text: 'Doanh thu (VNĐ)'
+                            },
+                            ticks: {
+                                stepSize: 500000
                             }
                         }
                     }
@@ -880,6 +951,7 @@
                 var year = $('#yearSelect2').val();
                 var startDate = $('#start_date').val();
                 var endDate = $('#end_date').val();
+                var cinema_id = $('#cinema_id').val();
 
                 var data = {
                     filter: filter,
@@ -889,22 +961,37 @@
                     year_filter: year,
                     start_date: startDate,
                     end_date: endDate,
-                    _token: $('input[name="_token"]').val() 
+                    cinema_id: cinema_id,
+                    _token: $('input[name="_token"]').val()
                 };
 
                 $.ajax({
-                    url: $('#revenueAndTicketForm').attr('action'), 
+                    url: $('#revenueAndTicketForm').attr('action'),
                     method: 'GET',
                     data: data,
                     dataType: 'json',
                     success: function(response) {
                         const chartData = response.chart;
-                        const labels = chartData.map(item => item.movie_name_and_date);
-                        const revenues = chartData.map(item => item.total_revenue);
 
-                        myChart.data.labels = labels;
-                        myChart.data.datasets[0].data = revenues;
-                        myChart.update();
+                        const revenuaData = $('.revenuaData');
+                        let totalRevenue = 0;
+
+                        for (let i = 0; i < chartData.length; i++) {
+                            totalRevenue += chartData[i].total_revenue;
+                        }
+
+                        revenuaData.text(totalRevenue.toLocaleString('vi-VN') + ' VNĐ');
+
+                        const labels = chartData.map(item => item.movie_name_and_date); // Nhãn (tên phim và ngày)
+                        const revenues = chartData.map(item => item.total_revenue); // Dữ liệu cột
+                        const movieCounts = chartData.map(item => item.movie_count); // Dữ liệu cho đường line
+
+                        // Cập nhật dữ liệu cho chart
+                        myChart.data.labels = labels; // Cập nhật trục X
+                        myChart.data.datasets[0].data = revenues; // Cập nhật dữ liệu cột
+                        myChart.data.datasets[1].data = movieCounts; // Cập nhật dữ liệu đường line (số lượng phim)
+
+                        myChart.update(); // Render lại biểu đồ
                     },
                     error: function(xhr, status, error) {
                         console.error('Lỗi khi tải dữ liệu biểu đồ:', error);
@@ -918,14 +1005,26 @@
                 dataType: 'json',
                 success: function(response) {
                     const chartData = response.chart;
-                    const labels = chartData.map(item => item
-                        .movie_name_and_date); 
-                    const revenues = chartData.map(item => item.total_revenue);
 
-                    myChart.data.labels = labels; 
-                    myChart.data.datasets[0].data = revenues;
+                    const revenuaData = $('.revenuaData');
+                    let totalRevenue = 0;
 
-                    myChart.update();
+                    for (let i = 0; i < chartData.length; i++) {
+                        totalRevenue += chartData[i].total_revenue;
+                    }
+
+                    revenuaData.text(totalRevenue.toLocaleString('vi-VN') + ' VNĐ');
+
+                    const labels = chartData.map(item => item.movie_name_and_date); // Nhãn (tên phim và ngày)
+                    const revenues = chartData.map(item => item.total_revenue); // Dữ liệu cột
+                    const movieCounts = chartData.map(item => item.movie_count); // Dữ liệu cho đường line
+
+                    // Cập nhật dữ liệu cho chart
+                    myChart.data.labels = labels; // Cập nhật trục X
+                    myChart.data.datasets[0].data = revenues; // Cập nhật dữ liệu cột
+                    myChart.data.datasets[1].data = movieCounts; // Cập nhật dữ liệu đường line (số lượng phim)
+
+                    myChart.update(); // Render lại biểu đồ
                 },
                 error: function(xhr, status, error) {
                     console.error('Lỗi khi tải dữ liệu biểu đồ:', error);
