@@ -28,17 +28,15 @@ return new class extends Migration
                 'cancelled',
                 'waiting_for_cancellation',
                 'rejected'
-            ])->default('pending');
+            ])->nullable();
             $table->enum('payment_status', [
                 'pending',
                 'completed',
                 'failed',
                 'cancelled'
-            ])->default('pending');
+            ])->nullable();
             $table->enum('refund_status', [
-                'pending',
                 'completed',
-                'failed',
                 'cancelled'
             ])->nullable();
             $table->timestamps();

@@ -59,22 +59,23 @@ class Booking extends Model
         return $this->totalSeatsPrice() + $this->totalFoodsPrice();
     }
 
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
-
-    public function cinema(){
-        return $this->belongsTo(Cinema::class);
-    }
-
     public function movie()
     {
         return $this->belongsTo(Movie::class);
     }
-
     public function showtime()
     {
-        return $this->belongsTo(ShowTime::class);
+        return $this->belongsTo(Showtime::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function cinema()
+    {
+        return $this->belongsTo(Cinema::class);
     }
 
     public function getCanCancelAttribute()
