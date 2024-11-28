@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\SeatTypeController;
 use App\Http\Controllers\Admin\SystemController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\MovieController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\Error\Admin\ErrorController;
 use Illuminate\Support\Facades\Route;
@@ -437,7 +438,7 @@ Route::prefix('admin')
 
                     Route::get('/create', 'create')
                         ->name('create');
-                        
+
                     Route::post('/store', 'store')
                         ->name('store');
 
@@ -834,6 +835,17 @@ Route::prefix('admin')
                     Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                         ->name('deleteItemMultipleChecked')
                         ->middleware('authorizeAction:delete,App\Models\Cinema');
+                });
+            Route::prefix('orders')
+                ->controller(OrderController::class)
+                ->name('orders.')
+                ->group(function () {
+                    Route::get('/', 'index')
+                        ->name('index')
+                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                    Route::get('/{id}/detail', 'detail')
+                        ->name('detail')
+                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
                 });
         });
     });

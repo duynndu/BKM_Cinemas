@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CinemaController;
@@ -92,4 +93,10 @@ Route::name('api.')->group(function () {
         Route::get('/momoReturn', 'momoReturn')->name('momoReturn');
         Route::get('/zaloPayReturn', 'zaloPayReturn')->name('zaloPayReturn');
     });
+
+    Route::controller(BookingController::class)->prefix('orders')->name('orders.')->group(function () {
+        Route::post('/{id}/change-status', 'changeStatus')
+            ->name('changeStatus');
+    });
+
 });

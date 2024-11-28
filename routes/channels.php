@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Booking;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -16,3 +17,5 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('showtime.{showtimeId}', function ($user, $showtimeId) {
     return ['user' => $user, 'showtimeId' => $showtimeId];
 });
+
+

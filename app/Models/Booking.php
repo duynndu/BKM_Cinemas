@@ -21,7 +21,19 @@ class Booking extends Model
 
     public function seatsBooking()
     {
-        return $this->hasMany(BookingSeat::class);
+        return $this->hasMany(BookingSeat::class, 'booking_id');
+    }
+
+    public function seats()
+    {
+        return $this->hasManyThrough(
+            Seat::class, // Model liên quan (seats)
+            BookingSeat::class, // Bảng trung gian (booking_seats)
+            'booking_id', // Khóa ngoại trong bảng booking_seats
+            'id', // Khóa ngoại trong bảng seats
+            'id', // Khóa chính trong bảng bookings
+            'seat_id' // Khóa chính trong bảng booking_seats
+        );
     }
 
     public function totalSeatsPrice()
@@ -43,5 +55,34 @@ class Booking extends Model
 
     public function totalPrice(){
         return $this->totalSeatsPrice() + $this->totalFoodsPrice();
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function cinema(){
+        return $this->belongsTo(Cinema::class);
+    }
+
+    public function movie()
+    {
+        return $this->belongsTo(Movie::class);
+    }
+
+    public function showtime()
+    {
+        return $this->belongsTo(ShowTime::class);
+    }
+
+    public function getCanCancelAttribute()
+    {
+        $now = \Carbon\Carbon::now();
+
+        $startTime = \Carbon\Carbon::parse($this->showtime->start_time);
+
+        $timeDifferenceInMinutes = $now->diffInMinutes($startTime, false);
+
+        return $timeDifferenceInMinutes >= 120;
     }
 }
