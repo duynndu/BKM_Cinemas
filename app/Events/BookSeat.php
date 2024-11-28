@@ -62,28 +62,6 @@ class BookSeat implements ShouldBroadcast
             }
             $this->seatsStorage[$seatNumber] = $this->seats[$index];
         }
-        $seatsSelected = collect($this->seatsStorage)
-            ->where('user_id', '=', $userId)
-            ->where('status', '=', SeatStatus::BOOKING)
-            ->map(function ($seat) {
-                return $seat->seat_number;
-            })->values();
-        // if (count($seatsSelected) == 1) {
-        //     DB::table('jobs')
-        //         ->where('queue', 'default') // Chỉ định queue nếu cần
-        //         ->whereNotNull('payload') // Đảm bảo rằng payload không rỗng
-        //         ->get()
-        //         ->each(function ($job) use ($userId) {
-        //             $payload = json_decode($job->payload, true);
-        //             if (
-        //                 isset($payload['data']['showtimeId']) && $payload['data']['showtimeId'] == $this->showtimeId &&
-        //                 isset($payload['data']['userId']) && $payload['data']['userId'] == $userId
-        //             ) {
-        //                 DB::table('jobs')->where('id', $job->id)->delete();
-        //             }
-        //         });
-        //     ResetSeatStatus::dispatch($this->showtimeId, $userId)->delay(now()->addSeconds(300));
-        // }
     }
 
     public function set($seatStatus)

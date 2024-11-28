@@ -17,5 +17,6 @@ export interface IBooking {
   seats: ISeat[],
   foods: IFood[],
   seats_booking: any[],
-  foods_booking: any[]
+  foods_booking: any[],
+  endTime: string;
 }

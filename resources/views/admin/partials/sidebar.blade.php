@@ -135,7 +135,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>
-                        <a href="#">Đơn hàng</a>
+                        <a href="{{ route('admin.orders.index') }}">Đơn hàng</a>
                     </li>
                     <li>
                         <a href="#">Báo cáo</a>

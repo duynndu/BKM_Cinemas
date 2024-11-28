@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\BookSeat;
 use App\Http\Controllers\Client\PostByCategoryController;
 use App\Jobs\ResetSeatStatus;
 use App\WebSockets\CustomWebSocketHandler;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Client\ListMoviesController;
 use App\Http\Controllers\Auth\Client\GoogleController;
 use App\Http\Controllers\Client\MovieDetailController;
 use App\Http\Controllers\Auth\Client\FacebookController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Client\AboutController;
 use App\Http\Controllers\Client\PostController;
 use App\Http\Controllers\Client\PostDetailController;
@@ -93,6 +95,9 @@ Route::prefix('google')
     });
 // End đăng nhập google
 
+Route::get('tim-kiem', [ListMoviesController::class, 'searchMovies'])->name('search');
+
+
 // Nạp tiền
 Route::post('/processDeposit', [DepositController::class, 'processDeposit'])->name('processDeposit');
 
@@ -133,22 +138,27 @@ Route::get('/lich-chieu', function () {
 
 Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
     $userId = optional(auth()->user())->id;
+    $jobName = \App\Jobs\ResetSeatStatus::class;
+
+    // Tìm và xóa job có payload khớp
     DB::table('jobs')
-        ->where('queue', 'default') // Chỉ định queue nếu cần
-        ->whereNotNull('payload') // Đảm bảo rằng payload không rỗng
-        ->get()
-        ->each(function ($job) use ($userId, $showtime) {
-            $payload = json_decode($job->payload, true);
-            if (
-                isset($payload['data']['showtimeId']) && $payload['data']['showtimeId'] == $showtime->id &&
-                isset($payload['data']['userId']) && $payload['data']['userId'] == $userId
-            ) {
-                DB::table('jobs')->where('id', $job->id)->delete();
-            }
-        });
-    ResetSeatStatus::dispatch($showtime->id, $userId)->delay(now()->addSeconds(302));
-    return view('client.pages.buy-ticket', ['showtimeId' => $showtime->id]);
+        ->where('payload', 'LIKE', '%' . $showtime->id . '%')
+        ->where('payload', 'LIKE', '%' . $userId . '%')
+        ->delete();
+    $endTime = now()->addSeconds(300);
+    ResetSeatStatus::dispatch($showtime->id, $userId);
+    ResetSeatStatus::dispatch($showtime->id, $userId)->delay($endTime);
+    ResetSeatStatus::dispatch($showtime->id, $userId, 'SEAT_AWAITING_PAYMENT_ACTION');
+    ResetSeatStatus::dispatch($showtime->id, $userId, 'SEAT_WAITING_PAYMENT');
+
+    return view('client.pages.buy-ticket', [
+        'showtimeId' => $showtime->id,
+        'endTime' => $endTime->toIso8601String()
+    ]);
 })->name("buy-ticket");
+
+Route::get('/thanh-cong', [BookingController::class, 'paymentSuccess'])->name('thanh-cong');
+
 Route::get('/dat-ve/xac-nhan', function () {
     return view('client.pages.payment-verification');
 });
@@ -157,7 +167,6 @@ Route::get('/dat-ve/thanh-toan', function () {
     return view('client.pages.payment-verification-step2');
 });
 
-Route::get('/{slug}',[PostController::class, 'list'])->name('post.list');
+Route::get('/{slug}', [PostController::class, 'list'])->name('post.list');
 
-Route::get('/{cate_slug}/{slug}',[PostController::class, 'detail'])->name('post.detail');
-
+Route::get('/{cate_slug}/{slug}', [PostController::class, 'detail'])->name('post.detail');

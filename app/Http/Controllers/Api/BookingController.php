@@ -5,14 +5,24 @@ namespace App\Http\Controllers\Api;
 use App\Constants\SeatStatus;
 use App\Constants\Status;
 use App\Events\BookSeat;
+use App\Events\OrderRefundStatusUpdated;
+use App\Events\OrderStatusUpdated;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResetSeatStatus;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Services\Admin\Orders\Interfaces\OrderServiceInterface;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class BookingController extends Controller
 {
+    private $orderService;
+    public function __construct(
+        OrderServiceInterface $orderService
+    ) {
+        $this->orderService = $orderService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -31,7 +41,8 @@ class BookingController extends Controller
             'foods' => 'nullable',
             'movie_id' => 'required|integer',
             'showtime_id' => 'required|integer',
-            'payment_id' => 'required|integer'
+            'payment_id' => 'required|integer',
+            'cinema_id' => 'required|integer'
         ]);
 
         $seats = collect($request->seats)->map(function ($seat) {
@@ -49,7 +60,7 @@ class BookingController extends Controller
         DB::beginTransaction();
         try {
             $booking = new Booking();
-            $booking->cinema_id = auth()->user()->cinema_id;
+            $booking->cinema_id = $request->cinema_id;
             $booking->user_id = auth()->id();
             $booking->movie_id = $request->movie_id;
             $booking->showtime_id = $request->showtime_id;
@@ -64,7 +75,13 @@ class BookingController extends Controller
                 'action' => 'set',
                 'value' => SeatStatus::BOOKED
             ]);
-            ResetSeatStatus::dispatch($request->showtime_id, auth()->id(), 'SEAT_AWAITING_PAYMENT_ACTION')->delay(now()->addSeconds(180));
+            DB::table('jobs')
+                ->where('payload', 'LIKE', '%' . $booking->showtime_id . '%')
+                ->where('payload', 'LIKE', '%' . $booking->user_id . '%')
+                ->delete();
+            $endTime = now()->addSeconds(180);
+            ResetSeatStatus::dispatch($request->showtime_id, auth()->id(), 'SEAT_AWAITING_PAYMENT_ACTION')->delay($endTime);
+            $booking->endTime = $endTime->toIso8601String();
             return response()->json($booking, 201);
         } catch (\Exception $error) {
             DB::rollBack();
@@ -98,5 +115,102 @@ class BookingController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function changeStatus(Request $request, $id)
+    {
+        try {
+            $validated = $request->validate([
+                'status' => ['required', 'in:cancelled,waiting_for_cancellation,rejected'],
+            ]);
+
+            $record = $this->orderService->find($id);
+            if (empty($record)) {
+                return response()->json(['failed' => 'Có lỗi xảy ra!', 'id' => $id], 404);
+            }
+
+            if (!$record->getCanCancelAttribute()) {
+                return response()->json(['failed' => 'Không thể hủy!', 'id' => $id], 400);
+            }
+            if ($validated['status'] == 'waiting_for_cancellation') {
+                if (!($record->status == 'completed' && $record->payment_status == 'completed')) {
+                    return response()->json(['failed' => 'Không đủ điều kiện hủy!', 'id' => $id], 400);
+                }
+            }
+            $record->status = $validated['status'];
+            if ($validated['status'] == 'cancelled') {
+                $record->refund_status = 'pending';
+                $record->payment_status = 'pending';
+            }
+            $record->save();
+
+            ResetSeatStatus::dispatch($record->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT');
+
+            broadcast(new OrderStatusUpdated([
+                'id' => $id,
+                'status' => $record->status,
+                'code' => $record->code,
+                'urlChangeRefundStatus' => route('api.orders.changeRefundStatus', $record->id),
+                'urlChangeStatus' => route('api.orders.changeStatus', $record->id)
+            ]));
+
+            return response()->json(['success' => 'Thành công!', 'id' => $id], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'failed' => 'Dữ liệu không hợp lệ!',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'failed' => 'Đã xảy ra lỗi không xác định!',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function changeRefundStatus(Request $request, $id)
+    {
+        try {
+            $validated = $request->validate([
+                'status' => ['required', 'in:completed'],
+            ]);
+
+            $record = $this->orderService->find($id);
+            if (empty($record)) {
+                return response()->json(['failed' => 'Có lỗi xảy ra!', 'id' => $id], 404);
+            }
+
+            if (!$record->getCanCancelAttribute()) {
+                return response()->json(['failed' => 'Không thể hủy!', 'id' => $id], 400);
+            }
+
+            $record->refund_status = $validated['status'];
+            $user = $record->user;
+            if ($user) {
+                $user->balance += $record->total_price;
+                $user->save();
+            }
+            $record->save();
+
+            broadcast(new OrderRefundStatusUpdated([
+                'id' => $id,
+                'status' => $record->status,
+                'code' => $record->code,
+                'urlChangeRefundStatus' => route('api.orders.changeRefundStatus', $record->id),
+                'urlChangeStatus' => route('api.orders.changeStatus', $record->id)
+            ]));
+
+            return response()->json(['success' => 'Thành công!', 'id' => $id], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'failed' => 'Dữ liệu không hợp lệ!',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'failed' => 'Đã xảy ra lỗi không xác định!',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 }
