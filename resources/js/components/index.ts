@@ -15,6 +15,4 @@ import "./room.component";
 import "./seat-type.component";
 import "./seat-view.component";
 import "./movie-page.component";
-import "./order.component";
-import "./order-cancelled.component";
 //#endregion
