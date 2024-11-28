@@ -352,6 +352,34 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => 'Combo', 'url' => route('admin.food-combos.index')];
                     $breadcrumbs[] = ['title' => 'Chỉnh sửa combo', 'url' => route('admin.food-combos.edit', request()->id)];
                     break;
+                    // reward
+                case 'admin.rewards.index':
+                    $breadcrumbs[] = ['title' => 'Quà tặng', 'url' => ''];
+                    $breadcrumbs[] = ['title' => 'Danh sách quà tặng ', 'url' => route('admin.rewards.index')];
+                    break;
+                case 'admin.rewards.create':
+                    $breadcrumbs[] = ['title' => 'Quà tặng', 'url' => route('admin.rewards.index')];
+                    $breadcrumbs[] = ['title' => 'Thêm mới quà tặng', 'url' => route('admin.rewards.create')];
+                    break;
+                case 'admin.rewards.edit':
+                    $breadcrumbs[] = ['title' => 'Combo', 'url' => route('admin.rewards.index')];
+                    $breadcrumbs[] = ['title' => 'Chỉnh sửa quà tặng', 'url' => route('admin.rewards.edit', request()->id)];
+                    break;
+
+                    // voucher
+                    case 'admin.vouchers.index':
+                        $breadcrumbs[] = ['title' => 'Voucher', 'url' => ''];
+                        $breadcrumbs[] = ['title' => 'Danh sách Voucher ', 'url' => route('admin.vouchers.index')];
+                        break;
+                    case 'admin.vouchers.create':
+                        $breadcrumbs[] = ['title' => 'Voucher', 'url' => route('admin.vouchers.index')];
+                        $breadcrumbs[] = ['title' => 'Thêm mới Voucher', 'url' => route('admin.vouchers.create')];
+                        break;
+                    case 'admin.vouchers.edit':
+                        $breadcrumbs[] = ['title' => 'Voucher', 'url' => route('admin.vouchers.index')];
+                        $breadcrumbs[] = ['title' => 'Chỉnh sửa Voucher', 'url' => route('admin.vouchers.edit', request()->id)];
+                        break;
+
             }
 
             $view->with('breadcrumbs', $breadcrumbs);

@@ -68,8 +68,7 @@
                                                 <option value="" selected></option>
                                                 <option @selected($data->condition_type == 'new_member') id="new_member" value="new_member">
                                                     Thành viên mới</option>
-                                                <option @selected($data->condition_type == 'birthday') id="birthday" value="birthday">Sự kiện
-                                                    sinh nhật</option>
+                                               
                                                 <option @selected($data->condition_type == 'level_up') id="level_up" value="level_up">Thăng
                                                     hạng</option>
                                             </select>
@@ -81,9 +80,9 @@
                                             <label class="form-label mb-2">Loại hạng</label>
                                             <select class="form-control" name="voucher[level_type]" id="levelType">
                                                 <option value="" selected></option>
-                                                <option id="vip" @selected($data->levelType == 'vip') value="vip">Loại VIP
+                                                <option id="vip" @selected($data->level_type == 'vip') value="vip">Loại VIP
                                                 </option>
-                                                <option id="vvip" @selected($data->levelType == 'vvip') value="vvip">Loại VVIP
+                                                <option id="vvip" @selected($data->level_type == 'vvip') value="vvip">Loại VVIP
                                                 </option>
                                             </select>
                                             @error('voucher.level_type')

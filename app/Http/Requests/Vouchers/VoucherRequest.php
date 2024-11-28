@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Vouchers;
 
+use App\Models\Voucher;
 use App\Rules\CheckRuleName;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class VoucherRequest extends FormRequest
@@ -22,15 +24,16 @@ class VoucherRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('id');
-        return [
+        $id = $this->route('id'); // Lấy ID của voucher từ route
+        $voucher = Voucher::find($id); // Truy vấn voucher từ database
+    
+        $rules = [
             "voucher.name" => [
                 "required",
                 "min:3",
                 "max:250",
                 new CheckRuleName($id, 'vouchers')
             ],
-
             "voucher.code" => [
                 "required",
                 "min:5",
@@ -42,15 +45,6 @@ class VoucherRequest extends FormRequest
                 "min:1",
                 "max:100",
             ],
-            "voucher.start_date" => [
-                "required",
-                "date",
-                'after_or_equal:' . now()->toDateTimeString(),
-            ],
-            "voucher.end_date" => [
-                "required",
-                'after:voucher.start_date', // Ngày kết thúc phải lớn hơn ngày bắt đầu
-            ],
             "voucher.discount_value" => [
                 "required",
                 "numeric",
@@ -60,13 +54,51 @@ class VoucherRequest extends FormRequest
             "voucher.description" => [
                 "max:250"
             ],
-            // "voucher.condition_type" => [
-            //     "required",
-            // ],
-
-
         ];
+    
+        // Chỉ thêm validate ngày bắt đầu nếu giá trị mới khác giá trị cũ
+        if (!$voucher || $this->hasChanged('voucher.start_date', $voucher->start_date)) {
+            $rules["voucher.start_date"] = [
+                "required",
+                "date",
+                'after_or_equal:' . now()->toDateTimeString(),
+            ];
+        }
+    
+        // Chỉ thêm validate ngày kết thúc nếu giá trị mới khác giá trị cũ
+        if (!$voucher || $this->hasChanged('voucher.end_date', $voucher->end_date)) {
+            $rules["voucher.end_date"] = [
+                "required",
+                'after:voucher.start_date',
+            ];
+        }
+    
+        return $rules;
     }
+    /**
+ * Kiểm tra xem giá trị input có thay đổi so với giá trị cũ không.
+ *
+ * @param string $field Tên trường input
+ * @param string|null $currentValue Giá trị hiện tại trong database
+ * @return bool
+ */
+protected function hasChanged(string $field, ?string $currentValue): bool
+{
+    $newValue = $this->input($field);
+
+    // Nếu giá trị mới không được gửi hoặc cả hai đều rỗng, coi như không thay đổi
+    if (!$newValue && !$currentValue) {
+        return false;
+    }
+
+    // Chuyển đổi giá trị mới và giá trị cũ sang Carbon để so sánh
+    $newDate = $newValue ? Carbon::createFromFormat('Y-m-d\TH:i', $newValue) : null;
+    $currentDate = $currentValue ? Carbon::parse($currentValue) : null;
+
+    // So sánh giá trị, coi như không thay đổi nếu hai giá trị bằng nhau
+    return $newDate?->ne($currentDate);
+}
+    
 
     public function messages()
     {

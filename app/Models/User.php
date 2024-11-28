@@ -96,4 +96,14 @@ class User extends Authenticatable
     {
         return $this->role->permissions->contains('value', $permissionValue);
     }
+    // Quan hệ many-to-many với Voucher thông qua bảng trung gian `user_vouchers`
+    public function vouchers()
+    {
+        return $this->belongsToMany(Voucher::class, 'user_vouchers', 'user_id', 'voucher_id')->withTimestamps();;
+    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_vouchers')
+            ->withTimestamps();
+    }
 }

@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             \App\Models\User::create([
                 'role_id' => $i,
                 'city_id' => $i,

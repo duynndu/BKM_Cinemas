@@ -47,7 +47,7 @@ $(document).ready(function() {
         if (conditionType === "level_up") {
             fullLevelType.removeClass("d-none");
             $("#levelType").val('');
-        } else if (conditionType === "new_member" || conditionType === "birthday") {
+        } else if (conditionType === "new_member") {
             fullLevelType.addClass("d-none");
 
         }

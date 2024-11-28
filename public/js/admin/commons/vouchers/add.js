@@ -53,7 +53,7 @@ $(document).ready(function() {
         if (conditionType === "level_up") {
             fullLevelType.removeClass("d-none");
             $("#levelType").attr("name", "voucher[level_type]"); // Gán lại name
-        } else if (conditionType === "new_member" || conditionType === "birthday") {
+        } else if (conditionType === "new_member") {
             fullLevelType.addClass("d-none");
             $("#levelType").removeAttr("name"); // Xóa name
         }

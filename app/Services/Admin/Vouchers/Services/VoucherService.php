@@ -75,4 +75,15 @@ class VoucherService extends BaseService implements VoucherServiceInterface
             'path' => Storage::url($path),
         ];
     }
+    public function getAccountByVoucher($request){
+        return $this->repository->getAccountByVoucher($request);
+    }
+    public function  getAccountByKeyword($request){
+        return $this->repository->getAccountByKeyword($request);
+    }
+    public function giftVoucherToAccount($request){
+        return $this->repository->giftVoucherToAccount($request);
+
+    }
+
 }

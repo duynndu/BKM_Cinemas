@@ -36,13 +36,12 @@ return new class extends Migration {
                 ->comment('Điểm tích lũy của người dùng');
             $table->integer('exp')->default(0)
                 ->comment('Điểm kinh nghiệm của người dùng');
-                //  Thành viên bình thường: EXP từ 0 - 500.
-                //  Thành viên VIP: EXP từ 501 - 1000.
-                //  Thành viên VVIP: EXP > 1000.
+            //  Thành viên bình thường: EXP từ 0 - 500.
+            //  Thành viên VIP: EXP từ 501 - 1000.
+            //  Thành viên VVIP: EXP > 1000.
             $table->enum('membership_level', ['member', 'vip', 'vvip'])
                 ->default('member')
-                ->comment('member: thường, vip: víp, vvip: very víp')
-                ->change();
+                ->comment('member: thường, vip: víp, vvip: very víp');
             $table->tinyInteger('is_new_member')->default(1)
                 ->comment('1: Thành viên mới, 0: Thành viên cũ');
             $table->string('type')->default(\App\Models\User::TYPE_MEMBER);
