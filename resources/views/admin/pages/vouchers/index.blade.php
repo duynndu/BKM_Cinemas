@@ -221,6 +221,10 @@
                                                             <td>
                                                                 <p class="text-warning">Chờ phát hành</p>
                                                             </td>
+                                                        @else
+                                                        <td>
+                                                            <p class="text-warning">Chờ phát hành</p>
+                                                        </td>
                                                         @endif
 
                                                         <td>
