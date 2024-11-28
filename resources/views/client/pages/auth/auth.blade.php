@@ -9,7 +9,7 @@
 
 @section('content')
 
-    <div class="container" x-data="OrderCancelledComponent">
+    <div class="container">
         <div class="row" style="margin-bottom: 20px">
             <div class="">
                 <img width="100%" src="https://bhdstar.vn/wp-content/uploads/2024/10/banner-top.jpg" alt="">
@@ -1293,4 +1293,5 @@
 
 @section('js')
     <script type="module" src="{{ asset('client/js/auth/auth.js') }}"></script>
+    <script type="module" src=" {{ asset('/js/client/order.js') }} "></script>
 @endsection

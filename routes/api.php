@@ -97,6 +97,8 @@ Route::name('api.')->group(function () {
     Route::controller(BookingController::class)->prefix('orders')->name('orders.')->group(function () {
         Route::post('/{id}/change-status', 'changeStatus')
             ->name('changeStatus');
+        Route::post('/{id}/change-refund-status', 'changeRefundStatus')
+            ->name('changeRefundStatus');
     });
 
 });
