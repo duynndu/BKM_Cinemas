@@ -1,17 +1,102 @@
+import { modal_deposit } from '../commons/common.js';
+
 $(document).ready(function () {
+    $(document).on('change', '.date-filter', function (e) {
+        e.preventDefault();
+
+        let url = $(this).data('url');
+        let date = $(this).val();
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {date: date},
+            success: function (response) {
+                $('#ticket-main').html(response.tbody);
+                modal_deposit();
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+    $(document).on('click', '.pagination-tickets .pagination a', function (e) {
+        e.preventDefault();
+        let url = $(this).attr('href');
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (response) {
+                $('#ticket-main').html(response.tbody);
+                $('.pagination-container').html(response.pagination);
+                modal_deposit();
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+    $(document).on('submit','#updateAvatarForm', function (e) {
+        e.preventDefault();
+
+        let form = $(this);
+        let url = form.attr('action');
+        let data = new FormData(this);
+        let image = form.attr('data-image');
+        let imageSuccess = form.attr('data-success');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.status) {
+                    Swal.fire({
+                        position: "center",
+                        imageUrl: imageSuccess,
+                        imageWidth: 100,
+                        imageHeight: 100,
+                        width: "400px",
+                        title: "Cập nhật ảnh đại diện thành công",
+                        showConfirmButton: false,
+                        timerProgressBar: true,
+                        timer: 1500,
+                    }).then(() => {
+                        $('#modalAvatarImage').hide();
+                        $('#current-avatar img').attr('src', response.imageUrl);
+                        $('#current-avatar img').css('display', 'block');
+                        $('.avatar-placeholder').css('display', 'none');
+                        $('.input-box-image').css('background-image', 'url(' + image + ')');
+                        $('#avatarInput').val('');
+                        $('#avatar').val('');
+                    })
+                }
+            },
+            error: function (error) {
+                console.error(error);
+                alert("Đã xảy ra lỗi khi cập nhật ảnh đại diện.");
+            }
+        });
+    });
+
     $(document).on("submit", ".form-login", function (e) {
         e.preventDefault();
-    
+
         // Xóa thông báo lỗi cũ
         $('.form-login div[class$="_error"]').text('');
-    
+
         let form = $(this);
         let url = form.attr("action");
         let image = form.data("image");
         let data = form.serialize();
-    
+
         let hasErrors = false;
-    
+
         let emailOrPhone = form.find("input[name='emailOrPhone']").val();
         if (!emailOrPhone) {
             form.find(".emailOrPhone_error")
@@ -19,7 +104,7 @@ $(document).ready(function () {
                 .css("color", "red");
             hasErrors = true;
         }
-    
+
         let password = form.find("input[name='password']").val();
         if (!password) {
             form.find(".password_error")
@@ -27,7 +112,7 @@ $(document).ready(function () {
                 .css("color", "red");
             hasErrors = true;
         }
-    
+
         if (!hasErrors) {
             $.ajax({
                 url: url,
@@ -64,7 +149,7 @@ $(document).ready(function () {
                         }
                     }
                 },
-                error: function (xhr) { 
+                error: function (xhr) {
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         $.each(errors, function (key, messages) {
@@ -90,71 +175,71 @@ $(document).ready(function () {
 
     $(document).on("submit", ".form-register", function (e) {
         e.preventDefault();
-    
+
         // Xóa thông báo lỗi cũ
         $('.form-register div[class$="_error"]').text('');
-    
+
         let form = $(this);
         let url = form.attr("action");
         let image = form.data("image");
         let data = form.serialize();
-    
+
         let hasErrors = false;
-    
+
         let name = form.find("input[name='name']").val();
         if (!name) {
             form.find(".name_error").text("Vui lòng nhập tên.").css("color", "red");
             hasErrors = true;
         }
-    
+
         let firstName = form.find("input[name='first_name']").val();
         if (!firstName) {
             form.find(".first_name_error").text("Vui lòng nhập họ.").css("color", "red");
             hasErrors = true;
         }
-    
+
         let lastName = form.find("input[name='last_name']").val();
         if (!lastName) {
             form.find(".last_name_error").text("Vui lòng nhập tên đệm và tên.").css("color", "red");
             hasErrors = true;
         }
-    
+
         let email = form.find("input[name='email']").val();
         if (!email) {
             form.find(".email_error").text("Vui lòng nhập email.").css("color", "red");
             hasErrors = true;
         }
-    
+
         let gender = form.find("input[name='gender']:checked").val(); // Lấy giá trị của ô radio được chọn
         if (!gender) {
             form.find(".gender_error").text("Vui lòng chọn giới tính.").css("color", "red");
             hasErrors = true;
         }
-    
+
         let phone = form.find("input[name='phone']").val();
         if (!phone) {
             form.find(".phone_error").text("Vui lòng nhập số điện thoại.").css("color", "red");
             hasErrors = true;
         }
-    
+
         let date_birth = form.find("input[name='date_birth']").val();
         if (!date_birth) {
             form.find(".date_birth_error").text("Vui lòng nhập ngày sinh.").css("color", "red");
             hasErrors = true;
         }
-    
+
         let city_id = form.find("select[name='city_id']").val();
         if (!city_id) {
             form.find(".city_id_error").text("Vui lòng chọn tỉnh/thành phố.").css("color", "red");
             hasErrors = true;
         }
-    
+
         let password = form.find("input[name='password']").val();
         if (!password) {
             form.find(".password_error").text("Vui lòng nhập mật khẩu.").css("color", "red");
             hasErrors = true;
         }
-    
+
         let passwordConfirm = form.find("input[name='password_confirmation']").val();
         if (!passwordConfirm) {
             form.find(".password_confirmation_error").text("Vui lòng nhập lại mật khẩu.").css("color", "red");
@@ -167,7 +252,7 @@ $(document).ready(function () {
             form.find(".is_terms_accepted_error").text("Bạn phải chấp nhận các điều khoản.").css("color", "red");
             hasErrors = true;
         }
-    
+
         if (!hasErrors) {
             Swal.fire({
                 title: "Đang xử lý yêu cầu...",
@@ -175,7 +260,7 @@ $(document).ready(function () {
                 showConfirmButton: false,
                 allowOutsideClick: false,
             });
-    
+
             $.ajax({
                 url: url,
                 type: "POST",
@@ -197,12 +282,12 @@ $(document).ready(function () {
                             $('#city').val('').trigger('change');
 
                             $('.nav-tabs li').removeClass('active');
-                            $('.nav-tabs a[href="#dang-nhap"]').closest('li').addClass('active'); 
+                            $('.nav-tabs a[href="#dang-nhap"]').closest('li').addClass('active');
 
                             $('.nav-tabs a[href="#dang-nhap"]').tab('show');
 
                             $('#dang-nhap').addClass('active in');
-                            $('#dang-ky').removeClass('active in'); 
+                            $('#dang-ky').removeClass('active in');
                         });
                     }
                 },
@@ -230,7 +315,7 @@ $(document).ready(function () {
             });
         }
     });
-    
+
     $(document).on("submit", "#forgotPass", function (e) {
         e.preventDefault();
 
@@ -369,19 +454,19 @@ $(document).ready(function () {
 
     $(document).on("submit", "#form-changepassword", function (e) {
         e.preventDefault();
-    
+
         // Xóa thông báo lỗi cũ
         $('#form-changepassword div[class$="_error"]').text('');
-    
+
         let form = $(this);
         let urlLogout = form.data("url-logout");
         let urlRedirect = form.data("url-redirect");
         let url = form.attr("action");
         let image = form.data("image");
         let data = form.serialize();
-    
+
         let hasErrors = false;
-    
+
         let old_password = form.find("input[name='old_password']").val();
         if (!old_password) {
             form.find(".old_password_error")
@@ -389,7 +474,7 @@ $(document).ready(function () {
                 .css("color", "red");
             hasErrors = true;
         }
-    
+
         let password = form.find("input[name='password']").val();
         if (!password) {
             form.find(".password_error")
@@ -397,7 +482,7 @@ $(document).ready(function () {
                 .css("color", "red");
             hasErrors = true;
         }
-    
+
         let confirm_password = form.find("input[name='confirm_password']").val();
         if (!confirm_password) {
             form.find(".confirm_password_error")
@@ -405,7 +490,7 @@ $(document).ready(function () {
                 .css("color", "red");
             hasErrors = true;
         }
-    
+
         if (!hasErrors) {
             Swal.fire({
                 title: "Đang gửi yêu cầu...",
@@ -446,7 +531,7 @@ $(document).ready(function () {
                                     type: "POST",
                                     data: data,
                                     success: function () {
-                                        window.location.href = urlRedirect; 
+                                        window.location.href = urlRedirect;
                                     },
                                     error: function () {
                                         Swal.fire({
@@ -487,12 +572,12 @@ $(document).ready(function () {
 
     $(document).on('submit', '#form-updateProfile', function(e) {
         e.preventDefault();
-    
+
         let form = $(this);
         let url = form.attr('action');
         let image = form.data('image');
         let data = form.serialize();
-        
+
         $.ajax({
             url: url,
             type: "POST",
@@ -530,7 +615,7 @@ $(document).ready(function () {
                         timer: 2500,
                     });
                 }
-            },    
+            },
         });
     })
 });

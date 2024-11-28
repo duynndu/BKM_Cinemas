@@ -18,7 +18,7 @@ declare global {
     Services: typeof Services;
     Alpine: typeof Alpine;
     utils: typeof utils;
-    Echo: Echo<'pusher'>;
+    echo: Echo<'pusher'>;
     Pusher: typeof Pusher;
     user: IUser
   }
