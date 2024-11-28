@@ -30,6 +30,7 @@ const roomSchema = yup.object().shape({
 
 Alpine.data('RoomComponent', (roomId: string | null = null) => ({
   errors: {} as Record<string, string>,
+  isSubmitting: false,
   formData: {
     id: null as any,
     room_name: '',
@@ -60,6 +61,8 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
     this.renderSelectDay();
   },
   async onSubmit() {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
     try {
       await roomSchema.validate(this.formData, { abortEarly: false });
     } catch (error: any) {
@@ -69,10 +72,12 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
           this.errors[err.path] = err.message;
         });
       }
+      this.isSubmitting = false;
       return;
     }
 
     const formData = new FormData();
+    let repoData:{ url: string };
     formData.set('room_name', this.formData.room_name);
     formData.set('col_count', this.formData.col_count.toString());
     formData.set('row_count', this.formData.row_count.toString());
@@ -83,9 +88,9 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
     }
     try {
       if (roomId) {
-        await roomService.putRoom(roomId, formData);
+        repoData = await roomService.putRoom(roomId, formData);
       } else {
-        await roomService.postRoom(formData);
+        repoData = await roomService.postRoom(formData);
       }
       swal.fire({
         title: 'Thao tác thành công!',
@@ -94,10 +99,12 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
         showConfirmButton: false,
         timer: 1000,
         reverseButtons: false
-      }).then(() => redirect().to('/admin/room-manager/rooms'));
+      }).then(() => redirect().to(repoData.url));
     } catch (error: any) {
       console.error(error);
       toastr.error(error.message);
+    } finally {
+        this.isSubmitting = false; 
     }
   },
   async getRoomById(roomId: string) {

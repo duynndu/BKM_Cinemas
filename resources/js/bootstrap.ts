@@ -10,10 +10,11 @@ import $ from "jquery";
 import Alpine from "alpinejs";
 import * as utils from "@/utils/common";
 import Services from "./services";
-import "./components";
 import moment from "moment";
 import "./moment.vi";
 import Echo from "laravel-echo";
+import './components';
+import { echo } from "./echo/Echo";
 moment.locale("vi");
 
 // thư viện
@@ -36,7 +37,4 @@ Alpine.start();
  * allows your team to easily build robust real-time web applications.
  */
 
-
-import Pusher from 'pusher-js';
-
-
+window.echo = echo

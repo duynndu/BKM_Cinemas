@@ -185,7 +185,7 @@
                                                     <label
                                                         class="form-label mb-2">{{ __('language.admin.movies.introduce') }}</label>
                                                     <textarea placeholder="{{ __('language.admin.movies.inputIntroduce') }}" class="form-control" cols="20"
-                                                        rows="5" name="movie[description]">{{ old('movie.description') }}</textarea>
+                                                        rows="5" name="movie[description]">{{ old('movie.description', $data->description) }}</textarea>
                                                     @error('movie.description')
                                                         <div class="text-danger mt-2">{{ $message }}</div>
                                                     @enderror
