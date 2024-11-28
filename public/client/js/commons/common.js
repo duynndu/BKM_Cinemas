@@ -221,6 +221,113 @@ $(function () {
         }
     });
 
+    $("#nowshowing-slider, #comingsoon-slider").owlCarousel({
+        autoplay: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        loop: true,
+        responsive: {
+            0: { items: 3, }, 420: { items: 2, }, 620: { items: 3, },
+            768: { items: 3, }, 980: { items: 3 }, 1010: { items: 3 }, 1100: { items: 4 }
+        },
+        nav: true,
+        dots: false
+    });
+
+    $("#nowshowing-slider2").owlCarousel({
+        autoplay: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        loop: true,
+        responsive: {
+            0: { items: 3, }, 420: { items: 2, }, 620: { items: 3, },
+            768: { items: 3, }, 980: { items: 3 }, 1010: { items: 3 }, 1100: { items: 3 }
+        },
+        nav: true,
+        dots: false
+    });
+
+    var mainpopup = sessionStorage.getItem('mainpopup');
+    if (!mainpopup) {
+        $("body").addClass("open-main-popup");
+    }
+    $(".main-popup").click(function () {
+        sessionStorage.setItem('mainpopup', 'close');
+        $("body").removeClass("open-main-popup");
+    });
+
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            xfbml: true,
+            version: 'v12.0'
+        });
+    };
+
+    $('.select2').select2({
+        placeholder: "Chọn tỉnh/thành phố", // Placeholder cho dropdown
+        allowClear: true, // Cho phép xóa lựa chọn
+        width: '100%',
+    });
+
+    // Khi người dùng nhấn vào liên kết trong phần Đăng nhập
+    $('.attr-link a').on('click', function (event) {
+        event.preventDefault();
+
+        // Lấy ID của tab được nhấn
+        var targetTab = $(this).attr('href');
+
+        // Xóa class 'active' khỏi tất cả các tab và thẻ `li`
+        $('.tab-pane, .menu li').removeClass('active');
+
+        // Thêm class 'active' vào tab và thẻ `li` tương ứng
+        $(targetTab).addClass('active in');
+        $('.menu li').find('a[href="' + targetTab + '"]').parent().addClass('active');
+    });
+
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy', // Định dạng ngày
+        autoclose: true,      // Tự động đóng khi chọn ngày
+        todayHighlight: true   // Nổi bật ngày hôm nay
+    });
+
+    function togglePasswordVisibility(passwordInput, icon) {
+        const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+        passwordInput.attr('type', type);
+
+        icon.toggleClass('fa-eye fa-eye-slash');
+    }
+
+    $('#toggle-password-icon').on('click', function () {
+        const passwordInput = $('input[id="passwordRegister"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $('#toggle-confirm-password-icon').on('click', function () {
+        const passwordInput = $('input[name="password_confirmation"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $('.toggle-password-login-icon').on('click', function () {
+        const passwordInput = $('input[id="passwordLogin"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $('.toggle-old-password-icon').on('click', function () {
+        const passwordInput = $('input[name="old_password"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $('.toggle-password-change-icon').on('click', function () {
+        const passwordInput = $('input[name="password"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
+    $('.toggle-confirm-password-icon').on('click', function () {
+        const passwordInput = $('input[name="confirm_password"]');
+        togglePasswordVisibility(passwordInput, $(this));
+    });
+
     function modal_deposit() {
         $('.open-modal').click(function () {
             const modalId = $(this).data('modal');

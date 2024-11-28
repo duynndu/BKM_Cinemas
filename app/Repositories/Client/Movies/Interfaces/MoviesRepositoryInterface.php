@@ -8,4 +8,6 @@ interface MoviesRepositoryInterface
     public function sliders();
     public function movieIsShowing();
     public function upcomingMovie();
+    public function searchMovies($keyword);
+
 }
