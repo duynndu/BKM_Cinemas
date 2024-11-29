@@ -52,6 +52,7 @@ return [
         'home' => 'Trang chủ',
         'search' => 'Tìm kiếm',
         'position' => 'Vị trí này đã tồn tại',
+        'create' => 'Tạo mới',
         'dashboards' => [
             'name' => 'Bảng điều khiển',
             'order' => 'Tổng số đơn hàng',

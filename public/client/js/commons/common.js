@@ -517,8 +517,10 @@ $(function () {
     });
 
     var chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "1853915061599035");
-    chatbox.setAttribute("attribution", "biz_inbox");
+    if (chatbox) {
+        chatbox.setAttribute("page_id", "1853915061599035");
+        chatbox.setAttribute("attribution", "biz_inbox");
+    }
 
 
     window.fbAsyncInit = function () {

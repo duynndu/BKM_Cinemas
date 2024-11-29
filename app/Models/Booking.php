@@ -59,6 +59,15 @@ class Booking extends Model
         return $this->totalSeatsPrice() + $this->totalFoodsPrice();
     }
 
+    public function movie()
+    {
+        return $this->belongsTo(Movie::class, 'movie_id');
+    }
+    public function showtime()
+    {
+        return $this->belongsTo(Showtime::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -67,16 +76,6 @@ class Booking extends Model
     public function cinema()
     {
         return $this->belongsTo(Cinema::class);
-    }
-
-    public function movie()
-    {
-        return $this->belongsTo(Movie::class, 'movie_id');
-    }
-
-    public function showtime()
-    {
-        return $this->belongsTo(ShowTime::class);
     }
 
     public function getCanCancelAttribute()

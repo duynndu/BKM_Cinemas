@@ -140,8 +140,11 @@ class BookingController extends Controller
             $record->status = $validated['status'];
             if ($validated['status'] == 'cancelled') {
                 $record->refund_status = 'pending';
+                $record->payment_status = 'pending';
             }
             $record->save();
+
+            ResetSeatStatus::dispatch($record->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT');
 
             broadcast(new OrderStatusUpdated([
                 'id' => $id,
@@ -182,7 +185,6 @@ class BookingController extends Controller
             }
 
             $record->refund_status = $validated['status'];
-            $record->payment_status = 'pending';
             $user = $record->user;
             if ($user) {
                 $user->balance += $record->total_price;

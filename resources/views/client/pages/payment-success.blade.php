@@ -1,6 +1,6 @@
 @extends('client.layouts.main')
 
-@section('title', 'Giới thiệu')
+@section('title', 'Đặt Vé Thành Công')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('client/css/payment_success.css') }}">
@@ -33,7 +33,7 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 <script>
-    QRCode.toCanvas(document.getElementById('qrcode'), 'Hello World', function(error) {
+    QRCode.toCanvas(document.getElementById('qrcode'), '{{$code}}', function(error) {
         if (error) console.error(error);
         console.log('Success!');
     });
