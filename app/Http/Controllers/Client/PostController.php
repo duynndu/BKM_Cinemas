@@ -48,20 +48,18 @@ class PostController extends Controller
 
     public function detail($cateSlug, $slug) {
         $post = $this->postService->getPostFirstByCateSlug($cateSlug, $slug);
-        if(!is_null($post)){
-            $postRelated = $this->postService->getPostRelated($cateSlug, $slug);
-            $movieIsShowing = $this->movieService->movieIsShowing();
-
-            $data = [
-                'post' => $post,
-                'postRelated' => $postRelated,
-                'movieIsShowing' => $movieIsShowing,
-                'cateSlug' => $cateSlug
-            ];
-            return view('client.pages.post-detail', $data);
-        }else{
+        if(is_null($post)){
             return view('error.client.404');
         }
-    }
+        $postRelated = $this->postService->getPostRelated($cateSlug, $slug);
+        $movieIsShowing = $this->movieService->movieIsShowing();
 
+        $data = [
+            'post' => $post,
+            'postRelated' => $postRelated,
+            'movieIsShowing' => $movieIsShowing,
+            'cateSlug' => $cateSlug
+        ];
+        return view('client.pages.post-detail', $data);
+    }
 }

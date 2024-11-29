@@ -9,5 +9,5 @@ interface MoviesRepositoryInterface
     public function movieIsShowing();
     public function upcomingMovie();
     public function searchMovies($keyword);
-
+    public function findMovieByslug($slug);
 }

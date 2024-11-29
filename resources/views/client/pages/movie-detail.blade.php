@@ -354,7 +354,8 @@
                         aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <div class="video-container" x-html="movie?.trailer_url">
+                    <div class="video-container video-trailer--home">
+                        <iframe x-bind:src="movie?.trailer_url" frameborder="0"></iframe>
                     </div>
                 </div x-text=movie?.trailer_url>
             </div>

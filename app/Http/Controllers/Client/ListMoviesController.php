@@ -28,9 +28,12 @@ class ListMoviesController extends Controller
 
     public function searchMovies(Request $request)
     {
+        if (empty($request->k)) {
+            return view('error.client.404');
+        }
         $movies = $this->movieService->searchMovies($request->k);
         return view('client.pages.search', [
-            'movies' => $movies 
+            'movies' => $movies
         ]);
     }
 }
