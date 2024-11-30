@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\SeatTypeController;
 use App\Http\Controllers\Admin\SystemController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\MovieController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\Error\Admin\ErrorController;
@@ -862,6 +863,9 @@ Route::prefix('admin')
                     Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                         ->name('deleteItemMultipleChecked')
                         ->middleware('authorizeAction:delete,App\Models\Cinema');
+                    Route::get('/get-areas-by-cityId', 'ajaxGetAreaByCityId')
+                        ->name('ajaxGetAreaByCityId')
+                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
                 });
             Route::prefix('orders')
                 ->controller(OrderController::class)
@@ -873,6 +877,16 @@ Route::prefix('admin')
                     Route::get('/{id}/detail', 'detail')
                         ->name('detail')
                         ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                    Route::post('/{id}/change-get-ticket', 'changeGetTickets')
+                        ->name('changeGetTickets')
+                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                });
+                Route::prefix('notifications')
+                ->controller(NotificationController::class)
+                ->name('notifications.')
+                ->group(function () {
+                    Route::get('/get-by-type', 'getByType')
+                        ->name('getByType');
                 });
         });
     });

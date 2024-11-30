@@ -71,7 +71,7 @@ class ShowtimeController extends Controller
                     EXISTS (SELECT 1
                     FROM bookings b
                     JOIN booking_seats bs ON bs.booking_id = b.id
-                    WHERE b.showtime_id = st.id AND b.payment_status = 'completed'
+                    WHERE b.showtime_id = st.id AND b.status = 'completed' OR b.status = 'rejected'
                     AND bs.seat_id = s.id), 'booked', 'available')
             ) AS status,
             (SELECT b.user_id FROM bookings b JOIN booking_seats bs ON bs.booking_id = b.id WHERE b.showtime_id = st.id AND bs.seat_id = s.id LIMIT 1) AS user_id FROM showtimes st JOIN rooms r ON r.id = st.room_id LEFT JOIN seats s ON s.room_id = r.id

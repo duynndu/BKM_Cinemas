@@ -40,13 +40,13 @@
                                         <form action="{{ route('admin.cinemas.index') }}" method="GET">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-xl-3 col-sm-6">
+                                                    <div class="col-xl-2 col-sm-4">
                                                         <label class="form-label">Tên rạp</label>
                                                         <input id="" value="{{ request()->name }}" name="name"
                                                             type="text" class="form-control mb-xl-0 mb-3"
                                                             placeholder="Nhập tên rạp">
                                                     </div>
-                                                    <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
+                                                    <div class="col-xl-2  col-sm-4 mb-3 ">
                                                         <label class="form-label">Sắp xếp</label>
                                                         <div id="order" class="dropdown bootstrap-select form-control">
                                                             <select name="order_with" class="form-control">
@@ -68,10 +68,26 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
+                                                    <div class="col-xl-2  col-sm-4 mb-3">
+                                                        <label class="form-label">Thành phố</label>
+                                                        <div id="order" class="dropdown bootstrap-select form-control">
+                                                            <select name="city_id" class="form-control" id="select_city" data-url="{{ route('admin.cinemas.ajaxGetAreaByCityId') }}">
+                                                                <option value="">
+                                                                    --chọn--
+                                                                </option>
+                                                                @foreach ($cities as $city)
+                                                                    <option @selected(request()->city_id == $city->id)
+                                                                        value="{{ $city->id }}">
+                                                                        {{ $city->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-2  col-sm-4 mb-3">
                                                         <label class="form-label">Khu vực</label>
                                                         <div id="order" class="dropdown bootstrap-select form-control">
-                                                            <select name="area_id" class="form-control">
+                                                            <select name="area_id" class="form-control" id="select_area">
                                                                 <option value="">
                                                                     --chọn--
                                                                 </option>
@@ -84,7 +100,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xl-5 col-sm-5 align-self-end">
+                                                    <div class="col-xl-4 col-sm-4 mb-3 align-self-end">
                                                         <div class="">
                                                             <button class="btn btn-primary me-2"
                                                                 title="Click here to Search" type="submit"><i
@@ -267,4 +283,5 @@
 @endsection
 
 @section('js')
+    <script src="{{ asset('js/admin/ajaxs/cinema.js') }}"></script>
 @endsection
