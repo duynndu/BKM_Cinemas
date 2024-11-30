@@ -260,15 +260,15 @@
                                                                 </button>
 
 
-                                                                <div class="modal fade"
+                                                                <div class="modal fade modal_voucher"
                                                                     id="basicModal_{{ $voucher->id }}" aria-modal="true"
-                                                                    role="dialog">
+                                                                    role="dialog" >
 
                                                                     <div class="modal-dialog modal-lg" role="document">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
                                                                                 <h5 class="modal-title">Tặng voucher</h5>
-                                                                                <button type="button" class="btn-close"
+                                                                                <button type="button" class="btn-close close-modal"
                                                                                     data-bs-dismiss="modal">
                                                                                 </button>
                                                                             </div>
@@ -278,8 +278,7 @@
                                                                                     <div class="form-check">
                                                                                         <input class="form-check-input"
                                                                                             type="checkbox" value="all"
-                                                                                            id="checked_all_account"
-                                                                                            id="flexCheckDefault">
+                                                                                            id="checked_all_account">
                                                                                         <label class="form-check-label"
                                                                                             for="flexCheckDefault">
                                                                                             Chọn tất cả
@@ -303,7 +302,7 @@
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="button"
-                                                                                    class="btn btn-danger light"
+                                                                                    class="btn btn-danger light close-modal"
                                                                                     data-bs-dismiss="modal">Hủy</button>
                                                                                 <button type="button"
                                                                                     data-url="{{ route('admin.vouchers.giftVoucherAccount') }}"

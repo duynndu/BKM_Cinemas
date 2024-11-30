@@ -6,7 +6,10 @@
 @endsection
 
 @section('content')
+
     <div class="container-fluid">
+        <input type="hidden" class="discount_value" data-value="{{ $data->discount_value }}">
+        <input type="hidden" class="discount_type" data-value="{{ $data->discount_type }}">
         <div class="row">
             <div class="col-xl-12">
                 <div class="row">
@@ -21,7 +24,7 @@
                     </div>
                 </div>
                 <form method="post" action="{{ route('admin.vouchers.update', $data->id) }}" class="product-vali"
-                    enctype="multipart/form-data">
+                    id="voucher-form" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -68,13 +71,13 @@
                                                 <option value="" selected></option>
                                                 <option @selected($data->condition_type == 'new_member') id="new_member" value="new_member">
                                                     Thành viên mới</option>
-                                               
+
                                                 <option @selected($data->condition_type == 'level_up') id="level_up" value="level_up">Thăng
                                                     hạng</option>
                                             </select>
                                             @error('voucher.condition_type')
-                                            <div class="text-danger mt-2">{{ $message }}</div>
-                                        @enderror
+                                                <div class="text-danger mt-2">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-4 d-none" id="full-levelType">
                                             <label class="form-label mb-2">Loại hạng</label>
@@ -95,7 +98,7 @@
 
                                     <div class="mb-4">
                                         <label class="form-label mb-2">Số lượng:</label>
-                                        <input type="number" min="1" max="1000" class="form-control"
+                                        <input type="number" min="0" max="1000" class="form-control"
                                             name="voucher[quantity]" value="{{ old('voucher.quantity', $data->quantity) }}">
                                         @error('voucher.quantity')
                                             <div class="text-danger mt-2">{{ $message }}</div>
@@ -146,7 +149,8 @@
                                     <div class="cm-content-body publish-content form excerpt">
                                         <div class="card-body">
                                             <div>
-                                                <select class="form-control" name="voucher[discount_type]">
+                                                <select class="form-control" name="voucher[discount_type]"
+                                                    id="discount_value">
                                                     <option @selected($data->discount_type == 'money') value="money"
                                                         {{ old('voucher.discount_type') == 'money' ? 'selected' : '' }}>
                                                         Số tiền ( Vnđ )
@@ -159,10 +163,24 @@
                                             </div>
                                             <div class="mt-3">
                                                 <label class="form-label mb-2">Giá trị giảm</label>
-                                                <input type="number" min="1" name="voucher[discount_value]"
-                                                    class="form-control"
-                                                    value="{{ old('voucher.discount_value', $data->discount_value) }}"
-                                                    placeholder="Nhập số tiền or %">
+                                                <div id="full-discount_value_money"
+                                                    class="{{ $data->discount_type == 'money' ? '' : 'd-none' }}">
+                                                    <input id="discount_value_money" type="number"
+                                                        name="voucher[discount_value]" class="form-control"
+                                                        value="{{ old('voucher.discount_value', $data->discount_value) }}"
+                                                        placeholder="Nhập số tiền...">
+                                                    <p class="text-danger error" id="error_discount_value_money"></p>
+                                                </div>
+
+                                                <div id="full-discount_value_percent"
+                                                    class="{{ $data->discount_type == 'percent' ? '' : 'd-none' }}">
+                                                    <input id="discount_value_percent" type="number"
+                                                        name="voucher[discount_value]" class="form-control"
+                                                        value="{{ old('voucher.discount_value', $data->discount_value) }}">
+                                                    <p class="text-danger error" id="error_discount_value_percent"></p>
+                                                </div>
+
+
                                                 @error('voucher.discount_value')
                                                     <div class="text-danger mt-2">{{ $message }}</div>
                                                 @enderror
@@ -235,5 +253,6 @@
 
 
 @section('js')
-<script src="{{ asset('js/admin/commons/vouchers/edit.js') }}"></script>
+    <script src="{{ asset('js/admin/commons/vouchers/edit.js') }}"></script>
+
 @endsection
