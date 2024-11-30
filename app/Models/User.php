@@ -92,10 +92,23 @@ class User extends Authenticatable
         ]);
     }
 
+    // public function hasPermission($permissionValue)
+    // {
+    //     return $this->role->permissions->contains('value', $permissionValue);
+    // }
+
     public function hasPermission($permissionValue)
     {
+        // Kiểm tra nếu role không tồn tại hoặc không có permissions
+        if (!$this->role || !$this->role->permissions) {
+            return false; // Không có quyền
+        }
+
+        // Kiểm tra quyền dựa trên giá trị
         return $this->role->permissions->contains('value', $permissionValue);
     }
+
+
     // Quan hệ many-to-many với Voucher thông qua bảng trung gian `user_vouchers`
     public function vouchers()
     {

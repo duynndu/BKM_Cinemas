@@ -24,33 +24,37 @@
                         @can('viewAny', App\Models\System::class)
                             <li>
                                 <a class="has-arrow" href="javascript:void(0);"
-                                   aria-expanded="false">{{ __('language.admin.systems.name') }}</a>
+                                    aria-expanded="false">{{ __('language.admin.systems.name') }}</a>
                                 <ul aria-expanded="false">
                                     @can('viewAny', App\Models\System::class)
                                         <li>
-                                            <a href="{{ route('admin.systems.index') }}">{{ __('language.admin.systems.listSidebar') }}</a>
+                                            <a
+                                                href="{{ route('admin.systems.index') }}">{{ __('language.admin.systems.listSidebar') }}</a>
                                         </li>
                                         @can('create', App\Models\System::class)
                                             <li>
-                                                <a href="{{ route('admin.systems.create') }}">{{ __('language.admin.systems.createSidebar') }}</a>
+                                                <a
+                                                    href="{{ route('admin.systems.create') }}">{{ __('language.admin.systems.createSidebar') }}</a>
                                             </li>
                                         @endcan
                                     @endcan
                                 </ul>
                             </li>
 
-                            @foreach($systemsByType0 as $key => $system)
+                            @foreach ($systemsByType0 as $key => $system)
                                 <li>
                                     <a class="has-arrow" href="javascript:void(0);"
-                                       aria-expanded="false">{{ $system->name ?? null }}</a>
+                                        aria-expanded="false">{{ $system->name ?? null }}</a>
                                     <ul aria-expanded="false">
                                         @can('viewAny', App\Models\System::class)
                                             <li>
-                                                <a href="{{ route('admin.systems.index') . '?system_id=' . $system->id }}">{{ __('language.admin.systems.listSidebar') }}</a>
+                                                <a
+                                                    href="{{ route('admin.systems.index') . '?system_id=' . $system->id }}">{{ __('language.admin.systems.listSidebar') }}</a>
                                             </li>
                                             @can('create', App\Models\System::class)
                                                 <li>
-                                                    <a href="{{ route('admin.systems.create') . '?system_id=' . $system->id }}">{{ __('language.admin.systems.createSidebar') }}</a>
+                                                    <a
+                                                        href="{{ route('admin.systems.create') . '?system_id=' . $system->id }}">{{ __('language.admin.systems.createSidebar') }}</a>
                                                 </li>
                                             @endcan
                                         @endcan
@@ -62,7 +66,9 @@
                 </li>
             @endcan
 
-            @if(auth()->user()->can('viewAny', App\Models\Menu::class) || auth()->user()->can('viewAny', App\Models\Page::class) || auth()->user()->can('viewAny', App\Models\Block::class))
+            @if (auth()->user()->can('viewAny', App\Models\Menu::class) ||
+                    auth()->user()->can('viewAny', App\Models\Page::class) ||
+                    auth()->user()->can('viewAny', App\Models\Block::class))
                 <li>
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">extension</i>
@@ -72,26 +78,28 @@
                         @can('viewAny', App\Models\Menu::class)
                             <li>
                                 <a href="{{ route('admin.menus.index') }}"
-                                   aria-expanded="false">{{ __('language.admin.interfaces.menus.title') }}</a>
+                                    aria-expanded="false">{{ __('language.admin.interfaces.menus.title') }}</a>
                             </li>
                         @endcan
                         @can('viewAny', App\Models\Page::class)
                             <li>
                                 <a href="{{ route('admin.pages.index') }}"
-                                   aria-expanded="false">{{ __('language.admin.interfaces.pages.title') }}</a>
+                                    aria-expanded="false">{{ __('language.admin.interfaces.pages.title') }}</a>
                             </li>
                         @endcan
                         @can('viewAny', App\Models\Block::class)
                             <li>
                                 <a href="{{ route('admin.blocks.index') }}"
-                                   aria-expanded="false">{{ __('language.admin.interfaces.blocks.title') }}</a>
+                                    aria-expanded="false">{{ __('language.admin.interfaces.blocks.title') }}</a>
                             </li>
                         @endcan
                     </ul>
                 </li>
             @endif
 
-            @if(auth()->user()->can('viewAny', App\Models\CategoryPost::class) || auth()->user()->can('viewAny', App\Models\Post::class) || auth()->user()->can('viewAny', App\Models\Tag::class))
+            @if (auth()->user()->can('viewAny', App\Models\CategoryPost::class) ||
+                    auth()->user()->can('viewAny', App\Models\Post::class) ||
+                    auth()->user()->can('viewAny', App\Models\Tag::class))
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">article</i>
@@ -101,19 +109,19 @@
                         @can('viewAny', App\Models\CategoryPost::class)
                             <li>
                                 <a href="{{ route('admin.categoryPosts.index') }}"
-                                   aria-expanded="false">{{ __('language.admin.categories.title') }}</a>
+                                    aria-expanded="false">{{ __('language.admin.categories.title') }}</a>
                             </li>
                         @endcan
                         @can('viewAny', App\Models\Post::class)
                             <li>
                                 <a href="{{ route('admin.posts.index') }}"
-                                   aria-expanded="false">{{ __('language.admin.posts.title') }}</a>
+                                    aria-expanded="false">{{ __('language.admin.posts.title') }}</a>
                             </li>
                         @endcan
                         @can('viewAny', App\Models\Tag::class)
                             <li>
                                 <a href="{{ route('admin.tags.index') }}"
-                                   aria-expanded="false">{{ __('language.admin.tags.title') }}</a>
+                                    aria-expanded="false">{{ __('language.admin.tags.title') }}</a>
                             </li>
                         @endcan
                     </ul>
@@ -128,20 +136,22 @@
                 </li>
             @endcan
 
-            <li>
-                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">local_play</i>
-                    <span class="nav-text">Quản lý vé</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li>
-                        <a href="{{ route('admin.orders.index') }}">Đơn hàng</a>
-                    </li>
-                    <li>
-                        <a href="#">Báo cáo</a>
-                    </li>
-                </ul>
-            </li>
+            @if (auth()->user()->can('viewAny', App\Models\Booking::class))
+                <li>
+                    <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                        <i class="material-icons">local_play</i>
+                        <span class="nav-text">Quản lý vé</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.orders.index') }}">Đơn hàng</a>
+                        </li>
+                        <li>
+                            <a href="#">Báo cáo</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
@@ -214,8 +224,10 @@
                     </li>
                 </ul>
             </li>
-            @if(auth()->user()->can('viewAny', App\Models\Food::class) || auth()->user()->can('viewAny', App\Models\FoodType::class) || auth()->user()->can('viewAny', App\Models\FoodCombo::class))
-                <li>
+            @if (auth()->user()->can('viewAny', App\Models\Food::class) ||
+                    auth()->user()->can('viewAny', App\Models\FoodType::class) ||
+                    auth()->user()->can('viewAny', App\Models\FoodCombo::class))
+                <li >
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">fastfood</i>
                         <span class="nav-text">Đồ ăn</span>
@@ -240,8 +252,10 @@
                 </li>
             @endif
 
-            @if(auth()->user()->can('viewAny', App\Models\User::class) || auth()->user()->can('viewAny', App\Models\Role::class) || auth()->user()->can('viewAny', App\Models\Module::class))
-                <li>
+            @if (auth()->user()->can('viewAny', App\Models\User::class) ||
+                    auth()->user()->can('viewAny', App\Models\Role::class) ||
+                    auth()->user()->can('viewAny', App\Models\Module::class))
+                <li class="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.modules.*') ? 'mm-active' : '' }}">
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">person</i>
                         <span class="nav-text">{{ __('language.admin.members.title') }}</span>
@@ -250,19 +264,19 @@
                         @can('viewAny', App\Models\User::class)
                             <li>
                                 <a href="{{ route('admin.users.index') }}"
-                                aria-expanded="false">{{ __('language.admin.members.users.title') }}</a>
+                                    aria-expanded="false">{{ __('language.admin.members.users.title') }}</a>
                             </li>
                         @endcan
                         @can('viewAny', App\Models\Role::class)
                             <li>
                                 <a href="{{ route('admin.roles.index') }}"
-                                aria-expanded="false">{{ __('language.admin.members.roles.title') }}</a>
+                                    aria-expanded="false">{{ __('language.admin.members.roles.title') }}</a>
                             </li>
                         @endcan
                         @can('viewAny', App\Models\Module::class)
                             <li>
                                 <a href="{{ route('admin.modules.index') }}"
-                                aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>
+                                    aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>
                             </li>
                         @endcan
 

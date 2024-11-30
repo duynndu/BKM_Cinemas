@@ -10,6 +10,7 @@ use App\Models\Page;
 use App\Models\Permission;
 use App\Models\Post;
 use App\Models\Block as BlockModel;
+use App\Models\Booking;
 use App\Models\Cinema;
 use App\Models\Food;
 use App\Models\FoodCombo;
@@ -20,6 +21,7 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Policies\Admin\Blocks\BlockPolicy;
 use App\Policies\Admin\Blocks\BlockTypePolicy;
+use App\Policies\Admin\Bookings\BookingPolicy;
 use App\Policies\Admin\CategoryPosts\CategoryPostPolicy;
 use App\Policies\Admin\Cinemas\CinemaPolicy;
 use App\Policies\Admin\Dashboards\DashboardPolicy;
@@ -63,6 +65,7 @@ class AuthServiceProvider extends ServiceProvider
         FoodType::class => FoodTypePolicy::class,
         FoodCombo::class => FoodComboPolicy::class,
         Cinema::class => CinemaPolicy::class,
+        Booking::class => BookingPolicy::class,
     ];
 
     /**
