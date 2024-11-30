@@ -31,4 +31,10 @@ class MovieService implements MovieServiceInterface
     {
         return $this->movieRepository->searchMovies($keyword);
     }
+
+    public function findMovieByslug($slug)
+    {
+        return $this->movieRepository->findMovieByslug($slug);
+
+    }
 }

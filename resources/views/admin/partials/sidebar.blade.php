@@ -189,7 +189,7 @@
                         <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
                     </li>
                     <li>
-                        <a href="#" aria-expanded="false">Voucher</a>
+                        <a href="{{ route('admin.vouchers.index') }}" aria-expanded="false">Voucher</a>
                     </li>
                 </ul>
             </li>

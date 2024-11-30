@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('voucher_id');
-            $table->integer('times_given')->default(1); // số lượt đã tặng
             $table->timestamps();
         });
     }

@@ -185,7 +185,7 @@
                                     <div class="d-flex justify-content-center align-items-center p-5">
                                         <div>
                                             <h3 class="text-center">
-                                                Không tìm thấy: {{ request()->name }}
+                                                {{ request()->name ? 'Chưa tìm thấy:'. request()->name : 'Không có dữ liệu' }}
                                             </h3>
                                         </div>
                                     </div>
