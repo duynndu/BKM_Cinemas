@@ -9,6 +9,7 @@ use App\Models\SeatType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class RoomController extends Controller
 {
@@ -73,7 +74,7 @@ class RoomController extends Controller
             }
 
             DB::commit();
-            return response()->json(['data' => $room, 'url' => route('admin.rooms.index')], 201);
+            return response()->json($room, 201);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
@@ -102,6 +103,14 @@ class RoomController extends Controller
             'image' => 'sometimes|image',
             'seats' => 'sometimes|required|json',
         ]);
+        $now = now();
+        $isShowtimeOngoing = $room->showtimes()->where('start_time', '<=', $now)
+            ->where('end_time', '>=', $now)
+            ->exists();
+
+        if ($isShowtimeOngoing) {
+            throw ValidationException::withMessages(['Không thể cập nhật phòng vì đang có lịch chiếu diễn ra.']);
+        }
 
         DB::beginTransaction();
         try {
@@ -143,7 +152,7 @@ class RoomController extends Controller
             }
 
             DB::commit();
-            return response()->json([$room->load('seats'), 'url' => route('admin.rooms.index')]);
+            return response()->json($room->load('seats'));
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());

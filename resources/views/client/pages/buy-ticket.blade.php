@@ -18,7 +18,7 @@
                     <strong style="display: none;">Touch Cinema - Rạp chiếu phim công nghệ hiện đại đạt chuẩn
                         quốc tế</strong>
                     <a href="/">
-                    <img style="max-width: 100%" src="{{asset('client/images/logo.png')}}" alt="touchcinema">
+                        <img style="max-width: 100%" src="{{asset('client/images/logo.png')}}" alt="touchcinema">
                     </a>
                 </h1>
             </div>
@@ -91,6 +91,9 @@
                                 </div>
                                 <div id="current-select">
                                     <div class="select seats">
+                                        Phòng: <span id="seat-code" x-text="room?.room_name"></span>
+                                    </div>
+                                    <div class="select seats">
                                         Ghế: <span id="seat-code" x-text="seatsSelected.map(seat => seat.seat_number).join(',')"></span>
                                         <span class="price"><span id="totalPriceSeat" x-text="price(totalPriceSeats)"></span></span>
                                     </div>
@@ -125,40 +128,7 @@
                             </a>
                         </div>
                     </div>
-                    <div id="tab-combo">
-                        <div id="login">
-                            <div class="title">
-                                <p>Vui lòng đăng nhập hoặc nhập thông tin để đặt vé</p>
-                                <h2>Đăng nhập</h2>
-                            </div>
-                            <div class="box-body">
-                                <form action="https://touchcinema.com/login" method="post">
-                                    <input type="hidden" name="_token" value="BXV7TW2mEar4PBN8BArnTk122Kc6ghxfnEGHC0fk">
-
-                                    <input type="hidden" name="redirect" value="https://touchcinema.com/dat-ve/79240" />
-                                    <div class="login-group">
-                                        <input id="username" type="text" name="name" value="" placeholder="Username"
-                                            required />
-                                    </div>
-                                    <div class="login-group">
-                                        <input id="password" type="password" name="password" placeholder="Password" required />
-                                    </div>
-                                    <input type="submit" class="btn btn-login" value="Đăng nhập" />
-                                    <div class="attr-link">
-                                        <a href="https://touchcinema.com/password/reset">Quên mật khẩu</a>
-                                        <a class="register" href="https://touchcinema.com/register">Đăng kí tài khoản</a>
-                                    </div>
-                                </form>
-                                Hoặc
-                                <a class="login-social facebook" href="https://touchcinema.com/auth/facebook"
-                                    title="Đăng nhập bằng Facebook">
-                                    Đăng nhập bằng Facebook
-                                </a>
-                                <a class="login-social google" href="https://touchcinema.com/auth/google" title="Đăng nhập bằng Google">
-                                    Đăng nhập bằng Google
-                                </a>
-                            </div>
-                        </div>
+                    <div style="overflow-y: auto;" id="tab-combo">
                         <div class="tw-mt-16">
                             <template x-for="foodType in foodTypes" :key="foodType.id">
                                 <div class="tw-w-full tw-border-b tw-gap-2">
@@ -247,13 +217,13 @@
                                         </div>
                                         <div class="info">
                                             <p class="name" x-text="user?.name"></p>
-                                            <p class="diem"><span class="current_point">0</span> ĐIỂM</p>
+                                            <p class="diem"><span class="current_point" x-text="price(user?.balance)"></span> </p>
                                         </div>
                                     </div>
                                     <div id="couponbox">
                                         <div id="formCoupon">
                                             <button type="button" class="btn-use-coupon" data-toggle="modal" data-target="#couponModal">
-                                                <i class="fa fa-gift " aria-hidden="true"></i> Sử dụng Coupon hoặc Voucher
+                                                <i class="fa fa-gift " aria-hidden="true"></i> Sử dụng voucher
                                             </button>
 
                                         </div>

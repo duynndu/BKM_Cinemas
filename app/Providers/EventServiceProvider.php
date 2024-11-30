@@ -6,10 +6,12 @@ use App\Events\Client\DepositSucceeded;
 use App\Events\Client\ForgotPasswordRequested;
 use App\Events\Client\PasswordChanged;
 use App\Events\Client\UserRegistered;
+use App\Events\SendMailBookedEvent;
 use App\Listeners\Client\SendDepositSuccessEmail;
 use App\Listeners\Client\SendPasswordChangeNotification;
 use App\Listeners\Client\SendPasswordResetEmail;
 use App\Listeners\Client\SendRegisterEmail;
+use App\Listeners\SendMailBookedListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -34,6 +36,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         DepositSucceeded::class => [
             SendDepositSuccessEmail::class
+        ],
+        SendMailBookedEvent::class => [
+            SendMailBookedListener::class
         ]
     ];
 

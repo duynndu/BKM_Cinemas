@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 
 
@@ -31,7 +31,7 @@ apiBase.interceptors.request.use(
 // Thêm response interceptor cho instance mới
 apiBase.interceptors.response.use(
   (response) => response,
-  (error) => {
+  (error: AxiosError) => {
     if (error.response && error.response.status === 401) {
       localStorage.clear();
       console.error('Đăng nhập hết hạn. Vui lòng đăng nhập lại.');
@@ -39,3 +39,8 @@ apiBase.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export interface IErrorResponse {
+  errors: { [key: string | number]: string[] };
+  message: string;
+}

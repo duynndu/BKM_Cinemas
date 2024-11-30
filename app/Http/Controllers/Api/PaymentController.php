@@ -7,8 +7,10 @@ use App\Constants\SeatStatus;
 use App\Constants\Status;
 use App\Events\BookSeat;
 use App\Events\Client\DepositSucceeded;
+use App\Events\SendMailBookedEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResetSeatStatus;
+use App\Mail\Client\BookingMail;
 use App\Models\Booking;
 use App\Services\Client\Deposits\Interfaces\DepositServiceInterface;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
@@ -18,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -174,10 +177,8 @@ class PaymentController extends Controller
                         'value' => SeatStatus::AVAILABLE
                     ]);
                 } else {
-                    $this->updatePoints($booking->total_price);
+                    // $this->updatePoints($booking->total_price);
                 }
-
-                $booking->update(['payment_status' => $dataTransaction['status']]);
                 $this->transactionService->create($dataTransaction);
                 DB::commit();
             } catch (\Exception $e) {
@@ -186,18 +187,20 @@ class PaymentController extends Controller
                 $dataTransaction['description'] = 'Lỗi giao dịch - Đặt vé';
                 Log::error('Transaction failed: ' . $e->getMessage());
                 $this->transactionService->create($dataTransaction);
-                $booking->update(['payment_status' => $dataTransaction['status']]);
                 BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                     'action' => 'set',
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
+            $booking->update([
+                'payment_status' => $dataTransaction['status'],
+                'status' => $dataTransaction['status']
+            ]);
             if ($dataTransaction['status'] == Status::COMPLETED) {
                 return redirect()->route('thanh-cong', [
                     'code' => $booking->code
                 ]);
             }
-            return response()->json($dataTransaction);
         }
     }
 
@@ -276,9 +279,8 @@ class PaymentController extends Controller
                         'value' => SeatStatus::AVAILABLE
                     ]);
                 } else {
-                    $this->updatePoints($booking->total_price);
+                    // $this->updatePoints($booking->total_price);
                 }
-                $booking->update(['payment_status' => $dataTransaction['status']]);
                 $this->transactionService->create($dataTransaction);
                 DB::commit();
             } catch (\Exception $e) {
@@ -287,18 +289,20 @@ class PaymentController extends Controller
                 $dataTransaction['description'] = 'Lỗi giao dịch - Đặt vé';
                 Log::error('Transaction failed: ' . $e->getMessage());
                 $this->transactionService->create($dataTransaction);
-                $booking->update(['payment_status' => $dataTransaction['status']]);
                 BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                     'action' => 'set',
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
+            $booking->update([
+                'payment_status' => $dataTransaction['status'],
+                'status' => $dataTransaction['status']
+            ]);
             if ($dataTransaction['status'] == Status::COMPLETED) {
                 redirect()->route('thanh-cong', [
                     'code' => $booking->code
                 ]);
             }
-            return response()->json($booking);
         }
     }
 
@@ -385,8 +389,6 @@ class PaymentController extends Controller
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
-
-            $booking->update(['payment_status' => $dataTransaction['status']]);
             $this->transactionService->create($dataTransaction);
             DB::commit();
         } catch (\Exception $e) {
@@ -395,10 +397,18 @@ class PaymentController extends Controller
             $dataTransaction['description'] = 'Lỗi giao dịch - Đặt vé';
             Log::error('Transaction failed: ' . $e->getMessage());
             $this->transactionService->create($dataTransaction);
-            $booking->update(['payment_status' => $dataTransaction['status']]);
             BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                 'action' => 'set',
                 'value' => SeatStatus::AVAILABLE
+            ]);
+        }
+        $booking->update([
+            'payment_status' => $dataTransaction['status'],
+            'status' => $dataTransaction['status']
+        ]);
+        if ($dataTransaction['status'] == Status::COMPLETED) {
+            return redirect()->route('thanh-cong', [
+                'code' => $booking->code
             ]);
         }
     }
@@ -426,11 +436,17 @@ class PaymentController extends Controller
             ]);
         } else {
             auth()->user()->update(['balance' => $balance_after]);
-            $this->updatePoints($booking->total_price);
+            // $this->updatePoints($booking->total_price);
         }
         $this->transactionService->create($dataTransaction);
-        $booking->update(['payment_status' => $dataTransaction['status']]);
+        $booking->update([
+            'payment_status' => $dataTransaction['status'],
+            'status' => $dataTransaction['status']
+        ]);
         $dataTransaction['code'] = $booking->code;
+        if ($dataTransaction['status'] == Status::COMPLETED) {
+            SendMailBookedEvent::dispatch(auth()->user(), $booking->code);
+        }
         return $dataTransaction;
     }
 
