@@ -22,6 +22,7 @@ class HomeController extends Controller
 
     public function index()
     {
+        // dd(\Hash::make(1)); 
         $sliders = $this->homeService->sliders();
         $movieIsShowing = $this->homeService->movieIsShowing();
         $upComingMovie = $this->homeService->upcomingMovie();

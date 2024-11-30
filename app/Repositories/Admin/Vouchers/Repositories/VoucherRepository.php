@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin\Vouchers\Repositories;
 
+use App\Events\Admin\GiftVoucherEvent;
 use App\Models\User;
 use App\Models\Voucher;
 use App\Models\VoucherUser;
@@ -132,7 +133,7 @@ class VoucherRepository extends BaseRepository implements VoucherInterface
     protected function getAllUser()
     {
         $users = User::where('status', 1)
-        ->where('id', '!=', auth()->id()) // Loại trừ tài khoản đang đăng nhập
+            // ->where('id', '!=', auth()->id()) // Loại trừ tài khoản đang đăng nhập
             ->orderBy('created_at', 'desc')
             ->get();
         return $users;
@@ -140,8 +141,8 @@ class VoucherRepository extends BaseRepository implements VoucherInterface
     protected function getNewMember()
     {
         $users = User::where('is_new_member', 1)
-        
-        ->where('id', '!=', auth()->id()) // Loại trừ tài khoản đang đăng nhập->where('status', 1)
+
+            ->where('id', '!=', auth()->id()) // Loại trừ tài khoản đang đăng nhập->where('status', 1)
             ->orderBy('created_at', 'desc')
             ->get();
         return $users;
@@ -149,8 +150,8 @@ class VoucherRepository extends BaseRepository implements VoucherInterface
     protected function getMemberVip()
     {
         $users = User::where('membership_level', 'vip')
-        ->where('id', '!=', auth()->id()) // Loại trừ tài khoản đang đăng nhập
-        ->where('status', 1)
+            ->where('id', '!=', auth()->id()) // Loại trừ tài khoản đang đăng nhập
+            ->where('status', 1)
             ->orderBy('created_at', 'desc')
             ->get();
         return $users;
@@ -158,7 +159,7 @@ class VoucherRepository extends BaseRepository implements VoucherInterface
     protected function getMemberVvip()
     {
         $users = User::where('membership_level', 'vvip')->where('status', 1)
-        ->where('id', '!=', auth()->id()) // Loại trừ tài khoản đang đăng nhập
+            ->where('id', '!=', auth()->id()) // Loại trừ tài khoản đang đăng nhập
             ->orderBy('created_at', 'desc')
             ->get();
         return $users;
@@ -166,45 +167,57 @@ class VoucherRepository extends BaseRepository implements VoucherInterface
 
     public function giftVoucherToAccount($request)
     {
-        if(empty($request->voucherId)){
+        if (empty($request->voucherId)) {
             return response()->json([
                 'status' => 'faile',
                 'message' => 'Voucher không tồn tại!'
             ]);
         }
         $voucher = Voucher::find($request->voucherId);
-        $userVoucher = VoucherUser::where('voucher_id', $voucher->id)->get();  // Lấy các người dùng đã tặng voucher
+        if (!empty($request->userIds)) {
 
-        // Kiểm tra số lượng voucher có đủ không (voucher còn lại tính từ tổng - số người đã được tặng)
-        if ($voucher->quantity < (count($request->userIds) - count($userVoucher))) {
+            $userVoucher = VoucherUser::where('voucher_id', $voucher->id)->get();  // Lấy các người dùng đã tặng voucher
+
+            // Kiểm tra số lượng voucher có đủ không (voucher còn lại tính từ tổng - số người đã được tặng)
+            if ($voucher->quantity < (count($request->userIds) - count($userVoucher))) {
+                return response()->json([
+                    'status' => 'faile',
+                    'message' => 'Số lượng voucher không đủ'
+                ]);
+            }
+
+            // Lưu lại số lượng ban đầu của voucher
+            $originQuantity = $voucher->quantity;
+
+            // Lấy ra danh sách người dùng đã được tặng voucher trước đó
+            $oldUserIds = $voucher->users()->pluck('user_id')->toArray();
+            $filteredUserIds = array_diff($request->userIds, $oldUserIds);
+            GiftVoucherEvent::dispatch($filteredUserIds, $voucher);
+
+            // Xóa tất cả voucher đã được gắn cho user
+            $voucher->users()->detach();
+
+            // Tính toán lại số lượng cần cộng lại (số lượng voucher cũ đã tặng, cần phải cộng lại số đã xóa)
+            $quantityToRestore = count($oldUserIds) - count($request->userIds);
+            $voucher->quantity = $originQuantity + $quantityToRestore; // Cộng lại số lượng đã bị xóa
+
+            // Tặng voucher cho các user mới được chọn
+            $voucher->users()->attach($request->userIds);
+
+            // Lưu lại số lượng mới vào database
+         
+            $voucher->save();
             return response()->json([
-                'status' => 'faile',
-                'message' => 'Số lượng voucher không đủ'
+                'status' => 'success',
+                'message' => 'Thành công'
+            ]);
+        } else {
+            // Xóa tất cả voucher đã được gắn cho user
+            $voucher->users()->detach();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thành công'
             ]);
         }
-
-        // Lưu lại số lượng ban đầu của voucher
-        $originQuantity = $voucher->quantity;
-
-        // Lấy ra danh sách người dùng đã được tặng voucher trước đó
-        $oldUserIds = $voucher->users()->pluck('user_id')->toArray();
-
-        // Xóa tất cả voucher đã được gắn cho user
-        $voucher->users()->detach();
-
-        // Tính toán lại số lượng cần cộng lại (số lượng voucher cũ đã tặng, cần phải cộng lại số đã xóa)
-        $quantityToRestore = count($oldUserIds) - count($request->userIds);
-        $voucher->quantity = $originQuantity + $quantityToRestore; // Cộng lại số lượng đã bị xóa
-
-        // Tặng voucher cho các user mới được chọn
-        $voucher->users()->attach($request->userIds);
-
-        // Lưu lại số lượng mới vào database
-        $voucher->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Voucher đã được tặng thành công'
-        ]);
     }
 }

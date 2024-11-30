@@ -42,14 +42,12 @@ class VoucherRequest extends FormRequest
             "voucher.quantity" => [
                 "required",
                 "integer",
-                "min:1",
+                $id ? 'min:0' : 'min:1', 
                 "max:100",
             ],
             "voucher.discount_value" => [
                 "required",
                 "numeric",
-                "min:1",
-                "max:1000000",
             ],
             "voucher.description" => [
                 "max:250"
@@ -119,7 +117,7 @@ protected function hasChanged(string $field, ?string $currentValue): bool
             "voucher.end_date.required" => "Ngày kết thúc là bắt buộc.",
             "voucher.end_date.after" => "Ngày kết thúc phải lớn hơn ngày bắt đầu.",
             "voucher.discount_value.required" => "Giá trị giảm giá là bắt buộc.",
-            "voucher.discount_value.numeric" => "Giá trị giảm giá phải là một số.",
+            "voucher.discount_value.numeric" => "Giá trị giảm giá phải là số.",
             "voucher.discount_value.min" => "Giá trị giảm giá phải lớn hơn hoặc bằng 1.",
             "voucher.discount_value.max" => "Giá trị giảm giá không được vượt quá 1,000,000.",
             "voucher.description.max" => "Mô tả không được vượt quá 250 ký tự.",

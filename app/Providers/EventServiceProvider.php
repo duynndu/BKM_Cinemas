@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\Admin\GiftVoucherEvent;
 use App\Events\Client\DepositSucceeded;
 use App\Events\Client\ForgotPasswordRequested;
 use App\Events\Client\PasswordChanged;
 use App\Events\Client\UserRegistered;
+use App\Listeners\Admin\GiftVoucherListener;
 use App\Listeners\Client\SendDepositSuccessEmail;
 use App\Listeners\Client\SendPasswordChangeNotification;
 use App\Listeners\Client\SendPasswordResetEmail;
@@ -34,7 +36,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         DepositSucceeded::class => [
             SendDepositSuccessEmail::class
-        ]
+        ],
+        GiftVoucherEvent::class=>[
+            GiftVoucherListener::class
+        ],
     ];
 
     protected $observers = [

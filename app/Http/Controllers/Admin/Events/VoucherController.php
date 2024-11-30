@@ -41,11 +41,13 @@ class VoucherController extends Controller
         return view('admin.pages.vouchers.create');
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(VoucherRequest $request)
     {
+        
         $data = $request->voucher;
         try {
             DB::beginTransaction();
