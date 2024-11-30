@@ -42,19 +42,4 @@ class RoomPolicy
     {
         return $user->hasPermission('delete-room');
     }
-
-    public function deleteMultiple(User $user)
-    {
-        return $user->hasPermission('delete-multiple-room');
-    }
-
-    public function changeOrder(User $user)
-    {
-        return $user->hasPermission('change-order-room');
-    }
-
-    public function changeActive(User $user)
-    {
-        return $user->hasPermission('change-active-room');
-    }
 }

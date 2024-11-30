@@ -153,6 +153,7 @@
                 </li>
             @endif
 
+            {{-- @if (auth()->user()->can('viewAny', App\Models\Movie::class)) --}}
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="material-icons">movie</i>
@@ -170,39 +171,59 @@
                     </li>
                 </ul>
             </li>
+            {{-- @endif --}}
 
-            <li>
-                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">movie</i>
-                    <span class="nav-text">Phòng chiếu</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li>
-                        <a href="{{ route('admin.rooms.index') }}" aria-expanded="false">Phòng chiếu</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.seat-layouts.index') }}" aria-expanded="false">Sơ đồ ghế</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.seat-types.index') }}" aria-expanded="false">Loại ghế</a>
-                    </li>
-                </ul>
-            </li>
+            @if (auth()->user()->can('viewAny', App\Models\Room::class) ||
+                    auth()->user()->can('viewAny', App\Models\SeatType::class) ||
+                    auth()->user()->can('viewAny', App\Models\SeatLayout::class))
+                <li>
+                    <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                        <i class="material-icons">movie</i>
+                        <span class="nav-text">Phòng chiếu</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        @if (auth()->user()->can('viewAny', App\Models\Room::class))
+                            <li>
+                                <a href="{{ route('admin.rooms.index') }}" aria-expanded="false">Phòng chiếu</a>
+                            </li>
+                        @endif
+                        @if (auth()->user()->can('viewAny', App\Models\SeatType::class))
+                            <li>
+                                <a href="{{ route('admin.seat-layouts.index') }}" aria-expanded="false">Sơ đồ ghế</a>
+                            </li>
+                        @endif
+                        @if (auth()->user()->can('viewAny', App\Models\SeatLayout::class))
+                            <li>
+                                <a href="{{ route('admin.seat-types.index') }}" aria-expanded="false">Loại ghế</a>
+                            </li>
+                        @endif
 
-            <li>
-                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">card_giftcard</i>
-                    <span class="nav-text">Sự kiện</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li>
-                        <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.vouchers.index') }}" aria-expanded="false">Voucher</a>
-                    </li>
-                </ul>
-            </li>
+                    </ul>
+                </li>
+            @endif
+
+            @if (auth()->user()->can('viewAny', App\Models\Voucher::class) ||
+                auth()->user()->can('viewAny', App\Models\Reward::class))
+                <li>
+                    <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                        <i class="material-icons">card_giftcard</i>
+                        <span class="nav-text">Sự kiện</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        @if (auth()->user()->can('viewAny', App\Models\Voucher::class))
+                            <li>
+                                <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->can('viewAny', App\Models\Voucher::class))
+                            <li>
+                                <a href="{{ route('admin.vouchers.index') }}" aria-expanded="false">Voucher</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
 
             <li>
                 <a href="{{ route('admin.payments.index') }}">
@@ -224,10 +245,11 @@
                     </li>
                 </ul>
             </li>
+            
             @if (auth()->user()->can('viewAny', App\Models\Food::class) ||
                     auth()->user()->can('viewAny', App\Models\FoodType::class) ||
                     auth()->user()->can('viewAny', App\Models\FoodCombo::class))
-                <li >
+                <li>
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">fastfood</i>
                         <span class="nav-text">Đồ ăn</span>
@@ -255,7 +277,8 @@
             @if (auth()->user()->can('viewAny', App\Models\User::class) ||
                     auth()->user()->can('viewAny', App\Models\Role::class) ||
                     auth()->user()->can('viewAny', App\Models\Module::class))
-                <li class="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.modules.*') ? 'mm-active' : '' }}">
+                <li
+                    class="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.modules.*') ? 'mm-active' : '' }}">
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">person</i>
                         <span class="nav-text">{{ __('language.admin.members.title') }}</span>

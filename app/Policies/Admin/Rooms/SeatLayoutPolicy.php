@@ -50,19 +50,4 @@ class SeatLayoutPolicy
     {
         return $user->hasPermission('delete-seat-layout');
     }
-
-    public function deleteMultiple(User $user)
-    {
-        return $user->hasPermission('delete-multiple-seat-layout');
-    }
-
-    public function changeOrder(User $user)
-    {
-        return $user->hasPermission('change-order-seat');
-    }
-
-    public function changeActive(User $user)
-    {
-        return $user->hasPermission('change-active-seat');
-    }
 }

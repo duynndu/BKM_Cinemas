@@ -15,16 +15,23 @@ use App\Models\Cinema;
 use App\Models\Food;
 use App\Models\FoodCombo;
 use App\Models\FoodType;
+use App\Models\Reward;
 use App\Models\Role;
+use App\Models\Room;
+use App\Models\SeatLayout;
+use App\Models\SeatType;
 use App\Models\System;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Voucher;
 use App\Policies\Admin\Blocks\BlockPolicy;
 use App\Policies\Admin\Blocks\BlockTypePolicy;
 use App\Policies\Admin\Bookings\BookingPolicy;
 use App\Policies\Admin\CategoryPosts\CategoryPostPolicy;
 use App\Policies\Admin\Cinemas\CinemaPolicy;
 use App\Policies\Admin\Dashboards\DashboardPolicy;
+use App\Policies\Admin\Events\EventPolicy;
+use App\Policies\Admin\Events\VoucherPolicy;
 use App\Policies\Admin\Foods\FoodComboPolicy;
 use App\Policies\Admin\Foods\FoodPolicy;
 use App\Policies\Admin\Foods\FoodTypePolicy;
@@ -34,6 +41,9 @@ use App\Policies\Admin\Pages\PagePolicy;
 use App\Policies\Admin\Permissions\PermissionPolicy;
 use App\Policies\Admin\Posts\PostPolicy;
 use App\Policies\Admin\Roles\RolePolicy;
+use App\Policies\Admin\Rooms\RoomPolicy;
+use App\Policies\Admin\Rooms\SeatLayoutPolicy;
+use App\Policies\Admin\Rooms\SeatTypePolicy;
 use App\Policies\Admin\Systems\SystemPolicy;
 use App\Policies\Admin\Tags\TagPolicy;
 use App\Policies\Admin\Users\UserPolicy;
@@ -66,6 +76,13 @@ class AuthServiceProvider extends ServiceProvider
         FoodCombo::class => FoodComboPolicy::class,
         Cinema::class => CinemaPolicy::class,
         Booking::class => BookingPolicy::class,
+        Room::class => RoomPolicy::class,
+        SeatLayout::class => SeatLayoutPolicy::class,
+        SeatType::class => SeatTypePolicy::class,
+        Reward::class => EventPolicy::class,
+        Voucher::class => VoucherPolicy::class,
+
+
     ];
 
     /**
