@@ -24,7 +24,7 @@ class CheckRuleSlug implements ValidationRule
     {
         $id = $this->id;
 
-        $tables = ['blocks', 'category_posts', 'pages', 'posts', 'systems', 'genres', 'menus', 'movies', 'notifications', 'tags'];
+        $tables = ['blocks', 'category_posts', 'pages', 'posts', 'systems', 'genres', 'menus', 'movies', 'tags'];
 
         foreach ($tables as $table) {
             $query = DB::table($table)->where('slug', $value)->whereNull('deleted_at');

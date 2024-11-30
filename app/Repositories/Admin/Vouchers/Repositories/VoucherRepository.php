@@ -133,7 +133,7 @@ class VoucherRepository extends BaseRepository implements VoucherInterface
     protected function getAllUser()
     {
         $users = User::where('status', 1)
-            // ->where('id', '!=', auth()->id()) // Loại trừ tài khoản đang đăng nhập
+            ->where('id', '!=', auth()->id()) // Loại trừ tài khoản đang đăng nhập
             ->orderBy('created_at', 'desc')
             ->get();
         return $users;

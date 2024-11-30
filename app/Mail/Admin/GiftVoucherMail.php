@@ -29,10 +29,23 @@ class GiftVoucherMail extends Mailable
     /**
      * Get the message envelope.
      */
+    public function build()
+    {
+        return $this->subject('BKM Cinemas - Rạp chiếu phim 3D công nghệ hàng đầu.')
+            ->view('admin.mails.GiftVoucher')
+            ->attach(public_path('client/images/logo.png'), [
+                'as' => 'logo.png',
+                'mime' => 'image/png',
+            ]);
+    }
+
+    /**
+     * Get the message envelope.
+     */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Tặng mã giảm giá',
+            subject: 'Bạn vừa nhận được voucher:' . $this->voucher->name,
         );
     }
 
@@ -42,11 +55,11 @@ class GiftVoucherMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'Admin.mails.GiftVoucher',
+            view: 'admin.mails.GiftVoucher',
             with: [
                 'user' => $this->user,
-                'voucher' => $this->voucher
-            ]
+                'voucher' => $this->voucher,
+            ],
         );
     }
 
