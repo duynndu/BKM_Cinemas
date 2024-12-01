@@ -432,7 +432,7 @@ class PaymentController extends Controller
         $dataTransaction = [
             'user_id' => $booking->user_id,
             'payment_method' => 'customer',
-            'amount' => -$amount,
+            'amount' => $amount,
             'type' => 'deposit',
             'description' => 'Giao dịch thành công - Đặt vé',
             'balance_after' => $balance_after,
