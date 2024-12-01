@@ -25,11 +25,10 @@ class DashboardRepository extends BaseRepository implements DashboardInterface
 
     public function __construct(
         Booking $booking,
-        Movie   $movie,
-        User    $user,
-        Cinema  $cinema
-    )
-    {
+        Movie $movie,
+        User $user,
+        Cinema $cinema
+    ) {
         parent::__construct();
         $this->booking = $booking;
         $this->movie = $movie;
@@ -139,7 +138,7 @@ class DashboardRepository extends BaseRepository implements DashboardInterface
         return $totalTickets;
     }
 
-//    public function getRevenueAndTicketData($request)
+    //    public function getRevenueAndTicketData($request)
 //    {
 //        $filter = $request->filter;
 //        $startDate = $request->start_date;
@@ -354,7 +353,7 @@ class DashboardRepository extends BaseRepository implements DashboardInterface
         ];
     }
 
-//    private function getTicketCountForMonth($month, $year, $cinemaId, $userCinemaId, $filter = null, $startDate = null, $endDate = null)
+    //    private function getTicketCountForMonth($month, $year, $cinemaId, $userCinemaId, $filter = null, $startDate = null, $endDate = null)
 //    {
 //        $query = $this->booking->where('code', '!=', null)
 //            ->where('status', 'completed');
@@ -453,15 +452,17 @@ class DashboardRepository extends BaseRepository implements DashboardInterface
         $top5Cinemas = Cinema::withCount([
             'bookings as total_tickets' => function ($query) {
                 $query->whereNotNull('code')
-                ->whereIn('status', ['completed', 'rejected'])
-                ->where('payment_status', 'completed');
+                    ->whereIn('status', ['completed', 'rejected'])
+                    ->where('payment_status', 'completed');
             },
         ])
             ->withSum('bookings as total_revenue', 'total_price')
+            ->having('total_tickets', '>', 0) 
+            ->having('total_revenue', '>', 0)
             ->orderByDesc('total_revenue')
             ->orderByDesc('total_tickets')
-            ->take(5)
-            ->get(['id', 'name']);
+            ->take(5) 
+            ->get(['id', 'name']); 
 
         return $top5Cinemas;
     }
@@ -480,16 +481,16 @@ class DashboardRepository extends BaseRepository implements DashboardInterface
             }
         ])
             ->withSum([
-                'bookings as total_revenue' => function ($query) {
-                    $query->where('code', '!=', null)
-                        ->where('status', 'completed')
-                        ->where('payment_status', 'completed');
+                    'bookings as total_revenue' => function ($query) {
+                        $query->where('code', '!=', null)
+                            ->where('status', 'completed')
+                            ->where('payment_status', 'completed');
 
-                    if (Auth::user()->cinema_id !== null) {
-                        $query->where('cinema_id', Auth::user()->cinema_id);
+                        if (Auth::user()->cinema_id !== null) {
+                            $query->where('cinema_id', Auth::user()->cinema_id);
+                        }
                     }
-                }
-            ], 'total_price')
+                ], 'total_price')
             ->orderByDesc('total_revenue')
             ->orderByDesc('total_tickets')
             ->limit(1)

@@ -783,19 +783,6 @@
                             </div>
                         </div>
 
-                        <div id="dkdoithuong" class="mbox tab-pane fade">
-                            <div class="title">
-                                <h2>Điều kiện đổi thưởng</h2>
-                            </div>
-                            <div class="box-body">
-                                <div class="row flex">
-                                    <div class="col-md-12 col-sm-12">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div id="vedadat" class="mbox tab-pane fade">
                             <div class="title">
                                 <h2>Lịch sử mua vé</h2>
