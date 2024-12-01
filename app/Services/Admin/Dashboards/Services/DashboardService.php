@@ -24,6 +24,46 @@ class DashboardService extends BaseService implements DashboardServiceInterface
         return $this->repository->top10PostLatest();
     }
 
+    public function getAllUsers()
+    {
+        return $this->repository->getAllUsers();
+    }
+
+    public function getAllMovies()
+    {
+        return $this->repository->getAllMovies();
+    }
+
+    public function getAllCinemas()
+    {
+        return $this->repository->getAllCinemas();
+    }
+
+    public function getTotalTicketsInMonth()
+    {
+        return $this->repository->getTotalTicketsInMonth();
+    }
+
+    public function getTotalTicketsCompleted()
+    {
+        return $this->repository->getTotalTicketsCompleted();
+    }
+
+    public function getTotalTicketsWaitingForCancellation()
+    {
+        return $this->repository->getTotalTicketsWaitingForCancellation();
+    }
+
+    public function getTotalTicketsCancelled()
+    {
+        return $this->repository->getTotalTicketsCancelled();
+    }
+
+    public function getTotalTicketsRejected()
+    {
+        return $this->repository->getTotalTicketsRejected();
+    }
+
     public function getRevenueAndTicketData($request)
     {
         return $this->repository->getRevenueAndTicketData($request);
@@ -32,5 +72,15 @@ class DashboardService extends BaseService implements DashboardServiceInterface
     public function getTop5MoviesByViewCount()
     {
         return $this->repository->getTop5MoviesByViewCount();
+    }
+
+    public function getTop5Cinemas()
+    {
+        return $this->repository->getTop5Cinemas();
+    }
+
+    public function getTop1MovieByRevenue()
+    {
+        return $this->repository->getTop1MovieByRevenue();
     }
 }
