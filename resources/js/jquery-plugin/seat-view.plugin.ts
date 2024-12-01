@@ -4,6 +4,7 @@ import { ISeatLayout } from "@/types/seat-layout.interface";
 import { price } from "@/utils/common";
 import { ISeatType } from "@/types/seat-type.interface";
 import { ISeat, SEAT_STATUS_VALUES } from "@/types/seat.interface";
+import Swal from "sweetalert2";
 
 $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, seat_types: ISeatType[] }, onChange?: (data: any) => any) {
   const user = window.user;
@@ -121,9 +122,13 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
         if (isUserSelectSeat || seat.status == SEAT_STATUS.AVAILABLE) {
           seatElement.removeClass(seatElement.data('status'));
 
-          if (seatsSelected.length > 9 && (seat.status != SEAT_STATUS.BOOKING && !seat.user_id)) {
+          if (seatsSelected.length >= 9 && (seat.status != SEAT_STATUS.BOOKING && !seat.user_id)) {
             seatErrors.quantityError = true;
-            alert('Nếu bạn muốn đặt trên 9 ghế, vui lòng thực hiện giao dịch nhiều lần hoặc liên hệ tại quầy!');
+            Swal.fire({
+              icon: 'warning',
+              title: 'Cảnh báo',
+              text: 'Nếu bạn muốn đặt trên 9 ghế, vui lòng thực hiện giao dịch nhiều lần hoặc liên hệ tại quầy!',
+            });
             // return;
           } else {
             seatErrors.quantityError = false;
@@ -131,7 +136,11 @@ $.fn.seatview = async function (seatLayout: ISeatLayout & { base_price: any, sea
 
           if (seatsSelected[0] && seatsSelected[0]?.type !== seat.type) {
             seatErrors.typeError = true;
-            alert('Không được chọn 2 loại ghế khác nhau');
+            Swal.fire({
+              icon: 'warning',
+              title: 'Cảnh báo',
+              text: 'Không được chọn 2 loại ghế khác nhau!',
+            });
           } else {
             seatErrors.typeError = false;
           }

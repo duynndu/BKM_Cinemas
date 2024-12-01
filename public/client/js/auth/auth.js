@@ -394,7 +394,8 @@ $(document).ready(function () {
 
     $(document).on("submit", "#confirmResetPassword", function (e) {
         e.preventDefault();
-
+        console.log(e);
+        
         $('#confirmResetPassword div[class$="_error"]').empty();
 
         let form = $(this);
@@ -407,48 +408,48 @@ $(document).ready(function () {
         data += `&token=${encodeURIComponent(token)}&email=${encodeURIComponent(email)}`;
 
         $.ajax({
-        url: $(this).attr("action"),
-        type: "POST",
-        data: data,
-        success: function (response) {
-            if (response.sendResetPassword) {
-                Swal.fire({
-                    position: "center",
-                    imageUrl: image,
-                    imageWidth: 100,
-                    imageHeight: 100,
-                    width: "400px",
-                    title: "Thay đổi mật khẩu thành công!",
-                    text: "Bây giờ bạn có thể đăng nhập bằng mật khẩu mới bạn vừa thay đổi.",
-                    showConfirmButton: true,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                    // Chuyển hướng và reset form sau khi bấm "OK"
-                    window.location.href = response.url;
-                        $("#confirmResetPassword").trigger("reset");
+            url: $(this).attr("action"),
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.sendResetPassword) {
+                    Swal.fire({
+                        position: "center",
+                        imageUrl: image,
+                        imageWidth: 100,
+                        imageHeight: 100,
+                        width: "400px",
+                        title: "Thay đổi mật khẩu thành công!",
+                        text: "Bây giờ bạn có thể đăng nhập bằng mật khẩu mới bạn vừa thay đổi.",
+                        showConfirmButton: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                        // Chuyển hướng và reset form sau khi bấm "OK"
+                        window.location.href = response.url;
+                            $("#confirmResetPassword").trigger("reset");
+                        }
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status === 422) {
+                let errors = xhr.responseJSON.errors;
+                $.each(errors, function (key, messages) {
+                    let errorContainer = form.find("." + key + "_error");
+                    if (errorContainer.length) {
+                    errorContainer.html(messages[0]).css("color", "red");
                     }
                 });
-            }
-        },
-        error: function (xhr, status, error) {
-            if (xhr.status === 422) {
-            let errors = xhr.responseJSON.errors;
-            $.each(errors, function (key, messages) {
-                let errorContainer = form.find("." + key + "_error");
-                if (errorContainer.length) {
-                errorContainer.html(messages[0]).css("color", "red");
+                } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: `${xhr.responseJSON.message}`,
+                    showConfirmButton: false,
+                    timer: 2500,
+                });
                 }
-            });
-            } else {
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: `${xhr.responseJSON.message}`,
-                showConfirmButton: false,
-                timer: 2500,
-            });
-            }
-        },
+            },
         });
     });
 

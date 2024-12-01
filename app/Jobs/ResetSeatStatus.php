@@ -51,7 +51,7 @@ class ResetSeatStatus implements ShouldQueue
             case 'SEAT_AWAITING_PAYMENT_ACTION': {
                     $latestBooking = Booking::where('user_id', $this->userId)
                         ->where('showtime_id', $this->showtimeId)
-                        ->whereNull('payment_status')
+                        ->whereNull('status')
                         ->orderBy('created_at', 'desc')
                         ->with('seatsBooking.seat')
                         ->first();
@@ -68,13 +68,15 @@ class ResetSeatStatus implements ShouldQueue
             case 'SEAT_WAITING_PAYMENT': {
                     $latestBooking = Booking::where('user_id', $this->userId)
                         ->where('showtime_id', $this->showtimeId)
-                        ->where('payment_status', '!=', Status::COMPLETED)
+                        ->whereNotIn('status', ['completed', 'rejected'])
                         ->orderBy('created_at', 'desc')
                         ->with('seatsBooking.seat')
                         ->first();
-                    Log::info($latestBooking);
+                    // Log::info($latestBooking);
                     if ($latestBooking && $latestBooking->seatsBooking) {
                         $seatsNumberSelected = $latestBooking->seatsBooking->pluck('seat.seat_number');
+                        Log::info($latestBooking);
+
                         BookSeat::dispatch($this->showtimeId, $seatsNumberSelected, [
                             'action' => 'set',
                             'value' => SeatStatus::AVAILABLE

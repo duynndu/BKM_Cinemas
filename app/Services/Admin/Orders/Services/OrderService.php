@@ -13,4 +13,13 @@ class OrderService extends BaseService implements OrderServiceInterface
         return OrderInterface::class;
     }
 
+    public function changeGetTickets($id)
+    {
+        return $this->repository->changeGetTickets($id);
+    }
+
+    public function filter($request)
+    {
+        return $this->repository->filter($request);
+    }
 }

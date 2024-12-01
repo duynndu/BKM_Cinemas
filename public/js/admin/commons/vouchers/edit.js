@@ -106,7 +106,7 @@ $(document).ready(function () {
   var discount_value = $('.discount_value').data('value');
   var discount_type = $('.discount_type').data('value');
   console.log(discount_type);
-  
+
 
   if (discount_type == "money") {
     $("#discount_value_money").val(discount_value); //

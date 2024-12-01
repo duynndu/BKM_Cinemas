@@ -26,7 +26,7 @@ class VoucherRequest extends FormRequest
     {
         $id = $this->route('id'); // Lấy ID của voucher từ route
         $voucher = Voucher::find($id); // Truy vấn voucher từ database
-    
+
         $rules = [
             "voucher.name" => [
                 "required",
@@ -42,7 +42,7 @@ class VoucherRequest extends FormRequest
             "voucher.quantity" => [
                 "required",
                 "integer",
-                $id ? 'min:0' : 'min:1', 
+                $id ? 'min:0' : 'min:1',
                 "max:100",
             ],
             "voucher.discount_value" => [
@@ -53,7 +53,7 @@ class VoucherRequest extends FormRequest
                 "max:250"
             ],
         ];
-    
+
         // Chỉ thêm validate ngày bắt đầu nếu giá trị mới khác giá trị cũ
         if (!$voucher || $this->hasChanged('voucher.start_date', $voucher->start_date)) {
             $rules["voucher.start_date"] = [
@@ -62,7 +62,7 @@ class VoucherRequest extends FormRequest
                 'after_or_equal:' . now()->toDateTimeString(),
             ];
         }
-    
+
         // Chỉ thêm validate ngày kết thúc nếu giá trị mới khác giá trị cũ
         if (!$voucher || $this->hasChanged('voucher.end_date', $voucher->end_date)) {
             $rules["voucher.end_date"] = [
@@ -70,7 +70,7 @@ class VoucherRequest extends FormRequest
                 'after:voucher.start_date',
             ];
         }
-    
+
         return $rules;
     }
     /**
@@ -96,7 +96,7 @@ protected function hasChanged(string $field, ?string $currentValue): bool
     // So sánh giá trị, coi như không thay đổi nếu hai giá trị bằng nhau
     return $newDate?->ne($currentDate);
 }
-    
+
 
     public function messages()
     {

@@ -29,9 +29,9 @@ $(document).ready(function () {
                                     <label class="form-check-label" for="checkbox_${account.id}">
                                         ${account.name} (${account.email})
                                     </label>
-                                    <input class="form-check-input" 
-                                           type="checkbox" 
-                                           value="${account.id}" 
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           value="${account.id}"
                                            id="checkbox_${account.id}"
                                            ${account.hasVoucher ? "checked" : ""}>
                                 </div>
@@ -72,9 +72,9 @@ $(document).ready(function () {
             <label class="form-check-label" for="checkbox_${account.id}">
                 ${account.name} (${account.email})
             </label>
-            <input class="form-check-input" 
-                   type="checkbox" 
-                   value="${account.id}" 
+            <input class="form-check-input"
+                   type="checkbox"
+                   value="${account.id}"
                    id="checkbox_${account.id}"
                    ${account.hasVoucher ? "checked" : ""}>
         </div>
@@ -155,14 +155,14 @@ $(document).ready(function () {
         $(".modal_voucher").each(function (e) {
           const self = $(this);
           var checkedAllAccount = self.find("#checked_all_account");
-    
+
           function initiallyChecked() {
             var totalCheckboxes = self
             .find(".form-check-input")
             .not("#checked_all_account").length;
-         
-            
-      
+
+
+
           // Số lượng checkbox nhỏ được chọn
           var checkedCheckboxes = self
             .find(".form-check-input:checked")
@@ -172,7 +172,7 @@ $(document).ready(function () {
           checkedAllAccount.prop("checked", totalCheckboxes === checkedCheckboxes);
           }
           initiallyChecked();
-        
+
           // Sự kiện khi nhấn vào nút "Chọn tất cả"
           checkedAllAccount.on("click", function () {
             // Chọn hoặc bỏ chọn tất cả các checkbox nhỏ
@@ -181,37 +181,37 @@ $(document).ready(function () {
               .not("#checked_all_account")
               .prop("checked", this.checked);
           });
-        
+
           self.find(".close-modal").on("click", function () {
             self
             .find("#checked_all_account").prop("checked", false);
           })
           // Tổng số checkbox nhỏ (không tính nút "Chọn tất cả")
-        
-        
+
+
         // Cập nhật trạng thái của nút "Chọn tất cả"
-        
+
           // Sự kiện khi nhấn vào từng checkbox nhỏ
           $(document).on("click", ".form-check-input", function () {
-            
+
             if ($(this).attr("id") === "checked_all_account") return; // Bỏ qua nút "Chọn tất cả"
-        
+
             // Tổng số checkbox nhỏ (không tính nút "Chọn tất cả")
             var totalCheckboxes = self
               .find(".form-check-input")
               .not("#checked_all_account").length;
               console.log(totalCheckboxes);
-              
-        
+
+
             // Số lượng checkbox nhỏ được chọn
             var checkedCheckboxes = self
               .find(".form-check-input:checked")
               .not("#checked_all_account").length;
-        
+
             // Cập nhật trạng thái của nút "Chọn tất cả"
             checkedAllAccount.prop("checked", totalCheckboxes === checkedCheckboxes);
           });
-        
+
         });
 
       },
@@ -219,7 +219,7 @@ $(document).ready(function () {
         console.log("Có lỗi xảy ra: " + error);
       },
     });
-  
+
   }); // Đóng sự kiện click
 
 });

@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', $title['index'] ?? null)
+@section('title', $title['index'] ?? 'Danh sách phòng chiếu')
 
 @section('css')
 @endsection
