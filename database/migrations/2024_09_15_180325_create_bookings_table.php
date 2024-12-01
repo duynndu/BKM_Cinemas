@@ -30,9 +30,7 @@ return new class extends Migration
             $table->decimal('final_price', 10, 2)->nullable(); // Giá sau khi áp dụng voucher
             $table->decimal('discount_price', 10, 2)->nullable(); // Giá trị giảm giá
             $table->enum('status', [
-                'pending',
                 'completed',
-                'failed',
                 'cancelled',
                 'waiting_for_cancellation',
                 'rejected'
@@ -44,9 +42,10 @@ return new class extends Migration
                 'cancelled'
             ])->nullable();
             $table->enum('refund_status', [
-                'completed',
-                'cancelled'
+                'pending',
+                'completed'
             ])->nullable();
+            $table->integer('get_tickets')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

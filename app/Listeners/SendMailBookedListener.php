@@ -54,6 +54,6 @@ class SendMailBookedListener implements ShouldQueue
             'total_seat' => $booking->totalSeatsPrice(),
             'total' => $booking->total_price,
         ];
-        Mail::to("duynnz1901@gmail.com")->send(new BookingMail($user, $data));
+        Mail::to($user->email)->send(new BookingMail($user, $data));
     }
 }

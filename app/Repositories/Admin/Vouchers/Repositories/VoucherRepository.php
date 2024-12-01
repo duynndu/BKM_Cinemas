@@ -205,7 +205,7 @@ class VoucherRepository extends BaseRepository implements VoucherInterface
             $voucher->users()->attach($request->userIds);
 
             // Lưu lại số lượng mới vào database
-         
+
             $voucher->save();
             return response()->json([
                 'status' => 'success',

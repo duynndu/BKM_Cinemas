@@ -156,6 +156,22 @@
     margin-top: 7px;
 }
 
+h6.post-dashboard {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 308px;
+}
+
+h4.total-revenue {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 550px;
+}
+
 .text-hover:hover {
     color: #bd4646 !important;
     text-decoration: underline;

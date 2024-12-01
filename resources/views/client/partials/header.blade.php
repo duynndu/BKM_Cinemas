@@ -11,8 +11,8 @@
             <div class="top-button">
                 <div class="row">
                     <div class="col-md-8 col-sm-7">
-                        <a class="buy-ticket" href="#"><img class="img-responsive"
-                                src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
+                        {{-- <a class="buy-ticket" href="#"><img class="img-responsive"
+                                src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a> --}}
                         {{-- <a class="flags" href="#"><img class="img-responsive"
                                 src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a> --}}
                         <a class="hidden-lg btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
@@ -96,18 +96,6 @@
                                                     <a href="{{ route('admin.dashboard') }}">Vào trang quản trị</a>
                                                 </li>
                                             @endif
-                                            <li>
-                                                <a href="">Lịch sử mua vé</a>
-                                            </li>
-                                            <li>
-                                                <a href="">Đổi thông tin</a>
-                                            </li>
-                                            <li>
-                                                <a href="">Đổi mật khẩu</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">Đổi thưởng</a>
-                                            </li>
                                             <li role="presentation" class="divider"></li>
                                             <li>
                                                 <form action="{{ route('logout') }}" method="post">
@@ -194,7 +182,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <div class="notification-box">
-                                    <div id="noti_Button" class=" notifications">
+                                    <div id="noti_Button" class="d-flex align-items-center justify-content-center notifications">
                                         <i class="fa fa-bell" aria-hidden="true"></i>
                                     </div>
                                     <!--THE NOTIFICAIONS DROPDOWN BOX.-->

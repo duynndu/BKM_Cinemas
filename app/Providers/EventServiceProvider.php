@@ -9,6 +9,8 @@ use App\Events\Client\PasswordChanged;
 use App\Events\Client\UserRegistered;
 use App\Events\SendMailBookedEvent;
 use App\Listeners\Admin\GiftVoucherListener;
+use App\Events\OrderRefundStatusUpdated;
+use App\Listeners\Admin\SendMailOrderRefund;
 use App\Listeners\Client\SendDepositSuccessEmail;
 use App\Listeners\Client\SendPasswordChangeNotification;
 use App\Listeners\Client\SendPasswordResetEmail;
@@ -45,6 +47,9 @@ class EventServiceProvider extends ServiceProvider
         GiftVoucherEvent::class=>[
             GiftVoucherListener::class
         ],
+        OrderRefundStatusUpdated::class => [
+            SendMailOrderRefund::class
+        ]
     ];
 
     protected $observers = [
