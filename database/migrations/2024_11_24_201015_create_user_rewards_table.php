@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reward_redemptions', function (Blueprint $table) {
+        Schema::create('user_rewards', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('reward_id');
