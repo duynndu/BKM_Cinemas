@@ -24,7 +24,7 @@ class DepositSucceeded implements ShouldBroadcast
     {
         $this->user = $user;
         $this->amount = $amount;
-        $this->time = Carbon::now()->format('H:i:s d/m/Y'); // Định dạng thời gian đổi mật khẩu
+        $this->time = Carbon::now()->format('H:i:s d/m/Y');
         $this->payment_method = $payment_method;
     }
 

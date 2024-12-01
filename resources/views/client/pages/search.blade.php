@@ -10,9 +10,8 @@
             <h2 class="title">Phim</h2>
             <div class="tab-content">
                 <div class="row row-flex">
-                    @if (isset($movies))
-
-                        @forelse ($movies as $item)
+                    @if (isset($movies) && !$movies->isEmpty())
+                        @foreach ($movies as $item)
                             <div class="col-md-3 col-sm-4 col-xs-6">
                                 <div class="movie" style="padding-top: 30px;">
                                     <div class="poster">
@@ -60,13 +59,12 @@
                                     </div>
                                 </div>
                             </div>
-                        @empty
-                            <p class="text-center">Không tìm thấy phim nào phù hợp với từ khóa:
-                                <strong>{{ request()->k ?? '' }}</strong>
-                            </p>
-                        @endforelse ($movies as $item)
+                        @endforeach
+                    @else
+                        <p class="text-center">Không tìm thấy phim nào phù hợp với từ khóa:
+                            <strong>{{ request()->k ?? '' }}</strong>
+                        </p>
                     @endif
-
                 </div>
             </div>
             <div class="text-center">
@@ -76,5 +74,23 @@
             </div>
         </section>
     </div>
-
+    @if (isset($movies) && !$movies->isEmpty())
+        @foreach ($movies as $item)
+            <div class="modal fade in" id="modal-trailer-{{ $item->id }}" style="display: none;">
+                <div class="modal-dialog modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" title="Đóng" aria-hidden="true">×
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="video-container video-trailer--home">
+                                <iframe src="{{ $item->trailer_url }}" frameborder="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
 @endsection

@@ -8,6 +8,5 @@ interface MovieServiceInterface
     public function upcomingMovie();
     public function sliders();
     public function searchMovies($keyword);
-
-  
+    public function findMovieByslug($slug);
 }

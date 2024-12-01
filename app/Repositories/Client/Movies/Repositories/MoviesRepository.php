@@ -55,4 +55,9 @@ class MoviesRepository implements MoviesRepositoryInterface
             ->paginate(PAGINATE_SEARCH);
     }
 
+    public function findMovieByslug($slug)
+    {
+        return $this->movie->where('slug', $slug)->where('active', 1)->first();
+    }
+
 }

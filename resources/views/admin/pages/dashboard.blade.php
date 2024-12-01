@@ -177,9 +177,9 @@
                                         <div class="media-body text-white">
                                             <p class="mb-1 text-white">TOP 1 bộ phim có doanh thu cao nhất</p>
                                             <div style="max-width: 550px">
-                                                <h4 class="text-white total-revenue">{{ (!empty($data['top1Movie']->total_tickets) && !empty($data['top1Movie']->total_tickets)) ? $data['top1Movie']->title : 'Chưa có dữ liệu' }}</h4>
+                                                <h4 class="text-white total-revenue">{{ !empty($data['top1Movie']->total_tickets) ? $data['top1Movie']->title : 'Chưa có dữ liệu' }}</h4>
                                             </div>
-                                            <h5 class="text-white">Doanh thu: {{ number_format($data['top1Movie']->total_revenue, 0, ',', '.') }} VNĐ | Số vé: {{ $data['top1Movie']->total_tickets }}</h5>
+                                            <h5 class="text-white">Doanh thu: {{ !empty($data['top1Movie']->total_revenue) ? number_format($data['top1Movie']->total_revenue, 0, ',', '.') : 0 }} VNĐ | Số vé: {{ !empty($data['top1Movie']->total_tickets) ? $data['top1Movie']->total_tickets : 0 }}</h5>
                                         </div>
                                     </div>
                                 </div>

@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -13,10 +15,14 @@ class OrderRefundStatusUpdated implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $order;
+    public $user;
+    public $time;
 
-    public function __construct(array $order)
+    public function __construct(array $order, User $user)
     {
         $this->order = $order;
+        $this->user = $user;
+        $this->time = Carbon::now()->format('H:i:s d/m/Y');
     }
 
     /**

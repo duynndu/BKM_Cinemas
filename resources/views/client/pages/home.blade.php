@@ -154,7 +154,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                    @if (!empty($postPromotion))
+                    @if (isset($postPromotion) && !$postPromotion->isEmpty())
                         <div id="promotion">
                             <div class="title">
                                 <h2>Ưu đãi - Sự kiện</h2>
@@ -178,7 +178,7 @@
                             </div>
                         </div>
                     @endif
-                    @if (!empty($postReviews))
+                    @if (isset($postReviews) && !$postReviews->isEmpty())
                         <div id="carousel-post" class="carousel slide">
                             <div class="post-arrow"></div>
                             <div class="clearfix"></div>

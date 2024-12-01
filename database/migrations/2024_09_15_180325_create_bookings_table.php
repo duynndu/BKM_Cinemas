@@ -22,8 +22,8 @@ return new class extends Migration
             $table->bigInteger('payment_id'); // id hình thức thanh toán
             $table->decimal('total_price', 10, 2)->default(0); // Tổng tiền
             $table->enum('status', [
-                'pending', 
                 'completed',
+                'cancelled',
                 'waiting_for_cancellation',
                 'rejected'
             ])->nullable();
@@ -34,8 +34,10 @@ return new class extends Migration
                 'cancelled'
             ])->nullable();
             $table->enum('refund_status', [
-                'completed',
+                'pending',
+                'completed'
             ])->nullable();
+            $table->integer('get_tickets')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

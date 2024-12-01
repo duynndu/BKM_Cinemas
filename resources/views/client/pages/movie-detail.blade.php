@@ -118,16 +118,16 @@
                     <div>
                         <div class="showtime-date" x-text="showtimeDetail.area.name"></div>
                         <div class="showtimes">
-                            <div class="tw-grid tw-grid-cols-9 tw-gap-y-3">
-                                <template x-for="showtime in showtimeDetail.showtimes">
-                                        <a align="center" :class="{
-                                                'active': moment().isBefore(moment(showtime.start_time).subtract(2, 'hours')),
-                                                'tw-cursor-not-allowed': moment().isAfter(moment(showtime.start_time).subtract(2, 'hours'))
-                                            }"
-                                            :href="moment().isBefore(moment(showtime.start_time).subtract(2, 'hours')) ? `{{ url('dat-ve') }}/${showtime.id}` : '#'"
-                                            x-text="moment(showtime.start_time).format('HH:mm')"
-                                            :disabled="moment().isAfter(moment(showtime.start_time).subtract(2, 'hours'))">
-                                        </a>
+                            <div class="tw-flex tw-flex-wrap tw-gap-y-3">
+                                <template x-for="showtime in showtimeDetail.showtimes.sort((a, b) => moment(a.start_time).isBefore(moment(b.start_time)) ? -1 : 1)">
+                                    <a align="center" :class="{
+                                'active': moment().isBefore(moment(showtime.start_time).subtract(2, 'hours')),
+                                'tw-cursor-not-allowed': moment().isAfter(moment(showtime.start_time).subtract(2, 'hours'))
+                            }"
+                                        :href="moment().isBefore(moment(showtime.start_time).subtract(2, 'hours')) ? `{{ url('dat-ve') }}/${showtime.id}` : '#'"
+                                        x-text="moment(showtime.start_time).format('HH:mm')"
+                                        :disabled="moment().isAfter(moment(showtime.start_time).subtract(2, 'hours'))">
+                                    </a>
                                 </template>
                             </div>
                         </div>
@@ -140,164 +140,20 @@
                 <div class="related-post">
                     <h2>Bài viết mới</h2>
                     <div class="row">
+                        @foreach($posts as $post)
                         <div class="col-md-4 col-sm-4">
                             <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/con-lac-ta-thuat">
+                                <a href="{{"/khuyen-mai/$post->slug"}}">
                                     <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-con-lac-ta-thuat/phim-con-lac-ta-thuat-thumbnail.jpg"
-                                        alt="Review phim Con lắc tà thuật – The Hypnosis">
+                                        src="{{$post->avatar}}"
+                                        alt="{{$post->name}}">
                                 </a>
                             </div>
                             <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/con-lac-ta-thuat">Review phim Con lắc tà
-                                    thuật – The Hypnosis</a>
+                                <a href="{{"/khuyen-mai/$post->slug"}}">{{$post->name}}</a>
                             </h3>
                         </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/seobok-nguoi-nhan-ban">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-nguoi-nhan-ban/phim-nguoi-nhan-ban-thumbnail.jpg"
-                                        alt="Review phim Seobok (Người nhân bản) – Vì sao con người luôn sợ hãi trước cái chết?">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/seobok-nguoi-nhan-ban">Review phim Seobok
-                                    (Người nhân bản) – Vì sao con người luôn sợ hãi trước cái chết?</a>
-                            </h3>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/tham-tu-lung-danh-conan-vien-dan-do">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-tham-tu-lung-danh-conan-vien-dan-do/phim-tham-tu-lung-danh-conan-vien-dan-do-thumbnail.jpg"
-                                        alt="Review phim Thám tử lừng danh Conan: Viên đạn đỏ - Hấp dẫn miễn chê">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/tham-tu-lung-danh-conan-vien-dan-do">Review
-                                    phim Thám tử lừng danh Conan: Viên đạn đỏ - Hấp dẫn miễn chê</a>
-                            </h3>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/lat-mat-48h">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-lat-mat-48h/phim-lat-mat-48h-thumbnail.png"
-                                        alt="Review phim Lật mặt: 48h  - Lý Hải &quot;đỉnh của chóp&quot; luôn">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/lat-mat-48h">Review phim Lật mặt: 48h -
-                                    Lý Hải "đỉnh của chóp" luôn</a>
-                            </h3>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/nao-minh-cung-mo">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-nao-minh-cung-mo/phim-nao-minh-cung-mo-thumbnail.png"
-                                        alt="Review phim Nào mình cùng mơ – Vui vẻ, nhẹ nhàng">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/nao-minh-cung-mo">Review phim Nào mình
-                                    cùng mơ – Vui vẻ, nhẹ nhàng</a>
-                            </h3>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/kieu">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-kieu/phim-kieu-thumbnail.png"
-                                        alt="Review phim Kiều – Có phải bị chê nhiều là không nên xem?">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/kieu">Review phim Kiều – Có phải bị chê
-                                    nhiều là không nên xem?</a>
-                            </h3>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/ban-tay-diet-quy">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-ban-tay-diet-quy/phim-ban-tay-diet-quy-thumbnail.png"
-                                        alt="Review phim Bàn tay diệt quỷ - Gay cấn, ấn tượng và mê!">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/ban-tay-diet-quy">Review phim Bàn tay
-                                    diệt quỷ - Gay cấn, ấn tượng và mê!</a>
-                            </h3>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/mortal-kombat-cuoc-chien-sinh-tu">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-mortal-kombat-cuoc-chien-sinh-tu/phim-mortal-kombat-cuoc-chien-sinh-tu-1-thumbnail.png"
-                                        alt="Review phim Mortal Kombat: Cuộc chiến sinh tử - Phù thủy James Wan chưa bao giờ khiến khán giả thất vọng">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/mortal-kombat-cuoc-chien-sinh-tu">Review
-                                    phim Mortal Kombat: Cuộc chiến sinh tử - Phù thủy James Wan chưa bao giờ khiến khán
-                                    giả thất vọng</a>
-                            </h3>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/song-song">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-song-song/phim-song-song-thumbnail.jpg"
-                                        alt="Review phim Song Song – Một cánh én nhỏ làm “chao đảo” cả vài mùa xuân">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/song-song">Review phim Song Song – Một
-                                    cánh én nhỏ làm “chao đảo” cả vài mùa xuân</a>
-                            </h3>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/an-quy">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-an-quy/phim-an-quy-thumbnail.jpg"
-                                        alt="Review phim Ấn quỷ - Đức tin rất cần tỉnh táo và lý trí">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/an-quy">Review phim Ấn quỷ - Đức tin rất
-                                    cần tỉnh táo và lý trí</a>
-                            </h3>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/oi-troi-oi-chuyen-phieu-luu-day-thu-vi">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/oi-troi-oi-chuyen-phieu-luu-thu-vi/oi-troi-oi-chuyen-phieu-luu-thu-vi-thumbnail.jpg"
-                                        alt="Review phim Ối trời ơi! Chuyến phiêu lưu đầy “thú” vị - Vui nhộn, hài hước">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/oi-troi-oi-chuyen-phieu-luu-day-thu-vi">Review
-                                    phim Ối trời ơi! Chuyến phiêu lưu đầy “thú” vị - Vui nhộn, hài hước</a>
-                            </h3>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="poster">
-                                <a href="https://touchcinema.com/danh-gia-phim/godzilla-vs-kong">
-                                    <img class="img-responsive"
-                                        src="https://touchcinema.com/uploads/phim-godzilla-vs-kong/phim-godzilla-vs-kong-thumbnail.jpg"
-                                        alt="Review phim Godzilla Vs. Kong – Đại chiến của hai quái vật thời cổ đại có biến Trái đất về thời đồ đá?">
-                                </a>
-                            </div>
-                            <h3>
-                                <a href="https://touchcinema.com/danh-gia-phim/godzilla-vs-kong">Review phim Godzilla
-                                    Vs. Kong – Đại chiến của hai quái vật thời cổ đại có biến Trái đất về thời đồ
-                                    đá?</a>
-                            </h3>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -306,39 +162,16 @@
             <div class="related-movie">
                 <h2>Phim đang chiếu</h2>
                 <div class="list">
-                    <a href="https://touchcinema.com/phim/khong-noi-dieu-du">
+                    @foreach($movies as $movie)
+                    <a href="{{ url('phim/' . $movie->slug) }}">
                         <div class="poster"
-                            style="background-image: url('https://touchcinema.com/storage/slider-app/2048wx858h-3-1726123907.jpg')">
+                            style="background-image: url('{{ asset($movie->image)}}')">
                         </div>
                     </a>
-                    <a href="https://touchcinema.com/phim/anh-trai-vuot-moi-tam-tai">
-                        <div class="poster"
-                            style="background-image: url('https://touchcinema.com/storage/slider-app/2048wx858h-5-1726124535.jpg')">
-                        </div>
-                    </a>
-                    <a href="https://touchcinema.com/phim/bao-thu-di-tim-chu">
-                        <div class="poster"
-                            style="background-image: url('https://touchcinema.com/storage/slider-app/2048wx858h-4-1726124158.jpg')">
-                        </div>
-                    </a>
-                    <a href="https://touchcinema.com/phim/lam-giau-voi-ma">
-                        <div class="poster"
-                            style="background-image: url('https://touchcinema.com/storage/slider-app/lam-giau-voi-ma-1-1724686130347.jpg')">
-                        </div>
-                    </a>
-                    <a href="https://touchcinema.com/phim/the-crow-bao-thu">
-                        <div class="poster"
-                            style="background-image: url('https://touchcinema.com/storage/slider-app/2048wx858h-2-1726123709.jpg')">
-                        </div>
-                    </a>
-                    <a href="https://touchcinema.com/phim/tham-kich-di-giao">
-                        <div class="poster"
-                            style="background-image: url('https://touchcinema.com/storage/slider-app/1920x1080-2-1725542410.jpg')">
-                        </div>
-                    </a>
+                    @endforeach
                 </div>
                 <div class="view-more">
-                    <a href="https://touchcinema.com/phim">
+                    <a href="/phim">
                         <div class="text">xem thêm</div>
                         <div class="arrow-down"></div>
                     </a>
@@ -354,7 +187,8 @@
                         aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <div class="video-container" x-html="movie?.trailer_url">
+                    <div class="video-container video-trailer--home">
+                        <iframe x-bind:src="movie?.trailer_url" frameborder="0"></iframe>
                     </div>
                 </div x-text=movie?.trailer_url>
             </div>

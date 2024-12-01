@@ -25,7 +25,7 @@ $.fn.selectTime = function ({showtimes, idShowtimeSelected}: {showtimes: IShowti
     $this.append(`<div class="tw-text-sm tw-font-bold tw-text-black tw-mt-3 mb-1">${periods[index]}</div>`);
     const $timeContainer = $(`<div class="tw-grid tw-grid-cols-6 tw-gap-2"></div>`);
     timeArray.forEach(time => {
-      const $timeElement = $(`<div class="time">${moment(time.start_time).format('HH:mm')}</div>`);
+      const $timeElement = $(`<div class="time">${moment(time.start_time).format('HH:mm')} ~ ${moment(time.end_time).format('HH:mm')}</div>`);
       if (idShowtimeSelected && time.id === idShowtimeSelected) {
         $timeElement.addClass("selected");
       }

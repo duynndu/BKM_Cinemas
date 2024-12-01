@@ -13,6 +13,11 @@ class AreaRepository extends BaseRepository implements AreaInterface
         return Area::class;
     }
 
+    public function getByCityId($cityId)
+    {
+        return $this->model->where('city_id', $cityId)->get();
+    }
+
     public function filter($request)
     {
         $query = $this->model->newQuery();

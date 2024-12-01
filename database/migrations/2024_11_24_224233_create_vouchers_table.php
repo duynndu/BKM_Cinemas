@@ -19,18 +19,19 @@ return new class extends Migration {
             $table->decimal('discount_value', 30, 0); // Giá trị giảm giá
             $table->enum('discount_condition', ['all', 'condition'])
                 ->default('all'); // Điều kiện áp dụng: tất cả hoặc có điều kiện
-            $table->enum('condition_type', ['new_member', 'birthday', 'level_up'])
+            $table->enum('condition_type', ['new_member', 'level_up'])
                 ->nullable();
                 // Loại điều kiện: new_member: Thành viên mới, birthday: Sinh nhật, level_up: Lên Hạng
-            $table->enum('level_type', ['vip', 'vvip'])
+            $table->enum('level_type', ['vip', 'vvip']) // chỉ áp dụng cho tài khoản nạp v
                 ->nullable();
-            $table->enum('discount_type', ['fixed', 'percentage'])
-                ->default('fixed');
+            $table->enum('discount_type', ['money', 'percentage'])
+                ->default('money'); 
                 // Loại giảm giá: cố định hoặc phần trăm
             $table->dateTime('start_date'); // Ngày bắt đầu áp dụng
             $table->dateTime('end_date'); // Ngày hết hạn áp dụng
             $table->integer('quantity')->nullable(); // null: vô hạn, > 0: Số lượt có thể tặng
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

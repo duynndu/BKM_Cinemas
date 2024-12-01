@@ -21,6 +21,7 @@ import { paymentService } from "@/services/payment.service";
 import { bookingService } from "@/services/booking.service";
 import { echo } from "@/echo/Echo";
 import { Status } from "@/define/status";
+import Swal from "sweetalert2";
 
 Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   errors: {} as Record<string, string>,
@@ -143,12 +144,15 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
       if (res.status == Status.FAILED) {
         alert('Lỗi giao dịch hoặc không đủ số dư vui nạp thêm tiền vào tài khoản.')
       }
-      if (res.status == Status.COMPLETED) {
-        alert('Giao dịch thành công.');
+      Swal.fire({
+        title: 'Giao dịch thành công.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
         redirect().to('/thanh-cong', {
           'code': res.code
         });
-      }
+      });
 
     }
 

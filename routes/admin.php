@@ -8,7 +8,8 @@ use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\CinemaController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\RewardController;
+use App\Http\Controllers\Admin\Events\VoucherController;
+use App\Http\Controllers\Admin\Events\RewardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\Foods\FoodComboController;
 use App\Http\Controllers\Admin\Foods\FoodController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Admin\SeatTypeController;
 use App\Http\Controllers\Admin\SystemController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\MovieController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\Error\Admin\ErrorController;
@@ -812,6 +814,32 @@ Route::prefix('admin')
                     Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                         ->name('deleteItemMultipleChecked');
                 });
+                Route::prefix('vouchers')
+                    ->controller(VoucherController::class)
+                    ->name('vouchers.')
+                    ->group(function () {
+                        Route::get('/', 'index')->name('index');
+                        Route::get('/create', 'create')
+                            ->name('create');
+                        Route::post('/store', 'store')
+                            ->name('store');
+                        Route::get('/{id}/edit', 'edit')
+                            ->name('edit');
+                        Route::post('/gift', 'getAccountByVoucher')
+                            ->name('getAccountByVoucher');
+                            Route::post('/gift-voucher-account', 'giftVoucherAccount')
+                            ->name('giftVoucherAccount');
+                            Route::post('/search-users', 'searchUser')
+                            ->name('searchUser');
+                        Route::put('/{id}/update', 'update')
+                            ->name('update');
+                        Route::delete('/{id}/delete', 'destroy')
+                            ->name('delete');
+                        Route::post('/removeAvatarImage', 'removeAvatarImage')
+                            ->name('removeAvatarImage');
+                        Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                            ->name('deleteItemMultipleChecked');
+                    });
 
             Route::prefix('cinemas')
                 ->controller(CinemaController::class)
@@ -843,6 +871,9 @@ Route::prefix('admin')
                     Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                         ->name('deleteItemMultipleChecked')
                         ->middleware('authorizeAction:delete,App\Models\Cinema');
+                    Route::get('/get-areas-by-cityId', 'ajaxGetAreaByCityId')
+                        ->name('ajaxGetAreaByCityId')
+                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
                 });
             Route::prefix('orders')
                 ->controller(OrderController::class)
@@ -855,6 +886,16 @@ Route::prefix('admin')
                     Route::get('/{id}/detail', 'detail')
                         ->name('detail')
                         ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                    Route::post('/{id}/change-get-ticket', 'changeGetTickets')
+                        ->name('changeGetTickets')
+                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                });
+                Route::prefix('notifications')
+                ->controller(NotificationController::class)
+                ->name('notifications.')
+                ->group(function () {
+                    Route::get('/get-by-type', 'getByType')
+                        ->name('getByType');
                 });
         });
     });
