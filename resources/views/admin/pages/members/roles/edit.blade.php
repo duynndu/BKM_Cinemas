@@ -122,7 +122,7 @@
                                                                                                id="permission_{{ $permission->id }}"
                                                                                             {{ in_array($permission->id, old('permissions', $permissionIds)) ? 'checked' : '' }}>
                                                                                         <!-- Kiểm tra để đánh dấu checked -->
-                                                                                        <label class="form-check-label" for="customCheckBox4"></label>
+                                                                                        <label class="form-check-label" for="permission_{{ $permission->id }}"></label>
                                                                                     </div>
                                                                                     <div class="media-body">
                                                                                         <h5 class="mb-0">{{ $permission->name ?? '' }}</h5>

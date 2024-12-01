@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Area;
 use App\Models\BlockType;
 use App\Models\CategoryPost;
 use App\Models\Menu;
@@ -12,9 +13,12 @@ use App\Models\Post;
 use App\Models\Block as BlockModel;
 use App\Models\Booking;
 use App\Models\Cinema;
+use App\Models\City;
 use App\Models\Food;
 use App\Models\FoodCombo;
 use App\Models\FoodType;
+use App\Models\Movie;
+use App\Models\Payment;
 use App\Models\Reward;
 use App\Models\Role;
 use App\Models\Room;
@@ -35,9 +39,13 @@ use App\Policies\Admin\Events\VoucherPolicy;
 use App\Policies\Admin\Foods\FoodComboPolicy;
 use App\Policies\Admin\Foods\FoodPolicy;
 use App\Policies\Admin\Foods\FoodTypePolicy;
+use App\Policies\Admin\Locations\AreaPolicy;
+use App\Policies\Admin\Locations\CityPolicy;
 use App\Policies\Admin\Menus\MenuPolicy;
 use App\Policies\Admin\Modules\ModulePolicy;
+use App\Policies\Admin\Movies\MoviePolicy;
 use App\Policies\Admin\Pages\PagePolicy;
+use App\Policies\Admin\Payments\PaymentPolicy;
 use App\Policies\Admin\Permissions\PermissionPolicy;
 use App\Policies\Admin\Posts\PostPolicy;
 use App\Policies\Admin\Roles\RolePolicy;
@@ -66,6 +74,7 @@ class AuthServiceProvider extends ServiceProvider
         BlockType::class => BlockTypePolicy::class,
         CategoryPost::class => CategoryPostPolicy::class,
         Post::class => PostPolicy::class,
+        Movie::class => MoviePolicy::class,
         Tag::class => TagPolicy::class,
         User::class => UserPolicy::class,
         Role::class => RolePolicy::class,
@@ -81,8 +90,9 @@ class AuthServiceProvider extends ServiceProvider
         SeatType::class => SeatTypePolicy::class,
         Reward::class => EventPolicy::class,
         Voucher::class => VoucherPolicy::class,
-
-
+        Payment::class => PaymentPolicy::class,
+        Area::class => AreaPolicy::class,
+        City::class => CityPolicy::class,
     ];
 
     /**

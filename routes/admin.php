@@ -469,40 +469,52 @@ Route::prefix('admin')
                     ->name('movies.')
                     ->group(function () {
                         Route::get('/', 'index')
-                            ->name('index');
+                            ->name('index')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
 
                         Route::get('/create', 'create')
-                            ->name('create');
+                            ->name('create')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
 
                         Route::post('/store', 'store')
-                            ->name('store');
+                            ->name('store')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
 
                         Route::get('/{id}/edit', 'edit')
-                            ->name('edit');
+                            ->name('edit')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
 
                         Route::put('/{id}/update', 'update')
-                            ->name('update');
+                            ->name('update')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
 
                         Route::delete('/{id}/delete', 'delete')
-                            ->name('delete');
+                            ->name('delete')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
 
                         Route::post('/change-order', 'changeOrder')
-                            ->name('changeOrder');
+                            ->name('changeOrder')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
 
                         Route::post('/change-position', 'changePosition')
-                            ->name('changePosition');
+                            ->name('changePosition')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
                         Route::post('/change-active', 'changeActive')
-                            ->name('changeActive');
+                            ->name('changeActive')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
 
                         Route::post('/change-hot', 'changeHot')
                             ->name('changeHot')
-                            ->middleware('authorizeAction:changeHot,App\Models\Post');
+                            ->middleware('authorizeAction:changeHot,App\Models\Movie');
                         Route::post('/removeAvatarImage', 'removeAvatarImage')
-                            ->name('removeAvatarImage');
+                            ->name('removeAvatarImage')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
                         Route::post('/removeBannerImage', 'removeBannerImage')
-                            ->name('removeBannerImage');
+                            ->name('removeBannerImage')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
-                            ->name('deleteItemMultipleChecked');
+                            ->name('deleteItemMultipleChecked')
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
                     });
 
                 Route::prefix('users')
@@ -747,21 +759,29 @@ Route::prefix('admin')
                     ->name('payments.')
                     ->group(function () {
                         Route::get('/', 'index')
-                            ->name('index');
+                            ->name('index')
+                            ->middleware('authorizeAction:viewAny,App\Models\Payment');
                         Route::get('/create', 'create')
-                            ->name('create');
+                            ->name('create')
+                            ->middleware('authorizeAction:create,App\Models\Payment');
                         Route::post('/store', 'store')
-                            ->name('store');
+                            ->name('store')
+                            ->middleware('authorizeAction:create,App\Models\Payment');
                         Route::get('/{id}/edit', 'edit')
-                            ->name('edit');
+                            ->name('edit')
+                            ->middleware('authorizeAction:update,App\Models\Payment');
                         Route::put('/{id}/update', 'update')
-                            ->name('update');
+                            ->name('update')
+                            ->middleware('authorizeAction:update,App\Models\Payment');
                         Route::delete('/{id}/delete', 'delete')
-                            ->name('delete');
+                            ->name('delete')
+                            ->middleware('authorizeAction:delete,App\Models\Payment');
                         Route::post('/change-active', 'changeActive')
-                            ->name('changeActive');
+                            ->name('changeActive')
+                            ->middleware('authorizeAction:viewAny,App\Models\Payment');
                         Route::post('/removeAvatarImage', 'removeAvatarImage')
-                            ->name('removeAvatarImage');
+                            ->name('removeAvatarImage')
+                            ->middleware('authorizeAction:viewAny,App\Models\Payment');
                     });
 
                 Route::prefix('actors')

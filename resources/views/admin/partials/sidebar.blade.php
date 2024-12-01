@@ -137,7 +137,7 @@
             @endcan
 
             @if (auth()->user()->can('viewAny', App\Models\Booking::class))
-                <li>
+                <li class="{{ request()->segment(2) == 'orders' ? 'mm-active' : '' }}">
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">local_play</i>
                         <span class="nav-text">Quản lý vé</span>
@@ -153,25 +153,26 @@
                 </li>
             @endif
 
-            {{-- @if (auth()->user()->can('viewAny', App\Models\Movie::class)) --}}
-            <li>
-                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">movie</i>
-                    <span class="nav-text">Phim</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li>
-                        <a href="{{ route('admin.genres.index') }}" aria-expanded="false">Thể loại phim</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.movies.index') }}" aria-expanded="false">Phim</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.actors.index') }}" aria-expanded="false">Diễn viên</a>
-                    </li>
-                </ul>
-            </li>
-            {{-- @endif --}}
+            @if (auth()->user()->can('viewAny', App\Models\Movie::class))
+                <li
+                    class="{{ request()->segment(2) == 'movies' || request()->segment(2) == 'actors' || request()->segment(2) == 'genres-movie' ? 'mm-active' : '' }}">
+                    <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                        <i class="material-icons">movie</i>
+                        <span class="nav-text">Phim</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li class="{{ request()->segment(2) == 'genres-movie' ? 'mm-active' : '' }}">
+                            <a href="{{ route('admin.genres.index') }}" aria-expanded="false">Thể loại phim</a>
+                        </li>
+                        <li class="{{ request()->segment(2) == 'movies' ? 'mm-active' : '' }}">
+                            <a href="{{ route('admin.movies.index') }}" aria-expanded="false">Phim</a>
+                        </li>
+                        <li class="{{ request()->segment(2) == 'actors' ? 'mm-active' : '' }}">
+                            <a href="{{ route('admin.actors.index') }}" aria-expanded="false">Diễn viên</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
             @if (auth()->user()->can('viewAny', App\Models\Room::class) ||
                     auth()->user()->can('viewAny', App\Models\SeatType::class) ||
@@ -203,7 +204,7 @@
             @endif
 
             @if (auth()->user()->can('viewAny', App\Models\Voucher::class) ||
-                auth()->user()->can('viewAny', App\Models\Reward::class))
+                    auth()->user()->can('viewAny', App\Models\Reward::class))
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">card_giftcard</i>
@@ -225,27 +226,33 @@
                 </li>
             @endif
 
-            <li>
-                <a href="{{ route('admin.payments.index') }}">
-                    <i class="material-icons">payment</i>
-                    <span class="nav-text">Phương thức thanh toán</span>
-                </a>
-            </li>
-            <li>
-                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">location_on</i>
-                    <span class="nav-text">Vị trí</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li>
-                        <a href="{{ route('admin.cities.index') }}" aria-expanded="false">Thành Phố</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.areas.index') }}" aria-expanded="false">Khu Vực</a>
-                    </li>
-                </ul>
-            </li>
-            
+            @if (auth()->user()->can('viewAny', App\Models\Payment::class))
+                <li>
+                    <a href="{{ route('admin.payments.index') }}">
+                        <i class="material-icons">payment</i>
+                        <span class="nav-text">Phương thức thanh toán</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                        <i class="material-icons">location_on</i>
+                        <span class="nav-text">Vị trí</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        @if (auth()->user()->can('viewAny', App\Models\City::class))
+                            <li>
+                                <a href="{{ route('admin.cities.index') }}" aria-expanded="false">Thành Phố</a>
+                            </li>
+                        @endif
+                        @if (auth()->user()->can('viewAny', App\Models\Area::class))
+                            <li>
+                                <a href="{{ route('admin.areas.index') }}" aria-expanded="false">Khu Vực</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
+
             @if (auth()->user()->can('viewAny', App\Models\Food::class) ||
                     auth()->user()->can('viewAny', App\Models\FoodType::class) ||
                     auth()->user()->can('viewAny', App\Models\FoodCombo::class))
