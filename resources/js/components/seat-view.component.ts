@@ -22,6 +22,8 @@ import { bookingService } from "@/services/booking.service";
 import { echo } from "@/echo/Echo";
 import { Status } from "@/define/status";
 import Swal from "sweetalert2";
+import { IVoucher } from "@/types/voucher.interface";
+import { voucherService } from "@/services/voucher.service";
 
 Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   errors: {} as Record<string, string>,
@@ -30,6 +32,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   seatLayouts: null as any[] | null,
   seatTypes: [] as ISeatType[],
   showtimeDetail: null as IShowtime | null,
+  vouchers: [] as IVoucher[],
   foodTypes: [] as IFoodType[],
   seatsSelected: [] as ISeat[],
   totalPriceSeats: 0,
@@ -52,7 +55,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   paymentMethod: '',
   booking: {} as IBooking,
   interval: null as ReturnType<typeof setInterval> | null,
-
+  modalVoucher: false,
   async init() {
     this.countdownTimer(endTime);
     this.user = await authService.getCurrentUser();
@@ -135,7 +138,8 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
       }
       const res = await paymentService.processDeposit({
         payment: this.paymentMethod,
-        booking_id: this.booking.id
+        booking_id: this.booking.id,
+        voucher_id: this.voucherSelected?.id
       }) as unknown as any;
 
       if (this.paymentMethod != 'customer') {
@@ -278,6 +282,32 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
     const minute = Math.floor(this.seconds / 60);
     const second = this.seconds % 60;
     return `${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`
+  },
+  voucherSelected: {} as IVoucher,
+  voucherCode: '' as string,
+  voucherNotFound: false,
+  discountPrice: 0,
+  async getVouchers() {
+    if (this.vouchers.length > 0) return;
+    this.vouchers = await voucherService.getUserVouchers();
+  },
+  choseVoucher(voucher: IVoucher) {
+    if (voucher.id === this.voucherSelected.id) {
+      this.voucherSelected = {} as IVoucher;
+    }
+    this.voucherSelected = { ...voucher };
+    this.voucherNotFound = !this.voucherSelected?.name;
+    this.discountPrice = - this.calculatorVoucherPrice()[this.voucherSelected.discount_type]?.() ?? 0;
+  },
+  async applyVoucher() {
+    this.voucherSelected = await voucherService.getVoucherByCode(this.voucherCode);
+    this.voucherNotFound = !this.voucherSelected?.name;
+  },
+  calculatorVoucherPrice() {
+    return {
+      money: () => parseInt(this.voucherSelected.discount_value),
+      percentage: () => (this.totalPriceFoods + this.totalPriceSeats) * parseInt(this.voucherSelected.discount_value) / 100,
+    }
   }
 
 }));

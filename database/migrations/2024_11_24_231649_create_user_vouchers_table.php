@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('voucher_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -222,26 +222,27 @@
                                     </div>
                                     <div id="couponbox">
                                         <div id="formCoupon">
-                                            <button type="button" class="btn-use-coupon" data-toggle="modal" data-target="#couponModal">
+                                            <button type="button" class="btn-use-coupon" @click="modalVoucher = true; getVouchers()">
                                                 <i class="fa fa-gift " aria-hidden="true"></i> Sử dụng voucher
                                             </button>
-
-                                        </div>
-                                        <div id="useCoupon">
-                                            <p id="coupon-msg">Mã đang dùng: <span id="coupon-code"></span></p>
-                                            <a href="javascript:;" id="removeCoupon">
-                                                Xóa
-                                            </a>
+                                            <div style="padding: 0 15px;" x-show="voucherSelected?.name" class="applied-voucher">
+                                                <p>VOUCHER: <strong x-text="voucherSelected?.code"></strong> | <strong x-text="voucherSelected.name"></strong></p>
+                                            </div>
                                         </div>
                                     </div>
                                     <div id="current-select">
                                         <div class="select">
                                             Tổng cộng:<span class="price" style="font-size: 30px">
-                                                <span id="totalPrice" x-text="price(totalPriceSeats + totalPriceFoods)"></span>
+                                                <span id="totalPrice" x-text="price(totalPriceSeats + totalPriceFoods + discountPrice)"></span>
                                             </span>
                                             <span id="decrease"></span>
                                         </div>
-                                        <div class="select seats">
+                                        <div class="select">
+                                            voucher:<span class="price">
+                                                <span id="price_seat" x-text="price(discountPrice)"></span>
+                                            </span>
+                                        </div>
+                                        <div class="select">
                                             Vé ghế:<span class="price">
                                                 <span id="price_seat" x-text="price(totalPriceSeats)"></span>
                                             </span>
@@ -304,6 +305,44 @@
             </template>
             {{-- combo and login --}}
 
+        </div>
+    </div>
+    <div class="my-modal" x-show="modalVoucher" x-cloak>
+        <div @click.outside="modalVoucher = false" class="modal-content">
+            <span class="modal-close" id="close-modal-btn" @click="modalVoucher = false">×</span>
+            <h3>Chọn Mã Giảm Giá</h3>
+
+            <div class="coupon-list" id="coupon-list" style="overflow-y: auto;">
+                <!-- Mã giảm giá sẽ được render tại đây -->
+                <template x-for="voucher in vouchers" :key="voucher.id">
+                    <div @click="choseVoucher(voucher)" :class="{
+                    'coupon-item': true,
+                    'active': voucher.id === voucherSelected?.id,
+                    }">
+                        <img :src="voucher.image" alt="SALE20">
+                        <div class="coupon-info">
+                            <strong x-text="voucher.code">SALE20</strong>
+                            <span x-text="voucher.description">Giảm 20% cho đơn hàng từ 500k</span>
+                            <div><small>Hiệu lực đến ngày: <b x-text="voucher.end_date"></b></small></div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- <div class="coupon-input">
+                <input x-model="voucherCode" type="text" placeholder="Nhập mã giảm giá">
+                <button id="apply-coupon" @click="applyVoucher()">Áp dụng</button>
+            </div> -->
+            <div style="height: 26px;">
+                <div x-show="voucherSelected?.name" class="applied-voucher">
+                    <p>VOUCHER: <strong x-text="voucherSelected?.code"></strong> | <strong x-text="voucherSelected.name"></strong></p>
+                </div>
+            </div>
+
+            <!-- Thông báo lỗi nếu mã giảm giá không hợp lệ -->
+            <div x-show="voucherNotFound" class="error-message">
+                <p class="tw-text-red-500">Mã giảm giá không hợp lệ</p>
+            </div>
         </div>
     </div>
 </div>
