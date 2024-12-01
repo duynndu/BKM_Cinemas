@@ -77,6 +77,12 @@ Route::prefix('admin')
                 ->group(function () {
                     Route::get('/getRevenueAndTicketData', 'getRevenueAndTicketData')
                         ->name('getRevenueAndTicketData');
+
+                    Route::post('/getAreaByCity', 'getAreaByCity')
+                        ->name('getAreaByCity');
+
+                    Route::post('/getCinemaByArea', 'getCinemaByArea')
+                        ->name('getCinemaByArea');
                 });
 
             Route::prefix('systems')
