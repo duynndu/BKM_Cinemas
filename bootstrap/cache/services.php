@@ -51,7 +51,8 @@
     47 => 'Spatie\\Permission\\PermissionServiceProvider',
     48 => 'App\\Providers\\Admin\\BreadcrumbServiceProvider',
     49 => 'App\\Providers\\Client\\ViewServiceProvider',
-    50 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    50 => 'App\\Providers\\Admin\\ViewHeaderAdminServiceProvider',
+    51 => 'Laravel\\Socialite\\SocialiteServiceProvider',
   ),
   'eager' => 
   array (
@@ -89,6 +90,7 @@
     31 => 'Spatie\\Permission\\PermissionServiceProvider',
     32 => 'App\\Providers\\Admin\\BreadcrumbServiceProvider',
     33 => 'App\\Providers\\Client\\ViewServiceProvider',
+    34 => 'App\\Providers\\Admin\\ViewHeaderAdminServiceProvider',
   ),
   'deferred' => 
   array (

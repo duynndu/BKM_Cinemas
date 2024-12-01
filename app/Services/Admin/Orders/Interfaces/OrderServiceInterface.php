@@ -6,6 +6,6 @@ use App\Services\Base\BaseServiceInterface;
 
 interface OrderServiceInterface extends BaseServiceInterface
 {
-
-
+    public function changeGetTickets($id);
+    public function filter($request);
 }

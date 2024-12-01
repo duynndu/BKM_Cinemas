@@ -80,7 +80,7 @@
                     <p>Xin hãy click vào link "ĐỔI MẬT KHẨU" bên dưới để đổi mật khẩu: (Lưu ý: link chỉ có hiệu lực trong
                         vòng 60 phút.)</p>
                     <div class="box-email-forgotpassword">
-                        <a href="{{ url('/forgot-password/') . '/?code=' . $token . '&email=' . urlencode($email) }}"
+                        <a href="{{ url('/quen-mat-khau/') . '/?code=' . $token . '&email=' . urlencode($email) }}"
                             class="button_access">Đổi mật khẩu</a>
                     </div>
                     <div>

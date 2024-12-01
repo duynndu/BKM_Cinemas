@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Constants\MemberLevel;
 use App\Constants\SeatStatus;
-use App\Constants\Status;
 use App\Events\BookSeat;
 use App\Events\OrderRefundStatusUpdated;
 use App\Events\OrderStatusUpdated;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResetSeatStatus;
 use App\Models\Booking;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\Admin\Orders\Interfaces\OrderServiceInterface;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class BookingController extends Controller
 {
@@ -64,7 +64,6 @@ class BookingController extends Controller
             $booking->user_id = auth()->id();
             $booking->movie_id = $request->movie_id;
             $booking->showtime_id = $request->showtime_id;
-            $booking->payment_id = $request->payment_id;
             $booking->save();
             $booking->seatsBooking()->createMany($seats);
             $booking->foodsBooking()->createMany($foods);
@@ -128,31 +127,47 @@ class BookingController extends Controller
             if (empty($record)) {
                 return response()->json(['failed' => 'Có lỗi xảy ra!', 'id' => $id], 404);
             }
-
-            if (!$record->getCanCancelAttribute()) {
-                return response()->json(['failed' => 'Không thể hủy!', 'id' => $id], 400);
-            }
             if ($validated['status'] == 'waiting_for_cancellation') {
-                if (!($record->status == 'completed' && $record->payment_status == 'completed')) {
+                if (!$record->getCanCancelAttribute()) {
+                    return response()->json(['failed' => 'Không thể hủy!', 'id' => $id], 400);
+                } elseif (
+                    !($record->status == 'completed'
+                        && $record->payment_status == 'completed'
+                        && $record->get_tickets == 0
+                        && $record->user_id == auth()->user()->id)
+                ) {
                     return response()->json(['failed' => 'Không đủ điều kiện hủy!', 'id' => $id], 400);
                 }
+                Notification::create([
+                    'user_id' => $record->user_id,
+                    'title'   => 'Người dùng ' . ($record->user->name ?? $record->user->email) . ' yêu cầu hủy vé: ' . $record->code,
+                    'type'    => 'refund',
+                ]);
             }
+
+            if ($validated['status'] != 'waiting_for_cancellation') {
+                Notification::where('type', 'refund')->where('user_id', $record->user_id)->delete();
+            }
+
             $record->status = $validated['status'];
             if ($validated['status'] == 'cancelled') {
                 $record->refund_status = 'pending';
-                $record->payment_status = 'pending';
             }
             $record->save();
-
-            ResetSeatStatus::dispatch($record->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT');
 
             broadcast(new OrderStatusUpdated([
                 'id' => $id,
                 'status' => $record->status,
                 'code' => $record->code,
+                'userName' => $record->user->name ?? $record->user->email,
                 'urlChangeRefundStatus' => route('api.orders.changeRefundStatus', $record->id),
-                'urlChangeStatus' => route('api.orders.changeStatus', $record->id)
+                'urlChangeStatus' => route('api.orders.changeStatus', $record->id),
+                'urlGetTicket' => route('admin.orders.changeGetTickets', $record->id),
             ]));
+
+            if ($validated['status'] == 'cancelled') {
+                ResetSeatStatus::dispatch($record->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT');
+            }
 
             return response()->json(['success' => 'Thành công!', 'id' => $id], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -179,26 +194,40 @@ class BookingController extends Controller
             if (empty($record)) {
                 return response()->json(['failed' => 'Có lỗi xảy ra!', 'id' => $id], 404);
             }
-
-            if (!$record->getCanCancelAttribute()) {
-                return response()->json(['failed' => 'Không thể hủy!', 'id' => $id], 400);
+            if (
+                !($record->status == 'cancelled'
+                && $record->payment_status == 'completed'
+                && $record->refund_status == 'pending'
+                && $record->get_tickets == 0)
+            ) {
+                return response()->json(['failed' => 'Không đủ điều kiện hoàn tiền !', 'id' => $id], 400);
             }
-
             $record->refund_status = $validated['status'];
             $user = $record->user;
+
             if ($user) {
                 $user->balance += $record->total_price;
                 $user->save();
             }
+
             $record->save();
 
             broadcast(new OrderRefundStatusUpdated([
                 'id' => $id,
                 'status' => $record->status,
                 'code' => $record->code,
+                'total_price' => $record->total_price,
+                'get_tickets' => $record->get_tickets,
                 'urlChangeRefundStatus' => route('api.orders.changeRefundStatus', $record->id),
                 'urlChangeStatus' => route('api.orders.changeStatus', $record->id)
-            ]));
+            ], $record->user));
+
+            OrderRefundStatusUpdated::dispatch([
+                'id' => $id,
+                'status' => $record->status,
+                'code' => $record->code,
+                'total_price' => $record->total_price,
+            ], $record->user);
 
             return response()->json(['success' => 'Thành công!', 'id' => $id], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {

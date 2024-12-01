@@ -48,6 +48,7 @@
     <link rel="stylesheet" href="{{ asset('css/style_image.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style_auth.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/monaco-editor-0.51.0/package/min/vs/editor/editor.main.css') }}">
+    <script src="{{ asset('js/admin/chart/chart.js') }}"></script>
 
     @yield('css')
     @routes
@@ -613,7 +614,7 @@
     <script src="{{ asset('js/admin/commons/changeCheckbox.js') }}"></script>
     <script src="{{ asset('js/admin/commons/format-price.js') }}"></script>
     <script src="{{ asset('js/plugins-init/swiper.min.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
+    <script type="module" src="{{ asset('js/main.js') }}"></script>
 
     @yield('js')
 

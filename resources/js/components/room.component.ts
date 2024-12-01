@@ -25,7 +25,7 @@ const roomSchema = yup.object().shape({
   row_count: yup.number()
     .typeError('Số cột phải là một số và không được để trống')
     .min(1, 'Số hàng phải lớn hơn hoặc bằng 1'),
-  base_price: yup.number().min(0, 'Giá cơ bản phải lớn hơn hoặc bằng 0').required('Giá cơ bản là bắt buộc'),
+  base_price: yup.number().min(10000, 'Giá cơ bản phải lớn hơn hoặc bằng 10000').required('Giá cơ bản là bắt buộc'),
 });
 
 Alpine.data('RoomComponent', (roomId: string | null = null) => ({
@@ -87,10 +87,12 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
       formData.set('image', await domToBlob(this.seatTable[0]));
     }
     try {
+      let url = '/admin/room-manager/rooms';
       if (roomId) {
-        repoData = await roomService.putRoom(roomId, formData);
+        await roomService.putRoom(roomId, formData);
       } else {
-        repoData = await roomService.postRoom(formData);
+        const room = await roomService.postRoom(formData);
+        url = `/admin/room-manager/rooms/${room.id}/edit`;
       }
       swal.fire({
         title: 'Thao tác thành công!',
@@ -99,10 +101,9 @@ Alpine.data('RoomComponent', (roomId: string | null = null) => ({
         showConfirmButton: false,
         timer: 1000,
         reverseButtons: false
-      }).then(() => redirect().to(repoData.url));
+      }).then(() => redirect().to(url));
     } catch (error: any) {
-      console.error(error);
-      toastr.error(error.message);
+      toastr.error(error?.response?.data?.message || error?.message);
     } finally {
         this.isSubmitting = false; 
     }

@@ -26,7 +26,7 @@ class VoucherService extends BaseService implements VoucherServiceInterface
     public function create(&$data)
     {
         if (isset($data['image']) && $data['image']) {
-            $uploadData = $this->uploadFile($data['image'], 'public/actors');
+            $uploadData = $this->uploadFile($data['image'], 'public/vouchers');
             $data['image'] = $uploadData['path'];
         }
         return $this->repository->create($data);
@@ -40,9 +40,9 @@ class VoucherService extends BaseService implements VoucherServiceInterface
         }
         if (isset($data['image']) && $data['image']) {
             if ($record->image) {
-                $this->deleteAvatar($record->image, 'actors');
+                $this->deleteAvatar($record->image, 'vouchers');
             }
-            $uploadData = $this->uploadFile($data['image'], 'public/actors');
+            $uploadData = $this->uploadFile($data['image'], 'public/vouchers');
             $data['image'] = $uploadData['path'];
         }
         return $this->repository->update($id, $data);

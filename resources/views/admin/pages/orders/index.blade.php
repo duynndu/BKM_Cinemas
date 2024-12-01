@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Danh sách Loại Đồ Ăn')
+@section('title', 'Danh sách vé')
 
 @section('css')
 
@@ -33,9 +33,8 @@
                             </div>
                             <div class="col-12">
                                 <div class="filter cm-content-box box-primary">
-
                                     <div class="cm-content-body form excerpt" style="">
-                                        <form action="{{ route('admin.food-types.index') }}" method="GET">
+                                        <form action="{{ route('admin.orders.index') }}" method="GET">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-xl-3 col-sm-6">
@@ -45,38 +44,71 @@
                                                             placeholder="Nhập mã đơn">
                                                     </div>
                                                     <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
-                                                        <label class="form-label">Sắp xếp</label>
-                                                        <div id="order" class="dropdown bootstrap-select form-control">
-                                                            <select name="order_with" class="form-control">
-                                                                <option value="">
-                                                                    --chọn--
-                                                                </option>
-                                                                <option @selected(request()->order_with == 'dateASC') value="dateASC">
-                                                                    Ngày tạo tăng dần
-                                                                </option>
-                                                                <option @selected(request()->order_with == 'dateDESC') value="dateDESC">
-                                                                    Ngày tạo giảm dần
-                                                                </option>
-                                                                <option @selected(request()->order_with == 'priceASC') value="priceASC">
-                                                                    Giá tăng dần
-                                                                </option>
-                                                                <option @selected(request()->order_with == 'priceDESC') value="priceDESC">
-                                                                    Giá giảm dần
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
-                                                        <label class="form-label">Lọc theo</label>
-                                                        <select name="fill_action" class="form-control">
+                                                        <label class="form-label">Trạng thái vé</label>
+                                                        <select name="status" class="form-control">
                                                             <option value="">
                                                                 --chọn--
                                                             </option>
-                                                            <option @selected(request()->fill_action == 'active') value="active">
-                                                                Hiện
+                                                            <option @selected(request()->status == 'completed') value="completed">
+                                                                Hoàn thành
                                                             </option>
-                                                            <option @selected(request()->fill_action == 'noActive') value="noActive">
-                                                                Ẩn
+                                                            <option @selected(request()->status == 'cancelled') value="cancelled">
+                                                                Hủy
+                                                            </option>
+                                                            <option @selected(request()->status == 'waiting_for_cancellation')
+                                                                value="waiting_for_cancellation">
+                                                                Chờ hủy
+                                                            </option>
+                                                            <option @selected(request()->status == 'rejected') value="rejected">
+                                                                Từ chối hủy
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
+                                                        <label class="form-label">Trạng thái thanh toán</label>
+                                                        <select name="payment_status" class="form-control">
+                                                            <option value="">
+                                                                --chọn--
+                                                            </option>
+                                                            <option @selected(request()->payment_status == 'pending') value="pending">
+                                                                Chờ xác nhận
+                                                            </option>
+                                                            <option @selected(request()->payment_status == 'completed') value="completed">
+                                                                Hoàn thành
+                                                            </option>
+                                                            <option @selected(request()->payment_status == 'failed') value="failed">
+                                                                Lỗi
+                                                            </option>
+                                                            <option @selected(request()->payment_status == 'cancelled') value="cancelled">
+                                                                Hủy
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
+                                                        <label class="form-label">Trạng thái hoàn tiền</label>
+                                                        <select name="refund_status" class="form-control">
+                                                            <option value="">
+                                                                --chọn--
+                                                            </option>
+                                                            <option @selected(request()->refund_status == 'pending') value="pending">
+                                                                Chờ hoàn tiền
+                                                            </option>
+                                                            <option @selected(request()->refund_status == 'completed') value="completed">
+                                                                Hoàn thành
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xl-2  col-sm-4 mb-3 mb-xl-0">
+                                                        <label class="form-label">Nhận vé</label>
+                                                        <select name="get_tickets" class="form-control">
+                                                            <option value="">
+                                                                --chọn--
+                                                            </option>
+                                                            <option @selected(request()->get_tickets == 1) value="1">
+                                                                Đã nhận
+                                                            </option>
+                                                            <option @selected(request()->get_tickets == 0) value="0">
+                                                                Chưa nhận
                                                             </option>
                                                         </select>
                                                     </div>
@@ -118,6 +150,7 @@
                                                     <th>Trạng thái</th>
                                                     <th>Trạng thái thanh toán</th>
                                                     <th>Trạng thái hoàn tiền</th>
+                                                    <th>Nhận vé</th>
                                                     <th>Hành động</th>
                                                 </tr>
                                             </thead>
@@ -143,8 +176,8 @@
                                                             {{ $order->user->name }}
                                                         </td>
                                                         <td>
-                                                            @if ($order->status == 'cancelled' || $order->status == 'completed')
-                                                                <p id="status-{{ $order->id }}">
+                                                            @if ($order->status == 'cancelled' || $order->status == null || $order->status == 'completed' || $order->status == 'rejected')
+                                                                <b id="status-{{ $order->id }}">
                                                                     @switch($order->status)
                                                                         @case('completed')
                                                                             Hoàn thành
@@ -161,7 +194,7 @@
                                                                         @default
                                                                             Không xác định
                                                                     @endswitch
-                                                                </p>
+                                                                </b>
                                                             @else
                                                                 <select name="status" id="status-{{ $order->id }}"
                                                                     class="form-control order_status"
@@ -180,33 +213,35 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @switch($order->payment_status)
-                                                                @case('pending')
-                                                                    Chờ xác nhận
-                                                                @break
+                                                            <b id="payment_status-{{ $order->id }}">
+                                                                @switch($order->payment_status)
+                                                                    @case('pending')
+                                                                        Chờ xác nhận
+                                                                    @break
 
-                                                                @case('completed')
-                                                                    Hoàn thành
-                                                                @break
+                                                                    @case('completed')
+                                                                        Hoàn thành
+                                                                    @break
 
-                                                                @case('failed')
-                                                                    Lỗi
-                                                                @break
+                                                                    @case('failed')
+                                                                        Lỗi
+                                                                    @break
 
-                                                                @case('cancelled')
-                                                                    Hủy
-                                                                @break
+                                                                    @case('cancelled')
+                                                                        Hủy
+                                                                    @break
 
-                                                                @default
-                                                                    Không xác định
-                                                            @endswitch
+                                                                    @default
+                                                                        Không xác định
+                                                                @endswitch
+                                                            </b>
                                                         </td>
                                                         <td>
                                                             @if (is_null($order->refund_status))
-                                                                <p id="refund_status-{{ $order->id }}">Không có</p>
+                                                                <b id="refund_status-{{ $order->id }}">Không có</b>
                                                             @elseif ($order->refund_status == 'completed')
-                                                                <p id="refund_status-{{ $order->id }}">Hoàn tiền thành
-                                                                    công</p>
+                                                                <b id="refund_status-{{ $order->id }}">Hoàn tiền thành
+                                                                    công</b>
                                                             @else
                                                                 <select name="refund_status"
                                                                     data-url="{{ route('api.orders.changeRefundStatus', $order->id) }}"
@@ -222,11 +257,28 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if (auth()->user()->can('viewDetail', App\Models\Booking::class))
-                                                                <a href="{{ route('admin.orders.detail', $order->id) }}"class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a>
+                                                            @if (
+                                                                $order->refund_status == 'completed' ||
+                                                                    $order->status == 'cancelled' ||
+                                                                    $order->status == 'waiting_for_cancellation' ||
+                                                                    $order->get_tickets == 1)
+                                                                <b id="get_tickets-{{ $order->id }}">
+                                                                    {{ $order->get_tickets == 1 ? 'Đã nhận' : 'Chưa nhận' }}
+                                                                </b>
+                                                            @else
+                                                                <button id="get_tickets-{{ $order->id }}"
+                                                                    class="get_tickets btn btn-xs btn-success text-white"
+                                                                    data-id="{{ $order->id }}"
+                                                                    data-url="{{ route('admin.orders.changeGetTickets', $order->id) }}">
+                                                                    Nhận vé
+                                                                </button>
                                                             @endif
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('admin.orders.detail', $order->id) }}"
+                                                                class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

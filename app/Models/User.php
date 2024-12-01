@@ -112,7 +112,10 @@ class User extends Authenticatable
     // Quan hệ many-to-many với Voucher thông qua bảng trung gian `user_vouchers`
     public function vouchers()
     {
-        return $this->belongsToMany(Voucher::class, 'user_vouchers', 'user_id', 'voucher_id')->withTimestamps();;
+        return $this->belongsToMany(Voucher::class, 'user_vouchers', 'user_id', 'voucher_id')
+        ->withTimestamps()
+        ->withPivot('deleted_at')
+        ->wherePivotNull('deleted_at');
     }
     public function users()
     {

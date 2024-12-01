@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', $title['create'] ?? null)
+@section('title', $title['create'] ?? 'Cập nhật phòng chiếu')
 
 @section('css')
 @endsection
@@ -27,14 +27,14 @@
 									</div>
 									<div class="col-6 mb-3">
 										<label class="form-label mb-2">Số cột</label>
-										<input disabled type="number" x-model="formData.col_count" @input="renderSeatLayout; formData.seats = []"
+										<input type="number" x-model="formData.col_count" @input="renderSeatLayout; formData.seats = []"
 											@change="formData.seats = []" class="form-control"
 											placeholder="Nhập số cột">
 										<span class="text-danger" x-text="errors.col_count"></span>
 									</div>
 									<div class="col-6 mb-3">
 										<label class="form-label mb-2">Số hàng</label>
-										<input disabled type="number" x-model="formData.row_count" @input="renderSeatLayout; formData.seats = []"
+										<input type="number" x-model="formData.row_count" @input="renderSeatLayout; formData.seats = []"
 											@change="formData.seats = []" class="form-control"
 											placeholder="Nhập số hàng">
 										<span class="text-danger" x-text="errors.row_count"></span>

@@ -5,6 +5,7 @@ use App\Http\Requests\Cinemas\CinemaRequest;
 use App\Models\Cinema;
 use App\Services\Admin\Areas\Interfaces\AreaServiceInterface;
 use App\Services\Admin\Cinemas\Interfaces\CinemaServiceInterface;
+use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
 use App\Traits\RemoveImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,12 +17,16 @@ class CinemaController extends Controller
     use RemoveImageTrait;
     protected $cinemaService;
     protected $areaService;
+    protected $cityService;
+
     public function __construct(
         CinemaServiceInterface $cinemaService,
         AreaServiceInterface $areaService,
+        CityServiceInterface $cityService,
     ) {
         $this->cinemaService = $cinemaService;
         $this->areaService = $areaService;
+        $this->cityService = $cityService;
     }
     /**
      * Display a listing of the resource.
@@ -29,8 +34,13 @@ class CinemaController extends Controller
     public function index(Request $request)
     {
         $data = $this->cinemaService->filter($request);
-        $areas = $this->areaService->getAll();
-        return view('admin.pages.cinemas.index', compact('data', 'areas'));
+        if (!empty($request->city_id)) {
+            $areas = $this->areaService->getByCityId($request->city_id);
+        }else{
+            $areas = $this->areaService->getAll();
+        }
+        $cities = $this->cityService->getAll();
+        return view('admin.pages.cinemas.index', compact('data', 'areas', 'cities'));
     }
 
     /**
@@ -213,5 +223,18 @@ class CinemaController extends Controller
                 'message' => 'Có lỗi xảy ra!',
             ], 500);
         }
+    }
+
+    public function ajaxGetAreaByCityId(Request $request)
+    {
+        if (!empty($request->city_id)) {
+            $areas = $this->areaService->getByCityId($request->city_id);
+        }else{
+            $areas = $this->areaService->getAll();
+        }
+        return response()->json([
+            'areas' => $areas,
+            'message' => 'Thành công!',
+        ], 200 );
     }
 }

@@ -12,7 +12,7 @@ class BookingController extends Controller
         $code = $request->code;
         $booking = Booking::where('code', $code)
             ->orderBy('created_at', 'desc')
-            ->with(['seatsBooking.seat', 'movie', 'foodsBooking.food', 'showtime'])
+            ->with(['seatsBooking.seat', 'movie', 'foodsBooking.food', 'showtime', 'cinema'])
             ->first();
         $showtime = $booking->showtime;
         $foodsBooking = $booking->foodsBooking->map(function ($foodBooking) {
@@ -21,14 +21,20 @@ class BookingController extends Controller
             ]);
         });
         $movie = $booking->movie;
+        $cinema = $booking->cinema->load(['area', 'city']);
+        $area = $cinema->area;
+        $city = $area->city;
         $seatsBooking = $booking->seatsBooking->pluck('seat.seat_number')->toArray();
         return view('client.pages.payment-success', [
+            'cinema' => $cinema,
             'booking' => $booking,
             'showtime' => $showtime,
             'seatsBooking' => $seatsBooking,
             'foodsBooking' => $foodsBooking,
             'code' => $code,
-            'movie' => $movie
+            'movie' => $movie,
+            'area' => $area,
+            'city' => $city,
         ]);
     }
 }

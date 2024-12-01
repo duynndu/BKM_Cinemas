@@ -15,6 +15,6 @@ class Voucher extends Model
     protected $guarded = [];
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_vouchers', 'voucher_id', 'user_id')->withTimestamps();;
+        return $this->belongsToMany(User::class, 'user_vouchers', 'voucher_id', 'user_id')->withTimestamps();
     }
 }

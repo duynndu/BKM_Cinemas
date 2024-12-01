@@ -15,10 +15,11 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->string('image')->nullable();
-            $table->string('title');  // Tiêu đề thông báo
-            $table->text('content')->nullable(); // Nội dung thông báo
-            $table->string('type'); // Loại thông báo: Vd: Sự kiện, Hệ thống, Đặt vé,...
+            $table->string('title');
+            $table->text('content')->nullable();
+            $table->enum('type', [
+                'refund',
+            ])->nullable();
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\SeatController;
 use App\Http\Controllers\Api\SeatLayoutController;
 use App\Http\Controllers\Api\SeatTypeController;
 use App\Http\Controllers\Api\ShowtimeController;
+use App\Http\Controllers\api\VoucherController;
 use App\Models\Cinema;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -101,4 +102,13 @@ Route::name('api.')->group(function () {
             ->name('changeRefundStatus');
     });
 
+    Route::controller(VoucherController::class)->prefix('vouchers')->name('vouchers.')->group(function () {
+        Route::get('', 'index');
+        Route::get('getUserVouchers', 'getUserVouchers');
+        Route::get('getVoucherByCode/{code}', 'getVoucherByCode');
+        Route::get('{voucher}', 'show');
+        Route::post('', 'store');
+        Route::put('{voucher}', 'update');
+        Route::delete('{voucher}', 'destroy');
+    });
 });

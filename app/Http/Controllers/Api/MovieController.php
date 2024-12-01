@@ -13,11 +13,11 @@ class MovieController extends Controller
      */
     public function index()
     {
-        return response()->json(Movie::all());
+        return response()->json(Movie::where('active', '1')->get());
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage
      */
     public function store(Request $request)
     {

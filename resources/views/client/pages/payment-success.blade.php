@@ -12,7 +12,7 @@
     <div class="ticket-info text-center">
         <p><strong>Tên phim:</strong> {{$movie->title}}</p>
         <p><strong>Thời gian chiếu:</strong> {{ \Carbon\Carbon::parse($showtime->start_time)->format('d/m/Y - H:i') }}</p>
-        <p><strong>Rạp:</strong> Touch Cinema - Hà Nội</p>
+        <p><strong>Rạp:</strong> {{"$cinema->name $area->name thành phố $city->name"}}</p>
         <p><strong>Ghế:</strong> {{implode(', ', $seatsBooking)}}</p>
     </div>
     <div class="qr-code">

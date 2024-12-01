@@ -7,9 +7,12 @@ use App\Constants\SeatStatus;
 use App\Constants\Status;
 use App\Events\BookSeat;
 use App\Events\Client\DepositSucceeded;
+use App\Events\SendMailBookedEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResetSeatStatus;
+use App\Mail\Client\BookingMail;
 use App\Models\Booking;
+use App\Models\Voucher;
 use App\Services\Client\Deposits\Interfaces\DepositServiceInterface;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use Carbon\Carbon;
@@ -18,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -44,13 +48,21 @@ class PaymentController extends Controller
         $orderCode = $this->generateRandomOrderCode(8);
         if ($request->booking_id) {
             $booking = Booking::find($request->booking_id);
-            $booking->update(['code' => $orderCode, 'payment_status' => Status::PENDING]);
             DB::table('jobs')
                 ->where('payload', 'LIKE', '%' . $booking->showtime_id . '%')
                 ->where('payload', 'LIKE', '%' . $booking->user_id . '%')
                 ->delete();
             ResetSeatStatus::dispatch($booking->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT')->delay(now()->addSeconds(300));
             $amount = $booking->totalPrice();
+            $discountPrice = $this->calculatorVoucherPrice($amount, $request->voucher_id);
+            $booking->update([
+                'code' => $orderCode,
+                'payment_status' => Status::PENDING,
+                'discount_price' => $discountPrice,
+                'final_price' => $amount - $discountPrice,
+                'voucher_id' => $request->voucher_id,
+                'payment_method' => $request->payment
+            ]);
             if ($request->payment == 'vnpay') {
                 $vnpayUrl = $this->vnpay_payment($orderCode, $amount);
                 return response()->json($vnpayUrl);
@@ -174,10 +186,9 @@ class PaymentController extends Controller
                         'value' => SeatStatus::AVAILABLE
                     ]);
                 } else {
-                    $this->updatePoints($booking->total_price);
+                    // $this->updatePoints($booking->total_price);
+                    auth()->user()->vouchers()->updateExistingPivot($booking->voucher_id, ['deleted_at' => now()]);
                 }
-
-                $booking->update(['payment_status' => $dataTransaction['status']]);
                 $this->transactionService->create($dataTransaction);
                 DB::commit();
             } catch (\Exception $e) {
@@ -186,18 +197,20 @@ class PaymentController extends Controller
                 $dataTransaction['description'] = 'Lỗi giao dịch - Đặt vé';
                 Log::error('Transaction failed: ' . $e->getMessage());
                 $this->transactionService->create($dataTransaction);
-                $booking->update(['payment_status' => $dataTransaction['status']]);
                 BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                     'action' => 'set',
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
+            $booking->update([
+                'payment_status' => $dataTransaction['status'],
+                'status' => $dataTransaction['status']
+            ]);
             if ($dataTransaction['status'] == Status::COMPLETED) {
                 return redirect()->route('thanh-cong', [
                     'code' => $booking->code
                 ]);
             }
-            return response()->json($dataTransaction);
         }
     }
 
@@ -276,9 +289,9 @@ class PaymentController extends Controller
                         'value' => SeatStatus::AVAILABLE
                     ]);
                 } else {
-                    $this->updatePoints($booking->total_price);
+                    // $this->updatePoints($booking->total_price);
+                    auth()->user()->vouchers()->updateExistingPivot($booking->voucher_id, ['deleted_at' => now()]);
                 }
-                $booking->update(['payment_status' => $dataTransaction['status']]);
                 $this->transactionService->create($dataTransaction);
                 DB::commit();
             } catch (\Exception $e) {
@@ -287,18 +300,20 @@ class PaymentController extends Controller
                 $dataTransaction['description'] = 'Lỗi giao dịch - Đặt vé';
                 Log::error('Transaction failed: ' . $e->getMessage());
                 $this->transactionService->create($dataTransaction);
-                $booking->update(['payment_status' => $dataTransaction['status']]);
                 BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                     'action' => 'set',
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
+            $booking->update([
+                'payment_status' => $dataTransaction['status'],
+                'status' => $dataTransaction['status']
+            ]);
             if ($dataTransaction['status'] == Status::COMPLETED) {
                 redirect()->route('thanh-cong', [
                     'code' => $booking->code
                 ]);
             }
-            return response()->json($booking);
         }
     }
 
@@ -355,7 +370,6 @@ class PaymentController extends Controller
 
     public function zaloPayReturn(Request $request)
     {
-        dd($request->all());
         $orderCode = '';
         $return_code = $request->input('return_code');
         $app_trans_id = $request->input('app_trans_id');
@@ -384,9 +398,9 @@ class PaymentController extends Controller
                     'action' => 'set',
                     'value' => SeatStatus::AVAILABLE
                 ]);
+            } else {
+                auth()->user()->vouchers()->updateExistingPivot($booking->voucher_id, ['deleted_at' => now()]);
             }
-
-            $booking->update(['payment_status' => $dataTransaction['status']]);
             $this->transactionService->create($dataTransaction);
             DB::commit();
         } catch (\Exception $e) {
@@ -395,10 +409,18 @@ class PaymentController extends Controller
             $dataTransaction['description'] = 'Lỗi giao dịch - Đặt vé';
             Log::error('Transaction failed: ' . $e->getMessage());
             $this->transactionService->create($dataTransaction);
-            $booking->update(['payment_status' => $dataTransaction['status']]);
             BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                 'action' => 'set',
                 'value' => SeatStatus::AVAILABLE
+            ]);
+        }
+        $booking->update([
+            'payment_status' => $dataTransaction['status'],
+            'status' => $dataTransaction['status']
+        ]);
+        if ($dataTransaction['status'] == Status::COMPLETED) {
+            return redirect()->route('thanh-cong', [
+                'code' => $booking->code
             ]);
         }
     }
@@ -410,27 +432,49 @@ class PaymentController extends Controller
         $dataTransaction = [
             'user_id' => $booking->user_id,
             'payment_method' => 'customer',
-            'amount' => -$amount,
+            'amount' => $amount,
             'type' => 'deposit',
             'description' => 'Giao dịch thành công - Đặt vé',
             'balance_after' => $balance_after,
             'status' => Status::COMPLETED
         ];
-        if ($balance_after < 0) {
+        DB::beginTransaction();
+        try {
+            if ($balance_after < 0) {
+                $dataTransaction['status'] = Status::FAILED;
+                $dataTransaction['description'] = 'Số dư không đủ để đặt vé';
+                $dataTransaction['balance_after'] = $userPoints;
+                BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
+                    'action' => 'set',
+                    'value' => SeatStatus::AVAILABLE
+                ]);
+            } else {
+                auth()->user()->update(['balance' => $balance_after]);
+                // $this->updatePoints($booking->total_price);
+                auth()->user()->vouchers()->updateExistingPivot($booking->voucher_id, ['deleted_at' => now()]);
+            }
+            $this->transactionService->create($dataTransaction);
+            $dataTransaction['code'] = $booking->code;
+            if ($dataTransaction['status'] == Status::COMPLETED) {
+                SendMailBookedEvent::dispatch(auth()->user(), $booking->code);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
             $dataTransaction['status'] = Status::FAILED;
-            $dataTransaction['description'] = 'Số điểm không đủ để đặt vé';
-            $dataTransaction['balance_after'] = $userPoints;
+            $dataTransaction['description'] = 'Lỗi giao dịch - Đặt vé';
+            Log::error('Transaction failed: ' . $e->getMessage());
+            $this->transactionService->create($dataTransaction);
             BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                 'action' => 'set',
                 'value' => SeatStatus::AVAILABLE
             ]);
-        } else {
-            auth()->user()->update(['balance' => $balance_after]);
-            $this->updatePoints($booking->total_price);
         }
-        $this->transactionService->create($dataTransaction);
-        $booking->update(['payment_status' => $dataTransaction['status']]);
-        $dataTransaction['code'] = $booking->code;
+        $booking->update([
+            'payment_status' => $dataTransaction['status'],
+            'status' => $dataTransaction['status']
+        ]);
+
         return $dataTransaction;
     }
 
@@ -457,5 +501,19 @@ class PaymentController extends Controller
                 ]);
             }
         }
+    }
+
+    private function calculatorVoucherPrice($amount, $voucherId)
+    {
+        $voucher = Voucher::find($voucherId);
+        if ($voucher) {
+            if ($voucher->discount_type == 'money') {
+                return $voucher->discount_value;
+            }
+            if ($voucher->discount_type == 'percentage') {
+                return ($amount * $voucher->discount_value) / 100;
+            }
+        }
+        return 0;
     }
 }

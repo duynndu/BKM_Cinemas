@@ -74,7 +74,7 @@ Alpine.data('SeatLayout', (seatLayoutId?: number) => ({
       }
       toastr.success('Thao tác thành công');
       setTimeout(() => {
-        redirect().to('admin/room-manager/seat-layouts');
+        redirect().to('/admin/room-manager/seat-layouts');
       }, 500);
     } catch (error: any) {
       console.error(error);

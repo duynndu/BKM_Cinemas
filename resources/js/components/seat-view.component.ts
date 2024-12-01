@@ -21,6 +21,9 @@ import { paymentService } from "@/services/payment.service";
 import { bookingService } from "@/services/booking.service";
 import { echo } from "@/echo/Echo";
 import { Status } from "@/define/status";
+import Swal from "sweetalert2";
+import { IVoucher } from "@/types/voucher.interface";
+import { voucherService } from "@/services/voucher.service";
 
 Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   errors: {} as Record<string, string>,
@@ -29,6 +32,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   seatLayouts: null as any[] | null,
   seatTypes: [] as ISeatType[],
   showtimeDetail: null as IShowtime | null,
+  vouchers: [] as IVoucher[],
   foodTypes: [] as IFoodType[],
   seatsSelected: [] as ISeat[],
   totalPriceSeats: 0,
@@ -51,7 +55,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   paymentMethod: '',
   booking: {} as IBooking,
   interval: null as ReturnType<typeof setInterval> | null,
-
+  modalVoucher: false,
   async init() {
     this.countdownTimer(endTime);
     this.user = await authService.getCurrentUser();
@@ -90,7 +94,11 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
     if (this.step == 1) {
       if (this.seatErrors.quantityError) return;
       if (this.seatErrors.slotError) {
-        alert('Vui lòng không chừa 1 ghế trống bên trái hoặc bên phải của các ghế bạn đã chọn.');
+        Swal.fire({
+          icon: 'warning',
+          title: 'Cảnh báo',
+          text: 'Vui lòng không chừa 1 ghế trống bên trái hoặc bên phải của các ghế bạn đã chọn.!',
+        });
         return;
       }
       if (this.seatErrors.typeError) {
@@ -104,8 +112,6 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
           }
         })
       })
-      console.log(this.seatsSelected);
-      console.log(this.foodsSelected);
       try {
         this.booking = await bookingService.postBooking({
           seats: this.seatsSelected,
@@ -115,7 +121,6 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
           payment_id: 1,
           cinema_id: this.showtimeDetail?.cinema?.id,
         });
-        console.log(this.booking);
         endTime = this.booking.endTime;
         this.countdownTimer(endTime);
         this.seatsSelected = this.booking.seats_booking.map(seat_booking => seat_booking.seat);
@@ -129,26 +134,38 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
     } else if (this.step == 2) {
       if (!this.paymentMethod) {
         // toastr.error("Vưi lòng chọn phương thức thanh toán", "cảnh báo")
-        alert("Vui lòng chọn phương thức thanh toán. Cảnh báo");
+        Swal.fire({
+          icon: 'warning',
+          title: 'Cảnh báo',
+          text: 'Vui lòng chọn phương thức thanh toán. Cảnh báo!',
+        });
         return;
       }
       const res = await paymentService.processDeposit({
         payment: this.paymentMethod,
-        booking_id: this.booking.id
+        booking_id: this.booking.id,
+        voucher_id: this.voucherSelected?.id
       }) as unknown as any;
 
       if (this.paymentMethod != 'customer') {
         window.location.href = res.payment_url;
       }
       if (res.status == Status.FAILED) {
-        alert('Lỗi giao dịch hoặc không đủ số dư vui nạp thêm tiền vào tài khoản.')
+        Swal.fire({
+          icon: 'warning',
+          title: 'Cảnh báo',
+          text: 'Lỗi giao dịch hoặc không đủ số dư vui nạp thêm tiền vào tài khoản!',
+        });
       }
-      if (res.status == Status.COMPLETED) {
-        alert('Giao dịch thành công.');
+      Swal.fire({
+        title: 'Giao dịch thành công.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
         redirect().to('/thanh-cong', {
           'code': res.code
         });
-      }
+      });
 
     }
 
@@ -178,7 +195,11 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
       $("#seatingArea").addClass("event-none");
       $("#login").removeClass("tw-hidden");
       $("#combo").addClass("tw-hidden");
-      alert('Bạn phải đăng nhập để đặt vé');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Cảnh báo',
+        text: 'Bạn phải đăng nhập để đặt vé!',
+      });
       redirect().to('/account');
     } else {
       $("#seatingArea").removeClass("event-none");
@@ -195,14 +216,11 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
     });
     echo.join(`showtime.${showtimeId}`)
       .here((users: any) => {
-        console.log("Người dùng hiện tại:", users);
         this.setSeatsSelected();
       })
       .joining((user: any) => {
-        console.log("Người dùng đã tham gia:", user);
       })
       .leaving((user: any) => {
-        console.log("Người dùng đã rời:", user);
       }).listen('BookSeat', (e: { showtimeId: string, seats: ISeat[] }) => {
         this.calculateTotalPrice();
         //@ts-ignore
@@ -259,9 +277,17 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
         }
 
         if (this.step === 1) {
-          alert("Hết thời gian đặt ghế");
+          Swal.fire({
+            icon: 'warning',
+            title: 'Cảnh báo',
+            text: 'Hết thời gian đặt ghế!',
+          });
         } else if (this.step === 2) {
-          alert("Hết thời gian đặt lịch");
+          Swal.fire({
+            icon: 'warning',
+            title: 'Cảnh báo',
+            text: 'Hết thời gian đặt lịch!',
+          });
         }
 
         redirect().to(`/phim/${this.movie.slug}`);
@@ -274,6 +300,32 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
     const minute = Math.floor(this.seconds / 60);
     const second = this.seconds % 60;
     return `${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`
+  },
+  voucherSelected: {} as IVoucher,
+  voucherCode: '' as string,
+  voucherNotFound: false,
+  discountPrice: 0,
+  async getVouchers() {
+    if (this.vouchers.length > 0) return;
+    this.vouchers = await voucherService.getUserVouchers();
+  },
+  choseVoucher(voucher: IVoucher) {
+    if (voucher.id === this.voucherSelected.id) {
+      this.voucherSelected = {} as IVoucher;
+    }
+    this.voucherSelected = { ...voucher };
+    this.voucherNotFound = !this.voucherSelected?.name;
+    this.discountPrice = - this.calculatorVoucherPrice()[this.voucherSelected.discount_type]?.() ?? 0;
+  },
+  async applyVoucher() {
+    this.voucherSelected = await voucherService.getVoucherByCode(this.voucherCode);
+    this.voucherNotFound = !this.voucherSelected?.name;
+  },
+  calculatorVoucherPrice() {
+    return {
+      money: () => parseInt(this.voucherSelected.discount_value),
+      percentage: () => (this.totalPriceFoods + this.totalPriceSeats) * parseInt(this.voucherSelected.discount_value) / 100,
+    }
   }
 
 }));

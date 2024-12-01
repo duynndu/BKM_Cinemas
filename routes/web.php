@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\DB;
 Route::get('/',                     [HomeController::class, 'index'])->name('home');
 
 // Tài khoản
-Route::get('/account',              [AuthController::class, 'account'])->name('account');
+Route::get('/tai-khoan',              [AuthController::class, 'account'])->name('account');
 
 Route::post('/register',            [AuthController::class, 'register'])
     ->middleware('checkLogin')
@@ -49,7 +49,7 @@ Route::post('/login',               [AuthController::class, 'login'])
 Route::post('/logout',              [AuthController::class, 'logout'])
     ->name('logout');
 
-Route::get('/forgot-password',      [AuthController::class, 'forgotPassword'])
+Route::get('/quen-mat-khau',      [AuthController::class, 'forgotPassword'])
     ->middleware('checkLogin')
     ->name('forgotPassword');
 
@@ -138,8 +138,6 @@ Route::get('/lich-chieu', function () {
 
 Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
     $userId = optional(auth()->user())->id;
-    $jobName = \App\Jobs\ResetSeatStatus::class;
-
     // Tìm và xóa job có payload khớp
     DB::table('jobs')
         ->where('payload', 'LIKE', '%' . $showtime->id . '%')

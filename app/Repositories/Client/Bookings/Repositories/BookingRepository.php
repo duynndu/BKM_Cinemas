@@ -32,6 +32,6 @@ class BookingRepository extends BaseRepository
                 ->whereYear('created_at', $parsedDate->year);
         }
 
-        return $query->paginate(1);
+        return $query->paginate(20);
     }
 }

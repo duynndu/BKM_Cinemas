@@ -15,7 +15,7 @@ class CinemaRepository extends BaseRepository implements CinemaInterface
     {
         $data = $this->model->newQuery();
         $data = $this->filterByName($data, $request);
-        $data = $this->filterByArea($data, $request);
+        $data = $this->filterByAreaOrCity($data, $request);
         $data = $this->applyOrdering($data, $request);
         $data = $data->with('area')->paginate(self::PAGINATION);
 
@@ -27,7 +27,14 @@ class CinemaRepository extends BaseRepository implements CinemaInterface
     }
 
     public function getAllActive(){
-        return $this->model->select('id', 'name', 'city_id')->where('active', 1)->get();
+        return $this->model->select('id', 'name', 'area_id')->where('active', 1)->get();
+    }
+
+    public function getCinemaByArea($area_id){
+        return $this->model->select('id', 'name')
+            ->where('active', 1)
+            ->where('area_id', $area_id)
+            ->get();
     }
 
     public function deleteMultiple(array $ids)
@@ -46,10 +53,14 @@ class CinemaRepository extends BaseRepository implements CinemaInterface
         return $query;
     }
 
-    private function filterByArea($query, $request)
+    private function filterByAreaOrCity($query, $request)
     {
         if (!empty($request->area_id)) {
             return $query->where('area_id', $request->area_id);
+        }elseif (!empty($request->city_id)) {
+            return $query->whereHas('area', function ($query) use ($request) {
+                $query->where('city_id', $request->city_id);
+            });
         }
         return $query;
     }
