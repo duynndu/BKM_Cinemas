@@ -116,39 +116,39 @@ $(document).ready(function () {
           // }
 
           // Gửi dữ liệu qua AJAX
-          $.ajax({
-            url: url,
-            method: "POST", // Phương thức gửi
-            data: {
-              _token: csrfToken, // Thêm token bảo mật
-              voucherId: voucherId,
-              userIds: userSelected, // các tài khoản đã chọn
-            },
-            success: function (response) {
-              if (response.data.original.status == "success") {
-                Swal.fire({
-                  position: "top-center",
-                  icon: "success",
-                  title: response.data.original.message,
-                  showConfirmButton: false,
-                  timer: 1500,
-                }).then(() => {
-                  // Sau khi Swal hoàn tất, tải lại trang
-                  location.reload();
-                });
-              } else if (response.data.original.status == "faile") {
-                Swal.fire({
-                  position: "top-center",
-                  icon: "error",
-                  title: response.data.original.message,
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }
+            $.ajax({
+              url: url,
+              method: "POST", // Phương thức gửi
+              data: {
+                _token: csrfToken, // Thêm token bảo mật
+                voucherId: voucherId,
+                userIds: userSelected, // các tài khoản đã chọn
+              },
+              success: function (response) {
+                if (response.data.original.status == "success") {
+                  Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: response.data.original.message,
+                    showConfirmButton: false,
+                    timer: 1500,
+                  }).then(() => {
+                    // Sau khi Swal hoàn tất, tải lại trang
+                    location.reload();
+                  });
+                } else if (response.data.original.status == "faile") {
+                  Swal.fire({
+                    position: "top-center",
+                    icon: "error",
+                    title: response.data.original.message,
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                }
 
-            },
-            error: function (xhr, status, error) {},
-          });
+              },
+              error: function (xhr, status, error) {},
+            });
         });
 
 

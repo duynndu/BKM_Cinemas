@@ -2,12 +2,15 @@
 
 namespace App\Repositories\Admin\Posts\Repositories;
 
+use App\Events\Admin\NotificationPostEvent;
 use App\Models\CategoryPost;
 use App\Models\Image;
+use App\Models\Notification;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\PostTag;
 use App\Models\Tag;
+use App\Models\User;
 use App\Repositories\Admin\Posts\Interfaces\PostInterface;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Str;
@@ -271,6 +274,11 @@ class PostRepository extends BaseRepository implements PostInterface
             $post->delete();
         }
 
+        return true;
+    }
+
+    public function sendPromotion($id){
+       NotificationPostEvent::dispatch($id);       
         return true;
     }
 }

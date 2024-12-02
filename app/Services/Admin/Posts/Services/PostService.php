@@ -2,7 +2,10 @@
 
 namespace App\Services\Admin\Posts\Services;
 
+use App\Models\Notification;
+use App\Models\Post;
 use App\Models\PostTag;
+use App\Models\User;
 use App\Repositories\Admin\Posts\Interfaces\PostInterface;
 use App\Services\Admin\Posts\Interfaces\PostServiceInterface;
 use App\Services\Base\BaseService;
@@ -43,6 +46,7 @@ class PostService extends BaseService implements PostServiceInterface
             'order' => $request->order,
             'active' => $request->active,
             'hot' => $request->hot ? 1 : 0,
+            'promotion' => $request->promotion ? 1 : 0
         ];
 
         $uploadData = $this->storageTraitUpload($request, 'avatar', 'public/posts');
@@ -52,6 +56,7 @@ class PostService extends BaseService implements PostServiceInterface
         }
 
         $post = $this->repository->create($dataPost);
+
 
         if ($post) {
             foreach ($request->parent_id as $category) {
@@ -119,6 +124,7 @@ class PostService extends BaseService implements PostServiceInterface
             'order' => $request->order,
             'active' => $request->active,
             'hot' => $request->hot ? 1 : 0,
+            'promotion' => $request->promotion ? 1 : 0,
         ];
 
         if ($uploadAvatar) {
@@ -303,4 +309,23 @@ class PostService extends BaseService implements PostServiceInterface
             return true;
         }
     }
+    public function sendPromotion($id){
+        $users = User::where('type','member')->where('status',1)->get();
+        $post = Post::where('id',$id)->first();
+        
+        $data = [];
+        foreach ($users as $user) {
+            $data[] = [
+                'user_id' => $user->id,
+                'title'=>$post->name,
+                'content'=>$post->description,
+                'type' => 'promotion',
+                'created_at' => now(),
+            ];
+        }
+        Notification::insert($data);
+        $this->repository->sendPromotion($id);
+        return true;
+    }
+    
 }

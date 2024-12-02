@@ -38,6 +38,8 @@ class HomeService  implements HomeServiceInterface
     {
         return $this->categoryPostRepository->getCategoryPostBySlug($slug);
     }
-    
+    public function emailSubscribe($request){
+        return $this->homeRepository->emailSubscribe($request);
+    }
 
 }

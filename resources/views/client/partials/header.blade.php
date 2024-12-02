@@ -201,59 +201,7 @@
                                                             động reset điểm về 0.</p>
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <a href="index.html">
-                                                        <b>Khuyến mãi mới từ Touch Cinema</b>
-                                                        <p>Khuyến mãi từ Touch Cinema: TOUCHxYOUNGFEST</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="phim/nha-ba-nu.html">
-                                                        <b>💵Nhà Bà Nữ: Cán mốc 50 tỷ</b>
-                                                        <p>❤️Bộ phim về gia đình chân thật và ý nghĩa, hứa hẹn
-                                                            sẽ chạm đến cảm xúc của người xem.</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="phim/nha-ba-nu.html">
-                                                        <b>🦀 Nhà Bà Nữ - Bánh canh cua đủ vị</b>
-                                                        <p>Đến Touch Cinema ”book” ngay món bánh canh cua Nhà Bà
-                                                            Nữ. Đồng cảm với những hoài bão, khát vọng và cả sự
-                                                            nông nổi của tuổi trẻ… 🥰</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="index.html">
-                                                        <b>Touch Cinema Happy New Year!!!🎊</b>
-                                                        <p>Nhân dịp tết Quý Mão 2023 kính chúc quý khách cùng
-                                                            gia đình mạnh khỏe, an khang thịnh vượng, vạn sự như
-                                                            ý, vạn sự thành công💕💕💕💕</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="phim/avatar-dong-chay-cua-nuoc.html">
-                                                        <b>🎬Avatar 2 - tuyệt tác điện ảnh</b>
-                                                        <p>💦Ra mắt sau hàng thập kỷ chờ đợi của khán giả. Bom
-                                                            tấn khoa học viễn tưởng mang đến góc nhìn mới lạ về
-                                                            Pandora và câu chuyện cảm động về tình cảm gia đình.
-                                                        </p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="phim/black-adam.html">
-                                                        <b>🏵️ Black Adam chiếu sớm từ 20/10</b>
-                                                        <p>💣 Bom tấn cuối cùng của nhà DC trong năm nay đem đến
-                                                            những phân cảnh hành động hoành tráng của The Rock,
-                                                            khuấy đảo màn ảnh rộng</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="index.html">
-                                                        <b>Khuyến mãi mới từ Touch Cinema</b>
-                                                        <p>Khuyến mãi từ Touch Cinema: 10.10 TOUCHxGRAB MUA 1
-                                                            TẶNG 1 BẮP RANG BƠ</p>
-                                                    </a>
-                                                </li>
+                                               
                                             </ul>
                                         </div>
                                     </div>

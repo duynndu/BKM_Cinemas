@@ -207,6 +207,7 @@
 <script src="{{ asset('client/js/statics/js/showtime-widget.js') }}"></script>
 <script type="text/javascript" src="{{ asset('client/js/statics/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
 <script type="module" src="{{ asset('client/js/commons/common.js') }}"></script>
+<script src="{{ asset('client/js/footer.js')}}"></script>
  @vite(['resources/js/app.js'])
 @yield('js')
 

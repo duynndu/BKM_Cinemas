@@ -66,8 +66,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12 col-xs-6 text-center">
-                                <a rel="nofollow" target="_blank"
-                                    href="">
+                                <a rel="nofollow" target="_blank" href="">
                                     <img class="img-responsive" src="{{ asset('client/images/icons/dathongbao.png') }}"
                                         alt="Touchcinema - Đã thông báo bộ công thương" />
                                 </a>
@@ -118,12 +117,15 @@
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" id="email-subscribe" required>
+                        <input type="email" name="email-subscribe" placeholder="Nhập địa chỉ email..." class="form-control"
+                            id="email-subscribe" required>
                     </div>
+                    <div id="email_error" class="mt-2"></div>
                 </div>
                 <div class="modal-footer">
                     <div class="center">
-                        <button type="button" class="btn btn-primary btn-subscribe">Đăng kí</button>
+                        <button data-token="{{ csrf_token() }}" data-url="{{ route('emailSubscribe') }}" type="button"
+                            class="btn btn-primary btn-email-subscribe">Đăng kí</button>
                     </div>
                 </div>
             </div>

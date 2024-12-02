@@ -109,6 +109,8 @@ Route::get('/zaloPayReturn', [DepositController::class, 'zaloPayReturn'])->name(
 // End Nạp tiền
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/email-subscribe', [HomeController::class, 'emailSubscribe'])->name('emailSubscribe');
+
 
 Route::get('/profile', function () {
     return view('client.pages.profile.info');

@@ -9,4 +9,5 @@ interface HomeRepositoryInterface
     public function movieIsShowing();
     public function upcomingMovie();
     public function promotionEvent();
+    public function emailSubscribe($request);
 }

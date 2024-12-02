@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content')->nullable();
             $table->enum('type', [
-                'refund',
+                'refund','promotion'
             ])->nullable();
             $table->timestamps();
         });

@@ -21,4 +21,5 @@ interface PostInterface extends RepositoryInterface
     public function createRelatedPhotoPost($record, $data);
     public function getImageRelatedPhotoById($id);
     public function delete($id);
+    public function sendPromotion($id);
 }
