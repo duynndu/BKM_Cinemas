@@ -325,8 +325,6 @@
                                     aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>
                             </li>
                         @endcan
-<<<<<<< HEAD
-=======
 
 
                         <li>
@@ -334,7 +332,6 @@
                                 aria-expanded="false">Thông báo</a>
                         </li>
 
->>>>>>> a3dc6c0f37b4384b369d569461373d5269d07e98
                     </ul>
                 </li>
             @endif

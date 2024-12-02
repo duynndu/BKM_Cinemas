@@ -118,6 +118,11 @@
                                                     @endif
                                                 </select>
                                                 <input type="hidden" name="type" class="type" value="member">
+                                                @error('role_id')
+                                                    <div class="mt-2">
+                                                        <span class="text-red">{{ $message }}</span>
+                                                    </div>
+                                                @enderror
                                             </div>
 
                                             @if (!auth()->user()->cinema_id)

@@ -127,12 +127,19 @@
                                                 </select>
                                                 <input type="hidden" name="type" class="type"
                                                     value="{{ $data['user']->type ?? '' }}">
+
+                                                @error('role_id')
+                                                    <div class="mt-2">
+                                                        <span class="text-red">{{ $message }}</span>
+                                                    </div>
+                                                @enderror
                                             </div>
 
                                             @if (!auth()->user()->cinema_id)
                                                 <div class="col-6">
                                                     <label class="form-label mb-2">Chọn rạp (nếu có)</label><br>
-                                                    <select name="cinema_id" class="form-control cinema_id" id="">
+                                                    <select name="cinema_id" class="form-control cinema_id"
+                                                        id="">
                                                         <option value="">-- Chọn rạp --</option>
                                                         @if ($data['cinemas']->isNotEmpty())
                                                             @foreach ($data['cinemas'] as $cinema)
@@ -151,21 +158,21 @@
                                                     @enderror
                                                 </div>
                                             @else
-                                            <div class="col-6">
-                                                <label class="form-label mb-2">Rạp</label>
-                                                <select name="cinema_id" class="form-control cinema_id"
-                                                    id="">
-                                                    <option name="cinema_id" selected
-                                                        value="{{ $data['user']->cinema_id }}">
-                                                        {{ $data['user']->cinema->name ?? '' }}
-                                                    </option>
-                                                </select>
-                                                @error('cinema_id')
-                                                    <div class="mt-2">
-                                                        <span class="text-red">{{ $message }}</span>
-                                                    </div>
-                                                @enderror
-                                            </div>
+                                                <div class="col-6">
+                                                    <label class="form-label mb-2">Rạp</label>
+                                                    <select name="cinema_id" class="form-control cinema_id"
+                                                        id="">
+                                                        <option name="cinema_id" selected
+                                                            value="{{ $data['user']->cinema_id }}">
+                                                            {{ $data['user']->cinema->name ?? '' }}
+                                                        </option>
+                                                    </select>
+                                                    @error('cinema_id')
+                                                        <div class="mt-2">
+                                                            <span class="text-red">{{ $message }}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
                                             @endif
                                         </div>
                                     </div>

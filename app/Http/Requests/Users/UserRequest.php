@@ -31,7 +31,7 @@ class UserRequest extends FormRequest
             'email' => 'required|email|max:255|unique:users,email,' . $id,
             'password' => $passwordRule, // Quy tắc cho password
             'new_password' => 'nullable|min:8', // Quy tắc cho new_password chỉ cần khi cập nhật
-            'role_id' => 'nullable|numeric',
+            'role_id' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
