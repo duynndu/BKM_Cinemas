@@ -110,6 +110,9 @@ Route::get('/zaloPayReturn', [DepositController::class, 'zaloPayReturn'])->name(
 // End Nạp tiền
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/email-subscribe', [HomeController::class, 'emailSubscribe'])->name('emailSubscribe');
+
+Route::post('/deleteNotification', [HomeController::class, 'deleteNotification'])->name('deleteNotification');
 
 Route::get('/profile', function () {
     return view('client.pages.profile.info');
@@ -123,6 +126,7 @@ Route::get('/profile-change-info', function () {
 Route::get('/profile-history-ticket', function () {
     return view('client.pages.profile.history-ticket');
 });
+
 
 Route::get('/phim', [ListMoviesController::class, 'movies'])->name('movie');
 

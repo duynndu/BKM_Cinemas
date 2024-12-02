@@ -93,7 +93,6 @@ Route::prefix('admin')
                         Route::get('/', 'index')
                             ->name('index')
                             ->middleware('authorizeAction:viewAny,App\Models\System');
-
                         Route::get('/create', 'create')
                             ->name('create')
                             ->middleware('authorizeAction:create,App\Models\System');
@@ -174,46 +173,6 @@ Route::prefix('admin')
                                 Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                                     ->name('deleteItemMultipleChecked')
                                     ->middleware('authorizeAction:deleteMultiple,App\Models\System');
-                            });
-
-
-                        Route::prefix('room-manager')
-                            ->group(function () {
-                                Route::prefix('rooms')
-                                    ->controller(RoomController::class)
-                                    ->name('rooms.')
-                                    ->group(function () {
-                                        Route::get('/', 'index')->name('index');
-                                        Route::get('/create', 'create')->name('create');
-                                        Route::post('/store', 'store')->name('store');
-                                        Route::get('/{room}/edit', 'edit')->name('edit');
-                                        Route::post('/{room}/update', 'update')->name('update');
-                                        Route::delete('/{room}', 'destroy')->name('destroy');
-                                    });
-                            });
-
-                        Route::prefix('seat-layouts')
-                            ->controller(SeatLayoutController::class)
-                            ->name('seat-layouts.')
-                            ->group(function () {
-                                Route::get('/', 'index')->name('index');
-                                Route::get('/create', 'create')->name('create');
-                                Route::post('/store', 'store')->name('store');
-                                Route::get('/{seatLayout}/edit', 'edit')->name('edit');
-                                Route::post('/{seatLayout}/update', 'update')->name('update');
-                                Route::delete('{seatLayout}', 'destroy')->name('destroy');
-                            });
-
-                        Route::prefix('seat-types')
-                            ->controller(SeatTypeController::class)
-                            ->name('seat-types.')
-                            ->group(function () {
-                                Route::get('/', 'index')->name('index');
-                                Route::get('/create', 'create')->name('create');
-                                Route::post('/store', 'store')->name('store');
-                                Route::get('/{seatType}/edit', 'edit')->name('edit');
-                                Route::post('/{seatType}/update', 'update')->name('update');
-                                Route::delete('{seatType}', 'destroy')->name('destroy');
                             });
                     });
 
@@ -388,7 +347,8 @@ Route::prefix('admin')
                         Route::get('/', 'index')
                             ->name('index')
                             ->middleware('authorizeAction:viewAny,App\Models\Post');
-
+                        Route::post('/send-promotion', 'sendPromotion')
+                            ->name('sendPromotion');
                         Route::get('/create', 'create')
                             ->name('create')
                             ->middleware('authorizeAction:create,App\Models\Post');
@@ -956,17 +916,36 @@ Route::prefix('admin')
                     ->name('orders.')
                     ->group(function () {
                         Route::get('/', 'index')
-                            ->name('index');
+                            ->name('index')
+                            ->middleware('authorizeAction:viewAny,App\Models\Booking');
                         Route::get('/{id}/detail', 'detail')
-                            ->name('detail');
+                            ->name('detail')
+                            ->middleware('authorizeAction:viewAny,App\Models\Booking');
                         Route::post('/{id}/change-get-ticket', 'changeGetTickets')
-                            ->name('changeGetTickets');
+                            ->name('changeGetTickets')
+                            ->middleware('authorizeAction:viewAny,App\Models\Cinema');
                     });
 
                 Route::prefix('notifications')
                     ->controller(NotificationController::class)
                     ->name('notifications.')
                     ->group(function () {
+                        Route::get('/', 'index')->name('index');
+                        Route::get('/create', 'create')
+                            ->name('create');
+                        Route::post('/store', 'store')
+                            ->name('store');
+                        Route::get('/{id}/edit', 'edit')
+                            ->name('edit');
+                        Route::put('/{id}/update', 'update')
+                            ->name('update');
+                        Route::delete('/{id}/delete', 'destroy')
+                            ->name('delete');
+                        Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                            ->name('deleteItemMultipleChecked');
+                        Route::get('/get-by-type', 'getByType')
+                            ->name('getByType');
+                       
                         Route::get('/get-by-type', 'getByType')
                             ->name('getByType');
                     });

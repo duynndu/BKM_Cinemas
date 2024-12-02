@@ -7,4 +7,6 @@ use App\Services\Base\BaseServiceInterface;
 interface NotificationServiceInterface extends BaseServiceInterface
 {
     public function getByType($type);
+    public function filter($request);
+    public function deleteMultipleChecked($request);
 }

@@ -310,6 +310,12 @@
                             </li>
                         @endcan
 
+
+                        <li>
+                            <a href="{{ route('admin.notifications.index') }}"
+                                aria-expanded="false">Thông báo</a>
+                        </li>
+
                     </ul>
                 </li>
             @endif

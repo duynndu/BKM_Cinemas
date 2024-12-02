@@ -15,4 +15,5 @@ interface PostServiceInterface extends BaseServiceInterface
     public function changeActive($request);
     public function destroyImage($id);
     public function deleteMultipleChecked($request);
+    public function sendPromotion($id);
 }

@@ -7,9 +7,13 @@ use App\Repositories\Client\Bookings\Interfaces\BookingInterface;
 use App\Repositories\Client\Bookings\Repositories\BookingRepository;
 use App\Repositories\Client\Movies\Interfaces\MoviesRepositoryInterface;
 use App\Repositories\Client\Movies\Repositories\MoviesRepository;
+use App\Repositories\Client\Views\Interfaces\ViewInterface;
+use App\Repositories\Client\Views\Repositories\ViewRepository;
 use App\Services\Admin\Orders\Services\OrderService;
 use App\Services\Client\Bookings\Interfaces\BookingServiceInterface;
 use App\Services\Client\Bookings\Services\BookingService;
+use App\Services\Client\Views\Interfaces\ViewServiceInterface;
+use App\Services\Client\Views\Services\ViewDataService;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -251,6 +255,8 @@ class AppServiceProvider extends ServiceProvider
         // End admin
 
         // Client
+        $this->app->bind(ViewInterface                      ::class, ViewRepository               ::class);
+        $this->app->bind(ViewServiceInterface               ::class, ViewDataService              ::class);
         $this->app->bind(RegisterInterface                  ::class, RegisterRepository           ::class);
         $this->app->bind(RegisterServiceInterface           ::class, RegisterService              ::class);
         $this->app->bind(ForgotPasswordInterface            ::class, ForgotPasswordRepository     ::class);
@@ -293,7 +299,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Admin
         View::composer('admin.partials.sidebar', GetAllDataComposer::class);
-
+        View::composer('client.partials.*', GetAllDataComposer::class);
         // if (env('APP_ENV') !== 'local') {
         //     URL::forceScheme('https');
         // }

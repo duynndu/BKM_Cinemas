@@ -38,6 +38,12 @@ class HomeService  implements HomeServiceInterface
     {
         return $this->categoryPostRepository->getCategoryPostBySlug($slug);
     }
-    
+    public function emailSubscribe($request){
+        return $this->homeRepository->emailSubscribe($request);
+    }
+
+    public function deleteNotification($id){
+        return $this->homeRepository->deleteNotification($id);
+    }
 
 }
