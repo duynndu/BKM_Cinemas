@@ -112,8 +112,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="subscribe-msg" class="alert alert-danger hidden">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <p></p>
+                        <button type="button" class="close emailSubscribe" data-dismiss="alert" aria-hidden="true">&times;</button>
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
