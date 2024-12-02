@@ -34,13 +34,16 @@ class PostRepository implements PostInterface
     {
         $post = $this->post
                 ->where('slug', $slug)
-                ->whereHas('categories', function ($query) use ($slugCate) {
-                    $query->where('slug', $slugCate);
-                })
                 ->where('active', 1)
+                ->whereHas('postCategories', function ($query) use ($slugCate) {
+                    $query->whereNull('deleted_at') // Kiểm tra deleted_at trong bảng trung gian
+                          ->whereHas('category', function ($subQuery) use ($slugCate) {
+                              $subQuery->where('slug', $slugCate); // Kiểm tra slug của category
+                          });
+                })
                 ->select('name', 'slug', 'description', 'content', 'avatar', 'created_at')
                 ->first();
-
+    
         return $post;
     }
 
@@ -48,23 +51,23 @@ class PostRepository implements PostInterface
     public function getPostRelated($slugCate, $slug)
     {
         return  $this->post
-                ->where('slug', '!=', $slug)
-                ->whereHas('categories', function ($query) use ($slugCate) {
-                    $query->where('slug', $slugCate);
-                })
-                ->select("name", "slug", "description", "content", "avatar", "created_at")
-                ->limit(self::LIMIT)
-                ->get();
+            ->where('slug', '!=', $slug)
+            ->whereHas('categories', function ($query) use ($slugCate) {
+                $query->where('slug', $slugCate);
+            })
+            ->select("name", "slug", "description", "content", "avatar", "created_at")
+            ->limit(self::LIMIT)
+            ->get();
     }
 
     public function getPostByCategory($slug)
     {
         return $this->post
-                ->whereHas('categories', function ($query) use ($slug) {
-                    $query->where('slug', $slug);
-                })
-                ->where('active', 1)
-                ->select('name', 'slug', 'description', 'content', 'avatar', 'created_at')
-                ->get();
+            ->whereHas('categories', function ($query) use ($slug) {
+                $query->where('slug', $slug);
+            })
+            ->where('active', 1)
+            ->select('name', 'slug', 'description', 'content', 'avatar', 'created_at')
+            ->get();
     }
 }

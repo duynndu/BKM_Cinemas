@@ -122,7 +122,7 @@ class FoodTypeController extends Controller
 
             return back()->with([
                 'status_failed' => 'Đã xảy ra lỗi khi xóa'
-            ]);
+            ], 500);
         }
     }
 

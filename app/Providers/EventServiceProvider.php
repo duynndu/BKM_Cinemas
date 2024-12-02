@@ -3,14 +3,18 @@
 namespace App\Providers;
 
 use App\Events\Admin\GiftVoucherEvent;
+use App\Events\Admin\NotificationPostEvent;
 use App\Events\Client\DepositSucceeded;
+use App\Events\Client\EmailSubscribeEvent;
 use App\Events\Client\ForgotPasswordRequested;
 use App\Events\Client\PasswordChanged;
 use App\Events\Client\UserRegistered;
 use App\Events\SendMailBookedEvent;
 use App\Listeners\Admin\GiftVoucherListener;
 use App\Events\OrderRefundStatusUpdated;
+use App\Listeners\Admin\NotificationPostListener;
 use App\Listeners\Admin\SendMailOrderRefund;
+use App\Listeners\Client\EmailSubscibeListener;
 use App\Listeners\Client\SendDepositSuccessEmail;
 use App\Listeners\Client\SendPasswordChangeNotification;
 use App\Listeners\Client\SendPasswordResetEmail;
@@ -44,8 +48,14 @@ class EventServiceProvider extends ServiceProvider
         SendMailBookedEvent::class => [
             SendMailBookedListener::class
         ],
+        EmailSubscribeEvent::class => [
+            EmailSubscibeListener::class
+        ],
         GiftVoucherEvent::class=>[
             GiftVoucherListener::class
+        ],
+        NotificationPostEvent::class=>[
+            NotificationPostListener::class
         ],
         OrderRefundStatusUpdated::class => [
             SendMailOrderRefund::class

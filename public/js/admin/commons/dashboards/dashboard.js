@@ -3,6 +3,7 @@ $(document).ready(function() {
         const $cityId = $(this).val();
         const url = $(this).data('url');
         let areaId = $('#area_id');
+        let cinemaId = $('#cinema_id');
 
         $.ajax({
             url: url,
@@ -14,6 +15,8 @@ $(document).ready(function() {
             success: function(response) {
                 areaId.empty();
                 areaId.append('<option value="">-- Chọn khu vực --</option>');
+                cinemaId.empty();
+                cinemaId.append('<option value="">-- Chọn rạp phim --</option>');
 
                 response.areas.forEach(area => {
                     areaId.append(`<option value="${area.id}">${area.name}</option>`);

@@ -26,7 +26,8 @@ class OrderRepository extends BaseRepository implements OrderInterface
                     'user:id,name',
                     'cinema:id,name',
                     'movie:id,title',
-                    'showtime:id,start_time'
+                    'showtime:id,start_time,room_id',
+                    'showtime.room:id,room_name',
                 ])
                 ->orderBy('id', 'desc')
                 ->get();
@@ -43,8 +44,9 @@ class OrderRepository extends BaseRepository implements OrderInterface
         ->with([
             'user:id,name',
             'cinema:id,name',
-            'movie:id,title',
-            'showtime:id,start_time'
+            'movie:id,title,image',
+            'showtime:id,start_time,room_id',
+            'showtime.room:id,room_name',
         ]);
         $data = $this->filterByCode($data, $request);
         $data = $this->filterByStatus($data, $request);
@@ -61,7 +63,8 @@ class OrderRepository extends BaseRepository implements OrderInterface
         ]);
     }
 
-    public function changeGetTickets($id){
+    public function changeGetTickets($id)
+    {
         $order = $this->model->find($id);
         if (
             $order->status == 'completed'
@@ -79,12 +82,26 @@ class OrderRepository extends BaseRepository implements OrderInterface
 
             if (isset($rateMap[$memberLevel])) {
                 $point = $user->points;
-                $point += round($order->total_price * $rateMap[$memberLevel]);
+                $calculatedPoints = $order->total_price * $rateMap[$memberLevel];
 
-                $user->update([
-                    'points' => $point,
-                ]);
+                $fractionalPart = $calculatedPoints - floor($calculatedPoints);
+                if ($fractionalPart >= 0.5) {
+                    $calculatedPoints = ceil($calculatedPoints); // Làm tròn lên
+                } elseif ($fractionalPart >= 0.1 && $fractionalPart < 0.5) {
+                    $calculatedPoints = floor($calculatedPoints); // Làm tròn xuống
+                } else {
+                    $calculatedPoints = 0; // Không cộng điểm nếu nhỏ hơn 0.1
+                }
+
+                // Cộng điểm vào tài khoản nếu điểm được làm tròn > 0
+                if ($calculatedPoints > 0) {
+                    $point += $calculatedPoints;
+                    $user->update([
+                        'points' => $point,
+                    ]);
+                }
             }
+
             $order->get_tickets = 1;
             $order->save();
 
@@ -92,6 +109,7 @@ class OrderRepository extends BaseRepository implements OrderInterface
         }
         return false;
     }
+
 
     private function filterByCode($query, $request)
     {

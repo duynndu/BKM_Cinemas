@@ -197,12 +197,29 @@
                                 <a href="{{ route('admin.seat-types.index') }}" aria-expanded="false">Loại ghế</a>
                             </li>
                         @endif
-
                     </ul>
                 </li>
             @endif
 
-            @if (auth()->user()->can('viewAny', App\Models\Voucher::class) ||
+            <li>
+                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">card_giftcard</i>
+                    <span class="nav-text">Sự kiện</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{{ route('admin.redeemRewards.index') }}" aria-expanded="false">Đổi thưởng</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.vouchers.index') }}" aria-expanded="false">Voucher</a>
+                    </li>
+                </ul>
+            </li>
+
+            {{-- @if (auth()->user()->can('viewAny', App\Models\Voucher::class) ||
                     auth()->user()->can('viewAny', App\Models\Reward::class))
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
@@ -223,7 +240,7 @@
                         @endif
                     </ul>
                 </li>
-            @endif
+            @endif --}}
 
             @if (auth()->user()->can('viewAny', App\Models\Payment::class))
                 <li>
@@ -271,15 +288,15 @@
                                 <a href="{{ route('admin.foods.index') }}" aria-expanded="false">Đồ ăn</a>
                             </li>
                         @endcan
-                        @can('viewAny', App\Models\FoodCombo::class)
-                            <li>
-                                <a href="{{ route('admin.food-combos.index') }}" aria-expanded="false">Combo</a>
-                            </li>
-                        @endcan
                     </ul>
                 </li>
             @endif
-
+            <li>
+                <a class="" href="{{ route('admin.contacts.index') }}" aria-expanded="false">
+                    <i class="material-icons">contacts</i>
+                    <span class="nav-text">Liên hệ</span>
+                </a>
+            </li>
             @if (auth()->user()->can('viewAny', App\Models\User::class) ||
                     auth()->user()->can('viewAny', App\Models\Role::class) ||
                     auth()->user()->can('viewAny', App\Models\Module::class))
@@ -308,10 +325,19 @@
                                     aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>
                             </li>
                         @endcan
+<<<<<<< HEAD
+=======
+
+
+                        <li>
+                            <a href="{{ route('admin.notifications.index') }}"
+                                aria-expanded="false">Thông báo</a>
+                        </li>
+
+>>>>>>> a3dc6c0f37b4384b369d569461373d5269d07e98
                     </ul>
                 </li>
             @endif
-
         </ul>
     </div>
 </div>
