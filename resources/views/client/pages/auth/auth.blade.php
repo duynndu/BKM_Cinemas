@@ -197,7 +197,7 @@
                                                         <label for="birthday">Ngày sinh <span
                                                                 style="color: red;">*</span></label>
                                                         <input id="date_birth" placeholder="-- Ngày Sinh --" type="text"
-                                                            class="form-control datepicker" name="date_birth">
+                                                            class="form-control datepickerRegister" name="date_birth">
                                                         <div class="date_birth_error"></div>
                                                     </div>
 

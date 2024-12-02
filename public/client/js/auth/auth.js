@@ -223,10 +223,28 @@ $(document).ready(function () {
         }
 
         let date_birth = form.find("input[name='date_birth']").val();
+        let currentDate = new Date();
+
+        let dateRegex = /^\d{2}-\d{2}-\d{4}$/;
+
         if (!date_birth) {
             form.find(".date_birth_error").text("Vui lòng nhập ngày sinh.").css("color", "red");
             hasErrors = true;
+        } else if (!dateRegex.test(date_birth)) {
+            form.find(".date_birth_error").text("Định dạng ngày không hợp lệ (dd-mm-yyyy).").css("color", "red");
+            hasErrors = true;
+        } else {
+            let parts = date_birth.split("-");
+            let inputDate = new Date(parts[2], parts[1] - 1, parts[0]); 
+
+            if (inputDate > currentDate) {
+                form.find(".date_birth_error").text("Ngày sinh không được lớn hơn ngày hiện tại.").css("color", "red");
+                hasErrors = true;
+            } else {
+                form.find(".date_birth_error").text("");
+            }
         }
+
 
         let city_id = form.find("select[name='city_id']").val();
         if (!city_id) {
@@ -295,15 +313,11 @@ $(document).ready(function () {
                     Swal.close();
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
-                        $.each(errors, function (key, messages) {
-                            let errorContainer = form.find("." + key + "_error");
-                            if (errorContainer.length) {
-                                errorContainer.text(messages[0]).css("color", "red");
-                            }
-                        });
+                        for (const [key, messages] of Object.entries(errors)) {
+                            form.find(`.${key}_error`).text(messages[0]).css("color", "red");
+                        }
                     } else {
                         Swal.fire({
-                            position: "center",
                             icon: "error",
                             title: "Đã xảy ra lỗi!",
                             text: "Vui lòng thử lại sau.",
@@ -311,7 +325,7 @@ $(document).ready(function () {
                             timer: 2500,
                         });
                     }
-                },
+                }
             });
         }
     });
@@ -366,27 +380,22 @@ $(document).ready(function () {
                 }
                 },
                 error: function (xhr) {
-                // Đóng thông báo đang xử lý
-                Swal.close();
-
-                if (xhr.status === 422) {
-                    let errors = xhr.responseJSON.errors;
-                    $.each(errors, function (key, messages) {
-                        let errorContainer = form.find("." + key + "_error");
-                        if (errorContainer.length) {
-                            errorContainer.html(messages[0]).css("color", "red");
+                    // Đóng thông báo đang xử lý
+                    Swal.close();
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        for (const [key, messages] of Object.entries(errors)) {
+                            form.find(`.${key}_error`).text(messages[0]).css("color", "red");
                         }
-                    });
-                } else {
-                    Swal.fire({
-                        position: "center",
-                        icon: "error",
-                        title: "Đã xảy ra lỗi!",
-                        text: "Vui lòng thử lại sau.",
-                        showConfirmButton: false,
-                        timer: 2500,
-                    });
-                }
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Đã xảy ra lỗi!",
+                            text: "Vui lòng thử lại sau.",
+                            showConfirmButton: false,
+                            timer: 2500,
+                        });
+                    }
                 },
             });
         }
@@ -433,21 +442,18 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 if (xhr.status === 422) {
-                let errors = xhr.responseJSON.errors;
-                $.each(errors, function (key, messages) {
-                    let errorContainer = form.find("." + key + "_error");
-                    if (errorContainer.length) {
-                    errorContainer.html(messages[0]).css("color", "red");
+                    let errors = xhr.responseJSON.errors;
+                    for (const [key, messages] of Object.entries(errors)) {
+                        form.find(`.${key}_error`).text(messages[0]).css("color", "red");
                     }
-                });
                 } else {
-                Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: `${xhr.responseJSON.message}`,
-                    showConfirmButton: false,
-                    timer: 2500,
-                });
+                    Swal.fire({
+                        icon: "error",
+                        title: "Đã xảy ra lỗi!",
+                        text: "Vui lòng thử lại sau.",
+                        showConfirmButton: false,
+                        timer: 2500,
+                    });
                 }
             },
         });
@@ -551,17 +557,14 @@ $(document).ready(function () {
                     Swal.close();
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
-                        $.each(errors, function (key, messages) {
-                            let errorContainer = form.find("." + key + "_error");
-                            if (errorContainer.length) {
-                                errorContainer.html(messages[0]).css("color", "red");
-                            }
-                        });
+                        for (const [key, messages] of Object.entries(errors)) {
+                            form.find(`.${key}_error`).text(messages[0]).css("color", "red");
+                        }
                     } else {
                         Swal.fire({
-                            position: "center",
                             icon: "error",
-                            title: `${xhr.responseJSON.message}`,
+                            title: "Đã xảy ra lỗi!",
+                            text: "Vui lòng thử lại sau.",
                             showConfirmButton: false,
                             timer: 2500,
                         });
@@ -601,17 +604,14 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 if (xhr.status === 422) {
                     let errors = xhr.responseJSON.errors;
-                    $.each(errors, function (key, messages) {
-                        let errorContainer = form.find("." + key + "_error");
-                        if (errorContainer.length) {
-                            errorContainer.html(messages[0]).css("color", "red");
-                        }
-                    });
+                    for (const [key, messages] of Object.entries(errors)) {
+                        form.find(`.${key}_error`).text(messages[0]).css("color", "red");
+                    }
                 } else {
                     Swal.fire({
-                        position: "center",
                         icon: "error",
-                        title: `${xhr.responseJSON.message}`,
+                        title: "Đã xảy ra lỗi!",
+                        text: "Vui lòng thử lại sau.",
                         showConfirmButton: false,
                         timer: 2500,
                     });

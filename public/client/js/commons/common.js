@@ -551,8 +551,8 @@ $(function () {
         $('.menu li').find('a[href="' + targetTab + '"]').parent().addClass('active');
     });
 
-    $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy', // Định dạng ngày
+    $('.datepickerRegister').datepicker({
+        format: 'dd-mm-yyyy', // Định dạng ngày
         autoclose: true,      // Tự động đóng khi chọn ngày
         todayHighlight: true   // Nổi bật ngày hôm nay
     });
