@@ -36,7 +36,7 @@
                             <div class="card-body">
                                 <div class="courses-bx">
                                     <div class="dlab-media overlay-main position-relative" style="height: 300px;">
-                                        <img style="height: 100%; object-fit: cover" src="{{ $role->image ?? '#' }}" class="w-100 rounded" alt="">
+                                        <img style="height: 100%; object-fit: cover" src="{{ $role->image ?? asset('images/no-img-avatar.png') }}" class="w-100 rounded" alt="">
                                         @can('view', App\Models\Role::class)
                                             <div class="overlay-bx">
                                                 <div class="overlay-icon">
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row d-flex justify-content-center align-items-center">
-                                        <img src="{{ $role->image ?? '#' }}" style="width: 250px;" alt="">
+                                        <img src="{{ $role->image ?? asset('images/no-img-avatar.png') }}" style="width: 250px;" alt="">
                                     </div>
                                     <h6 class="text-center mt-4">{{ __('language.admin.members.roles.information') }}</h6>
                                     <div class="row mt-3">

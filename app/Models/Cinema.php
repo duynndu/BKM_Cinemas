@@ -39,4 +39,9 @@ class Cinema extends Model
     {
         return $this->hasMany(Showtime::class);
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

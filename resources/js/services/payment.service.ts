@@ -12,6 +12,7 @@ class Payment extends BaseService {
   async processDeposit(data: {
     payment: typeof PAYMENT[keyof typeof PAYMENT]
     booking_id: string;
+    voucher_id?: string;
   }): Promise<processDeposit> {
     const response = await apiBase.post<processDeposit>('/payments/processDeposit', data);
     return response.data;

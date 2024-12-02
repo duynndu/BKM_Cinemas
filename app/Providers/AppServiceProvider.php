@@ -133,6 +133,8 @@ use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use App\Repositories\Admin\CategoryPosts\Repositories\CategoryPostRepository;
 use App\Repositories\Admin\Contacts\Repositories\ContactRepository;
 use App\Repositories\Admin\Contacts\Interfaces\ContactInterface;
+use App\Repositories\Admin\Dashboards\Interfaces\DashboardInterface;
+use App\Repositories\Admin\Dashboards\Repositories\DashboardRepository;
 use App\Repositories\Admin\Notifications\Interfaces\NotificationInterface;
 use App\Repositories\Admin\Notifications\Repositories\NotificationRepository;
 use App\Repositories\Admin\Orders\Interfaces\OrderInterface;
@@ -157,8 +159,12 @@ use App\Repositories\Client\Systems\Interfaces\SystemInterface as InterfacesSyst
 use App\Repositories\Client\Systems\Repositories\SystemRepository as RepositoriesSystemRepository;
 use App\Services\Admin\Contacts\Interfaces\ContactServiceInterface;
 use App\Services\Admin\Contacts\Services\ContactService;
+use App\Repositories\Client\Rewards\Interfaces\RewardInterface as ClientRewardInterface;
+use App\Repositories\Client\Rewards\Repositories\RewardRepository as ClientRewardRepository;
 use App\Services\Admin\Notifications\Interfaces\NotificationServiceInterface;
 use App\Services\Admin\Notifications\Services\NotificationService;
+use App\Services\Admin\Dashboards\Interfaces\DashboardServiceInterface;
+use App\Services\Admin\Dashboards\Services\DashboardService;
 use App\Services\Admin\Orders\Interfaces\OrderServiceInterface;
 use App\Services\Admin\Rewards\Services\RewardService;
 use App\Services\Admin\Rewards\Interfaces\RewardServiceInterface;
@@ -172,6 +178,9 @@ use App\Services\Client\Movies\Services\MovieService as ServicesMovieService;
 use App\Services\Client\Movies\Interfaces\MovieServiceInterface as InterfacesMovieServiceInterface;
 use App\Services\Client\Systems\Interfaces\SystemServiceInterface as InterfacesSystemServiceInterface;
 use App\Services\Client\Systems\Services\SystemService as ServicesSystemService;
+use App\Services\Client\Rewards\Interfaces\RewardServiceInterface as ClientRewardServiceInterface;
+use App\Services\Client\Rewards\Services\RewardService as ClientRewardService;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -181,6 +190,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Admin
+        $this->app->bind(DashboardInterface          ::class, DashboardRepository   ::class);
+        $this->app->bind(DashboardServiceInterface   ::class, DashboardService      ::class);
         $this->app->bind(ActorInterface              ::class, ActorRepository       ::class);
         $this->app->bind(ActorServiceInterface       ::class, ActorService          ::class);
         $this->app->bind(RewardInterface             ::class, RewardRepository      ::class);
@@ -267,7 +278,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ClientUserServiceInterface         ::class, ClientUserService            ::class);
         $this->app->bind(BookingInterface                   ::class, BookingRepository            ::class);
         $this->app->bind(BookingServiceInterface            ::class, BookingService               ::class);
-
+        $this->app->bind(ClientRewardInterface              ::class, ClientRewardRepository       ::class);
+        $this->app->bind(RewardServiceInterface             ::class, RewardService                ::class);
+        $this->app->bind(ClientRewardServiceInterface       ::class, ClientRewardService          ::class);
 
         // End client
     }

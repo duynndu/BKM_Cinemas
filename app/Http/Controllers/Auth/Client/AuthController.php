@@ -15,6 +15,7 @@ use App\Http\Requests\Auth\Client\UpdateProfileRequest;
 use App\Models\Transaction;
 use App\Repositories\Auth\Client\ChangePasswords\Interfaces\ChangePasswordInterface;
 use App\Repositories\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordInterface;
+use App\Services\Admin\Rewards\Interfaces\RewardServiceInterface;
 use App\Services\Auth\Client\Registers\Interfaces\RegisterServiceInterface;
 use App\Services\Client\Bookings\Interfaces\BookingServiceInterface;
 use App\Services\Client\Cities\Interfaces\CityServiceInterface;
@@ -39,7 +40,11 @@ class AuthController extends Controller
     protected $changePassword;
 
     protected $transactionService;
+
     protected $userService;
+
+    protected $rewardService;
+
     protected $bookingService;
 
     public function __construct(
@@ -49,6 +54,7 @@ class AuthController extends Controller
         ChangePasswordInterface         $changePassword,
         TransactionServiceInterface     $transactionService,
         UserServiceInterface            $userService,
+        RewardServiceInterface          $rewardService,
         BookingServiceInterface         $bookingService
     ) {
         $this->cityService = $cityService;
@@ -57,6 +63,7 @@ class AuthController extends Controller
         $this->changePassword = $changePassword;
         $this->transactionService = $transactionService;
         $this->userService = $userService;
+        $this->rewardService = $rewardService;
         $this->bookingService = $bookingService;
     }
 
@@ -71,6 +78,8 @@ class AuthController extends Controller
             $data['transactions'] = $this->transactionService->getTransactionByUser($userId);
 
             $data['tickets'] = $this->bookingService->getTicketsByUserId($userId, $date);
+
+            $data['rewards'] = $this->rewardService->getAll();
 
             if ($request->ajax()) {
                 if ($data['tickets']->isEmpty()) {

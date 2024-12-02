@@ -27,7 +27,14 @@ class CinemaRepository extends BaseRepository implements CinemaInterface
     }
 
     public function getAllActive(){
-        return $this->model->select('id', 'name', 'city_id')->where('active', 1)->get();
+        return $this->model->select('id', 'name', 'area_id')->where('active', 1)->get();
+    }
+
+    public function getCinemaByArea($area_id){
+        return $this->model->select('id', 'name')
+            ->where('active', 1)
+            ->where('area_id', $area_id)
+            ->get();
     }
 
     public function deleteMultiple(array $ids)

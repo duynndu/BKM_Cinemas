@@ -16,6 +16,10 @@ class CinemaService extends BaseService implements CinemaServiceInterface
         return $this->repository->filter($request);
     }
 
+    public function getCinemaByArea($area_id){
+        return $this->repository->getCinemaByArea($area_id);
+    }
+
     public function create(&$data)
     {
         if (isset($data['image']) && $data['image']) {

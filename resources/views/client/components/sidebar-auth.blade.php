@@ -26,9 +26,6 @@
             <a data-toggle="tab" href="#uudaichung" aria-expanded="false">Ưu đãi chung</a>
         </li>
         <li class="">
-            <a data-toggle="tab" href="#dkdoithuong" aria-expanded="false">Điều kiện đổi thưởng</a>
-        </li>
-        <li class="">
             <a data-toggle="tab" href="#vedadat" aria-expanded="false">Vé đã đặt</a>
         </li>
         <li class="">

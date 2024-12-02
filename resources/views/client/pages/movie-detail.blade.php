@@ -64,7 +64,7 @@
                         <span class="age_restricted_label" x-text="movie?.age"></span>
                     </span>
                 </p>
-                <div class="age_restricted"><span>T18</span></div>
+                <div class="age_restricted"><span x-text="movie?.age"></span></div>
                 <div class="group-buton">
                     <a href="#showtime" id="dat-ve"><img src="https://touchcinema.com/images/icons/icon-dat-ve.png"
                             alt="Đặt vé"> Đặt vé</a>
@@ -222,7 +222,7 @@
 
             <!-- Movie Grid -->
             <div class="tw-h-[350px] ">
-                <div style="margin-top: 12px" class="modal-body tw-pb-14 tw-overflow-y-auto tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 tw-gap-4 tw-p-8">
+                <div style="margin-top: 12px; overflow-y: auto; max-height: 369px;" class="modal-body tw-pb-14 tw-overflow-y-auto tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 tw-gap-4 tw-p-8">
                     <template x-for="city in cities.filter(city => city.name.toLowerCase().includes(searchCity.toLowerCase()) || searchCity == '')" :key="city.id">
                         <div @click="choseCity(city)" :class="{
                             'button-location': true,
