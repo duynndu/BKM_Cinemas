@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Services\Client\Abouts\Interfaces\AboutServiceInterface;
 use App\Services\Client\Movies\Interfaces\MovieServiceInterface;
+use App\Services\Client\Systems\Interfaces\SystemServiceInterface;
 
 class AboutController extends Controller
 {
@@ -12,7 +12,7 @@ class AboutController extends Controller
     private $movieService;
 
     public function __construct(
-        AboutServiceInterface $aboutService,
+        SystemServiceInterface $aboutService,
         MovieServiceInterface $movieService
     ){
         $this->aboutService = $aboutService;

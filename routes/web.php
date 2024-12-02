@@ -16,6 +16,7 @@ use App\Http\Controllers\Client\MovieDetailController;
 use App\Http\Controllers\Auth\Client\FacebookController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Client\AboutController;
+use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\PostController;
 use App\Http\Controllers\Client\PostDetailController;
 use App\Models\Showtime;
@@ -165,6 +166,12 @@ Route::get('/dat-ve/thanh-toan', function () {
     return view('client.pages.payment-verification-step2');
 });
 
+Route::get('/lien-he', [ContactController::class, 'index'])->name('contact');
+Route::post('/submit-contact', [ContactController::class, 'submit'])
+    ->middleware('throttle:1,2')
+    ->name('submit.contact');
+
 Route::get('/{slug}', [PostController::class, 'list'])->name('post.list');
 
 Route::get('/{cate_slug}/{slug}', [PostController::class, 'detail'])->name('post.detail');
+

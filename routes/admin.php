@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Blocks\BlockTypeController;
 use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\CinemaController;
 use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Events\VoucherController;
 use App\Http\Controllers\Admin\Events\RewardController;
@@ -872,21 +873,27 @@ Route::prefix('admin')
                 ->name('orders.')
                 ->group(function () {
                     Route::get('/', 'index')
-                        ->name('index')
-                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                        ->name('index');
                     Route::get('/{id}/detail', 'detail')
-                        ->name('detail')
-                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                        ->name('detail');
                     Route::post('/{id}/change-get-ticket', 'changeGetTickets')
-                        ->name('changeGetTickets')
-                        ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                        ->name('changeGetTickets');
                 });
-                Route::prefix('notifications')
+            Route::prefix('notifications')
                 ->controller(NotificationController::class)
                 ->name('notifications.')
                 ->group(function () {
                     Route::get('/get-by-type', 'getByType')
                         ->name('getByType');
+                });
+            Route::prefix('contacts')
+                ->controller(ContactController::class)
+                ->name('contacts.')
+                ->group(function () {
+                    Route::get('/', 'index')
+                        ->name('index');
+                    Route::delete('/{id}/delete', 'destroy')
+                        ->name('delete');
                 });
         });
     });
