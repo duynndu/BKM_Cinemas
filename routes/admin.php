@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Events\VoucherController;
 use App\Http\Controllers\Admin\Events\RewardController;
+use App\Http\Controllers\Admin\Events\RedeemRewardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\Foods\FoodComboController;
 use App\Http\Controllers\Admin\Foods\FoodController;
@@ -828,6 +829,16 @@ Route::prefix('admin')
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                             ->name('deleteItemMultipleChecked');
                     });
+
+                Route::prefix('redeem-rewards')
+                    ->controller(RedeemRewardController::class)
+                    ->name('redeemRewards.')
+                    ->group(function () {
+                        Route::get('/', 'index')->name('index');
+
+                        Route::post('/change-status', 'changeStatus')->name('changeStatus');
+                    });
+
 
                 Route::prefix('rewards')
                     ->controller(RewardController::class)

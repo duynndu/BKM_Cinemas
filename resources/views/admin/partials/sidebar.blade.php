@@ -198,12 +198,29 @@
                                 <a href="{{ route('admin.seat-types.index') }}" aria-expanded="false">Loại ghế</a>
                             </li>
                         @endif
-
                     </ul>
                 </li>
             @endif
 
-            @if (auth()->user()->can('viewAny', App\Models\Voucher::class) ||
+            <li>
+                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                    <i class="material-icons">card_giftcard</i>
+                    <span class="nav-text">Sự kiện</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{{ route('admin.redeemRewards.index') }}" aria-expanded="false">Đổi thưởng</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.vouchers.index') }}" aria-expanded="false">Voucher</a>
+                    </li>
+                </ul>
+            </li>
+
+            {{-- @if (auth()->user()->can('viewAny', App\Models\Voucher::class) ||
                     auth()->user()->can('viewAny', App\Models\Reward::class))
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
@@ -224,7 +241,7 @@
                         @endif
                     </ul>
                 </li>
-            @endif
+            @endif --}}
 
             @if (auth()->user()->can('viewAny', App\Models\Payment::class))
                 <li>

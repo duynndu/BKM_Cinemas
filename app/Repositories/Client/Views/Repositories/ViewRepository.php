@@ -17,13 +17,13 @@ class ViewRepository implements ViewInterface
 
     public function getNotifications()
     {
-        $data['users'] = [];
-        $data['all'] = [];
-        if(!empty(Auth::user()->id)){
-            $data['users'] = $this->notifications->where('user_id',Auth::user()->id)
-            ->where('type','promotion')->get();
+        $data['users'] = collect([]);
+        $data['all'] = collect([]);
+        if (!empty(Auth::user()->id)) {
+            $data['users'] = $this->notifications->where('user_id', Auth::user()->id)
+                ->where('type', 'promotion')->get();
         }
-        $data['all'] = $this->notifications->where('type','all')->get();
+        $data['all'] = $this->notifications->where('type', 'all')->get();
         return $data;
     }
 }

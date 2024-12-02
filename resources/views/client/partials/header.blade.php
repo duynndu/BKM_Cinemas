@@ -208,10 +208,8 @@
                                         <h3>Thông báo</h3>
                                         <div class="list-notifications">
                                             <ul>
-                                                @if (
-                                                    (isset($notifications['users']) && $notifications['users']->count() > 0) ||
-                                                        (isset($notifications['all']) && $notifications['all']->count() > 0))
-                                                    @if (isset($notifications['users']) && $notifications['users']->count() > 0)
+                                                @if (($notifications['users']->isNotEmpty()) || ($notifications['all']->isNotEmpty()))
+                                                    @if ($notifications['users']->isNotEmpty())
                                                         @foreach ($notifications['users'] as $item)
                                                             <li style="display: flex;justify-content: space-between; align-items:center"
                                                                 class="notification-item">
@@ -231,7 +229,7 @@
                                                             </li>
                                                         @endforeach
                                                     @endif
-                                                    @if (isset($notifications['all']) && $notifications['all']->count() > 0)
+                                                    @if ($notifications['all']->isNotEmpty())
                                                         @foreach ($notifications['all'] as $item)
                                                             <li>
                                                                 <a href="#">

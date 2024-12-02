@@ -19,10 +19,13 @@ class BookingRepository extends BaseRepository
             'cinema',
             'movie',
             'showtime',
+            'showtime.room',
             'seats',
             'seatsBooking.seat',
         ])->where('user_id', $userId)
             ->where('code', '!=', null)
+            ->where('status', '!=', null)
+            ->where('payment_status', 'completed')
             ->orderBy('id', 'DESC');
 
         if ($date) {
