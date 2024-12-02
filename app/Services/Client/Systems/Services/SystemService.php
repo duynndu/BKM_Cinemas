@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Client\Abouts\Services;
+namespace App\Services\Client\Systems\Services;
 
 use App\Repositories\Client\Systems\Interfaces\SystemInterface;
-use App\Services\Client\Abouts\Interfaces\AboutServiceInterface;
+use App\Services\Client\Systems\Interfaces\SystemServiceInterface;
 
-class AboutService implements AboutServiceInterface
+class SystemService implements SystemServiceInterface
 {
     private $systemRepository;
     public function __construct(

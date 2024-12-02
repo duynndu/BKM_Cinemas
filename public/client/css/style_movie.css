@@ -10846,7 +10846,7 @@ label:hover:before {
     width: 100%;
     height: 0;
     padding-top: 45%;
-    background-image: url(images/contact6b01.jpg);
+    background-image: url(images/cinema-image.jpg);
     background-size: 100% 100%
 }
 
@@ -10906,8 +10906,7 @@ label:hover:before {
 
 .page-contact>.container .tabs .active {
     background-color: #eb1689;
-    height: 60px;
-    padding-top: 22px
+    margin-top: 22px
 }
 
 .page-contact>.container .form {

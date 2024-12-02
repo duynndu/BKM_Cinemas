@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Client\Abouts\Interfaces;
+namespace App\Services\Client\Systems\Interfaces;
 
-interface AboutServiceInterface{
+interface SystemServiceInterface{
     public function getSytemBySlug($slug);
     public function getSystemByType($type);
 }

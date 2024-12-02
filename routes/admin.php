@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Blocks\BlockTypeController;
 use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\CinemaController;
 use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Events\VoucherController;
 use App\Http\Controllers\Admin\Events\RewardController;
@@ -905,7 +906,11 @@ Route::prefix('admin')
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                             ->name('deleteItemMultipleChecked')
                             ->middleware('authorizeAction:delete,App\Models\Cinema');
+                        Route::get('/get-areas-by-cityId', 'ajaxGetAreaByCityId')
+                            ->name('ajaxGetAreaByCityId')
+                            ->middleware('authorizeAction:viewAny,App\Models\Cinema');
                     });
+
                 Route::prefix('orders')
                     ->controller(OrderController::class)
                     ->name('orders.')
@@ -941,6 +946,18 @@ Route::prefix('admin')
                         Route::get('/get-by-type', 'getByType')
                             ->name('getByType');
                        
+                        Route::get('/get-by-type', 'getByType')
+                            ->name('getByType');
+                    });
+
+                Route::prefix('contacts')
+                    ->controller(ContactController::class)
+                    ->name('contacts.')
+                    ->group(function () {
+                        Route::get('/', 'index')
+                            ->name('index');
+                        Route::delete('/{id}/delete', 'destroy')
+                            ->name('delete');
                     });
             });
     });

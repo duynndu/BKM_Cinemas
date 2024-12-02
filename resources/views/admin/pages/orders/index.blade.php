@@ -173,7 +173,7 @@
                                                             {{ $order->cinema->name }}
                                                         </td>
                                                         <td>
-                                                            {{ $order->user->name }}
+                                                            {{ $order->user->name ?? $order->user->email }}
                                                         </td>
                                                         <td>
                                                             @if ($order->status == 'cancelled' || $order->status == null || $order->status == 'completed' || $order->status == 'rejected')
@@ -182,7 +182,7 @@
                                                                         @case('completed')
                                                                             Hoàn thành
                                                                         @break
-
+                                                                    
                                                                         @case('rejected')
                                                                             Từ chối hủy
                                                                         @break
@@ -258,8 +258,9 @@
                                                         </td>
                                                         <td>
                                                             @if (
-                                                                $order->refund_status == 'completed' ||
+                                                                $order->refund_status != null ||
                                                                     $order->status == 'cancelled' ||
+                                                                    $order->payment_status != 'completed' ||
                                                                     $order->status == 'waiting_for_cancellation' ||
                                                                     $order->get_tickets == 1)
                                                                 <b id="get_tickets-{{ $order->id }}">
