@@ -197,8 +197,6 @@
                                                                     class="form-control changeOrder" style="width: 67px;">
                                                             </td>
                                                         @endcan
-
-
                                                         <td>
                                                             <div
                                                                 style="padding-right: 20px; display: flex; justify-content: end">

@@ -8,4 +8,8 @@ interface RewardInterface extends RepositoryInterface
 {
     public function deleteMultiple(array $ids);
     public function filter($request);
+
+    public function getUserRewards();
+
+    public function updateRewardByCode($code);
 }

@@ -4,6 +4,7 @@
 }
 
 .btn-login {
+font-family: sans-serif;
   position: relative;
   display: inline-block;
   padding: 10px 20px;
@@ -1219,6 +1220,8 @@ img.rank_vvip {
   width: 100%;
 }
 
+
+
 @media screen and (min-width: 850px) {
     .col:first-child .col-inner {
         margin-left: auto;
@@ -1421,6 +1424,20 @@ img {
   max-width: 1322.5px;
 }
 
+@media screen and (min-width: 850px) {
+  .large-3 {
+      flex-basis: 25%;
+      max-width: 25%;
+  }
+}
+
+@media screen and (min-width: 550px) {
+  .medium-3 {
+      flex-basis: 25%;
+      max-width: 25%;
+  }
+}
+
 .container .row:not(.row-collapse),
 .lightbox-content .row:not(.row-collapse),
 .row .gallery,
@@ -1495,4 +1512,8 @@ img {
 
 .flex-column {
   flex-direction: column !important;
+}
+
+.reward-options .reward-image img {
+    width: 100px;
 }

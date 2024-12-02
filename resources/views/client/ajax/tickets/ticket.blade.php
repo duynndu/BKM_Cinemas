@@ -39,7 +39,7 @@
                                                         <div class="col content-col medium-12 small-12 large-12">
                                                             <div class="col-inner">
                                                                 <div
-                                                                    class="row align-middle row-divided order-details-row row-collapse">
+                                                                    class="row d-flex align-middle row-divided order-details-row row-collapse">
                                                                     <div class="col medium-3 small-12 large-3">
                                                                         <div class="col-inner">
                                                                             <div class="qrcode-image text-center">
@@ -93,7 +93,7 @@
                                                                                         </ul>
                                                                                     </div>
                                                                                     <div
-                                                                                        class="row row-small ticket-row row-divided">
+                                                                                        class="row d-flex row-small ticket-row row-divided">
                                                                                         <div
                                                                                             class="col medium-12 small-12 large-3">
                                                                                             <div
@@ -119,8 +119,7 @@
                                                                                             <div
                                                                                                 class="col-inner text-center">
                                                                                                 <p>Phòng chiếu</p>
-                                                                                                <div>Vui lòng liên hệ
-                                                                                                    rạp.</div>
+                                                                                                <div>{{ $ticket->showtime->room->room_name }}</div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>

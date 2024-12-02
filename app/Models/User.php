@@ -92,10 +92,23 @@ class User extends Authenticatable
         ]);
     }
 
+    // public function hasPermission($permissionValue)
+    // {
+    //     return $this->role->permissions->contains('value', $permissionValue);
+    // }
+
     public function hasPermission($permissionValue)
     {
+        // Kiểm tra nếu role không tồn tại hoặc không có permissions
+        if (!$this->role || !$this->role->permissions) {
+            return false; // Không có quyền
+        }
+
+        // Kiểm tra quyền dựa trên giá trị
         return $this->role->permissions->contains('value', $permissionValue);
     }
+
+
     // Quan hệ many-to-many với Voucher thông qua bảng trung gian `user_vouchers`
     public function vouchers()
     {
@@ -108,5 +121,34 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'user_vouchers')
             ->withTimestamps();
+    }
+
+    public function rewards()
+    {
+        return $this->belongsToMany(Reward::class, 'user_rewards', 'user_id', 'reward_id')
+            ->withPivot('code', 'points_spent', 'quantity', 'status', 'used_at')
+            ->withTimestamps();
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'city_id');
+    }
+
+    public function cinemas()
+    {
+        return $this->hasManyThrough(
+            Cinema::class,
+            Area::class,
+            'id',
+            'area_id',
+            'city_id',
+            'id'
+        );
     }
 }

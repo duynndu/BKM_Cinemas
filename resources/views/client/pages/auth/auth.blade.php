@@ -394,8 +394,7 @@
                                                 </span>
                                             </p>
                                             <p>Điểm tích lũy: <span
-                                                    class="point">{{ !empty(Auth::user()->points) ? Auth::user()->points : 0 }}</span>
-                                                điểm
+                                                    class="point reward-tab-thanhvien">{{ !empty(Auth::user()->points) ? number_format(Auth::user()->points, 0, ',', '.') : 0 }} điểm</span>
                                                 <a href="javascript:;" data-modal="#modalPoints" title="Xem quy tắc đổi điểm"
                                                     class="no-verify open-modal">
                                                     Quy tắc & Đổi thưởng
@@ -498,9 +497,11 @@
                                                     </div>
                                                     <div class="info-content">
                                                         <p>Quà tặng</p>
-                                                        <p>0</p>
+                                                        <p class="rewardsUser-count">{{ !empty($data['rewardsUser']) ? $data['rewardsUser']->count() : 0 }}</p>
                                                         <div class="info-bkm-card">
-                                                            <a class="btn-login">Xem</a>
+                                                            <a href="javascript:;" 
+                                                            data-modal="#modalRewards" title="Quà tặng"
+                                                            class="no-verify open-modal btn-login">Xem</a>
                                                         </div>
                                                     </div>
                                                     <div class="info-content">
@@ -706,7 +707,7 @@
 
                         <div id="tichluydiem" class="mbox tab-pane fade">
                             <div class="title">
-                                <h2>Tích lũy điểm</h2>
+                                <h2>Tích lũy & đổi thưởng</h2>
                             </div>
                             <div style="padding: 20px 20px;">
                                 <div class="row flex">
@@ -717,7 +718,7 @@
                                             </h3>
                                             <p>Bạn hiện đang có:
                                                 <span
-                                                    class="highlight-points">{{ number_format(Auth::user()->exp, 0, ',', '.') }}
+                                                    class="highlight-points reward-tab-tichluydiem">{{ number_format(Auth::user()->points, 0, ',', '.') }}
                                                     điểm</span>
                                             </p>
                                             <p>Cấp bậc hiện tại:
@@ -749,12 +750,12 @@
                                             <hr>
                                             <h4>Quy đổi điểm:</h4>
                                             <ul class="list-points">
-                                                <li>🎁 <strong>BKM Member:</strong> 1 điểm = 1.000 đ</li>
-                                                <li>🎁 <strong>BKM VIP:</strong> 2 điểm = 2.000 đ</li>
-                                                <li>🎁 <strong>BKM VVIP:</strong> 3 điểm = 3.000 đ</li>
-                                                <li>🎁 Các phần quà hấp dẫn khác 👇</li>
+                                                <li>🎁 <strong>Đổi điểm nhận nước uống tùy chọn</strong></li>
+                                                <li>🎁 <strong>Đổi điểm nhận bắp ngọt</strong></li>
+                                                <li>🎁 <strong>Đổi điểm nhận vé xem phim 2D/3D</strong></li>
+                                                <li>🎁 <strong>Các phần quà hấp dẫn khác 👇</strong></li>
                                             </ul>
-                                            <button class="btn btn-primary btn-redeem btn-login open-modal"
+                                            <button class="btn btn-primary btn-login open-modal"
                                                 data-modal="#modalExchangeExp">Đổi thưởng</button>
                                         </div>
                                     </div>
@@ -1118,7 +1119,6 @@
 
                         <h4>2. Cách làm tròn điểm thưởng</h4>
                         <ul>
-                            <li>1 Điểm BKM = <strong>1.000 đ</strong> giá trị quy đổi.</li>
                             <li>Từ <strong>0.1</strong> đến <strong>0.4</strong>: làm tròn xuống (Ví dụ: <strong>3.2
                                     điểm</strong> sẽ được tích vào tài khoản <strong>3 điểm</strong>).
                                 Lưu ý: giao dịch có điểm tích lũy từ <strong>0.1</strong> đến <strong>0.4</strong> sẽ không
@@ -1128,37 +1128,13 @@
                                     điểm</strong> sẽ được tích vào tài khoản <strong>4 điểm</strong>)</li>
                         </ul>
 
-                        <h4>3. Hạng thành viên và tỷ lệ ưu đãi</h4>
-                        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-                            <thead>
-                                <tr>
-                                    <th style="border: 1px solid #ddd; padding: 8px;">Hạng thành viên</th>
-                                    <th style="border: 1px solid #ddd; padding: 8px;">Tỷ lệ quy đổi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM Member 🥈</td>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">1 Điểm = 1.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM VIP 🌟</td>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">2 Điểm = 2.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM VVIP 👑</td>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">3 Điểm = 3.000 đ</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <h4>4. Thời gian xử lý yêu cầu</h4>
+                        <h4>3. Thời gian xử lý yêu cầu</h4>
                         <ul>
                             <li>Thời gian xử lý: <strong>24-48 giờ</strong> kể từ khi gửi yêu cầu.</li>
                             <li>Trường hợp bảo trì, hệ thống sẽ thông báo thời gian xử lý qua email hoặc tin nhắn.</li>
                         </ul>
 
-                        <h4>5. Quy định bổ sung</h4>
+                        <h4>4. Quy định bổ sung</h4>
                         <ul>
                             <li>Mỗi tài khoản được đổi tối đa <strong>10 giao dịch/ngày</strong>.</li>
                             <li>Điểm thưởng tối thiểu cho mỗi giao dịch: <strong>20 điểm</strong>.</li>
@@ -1202,42 +1178,74 @@
                         <h3><b>CHỌN QUÀ</b></h3>
                     </div>
                     <div class="reward-options">
-                        <div class="reward-item">
-                            <div class="reward-image">
-                                <img src="https://via.placeholder.com/100" alt="Quà 1">
-                                <p>Quà Tặng A</p>
+                        @if (!empty($data['rewards']))
+                            @foreach ($data['rewards'] as $reward)
+                                <div class="reward-item">
+                                    <div class="reward-image">
+                                        <img src="{{ !empty($reward->image) ? asset($reward->image) : '' }}" alt="{{ !empty($reward->name) ? $reward->name : '' }}">
+                                        <div class="d-flex flex-column">
+                                            <p>{{ !empty($reward->name) ? $reward->name : '' }}</p>
+                                            <p>Điều kiện: {{ !empty($reward->points_required) ? $reward->points_required : '' }} điểm tích lũy</p>
+                                        </div>
+                                    </div>
+                                    <div class="reward-button">
+                                        <button data-url="{{ route('rewards.redeem') }}" 
+                                            data-id="{{ $reward->id }}"
+                                            data-points="{{ $reward->points_required }}"
+                                            data-image="{{ asset('client/images/success.png') }}"
+                                            data-error="{{ asset('client/images/error.png') }}"
+                                            class="btn btn-success btn-redeem btn-login">Đổi ngay</button>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="close-modal" type="button">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalRewards" style="height: 100%;" class="custom-modal">
+        <div class="custom-modal-content">
+            <!-- Nút đóng -->
+            <span class="custom-close">&times;</span>
+
+            <!-- Tiêu đề -->
+            <div class="modal-header d-flex justify-content-center">
+                <h3 class="title-payment">QUÀ TẶNG CỦA BẠN</h3>
+            </div>
+
+            <!-- Nội dung chính -->
+            <div class="main-modal">
+                <div class="modal-body">
+                    <div class="reward-options reward-options-tab-quatang">
+                        @if (isset($data['rewardsUser']) && $data['rewardsUser']->isNotEmpty())
+                            @foreach ($data['rewardsUser'] as $reward)
+                                <div class="reward-item">
+                                    <div class="reward-image">
+                                        <img src="{{ !empty($reward->reward->image) ? asset($reward->reward->image) : '' }}" alt="{{ !empty($reward->reward->name) ? $reward->reward->name : '' }}">
+                                        <div class="d-flex flex-column">
+                                            <p>Mã quà tặng: {{ !empty($reward->code) ? $reward->code : '' }}</p>
+                                            <p>{{ !empty($reward->reward->name) ? $reward->reward->name : '' }}</p>
+                                            <p>Trạng thái: {{ $reward->status == 1 ? 'Đã sử dụng' : 'Chưa sử dụng' }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="reward-item">
+                                <div class="reward-image">
+                                    <div class="d-flex flex-column">
+                                        <p>Bạn chưa có quà tặng</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="reward-button">
-                                <button class="btn btn-success btn-redeem btn-login">Đổi ngay</button>
-                            </div>
-                        </div>
-                        <div class="reward-item">
-                            <div class="reward-image">
-                                <img src="https://via.placeholder.com/100" alt="Quà 1">
-                                <p>Quà Tặng B</p>
-                            </div>
-                            <div class="reward-button">
-                                <button class="btn btn-success btn-redeem btn-login">Đổi ngay</button>
-                            </div>
-                        </div>
-                        <div class="reward-item">
-                            <div class="reward-image">
-                                <img src="https://via.placeholder.com/100" alt="Quà 1">
-                                <p>Quà Tặng B</p>
-                            </div>
-                            <div class="reward-button">
-                                <button class="btn btn-success btn-redeem btn-login">Đổi ngay</button>
-                            </div>
-                        </div>
-                        <div class="reward-item">
-                            <div class="reward-image">
-                                <img src="https://via.placeholder.com/100" alt="Quà 1">
-                                <p>Quà Tặng B</p>
-                            </div>
-                            <div class="reward-button">
-                                <button class="btn btn-success btn-redeem btn-login">Đổi ngay</button>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -1283,5 +1291,6 @@
 
 @section('js')
     <script type="module" src="{{ asset('client/js/auth/auth.js') }}"></script>
+    <script type="module" src="{{ asset('client/js/auth/reward.js') }}"></script>
     <script type="module" src=" {{ asset('/js/client/order.js') }} "></script>
 @endsection

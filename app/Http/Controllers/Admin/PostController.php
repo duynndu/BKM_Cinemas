@@ -226,4 +226,26 @@ class PostController extends Controller
             ], 500);
         }
     }
+
+    public function sendPromotion(Request $request) {
+        try {
+            DB::beginTransaction();
+            if (empty($request->id)) {
+                return response()->json(['message' => 'Bài viết không tồn tại'], 400);
+            }
+         $this->postService->sendPromotion($request->id);
+          
+
+            DB::commit();
+            return response()->json(['message' => 'Gửi thông tin sự kiện thành công!'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
+    }
 }

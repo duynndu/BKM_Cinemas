@@ -13,12 +13,11 @@ class Reward extends Model
     protected $table = 'rewards';
 
     protected $guarded = [];
-    // public function movie_actor()
-    // {
-    //     return $this->hasMany(MovieActor::class, 'actor_id', 'id');
-    // }
-    // public function movies()
-    // {
-    //     return $this->belongsToMany(Movie::class, 'movie_actor', 'actor_id');
-    // }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_rewards', 'reward_id', 'user_id')
+            ->withPivot('code', 'points_spent', 'quantity', 'status', 'used_at')
+            ->withTimestamps();
+    }
 }

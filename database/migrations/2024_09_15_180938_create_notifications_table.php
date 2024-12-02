@@ -14,16 +14,16 @@ return new class extends Migration
         // Bảng thông báo của người dùng
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->nullable();
             $table->string('title');
             $table->text('content')->nullable();
             $table->enum('type', [
-                'refund',
+                'refund','promotion','all'
             ])->nullable();
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      */

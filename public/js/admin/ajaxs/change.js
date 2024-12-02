@@ -258,4 +258,46 @@ $(document).ready(function () {
     });
 
 
+        var csrfToken = $('meta[name="csrf-token"]').attr("content");
+        $('.send-promotion').each(function(e) {
+            $(this).on('click', function() {
+                var id = $(this).attr('data-id');
+                var url = $(this).attr('data-url');
+                Swal.fire({
+                    title: 'Xác nhận gửi',
+                    text: 'Bạn có chắc chắn muốn gửi thông tin sự kiện đến mọi người không?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Có',
+                    cancelButtonText: 'Không'
+                })
+            .then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: url,
+                        method: "POST", // Phương thức gửi
+                        data: {
+                            _token: csrfToken, // Thêm token bảo mật
+                            id: id,
+                        },
+                        success: function(response) {
+                                Swal.fire({
+                                    position: "top-center",
+                                    icon: "success",
+                                    title: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                });
+                        },
+                        error: function(xhr, status, error) {},
+                    });
+                }
+            })
+
+        })
+
+        })
+  
+
 });

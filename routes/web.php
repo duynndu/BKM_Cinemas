@@ -16,6 +16,7 @@ use App\Http\Controllers\Client\MovieDetailController;
 use App\Http\Controllers\Auth\Client\FacebookController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Client\AboutController;
+use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\PostController;
 use App\Http\Controllers\Client\PostDetailController;
 use App\Models\Showtime;
@@ -69,6 +70,9 @@ Route::post('/updateAvatar',        [AuthController::class, 'updateAvatar'])
 
 Route::post('/updateProfile',        [AuthController::class, 'updateProfile'])
     ->name('updateProfile');
+
+Route::post('/redeem',              [AuthController::class, 'redeem'])
+    ->name('rewards.redeem');
 // End Tài khoản
 
 // Đăng nhập facebook
@@ -109,6 +113,9 @@ Route::get('/zaloPayReturn', [DepositController::class, 'zaloPayReturn'])->name(
 // End Nạp tiền
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/email-subscribe', [HomeController::class, 'emailSubscribe'])->name('emailSubscribe');
+
+Route::post('/deleteNotification', [HomeController::class, 'deleteNotification'])->name('deleteNotification');
 
 Route::get('/profile', function () {
     return view('client.pages.profile.info');
@@ -122,6 +129,7 @@ Route::get('/profile-change-info', function () {
 Route::get('/profile-history-ticket', function () {
     return view('client.pages.profile.history-ticket');
 });
+
 
 Route::get('/phim', [ListMoviesController::class, 'movies'])->name('movie');
 
@@ -165,6 +173,12 @@ Route::get('/dat-ve/thanh-toan', function () {
     return view('client.pages.payment-verification-step2');
 });
 
+Route::get('/lien-he', [ContactController::class, 'index'])->name('contact');
+Route::post('/submit-contact', [ContactController::class, 'submit'])
+    ->middleware('throttle:1,2')
+    ->name('submit.contact');
+
 Route::get('/{slug}', [PostController::class, 'list'])->name('post.list');
 
 Route::get('/{cate_slug}/{slug}', [PostController::class, 'detail'])->name('post.detail');
+

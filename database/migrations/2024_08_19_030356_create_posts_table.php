@@ -22,6 +22,7 @@ return new class extends Migration
             $table->tinyInteger('hot')->default(0);
             $table->tinyInteger('active')->default(1);
             $table->integer('order')->default(0);
+            $table->tinyInteger('promotion')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

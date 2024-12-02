@@ -19,4 +19,45 @@ class NotificationRepository extends BaseRepository implements NotificationInter
     {
         return $this->model->where('type', $type)->orderBy('id', 'desc')->get();
     }
+
+    public function filter($request)
+    {
+        $data = $this->model->newQuery();
+        $data = $this->filterByName($data);
+        $data = $data->paginate(self::PAGINATION);
+        return $data->appends([
+            'title' => $request->title,
+        ]);
+    }
+
+   
+
+    public function delete($id)
+    {
+        $result = $this->find($id);
+        if ($result) {
+            $result->delete();  
+            return true;
+        }
+
+        return false;
+    }
+
+    public function deleteMultiple(array $ids)
+    {
+        collect($ids)->chunk(1000)->each(function ($chunk) {
+            $this->model->whereIn('id', $chunk)->delete();
+        });
+        return true;
+    }
+
+    protected function filterByName($query)
+    {
+        if (!empty(request()->title)) {
+            return $query->where('title', 'like', '%' . request()->title . '%');
+        }
+        return $query;
+    }
+
+
 }

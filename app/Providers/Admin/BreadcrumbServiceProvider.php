@@ -35,7 +35,7 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => __('language.admin.dashboard'), 'url' => route('admin.dashboard')];
                     break;
 
-            
+
                     // Posts
                 case 'admin.posts.index':
                     $breadcrumbs[] = ['title' => __('language.admin.posts.list'), 'url' => route('admin.posts.index')];
@@ -352,6 +352,13 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => 'Combo', 'url' => route('admin.food-combos.index')];
                     $breadcrumbs[] = ['title' => 'Chỉnh sửa combo', 'url' => route('admin.food-combos.edit', request()->id)];
                     break;
+
+                // reward
+                case 'admin.redeemRewards.index':
+                    $breadcrumbs[] = ['title' => 'Đổi thưởng', 'url' => ''];
+                    $breadcrumbs[] = ['title' => 'Danh sách đổi thưởng ', 'url' => route('admin.redeemRewards.index')];
+                    break;
+
                     // reward
                 case 'admin.rewards.index':
                     $breadcrumbs[] = ['title' => 'Quà tặng', 'url' => ''];
@@ -362,7 +369,7 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $breadcrumbs[] = ['title' => 'Thêm mới quà tặng', 'url' => route('admin.rewards.create')];
                     break;
                 case 'admin.rewards.edit':
-                    $breadcrumbs[] = ['title' => 'Combo', 'url' => route('admin.rewards.index')];
+                    $breadcrumbs[] = ['title' => 'Quà tặng', 'url' => route('admin.rewards.index')];
                     $breadcrumbs[] = ['title' => 'Chỉnh sửa quà tặng', 'url' => route('admin.rewards.edit', request()->id)];
                     break;
 
