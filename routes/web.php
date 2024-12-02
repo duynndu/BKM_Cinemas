@@ -69,6 +69,9 @@ Route::post('/updateAvatar',        [AuthController::class, 'updateAvatar'])
 
 Route::post('/updateProfile',        [AuthController::class, 'updateProfile'])
     ->name('updateProfile');
+
+Route::post('/redeem',              [AuthController::class, 'redeem'])
+    ->name('rewards.redeem');
 // End Tài khoản
 
 // Đăng nhập facebook

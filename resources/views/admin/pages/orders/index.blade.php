@@ -3,7 +3,478 @@
 @section('title', 'Danh sách vé')
 
 @section('css')
+    <style>
+        /* Ticket */
+        .card-body {
+            padding: 15px 20px;
+        }
 
+        .info {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .info div {
+            flex: 1;
+        }
+
+        .info div:not(:last-child) {
+            border-right: 1px solid #ddd;
+        }
+
+        .info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .info-bkm-card {
+            max-width: 76px !important;
+        }
+
+        .info-bkm-card a.btn-login {
+            font-size: 13px;
+            padding: 6px 20px;
+            border-radius: 3px;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .info-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mt-25 {
+            margin-top: 25px;
+        }
+
+        .body-account {
+            border-top: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .h3-body-account {
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+
+        .date-content {
+            display: flex;
+            align-content: center;
+        }
+
+        .date-box-content {
+            position: relative;
+        }
+
+        .date-box-content .date-input {
+            text-align: center;
+            width: 108px;
+            border-radius: 4px;
+            padding-left: 23px;
+        }
+
+        .date-box-content .dp__input_icons {
+            position: absolute;
+            width: 34px;
+            height: 14px;
+            stroke-width: 0;
+            font-size: 1rem;
+            line-height: calc(1rem * 1.5);
+            cursor: pointer;
+            top: 50%;
+            inset-inline-start: 0;
+            transform: translateY(-50%);
+            color: #959595;
+            stroke: currentcolor;
+            fill: currentcolor;
+        }
+
+        .btn-cancelled-ticket {
+            padding: 5px 10px;
+            background-color: #eb1689;
+            color: #fff;
+            box-shadow: -2px 0 4px #000;
+            border-radius: 0;
+            font-size: 12px;
+        }
+
+        .transaction-reward th {
+            padding: 7px;
+            font-size: 13px;
+        }
+
+        .transaction-reward td {
+            padding: 7px;
+            font-size: 13px;
+        }
+
+        .col-inner {
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            flex: 1 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            width: 100%;
+        }
+
+        .order-view-container .order-view-content,
+        .order-view-container .order-view-content p,
+        .order-view-container .order-view-content td,
+        .order-view-container .order-view-content h1,
+        .order-view-container .order-view-content h2,
+        .order-view-container .order-view-content h3,
+        .order-view-container .order-view-content h4,
+        .order-view-container .order-view-content h5,
+        .order-view-container .order-view-content h6,
+        .order-view-container .order-view-content .heading-font {
+            color: black;
+        }
+
+        .order-view-container .order-view-content {
+            height: 100%;
+        }
+
+        .order-view-container .order-view-content > .row {
+            height: 100%;
+        }
+
+        .row-collapse > .col,
+        .row-collapse > .flickity-viewport > .flickity-slider > .col {
+            padding: 0 !important;
+        }
+
+        .small-12,
+        .small-columns-1 .flickity-slider > .col,
+        .small-columns-1 > .col {
+            flex-basis: 100%;
+            max-width: 100%;
+        }
+
+        .col,
+        .columns,
+        .gallery-item {
+            margin: 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .col-inner {
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            flex: 1 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            width: 100%;
+        }
+
+
+
+        @media screen and (min-width: 850px) {
+            .col:first-child .col-inner {
+                margin-left: auto;
+                margin-right: 0;
+            }
+        }
+
+        .order-view-container .order-view-content > .row > .col.content-col > .col-inner {
+            position: relative;
+            background-color: #f4f5f6;
+            border-radius: 20px;
+        }
+
+        .row-collapse {
+            padding: 0;
+        }
+
+        .row.row-collapse {
+            max-width: 1300px;
+        }
+
+        .row-collapse > .col,
+        .row-collapse > .flickity-viewport > .flickity-slider > .col {
+            padding: 0 !important;
+        }
+
+        .col-inner {
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            flex: 1 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            width: 100%;
+        }
+
+        .order-details-row > .col > .col-inner {
+            padding: 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .order-details-row .qrcode-image {
+            max-width: 160px;
+            margin: auto;
+        }
+
+        .text-center .is-divider,
+        .text-center .is-star-rating,
+        .text-center .star-rating,
+        .text-center > div,
+        .text-center > div > div {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .order-details-row .qrcode-image > div {
+            line-height: 1.2em;
+            margin-bottom: 7px;
+        }
+
+        .order-details-row .qrcode-image > div:last-child {
+            margin-bottom: 0px;
+        }
+
+        .order-details-row .code {
+            color: #72be43;
+            font-weight: bold;
+        }
+
+        .row-collapse > .col,
+        .row-collapse > .flickity-viewport > .flickity-slider > .col {
+            padding: 0 !important;
+        }
+
+        .order-view-container .row-divided > .col + .col:not(.large-12) {
+            border-left-style: dashed;
+            border-left-color: rgb(0 0 0 / 30%);
+        }
+
+        .col-inner {
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            flex: 1 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            width: 100%;
+        }
+
+        .order-details-row > .col > .col-inner {
+            padding: 20px;
+        }
+
+        .align-middle {
+            align-items: center !important;
+            align-self: center !important;
+            vertical-align: middle !important;
+        }
+
+        .icon-box-left,
+        .icon-box-right {
+            display: flex;
+            flex-flow: row wrap;
+            width: 100%;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .icon-box .icon-box-img {
+            margin-bottom: 1em;
+            max-width: 100%;
+            position: relative;
+        }
+
+        .icon-box-left .icon-box-img,
+        .icon-box-right .icon-box-img {
+            flex: 0 0 auto;
+            margin-bottom: 0;
+            max-width: 200px;
+        }
+
+        .icon-box-left .icon-box-text,
+        .icon-box-right .icon-box-text {
+            flex: 1 1 0px;
+        }
+
+        .icon-box-left .icon-box-img + .icon-box-text {
+            padding-left: 1em;
+        }
+
+        .order-film-box .title {
+            font-size: 1.3em;
+            line-height: 1.3em;
+            margin-bottom: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .order-film-box .metas ul {
+            margin: 0px 0px 15px;
+            padding: 0px;
+            list-style: none;
+            font-size: 0.9em;
+        }
+
+        .col-inner ol li,
+        .col-inner ul li,
+        .entry-content ol li,
+        .entry-content ul li,
+        .entry-summary ol li,
+        .entry-summary ul li {
+            margin-left: 1.3em;
+        }
+
+        .order-film-box .metas ul li {
+            margin: 0px 0px 10px;
+        }
+
+        .modal-tikets {
+            width: 1300px;
+        }
+
+        img {
+            border-style: none;
+        }
+
+        img {
+            display: inline-block;
+            height: auto;
+            max-width: 100%;
+            vertical-align: middle;
+        }
+
+        img {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        .order-film-box .metas ul li img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            float: left;
+            margin-top: 3px;
+        }
+
+        .row.ticket-row {
+            font-size: 0.9em;
+            margin-bottom: 15px !important;
+        }
+
+        .row.row-small {
+            max-width: 1322.5px;
+        }
+
+        @media screen and (min-width: 850px) {
+            .large-3 {
+                flex-basis: 25%;
+                max-width: 25%;
+            }
+        }
+
+        @media screen and (min-width: 550px) {
+            .medium-3 {
+                flex-basis: 25%;
+                max-width: 25%;
+            }
+        }
+
+        .container .row:not(.row-collapse),
+        .lightbox-content .row:not(.row-collapse),
+        .row .gallery,
+        .row .row:not(.row-collapse) {
+            margin-left: -15px;
+            margin-right: -15px;
+            padding-left: 0;
+            padding-right: 0;
+            width: auto;
+        }
+
+        .container .row-small:not(.row-collapse),
+        .row .row-small:not(.row-collapse) {
+            margin-bottom: 0;
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+
+        .row-small > .col,
+        .row-small > .flickity-viewport > .flickity-slider > .col {
+            margin-bottom: 0;
+            padding: 0 9.8px 19.6px;
+        }
+
+        .ticket-row .col {
+            padding-bottom: 0px;
+        }
+
+        .ticket-row p {
+            margin-bottom: 5px;
+        }
+
+        .order-film-box .total {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .order-film-box .total span {
+            color: #72be43;
+        }
+
+        .mt-0 {
+            margin-top: 0 !important;
+        }
+
+        .fw-700 {
+            font-weight: 700;
+        }
+
+        .d-flex {
+            display: flex !important;
+        }
+
+        .justify-content-center {
+            justify-content: center !important;
+        }
+
+        .align-items-center {
+            align-items: center !important;
+        }
+
+        .p-5 {
+            padding: 10rem !important;
+        }
+
+        .no-ticket {
+            border: 1px solid #d9d9d9;
+            margin-top: 25px;
+            border-radius: 4px;
+            background: #f5f5f5;
+        }
+
+        .flex-column {
+            flex-direction: column !important;
+        }
+
+        .reward-options .reward-image img {
+            width: 100px;
+        }
+    </style>
 @endsection
 
 @vite(['resources/js/app.js', 'resources/css/app.css'])
@@ -275,12 +746,119 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('admin.orders.detail', $order->id) }}"
+                                                            <a href="javascript:void(0)"
+                                                               data-bs-toggle="modal" data-bs-target="#modalTickets_{{ $order->id }}"
                                                                 class="btn btn-primary shadow btn-xs sharp me-1">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
                                                         </td>
                                                     </tr>
+                                                    <div class="modal fade" id="modalTickets_{{ $order->id }}" aria-modal="true" role="dialog">
+                                                        <div class="modal-dialog modal-xl" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">{{ __('language.admin.members.roles.information') }}</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="col-inner">
+                                                                        <div class="order-view-container">
+                                                                            <div class="order-view-content">
+                                                                                <div class="row align-center align-middle row-collapse">
+                                                                                    <div class="col content-col medium-12 small-12 large-12">
+                                                                                        <div class="col-inner">
+                                                                                            <div
+                                                                                                class="row d-flex align-middle row-divided order-details-row row-collapse">
+                                                                                                <div class="col-3">
+                                                                                                    <div class="col-inner p-3">
+                                                                                                        <div class="qrcode-image text-center">
+                                                                                                            <div>Thông tin vé</div>
+                                                                                                            <div>
+                                                                                                                <img src="{{ asset('client/images/offline-ticket.jpg') }}">
+                                                                                                            </div>
+                                                                                                            <div><span class="code">Vé đặt online</span>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="col-9">
+                                                                                                    <div class="col-inner p-3">
+                                                                                                        <div
+                                                                                                            class="icon-box icon-box-left align-middle text-left order-film-box">
+                                                                                                            <div class="icon-box-img">
+                                                                                                                <img src="{{ $order->movie->image }}">
+                                                                                                            </div>
+                                                                                                            <div class="icon-box-text p-last-0">
+                                                                                                                <h4 class="fw-700">{{ $order->movie->title }}</h4>
+                                                                                                                <div class="metas">
+                                                                                                                    <ul>
+                                                                                                                        <li>
+                                                                                                                            <img src="{{ asset('client/images/helpIcon.png') }}">
+                                                                                                                            <span>Phụ đề, {{ $order->movie->format }}</span>
+                                                                                                                        </li>
+                                                                                                                        <li>
+                                                                                                                            <img src="{{ asset('client/images/calendarIcon.png') }}">
+                                                                                                                            <span>{{ date('d/m/Y', strtotime($order->showtime->start_time)) }}</span>
+                                                                                                                        </li>
+                                                                                                                        <li>
+                                                                                                                            <img src="{{ asset('client/images/clockIcon.png') }}">
+                                                                                                                            Suất chiếu:
+                                                                                                                            <span>{{ date('H:i', strtotime($order->showtime->start_time)) }}</span>
+                                                                                                                        </li>
+                                                                                                                        <li>
+                                                                                                                            <img src="{{ asset('client/images/locationIcon.png') }}">
+                                                                                                                            <span>{{ $order->cinema->name }}</span>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </div>
+                                                                                                                <div class="row d-flex row-small ticket-row row-divided">
+                                                                                                                    <div class="col medium-12 small-12 large-3">
+                                                                                                                        <div class="col-inner text-center">
+                                                                                                                            <p>Ghế</p>
+                                                                                                                            <div>
+                                                                                                                                @if ($order->seatsBooking && $order->seatsBooking->count())
+                                                                                                                                    @foreach ($order->seatsBooking as $seatBooking)
+                                                                                                                                        <span>{{ $seatBooking->seat->seat_number ?? '' }}</span>
+                                                                                                                                        @if (!$loop->last)
+                                                                                                                                            ,
+                                                                                                                                        @endif
+                                                                                                                                    @endforeach
+                                                                                                                                @else
+                                                                                                                                    <span>Không có ghế</span>
+                                                                                                                                @endif
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="col medium-12 small-12 large-3">
+                                                                                                                        <div class="col-inner text-center">
+                                                                                                                            <p>Phòng chiếu</p>
+                                                                                                                            <div>{{ $order->showtime->room->room_name ?? '' }}</div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="total">
+                                                                                                                    Tổng tiền: <span>{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">{{ __('language.admin.members.roles.close') }}</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 @endforeach
                                             </tbody>
                                         </table>

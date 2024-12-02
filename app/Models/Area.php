@@ -18,4 +18,15 @@ class Area extends Model
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
     }
+
+    public function cinemas()
+    {
+        return $this->hasMany(Cinema::class, 'area_id');
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'city_id');
+    }
+
 }

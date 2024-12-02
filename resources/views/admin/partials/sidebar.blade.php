@@ -186,6 +186,9 @@
                 </a>
                 <ul aria-expanded="false">
                     <li>
+                        <a href="{{ route('admin.redeemRewards.index') }}" aria-expanded="false">Đổi thưởng</a>
+                    </li>
+                    <li>
                         <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
                     </li>
                     <li>

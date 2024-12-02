@@ -109,4 +109,33 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'user_vouchers')
             ->withTimestamps();
     }
+
+    public function rewards()
+    {
+        return $this->belongsToMany(Reward::class, 'user_rewards', 'user_id', 'reward_id')
+            ->withPivot('code', 'points_spent', 'quantity', 'status', 'used_at')
+            ->withTimestamps();
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'city_id');
+    }
+
+    public function cinemas()
+    {
+        return $this->hasManyThrough(
+            Cinema::class,
+            Area::class,
+            'id',
+            'area_id',
+            'city_id',
+            'id'
+        );
+    }
 }
