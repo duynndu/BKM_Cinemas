@@ -8,4 +8,5 @@ interface ModuleServiceInterface extends BaseServiceInterface
 {
     public function deleteMultipleChecked($request);
     public function filter($request);
+    public function getModule();
 }

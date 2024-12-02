@@ -113,9 +113,9 @@ class User extends Authenticatable
     public function vouchers()
     {
         return $this->belongsToMany(Voucher::class, 'user_vouchers', 'user_id', 'voucher_id')
-        ->withTimestamps()
-        ->withPivot('deleted_at')
-        ->wherePivotNull('deleted_at');
+            ->withTimestamps()
+            ->withPivot('deleted_at')
+            ->wherePivotNull('deleted_at');
     }
     public function users()
     {
@@ -123,6 +123,10 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function cinema()
+    {
+        return $this->belongsTo(Cinema::class, 'cinema_id', 'id');
+    }
     public function rewards()
     {
         return $this->belongsToMany(Reward::class, 'user_rewards', 'user_id', 'reward_id')

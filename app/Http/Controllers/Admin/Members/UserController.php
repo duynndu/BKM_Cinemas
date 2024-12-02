@@ -25,7 +25,6 @@ class UserController extends Controller
 
     protected $cinemaService;
 
-
     public function __construct(
         UserServiceInterface    $userService,
         RoleServiceInterface    $roleService,

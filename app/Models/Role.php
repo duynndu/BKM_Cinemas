@@ -15,12 +15,17 @@ class Role extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class, 'id', 'role_id');
+        return $this->hasMany(User::class, 'role_id', 'id');
     }
 
     // Mối quan hệ với Permission: nhiều-nhiều
     public function permissions()
     {
         return $this->belongsToMany(Permission::class, 'role_permission', 'role_id', 'permission_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -921,7 +921,6 @@ Route::prefix('admin')
                             ->name('ajaxGetAreaByCityId')
                             ->middleware('authorizeAction:viewAny,App\Models\Cinema');
                     });
-
                 Route::prefix('orders')
                     ->controller(OrderController::class)
                     ->name('orders.')
@@ -954,9 +953,7 @@ Route::prefix('admin')
                             ->name('delete');
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                             ->name('deleteItemMultipleChecked');
-                        Route::get('/get-by-type', 'getByType')
-                            ->name('getByType');
-                       
+
                         Route::get('/get-by-type', 'getByType')
                             ->name('getByType');
                     });
