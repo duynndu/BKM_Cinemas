@@ -1,7 +1,6 @@
 <div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-
             @can('viewAny', 'Dashboard')
                 <li>
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
@@ -303,13 +302,12 @@
                                     aria-expanded="false">{{ __('language.admin.members.roles.title') }}</a>
                             </li>
                         @endcan
-                        @can('viewAny', App\Models\Module::class)
+                        @can('viewAny', App\Models\Permission::class)
                             <li>
                                 <a href="{{ route('admin.modules.index') }}"
                                     aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>
                             </li>
                         @endcan
-
                     </ul>
                 </li>
             @endif

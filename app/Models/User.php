@@ -122,4 +122,9 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'user_vouchers')
             ->withTimestamps();
     }
+
+    public function cinema()
+    {
+        return $this->belongsTo(Cinema::class, 'cinema_id', 'id');
+    }
 }
