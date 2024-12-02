@@ -1,3 +1,20 @@
+<style>
+    .del-item-notification {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        font-size: 10px;
+        border-radius: 50%;
+        background-color: #EA3B82;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    .del-item-notification:hover{
+        background-color: #b8366a;
+    }
+</style>
 <div id="header">
     <div class="container">
         <div class="logo">
@@ -18,8 +35,8 @@
                         <a class="hidden-lg btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
                         <form action="{{ route('search') }}" class="form-search visible-lg" method="get">
                             <div class="input-group">
-                                <input class="form-control" name="k" required value="{{ request()->get('k') }}" type="search"
-                                    placeholder="Tìm kiếm">
+                                <input class="form-control" name="k" required value="{{ request()->get('k') }}"
+                                    type="search" placeholder="Tìm kiếm">
                                 <button type="submit" class="submit"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
@@ -182,7 +199,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <div class="notification-box">
-                                    <div id="noti_Button" class="d-flex align-items-center justify-content-center notifications">
+                                    <div id="noti_Button"
+                                        class="d-flex align-items-center justify-content-center notifications">
                                         <i class="fa fa-bell" aria-hidden="true"></i>
                                     </div>
                                     <!--THE NOTIFICAIONS DROPDOWN BOX.-->
@@ -190,70 +208,43 @@
                                         <h3>Thông báo</h3>
                                         <div class="list-notifications">
                                             <ul>
-                                                <li>
-                                                    <a href="index.html">
-                                                        <b>NGÀY CUỐI ĐỔI ĐIỂM THÀNH VIÊN TOUCH CINEMA
-                                                            2023⚡⚡⚡</b>
-                                                        <p>Trân trọng kính mời quý khách hàng đổi điểm thưởng
-                                                            thành viên Touch Cinema (Đổi online tại app/web
-                                                            Touch Cinema cho các suất đã có lịch chiếu hoặc đổi
-                                                            trực tiếp tại quầy). 00H 1/1/2024 Hệ thống sẽ tự
-                                                            động reset điểm về 0.</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="index.html">
-                                                        <b>Khuyến mãi mới từ Touch Cinema</b>
-                                                        <p>Khuyến mãi từ Touch Cinema: TOUCHxYOUNGFEST</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="phim/nha-ba-nu.html">
-                                                        <b>💵Nhà Bà Nữ: Cán mốc 50 tỷ</b>
-                                                        <p>❤️Bộ phim về gia đình chân thật và ý nghĩa, hứa hẹn
-                                                            sẽ chạm đến cảm xúc của người xem.</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="phim/nha-ba-nu.html">
-                                                        <b>🦀 Nhà Bà Nữ - Bánh canh cua đủ vị</b>
-                                                        <p>Đến Touch Cinema ”book” ngay món bánh canh cua Nhà Bà
-                                                            Nữ. Đồng cảm với những hoài bão, khát vọng và cả sự
-                                                            nông nổi của tuổi trẻ… 🥰</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="index.html">
-                                                        <b>Touch Cinema Happy New Year!!!🎊</b>
-                                                        <p>Nhân dịp tết Quý Mão 2023 kính chúc quý khách cùng
-                                                            gia đình mạnh khỏe, an khang thịnh vượng, vạn sự như
-                                                            ý, vạn sự thành công💕💕💕💕</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="phim/avatar-dong-chay-cua-nuoc.html">
-                                                        <b>🎬Avatar 2 - tuyệt tác điện ảnh</b>
-                                                        <p>💦Ra mắt sau hàng thập kỷ chờ đợi của khán giả. Bom
-                                                            tấn khoa học viễn tưởng mang đến góc nhìn mới lạ về
-                                                            Pandora và câu chuyện cảm động về tình cảm gia đình.
-                                                        </p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="phim/black-adam.html">
-                                                        <b>🏵️ Black Adam chiếu sớm từ 20/10</b>
-                                                        <p>💣 Bom tấn cuối cùng của nhà DC trong năm nay đem đến
-                                                            những phân cảnh hành động hoành tráng của The Rock,
-                                                            khuấy đảo màn ảnh rộng</p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="index.html">
-                                                        <b>Khuyến mãi mới từ Touch Cinema</b>
-                                                        <p>Khuyến mãi từ Touch Cinema: 10.10 TOUCHxGRAB MUA 1
-                                                            TẶNG 1 BẮP RANG BƠ</p>
-                                                    </a>
-                                                </li>
+                                                @if (($notifications['users']->isNotEmpty()) || ($notifications['all']->isNotEmpty()))
+                                                    @if ($notifications['users']->isNotEmpty())
+                                                        @foreach ($notifications['users'] as $item)
+                                                            <li style="display: flex;justify-content: space-between; align-items:center"
+                                                                class="notification-item">
+                                                                <a href="#">
+                                                                    <b>
+                                                                        {{ $item->title }}
+                                                                    </b>
+                                                                    <p>{{ $item->content }}</p>
+                                                                </a>
+                                                                <button data-token="{{ csrf_token() }}"
+                                                                    data-url="{{ route('deleteNotification') }}"
+                                                                    data-id="{{ $item->id }}"
+                                                                    class="del-item-notification">
+                                                                    X
+                                                                </button>
+
+                                                            </li>
+                                                        @endforeach
+                                                    @endif
+                                                    @if ($notifications['all']->isNotEmpty())
+                                                        @foreach ($notifications['all'] as $item)
+                                                            <li>
+                                                                <a href="#">
+                                                                    <b>
+                                                                        {{ $item->title }}
+                                                                    </b>
+                                                                    <p>{{ $item->content }}</p>
+                                                                </a>
+                                                            </li>
+                                                        @endforeach
+                                                    @endif
+                                                @else
+                                                    <h5 class="text-center">Chưa có thông báo nào!</h5>
+                                                @endif
+
                                             </ul>
                                         </div>
                                     </div>
@@ -275,7 +266,8 @@
             <div class="menu-mobile-content ">
                 <div class="menu-mobile-search">
                     <form action="{{ route('search') }}" method="get">
-                        <input type="text" name="k" value="{{ request()->get('k') }}" required placeholder="Tìm kiếm..." class=" menu-search--mobile">
+                        <input type="text" name="k" value="{{ request()->get('k') }}" required
+                            placeholder="Tìm kiếm..." class=" menu-search--mobile">
                     </form>
                 </div>
                 <button class="btn-close-menu">

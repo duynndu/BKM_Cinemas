@@ -286,12 +286,20 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-6">
+                                            <div class="col-5">
                                                 <div class="card-body">
                                                     <label
                                                         class="form-label">{{ __('language.admin.posts.hot') }}</label><br>
                                                     <input {{ $post->hot == 1 ? 'checked' : '' }} class="form-check-input"
                                                         type="checkbox" id="hot" name="hot" value="1">
+                                                </div>
+                                            </div>
+                                            <div class="col-7">
+                                                <div class="card-body">
+                                                    <label
+                                                        class="form-label">Tin khuyến mãi</label><br>
+                                                    <input {{ $post->promotion == 1 ? 'checked' : '' }} class="form-check-input" type="checkbox" id="promotion"
+                                                        name="promotion" value="1">
                                                 </div>
                                             </div>
                                         </div>

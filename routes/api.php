@@ -102,6 +102,7 @@ Route::name('api.')->group(function () {
             ->name('changeRefundStatus');
     });
 
+
     Route::controller(VoucherController::class)->prefix('vouchers')->name('vouchers.')->group(function () {
         Route::get('', 'index');
         Route::get('getUserVouchers', 'getUserVouchers');

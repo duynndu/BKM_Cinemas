@@ -28,26 +28,28 @@
                 @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
                     <div class="row">
                         <div class="col-xl-6">
-                            <div class="page-titles d-flex justify-content-center align-items-center" style="position: relative; z-index: 2; padding-right: 0;">
-                                <div class="row">
-                                    <h4 class="title text-uppercase mb-3 text-black">Chọn thành phố, khu vực</h4>
-                                </div>
-                                <div class="d-flex justify-content-center align-items-center mb-3">
+                            <div class="card d-flex justify-content-center p-4" style="position: relative; z-index: 99; padding-right: 0;">
+                                <div class="d-flex justify-content-center flex-column">
                                     <div class="row">
-                                        <div class="col">
-                                            @if($data['cities']->isNotEmpty())
-                                                <select data-url="{{ route('admin.dashboards.getAreaByCity') }}" class="select2" name="city_id" id="city_id">
-                                                    <option value="">-- Chọn thành phố --</option>
-                                                    @foreach($data['cities'] as $key => $city)
-                                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                                    @endforeach
+                                        <h4 class="title text-uppercase mb-3 text-black text-center">Chọn thành phố, khu vực</h4>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div style="width: 255px;">
+                                                @if($data['cities']->isNotEmpty())
+                                                    <select data-url="{{ route('admin.dashboards.getAreaByCity') }}" class="select2-with-label-multiple w-100" name="city_id" id="city_id">
+                                                        <option value="">-- Chọn thành phố --</option>
+                                                        @foreach($data['cities'] as $key => $city)
+                                                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                @endif
+                                            </div>
+                                            <div style="width: 255px;margin-left: 20px;">
+                                                <select data-url="{{ route('admin.dashboards.getCinemaByArea') }}" class="select2-with-label-multiple" name="area_id" id="area_id">
+                                                    <option value="">-- Chọn khu vực --</option>
                                                 </select>
-                                            @endif
-                                        </div>
-                                        <div class="col" style="margin-left: 20px;">
-                                            <select data-url="{{ route('admin.dashboards.getCinemaByArea') }}" class="select2" name="area_id" id="area_id">
-                                                <option value="">-- Chọn khu vực --</option>
-                                            </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -346,8 +348,8 @@
 
                                                     <div class="row">
                                                         @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
-                                                            <div class="col" style="margin-left: 20px;">
-                                                                <select class="select2" name="cinema_id" id="cinema_id">
+                                                            <div class="col" style="margin-left: 20px;width: 255px;">
+                                                                <select class="select2-with-label-multiple" name="cinema_id" id="cinema_id">
                                                                     <option value="">-- Chọn rạp --</option>
                                                                 </select>
                                                             </div>

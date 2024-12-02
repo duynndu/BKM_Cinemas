@@ -18,7 +18,6 @@ class Room extends Model
         'room_seats' => 'json',
     ];
 
-
     public function seats()
     {
         return $this->hasMany(Seat::class);

@@ -7,9 +7,13 @@ use App\Repositories\Client\Bookings\Interfaces\BookingInterface;
 use App\Repositories\Client\Bookings\Repositories\BookingRepository;
 use App\Repositories\Client\Movies\Interfaces\MoviesRepositoryInterface;
 use App\Repositories\Client\Movies\Repositories\MoviesRepository;
+use App\Repositories\Client\Views\Interfaces\ViewInterface;
+use App\Repositories\Client\Views\Repositories\ViewRepository;
 use App\Services\Admin\Orders\Services\OrderService;
 use App\Services\Client\Bookings\Interfaces\BookingServiceInterface;
 use App\Services\Client\Bookings\Services\BookingService;
+use App\Services\Client\Views\Interfaces\ViewServiceInterface;
+use App\Services\Client\Views\Services\ViewDataService;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -131,6 +135,8 @@ use App\Repositories\Client\Transactions\Repositories\TransactionRepository;
 use App\Services\Auth\Client\ChangePasswords\Services\ChangePasswordService;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use App\Repositories\Admin\CategoryPosts\Repositories\CategoryPostRepository;
+use App\Repositories\Admin\Contacts\Repositories\ContactRepository;
+use App\Repositories\Admin\Contacts\Interfaces\ContactInterface;
 use App\Repositories\Admin\Dashboards\Interfaces\DashboardInterface;
 use App\Repositories\Admin\Dashboards\Repositories\DashboardRepository;
 use App\Repositories\Admin\Notifications\Interfaces\NotificationInterface;
@@ -155,6 +161,8 @@ use App\Repositories\Client\Cities\Repositories\CityRepository as ClientCityRepo
 use App\Repositories\Client\Home\Repository\HomeRepository;
 use App\Repositories\Client\Systems\Interfaces\SystemInterface as InterfacesSystemInterface;
 use App\Repositories\Client\Systems\Repositories\SystemRepository as RepositoriesSystemRepository;
+use App\Services\Admin\Contacts\Interfaces\ContactServiceInterface;
+use App\Services\Admin\Contacts\Services\ContactService;
 use App\Repositories\Client\Rewards\Interfaces\RewardInterface as ClientRewardInterface;
 use App\Repositories\Client\Rewards\Repositories\RewardRepository as ClientRewardRepository;
 use App\Services\Admin\Notifications\Interfaces\NotificationServiceInterface;
@@ -168,12 +176,12 @@ use App\Services\Admin\Vouchers\Interfaces\VoucherServiceInterface;
 use App\Services\Admin\Vouchers\Services\VoucherService;
 use App\Services\Auth\Client\ChangePasswords\Interfaces\ChangePasswordServiceInterface;
 use App\Services\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordServicesInterface;
-use App\Services\Client\Abouts\Interfaces\AboutServiceInterface;
-use App\Services\Client\Abouts\Services\AboutService;
 use App\Services\Client\Users\Interfaces\UserServiceInterface as ClientUserServiceInterface;
 use App\Services\Client\Cities\Interfaces\CityServiceInterface as ClientCityServiceInterface;
 use App\Services\Client\Movies\Services\MovieService as ServicesMovieService;
 use App\Services\Client\Movies\Interfaces\MovieServiceInterface as InterfacesMovieServiceInterface;
+use App\Services\Client\Systems\Interfaces\SystemServiceInterface as InterfacesSystemServiceInterface;
+use App\Services\Client\Systems\Services\SystemService as ServicesSystemService;
 use App\Services\Client\Rewards\Interfaces\RewardServiceInterface as ClientRewardServiceInterface;
 use App\Services\Client\Rewards\Services\RewardService as ClientRewardService;
 
@@ -242,9 +250,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(OrderServiceInterface       ::class, OrderService          ::class);
         $this->app->bind(NotificationInterface       ::class, NotificationRepository::class);
         $this->app->bind(NotificationServiceInterface::class, NotificationService   ::class);
+        $this->app->bind(ContactInterface            ::class, ContactRepository     ::class);
+        $this->app->bind(ContactServiceInterface     ::class, ContactService        ::class);
         // End admin
 
         // Client
+        $this->app->bind(ViewInterface                      ::class, ViewRepository               ::class);
+        $this->app->bind(ViewServiceInterface               ::class, ViewDataService              ::class);
         $this->app->bind(RegisterInterface                  ::class, RegisterRepository           ::class);
         $this->app->bind(RegisterServiceInterface           ::class, RegisterService              ::class);
         $this->app->bind(ForgotPasswordInterface            ::class, ForgotPasswordRepository     ::class);
@@ -260,9 +272,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryPostServiceInterfaceClient ::class, CategoryPostServiceClient    ::class);
         $this->app->bind(CategoryPostInterfaceClient        ::class, CategoryPostRepositoryClient ::class);
 
-
         $this->app->bind(InterfacesSystemInterface          ::class, RepositoriesSystemRepository ::class);
-        $this->app->bind(AboutServiceInterface              ::class, AboutService                 ::class);
+        $this->app->bind(InterfacesSystemServiceInterface   ::class, ServicesSystemService        ::class);
         $this->app->bind(ClientCityInterface                ::class, ClientCityRepository         ::class);
         $this->app->bind(ClientCityServiceInterface         ::class, ClientCityService            ::class);
         $this->app->bind(DepositInterface                   ::class, DepositRepository            ::class);
@@ -288,7 +299,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Admin
         View::composer('admin.partials.sidebar', GetAllDataComposer::class);
-
+        View::composer('client.partials.*', GetAllDataComposer::class);
         // if (env('APP_ENV') !== 'local') {
         //     URL::forceScheme('https');
         // }
