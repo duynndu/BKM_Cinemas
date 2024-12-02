@@ -13,7 +13,6 @@ class CityController extends Controller
 {
     protected $cityService;
 
-
     public function __construct(
         CityServiceInterface $cityService
     ){

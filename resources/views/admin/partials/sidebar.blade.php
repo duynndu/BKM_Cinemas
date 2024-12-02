@@ -272,15 +272,15 @@
                                 <a href="{{ route('admin.foods.index') }}" aria-expanded="false">Đồ ăn</a>
                             </li>
                         @endcan
-                        @can('viewAny', App\Models\FoodCombo::class)
-                            <li>
-                                <a href="{{ route('admin.food-combos.index') }}" aria-expanded="false">Combo</a>
-                            </li>
-                        @endcan
                     </ul>
                 </li>
             @endif
-
+            <li>
+                <a class="" href="{{ route('admin.contacts.index') }}" aria-expanded="false">
+                    <i class="material-icons">contacts</i>
+                    <span class="nav-text">Liên hệ</span>
+                </a>
+            </li>
             @if (auth()->user()->can('viewAny', App\Models\User::class) ||
                     auth()->user()->can('viewAny', App\Models\Role::class) ||
                     auth()->user()->can('viewAny', App\Models\Module::class))
@@ -313,7 +313,6 @@
                     </ul>
                 </li>
             @endif
-
         </ul>
     </div>
 </div>
