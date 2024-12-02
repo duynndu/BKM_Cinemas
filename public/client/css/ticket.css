@@ -8470,7 +8470,7 @@ label:hover:before {
 }
 
 #main-right #main-right-content .right-content #current-select .select.seats {
-    color: #ed1e24
+    /* color: #ed1e24; */
 }
 
 #main-right #main-right-content .right-content #current-select .select.combo a.show-combo {

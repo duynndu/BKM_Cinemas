@@ -64,7 +64,6 @@ class BookingController extends Controller
             $booking->user_id = auth()->id();
             $booking->movie_id = $request->movie_id;
             $booking->showtime_id = $request->showtime_id;
-            $booking->payment_id = $request->payment_id;
             $booking->save();
             $booking->seatsBooking()->createMany($seats);
             $booking->foodsBooking()->createMany($foods);

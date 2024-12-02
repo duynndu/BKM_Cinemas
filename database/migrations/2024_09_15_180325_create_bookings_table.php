@@ -19,8 +19,16 @@ return new class extends Migration
             $table->bigInteger('cinema_id'); // id cinema
             $table->bigInteger('showtime_id'); // Thời điểm chiếu (khung giờ chiếu)
             $table->bigInteger('user_id'); // Người đặt vé
-            $table->bigInteger('payment_id'); // id hình thức thanh toán
+            $table->enum('payment_method', [
+                'vnpay',
+                'momo',
+                'zalopay',
+                'customer'
+            ]); // id hình thức thanh toán
+            $table->bigInteger('voucher_id')->nullable();
             $table->decimal('total_price', 10, 2)->default(0); // Tổng tiền
+            $table->decimal('final_price', 10, 2)->nullable(); // Giá sau khi áp dụng voucher
+            $table->decimal('discount_price', 10, 2)->nullable(); // Giá trị giảm giá
             $table->enum('status', [
                 'completed',
                 'cancelled',

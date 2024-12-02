@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Movie;
 use App\Models\MovieGenre;
 use App\Models\CategoryPost;
+use App\Models\Notification;
 use App\Models\PostCategory;
 use App\Models\User;
 use App\Repositories\Client\Home\Interface\HomeRepositoryInterface;
@@ -19,15 +20,24 @@ class HomeRepository implements HomeRepositoryInterface
     protected $post;
     protected $categoryPost;
     protected $postCategory;
+    protected $notification;
 
 
-    public function __construct(Movie $movie, MovieGenre $movieGenre, Post $post, CategoryPost $categoryPost, PostCategory $postCategory)
+    public function __construct(
+        Movie $movie,
+         MovieGenre $movieGenre,
+          Post $post,
+           CategoryPost $categoryPost,
+            PostCategory $postCategory,
+            Notification $notification
+            )
     {
         $this->movie = $movie;
         $this->post = $post;
         $this->categoryPost = $categoryPost;
         $this->postCategory = $postCategory;
         $this->movieGenre = $movieGenre;
+        $this->notification = $notification;
     }
 
     public function sliders()
@@ -98,5 +108,10 @@ class HomeRepository implements HomeRepositoryInterface
                 'message' => 'Đăng ký nhận tin thành công',
             ],200);
         }
+    }
+
+    public function deleteNotification($id){
+        $this->notification->find($id)->delete();
+        return response()->json(['message' => 'Xóa thành công'],204);
     }
 }

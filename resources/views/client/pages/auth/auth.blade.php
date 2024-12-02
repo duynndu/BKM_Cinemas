@@ -394,7 +394,7 @@
                                                 </span>
                                             </p>
                                             <p>Điểm tích lũy: <span
-                                                    class="point">{{ !empty(Auth::user()->points) ? Auth::user()->points : 0 }}</span>
+                                                    class="point">{{ !empty(Auth::user()->points) ? number_format(Auth::user()->points, 0, ',', '.') : 0 }}</span>
                                                 điểm
                                                 <a href="javascript:;" data-modal="#modalPoints" title="Xem quy tắc đổi điểm"
                                                     class="no-verify open-modal">
@@ -706,7 +706,7 @@
 
                         <div id="tichluydiem" class="mbox tab-pane fade">
                             <div class="title">
-                                <h2>Tích lũy điểm</h2>
+                                <h2>Tích lũy quà</h2>
                             </div>
                             <div style="padding: 20px 20px;">
                                 <div class="row flex">
@@ -717,7 +717,7 @@
                                             </h3>
                                             <p>Bạn hiện đang có:
                                                 <span
-                                                    class="highlight-points">{{ number_format(Auth::user()->exp, 0, ',', '.') }}
+                                                    class="highlight-points">{{ number_format(Auth::user()->points, 0, ',', '.') }}
                                                     điểm</span>
                                             </p>
                                             <p>Cấp bậc hiện tại:
@@ -749,10 +749,10 @@
                                             <hr>
                                             <h4>Quy đổi điểm:</h4>
                                             <ul class="list-points">
-                                                <li>🎁 <strong>BKM Member:</strong> 1 điểm = 1.000 đ</li>
-                                                <li>🎁 <strong>BKM VIP:</strong> 2 điểm = 2.000 đ</li>
-                                                <li>🎁 <strong>BKM VVIP:</strong> 3 điểm = 3.000 đ</li>
-                                                <li>🎁 Các phần quà hấp dẫn khác 👇</li>
+                                                <li>🎁 <strong>Đổi điểm nhận nước uống tùy chọn</strong></li>
+                                                <li>🎁 <strong>Đổi điểm nhận bắp ngọt</strong></li>
+                                                <li>🎁 <strong>Đổi điểm nhận vé xem phim 2D/3D</strong></li>
+                                                <li>🎁 <strong>Các phần quà hấp dẫn khác 👇</strong></li>
                                             </ul>
                                             <button class="btn btn-primary btn-redeem btn-login open-modal"
                                                 data-modal="#modalExchangeExp">Đổi thưởng</button>
@@ -773,19 +773,6 @@
                         <div id="uudaichung" class="mbox tab-pane fade">
                             <div class="title">
                                 <h2>Ưu đãi chung</h2>
-                            </div>
-                            <div class="box-body">
-                                <div class="row flex">
-                                    <div class="col-md-12 col-sm-12">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="dkdoithuong" class="mbox tab-pane fade">
-                            <div class="title">
-                                <h2>Điều kiện đổi thưởng</h2>
                             </div>
                             <div class="box-body">
                                 <div class="row flex">
@@ -1141,37 +1128,13 @@
                                     điểm</strong> sẽ được tích vào tài khoản <strong>4 điểm</strong>)</li>
                         </ul>
 
-                        <h4>3. Hạng thành viên và tỷ lệ ưu đãi</h4>
-                        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-                            <thead>
-                                <tr>
-                                    <th style="border: 1px solid #ddd; padding: 8px;">Hạng thành viên</th>
-                                    <th style="border: 1px solid #ddd; padding: 8px;">Tỷ lệ quy đổi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM Member 🥈</td>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">1 Điểm = 1.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM VIP 🌟</td>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">2 Điểm = 2.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">BKM VVIP 👑</td>
-                                    <td style="border: 1px solid #ddd; padding: 8px;">3 Điểm = 3.000 đ</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <h4>4. Thời gian xử lý yêu cầu</h4>
+                        <h4>3. Thời gian xử lý yêu cầu</h4>
                         <ul>
                             <li>Thời gian xử lý: <strong>24-48 giờ</strong> kể từ khi gửi yêu cầu.</li>
                             <li>Trường hợp bảo trì, hệ thống sẽ thông báo thời gian xử lý qua email hoặc tin nhắn.</li>
                         </ul>
 
-                        <h4>5. Quy định bổ sung</h4>
+                        <h4>4. Quy định bổ sung</h4>
                         <ul>
                             <li>Mỗi tài khoản được đổi tối đa <strong>10 giao dịch/ngày</strong>.</li>
                             <li>Điểm thưởng tối thiểu cho mỗi giao dịch: <strong>20 điểm</strong>.</li>

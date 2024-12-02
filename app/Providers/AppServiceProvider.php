@@ -7,9 +7,13 @@ use App\Repositories\Client\Bookings\Interfaces\BookingInterface;
 use App\Repositories\Client\Bookings\Repositories\BookingRepository;
 use App\Repositories\Client\Movies\Interfaces\MoviesRepositoryInterface;
 use App\Repositories\Client\Movies\Repositories\MoviesRepository;
+use App\Repositories\Client\Views\Interfaces\ViewInterface;
+use App\Repositories\Client\Views\Repositories\ViewRepository;
 use App\Services\Admin\Orders\Services\OrderService;
 use App\Services\Client\Bookings\Interfaces\BookingServiceInterface;
 use App\Services\Client\Bookings\Services\BookingService;
+use App\Services\Client\Views\Interfaces\ViewServiceInterface;
+use App\Services\Client\Views\Services\ViewDataService;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -155,6 +159,8 @@ use App\Repositories\Client\Cities\Repositories\CityRepository as ClientCityRepo
 use App\Repositories\Client\Home\Repository\HomeRepository;
 use App\Repositories\Client\Systems\Interfaces\SystemInterface as InterfacesSystemInterface;
 use App\Repositories\Client\Systems\Repositories\SystemRepository as RepositoriesSystemRepository;
+use App\Repositories\Client\Rewards\Interfaces\RewardInterface as ClientRewardInterface;
+use App\Repositories\Client\Rewards\Repositories\RewardRepository as ClientRewardRepository;
 use App\Services\Admin\Notifications\Interfaces\NotificationServiceInterface;
 use App\Services\Admin\Notifications\Services\NotificationService;
 use App\Services\Admin\Dashboards\Interfaces\DashboardServiceInterface;
@@ -172,6 +178,9 @@ use App\Services\Client\Users\Interfaces\UserServiceInterface as ClientUserServi
 use App\Services\Client\Cities\Interfaces\CityServiceInterface as ClientCityServiceInterface;
 use App\Services\Client\Movies\Services\MovieService as ServicesMovieService;
 use App\Services\Client\Movies\Interfaces\MovieServiceInterface as InterfacesMovieServiceInterface;
+use App\Services\Client\Rewards\Interfaces\RewardServiceInterface as ClientRewardServiceInterface;
+use App\Services\Client\Rewards\Services\RewardService as ClientRewardService;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -240,6 +249,8 @@ class AppServiceProvider extends ServiceProvider
         // End admin
 
         // Client
+        $this->app->bind(ViewInterface                      ::class, ViewRepository               ::class);
+        $this->app->bind(ViewServiceInterface               ::class, ViewDataService              ::class);
         $this->app->bind(RegisterInterface                  ::class, RegisterRepository           ::class);
         $this->app->bind(RegisterServiceInterface           ::class, RegisterService              ::class);
         $this->app->bind(ForgotPasswordInterface            ::class, ForgotPasswordRepository     ::class);
@@ -268,7 +279,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ClientUserServiceInterface         ::class, ClientUserService            ::class);
         $this->app->bind(BookingInterface                   ::class, BookingRepository            ::class);
         $this->app->bind(BookingServiceInterface            ::class, BookingService               ::class);
-
+        $this->app->bind(ClientRewardInterface              ::class, ClientRewardRepository       ::class);
+        $this->app->bind(RewardServiceInterface             ::class, RewardService                ::class);
+        $this->app->bind(ClientRewardServiceInterface       ::class, ClientRewardService          ::class);
 
         // End client
     }
@@ -281,7 +294,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Admin
         View::composer('admin.partials.sidebar', GetAllDataComposer::class);
-
+        View::composer('client.partials.*', GetAllDataComposer::class);
         // if (env('APP_ENV') !== 'local') {
         //     URL::forceScheme('https');
         // }

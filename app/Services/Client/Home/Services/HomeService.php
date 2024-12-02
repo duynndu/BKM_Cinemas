@@ -42,4 +42,8 @@ class HomeService  implements HomeServiceInterface
         return $this->homeRepository->emailSubscribe($request);
     }
 
+    public function deleteNotification($id){
+        return $this->homeRepository->deleteNotification($id);
+    }
+
 }

@@ -3,23 +3,6 @@
 @section('title', 'Bảng điều khiển')
 
 @section('css')
-    <style>
-        h6.post-dashboard {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            display: inline-block;
-            width: 308px;
-        }
-
-        h4.total-revenue {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            display: inline-block;
-            width: 550px;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -42,111 +25,36 @@
                 </div>
 
                 <!-- Bộ lọc -->
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="page-titles" style="position: relative; z-index: 2;">
-                            <div class="card-header pb-0 border-0 flex-wrap">
-                                <div class="d-flex align-items-center mb-3">
-                                    <form id="revenueAndTicketForm"
-                                          action="{{ route('admin.dashboards.getRevenueAndTicketData') }}"
-                                          method="post">
-                                        @csrf
-                                        <div class="d-flex align-items-center">
-                                            <div class="row">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <select class="select2" name="filter" id="filter">
-                                                                <option value="">-- Tất cả --</option>
-                                                                <option value="day">Thống kê theo ngày</option>
-                                                                <option value="month">Thống kê theo tháng</option>
-                                                                <option value="year">Thống kê theo năm</option>
-                                                                <option value="range">Thống kê theo khoảng thời gian</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <!-- Lọc theo ngày cụ thể -->
-                                                        <div class="col" id="dayFilter" style="display: none;">
-                                                            <input type="date" id="dateFilter" name="date" class="form-control" max="{{ \Carbon\Carbon::today()->toDateString() }}">
-                                                        </div>
-
-                                                        <div class="col" id="monthFilter" style="display: none;">
-                                                            <div class="d-flex align-items-center">
-                                                                <div style="margin-right: 20px;">
-                                                                    <select id="monthSelect" class="select2"
-                                                                            name="month">
-                                                                        <option value="">-- Chọn tháng --</option>
-                                                                        @for ($i = 1; $i <= 12; $i++)
-                                                                            <option value="{{ $i }}">Tháng
-                                                                                {{ $i }}</option>
-                                                                        @endfor
-                                                                    </select>
-                                                                </div>
-                                                                <div>
-                                                                    <select id="yearSelect" class="select2"
-                                                                            name="yearMonth">
-                                                                        <option value="">-- Chọn năm --</option>
-                                                                        @for ($i = 2000; $i <= \Carbon\Carbon::now()->year; $i++)
-                                                                            <option value="{{ $i }}">
-                                                                                {{ $i }}</option>
-                                                                        @endfor
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Lọc theo năm -->
-                                                        <div class="col" id="yearFilter" style="display: none;">
-                                                            <select id="yearSelect2" class="select2" name="year_filter">
-                                                                <option value="">-- Chọn Năm --</option>
-                                                                @for ($i = 2000; $i <= \Carbon\Carbon::now()->year; $i++)
-                                                                    <option value="{{ $i }}">
-                                                                        {{ $i }}</option>
-                                                                @endfor
-                                                            </select>
-                                                        </div>
-
-                                                        <!-- Lọc theo khoảng thời gian -->
-                                                        <div class="col" id="rangeFilter" style="display: none;">
-                                                            <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="start_date" class="form-control"
-                                                                   id="start_date">
-                                                        </div>
-
-                                                        <div class="col" id="rangeFilterEnd" style="display: none;">
-                                                            <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="end_date" class="form-control"
-                                                                   id="end_date">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
-                                                            <div class="col" style="margin-left: 20px;">
-                                                                @if($data['cinemas']->isNotEmpty())
-                                                                    <select class="select2" name="cinema_id" id="cinema_id">
-                                                                        <option value="">-- Chọn rạp --</option>
-                                                                        @foreach($data['cinemas'] as $key => $cinema)
-                                                                            <option value="{{ $cinema->id }}">{{ $cinema->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                @endif
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row" style="margin-left: 20px">
-                                                <div class="col text-end">
-                                                    <button type="button" class="btn btn-primary"
-                                                            id="btnFilter">Lọc</button>
-                                                </div>
-                                            </div>
+                @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="page-titles d-flex justify-content-center align-items-center" style="position: relative; z-index: 2; padding-right: 0;">
+                                <div class="row">
+                                    <h4 class="title text-uppercase mb-3 text-black">Chọn thành phố, khu vực</h4>
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center mb-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            @if($data['cities']->isNotEmpty())
+                                                <select data-url="{{ route('admin.dashboards.getAreaByCity') }}" class="select2" name="city_id" id="city_id">
+                                                    <option value="">-- Chọn thành phố --</option>
+                                                    @foreach($data['cities'] as $key => $city)
+                                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            @endif
                                         </div>
-                                    </form>
+                                        <div class="col" style="margin-left: 20px;">
+                                            <select data-url="{{ route('admin.dashboards.getCinemaByArea') }}" class="select2" name="area_id" id="area_id">
+                                                <option value="">-- Chọn khu vực --</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 <div class="row">
                     <div class="col-6">
@@ -360,6 +268,106 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="page-titles" style="position: relative; z-index: 2;">
+                            <div class="card-header pb-0 border-0 flex-wrap">
+                                <div class="d-flex align-items-center mb-3">
+                                    <form id="revenueAndTicketForm"
+                                          action="{{ route('admin.dashboards.getRevenueAndTicketData') }}"
+                                          method="post">
+                                        @csrf
+                                        <div class="d-flex align-items-center">
+                                            <div class="row">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <select class="select2" name="filter" id="filter">
+                                                                <option value="">-- Tất cả --</option>
+                                                                <option value="day">Thống kê theo ngày</option>
+                                                                <option value="month">Thống kê theo tháng</option>
+                                                                <option value="year">Thống kê theo năm</option>
+                                                                <option value="range">Thống kê theo khoảng thời gian</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <!-- Lọc theo ngày cụ thể -->
+                                                        <div class="col" id="dayFilter" style="display: none;">
+                                                            <input type="date" id="dateFilter" name="date" class="form-control" max="{{ \Carbon\Carbon::today()->toDateString() }}">
+                                                        </div>
+
+                                                        <div class="col" id="monthFilter" style="display: none;">
+                                                            <div class="d-flex align-items-center">
+                                                                <div style="margin-right: 20px;">
+                                                                    <select id="monthSelect" class="select2"
+                                                                            name="month">
+                                                                        <option value="">-- Chọn tháng --</option>
+                                                                        @for ($i = 1; $i <= 12; $i++)
+                                                                            <option value="{{ $i }}">Tháng
+                                                                                {{ $i }}</option>
+                                                                        @endfor
+                                                                    </select>
+                                                                </div>
+                                                                <div>
+                                                                    <select id="yearSelect" class="select2"
+                                                                            name="yearMonth">
+                                                                        <option value="">-- Chọn năm --</option>
+                                                                        @for ($i = 2000; $i <= \Carbon\Carbon::now()->year; $i++)
+                                                                            <option value="{{ $i }}">
+                                                                                {{ $i }}</option>
+                                                                        @endfor
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Lọc theo năm -->
+                                                        <div class="col" id="yearFilter" style="display: none;">
+                                                            <select id="yearSelect2" class="select2" name="year_filter">
+                                                                <option value="">-- Chọn Năm --</option>
+                                                                @for ($i = 2000; $i <= \Carbon\Carbon::now()->year; $i++)
+                                                                    <option value="{{ $i }}">
+                                                                        {{ $i }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+
+                                                        <!-- Lọc theo khoảng thời gian -->
+                                                        <div class="col" id="rangeFilter" style="display: none;">
+                                                            <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="start_date" class="form-control"
+                                                                   id="start_date">
+                                                        </div>
+
+                                                        <div class="col" id="rangeFilterEnd" style="display: none;">
+                                                            <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="end_date" class="form-control"
+                                                                   id="end_date">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
+                                                            <div class="col" style="margin-left: 20px;">
+                                                                <select class="select2" name="cinema_id" id="cinema_id">
+                                                                    <option value="">-- Chọn rạp --</option>
+                                                                </select>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-left: 20px">
+                                                <div class="col text-end">
+                                                    <button type="button" class="btn btn-primary"
+                                                            id="btnFilter">Lọc</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-xl-8">
@@ -480,230 +488,5 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function() {
-            $('#filter').on('change', function() {
-                var filter = $(this).val();
-
-                $('#dayFilter').hide().find('input').val('');
-                $('#monthFilter').hide().find('select').val('').trigger('change.select2');
-                $('#yearFilter').hide().find('select').val('').trigger('change.select2');
-                $('#rangeFilter').hide().find('input').val('');
-                $('#rangeFilterEnd').hide().find('input').val('');
-
-                if (filter === 'day') {
-                    $('#dayFilter').show().find('input').val('');
-                } else if (filter === 'month') {
-                    $('#monthFilter').show();
-                    $('#monthFilter select').val('').selectpicker('refresh');
-                } else if (filter === 'year') {
-                    $('#yearFilter').show();
-                    $('#yearFilter select').val('').selectpicker('refresh');
-                } else if (filter === 'range') {
-                    $('#rangeFilter').show().find('input').val('');
-                    $('#rangeFilterEnd').show().find('input').val('');
-                }
-            });
-
-            const ctx = $('#myChart')[0].getContext('2d');
-            const myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: [],
-                    datasets: [
-                        {
-                            label: 'Doanh thu (VNĐ)',
-                            backgroundColor: 'rgba(255, 165, 0, 0.2)',
-                            borderColor: 'rgba(255, 165, 0, 1)',
-                            borderWidth: 1,
-                            data: [],
-                            barThickness: 70,
-                            maxBarThickness: 80,
-                        },
-                        {
-                            label: 'Số vé',
-                            data: [],
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            type: 'line',
-                            borderWidth: 2,
-                            tension: 0.4,
-                            fill: false
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Số vé'
-                            },
-                            ticks: {
-                                callback: function(value, index, values) {
-                                    const label = this.getLabelForValue(value);
-                                    return label.length > 15 ? label.substring(0, 30) + "..." : label;
-                                }
-                            }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Doanh thu (VNĐ)'
-                            }
-                        }
-                    }
-                }
-            });
-
-            const ctxStatusBookingCinemaChart = $('#statusBookingCinemaChart')[0].getContext('2d');
-            const statusBookingCinemaChart = new Chart(ctxStatusBookingCinemaChart, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Số vé hoàn thành', 'Số vé chờ hủy', 'Số vé đã hủy', 'Số vé từ chối hủy'],
-                    datasets: [
-                        {
-                            label: 'Trạng thái vé',
-                            data: [],
-                            backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0'],
-                            hoverOffset: 4
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                color: '#333',
-                                font: {
-                                    size: 14
-                                }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function (tooltipItem) {
-                                    const value = tooltipItem.raw;
-                                    return `Số lượng: ${value}`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            $('#btnFilter').on('click', function () {
-                var filter = $('#filter').val();
-                var date = $('#dateFilter').val();
-                var month = $('#monthSelect').val();
-                var yearMonth = $('#yearSelect').val();
-                var year = $('#yearSelect2').val();
-                var startDate = $('#start_date').val();
-                var endDate = $('#end_date').val();
-                var cinema_id = $('#cinema_id').val();
-
-                var data = {
-                    filter: filter,
-                    date: date,
-                    month: month,
-                    yearMonth: yearMonth,
-                    year_filter: year,
-                    start_date: startDate,
-                    end_date: endDate,
-                    cinema_id: cinema_id,
-                    _token: $('input[name="_token"]').val()
-                };
-
-                $.ajax({
-                    url: $('#revenueAndTicketForm').attr('action'),
-                    method: 'GET',
-                    data: data,
-                    dataType: 'json',
-                    success: function (response) {
-                        console.log(response);
-                        const chartData = response.chart;
-
-                        if (response.cinemaId !== null) {
-                            var revenueCinemaBox = $('.revenue_cinema');
-                            revenueCinemaBox.css('display', 'block');
-                        }
-
-                        // $('.totalTicketsInMonth_number').text(response.totalTicketsInMonth);
-                        $('.totalTicketsCompleted_number').text(response.totalTicketsCompleted);
-                        $('.totalTicketsWaitingForCancellation_number').text(response.totalTicketsWaitingForCancellation);
-                        $('.totalTicketsCancelled_number').text(response.totalTicketsCancelled);
-                        $('.totalTicketsRejected_number').text(response.totalTicketsRejected);
-
-                        const labels = chartData.map(item => item.movie_name_and_date);
-                        const revenues = chartData.map(item => item.total_revenue);
-                        const movieCounts = chartData.map(item => item.movie_count);
-
-                        myChart.data.labels = labels;
-                        myChart.data.datasets[0].data = revenues;
-                        myChart.data.datasets[1].data = movieCounts;
-                        myChart.update();
-
-                        const statusCounts = [
-                            response.totalTicketsCompleted,              // Số vé hoàn thành
-                            response.totalTicketsWaitingForCancellation, // Số vé chờ hủy
-                            response.totalTicketsCancelled,              // Số vé đã hủy
-                            response.totalTicketsRejected                // Số vé từ chối hủy
-                        ];
-
-                        statusBookingCinemaChart.data.datasets[0].data = statusCounts;
-                        statusBookingCinemaChart.update();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Lỗi khi tải dữ liệu biểu đồ:', error);
-                    }
-                });
-            });
-
-
-            $.ajax({
-                url: $('#revenueAndTicketForm').attr('action'),
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    const chartData = response.chart;
-
-                    const revenuaData = $('.revenuaData');
-                    let totalRevenue = 0;
-
-                    for (let i = 0; i < chartData.length; i++) {
-                        totalRevenue += chartData[i].total_revenue;
-                    }
-
-                    revenuaData.text(totalRevenue.toLocaleString('vi-VN') + ' VNĐ');
-
-                    const labels = chartData.map(item => item.movie_name_and_date);
-                    const revenues = chartData.map(item => item.total_revenue);
-                    const movieCounts = chartData.map(item => item.movie_count);
-
-                    myChart.data.labels = labels;
-                    myChart.data.datasets[0].data = revenues;
-                    myChart.data.datasets[1].data = movieCounts;
-                    myChart.update();
-
-                    const statusCounts = [
-                        response.totalTicketsCompleted,              // Số vé hoàn thành
-                        response.totalTicketsWaitingForCancellation, // Số vé chờ hủy
-                        response.totalTicketsCancelled,              // Số vé đã hủy
-                        response.totalTicketsRejected                // Số vé từ chối hủy
-                    ];
-
-                    statusBookingCinemaChart.data.datasets[0].data = statusCounts;
-                    statusBookingCinemaChart.update();
-                },
-                error: function(xhr, status, error) {
-                    console.error('Lỗi khi tải dữ liệu biểu đồ:', error);
-                }
-            });
-
-        });
-    </script>
+    <script src="{{ asset('js/admin/commons/dashboards/dashboard.js') }}"></script>
 @endsection

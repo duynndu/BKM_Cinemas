@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Services\Admin\Areas\Interfaces\AreaServiceInterface;
 use App\Services\Admin\Cinemas\Interfaces\CinemaServiceInterface;
+use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
 use App\Services\Admin\Dashboards\Interfaces\DashboardServiceInterface;
 use Illuminate\Http\Request;
 
@@ -11,14 +14,22 @@ class DashboardController extends Controller
 {
     protected $dashboardService;
 
+    protected $cityService;
+
+    protected $areaService;
+
     protected $cinemaService;
 
     public function __construct(
-        DashboardServiceInterface $dashboardService,
-        CinemaServiceInterface    $cinemaService
+        DashboardServiceInterface   $dashboardService,
+        CityServiceInterface        $cityService,
+        AreaServiceInterface        $areaService,
+        CinemaServiceInterface      $cinemaService
     )
     {
         $this->dashboardService = $dashboardService;
+        $this->cityService = $cityService;
+        $this->areaService = $areaService;
         $this->cinemaService = $cinemaService;
     }
 
@@ -29,6 +40,8 @@ class DashboardController extends Controller
         $data['users'] = $this->dashboardService->getAllUsers();
 
         $data['movies'] = $this->dashboardService->getAllMovies();
+
+        $data['cities'] = $this->cityService->getAll();
 
         $data['cinemas'] = $this->dashboardService->getAllCinemas();
 
@@ -68,6 +81,24 @@ class DashboardController extends Controller
             'totalTicketsWaitingForCancellation'    => $data['chart']['totalTicketsWaitingForCancellation'],
             'totalTicketsCancelled'                 => $data['chart']['totalTicketsCancelled'],
             'totalTicketsRejected'                  => $data['chart']['totalTicketsRejected'],
+        ]);
+    }
+
+    public function getAreaByCity(Request $request)
+    {
+        $data['areas'] = $this->areaService->getByCityId($request->city_id);
+
+        return response()->json([
+            'areas' => $data['areas'],
+        ]);
+    }
+
+    public function getCinemaByArea(Request $request)
+    {
+        $data['cinemas'] = $this->cinemaService->getCinemaByArea($request->area_id);
+
+        return response()->json([
+            'cinemas' => $data['cinemas'],
         ]);
     }
 }

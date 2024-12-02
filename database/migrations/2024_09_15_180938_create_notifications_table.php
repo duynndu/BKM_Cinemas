@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('title');
             $table->text('content')->nullable();
             $table->enum('type', [
-                'refund','promotion'
+                'refund','promotion','all'
             ])->nullable();
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      */

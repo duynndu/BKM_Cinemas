@@ -10,4 +10,5 @@ interface HomeRepositoryInterface
     public function upcomingMovie();
     public function promotionEvent();
     public function emailSubscribe($request);
+    public function deleteNotification($id);
 }

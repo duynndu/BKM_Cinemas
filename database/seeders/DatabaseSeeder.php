@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'demo@gmail.com',
             'password' => bcrypt('1111'),
             'type' => 'admin',
+            'balance' => 9000000,
             'role_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'duynnz@gmail.com',
             'password' => bcrypt('1111'),
             'type' => 'admin',
+            'balance' => 9000000,
             'role_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
@@ -454,5 +456,75 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+        DB::table('vouchers')->insert([
+            [
+                'code' => 'DISCOUNT10',
+                'image' => 'https://example.com/voucher1.jpg',
+                'name' => 'Giảm 10%',
+                'description' => 'Giảm 10% cho đơn hàng từ 100k',
+                'discount_value' => 10,
+                'discount_condition' => 'all',
+                'condition_type' => null,
+                'level_type' => null,
+                'discount_type' => 'percentage',
+                'start_date' => Carbon::now(),
+                'end_date' => Carbon::now()->addDays(30),
+                'quantity' => 500,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'deleted_at' => null
+            ],
+            [
+                'code' => 'DISCOUNT500',
+                'image' => 'https://example.com/voucher2.jpg',
+                'name' => 'Giảm 500k',
+                'description' => 'Giảm 500k cho đơn hàng từ 500k',
+                'discount_value' => 500000,
+                'discount_condition' => 'all',
+                'condition_type' => null,
+                'level_type' => null,
+                'discount_type' => 'money',
+                'start_date' => Carbon::now(),
+                'end_date' => Carbon::now()->addDays(30),
+                'quantity' => 100,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'deleted_at' => null
+            ],
+            [
+                'code' => 'NEWUSER30',
+                'image' => 'https://example.com/voucher3.jpg',
+                'name' => 'Giảm 30% cho thành viên mới',
+                'description' => 'Giảm 30% cho thành viên mới đăng ký',
+                'discount_value' => 30,
+                'discount_condition' => 'condition',
+                'condition_type' => 'new_member',
+                'level_type' => null,
+                'discount_type' => 'percentage',
+                'start_date' => Carbon::now(),
+                'end_date' => Carbon::now()->addDays(30),
+                'quantity' => 200,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'deleted_at' => null
+            ],
+            [
+                'code' => 'VIPDISCOUNT',
+                'image' => 'https://example.com/voucher4.jpg',
+                'name' => 'Giảm 20% cho VIP',
+                'description' => 'Giảm 20% cho tài khoản VIP',
+                'discount_value' => 20,
+                'discount_condition' => 'condition',
+                'condition_type' => null,
+                'level_type' => 'vip',
+                'discount_type' => 'percentage',
+                'start_date' => Carbon::now(),
+                'end_date' => Carbon::now()->addDays(30),
+                'quantity' => 50,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'deleted_at' => null
+            ]
+        ]);
     }
 }

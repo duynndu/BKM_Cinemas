@@ -20,7 +20,7 @@ class GetAllDataComposer
         $view->with([
             'systemsByType0' => $systemsByType0
         ]);
-
         
+    
     }
 }

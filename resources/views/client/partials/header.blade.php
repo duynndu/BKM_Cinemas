@@ -1,3 +1,20 @@
+<style>
+    .del-item-notification {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        font-size: 10px;
+        border-radius: 50%;
+        background-color: #EA3B82;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    .del-item-notification:hover{
+        background-color: #b8366a;
+    }
+</style>
 <div id="header">
     <div class="container">
         <div class="logo">
@@ -18,8 +35,8 @@
                         <a class="hidden-lg btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
                         <form action="{{ route('search') }}" class="form-search visible-lg" method="get">
                             <div class="input-group">
-                                <input class="form-control" name="k" required value="{{ request()->get('k') }}" type="search"
-                                    placeholder="Tìm kiếm">
+                                <input class="form-control" name="k" required value="{{ request()->get('k') }}"
+                                    type="search" placeholder="Tìm kiếm">
                                 <button type="submit" class="submit"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
@@ -182,7 +199,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <div class="notification-box">
-                                    <div id="noti_Button" class="d-flex align-items-center justify-content-center notifications">
+                                    <div id="noti_Button"
+                                        class="d-flex align-items-center justify-content-center notifications">
                                         <i class="fa fa-bell" aria-hidden="true"></i>
                                     </div>
                                     <!--THE NOTIFICAIONS DROPDOWN BOX.-->
@@ -190,18 +208,45 @@
                                         <h3>Thông báo</h3>
                                         <div class="list-notifications">
                                             <ul>
-                                                <li>
-                                                    <a href="index.html">
-                                                        <b>NGÀY CUỐI ĐỔI ĐIỂM THÀNH VIÊN TOUCH CINEMA
-                                                            2023⚡⚡⚡</b>
-                                                        <p>Trân trọng kính mời quý khách hàng đổi điểm thưởng
-                                                            thành viên Touch Cinema (Đổi online tại app/web
-                                                            Touch Cinema cho các suất đã có lịch chiếu hoặc đổi
-                                                            trực tiếp tại quầy). 00H 1/1/2024 Hệ thống sẽ tự
-                                                            động reset điểm về 0.</p>
-                                                    </a>
-                                                </li>
-                                               
+                                                @if (
+                                                    (isset($notifications['users']) && $notifications['users']->count() > 0) ||
+                                                        (isset($notifications['all']) && $notifications['all']->count() > 0))
+                                                    @if (isset($notifications['users']) && $notifications['users']->count() > 0)
+                                                        @foreach ($notifications['users'] as $item)
+                                                            <li style="display: flex;justify-content: space-between; align-items:center"
+                                                                class="notification-item">
+                                                                <a href="#">
+                                                                    <b>
+                                                                        {{ $item->title }}
+                                                                    </b>
+                                                                    <p>{{ $item->content }}</p>
+                                                                </a>
+                                                                <button data-token="{{ csrf_token() }}"
+                                                                    data-url="{{ route('deleteNotification') }}"
+                                                                    data-id="{{ $item->id }}"
+                                                                    class="del-item-notification">
+                                                                    X
+                                                                </button>
+
+                                                            </li>
+                                                        @endforeach
+                                                    @endif
+                                                    @if (isset($notifications['all']) && $notifications['all']->count() > 0)
+                                                        @foreach ($notifications['all'] as $item)
+                                                            <li>
+                                                                <a href="#">
+                                                                    <b>
+                                                                        {{ $item->title }}
+                                                                    </b>
+                                                                    <p>{{ $item->content }}</p>
+                                                                </a>
+                                                            </li>
+                                                        @endforeach
+                                                    @endif
+                                                @else
+                                                    <h5 class="text-center">Chưa có thông báo nào!</h5>
+                                                @endif
+
                                             </ul>
                                         </div>
                                     </div>
@@ -223,7 +268,8 @@
             <div class="menu-mobile-content ">
                 <div class="menu-mobile-search">
                     <form action="{{ route('search') }}" method="get">
-                        <input type="text" name="k" value="{{ request()->get('k') }}" required placeholder="Tìm kiếm..." class=" menu-search--mobile">
+                        <input type="text" name="k" value="{{ request()->get('k') }}" required
+                            placeholder="Tìm kiếm..." class=" menu-search--mobile">
                     </form>
                 </div>
                 <button class="btn-close-menu">

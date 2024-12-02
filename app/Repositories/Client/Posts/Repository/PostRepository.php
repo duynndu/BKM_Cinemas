@@ -33,15 +33,17 @@ class PostRepository implements PostInterface
     public function getPostFirstByCateSlug($slugCate, $slug)
     {
         $post = $this->post
-            ->where('slug', $slug)
-            ->whereHas('categories', function ($query) use ($slugCate) {
-                $query->where('slug', $slugCate)
-                    ->whereNull('deleted_at');
-            })
-            ->where('active', 1)
-            ->select('name', 'slug', 'description', 'content', 'avatar', 'created_at')
-            ->first();
-
+                ->where('slug', $slug)
+                ->where('active', 1)
+                ->whereHas('postCategories', function ($query) use ($slugCate) {
+                    $query->whereNull('deleted_at') // Kiểm tra deleted_at trong bảng trung gian
+                          ->whereHas('category', function ($subQuery) use ($slugCate) {
+                              $subQuery->where('slug', $slugCate); // Kiểm tra slug của category
+                          });
+                })
+                ->select('name', 'slug', 'description', 'content', 'avatar', 'created_at')
+                ->first();
+    
         return $post;
     }
 
