@@ -155,4 +155,10 @@ class User extends Authenticatable
             'id'
         );
     }
+
+    public function usersvouchers()
+    {
+        return $this->belongsToMany(Voucher::class, 'user_vouchers')
+            ->withTimestamps();
+    }
 }

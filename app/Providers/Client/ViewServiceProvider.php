@@ -17,11 +17,14 @@ class ViewServiceProvider extends ServiceProvider
 
         View::composer('client.partials.*', function ($view) {
             $notifications = $this->viewDataService->getNotifications();
-
+            $customerCare  = $this->viewDataService->getSytemBySlug('cham-soc-khach-hang');
+            $connectWithUs = $this->viewDataService->getSytemBySlug('ket-noi-voi-chung-toi');
+            $rightFooter   = $this->viewDataService->getSytemBySlug('right-footer');
             $view->with([
                 'notifications' => $notifications,
-                //    'sidebar' => $sidebar,
-                //    'footer' => $footer,
+                'customerCare' => $customerCare,
+                'connectWithUs' => $connectWithUs,
+                'rightFooter' => $rightFooter,
             ]);
         });
     }

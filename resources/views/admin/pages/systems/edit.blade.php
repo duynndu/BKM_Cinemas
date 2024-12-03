@@ -87,7 +87,7 @@
                                             <div class="avatar-upload d-flex align-items-center">
                                                 <div class=" position-relative" style="width: 120px;">
                                                     <div class="avatar-preview">
-                                                        <div id="imagePreview" class="imagePreview"
+                                                        <div class="imagePreview"
                                                             style="background-image: url({{ asset($system->image ?? 'images/no-img-avatar.png') }});">
                                                         </div>
                                                         @if (!empty($system->image))

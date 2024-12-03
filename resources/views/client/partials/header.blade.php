@@ -143,12 +143,6 @@
                                     Phim
                                 </a>
                             </li>
-                            {{-- <li class="">
-                                <a href="lich-chieu">
-                                    Lịch chiếu
-                                </a>
-                            </li> --}}
-
                             <li class="">
                                 <a href="{{ route('post.list', 'gia-ve') }}">
                                     giá vé

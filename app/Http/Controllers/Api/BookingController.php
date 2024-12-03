@@ -127,6 +127,7 @@ class BookingController extends Controller
             if (empty($record)) {
                 return response()->json(['failed' => 'Có lỗi xảy ra!', 'id' => $id], 404);
             }
+
             if ($validated['status'] == 'waiting_for_cancellation') {
                 if (!$record->getCanCancelAttribute()) {
                     return response()->json(['failed' => 'Không thể hủy!', 'id' => $id], 400);
@@ -143,16 +144,19 @@ class BookingController extends Controller
                     'title'   => 'Người dùng ' . ($record->user->name ?? $record->user->email) . ' yêu cầu hủy vé: ' . $record->code,
                     'type'    => 'refund',
                 ]);
-            }
-
-            if ($validated['status'] != 'waiting_for_cancellation') {
+            }else{
                 Notification::where('type', 'refund')->where('user_id', $record->user_id)->delete();
             }
 
-            $record->status = $validated['status'];
             if ($validated['status'] == 'cancelled') {
                 $record->refund_status = 'pending';
+                if ($record->voucher_id != null) {
+                    $record->user->usersvouchers()->detach($record->voucher_id);
+                }
+                ResetSeatStatus::dispatch($record->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT');
             }
+
+            $record->status = $validated['status'];
             $record->save();
 
             broadcast(new OrderStatusUpdated([
@@ -164,10 +168,6 @@ class BookingController extends Controller
                 'urlChangeStatus' => route('api.orders.changeStatus', $record->id),
                 'urlGetTicket' => route('admin.orders.changeGetTickets', $record->id),
             ]));
-
-            if ($validated['status'] == 'cancelled') {
-                ResetSeatStatus::dispatch($record->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT');
-            }
 
             return response()->json(['success' => 'Thành công!', 'id' => $id], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -202,14 +202,14 @@ class BookingController extends Controller
             ) {
                 return response()->json(['failed' => 'Không đủ điều kiện hoàn tiền !', 'id' => $id], 400);
             }
-            $record->refund_status = $validated['status'];
             $user = $record->user;
 
             if ($user) {
-                $user->balance += $record->total_price;
+                $user->balance += $record->final_price;
                 $user->save();
             }
-
+            
+            $record->refund_status = $validated['status'];
             $record->save();
 
             broadcast(new OrderRefundStatusUpdated([
