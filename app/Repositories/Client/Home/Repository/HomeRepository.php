@@ -102,7 +102,6 @@ class HomeRepository implements HomeRepositoryInterface
             EmailSubscribeEvent::dispatch($request->email);
             $checkEmailExists->save();
 
-
             return response()->json([
                 'status' => 'success',
                 'message' => 'Đăng ký nhận tin thành công',

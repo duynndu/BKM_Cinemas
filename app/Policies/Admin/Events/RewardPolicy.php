@@ -4,7 +4,7 @@ namespace App\Policies\Admin\Events;
 
 use App\Models\User;
 
-class VoucherPolicy
+class RewardPolicy
 {
     public function viewAny(User $user)
     {
@@ -12,18 +12,19 @@ class VoucherPolicy
             return true;
         }
         // Kiểm tra quyền của người dùng
-        return $user->hasPermission('view-voucher');
+        return $user->hasPermission('view-reward');
     }
-    /**
+
+     /**
      * Determine whether the user can create models.
      */
     public function create(User $user)
     {
-        if ($user->type == User::TYPE_ADMIN) {
+        if($user->type == User::TYPE_ADMIN) {
             return true;
         }
 
-        return $user->hasPermission('create-voucher');
+        return $user->hasPermission('create-reward');
     }
 
     /**
@@ -31,11 +32,11 @@ class VoucherPolicy
      */
     public function update(User $user)
     {
-        if ($user->type == User::TYPE_ADMIN) {
+        if($user->type == User::TYPE_ADMIN) {
             return true;
         }
 
-        return $user->hasPermission('update-voucher');
+        return $user->hasPermission('update-reward');
     }
 
     /**
@@ -43,19 +44,19 @@ class VoucherPolicy
      */
     public function delete(User $user)
     {
-        if ($user->type == User::TYPE_ADMIN) {
+        if($user->type == User::TYPE_ADMIN) {
             return true;
         }
 
-        return $user->hasPermission('delete-voucher');
+        return $user->hasPermission('delete-reward');
     }
 
     public function deleteMultiple(User $user)
     {
-        if ($user->type == User::TYPE_ADMIN) {
+        if($user->type == User::TYPE_ADMIN) {
             return true;
         }
 
-        return $user->hasPermission('delete-multiple-voucher');
+        return $user->hasPermission('delete-multiple-reward');
     }
 }

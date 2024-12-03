@@ -3,6 +3,7 @@
 @section('title', 'BKM Cinemas - Rạp chiếu phim 3D công nghệ hàng đầu.')
 
 @section('css')
+<link rel="stylesheet" href="{{ asset('client/css/home.css') }}">
 @endsection
 
 @section('content')
