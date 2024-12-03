@@ -22,6 +22,8 @@ $(".btn-email-subscribe").click(function () {
           title: response.result.original.message,
           showConfirmButton: false,
           timer: 1500,
+        }).then(() => {
+          $("#modal-subscribe").modal("hide");
         });
        
       } else if (response.result.original.status === "faile") {

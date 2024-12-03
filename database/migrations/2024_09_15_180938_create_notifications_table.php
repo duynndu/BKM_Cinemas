@@ -17,9 +17,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->string('title');
             $table->text('content')->nullable();
-            $table->enum('type', [
-                'refund','promotion','all'
-            ])->nullable();
+            $table->enum('type', ['refund', 'promotion', 'all'])->default('all');
             $table->timestamps();
         });
     }
