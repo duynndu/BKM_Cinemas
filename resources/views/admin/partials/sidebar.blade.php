@@ -65,9 +65,9 @@
                 </li>
             @endcan
 
-            @if (auth()->user()->can('viewAny', App\Models\Menu::class) ||
-                    auth()->user()->can('viewAny', App\Models\Page::class) ||
-                    auth()->user()->can('viewAny', App\Models\Block::class))
+            {{-- @if (auth()->user()->can('viewAny', App\Models\Menu::class) ||
+    auth()->user()->can('viewAny', App\Models\Page::class) ||
+    auth()->user()->can('viewAny', App\Models\Block::class))
                 <li>
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">extension</i>
@@ -94,7 +94,7 @@
                         @endcan
                     </ul>
                 </li>
-            @endif
+            @endif --}}
 
             @if (auth()->user()->can('viewAny', App\Models\CategoryPost::class) ||
                     auth()->user()->can('viewAny', App\Models\Post::class) ||
@@ -144,9 +144,6 @@
                     <ul aria-expanded="false">
                         <li>
                             <a href="{{ route('admin.orders.index') }}">Đơn hàng</a>
-                        </li>
-                        <li>
-                            <a href="#">Báo cáo</a>
                         </li>
                     </ul>
                 </li>
@@ -220,7 +217,7 @@
             </li>
 
             {{-- @if (auth()->user()->can('viewAny', App\Models\Voucher::class) ||
-                    auth()->user()->can('viewAny', App\Models\Reward::class))
+    auth()->user()->can('viewAny', App\Models\Reward::class))
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">card_giftcard</i>
@@ -291,12 +288,14 @@
                     </ul>
                 </li>
             @endif
-            <li>
-                <a class="" href="{{ route('admin.contacts.index') }}" aria-expanded="false">
-                    <i class="material-icons">contacts</i>
-                    <span class="nav-text">Liên hệ</span>
-                </a>
-            </li>
+            @if (auth()->user()->can('viewAny', App\Models\Contact::class))
+                <li>
+                    <a class="" href="{{ route('admin.contacts.index') }}" aria-expanded="false">
+                        <i class="material-icons">contacts</i>
+                        <span class="nav-text">Liên hệ</span>
+                    </a>
+                </li>
+            @endif
             @if (auth()->user()->can('viewAny', App\Models\User::class) ||
                     auth()->user()->can('viewAny', App\Models\Role::class) ||
                     auth()->user()->can('viewAny', App\Models\Module::class))
@@ -328,8 +327,7 @@
 
 
                         <li>
-                            <a href="{{ route('admin.notifications.index') }}"
-                                aria-expanded="false">Thông báo</a>
+                            <a href="{{ route('admin.notifications.index') }}" aria-expanded="false">Thông báo</a>
                         </li>
 
                     </ul>

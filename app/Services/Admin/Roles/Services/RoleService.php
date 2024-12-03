@@ -63,12 +63,21 @@ class RoleService extends BaseService implements RoleServiceInterface
         }
 
         $user = auth()->user();
-        $dataUpdate = [
-            'name' => $data['role']['name'],
-            'type' => $data['role']['type'],
-            'description' => $data['role']['description'],
-            'user_id' => $user->id,
-        ];
+        if (!empty($user->cinema_id)) {
+            $dataUpdate = [
+                'name' => $data['role']['name'],
+                'type' => $data['role']['type'],
+                'description' => $data['role']['description'],
+                'user_id' => $user->id,
+            ];
+        } else {
+            $dataUpdate = [
+                'name' => $data['role']['name'],
+                'type' => $data['role']['type'],
+                'description' => $data['role']['description'],
+                'user_id' => null,
+            ];
+        }
 
         $this->repository->update($id, $dataUpdate);
 

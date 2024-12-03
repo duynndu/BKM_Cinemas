@@ -180,3 +180,5 @@ Route::post('/submit-contact', [ContactController::class, 'submit'])
 Route::get('/{slug}', [PostController::class, 'list'])->name('post.list');
 
 Route::get('/{cate_slug}/{slug}', [PostController::class, 'detail'])->name('post.detail');
+
+

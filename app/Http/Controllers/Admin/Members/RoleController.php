@@ -21,8 +21,7 @@ class RoleController extends Controller
     public function __construct(
         RoleServiceInterface $roleService,
         ModuleServiceInterface $moduleService,
-    )
-    {
+    ) {
         $this->roleService = $roleService;
         $this->moduleService = $moduleService;
     }
@@ -38,8 +37,6 @@ class RoleController extends Controller
         ]);
 
         $data['roles'] = $this->roleService->getAll();
-        // $data['roles'] = $this->roleService->getRoles();
-
         return view('admin.pages.members.roles.index', compact('data'));
     }
 

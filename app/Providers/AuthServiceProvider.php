@@ -14,6 +14,7 @@ use App\Models\Block as BlockModel;
 use App\Models\Booking;
 use App\Models\Cinema;
 use App\Models\City;
+use App\Models\Contact;
 use App\Models\Food;
 use App\Models\FoodCombo;
 use App\Models\FoodType;
@@ -33,6 +34,7 @@ use App\Policies\Admin\Blocks\BlockTypePolicy;
 use App\Policies\Admin\Bookings\BookingPolicy;
 use App\Policies\Admin\CategoryPosts\CategoryPostPolicy;
 use App\Policies\Admin\Cinemas\CinemaPolicy;
+use App\Policies\Admin\Contacts\ContactPolicy;
 use App\Policies\Admin\Dashboards\DashboardPolicy;
 use App\Policies\Admin\Events\EventPolicy;
 use App\Policies\Admin\Events\VoucherPolicy;
@@ -93,6 +95,7 @@ class AuthServiceProvider extends ServiceProvider
         Payment::class => PaymentPolicy::class,
         Area::class => AreaPolicy::class,
         City::class => CityPolicy::class,
+        Contact::class => ContactPolicy::class,
     ];
 
     /**

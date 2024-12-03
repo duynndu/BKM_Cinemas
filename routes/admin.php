@@ -948,6 +948,7 @@ Route::prefix('admin')
                         Route::get('/', 'index')->name('index');
                         Route::get('/create', 'create')
                             ->name('create');
+                            
                         Route::post('/store', 'store')
                             ->name('store');
                         Route::get('/{id}/edit', 'edit')
@@ -966,6 +967,7 @@ Route::prefix('admin')
                 Route::prefix('contacts')
                     ->controller(ContactController::class)
                     ->name('contacts.')
+                    ->middleware('authorizeAction:viewAny,App\Models\Contact')
                     ->group(function () {
                         Route::get('/', 'index')
                             ->name('index');

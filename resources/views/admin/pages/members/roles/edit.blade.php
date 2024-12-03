@@ -127,7 +127,7 @@
                                                         <div class="card-header border-0 pb-0" style="justify-content: start;">
                                                             <div class="form-check custom-checkbox checkbox-info check-lg me-3">
                                                                 <!-- CheckBox của modules chọn tất cả -->
-                                                                <input type="checkbox" class="form-check-input module-checkbox" data-module-id="{{ $module->id }}" id="module_{{ $module->id }}">
+                                                                <input type="checkbox" class="form-check-input module-checkbox" data-module-id="{{ $module->id }}" {{ in_array($module->id, $data['role']->permissions->pluck('module_id')->toArray()) ? 'checked' : '' }} id="module_{{ $module->id }}">
                                                                 <label class="form-check-label" for="customCheckBox4"></label>
                                                             </div>
                                                             <h4 class="card-title">{{ $module->name ?? '' }}</h4>
