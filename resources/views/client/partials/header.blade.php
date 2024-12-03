@@ -207,7 +207,7 @@
                                     <div id="notifications">
                                         <h3>Thông báo</h3>
                                         <div class="list-notifications">
-                                            <ul>
+                                            {{-- <ul>
                                                 @if (
                                                     (isset($notifications['users']) && $notifications['users']->count() > 0) ||
                                                         (isset($notifications['all']) && $notifications['all']->count() > 0))
@@ -247,7 +247,7 @@
                                                     <h5 class="text-center">Chưa có thông báo nào!</h5>
                                                 @endif
 
-                                            </ul>
+                                            </ul> --}}
                                         </div>
                                     </div>
                                 </div>
