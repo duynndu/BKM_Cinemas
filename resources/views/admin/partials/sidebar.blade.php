@@ -219,7 +219,7 @@
                                 <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
                             </li>
                         @endif
-                        
+
                         @if (auth()->user()->can('viewAny', App\Models\Voucher::class))
                             <li>
                                 <a href="{{ route('admin.vouchers.index') }}" aria-expanded="false">Voucher</a>
@@ -292,6 +292,7 @@
                     </a>
                 </li>
             @endif
+
             @if (auth()->user()->can('viewAny', App\Models\User::class) ||
                     auth()->user()->can('viewAny', App\Models\Role::class) ||
                     auth()->user()->can('viewAny', App\Models\Module::class) ||
