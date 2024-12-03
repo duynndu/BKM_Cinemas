@@ -16,8 +16,8 @@
                             <div class="col-md-6 col-xs-6 connect-us">
                                 @if (!empty($connectWithUs))
                                     <h4 class="footer-title">{{ $connectWithUs->name }}</h4>
-                                    @if ($connectWithUs->childs()->where('active', 1)->count() > 0)
-                                        @foreach ($connectWithUs->childs()->where('active', 1)->get() as $item)
+                                    @if ($connectWithUs->childs->count() > 0)
+                                        @foreach ($connectWithUs->childs as $item)
                                             <a href="{{ $item->description }}" target="_blank">
                                                 <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" />
                                             </a>
@@ -37,8 +37,8 @@
                     <div class="col-md-4 co-sm-12">
                         <div class="clearfix"></div>
                         <div class="row text-detail">
-                            @if (!empty($rightFooter) && $rightFooter->childs()->where('active', 1)->count() > 0)
-                                @foreach ($rightFooter->childs()->where('active', 1)->limit(8)->get()->chunk(4) as $chunk)
+                            @if (!empty($rightFooter) && $rightFooter->childs->count() > 0)
+                                @foreach ($rightFooter->childs()->where('active', 1)->limit(8)->orderBy('order')->get()->chunk(4) as $chunk)
                                     <div class="col-md-6 col-sm-6 col-xs-6">
                                         @foreach ($chunk as $item)
                                             <a href="{{ route('post.list', $item->slug) }}">{{ $item->name }}</a>

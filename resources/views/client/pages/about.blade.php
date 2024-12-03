@@ -72,21 +72,21 @@
                                                         src="{{ asset($item->image) }}"
                                                         alt="{{ $item->title }}">
                                                 </a>
-
                                                 <div class="info">
                                                     <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
                                                         Chi tiết
-                                                        <table></table>
                                                     </a>
                                                     <a class="button ticket video-play-button" data-toggle="modal"
-                                                        href="#modal-trailer-1">
-                                                        Trailer
+                                                        href="#modal-trailer-{{ $item->id }}">
+                                                        Trailer <img src="https://cdn-icons-png.flaticon.com/512/777/777242.png"
+                                                            alt="Trailer">
                                                     </a>
-                                                    <p class=" duration">
-                                                        <b>Thời lượng:</b> {{ $item->duration }} phút
+                                                    <p class="button duration">
+                                                        <b>Thời lượng: </b>
+                                                        {{ $item->duration }} phút
                                                     </p>
                                                     <p class=" category">
-                                                        Thể loại:
+                                                        <b>Thể loại:</b>
                                                         @if ($item->movieGenre->count() > 0)
                                                             @foreach ($item->movieGenre as $genre)
                                                                 {{ $loop->index > 0 ? ', ' : '' }}{{ $genre->genres->name }}
@@ -95,8 +95,9 @@
                                                             Chưa cập nhật
                                                         @endif
                                                     </p>
-                                                    <p class=" format">
-                                                        <b>Định dạng:</b> {{ $item->format }}
+                                                    <p class="button format">
+                                                        <b>Định dạng</b>
+                                                        {{ $item->format }}
                                                     </p>
                                                 </div>
                                             </div>
@@ -116,50 +117,25 @@
                     </div>
                 </div>
             </section>
+            @foreach ($movieIsShowing as $isShowing)
+                <div class="modal fade in" id="modal-trailer-{{ $isShowing->id }}" style="display: none;">
+                    <div class="modal-dialog modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" title="Đóng"
+                                    aria-hidden="true">×
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="video-container video-trailer--home">
+                                    <iframe src="{{ $isShowing->trailer_url }}" frameborder="0"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         @endif
-    </div>
-    <div class="widget-ticket  hidden ">
-        <h2>
-            <img src="images/icons/icon-ticket.png" alt="Đặt vé" />
-            <span>Đặt vé</span>
-            <div class="border"></div>
-        </h2>
-        <form>
-            <div class="close-modal">Đóng</div>
-            <div class="select-group">
-                <span class="addon"><i class="fa fa-film"></i></span>
-                <select class="form-control" id="widget-movie">
-                    <option>Chọn Phim</option>
-                    <option value="973">Làm Giàu Với Ma</option>
-                    <option value="1008">Đả Nữ Báo Thù</option>
-                    <option value="993">Ma Da</option>
-                    <option value="1012">Shin Cậu Bé Bút Chì: Nhật Ký Khủng Long Của Chúng Mình (Lồng Tiếng)
-                    </option>
-                    <option value="963">Harold Và Cây Bút Phép Thuật (Lồng Tiếng)</option>
-                    <option value="992">Quái Vật Không Gian</option>
-                    <option value="1013">Hai Muối</option>
-                    <option value="991">Chàng Nữ Phi Công</option>
-                </select>
-            </div>
-            <div class="select-group">
-                <span class="addon"><i class="fa fa-calendar-plus-o"></i></span>
-                <select class="form-control" id="widget-date">
-                    <option>Chọn Ngày</option>
-                </select>
-            </div>
-            <div class="select-group">
-                <span class="addon"><i class="fa fa-calendar"></i></span>
-                <select class="form-control" id="widget-time">
-                    <option>Chọn Suất</option>
-                </select>
-            </div>
-            <div class="center">
-                <button type="button" class="btn btn-success widget-buy">Mua vé</button>
-            </div>
-            <div class="loading hidden">
-                <img src="images/loader.gif" alt="Loading..." />
-            </div>
-        </form>
     </div>
 @endsection
 

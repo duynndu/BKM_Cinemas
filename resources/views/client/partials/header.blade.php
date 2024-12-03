@@ -144,7 +144,7 @@
                                 </a>
                             </li>
                             <li class="">
-                                <a href="{{ route('post.list', 'gia-ve') }}">
+                                <a href="{{ route('ticket-price') }}">
                                     giá vé
                                 </a>
                             </li>

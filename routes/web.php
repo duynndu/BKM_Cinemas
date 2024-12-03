@@ -19,6 +19,7 @@ use App\Http\Controllers\Client\AboutController;
 use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\PostController;
 use App\Http\Controllers\Client\PostDetailController;
+use App\Http\Controllers\Client\TicketPriceController;
 use App\Models\Showtime;
 use Illuminate\Support\Facades\DB;
 
@@ -136,13 +137,11 @@ Route::get('/phim', [ListMoviesController::class, 'movies'])->name('movie');
 Route::get('/phim/{slug}', [MovieDetailController::class, 'movieDetail'])->name('movie.detail');
 
 Route::get('/gioi-thieu', [AboutController::class, 'index'])->name('about');
-Route::get('/gia-ve', function () {
-    return view('client.pages.ticket-price');
-});
+Route::get('/gia-ve', [TicketPriceController::class, 'index'])->name('ticket-price');
 
-Route::get('/lich-chieu', function () {
-    return view('client.pages.showtime');
-});
+// Route::get('/lich-chieu', function () {
+//     return view('client.pages.showtime');
+// });
 
 Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
     $userId = optional(auth()->user())->id;
