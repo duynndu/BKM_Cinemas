@@ -21,6 +21,7 @@ use App\Services\Client\Bookings\Interfaces\BookingServiceInterface;
 use App\Services\Client\Cities\Interfaces\CityServiceInterface;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use App\Services\Client\Users\Interfaces\UserServiceInterface;
+use App\Services\Client\Vouchers\Interfaces\VoucherServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -44,8 +45,9 @@ class AuthController extends Controller
     protected $userService;
 
     protected $rewardService;
-
+    protected $voucherService;
     protected $bookingService;
+    
 
     public function __construct(
         CityServiceInterface            $cityService,
@@ -55,7 +57,8 @@ class AuthController extends Controller
         TransactionServiceInterface     $transactionService,
         UserServiceInterface            $userService,
         RewardServiceInterface          $rewardService,
-        BookingServiceInterface         $bookingService
+        BookingServiceInterface         $bookingService,
+        VoucherServiceInterface         $voucherService
     ) {
         $this->cityService = $cityService;
         $this->registerService = $registerService;
@@ -65,6 +68,7 @@ class AuthController extends Controller
         $this->userService = $userService;
         $this->rewardService = $rewardService;
         $this->bookingService = $bookingService;
+        $this->voucherService = $voucherService;
     }
 
     public function account(Request $request)
@@ -80,6 +84,7 @@ class AuthController extends Controller
             $data['tickets'] = $this->bookingService->getTicketsByUserId($userId, $date);
 
             $data['rewards'] = $this->rewardService->getAll();
+            $data['voucherUsers'] = $this->voucherService->getAllVoucherByUserId($userId);
 
             $data['rewardsUser'] = $this->rewardService->getRewardsByUserId($userId);
 

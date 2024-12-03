@@ -146,7 +146,11 @@ use App\Repositories\Admin\Orders\Repositories\OrderRepository;
 use App\Repositories\Admin\Rewards\Interfaces\RewardInterface;
 use App\Repositories\Admin\Rewards\Repositories\RewardRepository;
 use App\Repositories\Admin\Vouchers\Interfaces\VoucherInterface;
+use App\Repositories\Client\Vouchers\Interfaces\VoucherInterface as ClientVoucherInterface;
+
 use App\Repositories\Admin\Vouchers\Repositories\VoucherRepository;
+use App\Repositories\Client\Vouchers\Repositories\VoucherRepository as ClientVoucherRepository;
+
 use App\Repositories\Client\CategoryPosts\Repository\CategoryPostRepository as CategoryPostRepositoryClient;
 use App\Services\Admin\CategoryPosts\Interfaces\CategoryPostServiceInterface;
 use App\Services\Client\CategoryPosts\Interface\CategoryPostServiceInterface as CategoryPostServiceInterfaceClient;
@@ -173,7 +177,10 @@ use App\Services\Admin\Orders\Interfaces\OrderServiceInterface;
 use App\Services\Admin\Rewards\Services\RewardService;
 use App\Services\Admin\Rewards\Interfaces\RewardServiceInterface;
 use App\Services\Admin\Vouchers\Interfaces\VoucherServiceInterface;
+
 use App\Services\Admin\Vouchers\Services\VoucherService;
+use App\Services\Client\Vouchers\Services\VoucherService as ClientVoucherService;
+
 use App\Services\Auth\Client\ChangePasswords\Interfaces\ChangePasswordServiceInterface;
 use App\Services\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordServicesInterface;
 use App\Services\Client\Users\Interfaces\UserServiceInterface as ClientUserServiceInterface;
@@ -184,7 +191,7 @@ use App\Services\Client\Systems\Interfaces\SystemServiceInterface as InterfacesS
 use App\Services\Client\Systems\Services\SystemService as ServicesSystemService;
 use App\Services\Client\Rewards\Interfaces\RewardServiceInterface as ClientRewardServiceInterface;
 use App\Services\Client\Rewards\Services\RewardService as ClientRewardService;
-
+use App\Services\Client\Vouchers\Interfaces\VoucherServiceInterface as ClientVoucherServiceInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -288,6 +295,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RewardServiceInterface             ::class, RewardService                ::class);
         $this->app->bind(ClientRewardServiceInterface       ::class, ClientRewardService          ::class);
 
+        $this->app->bind(ClientVoucherInterface                   ::class, ClientVoucherRepository            ::class);
+        $this->app->bind(ClientVoucherServiceInterface            ::class, ClientVoucherService               ::class);
+
+    
         // End client
     }
 
