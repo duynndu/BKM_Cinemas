@@ -38,6 +38,7 @@ class EmailSubscribeRequest extends FormRequest
             "email-subscribe.mail" => "Email không đúng định dạng",
         ];
     }
+
     protected function failedValidation(Validator $validator)
     {
         $errors = $validator->errors();

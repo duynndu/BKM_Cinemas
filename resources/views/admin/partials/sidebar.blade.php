@@ -319,7 +319,7 @@
                                     aria-expanded="false">{{ __('language.admin.members.roles.title') }}</a>
                             </li>
                         @endcan
-                        @can('viewAny', App\Models\Permission::class)
+                        @can('viewAny', App\Models\Module::class)
                             <li>
                                 <a href="{{ route('admin.modules.index') }}"
                                     aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>

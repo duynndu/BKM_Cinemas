@@ -46,19 +46,19 @@
                                                 class="form-label mb-2">{{ __('language.admin.members.roles.type') }}</label><br>
                                             <select name="role[type]" class="form-control w-50 selectRoles"
                                                 id="">
-                                                <option value="" selected>--
+                                                <option value="" >
                                                     {{ __('language.admin.members.roles.select') }} --</option>
                                                 <option value="{{ \App\Models\User::TYPE_ADMIN }}"
-                                                    {{ old('role.type') == \App\Models\User::TYPE_ADMIN ? 'selected' : '' }}>
+                                                    {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_ADMIN ? 'selected' : '' }}>
                                                     {{ __('language.admin.members.roles.admin') }}</option>
                                                 <option value="{{ \App\Models\User::TYPE_MANAGE }}"
-                                                    {{ old('role.type') == \App\Models\User::TYPE_MANAGE ? 'selected' : '' }}>
+                                                    {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_MANAGE ? 'selected' : '' }}>
                                                     {{ __('language.admin.members.roles.manage') }}</option>
                                                 <option value="{{ \App\Models\User::TYPE_STAFF }}"
-                                                    {{ old('role.type') == \App\Models\User::TYPE_STAFF ? 'selected' : '' }}>
+                                                    {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_STAFF ? 'selected' : '' }}>
                                                     {{ __('language.admin.members.roles.staff') }}</option>
                                                 <option value="{{ \App\Models\User::TYPE_MEMBER }}"
-                                                    {{ old('role.type') == \App\Models\User::TYPE_MEMBER ? 'selected' : '' }}>
+                                                    {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_MEMBER ? 'selected' : '' }}>
                                                     {{ __('language.admin.members.roles.member') }}</option>
                                             </select>
                                             @error('role.type')
