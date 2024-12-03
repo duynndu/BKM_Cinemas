@@ -12,4 +12,10 @@ class RolePermission extends Model
     protected $table = 'role_permission';
 
     protected $guarded = [];
+
+    public function role()
+{
+    return $this->belongsTo(Role::class, 'role_id');
+}
+
 }

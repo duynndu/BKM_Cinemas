@@ -26,7 +26,7 @@ class RegisterService extends BaseService implements RegisterServiceInterface
             'last_name' => $request->last_name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'date_birth' => Carbon::createFromFormat('d/m/Y', $request->date_birth)->format('Y-m-d'),
+            'date_birth' => Carbon::createFromFormat('d-m-Y', $request->date_birth)->format('Y-m-d'),
             'gender' => $request->gender,
             'password' => Hash::make($request->password),
             'type' => User::TYPE_MEMBER,

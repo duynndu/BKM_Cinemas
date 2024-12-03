@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class RewardService extends BaseService implements RewardServiceInterface
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -74,5 +73,28 @@ class RewardService extends BaseService implements RewardServiceInterface
             'name' => $data->getClientOriginalName(),
             'path' => Storage::url($path),
         ];
+    }
+
+    public function getUserRewards()
+    {
+        return $this->repository->getUserRewards();
+    }
+
+    public function changeStatus($request)
+    {
+        $userReward = $this->repository->updateRewardByCode($request->code);
+
+        if (!$userReward) {
+            return false;
+        }
+
+        if ($userReward->status == 1) {
+            return false;
+        }
+
+        $userReward->status = $request->status == 0 ? 1 : 0;
+        $userReward->save();
+
+        return true;
     }
 }

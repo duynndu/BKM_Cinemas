@@ -47,6 +47,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'date_birth' => 'datetime',
     ];
 
     public function isAdmin()
@@ -113,13 +114,52 @@ class User extends Authenticatable
     public function vouchers()
     {
         return $this->belongsToMany(Voucher::class, 'user_vouchers', 'user_id', 'voucher_id')
-        ->withTimestamps()
-        ->withPivot('deleted_at')
-        ->wherePivotNull('deleted_at');
+            ->withTimestamps()
+            ->withPivot('deleted_at')
+            ->wherePivotNull('deleted_at');
     }
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_vouchers')
+            ->withTimestamps();
+    }
+
+    public function cinema()
+    {
+        return $this->belongsTo(Cinema::class, 'cinema_id', 'id');
+    }
+    public function rewards()
+    {
+        return $this->belongsToMany(Reward::class, 'user_rewards', 'user_id', 'reward_id')
+            ->withPivot('code', 'points_spent', 'quantity', 'status', 'used_at')
+            ->withTimestamps();
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'city_id');
+    }
+
+    public function cinemas()
+    {
+        return $this->hasManyThrough(
+            Cinema::class,
+            Area::class,
+            'id',
+            'area_id',
+            'city_id',
+            'id'
+        );
+    }
+
+    public function usersvouchers()
+    {
+        return $this->belongsToMany(Voucher::class, 'user_vouchers')
             ->withTimestamps();
     }
 }

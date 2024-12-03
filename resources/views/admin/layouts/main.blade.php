@@ -575,7 +575,6 @@
     <script src="{{ asset('vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}"></script>
     <script src="{{ asset('vendor/toastr/js/toastr.min.js') }}"></script>
-
     <script src="{{ asset('js/dashboard/cms.js') }}"></script>
     <script src="{{ asset('js/plugins-init/nestable-init.js') }}"></script>
 
@@ -615,7 +614,6 @@
     <script src="{{ asset('js/admin/commons/format-price.js') }}"></script>
     <script src="{{ asset('js/plugins-init/swiper.min.js') }}"></script>
     <script type="module" src="{{ asset('js/main.js') }}"></script>
-
     @yield('js')
 
 </body>

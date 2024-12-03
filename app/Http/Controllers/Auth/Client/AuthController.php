@@ -15,7 +15,7 @@ use App\Http\Requests\Auth\Client\UpdateProfileRequest;
 use App\Models\Transaction;
 use App\Repositories\Auth\Client\ChangePasswords\Interfaces\ChangePasswordInterface;
 use App\Repositories\Auth\Client\ForgotPasswords\Interfaces\ForgotPasswordInterface;
-use App\Services\Admin\Rewards\Interfaces\RewardServiceInterface;
+use App\Services\Client\Rewards\Interfaces\RewardServiceInterface;
 use App\Services\Auth\Client\Registers\Interfaces\RegisterServiceInterface;
 use App\Services\Client\Bookings\Interfaces\BookingServiceInterface;
 use App\Services\Client\Cities\Interfaces\CityServiceInterface;
@@ -81,6 +81,8 @@ class AuthController extends Controller
 
             $data['rewards'] = $this->rewardService->getAll();
 
+            $data['rewardsUser'] = $this->rewardService->getRewardsByUserId($userId);
+
             if ($request->ajax()) {
                 if ($data['tickets']->isEmpty()) {
                     return response()->json([
@@ -88,7 +90,7 @@ class AuthController extends Controller
                             'date' => $date
                         ])->render()
                     ]);
-                }
+                }   
 
                 return response()->json([
                     'tbody' => view('client.ajax.tickets.ticket', [
@@ -359,6 +361,46 @@ class AuthController extends Controller
 
             return response()->json([
                 'status' => false,
+            ]);
+        }
+    }
+
+    public function redeem(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            if (Auth::user()->points < $request->points_spent) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Điểm tích lũy của bạn không đủ để đổi món quà này.'
+                ]);
+            }
+
+            $reward = $this->rewardService->redeemRewards($request);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Đổi quà thành công.',
+                'points' => number_format($reward['points'], 0, ',', '.'),
+                'reward' => [
+                    'code' => $reward['code'],
+                    'name' => $reward['name'],
+                    'image' => $reward['image'],
+                    'status' => $reward['status']
+                ],
+                'userRewardsCount' => $reward['userRewardsCount']
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Đã xảy ra lỗi'
             ]);
         }
     }

@@ -91,7 +91,7 @@
                                             <div class="avatar-upload d-flex align-items-center">
                                                 <div class=" position-relative" style="width: 120px;">
                                                     <div class="avatar-preview">
-                                                        <div id="imagePreview"
+                                                        <div class="imagePreview"
                                                             style="background-image: url({{ asset('images/no-img-avatar.png') }});">
                                                         </div>
                                                     </div>

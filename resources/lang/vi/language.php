@@ -596,7 +596,7 @@ return [
             'order' => 'Số thứ tự',
             'noHot' => 'Không',
             'action' => 'Hành động',
-            'arranges' => [ 
+            'arranges' => [
                 'postedDateASC'=>'Ngày đăng - tăng dần',
                 'postedDateDESC'=>'Ngày đăng - giảm dần',
                 'releaseDateASC'=>'Ngày phát hành - tăng dần',
@@ -805,6 +805,7 @@ return [
                 'editSave' => 'Lưu thay đổi',
                 'back' => 'Trở về trang danh sách',
                 'action' => 'Hành động',
+                'role_id' => 'Vai trò',
             ],
             'roles' => [
                 'titleList' => 'Danh sách vai trò',

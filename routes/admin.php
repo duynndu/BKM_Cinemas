@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Events\VoucherController;
 use App\Http\Controllers\Admin\Events\RewardController;
+use App\Http\Controllers\Admin\Events\RedeemRewardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\Foods\FoodComboController;
 use App\Http\Controllers\Admin\Foods\FoodController;
@@ -137,42 +138,47 @@ Route::prefix('admin')
                             ->group(function () {
                                 Route::get('/', 'index')
                                     ->name('index')
-                                    ->middleware('authorizeAction:viewAny,App\Models\System');
+                                    ->middleware('authorizeAction:viewAny,App\Models\Room');
 
                                 Route::get('/create', 'create')
                                     ->name('create')
-                                    ->middleware('authorizeAction:create,App\Models\System');
+                                    ->middleware('authorizeAction:create,App\Models\Room');
 
                                 Route::post('/store', 'store')
                                     ->name('store')
-                                    ->middleware('authorizeAction:create,App\Models\System');
+                                    ->middleware('authorizeAction:create,App\Models\Room');
 
-                                Route::get('/{id}/edit', 'edit')
-                                    ->name('edit')
-                                    ->middleware('authorizeAction:update,App\Models\System');
+                                Route::get('/{room}/edit', 'edit')->name('edit')
+                                    ->middleware('authorizeAction:update,App\Models\Room');
 
-                                Route::post('/{id}/update', 'update')
-                                    ->name('update')
-                                    ->middleware('authorizeAction:update,App\Models\System');
+                                Route::post('/{room}/update', 'update')->name('update')
+                                    ->middleware('authorizeAction:update,App\Models\Room');
 
-                                Route::delete('/{id}/delete', 'delete')
-                                    ->name('delete')
-                                    ->middleware('authorizeAction:delete,App\Models\System');
+                                Route::delete('/{room}', 'destroy')->name('destroy')
+                                    ->middleware('authorizeAction:delete,App\Models\Room');
+                            });
+                        Route::prefix('seat-layouts')
+                            ->controller(SeatLayoutController::class)
+                            ->name('seat-layouts.')
+                            ->group(function () {
+                                Route::get('/', 'index')->name('index');
+                                Route::get('/create', 'create')->name('create');
+                                Route::post('/store', 'store')->name('store');
+                                Route::get('/{seatLayout}/edit', 'edit')->name('edit');
+                                Route::post('/{seatLayout}/update', 'update')->name('update');
+                                Route::delete('{seatLayout}', 'destroy')->name('destroy');
+                            });
 
-                                Route::post('/change-order', 'changeOrder')
-                                    ->name('changeOrder')
-                                    ->middleware('authorizeAction:changeOrder,App\Models\System');
-
-                                Route::post('/change-active', 'changeActive')
-                                    ->name('changeActive')
-                                    ->middleware('authorizeAction:changeActive,App\Models\System');
-
-                                Route::post('/removeAvatarImage', 'removeAvatarImage')
-                                    ->name('removeAvatarImage');
-
-                                Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
-                                    ->name('deleteItemMultipleChecked')
-                                    ->middleware('authorizeAction:deleteMultiple,App\Models\System');
+                        Route::prefix('seat-types')
+                            ->controller(SeatTypeController::class)
+                            ->name('seat-types.')
+                            ->group(function () {
+                                Route::get('/', 'index')->name('index');
+                                Route::get('/create', 'create')->name('create');
+                                Route::post('/store', 'store')->name('store');
+                                Route::get('/{seatType}/edit', 'edit')->name('edit');
+                                Route::post('/{seatType}/update', 'update')->name('update');
+                                Route::delete('{seatType}', 'destroy')->name('destroy');
                             });
                     });
 
@@ -829,6 +835,16 @@ Route::prefix('admin')
                             ->name('deleteItemMultipleChecked');
                     });
 
+                Route::prefix('redeem-rewards')
+                    ->controller(RedeemRewardController::class)
+                    ->name('redeemRewards.')
+                    ->group(function () {
+                        Route::get('/', 'index')->name('index');
+
+                        Route::post('/change-status', 'changeStatus')->name('changeStatus');
+                    });
+
+
                 Route::prefix('rewards')
                     ->controller(RewardController::class)
                     ->name('rewards.')
@@ -910,7 +926,6 @@ Route::prefix('admin')
                             ->name('ajaxGetAreaByCityId')
                             ->middleware('authorizeAction:viewAny,App\Models\Cinema');
                     });
-
                 Route::prefix('orders')
                     ->controller(OrderController::class)
                     ->name('orders.')
@@ -943,9 +958,7 @@ Route::prefix('admin')
                             ->name('delete');
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                             ->name('deleteItemMultipleChecked');
-                        Route::get('/get-by-type', 'getByType')
-                            ->name('getByType');
-                       
+
                         Route::get('/get-by-type', 'getByType')
                             ->name('getByType');
                     });

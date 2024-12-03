@@ -38,14 +38,14 @@ class RoleController extends Controller
         ]);
 
         $data['roles'] = $this->roleService->getAll();
+        // $data['roles'] = $this->roleService->getRoles();
 
         return view('admin.pages.members.roles.index', compact('data'));
     }
 
     public function create()
     {
-        $data['modules'] = $this->moduleService->getAll();
-
+        $data['modules'] = $this->moduleService->getModule();
         return view('admin.pages.members.roles.create', compact('data'));
     }
 
@@ -80,8 +80,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         $data['role'] = $this->roleService->find($id);
-
-        $data['modules'] = $this->moduleService->getAll();
+        $data['modules'] = $this->moduleService->getModule();
 
         return view('admin.pages.members.roles.edit', compact('data'));
     }

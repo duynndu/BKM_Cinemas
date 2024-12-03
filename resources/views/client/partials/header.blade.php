@@ -143,14 +143,8 @@
                                     Phim
                                 </a>
                             </li>
-                            {{-- <li class="">
-                                <a href="lich-chieu">
-                                    Lịch chiếu
-                                </a>
-                            </li> --}}
-
                             <li class="">
-                                <a href="{{ route('post.list', 'gia-ve') }}">
+                                <a href="{{ route('ticket-price') }}">
                                     giá vé
                                 </a>
                             </li>
@@ -207,11 +201,9 @@
                                     <div id="notifications">
                                         <h3>Thông báo</h3>
                                         <div class="list-notifications">
-                                            {{-- <ul>
-                                                @if (
-                                                    (isset($notifications['users']) && $notifications['users']->count() > 0) ||
-                                                        (isset($notifications['all']) && $notifications['all']->count() > 0))
-                                                    @if (isset($notifications['users']) && $notifications['users']->count() > 0)
+                                            <ul>
+                                                @if (($notifications['users']->isNotEmpty()) || ($notifications['all']->isNotEmpty()))
+                                                    @if ($notifications['users']->isNotEmpty())
                                                         @foreach ($notifications['users'] as $item)
                                                             <li style="display: flex;justify-content: space-between; align-items:center"
                                                                 class="notification-item">
@@ -231,7 +223,7 @@
                                                             </li>
                                                         @endforeach
                                                     @endif
-                                                    @if (isset($notifications['all']) && $notifications['all']->count() > 0)
+                                                    @if ($notifications['all']->isNotEmpty())
                                                         @foreach ($notifications['all'] as $item)
                                                             <li>
                                                                 <a href="#">
@@ -247,7 +239,7 @@
                                                     <h5 class="text-center">Chưa có thông báo nào!</h5>
                                                 @endif
 
-                                            </ul> --}}
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
