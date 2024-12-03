@@ -151,7 +151,7 @@ export function modal_deposit() {
     });
 }
 
-$(function () {
+$(document).ready(function () {
     window.dataLayer = window.dataLayer || [];
     function gtag() {
         dataLayer.push(arguments);
@@ -257,256 +257,6 @@ $(function () {
     });
 
 
-    window.fbAsyncInit = function () {
-        FB.init({
-            xfbml: true,
-            version: 'v12.0'
-        });
-    };
-
-    $('.select2').select2({
-        placeholder: "Chọn tỉnh/thành phố", // Placeholder cho dropdown
-        allowClear: true, // Cho phép xóa lựa chọn
-        width: '100%',
-    });
-
-    // Khi người dùng nhấn vào liên kết trong phần Đăng nhập
-    $('.attr-link a').on('click', function (event) {
-        event.preventDefault();
-
-        // Lấy ID của tab được nhấn
-        var targetTab = $(this).attr('href');
-
-        // Xóa class 'active' khỏi tất cả các tab và thẻ `li`
-        $('.tab-pane, .menu li').removeClass('active');
-
-        // Thêm class 'active' vào tab và thẻ `li` tương ứng
-        $(targetTab).addClass('active in');
-        $('.menu li').find('a[href="' + targetTab + '"]').parent().addClass('active');
-    });
-
-    $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy', // Định dạng ngày
-        autoclose: true,      // Tự động đóng khi chọn ngày
-        todayHighlight: true   // Nổi bật ngày hôm nay
-    });
-
-    function togglePasswordVisibility(passwordInput, icon) {
-        const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
-        passwordInput.attr('type', type);
-
-        icon.toggleClass('fa-eye fa-eye-slash');
-    }
-
-    $('#toggle-password-icon').on('click', function () {
-        const passwordInput = $('input[id="passwordRegister"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
-    $('#toggle-confirm-password-icon').on('click', function () {
-        const passwordInput = $('input[name="password_confirmation"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
-    $('.toggle-password-login-icon').on('click', function () {
-        const passwordInput = $('input[id="passwordLogin"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
-    $('.toggle-old-password-icon').on('click', function () {
-        const passwordInput = $('input[name="old_password"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
-    $('.toggle-password-change-icon').on('click', function () {
-        const passwordInput = $('input[name="password"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
-    $('.toggle-confirm-password-icon').on('click', function () {
-        const passwordInput = $('input[name="confirm_password"]');
-        togglePasswordVisibility(passwordInput, $(this));
-    });
-
-    function modal_deposit() {
-        $('.open-modal').click(function () {
-            const modalId = $(this).data('modal');
-            $(modalId).show();
-        });
-
-        $('.custom-close, .close-modal, .custom-modal').click(function (e) {
-            if ($(e.target).is('.custom-close, .close-modal, .custom-modal')) {
-                $(this).closest('.custom-modal').hide();
-            }
-        });
-
-        $('.submit-top-up').click(function () {
-            const modal = $(this).closest('.custom-modal');
-            const amount = modal.find('input[type="number"]').val();
-            if (amount) {
-                alert(`Nạp tiền thành công với số tiền: ${amount}`);
-                modal.hide();
-            } else {
-                alert('Vui lòng nhập số tiền!');
-            }
-        });
-
-        let currentTab = null; // Biến lưu trữ tab hiện tại
-
-        $('.list-method-button').on('click', function () {
-            const tab = $(this).data('tab');
-
-            // Kiểm tra nếu nhấp vào chính tab hiện tại
-            if (currentTab === tab) {
-                // Ẩn tab hiện tại
-                $(`.list-method-item-content[data-content="${tab}"]`).hide();
-
-                // Xóa giá trị và trạng thái chọn của input
-                $(`input[name="amount[${tab}]"]`).val(''); // Xóa giá trị của input trong tab hiện tại
-                $(this).find('input[type="radio"]').prop('checked', false); // Bỏ chọn radio
-
-                // Đặt currentTab về null vì không có tab nào đang hiển thị
-                currentTab = null;
-            } else {
-                // Nếu nhấp vào tab khác tab hiện tại
-                // Ẩn tất cả nội dung các tab
-                $('.list-method-item-content').hide();
-
-                // Xóa giá trị của các input "amount" trong các tab trước
-                $('input[name^="amount"]').val(''); // Đặt tất cả các input bắt đầu bằng "amount" về rỗng
-
-                // Hiển thị tab được chọn
-                $(`.list-method-item-content[data-content="${tab}"]`).show();
-
-                // Đặt trạng thái chọn cho phương thức thanh toán đã chọn
-                $(this).find('input[type="radio"]').prop('checked', true);
-
-                // Reset style của input khi chuyển tab
-                $('input[name^="amount"]').css({
-                    'border': '',
-                    'box-shadow': ''
-                });
-
-                // Cập nhật tab hiện tại
-                currentTab = tab;
-            }
-        });
-
-
-        $('#depositForm').on('submit', function (e) {
-            e.preventDefault();
-
-            let imageError = $(this).data('error');
-            const selectedPaymentMethod = $('input[name="payment_method"]:checked').val();
-
-            if (!selectedPaymentMethod) {
-                Swal.fire({
-                    position: "center",
-                    imageUrl: imageError,
-                    imageWidth: 100,
-                    imageHeight: 100,
-                    width: "600px",
-                    title: "Vui lòng chọn phương thức thanh toán!",
-                    showConfirmButton: true,
-                    confirmButtonText: "Ok",
-                });
-
-                return false;
-            }
-
-            let amountInput;
-
-            if (selectedPaymentMethod === 'vnpay') {
-                amountInput = $('input[name="amount[vnpay]"]');
-            } else if (selectedPaymentMethod === 'momo') {
-                amountInput = $('input[name="amount[momo]"]');
-            } else if (selectedPaymentMethod === 'zalopay') {
-                amountInput = $('input[name="amount[zalopay]"]');
-            }
-
-            if (amountInput && amountInput.val().trim() === '') {
-                Swal.fire({
-                    position: "center",
-                    imageUrl: imageError,
-                    imageWidth: 100,
-                    imageHeight: 100,
-                    width: "600px",
-                    title: "Vui lòng nhập số tiền cần nạp cho phương thức đã chọn!",
-                    showConfirmButton: true,
-                    confirmButtonText: "Ok",
-                }).then(() => {
-                    amountInput.css({
-                        'border': '1px solid red',
-                        'box-shadow': '0 0 10px rgba(255, 0, 0, 0.5)'
-                    });
-                    amountInput.focus();
-                });
-
-                return false;
-            } else {
-                amountInput.css({
-                    'border': '',
-                    'box-shadow': ''
-                });
-            }
-
-            if (amountInput && amountInput.val() < 10000) {
-                Swal.fire({
-                    position: "center",
-                    imageUrl: imageError,
-                    imageWidth: 100,
-                    imageHeight: 100,
-                    width: "600px",
-                    title: "Số tiền cần nạp phải ít nhất 10.000 VND",
-                    showConfirmButton: true,
-                    confirmButtonText: "Ok",
-                }).then(() => {
-                    amountInput.css({
-                        'border': '1px solid red',
-                        'box-shadow': '0 0 10px rgba(255, 0, 0, 0.5)'
-                    });
-                    amountInput.focus();
-                });
-
-                return false;
-            } else {
-                amountInput.css({
-                    'border': '',
-                    'box-shadow': ''
-                });
-            }
-
-            this.submit();
-            amountInput.reset();
-        });
-    }
-
-    $("#nowshowing-slider, #comingsoon-slider").owlCarousel({
-        autoplay: true,
-        autoplayTimeout: 5000,
-        autoplayHoverPause: true,
-        loop: true,
-        responsive: {
-            0: { items: 3, }, 420: { items: 2, }, 620: { items: 3, },
-            768: { items: 3, }, 980: { items: 3 }, 1010: { items: 3 }, 1100: { items: 4 }
-        },
-        nav: true,
-        dots: false
-    });
-
-    $("#nowshowing-slider2").owlCarousel({
-        autoplay: true,
-        autoplayTimeout: 5000,
-        autoplayHoverPause: true,
-        loop: true,
-        responsive: {
-            0: { items: 3, }, 420: { items: 2, }, 620: { items: 3, },
-            768: { items: 3, }, 980: { items: 3 }, 1010: { items: 3 }, 1100: { items: 3 }
-        },
-        nav: true,
-        dots: false
-    });
-
     var mainpopup = sessionStorage.getItem('mainpopup');
     if (!mainpopup) {
         $("body").addClass("open-main-popup");
@@ -572,7 +322,7 @@ $(function () {
         icon.toggleClass('fa-eye fa-eye-slash');
     }
 
-    $('#toggle-password-icon').on('click', function () {
+    $('#toggle-password-icon-register').on('click', function () {
         const passwordInput = $('input[id="passwordRegister"]');
         togglePasswordVisibility(passwordInput, $(this));
     });
@@ -745,7 +495,7 @@ $(function () {
         }
 
     }
-
+    
     exp();
     change_avatar();
     payment_alert();

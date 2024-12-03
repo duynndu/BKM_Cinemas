@@ -162,12 +162,12 @@
                                                         <label for="password">Mật khẩu <span
                                                                 style="color: red;">*</span></label>
                                                         <div class="input-group">
-                                                            <input id="passwordRegister" type="password" class="form-control"
+                                                            <input id="passwordRegister" type="password" class="form-control passwordRegister"
                                                                 name="password">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text toggle-password"
                                                                     style="cursor: pointer;">
-                                                                    <i class="fas fa-eye" id="toggle-password-icon"></i>
+                                                                    <i class="fas fa-eye" id="toggle-password-icon-register"></i>
                                                                 </span>
                                                             </div>
                                                         </div>
