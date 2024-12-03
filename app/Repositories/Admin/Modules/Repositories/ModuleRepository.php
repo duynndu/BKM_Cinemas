@@ -16,6 +16,23 @@ class ModuleRepository extends BaseRepository implements ModuleInterface
         return Module::class;
     }
 
+    public function getModule()
+    {
+        if (auth()->user()->cinema_id) {
+            $modules = Module::whereHas('permissions', function ($query) {
+                $query->whereHas('rolePermissions', function ($subQuery) {
+                    $subQuery->whereHas('role', function ($roleQuery) {
+                        $roleQuery->where('id', 4); // Thay 4 bằng giá trị role_id cần kiểm tra
+                    });
+                });
+            })->get();
+        }else{
+            $modules = Module::all();
+        }
+        return $modules;
+    }
+
+
     public function filter($request)
     {
         $data = $this->model->newQuery();

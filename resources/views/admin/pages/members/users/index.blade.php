@@ -48,29 +48,32 @@
                                         class="form-control mb-xl-0 mb-3"
                                         placeholder="Nhập tên chức năng">
                                 </div>
-                                <div class="col-xl-5">
-                                    <label class="form-label mb-2">{{ __('language.admin.members.roles.type') }}</label><br>
-                                    <select name="type" class="form-control w-50 selectRoles" id="">
-                                        <option value="">-- {{ __('language.admin.members.roles.select') }} --</option>
-                                        <option value="{{ \App\Models\User::TYPE_ADMIN }}" {{ request()->type == \App\Models\User::TYPE_ADMIN ? 'selected' : '' }}>
-                                            {{ __('language.admin.members.roles.admin') }}
-                                        </option>
-                                        <option value="{{ \App\Models\User::TYPE_MANAGE }}" {{ request()->type == \App\Models\User::TYPE_MANAGE ? 'selected' : '' }}>
-                                            {{ __('language.admin.members.roles.manage') }}
-                                        </option>
-                                        <option value="{{ \App\Models\User::TYPE_STAFF }}" {{ request()->type == \App\Models\User::TYPE_STAFF ? 'selected' : '' }}>
-                                            {{ __('language.admin.members.roles.staff') }}
-                                        </option>
-                                        <option value="{{ \App\Models\User::TYPE_MEMBER }}" {{ request()->type == \App\Models\User::TYPE_MEMBER ? 'selected' : '' }}>
-                                            {{ __('language.admin.members.roles.member') }}
-                                        </option>
-                                    </select>
-                                </div>
+
+                               @if (auth()->user()->type == \App\Models\User::TYPE_ADMIN)
+                                 <div class="col-xl-5">
+                                     <label class="form-label mb-2">{{ __('language.admin.members.roles.type') }}</label><br>
+                                     <select name="type" class="form-control w-50 selectRoles" id="">
+                                         <option value="">-- {{ __('language.admin.members.roles.select') }} --</option>
+                                         <option value="{{ \App\Models\User::TYPE_ADMIN }}" {{ request()->type == \App\Models\User::TYPE_ADMIN ? 'selected' : '' }}>
+                                             {{ __('language.admin.members.roles.admin') }}
+                                         </option>
+                                         <option value="{{ \App\Models\User::TYPE_MANAGE }}" {{ request()->type == \App\Models\User::TYPE_MANAGE ? 'selected' : '' }}>
+                                             {{ __('language.admin.members.roles.manage') }}
+                                         </option>
+                                         <option value="{{ \App\Models\User::TYPE_STAFF }}" {{ request()->type == \App\Models\User::TYPE_STAFF ? 'selected' : '' }}>
+                                             {{ __('language.admin.members.roles.staff') }}
+                                         </option>
+                                         <option value="{{ \App\Models\User::TYPE_MEMBER }}" {{ request()->type == \App\Models\User::TYPE_MEMBER ? 'selected' : '' }}>
+                                             {{ __('language.admin.members.roles.member') }}
+                                         </option>
+                                     </select>
+                                 </div>
+                               @endif
                                 <div class="col-xl-3 col-sm-6 align-self-end">
                                     <div>
                                         <button class="btn btn-primary me-2" title="Click here to Search"
                                             type="submit"><i class="fa-sharp fa-solid fa-filter me-2"></i>Tìm
-                                            kiếm nâng cao
+                                            kiếm 
                                         </button>
 
                                         <button type="reset" class="btn btn-danger light"

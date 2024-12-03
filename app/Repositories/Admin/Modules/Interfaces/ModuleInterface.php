@@ -11,5 +11,5 @@ interface ModuleInterface extends RepositoryInterface
     public function updatePermissionsByModuleId($record, $data);
     public function filter($request);
     public function deletePermissionsByModuleId($module, $permissionsIds);
-
+    public function getModule();
 }

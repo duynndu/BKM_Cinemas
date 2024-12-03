@@ -17,10 +17,16 @@ class RoleRepository extends BaseRepository implements RoleInterface
 
     public function getAll()
     {
-        $roles = $this->model->with('permissions')
-            ->paginate(self::PAGINATION);
+        $query = $this->model->newQuery();
+        $query->with(['permissions', 'users']);
 
-        return $roles;
+        if (auth()->user()->cinema_id) { {
+                $query->whereHas('user', function ($subQuery) {
+                    $subQuery->where('id', auth()->user()->id);
+                });
+            }
+        }
+        return $query->paginate(self::PAGINATION);
     }
 
     public function find($id)
@@ -46,7 +52,7 @@ class RoleRepository extends BaseRepository implements RoleInterface
 
         $role->delete($id);
 
-        if(!empty($role->permissions)) {
+        if (!empty($role->permissions)) {
             $role->permissions()->detach();
         }
 

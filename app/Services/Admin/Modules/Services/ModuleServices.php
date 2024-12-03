@@ -2,12 +2,14 @@
 
 namespace App\Services\Admin\Modules\Services;
 
+use App\Models\Module;
 use App\Repositories\Admin\Modules\Interfaces\ModuleInterface;
 use App\Services\Admin\Modules\Interfaces\ModuleServiceInterface;
 use App\Services\Base\BaseService;
 
 class ModuleServices extends BaseService implements ModuleServiceInterface
 {
+
     public function getRepository()
     {
         return ModuleInterface::class;
@@ -16,6 +18,14 @@ class ModuleServices extends BaseService implements ModuleServiceInterface
     {
         return $this->repository->filter($request);
     }
+
+
+    public function getModule()
+    {
+        $modules = $this->repository->getModule();
+        return $modules;
+    }
+
     public function create(&$data)
     {
         $module = $this->repository->create($data['module']);
