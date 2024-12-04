@@ -555,13 +555,6 @@
                                             <div class="card-body">
                                                 <div class="info">
                                                     <div class="info-content">
-                                                        <p>Thẻ quà tặng</p>
-                                                        <p> </p>
-                                                        <div class="info-bkm-card">
-                                                            <a class="btn-login">Xem</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-content">
                                                         <p>Voucher</p>
                                                         <p>{{ !empty($data['voucherUsers']) ? $data['voucherUsers']->count() : 0 }}
                                                         </p>
@@ -579,13 +572,6 @@
                                                             <a href="javascript:;" data-modal="#modalRewards"
                                                                 title="Quà tặng"
                                                                 class="no-verify open-modal btn-login">Xem</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-content">
-                                                        <p>Thẻ Thành Viên</p>
-                                                        <p>1</p>
-                                                        <div class="info-bkm-card">
-                                                            <a class="btn-login">Xem</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1374,7 +1360,7 @@
                                 </div>
                             @endforeach
                         @else
-                            <div class="reward-item">
+                            <div class="reward-item reward-no-item">
                                 <div class="reward-image">
                                     <div class="d-flex flex-column">
                                         <p>Bạn chưa có quà tặng</p>

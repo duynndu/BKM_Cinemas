@@ -100,87 +100,90 @@
 
                 <div class="row">
                     <div class="swiper mySwiper-counter position-relative overflow-hidden">
-                        <div class="swiper-wrapper ">
+                        <div class="swiper-wrapper">
                             <!--swiper-slide-->
-                            <div class="swiper-slide">
-                                <div class="card counter">
-                                    <div class="card-body d-flex align-items-center">
-                                        <div class="card-box-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                                 fill="none" viewBox="0 0 448 512">
-                                                <path fill="#9568FF"
-                                                      d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z" />
-                                            </svg>
-                                        </div>
-                                        <div class="chart-num">
-                                            <h2 class="mb-0">{{ !empty($data['users']) ? count($data['users']) : 0 }}</h2>
-                                            <p class="mb-0">
-                                                Người dùng
-                                            </p>
+                            @if (Auth::user()->type == 'admin')
+                                <div class="swiper-slide">
+                                    <div class="card counter">
+                                        <div class="card-body d-flex align-items-center">
+                                            <div class="card-box-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                    fill="none" viewBox="0 0 448 512">
+                                                    <path fill="#9568FF"
+                                                        d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z" />
+                                                </svg>
+                                            </div>
+                                            <div class="chart-num">
+                                                <h2 class="mb-0">{{ !empty($data['users']) ? count($data['users']) : 0 }}</h2>
+                                                <p class="mb-0">
+                                                    Người dùng
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="swiper-slide">
-                                <div class="card counter">
-                                    <div class="card-body d-flex align-items-center">
-                                        <div class="card-box-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                                 viewBox="0 0 512 512">
-                                                <path fill="#EB62D0"
-                                                      d="M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM48 368l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm368-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM48 240l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm368-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM48 112l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16L64 96c-8.8 0-16 7.2-16 16zM416 96c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM160 128l0 64c0 17.7 14.3 32 32 32l128 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32L192 96c-17.7 0-32 14.3-32 32zm32 160c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l128 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-128 0z" />
-                                            </svg>
-                                        </div>
-                                        <div class="chart-num">
-                                            <h2 class="font-w600 mb-0">
-                                                {{ !empty($data['movies']) ? count($data['movies']) : 0 }}</h2>
-                                            <p class="mb-0">
-                                                Phim
-                                            </p>
+                                <div class="swiper-slide">
+                                    <div class="card counter">
+                                        <div class="card-body d-flex align-items-center">
+                                            <div class="card-box-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                    viewBox="0 0 512 512">
+                                                    <path fill="#EB62D0"
+                                                        d="M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM48 368l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm368-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM48 240l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm368-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM48 112l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16L64 96c-8.8 0-16 7.2-16 16zM416 96c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM160 128l0 64c0 17.7 14.3 32 32 32l128 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32L192 96c-17.7 0-32 14.3-32 32zm32 160c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l128 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-128 0z" />
+                                                </svg>
+                                            </div>
+                                            <div class="chart-num">
+                                                <h2 class="font-w600 mb-0">
+                                                    {{ !empty($data['movies']) ? count($data['movies']) : 0 }}</h2>
+                                                <p class="mb-0">
+                                                    Phim
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="swiper-slide">
-                                <div class="card counter">
-                                    <div class="card-body d-flex align-items-center">
-                                        <div class="card-box-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                                 viewBox="0 0 576 512">
-                                                <path fill="#FF4646"
-                                                      d="M64 64C28.7 64 0 92.7 0 128l0 64c0 8.8 7.4 15.7 15.7 18.6C34.5 217.1 48 235 48 256s-13.5 38.9-32.3 45.4C7.4 304.3 0 311.2 0 320l0 64c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-64c0-8.8-7.4-15.7-15.7-18.6C541.5 294.9 528 277 528 256s13.5-38.9 32.3-45.4c8.3-2.9 15.7-9.8 15.7-18.6l0-64c0-35.3-28.7-64-64-64L64 64zm64 112l0 160c0 8.8 7.2 16 16 16l288 0c8.8 0 16-7.2 16-16l0-160c0-8.8-7.2-16-16-16l-288 0c-8.8 0-16 7.2-16 16zM96 160c0-17.7 14.3-32 32-32l320 0c17.7 0 32 14.3 32 32l0 192c0 17.7-14.3 32-32 32l-320 0c-17.7 0-32-14.3-32-32l0-192z" />
-                                            </svg>
-                                        </div>
-                                        <div class="chart-num">
-                                            <h2 class="mb-0 totalTicketsInMonth_number">{{ !empty($data['totalTicketsInMonth']) ? $data['totalTicketsInMonth'] : 0 }}</h2>
-                                            <p class="mb-0">
-                                                Số vé trong tháng
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card counter">
-                                    <div class="card-body d-flex align-items-center">
-                                        <div class="card-box-icon">
-                                            <svg width="22" height="22" xmlns="http://www.w3.org/2000/svg"
-                                                 viewBox="0 0 576 512">
-                                                <path fill="#ccc"
-                                                      d="M0 128C0 92.7 28.7 64 64 64l256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2l0 256c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1l0-17.1 0-128 0-17.1 14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z" />
-                                            </svg>
-                                        </div>
-                                        <div class="chart-num">
-                                            <h2 class="mb-0">{{ !empty($data['cinemas']) ? count($data['cinemas']) : 0 }}</h2>
-                                            <p class="mb-0">
-                                                Tổng số rạp phim
-                                            </p>
+                                <div class="swiper-slide">
+                                    <div class="card counter">
+                                        <div class="card-body d-flex align-items-center">
+                                            <div class="card-box-icon">
+                                                <svg width="22" height="22" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 576 512">
+                                                    <path fill="#ccc"
+                                                        d="M0 128C0 92.7 28.7 64 64 64l256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2l0 256c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1l0-17.1 0-128 0-17.1 14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z" />
+                                                </svg>
+                                            </div>
+                                            <div class="chart-num">
+                                                <h2 class="mb-0">{{ !empty($data['cinemas']) ? count($data['cinemas']) : 0 }}</h2>
+                                                <p class="mb-0">
+                                                    Tổng số rạp phim
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @elseif(Auth::user()->type == 'manage' || Auth::user()->type == 'staff')
+                                <div class="swiper-slide">
+                                    <div class="card counter">
+                                        <div class="card-body d-flex align-items-center">
+                                            <div class="card-box-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                    viewBox="0 0 576 512">
+                                                    <path fill="#FF4646"
+                                                        d="M64 64C28.7 64 0 92.7 0 128l0 64c0 8.8 7.4 15.7 15.7 18.6C34.5 217.1 48 235 48 256s-13.5 38.9-32.3 45.4C7.4 304.3 0 311.2 0 320l0 64c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-64c0-8.8-7.4-15.7-15.7-18.6C541.5 294.9 528 277 528 256s13.5-38.9 32.3-45.4c8.3-2.9 15.7-9.8 15.7-18.6l0-64c0-35.3-28.7-64-64-64L64 64zm64 112l0 160c0 8.8 7.2 16 16 16l288 0c8.8 0 16-7.2 16-16l0-160c0-8.8-7.2-16-16-16l-288 0c-8.8 0-16 7.2-16 16zM96 160c0-17.7 14.3-32 32-32l320 0c17.7 0 32 14.3 32 32l0 192c0 17.7-14.3 32-32 32l-320 0c-17.7 0-32-14.3-32-32l0-192z" />
+                                                </svg>
+                                            </div>
+                                            <div class="chart-num">
+                                                <h2 class="mb-0 totalTicketsInMonth_number">{{ !empty($data['totalTicketsInMonth']) ? $data['totalTicketsInMonth'] : 0 }}</h2>
+                                                <p class="mb-0">
+                                                    Số vé trong tháng
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -439,10 +442,12 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="card-footer border-0" style="padding: 30px 0 0 0;">
-                                    <a href="{{ route('admin.movies.index') }}"
-                                        class="btn btn-primary w-100 btn-login">{{ __('language.admin.dashboards.viewAll') }}</a>
-                                </div>
+                                @if (Auth::user()->type == 'admin')
+                                    <div class="card-footer border-0" style="padding: 30px 0 0 0;">
+                                        <a href="{{ route('admin.movies.index') }}"
+                                            class="btn btn-primary w-100 btn-login">{{ __('language.admin.dashboards.viewAll') }}</a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -475,10 +480,12 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="card-footer border-0" style="padding: 30px 0 0 0;">
-                                    <a href="{{ route('admin.posts.index') }}"
-                                        class="btn btn-primary w-100 btn-login">{{ __('language.admin.dashboards.viewAll') }}</a>
-                                </div>
+                                @if (Auth::user()->type == 'admin')
+                                    <div class="card-footer border-0" style="padding: 30px 0 0 0;">
+                                        <a href="{{ route('admin.posts.index') }}"
+                                            class="btn btn-primary w-100 btn-login">{{ __('language.admin.dashboards.viewAll') }}</a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
