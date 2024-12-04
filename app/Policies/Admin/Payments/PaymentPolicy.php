@@ -71,4 +71,12 @@ class PaymentPolicy
         return $user->hasPermission('delete-payment');
     }
 
+    public function changeActive(User $user)
+    {
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('change-active-payment');
+    }
 }

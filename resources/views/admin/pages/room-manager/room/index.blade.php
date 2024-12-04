@@ -17,13 +17,15 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Danh Sách {{ $title['index'] ?? null }}</h4>
-                    <div class="compose-btn">
-                        <a href="{{ route('admin.rooms.create') }}">
-                            <button class="btn btn-secondary btn-sm light" fdprocessedid="5mkvtw">
-                                + Thêm mới
-                            </button>
-                        </a>
-                    </div>
+                    @can('create', App\Models\Room::class)
+                        <div class="compose-btn">
+                            <a href="{{ route('admin.rooms.create') }}">
+                                <button class="btn btn-secondary btn-sm light" fdprocessedid="5mkvtw">
+                                    + Thêm mới
+                                </button>
+                            </a>
+                        </div>
+                    @endcan
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -64,10 +66,14 @@
                                         <td>{{ $room->row_count }}</td>
                                         <td>
                                             <div>
-                                                <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <x-destroy-button route="admin.rooms.destroy" id="{{ $room->id }}" />
+                                                @can('update')
+                                                    <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                @endcan
+                                                @can('delete', App\Models\Room::class)
+                                                    <x-destroy-button route="admin.rooms.destroy" id="{{ $room->id }}" />
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>
