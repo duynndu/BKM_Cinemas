@@ -237,7 +237,7 @@
                     @endif
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 sidebar">
-                    @if ($postRewards->posts->isNotEmpty())
+                    @if ($postRewards)
                         <div class="widget-ticket">
                             <h2>
                                 <img class="w-65" src="{{ asset('client/images/qua-tang.png') }}" alt="Quà tặng">
