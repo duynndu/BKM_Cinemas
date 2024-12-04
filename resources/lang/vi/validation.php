@@ -18,6 +18,7 @@ return [
     'module' => 'Vui lòng chọn :attribute!',
     'emailRequired' => 'Vui lòng nhập email.',
     'passwordRequired' => 'Vui lòng nhập mật khẩu.',
+    'email' => 'Email'
 ];
 
 

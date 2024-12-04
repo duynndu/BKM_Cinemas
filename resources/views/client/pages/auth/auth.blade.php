@@ -8,7 +8,6 @@
 @vite(['resources/js/app.js', 'resources/css/app.css'])
 
 @section('content')
-
     <div class="container">
         <div class="row" style="margin-bottom: 20px">
             <div class="">
@@ -162,12 +161,13 @@
                                                         <label for="password">Mật khẩu <span
                                                                 style="color: red;">*</span></label>
                                                         <div class="input-group">
-                                                            <input id="passwordRegister" type="password" class="form-control passwordRegister"
-                                                                name="password">
+                                                            <input id="passwordRegister" type="password"
+                                                                class="form-control passwordRegister" name="password">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text toggle-password"
                                                                     style="cursor: pointer;">
-                                                                    <i class="fas fa-eye" id="toggle-password-icon-register"></i>
+                                                                    <i class="fas fa-eye"
+                                                                        id="toggle-password-icon-register"></i>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -394,7 +394,8 @@
                                                 </span>
                                             </p>
                                             <p>Điểm tích lũy: <span
-                                                    class="point reward-tab-thanhvien">{{ !empty(Auth::user()->points) ? number_format(Auth::user()->points, 0, ',', '.') : 0 }} điểm</span>
+                                                    class="point reward-tab-thanhvien">{{ !empty(Auth::user()->points) ? number_format(Auth::user()->points, 0, ',', '.') : 0 }}
+                                                    điểm</span>
                                                 <a href="javascript:;" data-modal="#modalPoints" title="Xem quy tắc đổi điểm"
                                                     class="no-verify open-modal">
                                                     Quy tắc & Đổi thưởng
@@ -483,25 +484,28 @@
                                                 <div class="info">
                                                     <div class="info-content">
                                                         <p>Thẻ quà tặng</p>
-                                                        <p>0 đ</p>
+                                                        <p> </p>
                                                         <div class="info-bkm-card">
                                                             <a class="btn-login">Xem</a>
                                                         </div>
                                                     </div>
                                                     <div class="info-content">
                                                         <p>Voucher</p>
-                                                        <p>0</p>
+                                                        <p>{{ !empty($data['voucherUsers']) ? $data['voucherUsers']->count() : 0 }}</p>
                                                         <div class="info-bkm-card">
-                                                            <a class="btn-login">Xem</a>
+                                                            <a href="javascript:;" class="no-verify open-modal btn-login"
+                                                                data-modal="#modalVouchers" title="Vouchers">Xem</a>
                                                         </div>
                                                     </div>
                                                     <div class="info-content">
                                                         <p>Quà tặng</p>
-                                                        <p class="rewardsUser-count">{{ !empty($data['rewardsUser']) ? $data['rewardsUser']->count() : 0 }}</p>
+                                                        <p class="rewardsUser-count">
+                                                            {{ !empty($data['rewardsUser']) ? $data['rewardsUser']->count() : 0 }}
+                                                        </p>
                                                         <div class="info-bkm-card">
-                                                            <a href="javascript:;" 
-                                                            data-modal="#modalRewards" title="Quà tặng"
-                                                            class="no-verify open-modal btn-login">Xem</a>
+                                                            <a href="javascript:;" data-modal="#modalRewards"
+                                                                title="Quà tặng"
+                                                                class="no-verify open-modal btn-login">Xem</a>
                                                         </div>
                                                     </div>
                                                     <div class="info-content">
@@ -1182,15 +1186,17 @@
                             @foreach ($data['rewards'] as $reward)
                                 <div class="reward-item">
                                     <div class="reward-image">
-                                        <img src="{{ !empty($reward->image) ? asset($reward->image) : '' }}" alt="{{ !empty($reward->name) ? $reward->name : '' }}">
+                                        <img src="{{ !empty($reward->image) ? asset($reward->image) : '' }}"
+                                            alt="{{ !empty($reward->name) ? $reward->name : '' }}">
                                         <div class="d-flex flex-column">
                                             <p>{{ !empty($reward->name) ? $reward->name : '' }}</p>
-                                            <p>Điều kiện: {{ !empty($reward->points_required) ? $reward->points_required : '' }} điểm tích lũy</p>
+                                            <p>Điều kiện:
+                                                {{ !empty($reward->points_required) ? $reward->points_required : '' }} điểm
+                                                tích lũy</p>
                                         </div>
                                     </div>
                                     <div class="reward-button">
-                                        <button data-url="{{ route('rewards.redeem') }}" 
-                                            data-id="{{ $reward->id }}"
+                                        <button data-url="{{ route('rewards.redeem') }}" data-id="{{ $reward->id }}"
                                             data-points="{{ $reward->points_required }}"
                                             data-image="{{ asset('client/images/success.png') }}"
                                             data-error="{{ asset('client/images/error.png') }}"
@@ -1209,7 +1215,62 @@
             </div>
         </div>
     </div>
+    <div id="modalVouchers" style="height: 100%;" class="custom-modal">
+        <div class="custom-modal-content">
+            <!-- Nút đóng -->
+            <span class="custom-close">&times;</span>
 
+            <!-- Tiêu đề -->
+            <div class="modal-header d-flex justify-content-center">
+                <h3 class="title-payment">MÃ GIẢM GIÁ CỦA BẠN</h3>
+            </div>
+
+            <!-- Nội dung chính -->
+            <div class="main-modal">
+                <div class="modal-body">
+                    <div class="reward-options reward-options-tab-quatang">
+                        @if (isset($data['voucherUsers']) && $data['voucherUsers']->isNotEmpty())
+                            @foreach ($data['voucherUsers'] as $voucher)
+                                <div class="reward-item">
+                                    <div class="reward-image">
+                                        <img src="{{ !empty($voucher->voucher->image) ? asset($voucher->voucher->image) : '' }}"
+                                            alt="{{ !empty($reward->reward->name) ? $reward->reward->name : '' }}">
+                                        <div class="d-flex flex-column" style="font-size: 14px">
+                                            <p>Mã voucher:
+                                                {{ !empty($voucher->voucher->code) ? $voucher->voucher->code : '' }}</p>
+                                            <p>{{ !empty($voucher->voucher->name) ? $voucher->voucher->name : '' }}</p>
+                                            <p>Giảm: @if ($voucher->voucher->discount_type=='money')
+                                                {{ number_format($voucher->voucher->discount_value, 0, ',', '.') }} Vnđ
+                                                @elseif($voucher->voucher->discount_type=='percent')
+                                                {{ $voucher->voucher->discount_value }}%
+                                                @else
+                                            @endif</p>
+                                            <p><span style="color: red">Hạn sử dụng:</span>
+                                                {{ $voucher->voucher->end_date ? date('H:i d/m/Y', strtotime($voucher->voucher->end_date)) : '' }}
+ </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="reward-item">
+                                <div class="reward-image">
+                                    <div class="d-flex flex-column">
+                                        <p>Bạn chưa có mã giảm giá</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="close-modal" type="button">Đóng</button>
+            </div>
+        </div>
+    </div>
     <div id="modalRewards" style="height: 100%;" class="custom-modal">
         <div class="custom-modal-content">
             <!-- Nút đóng -->
@@ -1228,7 +1289,8 @@
                             @foreach ($data['rewardsUser'] as $reward)
                                 <div class="reward-item">
                                     <div class="reward-image">
-                                        <img src="{{ !empty($reward->reward->image) ? asset($reward->reward->image) : '' }}" alt="{{ !empty($reward->reward->name) ? $reward->reward->name : '' }}">
+                                        <img src="{{ !empty($reward->reward->image) ? asset($reward->reward->image) : '' }}"
+                                            alt="{{ !empty($reward->reward->name) ? $reward->reward->name : '' }}">
                                         <div class="d-flex flex-column">
                                             <p>Mã quà tặng: {{ !empty($reward->code) ? $reward->code : '' }}</p>
                                             <p>{{ !empty($reward->reward->name) ? $reward->reward->name : '' }}</p>

@@ -706,10 +706,10 @@ Route::prefix('admin')
                             ->middleware('authorizeAction:delete,App\Models\FoodType');
                         Route::post('/change-order', 'changeOrder')
                             ->name('changeOrder')
-                            ->middleware('authorizeAction:changeOrder,App\Models\FoodType');
+                            ->middleware('authorizeAction:viewAny,App\Models\FoodType');
                         Route::post('/change-active', 'changeActive')
                             ->name('changeActive')
-                            ->middleware('authorizeAction:changeActive,App\Models\FoodType');
+                            ->middleware('authorizeAction:viewAny,App\Models\FoodType');
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                             ->name('deleteItemMultipleChecked')
                             ->middleware('authorizeAction:deleteMultiple,App\Models\FoodType');
@@ -738,10 +738,10 @@ Route::prefix('admin')
                             ->middleware('authorizeAction:delete,App\Models\FoodCombo');
                         Route::post('/change-order', 'changeOrder')
                             ->name('changeOrder')
-                            ->middleware('authorizeAction:changeOrder,App\Models\FoodCombo');
+                            ->middleware('authorizeAction:viewAny,App\Models\FoodCombo');
                         Route::post('/change-active', 'changeActive')
                             ->name('changeActive')
-                            ->middleware('authorizeAction:changeActive,App\Models\FoodCombo');
+                            ->middleware('authorizeAction:viewAny,App\Models\FoodCombo');
                         Route::post('/removeAvatarImage', 'removeAvatarImage')
                             ->name('removeAvatarImage');
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
@@ -838,57 +838,73 @@ Route::prefix('admin')
                 Route::prefix('redeem-rewards')
                     ->controller(RedeemRewardController::class)
                     ->name('redeemRewards.')
+                    ->middleware('authorizeAction:viewAny,App\Models\UserReward')
                     ->group(function () {
                         Route::get('/', 'index')->name('index');
 
                         Route::post('/change-status', 'changeStatus')->name('changeStatus');
                     });
-
-
                 Route::prefix('rewards')
                     ->controller(RewardController::class)
                     ->name('rewards.')
                     ->group(function () {
                         Route::get('/', 'index')->name('index');
                         Route::get('/create', 'create')
+                            ->middleware('authorizeAction:create,App\Models\Reward')
                             ->name('create');
                         Route::post('/store', 'store')
+                            ->middleware('authorizeAction:create,App\Models\Reward')
                             ->name('store');
                         Route::get('/{id}/edit', 'edit')
+                            ->middleware('authorizeAction:update,App\Models\Reward')
                             ->name('edit');
                         Route::put('/{id}/update', 'update')
+                            ->middleware('authorizeAction:update,App\Models\Reward')
                             ->name('update');
                         Route::delete('/{id}/delete', 'destroy')
+                            ->middleware('authorizeAction:delete,App\Models\Reward')
                             ->name('delete');
                         Route::post('/removeAvatarImage', 'removeAvatarImage')
+                            ->middleware('authorizeAction:viewAny,App\Models\Reward')
                             ->name('removeAvatarImage');
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                            ->middleware('authorizeAction:deleteMultiple,App\Models\Reward')
                             ->name('deleteItemMultipleChecked');
                     });
                 Route::prefix('vouchers')
                     ->controller(VoucherController::class)
                     ->name('vouchers.')
                     ->group(function () {
-                        Route::get('/', 'index')->name('index');
+                        Route::get('/', 'index')
+                            ->middleware('authorizeAction:viewAny,App\Models\Voucher')
+                            ->name('index');
                         Route::get('/create', 'create')
+                            ->middleware('authorizeAction:create,App\Models\Voucher')
                             ->name('create');
                         Route::post('/store', 'store')
+                            ->middleware('authorizeAction:create,App\Models\Voucher')
                             ->name('store');
                         Route::get('/{id}/edit', 'edit')
+                            ->middleware('authorizeAction:update,App\Models\Voucher')
                             ->name('edit');
                         Route::post('/gift', 'getAccountByVoucher')
+                            ->middleware('authorizeAction:update,App\Models\Voucher')
                             ->name('getAccountByVoucher');
                         Route::post('/gift-voucher-account', 'giftVoucherAccount')
+                            ->middleware('authorizeAction:viewAny,App\Models\Voucher')
                             ->name('giftVoucherAccount');
                         Route::post('/search-users', 'searchUser')
                             ->name('searchUser');
                         Route::put('/{id}/update', 'update')
                             ->name('update');
                         Route::delete('/{id}/delete', 'destroy')
+                            ->middleware('authorizeAction:delete,App\Models\Voucher')
                             ->name('delete');
                         Route::post('/removeAvatarImage', 'removeAvatarImage')
+                            ->middleware('authorizeAction:viewAny,App\Models\Voucher')
                             ->name('removeAvatarImage');
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
+                            ->middleware('authorizeAction:deleteMultiple,App\Models\Voucher')
                             ->name('deleteItemMultipleChecked');
                     });
 
@@ -938,26 +954,40 @@ Route::prefix('admin')
                             ->middleware('authorizeAction:viewAny,App\Models\Booking');
                         Route::post('/{id}/change-get-ticket', 'changeGetTickets')
                             ->name('changeGetTickets')
-                            ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                            ->middleware('authorizeAction:viewAny,App\Models\Booking');
                     });
 
                 Route::prefix('notifications')
                     ->controller(NotificationController::class)
                     ->name('notifications.')
                     ->group(function () {
-                        Route::get('/', 'index')->name('index');
+                        Route::get('/', 'index')
+                            ->name('index')
+                            ->middleware('authorizeAction:viewAny,App\Models\Notification');
+
                         Route::get('/create', 'create')
-                            ->name('create');
+                            ->name('create')
+                            ->middleware('authorizeAction:create,App\Models\Notification');
+
                         Route::post('/store', 'store')
-                            ->name('store');
+                            ->name('store')
+                            ->middleware('authorizeAction:create,App\Models\Notification');
+
                         Route::get('/{id}/edit', 'edit')
-                            ->name('edit');
+                            ->name('edit')
+                            ->middleware('authorizeAction:update,App\Models\Notification');
+
                         Route::put('/{id}/update', 'update')
-                            ->name('update');
+                            ->name('update')
+                            ->middleware('authorizeAction:update,App\Models\Notification');
+
                         Route::delete('/{id}/delete', 'destroy')
-                            ->name('delete');
+                            ->name('delete')
+                            ->middleware('authorizeAction:delete,App\Models\Notification');
+
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
-                            ->name('deleteItemMultipleChecked');
+                            ->name('deleteItemMultipleChecked')
+                            ->middleware('authorizeAction:deleteMultiple,App\Models\Notification');;
                         Route::get('/get-by-cinema', 'getByCinemaId')
                             ->name('getByCinemaId');
                         Route::get('/get-by-type', 'getByType')
@@ -967,6 +997,7 @@ Route::prefix('admin')
                 Route::prefix('contacts')
                     ->controller(ContactController::class)
                     ->name('contacts.')
+                    ->middleware('authorizeAction:viewAny,App\Models\Contact')
                     ->group(function () {
                         Route::get('/', 'index')
                             ->name('index');

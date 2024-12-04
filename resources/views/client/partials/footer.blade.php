@@ -48,12 +48,12 @@
                             @endif
                         </div>
                         <div class="row">
-                            <div class="col-md-6 col-sm-12 col-xs-6 text-center">
-                                <div class="newsletter" data-toggle="modal" href='#modal-subscribe'>
-                                    <img src="{{ asset('client/images/icons/icon-email.png') }}" alt="Email" />
-                                    Đăng kí nhận tin
+                                <div class="col-md-6 col-sm-12 col-xs-6 text-center">
+                                    <div class="newsletter" data-toggle="modal" href='#modal-subscribe'>
+                                        <img src="{{ asset('client/images/icons/icon-email.png') }}" alt="Email" />
+                                        Đăng kí nhận tin
+                                    </div>
                                 </div>
-                            </div>
                             <div class="col-md-6 col-sm-12 col-xs-6 text-center">
                                 <a rel="nofollow" target="_blank" href="">
                                     <img class="img-responsive" src="{{ asset('client/images/icons/dathongbao.png') }}"

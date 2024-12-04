@@ -14,6 +14,7 @@ return new class extends Migration
         // Bảng vai trò
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->nullable();
             $table->string('image')->nullable();
             $table->string('name'); // Ví dụ: (Admin Tổng, Bộ phận frontend, Bộ phận backend, Trưởng phòng, Nhân viên, Cộng tác viên,...)
             $table->string('type'); // Ví dụ: (admin, frontend, backend, department_head, staff, member, management, administrative, staff)
