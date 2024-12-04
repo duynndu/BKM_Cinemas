@@ -66,7 +66,7 @@
                                         <td>{{ $room->row_count }}</td>
                                         <td>
                                             <div>
-                                                @can('update')
+                                                @can('update', App\Models\Room::class)
                                                     <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>

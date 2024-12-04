@@ -26,7 +26,7 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
 
         // Tính tổng chi tiêu của năm được chọn
         $totalMoney = $this->model
-            ->where('type', 'complete')
+            ->where('type', 'booking')
             ->where('status', 'completed')
             ->whereYear('created_at', $year)
             ->where('user_id', Auth::user()->id)
@@ -46,7 +46,7 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
     
         // Tính tổng chi tiêu của tháng và năm được chọn
         $totalMoney = $this->model
-            ->where('type', 'complete')
+            ->where('type', 'booking')
             ->where('status', 'completed')
             ->whereYear('created_at', $selectedYear) // Lọc theo năm
             ->whereMonth('created_at', $selectedMonth) // Lọc theo tháng
