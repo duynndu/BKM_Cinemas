@@ -1,4 +1,4 @@
-<div id="footer">
+<div id="footer" class="mt-4">
     <div id="footer">
         <div class="footer-wrap">
             <div class="container">
@@ -86,7 +86,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <p class="copyright">&copy{{ date('Y') }} BKM Cinema - All rights reserved. </p>
+                        <p class="copyright">&copy{{ date('Y') }} BKM Cinema - Mọi quyền được bảo lưu. </p>
                     </div>
                 </div>
             </div>
