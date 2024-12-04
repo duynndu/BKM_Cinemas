@@ -37,4 +37,9 @@ class BookingController extends Controller
             'city' => $city,
         ]);
     }
+
+    function paymentFailed(Request $request)
+    {
+        return view('client.pages.payment-failed');
+    }
 }

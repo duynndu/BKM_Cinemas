@@ -164,6 +164,7 @@ Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
 })->name("buy-ticket");
 
 Route::get('/thanh-cong', [BookingController::class, 'paymentSuccess'])->name('thanh-cong');
+Route::get('/that-bai', [BookingController::class, 'paymentFailed'])->name('that-bai');
 
 Route::get('/dat-ve/xac-nhan', function () {
     return view('client.pages.payment-verification');

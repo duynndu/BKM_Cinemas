@@ -202,14 +202,17 @@ class PaymentController extends Controller
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
-            $booking->update([
-                'payment_status' => $dataTransaction['status'],
-                'status' => $dataTransaction['status']
-            ]);
             if ($dataTransaction['status'] == Status::COMPLETED) {
+                $booking->update([
+                    'payment_status' => Status::COMPLETED,
+                    'status' => Status::COMPLETED
+                ]);
                 return redirect()->route('thanh-cong', [
                     'code' => $booking->code
                 ]);
+            } else {
+                $booking->forceDelete();
+                return redirect()->route('that-bai');
             }
         }
     }
@@ -470,11 +473,14 @@ class PaymentController extends Controller
                 'value' => SeatStatus::AVAILABLE
             ]);
         }
-        $booking->update([
-            'payment_status' => $dataTransaction['status'],
-            'status' => $dataTransaction['status']
-        ]);
-
+        if ($dataTransaction['status'] == Status::COMPLETED) {
+            $booking->update([
+                'payment_status' => Status::COMPLETED,
+                'status' => Status::COMPLETED
+            ]);
+        } else {
+            $booking->forceDelete();
+        }
         return $dataTransaction;
     }
 
