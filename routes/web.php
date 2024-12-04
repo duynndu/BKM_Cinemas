@@ -115,6 +115,8 @@ Route::get('/zaloPayReturn', [DepositController::class, 'zaloPayReturn'])->name(
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/email-subscribe', [HomeController::class, 'emailSubscribe'])->name('emailSubscribe');
+Route::post('/getTotalMoneyByYear', [AuthController::class, 'getTotalMoneyByYear'])->name('getTotalMoneyByYear');
+Route::post('/getTotalMoneyByMonth', [AuthController::class, 'getTotalMoneyByMonth'])->name('getTotalMoneyByMonth');
 
 Route::post('/deleteNotification', [HomeController::class, 'deleteNotification'])->name('deleteNotification');
 

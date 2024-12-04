@@ -16,5 +16,13 @@ class TransactionService extends BaseService implements TransactionServiceInterf
     public function getTransactionByUser($userId)
     {
         return $this->repository->getTransactionByUser($userId);
+        
+    }
+    public function getTotalMoneyByYear($request){
+        return $this->repository->getTotalMoneyByYear($request);
+    }
+    public function getTotalMoneyByMonth($request){
+        return $this->repository->getTotalMoneyByMonth($request);
+
     }
 }
