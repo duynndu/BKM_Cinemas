@@ -242,6 +242,8 @@
                         <span class="nav-text">Phương thức thanh toán</span>
                     </a>
                 </li>
+            @endif
+            @if (auth()->user()->can('viewAny', App\Models\City::class) || auth()->user()->can('viewAny', App\Models\Area::class))
                 <li>
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">location_on</i>
@@ -261,6 +263,7 @@
                     </ul>
                 </li>
             @endif
+
 
             @if (auth()->user()->can('viewAny', App\Models\Food::class) ||
                     auth()->user()->can('viewAny', App\Models\FoodType::class) ||
@@ -282,11 +285,11 @@
                             </li>
                         @endcan
 
-                        @if (auth()->user()->can('viewAny', App\Models\FoodCombo::class))
+                        {{-- @if (auth()->user()->can('viewAny', App\Models\FoodCombo::class))
                             <li>
                                 <a href="{{ route('admin.food-combos.index') }}" aria-expanded="false">Combo</a>
                             </li>
-                        @endif
+                        @endif --}}
                     </ul>
                 </li>
             @endif

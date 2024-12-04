@@ -18,13 +18,15 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Danh Sách {{ $title['index'] ?? null }}</h4>
-                        <div class="compose-btn">
-                            <a href="{{ route('admin.seat-layouts.create') }}">
-                                <button class="btn btn-secondary btn-sm light" fdprocessedid="5mkvtw">
-                                    + Thêm mới
-                                </button>
-                            </a>
-                        </div>
+                        @can('create', App\Models\SeatLayout::class)
+                            <div class="compose-btn">
+                                <a href="{{ route('admin.seat-layouts.create') }}">
+                                    <button class="btn btn-secondary btn-sm light" fdprocessedid="5mkvtw">
+                                        + Thêm mới
+                                    </button>
+                                </a>
+                            </div>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -65,12 +67,16 @@
                                             </td>
                                             <td>
                                                 <div>
-                                                    <a href="{{ route('admin.seat-layouts.edit', $seatLayout->id) }}"
-                                                        class="btn btn-primary shadow btn-xs sharp me-1">
-                                                        <i class="fa fa-pencil"></i>
-                                                    </a>
-                                                    <x-destroy-button route="admin.seat-layouts.destroy"
-                                                        id="{{ $seatLayout->id }}" />
+                                                    @can('update', App\Models\SeatLayout::class)
+                                                        <a href="{{ route('admin.seat-layouts.edit', $seatLayout->id) }}"
+                                                            class="btn btn-primary shadow btn-xs sharp me-1">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('delete', App\Models\SeatLayout::class)
+                                                        <x-destroy-button route="admin.seat-layouts.destroy"
+                                                            id="{{ $seatLayout->id }}" />
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

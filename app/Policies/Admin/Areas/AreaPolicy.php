@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Policies\Admin\Locations;
+namespace App\Policies\Admin\Areas;
 
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
 
 class AreaPolicy
 {
+    use HandlesAuthorization;
     /**
      * Create a new policy instance.
      */
@@ -13,12 +16,12 @@ class AreaPolicy
     {
         //
     }
-
     public function viewAny(User $user)
     {
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
+
         return $user->hasPermission('view-area');
     }
 
@@ -69,5 +72,4 @@ class AreaPolicy
 
         return $user->hasPermission('delete-area');
     }
-
 }

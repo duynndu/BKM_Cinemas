@@ -34,23 +34,20 @@ use App\Models\User;
 use App\Models\UserReward;
 use App\Models\Voucher;
 use App\Policies\Admin\Actors\ActorPolicy;
+use App\Policies\Admin\Areas\AreaPolicy;
 use App\Policies\Admin\Blocks\BlockPolicy;
 use App\Policies\Admin\Blocks\BlockTypePolicy;
 use App\Policies\Admin\Bookings\BookingPolicy;
 use App\Policies\Admin\CategoryPosts\CategoryPostPolicy;
 use App\Policies\Admin\Cinemas\CinemaPolicy;
+use App\Policies\Admin\Cities\CityPolicy;
 use App\Policies\Admin\Contacts\ContactPolicy;
 use App\Policies\Admin\Dashboards\DashboardPolicy;
-use App\Policies\Admin\Events\EventPolicy;
-use App\Policies\Admin\Events\RedeemRewardsPolicy;
-use App\Policies\Admin\Events\RewardPolicy;
-use App\Policies\Admin\Events\VoucherPolicy;
+
 use App\Policies\Admin\Foods\FoodComboPolicy;
 use App\Policies\Admin\Foods\FoodPolicy;
 use App\Policies\Admin\Foods\FoodTypePolicy;
 use App\Policies\Admin\Genres\GenrePolicy;
-use App\Policies\Admin\Locations\AreaPolicy;
-use App\Policies\Admin\Locations\CityPolicy;
 use App\Policies\Admin\Menus\MenuPolicy;
 use App\Policies\Admin\Modules\ModulePolicy;
 use App\Policies\Admin\Movies\MoviePolicy;
@@ -59,6 +56,7 @@ use App\Policies\Admin\Pages\PagePolicy;
 use App\Policies\Admin\Payments\PaymentPolicy;
 use App\Policies\Admin\Permissions\PermissionPolicy;
 use App\Policies\Admin\Posts\PostPolicy;
+use App\Policies\Admin\Rewards\RewardPolicy;
 use App\Policies\Admin\Roles\RolePolicy;
 use App\Policies\Admin\Rooms\RoomPolicy;
 use App\Policies\Admin\Rooms\SeatLayoutPolicy;
@@ -66,6 +64,8 @@ use App\Policies\Admin\Rooms\SeatTypePolicy;
 use App\Policies\Admin\Systems\SystemPolicy;
 use App\Policies\Admin\Tags\TagPolicy;
 use App\Policies\Admin\Users\UserPolicy;
+use App\Policies\Admin\Users\UserRewardPolicy;
+use App\Policies\Admin\Vouchers\VoucherPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use PhpParser\Node\Stmt\Block;
 
@@ -103,7 +103,7 @@ class AuthServiceProvider extends ServiceProvider
         SeatType::class => SeatTypePolicy::class,
         Reward::class => RewardPolicy::class,
         Voucher::class => VoucherPolicy::class,
-        UserReward::class => RedeemRewardsPolicy::class,
+        UserReward::class => UserRewardPolicy::class,
         Payment::class => PaymentPolicy::class,
         Area::class => AreaPolicy::class,
         City::class => CityPolicy::class,

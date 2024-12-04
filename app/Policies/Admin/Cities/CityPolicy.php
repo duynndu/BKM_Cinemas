@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Policies\Admin\Locations;
+namespace App\Policies\Admin\Cities;
 
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
 
 class CityPolicy
 {
+    use HandlesAuthorization;
     /**
      * Create a new policy instance.
      */
@@ -13,7 +16,6 @@ class CityPolicy
     {
         //
     }
-
     public function viewAny(User $user)
     {
         if($user->type == User::TYPE_ADMIN) {
@@ -70,5 +72,4 @@ class CityPolicy
 
         return $user->hasPermission('delete-city');
     }
-
 }

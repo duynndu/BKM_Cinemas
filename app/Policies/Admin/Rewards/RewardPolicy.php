@@ -1,21 +1,37 @@
 <?php
 
-namespace App\Policies\Admin\Events;
+namespace App\Policies\Admin\Rewards;
 
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class RewardPolicy
 {
+    /**
+     * Determine whether the user can view any models.
+     */
     public function viewAny(User $user)
     {
-        if ($user->type == User::TYPE_ADMIN) {
+        if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        // Kiểm tra quyền của người dùng
+
         return $user->hasPermission('view-reward');
     }
 
-     /**
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user)
+    {
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('view-reward');
+    }
+
+    /**
      * Determine whether the user can create models.
      */
     public function create(User $user)
@@ -49,6 +65,15 @@ class RewardPolicy
         }
 
         return $user->hasPermission('delete-reward');
+    }
+
+    public function changeStatus(User $user)
+    {
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('change-status-reward');
     }
 
     public function deleteMultiple(User $user)

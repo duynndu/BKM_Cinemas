@@ -8,11 +8,32 @@ class BookingPolicy
 {
     public function viewAny(User $user)
     {
+        if($user->type == User::TYPE_MANAGE || $user->type == User::TYPE_STAFF) {
+            return true;
+        }
         return $user->hasPermission('view-booking');
     }
 
-    public function viewDetail(User $user)
+    public function changeStatus(User $user)
     {
-        return $user->hasPermission('view-detail');
+        if($user->type == User::TYPE_MANAGE || $user->type == User::TYPE_STAFF) {
+            return true;
+        }
+        return $user->hasPermission('change-status-booking');
+    }
+    public function changeRefundStatus(User $user)
+    {
+        if($user->type == User::TYPE_MANAGE || $user->type == User::TYPE_STAFF) {
+            return true;
+        }
+        return $user->hasPermission('change-refund-status-booking');
+    }
+
+    public function getTickets(User $user)
+    {
+        if($user->type == User::TYPE_MANAGE || $user->type == User::TYPE_STAFF) {
+            return true;
+        }
+        return $user->hasPermission('get-tickets-booking');
     }
 }
