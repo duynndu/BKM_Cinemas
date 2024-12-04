@@ -1,26 +1,23 @@
 <?php
 
-namespace App\Policies\Admin\Movies;
+namespace App\Policies\Admin\Genres;
 
+use App\Models\Genre;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
-class MoviePolicy
+class GenrePolicy
 {
     /**
-     * Create a new policy instance.
+     * Determine whether the user can view any models.
      */
-    public function __construct()
-    {
-        //
-    }
-
     public function viewAny(User $user)
     {
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
 
-        return $user->hasPermission('view-movie');
+        return $user->hasPermission('view-genre');
     }
 
     /**
@@ -32,7 +29,7 @@ class MoviePolicy
             return true;
         }
 
-        return $user->hasPermission('view-movie');
+        return $user->hasPermission('view-genre');
     }
 
     /**
@@ -44,18 +41,8 @@ class MoviePolicy
             return true;
         }
 
-        return $user->hasPermission('create-movie');
+        return $user->hasPermission('create-genre');
     }
-
-    public function detail(User $user)
-    {
-        if($user->type == User::TYPE_ADMIN) {
-            return true;
-        }
-
-        return $user->hasPermission('view-detail-movie');
-    }
-
 
     /**
      * Determine whether the user can update the model.
@@ -66,7 +53,7 @@ class MoviePolicy
             return true;
         }
 
-        return $user->hasPermission('update-movie');
+        return $user->hasPermission('update-genre');
     }
 
     /**
@@ -78,7 +65,31 @@ class MoviePolicy
             return true;
         }
 
-        return $user->hasPermission('delete-movie');
+        return $user->hasPermission('delete-genre');
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     */
+    public function changeOrder(User $user)
+    {
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('change-order-genre');
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function changePosition(User $user)
+    {
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('change-position-genre');
     }
 
     public function deleteMultiple(User $user)
@@ -87,33 +98,6 @@ class MoviePolicy
             return true;
         }
 
-        return $user->hasPermission('delete-multiple-movie');
-    }
-
-    public function changeActive(User $user)
-    {
-        if($user->type == User::TYPE_ADMIN) {
-            return true;
-        }
-
-        return $user->hasPermission('change-active-movie');
-    }
-
-    public function changeHot(User $user)
-    {
-        if($user->type == User::TYPE_ADMIN) {
-            return true;
-        }
-
-        return $user->hasPermission('change-hot-movie');
-    }
-
-    public function changeOrder(User $user)
-    {
-        if($user->type == User::TYPE_ADMIN) {
-            return true;
-        }
-
-        return $user->hasPermission('change-order-movie');
+        return $user->hasPermission('delete-multiple-genre');
     }
 }

@@ -465,33 +465,43 @@ Route::prefix('admin')
                     ->name('genres.')
                     ->group(function () {
                         Route::get('/', 'index')
-                            ->name('index');
+                            ->name('index')
+                            ->middleware('authorizeAction:viewAny,App\Models\Genre');
 
                         Route::get('/create', 'create')
-                            ->name('create');
+                            ->name('create')
+                            ->middleware('authorizeAction:create,App\Models\Genre');
 
                         Route::post('/store', 'store')
-                            ->name('store');
+                            ->name('store')
+                            ->middleware('authorizeAction:store,App\Models\Genre');
 
                         Route::get('/{id}/edit', 'edit')
-                            ->name('edit');
+                            ->name('edit')
+                            ->middleware('authorizeAction:update,App\Models\Genre');
 
                         Route::post('/{id}/update', 'update')
-                            ->name('update');
+                            ->name('update')
+                            ->middleware('authorizeAction:update,App\Models\Genre');
 
                         Route::delete('/{id}/delete', 'delete')
-                            ->name('delete');
+                            ->name('delete')
+                            ->middleware('authorizeAction:delete,App\Models\Genre');
 
                         Route::post('/change-order', 'changeOrder')
-                            ->name('changeOrder');
+                            ->name('changeOrder')
+                            ->middleware('authorizeAction:changeOrder,App\Models\Genre');
 
                         Route::post('/change-position', 'changePosition')
-                            ->name('changePosition');
+                            ->name('changePosition')
+                            ->middleware('authorizeAction:changePosition,App\Models\Genre');
 
                         Route::post('/removeAvatarImage', 'removeAvatarImage')
                             ->name('removeAvatarImage');
+
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
-                            ->name('deleteItemMultipleChecked');
+                            ->name('deleteItemMultipleChecked')
+                            ->middleware('authorizeAction:deleteMultiple,App\Models\Genre');
                     });
 
                 Route::prefix('movie')
@@ -536,12 +546,15 @@ Route::prefix('admin')
                         Route::post('/change-hot', 'changeHot')
                             ->name('changeHot')
                             ->middleware('authorizeAction:changeHot,App\Models\Movie');
+
                         Route::post('/removeAvatarImage', 'removeAvatarImage')
                             ->name('removeAvatarImage')
                             ->middleware('authorizeAction:viewAny,App\Models\Movie');
+
                         Route::post('/removeBannerImage', 'removeBannerImage')
                             ->name('removeBannerImage')
                             ->middleware('authorizeAction:viewAny,App\Models\Movie');
+
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                             ->name('deleteItemMultipleChecked')
                             ->middleware('authorizeAction:viewAny,App\Models\Movie');
@@ -818,21 +831,36 @@ Route::prefix('admin')
                     ->controller(ActorController::class)
                     ->name('actors.')
                     ->group(function () {
-                        Route::get('/', 'index')->name('index');
+                        Route::get('/', 'index')
+                            ->name('index')
+                            ->middleware('authorizeAction:viewAny,App\Models\Actor');
+
                         Route::get('/create', 'create')
-                            ->name('create');
+                            ->name('create')
+                            ->middleware('authorizeAction:create,App\Models\Actor');
+
                         Route::post('/store', 'store')
-                            ->name('store');
+                            ->name('store')
+                            ->middleware('authorizeAction:store,App\Models\Actor');
+
                         Route::get('/{id}/edit', 'edit')
-                            ->name('edit');
+                            ->name('edit')
+                            ->middleware('authorizeAction:update,App\Models\Actor');
+
                         Route::put('/{id}/update', 'update')
-                            ->name('update');
+                            ->name('update')
+                            ->middleware('authorizeAction:update,App\Models\Actor');
+
                         Route::delete('/{id}/delete', 'destroy')
-                            ->name('delete');
+                            ->name('delete')
+                            ->middleware('authorizeAction:delete,App\Models\Actor');
+
                         Route::post('/removeAvatarImage', 'removeAvatarImage')
                             ->name('removeAvatarImage');
+
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
-                            ->name('deleteItemMultipleChecked');
+                            ->name('deleteItemMultipleChecked')
+                            ->middleware('authorizeAction:deleteMultiple,App\Models\Actor');
                     });
 
                 Route::prefix('redeem-rewards')

@@ -38,9 +38,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary mb-4" id="add-permission">
-                                        Thêm chức năng
-                                    </button>
+                                    
                                     <div id="list-permission">
                                         @if (!empty(old('old_permissions')))
                                             @foreach (old('old_permissions') as $key => $oldPermission)
@@ -119,6 +117,11 @@
                                             @endforeach
                                         @endif
                                     </div>
+
+                                    <button type="button" class="btn btn-primary mb-4" id="add-permission">
+                                        Thêm chức năng
+                                    </button>
+                                    
                                     <div class="mb-4">
                                         <label class="form-label mb-2">{{ __('language.admin.members.modules.description') }}</label>
                                         <textarea class="form-control" cols="20" rows="5" name="module[description]">{{ old('module.description', $data['module']->description) }}</textarea>

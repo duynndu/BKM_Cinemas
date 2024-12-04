@@ -143,11 +143,13 @@
                             <div class="card-header">
                                 <h4 class="card-title">{{ __('language.admin.movies.list') }}</h4>
                                 <div class="compose-btn">
-                                    <a href="{{ route('admin.movies.create') }}">
-                                        <button class="btn btn-secondary btn-sm light">
-                                            + {{ __('language.admin.movies.add') }}
-                                        </button>
-                                    </a>
+                                    @can('create', \App\Models\Movie::class)
+                                        <a href="{{ route('admin.movies.create') }}">
+                                            <button class="btn btn-secondary btn-sm light">
+                                                + {{ __('language.admin.movies.add') }}
+                                            </button>
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
                             <div class="card-body">
@@ -157,22 +159,24 @@
                                             <input type="hidden" id="value-item-id" value="">
                                             <thead>
                                                 <tr>
-                                                    <th>
-                                                        <div class="box-delete-item">
-                                                            <input type="checkbox" id="item-all-checked">
-                                                            <button id="btn-delete-all"
-                                                                data-url="{{ route('admin.movies.deleteItemMultipleChecked') }}"
-                                                                class="btn btn-sm btn-danger btn-delete-multiple_item">
-                                                                <svg width="15" height="15"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    viewBox="0 0 448 512">
-                                                                    <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                                                                    <path fill="white"
-                                                                        d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                    </th>
+                                                    @can('deleteMultiple', \App\Models\Movie::class)
+                                                        <th>
+                                                            <div class="box-delete-item">
+                                                                <input type="checkbox" id="item-all-checked">
+                                                                <button id="btn-delete-all"
+                                                                    data-url="{{ route('admin.movies.deleteItemMultipleChecked') }}"
+                                                                    class="btn btn-sm btn-danger btn-delete-multiple_item">
+                                                                    <svg width="15" height="15"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        viewBox="0 0 448 512">
+                                                                        <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                                        <path fill="white"
+                                                                            d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                        </th>
+                                                    @endcan
 
                                                     <th>#</th>
                                                     <th class="white-space-nowrap">{{ __('language.admin.movies.title') }}
@@ -185,19 +189,27 @@
                                                     <th>{{ __('language.admin.movies.created_at') }}</th>
                                                     <th>{{ __('language.admin.movies.release_date') }}</th>
                                                     <th>{{ __('language.admin.movies.premiere_date') }}</th>
+                                                    
                                                     <th>{{ __('language.admin.movies.active') }}</th>
+                                                    
                                                     <th>{{ __('language.admin.movies.hot') }}</th>
+
                                                     <th>{{ __('language.admin.movies.order') }}</th>
-                                                    <th>{{ __('language.admin.movies.action') }}</th>
+
+                                                    @if (Auth()->user()->can('detail', \App\Models\Movie::class) || Auth()->user()->can('update', \App\Models\Movie::class) || Auth()->user()->can('delete', \App\Models\Movie::class))
+                                                        <th>{{ __('language.admin.movies.action') }}</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($data as $key => $movie)
                                                     <tr>
-                                                        <td>
-                                                            <input type="checkbox" data-id="{{ $movie->id }}"
-                                                                class="item-checked">
-                                                        </td>
+                                                        @can('deleteMultiple', \App\Models\Movie::class)
+                                                            <td>
+                                                                <input type="checkbox" data-id="{{ $movie->id }}"
+                                                                    class="item-checked">
+                                                            </td>
+                                                        @endcan
                                                         <td>
                                                             <strong
                                                                 class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
@@ -236,61 +248,89 @@
                                                         </td>
                                                         <td>{{ \Carbon\Carbon::parse($movie->premiere_date)->format('d/m/Y') }}
                                                         </td>
-
-                                                        <td>
-                                                            <button
-                                                                class="toggle-active-btn btn btn-xs {{ $movie->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
-                                                                data-id="{{ $movie->id }}"
-                                                                data-status="{{ $movie->active }}"
-                                                                data-url="{{ route('admin.movies.changeActive') }}">
-                                                                {{ $movie->active == 1 ? __('language.admin.movies.show') : __('language.admin.movies.hidden') }}
-                                                            </button>
-                                                        </td>
-
-                                                        <td>
-                                                            <button
-                                                                class="toggle-hot-btn btn btn-xs {{ $movie->hot == 1 ? 'btn-success' : 'btn-danger' }} text-white"
-                                                                data-id="{{ $movie->id }}"
-                                                                data-status="{{ $movie->hot }}"
-                                                                data-url="{{ route('admin.movies.changeHot') }}">
-                                                                {{ $movie->hot == 1 ? __('language.admin.movies.hot') : __('language.admin.movies.noHot') }}
-                                                            </button>
-                                                        </td>
-                                                        <td>
-                                                            <input type="number" min="0" name="order"
-                                                                value="{{ $movie->order }}"
-                                                                data-id="{{ $movie->id }}"
-                                                                data-url="{{ route('admin.movies.changeOrder') }}"
-                                                                class="form-control changeOrder" style="width: 67px;">
-                                                        </td>
-                                                        <td>
-                                                            <div
-                                                                style="padding-right: 20px; display: flex; justify-content: end">
-                                                                <button data-bs-toggle="modal"
-                                                                    data-bs-target="#showModal_{{ $movie->id }}"
-                                                                    class="btn btn-success shadow btn-xs sharp me-1 show-order">
-                                                                    <i class="fa fa-eye"></i>
+                                                        @can('changeActive', \App\Models\Movie::class)
+                                                            <td>
+                                                                <button
+                                                                    class="toggle-active-btn btn btn-xs {{ $movie->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                    data-id="{{ $movie->id }}"
+                                                                    data-status="{{ $movie->active }}"
+                                                                    data-url="{{ route('admin.movies.changeActive') }}">
+                                                                    {{ $movie->active == 1 ? __('language.admin.movies.show') : __('language.admin.movies.hidden') }}
                                                                 </button>
+                                                            </td>
+                                                        @else
+                                                            <td>
+                                                                <span class="badge light badge-{{ $movie->active == 1 ? 'success' : 'danger' }}">{{ $movie->active == 1 ? __('language.admin.movies.show') : __('language.admin.movies.hidden') }}</span>
+                                                            </td>
+                                                        @endcan
+                                                        @can('changeHot', \App\Models\Movie::class)
+                                                            <td>
+                                                                <button
+                                                                    class="toggle-hot-btn btn btn-xs {{ $movie->hot == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                    data-id="{{ $movie->id }}"
+                                                                    data-status="{{ $movie->hot }}"
+                                                                    data-url="{{ route('admin.movies.changeHot') }}">
+                                                                    {{ $movie->hot == 1 ? __('language.admin.movies.hot') : __('language.admin.movies.noHot') }}
+                                                                </button>
+                                                            </td>
+                                                        @else
+                                                            <td>
+                                                                <span class="badge light badge-{{ $movie->hot == 1 ? 'success' : 'danger' }}">{{ $movie->hot == 1 ? __('language.admin.movies.show') : __('language.admin.movies.hidden') }}</span>
+                                                            </td>
+                                                        @endcan
 
-                                                                <a href="{{ route('admin.movies.edit', $movie->id) }}"
-                                                                    class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                    <i class="fa fa-pencil"></i>
-                                                                </a>
+                                                        @can('changeOrder', \App\Models\Movie::class)
+                                                            <td>
+                                                                <input type="number" min="0" name="order"
+                                                                    value="{{ $movie->order }}"
+                                                                    data-id="{{ $movie->id }}"
+                                                                    data-url="{{ route('admin.movies.changeOrder') }}"
+                                                                    class="form-control changeOrder" style="width: 67px;">
+                                                            </td>
+                                                        @else
+                                                            <td>
+                                                                <span class="">{{ $movie->order }}</span>
+                                                            </td>
 
-                                                                <form
-                                                                    action="{{ route('admin.movies.delete', $movie->id) }}"
-                                                                    class="formDelete" method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button
-                                                                        class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
-                                                                        data-type="DELETE" href="">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </form>
+                                                        @endcan
 
-                                                            </div>
-                                                        </td>
+                                                        @if (Auth()->user()->can('detail', \App\Models\Movie::class) || Auth()->user()->can('update', \App\Models\Movie::class) || Auth()->user()->can('delete', \App\Models\Movie::class))
+                                                            <td>
+                                                                <div
+                                                                    style="padding-right: 20px; display: flex; justify-content: end">
+                                                                    @can('detail', \App\Models\Movie::class)
+                                                                        <button data-bs-toggle="modal"
+                                                                            data-bs-target="#showModal_{{ $movie->id }}"
+                                                                            class="btn btn-success shadow btn-xs sharp me-1 show-order">
+                                                                            <i class="fa fa-eye"></i>
+                                                                        </button>
+                                                                    @endcan
+                                                                    
+                                                                    @can('update', \App\Models\Movie::class)
+                                                                        <a href="{{ route('admin.movies.edit', $movie->id) }}"
+                                                                            class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </a>
+                                                                    @endcan
+                                                                    
+                                                                    @can('delete', \App\Models\Movie::class)
+                                                                        <form
+                                                                            action="{{ route('admin.movies.delete', $movie->id) }}"
+                                                                            class="formDelete" method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button
+                                                                                class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                                data-type="DELETE" href="">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    @endcan
+
+                                                                </div>
+                                                            </td>
+                                                        @endif
+                                                        
                                                         <td>
                                                             <div class="modal fade" id="showModal_{{ $movie->id }}"
                                                                 tabindex="-1"

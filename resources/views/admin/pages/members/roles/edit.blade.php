@@ -121,13 +121,21 @@
                                 <div class="row">
                                     @if($data['modules']->isNotEmpty())
                                         @foreach($data['modules'] as $module)
+                                            @php
+                                                $allPermissionsChecked = $module->permissions->every(function ($permission) use ($data) {
+                                                    return in_array($permission->id, $data['role']->permissions->pluck('id')->toArray());
+                                                });
+                                            @endphp
                                             <div class="col-6">
                                                 <div class="filter cm-content-box box-primary">
                                                     <div class="card border-0 pb-0">
                                                         <div class="card-header border-0 pb-0" style="justify-content: start;">
                                                             <div class="form-check custom-checkbox checkbox-info check-lg me-3">
-                                                                <!-- CheckBox của modules chọn tất cả -->
-                                                                <input type="checkbox" class="form-check-input module-checkbox" data-module-id="{{ $module->id }}" {{ in_array($module->id, $data['role']->permissions->pluck('module_id')->toArray()) ? 'checked' : '' }} id="module_{{ $module->id }}">
+                                                                <input type="checkbox"
+                                                                    class="form-check-input module-checkbox"
+                                                                    data-module-id="{{ $module->id }}"
+                                                                    id="module_{{ $module->id }}"
+                                                                    {{ $allPermissionsChecked ? 'checked' : '' }}>
                                                                 <label class="form-check-label" for="customCheckBox4"></label>
                                                             </div>
                                                             <h4 class="card-title">{{ $module->name ?? '' }}</h4>
@@ -143,7 +151,6 @@
                                                                             <li>
                                                                                 <div class="timeline-panel">
                                                                                     <div class="form-check custom-checkbox checkbox-info check-lg me-3">
-                                                                                        <!-- CheckBox của permissions chọn tất cả -->
                                                                                         <input type="checkbox"
                                                                                                value="{{ $permission->id }}"
                                                                                                name="permissions[]"
@@ -151,7 +158,6 @@
                                                                                                data-module-id="{{ $module->id }}"
                                                                                                id="permission_{{ $permission->id }}"
                                                                                             {{ in_array($permission->id, old('permissions', $permissionIds)) ? 'checked' : '' }}>
-                                                                                        <!-- Kiểm tra để đánh dấu checked -->
                                                                                         <label class="form-check-label" for="permission_{{ $permission->id }}"></label>
                                                                                     </div>
                                                                                     <div class="media-body">

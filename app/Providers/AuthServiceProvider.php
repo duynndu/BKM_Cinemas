@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Actor;
 use App\Models\Area;
 use App\Models\BlockType;
 use App\Models\CategoryPost;
@@ -18,6 +19,7 @@ use App\Models\Contact;
 use App\Models\Food;
 use App\Models\FoodCombo;
 use App\Models\FoodType;
+use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Notification;
 use App\Models\Payment;
@@ -31,6 +33,7 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Models\UserReward;
 use App\Models\Voucher;
+use App\Policies\Admin\Actors\ActorPolicy;
 use App\Policies\Admin\Blocks\BlockPolicy;
 use App\Policies\Admin\Blocks\BlockTypePolicy;
 use App\Policies\Admin\Bookings\BookingPolicy;
@@ -45,6 +48,7 @@ use App\Policies\Admin\Events\VoucherPolicy;
 use App\Policies\Admin\Foods\FoodComboPolicy;
 use App\Policies\Admin\Foods\FoodPolicy;
 use App\Policies\Admin\Foods\FoodTypePolicy;
+use App\Policies\Admin\Genres\GenrePolicy;
 use App\Policies\Admin\Locations\AreaPolicy;
 use App\Policies\Admin\Locations\CityPolicy;
 use App\Policies\Admin\Menus\MenuPolicy;
@@ -82,6 +86,8 @@ class AuthServiceProvider extends ServiceProvider
         CategoryPost::class => CategoryPostPolicy::class,
         Post::class => PostPolicy::class,
         Movie::class => MoviePolicy::class,
+        Genre::class => GenrePolicy::class,
+        Actor::class => ActorPolicy::class,
         Tag::class => TagPolicy::class,
         User::class => UserPolicy::class,
         Role::class => RolePolicy::class,

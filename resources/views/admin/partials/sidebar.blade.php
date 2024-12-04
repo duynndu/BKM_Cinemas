@@ -149,7 +149,7 @@
                 </li>
             @endif
 
-            @if (auth()->user()->can('viewAny', App\Models\Movie::class))
+            @if (auth()->user()->can('viewAny', App\Models\Movie::class) || auth()->user()->can('viewAny', App\Models\Genre::class))
                 <li
                     class="{{ request()->segment(2) == 'movies' || request()->segment(2) == 'actors' || request()->segment(2) == 'genres-movie' ? 'mm-active' : '' }}">
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
@@ -157,15 +157,21 @@
                         <span class="nav-text">Phim</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li class="{{ request()->segment(2) == 'genres-movie' ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.genres.index') }}" aria-expanded="false">Thể loại phim</a>
-                        </li>
-                        <li class="{{ request()->segment(2) == 'movies' ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.movies.index') }}" aria-expanded="false">Phim</a>
-                        </li>
-                        <li class="{{ request()->segment(2) == 'actors' ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.actors.index') }}" aria-expanded="false">Diễn viên</a>
-                        </li>
+                        @can('viewAny', App\Models\Genre::class)
+                            <li class="{{ request()->segment(2) == 'genres-movie' ? 'mm-active' : '' }}">
+                                <a href="{{ route('admin.genres.index') }}" aria-expanded="false">Thể loại phim</a>
+                            </li>
+                        @endcan
+                        @can('viewAny', App\Models\Movie::class)
+                            <li class="{{ request()->segment(2) == 'movies' ? 'mm-active' : '' }}">
+                                <a href="{{ route('admin.movies.index') }}" aria-expanded="false">Phim</a>
+                            </li>
+                        @endcan
+                        @can('viewAny', App\Models\Actor::class)
+                            <li class="{{ request()->segment(2) == 'actors' ? 'mm-active' : '' }}">
+                                <a href="{{ route('admin.actors.index') }}" aria-expanded="false">Diễn viên</a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endif
