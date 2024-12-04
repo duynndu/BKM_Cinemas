@@ -5,6 +5,7 @@
 
 <head>
     <meta name="csrf_token" content="{{ csrf_token() }}">
+    <meta name="user_id" content="{{ auth()->user()->id ?? '' }}">
     <meta name="transaction_succeed" content="{{ session('transaction_succeed') }}">
     <meta name="transaction_failed" content="{{ session('transaction_failed') }}">
     <meta name="status_failed" content="{{ session('status_failed') }}">

@@ -1,3 +1,5 @@
+const cinema_id = $('meta[name="cinema_id"]').attr('content');
+
 $(function () {
     $("#datepicker").datepicker({
         autoclose: true,
@@ -56,62 +58,48 @@ const mySwiper = new Swiper('.swiper-container', {
     },
 });
 
-echo.channel('change_status_order')
+function formatTime(createdAt) {
+    const date = new Date(createdAt);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+}
+
+function formatDate(createdAt) {
+    const date = new Date(createdAt);
+    return `${date.getDate()} Tháng ${date.getMonth() + 1}, ${date.getFullYear()}`;
+}
+
+
+echo.private('change_status_order.' + cinema_id)
     .listen('OrderStatusUpdated', (data) => {
         if (data.order.status === 'waiting_for_cancellation') {
-            let element = $('.T_notification');
-            let element2 = $('.list_notification');
-            let url = element2.attr('data-url');
-            element.addClass('nav-item');
-
             $.ajax({
-                url: url,
+                url: $('.list_notification').attr('data-url'),
                 type: 'GET',
                 data: {
-                    type: 'refund',
+                    cinema_id: cinema_id,
                 },
                 success: (response) => {
-                    let htmlTemplate = `
-                        <li>
-                            <div class="timeline-panel">
-                                <div class="media-body">
-                                    <h6 class="mb-1">{title}</h6>
-                                    <small class="d-block">{formattedDate}</small>
-                                </div>
-                            </div>
-                        </li>
-                    `;
-
-                    let newHtml = '';
+                    $('.T_notification').addClass('nav-item');
+                    $('.list_notification').empty();
 
                     response.data.forEach(item => {
-                        const date = new Date(item.created_at);
-
-                        const day = date.getDate().toString().padStart(2, '0');
-                        const month = date.toLocaleString('vi-VN', { month: 'long' });
-                        const year = date.getFullYear();
-                        const hours = date.getHours();
-                        const minutes = date.getMinutes().toString().padStart(2, '0');
-
-                        const period = hours >= 12 ? 'PM' : 'AM';
-                        const formattedHour = hours % 12 || 12;
-
-                        const formattedDate = `Lúc ${formattedHour}:${minutes} ${period} ${day} ${month}, ${year}`;
-
-                        let listItem = htmlTemplate
-                            .replace('{title}', item.title)
-                            .replace('{formattedDate}', formattedDate);
-
-                        newHtml += listItem;
+                        const listItem = `
+                            <li>
+                                <div class="timeline-panel">
+                                    <div class="media-body">
+                                        <h6 class="mb-1">${item.title}</h6>
+                                        <small class="d-block">
+                                            Lúc ${formatTime(item.created_at)} ${formatDate(item.created_at)}
+                                        </small>
+                                    </div>
+                                </div>
+                            </li>
+                        `;
+                        $('.list_notification').append(listItem);
                     });
-
-                    const timelineList = document.querySelector('ul.timeline.list_notification');
-                    if (timelineList) {
-                        timelineList.innerHTML = newHtml;
-                    }
                 },
                 error: (xhr) => {
-                    console.error('An error occurred:', xhr.responseText);
+                    console.error('Error:', xhr.responseText);
                 }
             });
 

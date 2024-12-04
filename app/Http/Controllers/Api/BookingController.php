@@ -7,6 +7,7 @@ use App\Constants\SeatStatus;
 use App\Events\BookSeat;
 use App\Events\OrderRefundStatusUpdated;
 use App\Events\OrderStatusUpdated;
+use App\Events\OrderStatusUpdatedClient;
 use App\Http\Controllers\Controller;
 use App\Jobs\ResetSeatStatus;
 use App\Models\Booking;
@@ -141,6 +142,7 @@ class BookingController extends Controller
                 }
                 Notification::create([
                     'user_id' => $record->user_id,
+                    'cinema_id' => $record->cinema_id,
                     'title'   => 'Người dùng ' . ($record->user->name ?? $record->user->email) . ' yêu cầu hủy vé: ' . $record->code,
                     'type'    => 'refund',
                 ]);
@@ -161,7 +163,21 @@ class BookingController extends Controller
 
             broadcast(new OrderStatusUpdated([
                 'id' => $id,
+                'refund' => false,
                 'status' => $record->status,
+                'cinema_id' => $record->cinema_id,
+                'code' => $record->code,
+                'userName' => $record->user->name ?? $record->user->email,
+                'urlChangeRefundStatus' => route('api.orders.changeRefundStatus', $record->id),
+                'urlChangeStatus' => route('api.orders.changeStatus', $record->id),
+                'urlGetTicket' => route('admin.orders.changeGetTickets', $record->id),
+            ]));
+
+            broadcast(new OrderStatusUpdatedClient([
+                'id' => $id,
+                'status' => $record->status,
+                'cinema_id' => $record->cinema_id,
+                'user_id' => $record->user_id,
                 'code' => $record->code,
                 'userName' => $record->user->name ?? $record->user->email,
                 'urlChangeRefundStatus' => route('api.orders.changeRefundStatus', $record->id),
@@ -208,18 +224,21 @@ class BookingController extends Controller
                 $user->balance += $record->final_price;
                 $user->save();
             }
-            
+
             $record->refund_status = $validated['status'];
             $record->save();
+
+            broadcast(new OrderStatusUpdated([
+                'id' => $id,
+                'refund' => true,
+                'cinema_id' => $record->cinema_id,
+            ]));
 
             broadcast(new OrderRefundStatusUpdated([
                 'id' => $id,
                 'status' => $record->status,
                 'code' => $record->code,
                 'total_price' => $record->total_price,
-                'get_tickets' => $record->get_tickets,
-                'urlChangeRefundStatus' => route('api.orders.changeRefundStatus', $record->id),
-                'urlChangeStatus' => route('api.orders.changeStatus', $record->id)
             ], $record->user));
 
             OrderRefundStatusUpdated::dispatch([

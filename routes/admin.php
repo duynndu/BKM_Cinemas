@@ -982,7 +982,7 @@ Route::prefix('admin')
                             ->middleware('authorizeAction:viewAny,App\Models\Booking');
                         Route::post('/{id}/change-get-ticket', 'changeGetTickets')
                             ->name('changeGetTickets')
-                            ->middleware('authorizeAction:viewAny,App\Models\Cinema');
+                            ->middleware('authorizeAction:viewAny,App\Models\Booking');
                     });
 
                 Route::prefix('notifications')
@@ -1015,8 +1015,9 @@ Route::prefix('admin')
 
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                             ->name('deleteItemMultipleChecked')
-                            ->middleware('authorizeAction:deleteMultiple,App\Models\Notification');
-
+                            ->middleware('authorizeAction:deleteMultiple,App\Models\Notification');;
+                        Route::get('/get-by-cinema', 'getByCinemaId')
+                            ->name('getByCinemaId');
                         Route::get('/get-by-type', 'getByType')
                             ->name('getByType');
                     });
