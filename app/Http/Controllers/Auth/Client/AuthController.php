@@ -409,4 +409,14 @@ class AuthController extends Controller
             ]);
         }
     }
+
+    public function getTotalMoneyByYear(Request $request){
+        $totalPendingByUser = $this->transactionService->getTotalMoneyByYear($request);
+        return $totalPendingByUser;
+    }
+    public function getTotalMoneyByMonth(Request $request){
+        $totalPendingUserByMonth = $this->transactionService->getTotalMoneyByMonth($request);
+        return $totalPendingUserByMonth;
+    }
+    
 }

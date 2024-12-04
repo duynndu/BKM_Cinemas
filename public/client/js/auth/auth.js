@@ -618,5 +618,79 @@ $(document).ready(function () {
                 }
             },
         });
-    })
+    });
+
+    // tính tổng chi tiêu  theo năm
+
+    $('#moneySpending').on('change', function(e) {
+        // Lấy giá trị năm chính xác từ datepicker
+        const selectedYear = $(this).val() // Lấy năm từ datepicker
+        $('#year').text(selectedYear);
+
+
+        var url = $(this).attr('data-url');
+        var csrfToken = $(this).attr('data-token');
+
+        // Gửi yêu cầu AJAX
+        $.ajax({
+            url: url, // Đường dẫn đến route xử lý
+            method: 'POST',
+            data: {
+                _token: csrfToken, // Token CSRF
+                year: selectedYear, // Gửi năm được chọn
+            },
+            success: function(response) {
+                // Cập nhật tổng chi tiêu và năm
+                $('#totalPendingMoney').text(response.totalMoneyFormatted || 0);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+    $('#moneySpending').trigger('change');
+
+
+    // tính tổng chi tiêu theo tháng
+    $('#moneySpendingByMonth').on('change', function(e) {
+        // Lấy giá trị năm chính xác từ datepicker
+        const selectedMonth = $(this).val() // Lấy năm từ datepicker
+        
+        $('#month').text(selectedMonth);
+
+
+        var url = $(this).attr('data-url');
+        
+        var csrfToken = $(this).attr('data-token');
+
+        // Gửi yêu cầu AJAX
+        $.ajax({
+            url: url, // Đường dẫn đến route xử lý
+            method: 'POST',
+            data: {
+                _token: csrfToken, // Token CSRF
+                month: selectedMonth, // Gửi năm được chọn
+            },
+            success: function(response) {
+                // Cập nhật tổng chi tiêu và năm
+                $('#totalPendingMoneyByMonth').text(response.totalMoneyFormatted || 0);
+            },
+            error: function(error) {
+                console.log(error); 
+            }
+        });
+    });
+    $('#moneySpendingByMonth').trigger('change');
+
+
+    
+
+       
+
+
+
+            
+       
+        
+    
 });

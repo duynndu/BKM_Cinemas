@@ -314,6 +314,20 @@ $(document).ready(function () {
         language: 'vi',
         endDate: new Date(),
     });
+    $('.date-filter-year').datepicker({
+        format: 'yyyy',
+        minViewMode: "years", // Chế độ chỉ cho phép chọn năm
+        autoclose: true,
+        language: 'vi',
+        endDate: new Date(),
+    });
+    $('.date-filter-month').datepicker({
+        format: 'mm/yyyy',
+        minViewMode: 1,
+        autoclose: true,
+        language: 'vi',
+        endDate: new Date(),
+    });
 
     function togglePasswordVisibility(passwordInput, icon) {
         const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';

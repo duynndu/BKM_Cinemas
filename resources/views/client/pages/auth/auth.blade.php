@@ -458,10 +458,82 @@
                                     <div class="card-container">
                                         <div class="card">
                                             <div class="card-header">
-                                                <div class="stats">
-                                                    <p>Tổng chi tiêu <strong>{{ date('Y') }}</strong>: <span
-                                                            class="point">0</span> đ</p>
+                                                <div>
+                                                    <div style="display: flex; align-items: center;">
+                                                        <div class="stats">
+                                                            <p>
+                                                                Tổng chi tiêu theo năm: <strong id="year"></strong>:
+                                                                <span class="point" id="totalPendingMoney">
+                                                                    {{-- {{ !empty($data['totalPendingMoney']) ? number_format($data['totalPendingMoney'], 0, ',', '.') : 0 }} --}}
+                                                                </span> Vnđ
+                                                            </p>
+                                                        </div>
+                                                        <div class="date-box-content" style="margin-left: 30px">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                                                                fill="currentColor" aria-hidden="true"
+                                                                class="dp__icon dp__input_icon dp__input_icons">
+                                                                <path
+                                                                    d="M29.333 8c0-2.208-1.792-4-4-4h-18.667c-2.208 0-4 1.792-4 4v18.667c0 2.208 1.792 4 4 4h18.667c2.208 0 4-1.792 4-4v-18.667zM26.667 8v18.667c0 0.736-0.597 1.333-1.333 1.333 0 0-18.667 0-18.667 0-0.736 0-1.333-0.597-1.333-1.333 0 0 0-18.667 0-18.667 0-0.736 0.597-1.333 1.333-1.333 0 0 18.667 0 18.667 0 0.736 0 1.333 0.597 1.333 1.333z">
+                                                                </path>
+                                                                <path
+                                                                    d="M20 2.667v5.333c0 0.736 0.597 1.333 1.333 1.333s1.333-0.597 1.333-1.333v-5.333c0-0.736-0.597-1.333-1.333-1.333s-1.333 0.597-1.333 1.333z">
+                                                                </path>
+                                                                <path
+                                                                    d="M9.333 2.667v5.333c0 0.736 0.597 1.333 1.333 1.333s1.333-0.597 1.333-1.333v-5.333c0-0.736-0.597-1.333-1.333-1.333s-1.333 0.597-1.333 1.333z">
+                                                                </path>
+                                                                <path
+                                                                    d="M4 14.667h24c0.736 0 1.333-0.597 1.333-1.333s-0.597-1.333-1.333-1.333h-24c-0.736 0-1.333 0.597-1.333 1.333s0.597 1.333 1.333 1.333z">
+                                                                </path>
+                                                            </svg>
+    
+                                                            <input data-token="{{ csrf_token() }}" type="text"
+                                                                value="{{ \Carbon\Carbon::now()->format('Y') }}"
+                                                                class="form-control date-input date-filter-year"
+                                                                data-url="{{ route('getTotalMoneyByYear') }}" id="moneySpending">
+    
+                                                        </div>
+                                                    </div>
+                                                   
+    
+                                                    <div style="display: flex; align-items: center; margin-top: 15px;">
+                                                        <div class="stats">
+                                                            <p>
+                                                                Tổng chi tiêu theo tháng: <strong id="month"></strong>:
+                                                                <span class="point" id="totalPendingMoneyByMonth">
+                                                                    {{-- {{ !empty($data['totalPendingMoney']) ? number_format($data['totalPendingMoney'], 0, ',', '.') : 0 }} --}}
+                                                                </span> Vnđ
+                                                            </p>
+                                                        </div>
+                                                        <div class="date-box-content" style="margin-left: 30px">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                                                                fill="currentColor" aria-hidden="true"
+                                                                class="dp__icon dp__input_icon dp__input_icons">
+                                                                <path
+                                                                    d="M29.333 8c0-2.208-1.792-4-4-4h-18.667c-2.208 0-4 1.792-4 4v18.667c0 2.208 1.792 4 4 4h18.667c2.208 0 4-1.792 4-4v-18.667zM26.667 8v18.667c0 0.736-0.597 1.333-1.333 1.333 0 0-18.667 0-18.667 0-0.736 0-1.333-0.597-1.333-1.333 0 0 0-18.667 0-18.667 0-0.736 0.597-1.333 1.333-1.333 0 0 18.667 0 18.667 0 0.736 0 1.333 0.597 1.333 1.333z">
+                                                                </path>
+                                                                <path
+                                                                    d="M20 2.667v5.333c0 0.736 0.597 1.333 1.333 1.333s1.333-0.597 1.333-1.333v-5.333c0-0.736-0.597-1.333-1.333-1.333s-1.333 0.597-1.333 1.333z">
+                                                                </path>
+                                                                <path
+                                                                    d="M9.333 2.667v5.333c0 0.736 0.597 1.333 1.333 1.333s1.333-0.597 1.333-1.333v-5.333c0-0.736-0.597-1.333-1.333-1.333s-1.333 0.597-1.333 1.333z">
+                                                                </path>
+                                                                <path
+                                                                    d="M4 14.667h24c0.736 0 1.333-0.597 1.333-1.333s-0.597-1.333-1.333-1.333h-24c-0.736 0-1.333 0.597-1.333 1.333s0.597 1.333 1.333 1.333z">
+                                                                </path>
+                                                            </svg>
+    
+                                                            <input data-token="{{ csrf_token() }}" type="text" data-url="{{ route('getTotalMoneyByMonth') }}"
+                                                                value="{{ \Carbon\Carbon::now()->format('m/Y') }}"
+                                                                class="form-control date-input date-filter-month"
+                                                                 id="moneySpendingByMonth">
+                                                                {{-- {{ route('getTotalMoneyByMonth') }} --}}
+                                                        </div>
+                                                    </div>
+                                                       
                                                 </div>
+                                         
+
+
                                                 <div
                                                     class="level-card @if (Auth::user()->membership_level == 'member') rank-member @elseif(Auth::user()->membership_level == 'vip') rank-vip @else rank-vvip @endif">
                                                     @if (Auth::user()->membership_level == 'member')
@@ -491,7 +563,8 @@
                                                     </div>
                                                     <div class="info-content">
                                                         <p>Voucher</p>
-                                                        <p>{{ !empty($data['voucherUsers']) ? $data['voucherUsers']->count() : 0 }}</p>
+                                                        <p>{{ !empty($data['voucherUsers']) ? $data['voucherUsers']->count() : 0 }}
+                                                        </p>
                                                         <div class="info-bkm-card">
                                                             <a href="javascript:;" class="no-verify open-modal btn-login"
                                                                 data-modal="#modalVouchers" title="Vouchers">Xem</a>
@@ -1239,15 +1312,16 @@
                                             <p>Mã voucher:
                                                 {{ !empty($voucher->voucher->code) ? $voucher->voucher->code : '' }}</p>
                                             <p>{{ !empty($voucher->voucher->name) ? $voucher->voucher->name : '' }}</p>
-                                            <p>Giảm: @if ($voucher->voucher->discount_type=='money')
-                                                {{ number_format($voucher->voucher->discount_value, 0, ',', '.') }} Vnđ
-                                                @elseif($voucher->voucher->discount_type=='percent')
-                                                {{ $voucher->voucher->discount_value }}%
+                                            <p>Giảm: @if ($voucher->voucher->discount_type == 'money')
+                                                    {{ number_format($voucher->voucher->discount_value, 0, ',', '.') }} Vnđ
+                                                @elseif($voucher->voucher->discount_type == 'percent')
+                                                    {{ $voucher->voucher->discount_value }}%
                                                 @else
-                                            @endif</p>
+                                                @endif
+                                            </p>
                                             <p><span style="color: red">Hạn sử dụng:</span>
                                                 {{ $voucher->voucher->end_date ? date('H:i d/m/Y', strtotime($voucher->voucher->end_date)) : '' }}
- </p>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -1355,4 +1429,5 @@
     <script type="module" src="{{ asset('client/js/auth/auth.js') }}"></script>
     <script type="module" src="{{ asset('client/js/auth/reward.js') }}"></script>
     <script type="module" src=" {{ asset('/js/client/order.js') }} "></script>
+
 @endsection
