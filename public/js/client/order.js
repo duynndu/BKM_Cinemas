@@ -1,4 +1,5 @@
 let isSubmitting = false;
+const user_id = $('meta[name="user_id"]').attr('content');
 
 function changeOrder(e) {
     if (isSubmitting) return;
@@ -42,8 +43,8 @@ function changeOrder(e) {
 
  $(document).on('click', '.btn-cancelled-ticket', changeOrder);
 
-echo.channel('change_status_order')
-    .listen('OrderStatusUpdated', (data) => {
+echo.private('change_status_order_client.' + user_id)
+    .listen('OrderStatusUpdatedClient', (data) => {
         if (data.order.status === 'cancelled') {
             Swal.fire({
                 icon: 'success',
@@ -67,7 +68,7 @@ echo.channel('change_status_order')
             });
         }
     });
-echo.channel('change_refund_status_order')
+echo.private('change_refund_status_order.' + user_id)
     .listen('OrderRefundStatusUpdated', (data) => {
         Swal.fire({
             icon: 'success',

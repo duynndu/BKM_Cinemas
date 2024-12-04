@@ -42,12 +42,16 @@ class NotificationService extends BaseService implements NotificationServiceInte
 
     public function deleteMultipleChecked($request)
     {
-
         if (count($request->selectedIds) < 0) {
             return false;
         }
         $this->repository->deleteMultiple($request->selectedIds);
         return true;
+    }
+
+    public function getByCinemaId($cinema_id)
+    {
+        return $this->repository->getByCinemaId($cinema_id);
     }
 
 }

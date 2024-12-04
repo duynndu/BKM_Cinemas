@@ -1,4 +1,5 @@
 let isSubmitting = false;
+const cinema_id = $('meta[name="cinema_id"]').attr('content');
 
 function changeOrder(e) {
     if (isSubmitting) return;
@@ -84,98 +85,96 @@ $(document).on('change', '.order_status', changeOrder);
 $(document).on('change', '.refund_status', changeOrder);
 $(document).on('click', '.get_tickets', changeGetTickets);
 
-echo.channel('change_status_order')
+echo.private('change_status_order.' + cinema_id)
     .listen('OrderStatusUpdated', (data) => {
-        if (data.order.status === 'waiting_for_cancellation') {
-            $(`#status-${data.order.id}`).replaceWith(`
-                <select name="status" id="status-${data.order.id}" class="form-control order_status" data-url="${data.order.urlChangeStatus}">
-                    <option value="cancelled">
-                        Hủy
-                    </option>
-                    <option value="waiting_for_cancellation">
-                        Chờ hủy
-                    </option>
-                    <option value="rejected">
-                        Từ chối hủy
-                    </option>
-                </select>
-            `);
-            $(`#status-${data.order.id}`).val('waiting_for_cancellation').selectpicker('refresh');
-            $(`#get_tickets-${data.order.id}`).replaceWith(`
-                <b id="get_tickets-${data.order.id}">
-                     ${data.order.get_tickets == 1 ? 'Đã lấy' : 'Chưa lấy'}
-                </b>
-            `);
-        }else if(data.order.status === 'cancelled'){
-            $(`#refund_status-${data.order.id}`).replaceWith(`
-                <select name="refund_status" data-url="${data.order.urlChangeRefundStatus}" class="refund_status form-control"
-                    id="refund_status-${data.order.id}">
-                    <option value="pending">
-                        Chờ hoàn tiền
-                    </option>
-                    <option value="completed">
-                        Hoàn tiền
-                    </option>
-                </select>
-            `);
-            $(`#refund_status-${data.order.id}`).val('pending').selectpicker('refresh');
-            $(`#get_tickets-${data.order.id}`).replaceWith(`
-                <b id="get_tickets-${data.order.id}">
-                     ${data.order.get_tickets == 1 ? 'Đã lấy' : 'Chưa lấy'}
-                </b>
-            `);
-            const statusMap = {
-                'rejected': 'Từ chối hủy',
-                'cancelled': 'Hủy',
-            };
-
-            const statusText = statusMap[data.order.status];
-            $(`div.bootstrap-select.form-control.order_status > select#status-${data.order.id}`)
+        if (data.order.refund) {
+            $(`div.bootstrap-select.form-control.refund_status > select#refund_status-${data.order.id}`)
                 .closest('.bootstrap-select')
                 .replaceWith(`
-                    <b id="status-${data.order.id}">
-                        ${statusText}
+                    <b id="refund_status-${data.order.id}">
+                        Hoàn tiền thành công
                     </b>
-                `);
-            $('.T_notification').removeClass('nav-item');
-            $('.list_notification').empty();
+            `);
+            $(`#payment_status-${data.order.id}`).text('Chờ xác nhận');
         }else{
-            $(`#get_tickets-${data.order.id}`).replaceWith(`
-                 <button id="get_tickets-${data.order.id}"
-                    class="get_tickets btn btn-xs btn-success text-white"
-                    data-id="${data.order.id}"
-                    data-url="${data.order.urlGetTicket}">
-                    Nhận vé
-                </button>
-            `);
-            const statusMap = {
-                'rejected': 'Từ chối hủy',
-                'cancelled': 'Hủy',
-            };
-
-            const statusText = statusMap[data.order.status];
-            $(`div.bootstrap-select.form-control.order_status > select#status-${data.order.id}`)
-                .closest('.bootstrap-select')
-                .replaceWith(`
-                    <b id="status-${data.order.id}">
-                        ${statusText}
+            if (data.order.status === 'waiting_for_cancellation') {
+                $(`#status-${data.order.id}`).replaceWith(`
+                    <select name="status" id="status-${data.order.id}" class="form-control order_status" data-url="${data.order.urlChangeStatus}">
+                        <option value="cancelled">
+                            Hủy
+                        </option>
+                        <option value="waiting_for_cancellation">
+                            Chờ hủy
+                        </option>
+                        <option value="rejected">
+                            Từ chối hủy
+                        </option>
+                    </select>
+                `);
+                $(`#status-${data.order.id}`).val('waiting_for_cancellation').selectpicker('refresh');
+                $(`#get_tickets-${data.order.id}`).replaceWith(`
+                    <b id="get_tickets-${data.order.id}">
+                         ${data.order.get_tickets == 1 ? 'Đã lấy' : 'Chưa lấy'}
                     </b>
                 `);
-            $('.T_notification').removeClass('nav-item');
-            $('.list_notification').empty();
+            }else if(data.order.status === 'cancelled'){
+                $(`#refund_status-${data.order.id}`).replaceWith(`
+                    <select name="refund_status" data-url="${data.order.urlChangeRefundStatus}" class="refund_status form-control"
+                        id="refund_status-${data.order.id}">
+                        <option value="pending">
+                            Chờ hoàn tiền
+                        </option>
+                        <option value="completed">
+                            Hoàn tiền
+                        </option>
+                    </select>
+                `);
+                $(`#refund_status-${data.order.id}`).val('pending').selectpicker('refresh');
+                $(`#get_tickets-${data.order.id}`).replaceWith(`
+                    <b id="get_tickets-${data.order.id}">
+                         ${data.order.get_tickets == 1 ? 'Đã lấy' : 'Chưa lấy'}
+                    </b>
+                `);
+                const statusMap = {
+                    'rejected': 'Từ chối hủy',
+                    'cancelled': 'Hủy',
+                };
+
+                const statusText = statusMap[data.order.status];
+                $(`div.bootstrap-select.form-control.order_status > select#status-${data.order.id}`)
+                    .closest('.bootstrap-select')
+                    .replaceWith(`
+                        <b id="status-${data.order.id}">
+                            ${statusText}
+                        </b>
+                    `);
+                $('.T_notification').removeClass('nav-item');
+                $('.list_notification').empty();
+            }else{
+                $(`#get_tickets-${data.order.id}`).replaceWith(`
+                     <button id="get_tickets-${data.order.id}"
+                        class="get_tickets btn btn-xs btn-success text-white"
+                        data-id="${data.order.id}"
+                        data-url="${data.order.urlGetTicket}">
+                        Nhận vé
+                    </button>
+                `);
+                const statusMap = {
+                    'rejected': 'Từ chối hủy',
+                    'cancelled': 'Hủy',
+                };
+
+                const statusText = statusMap[data.order.status];
+                $(`div.bootstrap-select.form-control.order_status > select#status-${data.order.id}`)
+                    .closest('.bootstrap-select')
+                    .replaceWith(`
+                        <b id="status-${data.order.id}">
+                            ${statusText}
+                        </b>
+                    `);
+                $('.T_notification').removeClass('nav-item');
+                $('.list_notification').empty();
+            }
         }
-
     });
 
-echo.channel('change_refund_status_order')
-    .listen('OrderRefundStatusUpdated', (data) => {
-        $(`div.bootstrap-select.form-control.refund_status > select#refund_status-${data.order.id}`)
-            .closest('.bootstrap-select')
-            .replaceWith(`
-                <b id="refund_status-${data.order.id}">
-                    Hoàn tiền thành công
-                </b>
-        `);
-
-        $(`#payment_status-${data.order.id}`).text('Chờ xác nhận');
-    });

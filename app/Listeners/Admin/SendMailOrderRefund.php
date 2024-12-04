@@ -20,7 +20,7 @@ class SendMailOrderRefund implements ShouldQueue
     /**
      * Handle the event.
      */
-    public function handle(object $event, array $data): void
+    public function handle(object $event): void
     {
         Mail::to($event->user->email)->send(new OrderRefundMail($event->order, $event->user, $event->time));
     }

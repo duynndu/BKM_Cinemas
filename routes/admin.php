@@ -958,7 +958,8 @@ Route::prefix('admin')
                             ->name('delete');
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                             ->name('deleteItemMultipleChecked');
-
+                        Route::get('/get-by-cinema', 'getByCinemaId')
+                            ->name('getByCinemaId');
                         Route::get('/get-by-type', 'getByType')
                             ->name('getByType');
                     });

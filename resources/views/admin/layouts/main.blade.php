@@ -7,6 +7,7 @@
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="cinema_id" content="{{ auth()->user()->cinema_id ?? '' }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Dexignlabs">
     <meta name="robots" content="">
@@ -97,7 +98,7 @@
 ***********************************-->
 
         <div class="content-body default-height">
-            <div class="wallet-bar wow fadeInRight dlab-scroll" id="wallet-bar" data-wow-delay="0.7s">
+            {{-- <div class="wallet-bar wow fadeInRight dlab-scroll" id="wallet-bar" data-wow-delay="0.7s">
                 <div class="row ">
                     <!--column-->
                     <div class="col-xl-12">
@@ -470,7 +471,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             @yield('content')
 

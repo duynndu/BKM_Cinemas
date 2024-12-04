@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('cinema_id')->nullable();
             $table->string('title');
             $table->text('content')->nullable();
             $table->enum('type', [
@@ -23,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-    
+
     /**
      * Reverse the migrations.
      */
