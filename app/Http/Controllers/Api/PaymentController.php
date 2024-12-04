@@ -171,7 +171,7 @@ class PaymentController extends Controller
                 'user_id' => $booking->user_id,
                 'payment_method' => 'vnpay',
                 'amount' => $inputData['vnp_Amount'] / 100,
-                'type' => 'deposit',
+                'type' => 'booking',
                 'description' => 'Giao dịch thành công - Đặt vé',
                 'balance_after' => Auth::user()->balance,
                 'status' => Status::COMPLETED
@@ -269,7 +269,7 @@ class PaymentController extends Controller
 
         $partnerSignature = hash_hmac("sha256", $rawHash, config('payment.momo.momo_SecretKey'));
         if ($partnerSignature == $request->signature) {
-            $booking = Booking::where('code', $orderCode)->first();
+            $booking = Booking::where('code', '=', $orderCode)->first();
             if ($booking == null) {
                 Log::warning('Booking not found: ' . $orderCode);
             }
@@ -277,7 +277,7 @@ class PaymentController extends Controller
                 'user_id' => $booking->user_id,
                 'payment_method' => 'vnpay',
                 'amount' => $request->amount / 100,
-                'type' => 'deposit',
+                'type' => 'booking',
                 'description' => 'Giao dịch thành công - Đặt vé',
                 'balance_after' => Auth::user()->balance,
                 'status' => Status::COMPLETED
@@ -308,14 +308,17 @@ class PaymentController extends Controller
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
-            $booking->update([
-                'payment_status' => $dataTransaction['status'],
-                'status' => $dataTransaction['status']
-            ]);
             if ($dataTransaction['status'] == Status::COMPLETED) {
-                redirect()->route('thanh-cong', [
+                $booking->update([
+                    'payment_status' => Status::COMPLETED,
+                    'status' => Status::COMPLETED
+                ]);
+                return redirect()->route('thanh-cong', [
                     'code' => $booking->code
                 ]);
+            } else {
+                $booking->forceDelete();
+                return redirect()->route('that-bai');
             }
         }
     }
@@ -387,7 +390,7 @@ class PaymentController extends Controller
             'user_id' => $booking->user_id,
             'payment_method' => 'vnpay',
             'amount' => $request->amount / 100,
-            'type' => 'deposit',
+            'type' => 'booking',
             'description' => 'Giao dịch thành công - Đặt vé',
             'balance_after' => Auth::user()->balance,
             'status' => Status::COMPLETED
@@ -422,9 +425,16 @@ class PaymentController extends Controller
             'status' => $dataTransaction['status']
         ]);
         if ($dataTransaction['status'] == Status::COMPLETED) {
+            $booking->update([
+                'payment_status' => Status::COMPLETED,
+                'status' => Status::COMPLETED
+            ]);
             return redirect()->route('thanh-cong', [
                 'code' => $booking->code
             ]);
+        } else {
+            $booking->forceDelete();
+            return redirect()->route('that-bai');
         }
     }
 
@@ -436,7 +446,7 @@ class PaymentController extends Controller
             'user_id' => $booking->user_id,
             'payment_method' => 'customer',
             'amount' => $amount,
-            'type' => 'deposit',
+            'type' => 'booking',
             'description' => 'Giao dịch thành công - Đặt vé',
             'balance_after' => $balance_after,
             'status' => Status::COMPLETED
