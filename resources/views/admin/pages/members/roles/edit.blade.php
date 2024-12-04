@@ -40,51 +40,51 @@
                                     </div>
 
                                     @if (!auth()->user()->cinema_id)
-                                    <div class="row mb-4">
-                                        <div class="col-12">
-                                            <label
-                                                class="form-label mb-2">{{ __('language.admin.members.roles.type') }}</label><br>
-                                            <select name="role[type]" class="form-control w-50 selectRoles"
-                                                id="">
-                                                <option value="" >
-                                                    {{ __('language.admin.members.roles.select') }} --</option>
-                                                <option value="{{ \App\Models\User::TYPE_ADMIN }}"
-                                                    {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_ADMIN ? 'selected' : '' }}>
-                                                    {{ __('language.admin.members.roles.admin') }}</option>
-                                                <option value="{{ \App\Models\User::TYPE_MANAGE }}"
-                                                    {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_MANAGE ? 'selected' : '' }}>
-                                                    {{ __('language.admin.members.roles.manage') }}</option>
-                                                <option value="{{ \App\Models\User::TYPE_STAFF }}"
-                                                    {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_STAFF ? 'selected' : '' }}>
-                                                    {{ __('language.admin.members.roles.staff') }}</option>
-                                                <option value="{{ \App\Models\User::TYPE_MEMBER }}"
-                                                    {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_MEMBER ? 'selected' : '' }}>
-                                                    {{ __('language.admin.members.roles.member') }}</option>
-                                            </select>
-                                            @error('role.type')
-                                                <div class="mt-2">
-                                                    <span class="text-red">{{ $message }}</span>
-                                                </div>
-                                            @enderror
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <label
+                                                    class="form-label mb-2">{{ __('language.admin.members.roles.type') }}</label><br>
+                                                <select name="role[type]" class="form-control w-50 selectRoles"
+                                                    id="">
+                                                    <option value="" >
+                                                        {{ __('language.admin.members.roles.select') }} --</option>
+                                                    <option value="{{ \App\Models\User::TYPE_ADMIN }}"
+                                                        {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_ADMIN ? 'selected' : '' }}>
+                                                        {{ __('language.admin.members.roles.admin') }}</option>
+                                                    <option value="{{ \App\Models\User::TYPE_MANAGE }}"
+                                                        {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_MANAGE ? 'selected' : '' }}>
+                                                        {{ __('language.admin.members.roles.manage') }}</option>
+                                                    <option value="{{ \App\Models\User::TYPE_STAFF }}"
+                                                        {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_STAFF ? 'selected' : '' }}>
+                                                        {{ __('language.admin.members.roles.staff') }}</option>
+                                                    <option value="{{ \App\Models\User::TYPE_MEMBER }}"
+                                                        {{ old('role.type', $data['role']->type) == \App\Models\User::TYPE_MEMBER ? 'selected' : '' }}>
+                                                        {{ __('language.admin.members.roles.member') }}</option>
+                                                </select>
+                                                @error('role.type')
+                                                    <div class="mt-2">
+                                                        <span class="text-red">{{ $message }}</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
-                                @else
-                                    <div class="row mb-4">
-                                        <div class="col-12">
-                                            <label
-                                                class="form-label mb-2">{{ __('language.admin.members.roles.type') }}</label>
-                                            <input type="text" readonly
-                                                value="{{ __('language.admin.members.roles.staff') }}"
-                                                class="form-control">
-                                                <input type="hidden" name="role[type]" value="{{ \App\Models\User::TYPE_STAFF }}">
-                                            @error('role.type')
-                                                <div class="mt-2">
-                                                    <span class="text-red">{{ $message }}</span>
-                                                </div>
-                                            @enderror
+                                    @else
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <label
+                                                    class="form-label mb-2">{{ __('language.admin.members.roles.type') }}</label>
+                                                <input type="text" readonly
+                                                    value="{{ __('language.admin.members.roles.staff') }}"
+                                                    class="form-control">
+                                                    <input type="hidden" name="role[type]" value="{{ \App\Models\User::TYPE_STAFF }}">
+                                                @error('role.type')
+                                                    <div class="mt-2">
+                                                        <span class="text-red">{{ $message }}</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
 
 
                                     <div class="mb-4">
