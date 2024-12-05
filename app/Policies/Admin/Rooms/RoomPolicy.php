@@ -8,9 +8,6 @@ class RoomPolicy
 {
     public function viewAny(User $user)
     {
-        if($user->type == User::TYPE_MANAGE || $user->type == User::TYPE_STAFF) {
-            return true;
-        }
         return $user->hasPermission('view-room');
     }
 
@@ -19,9 +16,6 @@ class RoomPolicy
      */
     public function view(User $user)
     {
-        if($user->type == User::TYPE_MANAGE || $user->type == User::TYPE_STAFF) {
-            return true;
-        }
         return $user->hasPermission('view-room');
     }
 
@@ -30,9 +24,6 @@ class RoomPolicy
      */
     public function create(User $user)
     {
-        if($user->type == User::TYPE_MANAGE || $user->type == User::TYPE_STAFF) {
-            return true;
-        }
         return $user->hasPermission('create-room');
     }
 
@@ -41,9 +32,6 @@ class RoomPolicy
      */
     public function update(User $user)
     {
-        if($user->type == User::TYPE_MANAGE || $user->type == User::TYPE_STAFF) {
-            return true;
-        }
         return $user->hasPermission('update-room');
     }
 
@@ -52,9 +40,6 @@ class RoomPolicy
      */
     public function delete(User $user)
     {
-        if($user->type == User::TYPE_MANAGE || $user->type == User::TYPE_STAFF) {
-            return true;
-        }
         return $user->hasPermission('delete-room');
     }
 }
