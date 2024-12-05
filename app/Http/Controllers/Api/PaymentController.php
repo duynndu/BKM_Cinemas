@@ -52,33 +52,31 @@ class PaymentController extends Controller
                 ->where('payload', 'LIKE', '%' . $booking->showtime_id . '%')
                 ->where('payload', 'LIKE', '%' . $booking->user_id . '%')
                 ->delete();
-            ResetSeatStatus::dispatch($booking->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT')->delay(now()->addSeconds(300));
+            $second = $request->payment == 'zalopay' ? 900 : ($request->payment == 'momo' ? 600 : 300);
+            ResetSeatStatus::dispatch($booking->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT')->delay(now()->addSeconds($second));
             $amount = $booking->totalPrice();
             $discountPrice = $this->calculatorVoucherPrice($amount, $request->voucher_id);
+            $finalPrice = $amount - $discountPrice;
             $booking->update([
                 'code' => $orderCode,
                 'payment_status' => Status::PENDING,
                 'discount_price' => $discountPrice,
-                'final_price' => $amount - $discountPrice,
+                'final_price' => $finalPrice,
                 'voucher_id' => $request->voucher_id,
                 'payment_method' => $request->payment
             ]);
-            if ($request->payment == 'vnpay') {
-                $vnpayUrl = $this->vnpay_payment($orderCode, $amount);
+            if ($request->payment == 'customer' || $finalPrice == 0) {
+                $customerResponse = $this->customer_payment($finalPrice, $booking);
+                return response()->json($customerResponse);
+            } else if ($request->payment == 'vnpay') {
+                $vnpayUrl = $this->vnpay_payment($orderCode, $finalPrice);
                 return response()->json($vnpayUrl);
             } elseif ($request->payment == 'momo') {
-
-                $momoUrl = $this->momo_payment($orderCode, $amount);
-
+                $momoUrl = $this->momo_payment($orderCode, $finalPrice);
                 return response()->json($momoUrl);
             } elseif ($request->payment == 'zalopay') {
-
-                $zaloPayUrl = $this->zaloPay_payment($amount);
-
+                $zaloPayUrl = $this->zaloPay_payment($finalPrice);
                 return response()->json($zaloPayUrl);
-            } elseif ($request->payment == 'customer') {
-                $customerResponse = $this->customer_payment($amount, $booking);
-                return response()->json($customerResponse);
             }
         }
     }
@@ -376,6 +374,7 @@ class PaymentController extends Controller
 
     public function zaloPayReturn(Request $request)
     {
+        dd($request->all());
         $orderCode = '';
         $return_code = $request->input('return_code');
         $app_trans_id = $request->input('app_trans_id');
@@ -522,14 +521,17 @@ class PaymentController extends Controller
     private function calculatorVoucherPrice($amount, $voucherId)
     {
         $voucher = Voucher::find($voucherId);
+        $discountPrice = 0;
         if ($voucher) {
             if ($voucher->discount_type == 'money') {
-                return $voucher->discount_value;
+                $discountPrice = $voucher->discount_value;
             }
             if ($voucher->discount_type == 'percentage') {
-                return ($amount * $voucher->discount_value) / 100;
+                $discountPrice = ($amount * $voucher->discount_value) / 100;
             }
         }
-        return 0;
+        if ($discountPrice >= $amount) $discountPrice = $amount;
+
+        return $discountPrice;
     }
 }
