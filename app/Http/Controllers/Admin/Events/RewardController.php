@@ -136,4 +136,10 @@ class RewardController extends Controller
             ], 500);
         }
     }
+    public function changeActive(Request $request)
+    {
+        $item = $this->rewardService->changeActive($request);
+
+        return response()->json(['newStatus' => $item->active]);
+    }
 }

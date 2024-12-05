@@ -12,5 +12,6 @@ interface VoucherInterface extends RepositoryInterface
     public function getAccountByVoucher($request);
     public function  getAccountByKeyword($request);
     public function giftVoucherToAccount($request);
+    public function changeActive($id);
     // public function createMany($data, $role);
 }

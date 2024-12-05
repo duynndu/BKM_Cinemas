@@ -57,14 +57,14 @@
                                                     <div class="text-danger mt-2">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="col-8 p-3">
+                                            <div class="col-7 p-3">
                                                 <label class="form-label mb-2">Mô tả:</label>
                                                 <textarea class="form-control ckeditor" cols="20" rows="5" name="reward[description]">{{ old('reward.description', $data->description) }}</textarea>
                                                 @error('reward.description')
                                                     <div class="text-danger mt-2">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="col-4 p-3">
+                                            <div class="col-5 p-3">
                                                 <label class="form-label mb-2">Ảnh</label>
                                                 <div class="avatar-upload d-flex align-items-center">
                                                     <div class=" position-relative" style="width: 120px;">
@@ -94,9 +94,33 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @error('actor.image')
+                                                @error('reward.image')
                                                     <div class="text-danger mt-2">{{ $message }}</div>
                                                 @enderror
+                                                <div class="col-6">
+                                                    <div class="p-3">
+                                                        <label
+                                                            class="form-label">Trạng thái</label><br>
+                                                        <div class="row mt-2">
+                                                            <div class="col-sm-7">
+                                                                <input class="form-check-input" type="radio" id="active"
+                                                                    name="reward[active]" value="1"
+                                                                    @checked(old('reward.active', $data->active) == 1)>
+                                                                <label class="form-check-label" for="active">
+                                                                    Hiển thị
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-sm-5">
+                                                                <input class="form-check-input" value="0" type="radio"
+                                                                    id="active" name="reward[active]"
+                                                                    @checked(old('reward.active', $data->active) == 0)>
+                                                                <label class="form-check-label" for="active">
+                                                                   Ẩn
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

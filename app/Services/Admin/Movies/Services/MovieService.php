@@ -27,8 +27,7 @@ class MovieService extends BaseService implements MovieServiceInterface
     {
         return $this->repository->filter($request);
     }
-
-
+    
     public function create(&$data)
     {
         $data['movie_actors'] = $data['movie_actors'] ?? [];

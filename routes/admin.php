@@ -578,7 +578,12 @@ Route::prefix('admin')
 
                         Route::post('/delete-item-multiple-checked', 'deleteItemMultipleChecked')
                             ->name('deleteItemMultipleChecked')
-                            ->middleware('authorizeAction:deleteMultiple,App\Models\Movie');
+                            ->middleware('authorizeAction:viewAny,App\Models\Movie');
+                        Route::post('/getAreaByCity', 'getAreaByCity')
+                            ->name('getAreaByCity');
+
+                        Route::post('/getCinemaByArea', 'getCinemaByArea')
+                            ->name('getCinemaByArea');
                     });
 
                 Route::prefix('actors')
@@ -933,6 +938,8 @@ Route::prefix('admin')
                         Route::delete('/{id}/delete', 'destroy')
                             ->middleware('authorizeAction:delete,App\Models\Reward')
                             ->name('delete');
+                        Route::post('/change-active', 'changeActive')
+                            ->name('changeActive');
                         Route::post('/removeAvatarImage', 'removeAvatarImage')
                             ->middleware('authorizeAction:update,App\Models\Reward')
                             ->name('removeAvatarImage');
@@ -970,6 +977,8 @@ Route::prefix('admin')
                             ->name('giftVoucherAccount');
                         Route::post('/search-users', 'searchUser')
                             ->name('searchUser');
+                            Route::post('/change-active', 'changeActive')
+                            ->name('changeActive');
                         Route::post('/removeAvatarImage', 'removeAvatarImage')
                             ->middleware('authorizeAction:update,App\Models\Voucher')
                             ->name('removeAvatarImage');

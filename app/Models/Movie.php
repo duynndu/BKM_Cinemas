@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -43,4 +44,17 @@ class Movie extends Model
     {
         return $this->belongsToMany(Room::class, 'showtimes');
     }
+    public function cinemas()
+    {
+        return $this->belongsToMany(
+            Cinema::class,   // Model để lấy ra rạp
+            'showtimes',     // Tên bảng trung gian
+            'movie_id',      // Foreign key trên bảng trung gian (liên kết với bảng hiện tại)
+            'cinema_id'      // Foreign key trên bảng trung gian (liên kết với bảng cinema)
+        )
+        ->whereDate('showtimes.start_time', '>=', Carbon::today()->toDateString())  // So sánh theo ngày (không tính giờ)
+        ->distinct();
+    }
+    
+    
 }

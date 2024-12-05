@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Movies\MovieRequest;
 use App\Models\Movie;
 use App\Services\Admin\Actors\Interfaces\ActorServiceInterface;
+use App\Services\Admin\Areas\Interfaces\AreaServiceInterface;
+use App\Services\Admin\Cinemas\Interfaces\CinemaServiceInterface;
+use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
 use App\Services\Admin\Genres\Interfaces\GenreServiceInterface;
 use App\Services\Admin\Movies\Interfaces\MovieServiceInterface;
 use App\Traits\RemoveImageTrait;
@@ -21,16 +24,32 @@ class MovieController extends Controller
 
     protected $genreService;
     protected $actorService;
+    protected $cityService;
+    protected $areaService;
+    protected $cinemaService;
+
+
 
 
     public function __construct(
-        MovieServiceInterface     $movieService,
-        GenreServiceInterface      $genreService,
-        ActorServiceInterface      $actorService,
+        MovieServiceInterface    $movieService,
+        GenreServiceInterface    $genreService,
+        ActorServiceInterface    $actorService,
+        CityServiceInterface     $cityService,
+        AreaServiceInterface     $areaService,
+        CinemaServiceInterface   $cinemaService
+
+
+
     ) {
         $this->movieService = $movieService;
         $this->genreService = $genreService;
         $this->actorService = $actorService;
+        $this->cityService = $cityService;
+        $this->areaService = $areaService;
+        $this->cinemaService = $cinemaService;
+
+
     }
 
 
@@ -38,8 +57,10 @@ class MovieController extends Controller
     {
         $listGenre = $this->genreService->getAll();
         $data = $this->movieService->filter($request);
+        
+        $cities = $this->cityService->getAll();
 
-        return view('admin.pages.movies.index', compact('data','listGenre'));
+        return view('admin.pages.movies.index', compact('data','listGenre','cities'));
     }
 
     public function create()
@@ -193,5 +214,22 @@ class MovieController extends Controller
                 'message' => 'Có lỗi xảy ra!',
             ], 500);
         }
+    }
+    public function getAreaByCity(Request $request)
+    {
+        $data['areas'] = $this->areaService->getByCityId($request->city_id);
+
+        return response()->json([
+            'areas' => $data['areas'],
+        ]);
+    }
+
+    public function getCinemaByArea(Request $request)
+    {
+        $data['cinemas'] = $this->cinemaService->getCinemaByArea($request->area_id);
+
+        return response()->json([
+            'cinemas' => $data['cinemas'],
+        ]);
     }
 }

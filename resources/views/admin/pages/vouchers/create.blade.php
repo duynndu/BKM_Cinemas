@@ -83,13 +83,38 @@
 
 
 
-                                    <div class="mb-4">
-                                        <label class="form-label mb-2">Số lượng:</label>
-                                        <input type="number" min="1" max="1000" class="form-control"
-                                            name="voucher[quantity]" value="{{ old('voucher.quantity', 1) }}">
-                                        @error('voucher.quantity')
-                                            <div class="text-danger mt-2">{{ $message }}</div>
-                                        @enderror
+                                    <div class="row mb-4">
+                                        <div class="col-6">
+                                            <label class="form-label mb-2">Số lượng:</label>
+                                            <input type="number" min="1" max="1000" class="form-control"
+                                                name="voucher[quantity]" value="{{ old('voucher.quantity', 1) }}">
+                                            @error('voucher.quantity')
+                                                <div class="text-danger mt-2">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="p-3">
+                                                <label
+                                                    class="form-label">Trạng thái</label><br>
+                                                <div class="row mt-2">
+                                                    <div class="col-sm-6">
+                                                        <input class="form-check-input" type="radio"
+                                                            id="active" name="voucher[active]" value="1" @checked(old('voucher.active', 1) == 1)>
+                                                        <label class="form-check-label" for="active">
+                                                         Hiển thị
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-check-input" value="0"
+                                                            type="radio" id="active" name="voucher[active]" @checked(old('voucher.active', 1) == 0)>
+                                                        <label class="form-check-label" for="active">
+                                                            Ẩn
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col-6">
@@ -228,89 +253,89 @@
 @section('js')
     <script src="{{ asset('js/admin/commons/vouchers/add.js') }}"></script>
     <script>
-$(document).ready(function () {
-    // Xử lý thay đổi loại giảm giá
-    $("#discount_value").change(function () {
-        var discount_type = $(this).val();
+        $(document).ready(function() {
+            // Xử lý thay đổi loại giảm giá
+            $("#discount_value").change(function() {
+                var discount_type = $(this).val();
 
-        if (discount_type === 'percent') {
-            $("#full-discount_value_percent").removeClass("d-none");
-            $("#full-discount_value_money").addClass("d-none");
-            $("#discount_value_money").prop("disabled", true); // Disable trường không cần
-            $("#discount_value_percent").prop("disabled", false);
-            $("#error_discount_value_money").text(""); // Xóa lỗi khi chuyển đổi
-            $("#discount_value_percent").val(""); // Reset giá trị ô % về rỗng
+                if (discount_type === 'percent') {
+                    $("#full-discount_value_percent").removeClass("d-none");
+                    $("#full-discount_value_money").addClass("d-none");
+                    $("#discount_value_money").prop("disabled", true); // Disable trường không cần
+                    $("#discount_value_percent").prop("disabled", false);
+                    $("#error_discount_value_money").text(""); // Xóa lỗi khi chuyển đổi
+                    $("#discount_value_percent").val(""); // Reset giá trị ô % về rỗng
 
-        } else if (discount_type === 'money') {
-            $("#full-discount_value_money").removeClass("d-none");
-            $("#full-discount_value_percent").addClass("d-none");
-            $("#discount_value_percent").prop("disabled", true); // Disable trường không cần
-            $("#discount_value_money").prop("disabled", false);
-            $("#error_discount_value_percent").text(""); // Xóa lỗi khi chuyển đổi
-            $("#discount_value_money").val(""); // Reset giá trị ô money về rỗng
+                } else if (discount_type === 'money') {
+                    $("#full-discount_value_money").removeClass("d-none");
+                    $("#full-discount_value_percent").addClass("d-none");
+                    $("#discount_value_percent").prop("disabled", true); // Disable trường không cần
+                    $("#discount_value_money").prop("disabled", false);
+                    $("#error_discount_value_percent").text(""); // Xóa lỗi khi chuyển đổi
+                    $("#discount_value_money").val(""); // Reset giá trị ô money về rỗng
 
-        }
-    });
+                }
+            });
 
-    // Hàm kiểm tra giá trị và hiển thị lỗi
-    function validateField(inputId, errorId, type) {
-        var value = $(inputId).val();
-        var errorElement = $(errorId);
+            // Hàm kiểm tra giá trị và hiển thị lỗi
+            function validateField(inputId, errorId, type) {
+                var value = $(inputId).val();
+                var errorElement = $(errorId);
 
-        // Kiểm tra giá trị nhập
-        if (!value) {
-            errorElement.text("Vui lòng nhập giá trị giảm.");
-            return false;
-        } else if (type === 'percent' && (value < 1 || value > 100)) {
-            errorElement.text("Phần trăm giảm giá phải nằm trong khoảng 1-100.");
-            return false;
-        } else if (type === 'money' && (value <= 0 || value > 1000000)) {
-            errorElement.text("Số tiền phải lớn hơn 0 và không quá 1,000,000.");
-            return false;
-        } else {
-            errorElement.text(""); // Xóa lỗi nếu hợp lệ
-            return true;
-        }
-    }
+                // Kiểm tra giá trị nhập
+                if (!value) {
+                    errorElement.text("Vui lòng nhập giá trị giảm.");
+                    return false;
+                } else if (type === 'percent' && (value < 1 || value > 100)) {
+                    errorElement.text("Phần trăm giảm giá phải nằm trong khoảng 1-100.");
+                    return false;
+                } else if (type === 'money' && (value <= 0 || value > 1000000)) {
+                    errorElement.text("Số tiền phải lớn hơn 0 và không quá 1,000,000.");
+                    return false;
+                } else {
+                    errorElement.text(""); // Xóa lỗi nếu hợp lệ
+                    return true;
+                }
+            }
 
-    // Xử lý sự kiện submit form
-    $("#voucher-form").on("submit", function (event) {
-        var isValid = true;
+            // Xử lý sự kiện submit form
+            $("#voucher-form").on("submit", function(event) {
+                var isValid = true;
 
-        // Kiểm tra từng trường dữ liệu
-        if ($("#discount_value").val() === "money") {
-            isValid &= validateField("#discount_value_money", "#error_discount_value_money", "money");
-        }
+                // Kiểm tra từng trường dữ liệu
+                if ($("#discount_value").val() === "money") {
+                    isValid &= validateField("#discount_value_money", "#error_discount_value_money",
+                        "money");
+                }
 
-        if ($("#discount_value").val() === "percent") {
-            isValid &= validateField("#discount_value_percent", "#error_discount_value_percent", "percent");
-        }
+                if ($("#discount_value").val() === "percent") {
+                    isValid &= validateField("#discount_value_percent", "#error_discount_value_percent",
+                        "percent");
+                }
 
-        // Nếu có lỗi, ngăn submit
-        if (!isValid) {
-            event.preventDefault();
-        }
-    });
+                // Nếu có lỗi, ngăn submit
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
 
-    // Ràng buộc giá trị tối đa cho ô input khi nhập
-    $("#discount_value_money").on("input", function () {
-        var maxMoney = 1000000;
-        if ($(this).val() > maxMoney) {
-            $(this).val(maxMoney);
-        }
-    });
+            // Ràng buộc giá trị tối đa cho ô input khi nhập
+            $("#discount_value_money").on("input", function() {
+                var maxMoney = 1000000;
+                if ($(this).val() > maxMoney) {
+                    $(this).val(maxMoney);
+                }
+            });
 
-    $("#discount_value_percent").on("input", function () {
-        var maxPercent = 100;
-        if ($(this).val() > maxPercent) {
-            $(this).val(maxPercent);
-        }
-    });
+            $("#discount_value_percent").on("input", function() {
+                var maxPercent = 100;
+                if ($(this).val() > maxPercent) {
+                    $(this).val(maxPercent);
+                }
+            });
 
-    // Khởi tạo: Đảm bảo trường ban đầu hoạt động đúng
-    $("#discount_value").trigger("change");
-});
-
-
+            // Khởi tạo: Đảm bảo trường ban đầu hoạt động đúng
+            $("#discount_value").trigger("change");
+        });
     </script>
 @endsection
