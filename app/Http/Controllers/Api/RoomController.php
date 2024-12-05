@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\SeatType;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -104,8 +105,8 @@ class RoomController extends Controller
             'seats' => 'sometimes|required|json',
         ]);
         $now = now();
-        $isShowtimeOngoing = $room->showtimes()->where('start_time', '<=', $now)
-            ->where('end_time', '>=', $now)
+        $isShowtimeOngoing = $room->showtimes()
+            ->where('start_time', '>', $now)
             ->exists();
 
         if ($isShowtimeOngoing) {
@@ -114,6 +115,9 @@ class RoomController extends Controller
 
         DB::beginTransaction();
         try {
+            $room->showtimes()->pluck('id')->each(function ($showtimeId) {
+                Cache::forget("showtime.$showtimeId.seats");
+            });
             $room->room_name  = $validatedData['room_name'];
             $room->base_price = $validatedData['base_price'];
             $room->col_count  = $validatedData['col_count'];
