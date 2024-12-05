@@ -10,4 +10,5 @@ interface VoucherServiceInterface extends BaseServiceInterface
     public function getAccountByVoucher($request);
     public function  getAccountByKeyword($request);
     public function giftVoucherToAccount($request);
+    public function changeActive($request);
 }

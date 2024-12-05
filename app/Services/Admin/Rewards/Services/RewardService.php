@@ -97,4 +97,7 @@ class RewardService extends BaseService implements RewardServiceInterface
 
         return true;
     }
+    public function changeActive($request){
+        return $this->repository->changeActive($request);
+    }
 }

@@ -6,6 +6,7 @@ use App\Models\Movie;
 use App\Models\MovieGenre;
 use App\Repositories\Admin\Movies\Interfaces\MovieInterface;
 use App\Repositories\Base\BaseRepository;
+use Carbon\Carbon;
 
 class MovieRepository extends BaseRepository implements MovieInterface
 {
@@ -17,6 +18,11 @@ class MovieRepository extends BaseRepository implements MovieInterface
     public function filter($request)
     {
         $data = $this->model->newQuery();
+        if(!empty($request->cinema_id)){
+          $data = $this->filterMoviesByCinemaId($request->cinema_id); 
+          
+        }
+      
         $data = $this->filterByTitle($data, $request);
         $data = $this->filterByStatus($data, $request);
         $data = $this->applyOrdering($data, $request);
@@ -183,4 +189,17 @@ class MovieRepository extends BaseRepository implements MovieInterface
         }
         return $query->orderBy('order');
     }
+
+    public function filterMoviesByCinemaId($cinemaId)
+{
+    return $this->model->whereHas('cinemas', function ($query) use ($cinemaId) {
+        // Lọc các bộ phim với cinema_id cụ thể và start_time >= ngày hôm nay
+        $query->where('cinema_id', $cinemaId)
+              ->whereDate('showtimes.start_time', '>=', Carbon::today()->toDateString());
+    })
+    // Đảm bảo rằng chỉ lấy các bộ phim duy nhất, không bị trùng
+    ->distinct();
+    // Trả về tất cả các bộ phim thỏa mãn điều kiện trên
+}
+
 }

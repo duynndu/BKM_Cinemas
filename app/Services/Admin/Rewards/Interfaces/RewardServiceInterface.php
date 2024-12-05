@@ -9,4 +9,6 @@ interface RewardServiceInterface extends BaseServiceInterface
     public function filter($request);
     public function getUserRewards();
     public function changeStatus($request);
+    public function changeActive($request);
+    
 }

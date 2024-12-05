@@ -10,6 +10,7 @@ use App\Services\Client\Home\Interfaces\HomeServiceInterface;
 use App\Services\Client\Posts\Interface\PostServiceInterface;
 use App\Services\Client\Views\Interfaces\ViewServiceInterface;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller

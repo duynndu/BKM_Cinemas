@@ -12,4 +12,5 @@ interface RewardInterface extends RepositoryInterface
     public function getUserRewards();
 
     public function updateRewardByCode($code);
+    public function changeActive($id);
 }

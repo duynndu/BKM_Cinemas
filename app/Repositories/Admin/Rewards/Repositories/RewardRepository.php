@@ -98,4 +98,14 @@ class RewardRepository extends BaseRepository implements RewardInterface
     {
         return $this->userReward->where('code', $code)->first();
     }
+    public function changeActive($id)
+    {
+        $result = $this->model->find($id)->first();
+        if ($result) {
+            $result->active ^= 1;
+            $result->save();
+            return $result;
+        }
+        return false;
+    }
 }
