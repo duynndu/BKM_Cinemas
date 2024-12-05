@@ -41647,6 +41647,19 @@ a.btn.dlab-load-more {
     border-radius: 50%;
 }
 
+.contact_list .user-content .user-img-block::before {
+    content: "";
+    display: block;
+    background-color: #ff0000;
+    border: 2px solid #ff0000;
+    position: absolute;
+    bottom: -2px;
+    right: 10px;
+    width: 0.82rem;
+    height: 0.81rem;
+    border-radius: 50%;
+}
+
 .file-contact {
     display: flex;
     flex-wrap: wrap;
