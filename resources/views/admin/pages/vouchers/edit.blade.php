@@ -96,13 +96,41 @@
 
 
 
-                                    <div class="mb-4">
-                                        <label class="form-label mb-2">Số lượng:</label>
-                                        <input type="number" min="0" max="1000" class="form-control"
-                                            name="voucher[quantity]" value="{{ old('voucher.quantity', $data->quantity) }}">
-                                        @error('voucher.quantity')
-                                            <div class="text-danger mt-2">{{ $message }}</div>
-                                        @enderror
+                                    <div class="row mb-4">
+                                        <div class="col-6">
+                                            <label class="form-label mb-2">Số lượng:</label>
+                                            <input type="number" min="0" max="1000" class="form-control"
+                                                name="voucher[quantity]"
+                                                value="{{ old('voucher.quantity', $data->quantity) }}">
+                                            @error('voucher.quantity')
+                                                <div class="text-danger mt-2">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="p-3">
+                                                <label
+                                                    class="form-label">Trạng thái</label><br>
+                                                <div class="row mt-2">
+                                                    <div class="col-sm-6">
+                                                        <input class="form-check-input" type="radio" id="active"
+                                                            name="voucher[active]" value="1"
+                                                            @checked(old('voucher.active', $data->active) == 1)>
+                                                        <label class="form-check-label" for="active">
+                                                            Hiển thị
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-check-input" value="0" type="radio"
+                                                            id="active" name="voucher[active]"
+                                                            @checked(old('voucher.active', $data->active) == 0)>
+                                                        <label class="form-check-label" for="active">
+                                                           Ẩn
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col-6">

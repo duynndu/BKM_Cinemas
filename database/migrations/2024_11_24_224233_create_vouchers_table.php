@@ -26,6 +26,7 @@ return new class extends Migration {
                 ->nullable();
             $table->enum('discount_type', ['money', 'percentage'])
                 ->default('money'); 
+                $table->tinyInteger('active') -> default(1);
                 // Loại giảm giá: cố định hoặc phần trăm
             $table->dateTime('start_date'); // Ngày bắt đầu áp dụng
             $table->dateTime('end_date'); // Ngày hết hạn áp dụng

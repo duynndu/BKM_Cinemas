@@ -133,6 +133,7 @@
                                                     <th>Áp dụng</th>
                                                     <th>Hình ảnh</th>
                                                     <th>Hiệu lực</th>
+                                                    <th>Trạng thái</th>
                                                     <th>Ngày đăng</th>
                                                     <th>Hành động</th>
                                                 </tr>
@@ -226,6 +227,15 @@
                                                             <p class="text-warning">Chờ phát hành</p>
                                                         </td>
                                                         @endif
+                                                        <td>
+                                                            <button
+                                                                class="toggle-active-btn btn btn-xs {{ $voucher->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                data-id="{{ $voucher->id }}"
+                                                                data-status="{{ $voucher->active }}"
+                                                                data-url="{{ route('admin.vouchers.changeActive') }}">
+                                                                {{ $voucher->active == 1 ? 'Hiển thị' : 'Ẩn' }}
+                                                            </button>
+                                                        </td>
 
                                                         <td>
                                                             {{ \Carbon\Carbon::parse($voucher->created_at)->format('d-m-Y') }}
@@ -249,7 +259,7 @@
                                                                     </button>
                                                                 </form>
 
-
+                                                                @if ($voucher->active == 1)
                                                                 <button type="button" id="show_modal"
                                                                     class="btn btn-success mb-2 shadow btn-xs sharp me-1 giftButton"
                                                                     data-bs-toggle="modal"
@@ -258,6 +268,7 @@
                                                                     data-url="{{ route('admin.vouchers.getAccountByVoucher') }}">
                                                                     <i class="fa-solid fa-gift"></i>
                                                                 </button>
+                                                                @endif
 
 
                                                                 <div class="modal fade modal_voucher"

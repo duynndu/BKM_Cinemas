@@ -41,9 +41,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary mb-4" id="add-permission">
-                                        Thêm chức năng
-                                    </button>
+                                    
                                     <div id="list-permission">
                                         @if (!empty(old('permissions')))
                                             @foreach (old('permissions') as $key => $permission)
@@ -72,6 +70,11 @@
                                             @endforeach
                                         @endif
                                     </div>
+
+                                    <button type="button" class="btn btn-primary mb-4" id="add-permission">
+                                        Thêm chức năng
+                                    </button>
+                                    
                                     <div class="mb-4">
                                         <label
                                             class="form-label mb-2">{{ __('language.admin.members.modules.description') }}</label>

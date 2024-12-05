@@ -20,9 +20,8 @@
 
 /* Modal header */
 .custom-modal .modal-header {
-  background-color: #343a40;
-  color: #fff;
-  padding: 15px;
+  background-color: white;
+  padding: 10px;
 }
 
 .custom-modal .modal-title {
@@ -71,7 +70,6 @@
 .actor-movie-detail {
   margin-top: 20px;
   padding-top: 10px;
-  border-top: 1px solid #ddd;
   max-width: 760px;
 }
 

@@ -29,6 +29,7 @@ class VoucherService extends BaseService implements VoucherServiceInterface
             $uploadData = $this->uploadFile($data['image'], 'public/vouchers');
             $data['image'] = $uploadData['path'];
         }
+
         return $this->repository->create($data);
     }
 
@@ -85,5 +86,9 @@ class VoucherService extends BaseService implements VoucherServiceInterface
         return $this->repository->giftVoucherToAccount($request);
 
     }
+    public function changeActive($request){
+        return $this->repository->changeActive($request);
+    }
+    
 
 }

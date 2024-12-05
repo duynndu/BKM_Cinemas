@@ -1,6 +1,5 @@
 $(".btn-email-subscribe").click(function () {
   var email = $("#email-subscribe").val();
-  console.log(email);
 
   var url = $(this).attr("data-url");
   var csrfToken = $(this).attr("data-token");
@@ -25,7 +24,7 @@ $(".btn-email-subscribe").click(function () {
         }).then(() => {
           $("#modal-subscribe").modal("hide");
         });
-       
+
       } else if (response.result.original.status === "faile") {
         Swal.fire({
           position: "top-center",

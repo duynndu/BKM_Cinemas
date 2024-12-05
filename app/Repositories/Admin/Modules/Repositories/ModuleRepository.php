@@ -22,7 +22,7 @@ class ModuleRepository extends BaseRepository implements ModuleInterface
             $modules = Module::whereHas('permissions', function ($query) {
                 $query->whereHas('rolePermissions', function ($subQuery) {
                     $subQuery->whereHas('role', function ($roleQuery) {
-                        $roleQuery->where('id', 4); // Thay 4 bằng giá trị role_id cần kiểm tra
+                        $roleQuery->where('id', auth()->user()->role_id); 
                     });
                 });
             })->get();

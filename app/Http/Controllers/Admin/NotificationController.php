@@ -54,7 +54,7 @@ class NotificationController extends Controller
 
             return redirect()->route('admin.notifications.index')->with('status_succeed', "Thêm thông báo thành công");
         } catch (\Exception $e) {
-       
+
             DB::rollBack();
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
@@ -99,7 +99,7 @@ class NotificationController extends Controller
             DB::commit();
             return redirect()->route('admin.notifications.index')->with('status_succeed', "Cập nhật thông báo thành công");
         } catch (\Throwable $e) {
-        
+
             DB::rollBack();
             Log::error("Error updating notifications: {$e->getMessage()} at line {$e->getLine()}");
             return back()->with(['status_failed' => 'Đã xảy ra lỗi, vui lòng thử lại sau.']);
@@ -150,5 +150,15 @@ class NotificationController extends Controller
                 'message' => 'Có lỗi xảy ra!',
             ], 500);
         }
+    }
+
+    public function getByCinemaId(Request $request){
+        $data = $this->notificationService->getByCinemaId($request->cinema_id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Thành công!',
+            'data' => $data
+        ], 200);
     }
 }

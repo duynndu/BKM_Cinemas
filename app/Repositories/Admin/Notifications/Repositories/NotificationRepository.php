@@ -20,6 +20,11 @@ class NotificationRepository extends BaseRepository implements NotificationInter
         return $this->model->where('type', $type)->orderBy('id', 'desc')->get();
     }
 
+    public function getByCinemaId($cinema_id)
+    {
+        return $this->model->where('cinema_id', $cinema_id)->where('type', 'refund')->orderBy('id', 'desc')->get();
+    }
+
     public function filter($request)
     {
         $data = $this->model->newQuery();
@@ -30,13 +35,13 @@ class NotificationRepository extends BaseRepository implements NotificationInter
         ]);
     }
 
-   
+
 
     public function delete($id)
     {
         $result = $this->find($id);
         if ($result) {
-            $result->delete();  
+            $result->delete();
             return true;
         }
 

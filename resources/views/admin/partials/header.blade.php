@@ -56,7 +56,7 @@
                                 </a>
                             </div>
                             <div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
-                                <ul class="timeline list_notification" data-url="{{ route('admin.notifications.getByType') }}">
+                                <ul class="timeline list_notification" data-url="{{ route('admin.notifications.getByCinemaId', auth()->user()->cinema_id) }}">
                                     @if (isset($notifications) && $notifications->isNotEmpty())
                                         @foreach ($notifications as $item)
                                             <li>

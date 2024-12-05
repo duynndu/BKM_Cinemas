@@ -57,7 +57,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                   
+
                                                     <div class="col-xl-5 col-sm-5 align-self-end">
                                                         <div class="">
                                                             <button class="btn btn-primary me-2"
@@ -115,6 +115,7 @@
                                                     <th>Tên</th>
                                                     <th>Điểm</th>
                                                     <th>Hình ảnh</th>
+                                                    <th>Trạng thái</th>
                                                     <th>Hành động</th>
                                                 </tr>
                                             </thead>
@@ -126,7 +127,8 @@
                                                                 class="item-checked">
                                                         </td>
                                                         <td>
-                                                            <strong class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
+                                                            <strong
+                                                                class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
                                                         </td>
                                                         <td>
                                                             <b>
@@ -149,8 +151,18 @@
                                                                     style="width:80px; height:100px; object-fit:cover">
                                                             @endif
                                                         </td>
-                                                        
-                                                        
+                                                        <td>
+                                                            <button
+                                                                class="toggle-active-btn btn btn-xs {{ $reward->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                data-id="{{ $reward->id }}"
+                                                                data-status="{{ $reward->active }}"
+                                                                data-url="{{ route('admin.rewards.changeActive') }}">
+                                                                {{ $reward->active == 1 ? 'Hiển thị' : 'Ẩn' }}
+                                                            </button>
+                                                        </td>
+
+
+
                                                         <td>
                                                             <div
                                                                 style="padding-right: 20px; display: flex; justify-content: end">
@@ -185,7 +197,7 @@
                                     <div class="d-flex justify-content-center align-items-center p-5">
                                         <div>
                                             <h3 class="text-center">
-                                                {{ request()->name ? 'Chưa tìm thấy:'. request()->name : 'Không có dữ liệu' }}
+                                                {{ request()->name ? 'Chưa tìm thấy:' . request()->name : 'Không có dữ liệu' }}
                                             </h3>
                                         </div>
                                     </div>

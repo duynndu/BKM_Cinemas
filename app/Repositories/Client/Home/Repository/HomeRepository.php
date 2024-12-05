@@ -86,7 +86,7 @@ class HomeRepository implements HomeRepositoryInterface
         if (!$checkEmailExists) {
             return response()->json([
                 'status' => 'faile',
-                'message' => 'Email không tồn tại trong hệ thống',
+                'message' => 'Email không tồn tại trong hệ thống, vui lòng đăng kí để tiếp tục',
             ],404);
         }
 
@@ -101,7 +101,6 @@ class HomeRepository implements HomeRepositoryInterface
             $checkEmailExists->is_subscribed_promotions = 1;
             EmailSubscribeEvent::dispatch($request->email);
             $checkEmailExists->save();
-
 
             return response()->json([
                 'status' => 'success',

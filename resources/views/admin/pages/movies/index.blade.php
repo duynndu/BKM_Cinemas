@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Danh sách bài viết')
+@section('title', 'Danh sách phim')
 
 @section('css')
 
@@ -48,18 +48,8 @@
                                                         <option value="">
                                                             --{{ __('language.admin.movies.select') }}--
                                                         </option>
-                                                        <option @selected(request()->order_with == 'postedDateASC') value="postedDateASC">
-                                                            {{ __('language.admin.movies.arranges.postedDateASC') }}
-                                                        </option>
-                                                        <option @selected(request()->order_with == 'postedDateDESC') value="postedDateDESC">
-                                                            {{ __('language.admin.movies.arranges.postedDateDESC') }}
-                                                        </option>
-                                                        <option @selected(request()->order_with == 'releaseDateASC') value="releaseDateASC">
-                                                            {{ __('language.admin.movies.arranges.releaseDateASC') }}
-                                                        </option>
-                                                        <option @selected(request()->order_with == 'releaseDateDESC') value="releaseDateDESC">
-                                                            {{ __('language.admin.movies.arranges.releaseDateDESC') }}
-                                                        </option>
+
+
                                                         <option @selected(request()->order_with == 'premiereDateASC') value="premiereDateASC">
                                                             {{ __('language.admin.movies.arranges.premiereDateASC') }}
                                                         </option>
@@ -121,7 +111,30 @@
                                                     </option>
                                                 </select>
                                             </div>
-                                            <div class="col-xl-6 col-sm-6 align-self-end mt-3">
+                                            <div class="col-xl-3 mt-3">
+                                                <select data-url="{{ route('admin.dashboards.getAreaByCity') }}" class="select2-with-label-multiple w-100"
+                                                    name="city_id" id="city_id">
+                                                    <option value="">-- Chọn thành phố --</option>
+
+                                                    @foreach ($cities as $key => $city)
+                                                        <option value="{{ $city->id }}">
+                                                            {{ $city->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mt-3">
+                                                <select data-url="{{ route('admin.dashboards.getCinemaByArea') }}" class="select2-with-label-multiple" name="area_id"
+                                                    id="area_id">
+                                                    <option value="">-- Chọn khu vực --</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-xl-6 mt-3">
+                                                <select class="select2-with-label-multiple" name="cinema_id" id="cinema_id">
+                                                    <option value="">-- Chọn rạp --</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-6 col-sm-6 mt-3">
                                                 <div>
                                                     <button class="btn btn-primary me-2" title="Click here to Search"
                                                         type="submit"><i
@@ -132,6 +145,7 @@
                                                         title="Click here to remove filter">{{ __('language.admin.movies.removeValue') }}</button>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </form>
@@ -143,36 +157,40 @@
                             <div class="card-header">
                                 <h4 class="card-title">{{ __('language.admin.movies.list') }}</h4>
                                 <div class="compose-btn">
-                                    <a href="{{ route('admin.movies.create') }}">
-                                        <button class="btn btn-secondary btn-sm light">
-                                            + {{ __('language.admin.movies.add') }}
-                                        </button>
-                                    </a>
+                                    @can('create', \App\Models\Movie::class)
+                                        <a href="{{ route('admin.movies.create') }}">
+                                            <button class="btn btn-secondary btn-sm light">
+                                                + {{ __('language.admin.movies.add') }}
+                                            </button>
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
                             <div class="card-body">
-                                @if (!empty($data))
+                                @if ($data->isNotEmpty())
                                     <div class="table-responsive">
                                         <table class="table table-responsive-md" id="data-table">
                                             <input type="hidden" id="value-item-id" value="">
                                             <thead>
                                                 <tr>
-                                                    <th>
-                                                        <div class="box-delete-item">
-                                                            <input type="checkbox" id="item-all-checked">
-                                                            <button id="btn-delete-all"
-                                                                data-url="{{ route('admin.movies.deleteItemMultipleChecked') }}"
-                                                                class="btn btn-sm btn-danger btn-delete-multiple_item">
-                                                                <svg width="15" height="15"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    viewBox="0 0 448 512">
-                                                                    <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                                                                    <path fill="white"
-                                                                        d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                    </th>
+                                                    @can('deleteMultiple', \App\Models\Movie::class)
+                                                        <th>
+                                                            <div class="box-delete-item">
+                                                                <input type="checkbox" id="item-all-checked">
+                                                                <button id="btn-delete-all"
+                                                                    data-url="{{ route('admin.movies.deleteItemMultipleChecked') }}"
+                                                                    class="btn btn-sm btn-danger btn-delete-multiple_item">
+                                                                    <svg width="15" height="15"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        viewBox="0 0 448 512">
+                                                                        <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                                        <path fill="white"
+                                                                            d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                        </th>
+                                                    @endcan
 
                                                     <th>#</th>
                                                     <th class="white-space-nowrap">{{ __('language.admin.movies.title') }}
@@ -182,61 +200,66 @@
                                                     <th style="text-align: start">
                                                         {{ __('language.admin.movies.genre') }}
                                                     </th>
-                                                    <th>{{ __('language.admin.movies.created_at') }}</th>
-                                                    <th>{{ __('language.admin.movies.release_date') }}</th>
                                                     <th>{{ __('language.admin.movies.premiere_date') }}</th>
+
                                                     <th>{{ __('language.admin.movies.active') }}</th>
+
                                                     <th>{{ __('language.admin.movies.hot') }}</th>
+
                                                     <th>{{ __('language.admin.movies.order') }}</th>
-                                                    <th>{{ __('language.admin.movies.action') }}</th>
+
+                                                    @if (Auth()->user()->can('detail', \App\Models\Movie::class) ||
+                                                            Auth()->user()->can('update', \App\Models\Movie::class) ||
+                                                            Auth()->user()->can('delete', \App\Models\Movie::class))
+                                                        <th>{{ __('language.admin.movies.action') }}</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($data as $key => $movie)
-                                                    <tr>
+                                                    @can('deleteMultiple', \App\Models\Movie::class)
                                                         <td>
                                                             <input type="checkbox" data-id="{{ $movie->id }}"
                                                                 class="item-checked">
                                                         </td>
-                                                        <td>
-                                                            <strong
-                                                                class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
-                                                        </td>
-                                                        <td style="max-width: 155px !important;">
-                                                            <b class="text-style">
-                                                                {{ $movie->title }}
-                                                            </b>
-                                                        </td>
-                                                        <td>
-                                                            <img style="width:120px;" src="{{ $movie->image ?? '' }}"
-                                                                alt="">
-                                                        </td>
-                                                        <td>
-                                                            {{ $movie->duration }}
-                                                            {{ __('language.admin.movies.minute') }}
-                                                        </td>
-                                                        <td style="text-align: start">
-                                                            <ul>
-                                                                @if ($movie->movieGenre->isNotEmpty())
-                                                                    @foreach ($movie->movieGenre as $genreMovie)
-                                                                        <li>
-                                                                            {{ $genreMovie->genres->name ?? __('language.admin.movies.noData') }}
-                                                                            @if (!$loop->last)
-                                                                                ,
-                                                                            @endif
-                                                                        </li>
-                                                                    @endforeach
-                                                                @else
-                                                                    <b>{{ __('language.admin.movies.noData') }}</b>
-                                                                @endif
-                                                            </ul>
-                                                        </td>
-                                                        <td>{{ $movie->created_at->format('d/m/Y H:i') }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($movie->release_date)->format('d/m/Y') }}
-                                                        </td>
-                                                        <td>{{ \Carbon\Carbon::parse($movie->premiere_date)->format('d/m/Y') }}
-                                                        </td>
-
+                                                    @endcan
+                                                    <td>
+                                                        <strong
+                                                            class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
+                                                    </td>
+                                                    <td style="max-width: 155px !important;">
+                                                        <b class="text-style" style="white-space: unset !important">
+                                                            {{ $movie->title }}
+                                                        </b>
+                                                    </td>
+                                                    <td>
+                                                        <img style="width:120px;" src="{{ $movie->image ?? '' }}"
+                                                            alt="">
+                                                    </td>
+                                                    <td>
+                                                        {{ $movie->duration }}
+                                                        {{ __('language.admin.movies.minute') }}
+                                                    </td>
+                                                    <td style="text-align: start">
+                                                        <ul>
+                                                            @if ($movie->movieGenre->isNotEmpty())
+                                                                @foreach ($movie->movieGenre as $genreMovie)
+                                                                    <li>
+                                                                        {{ $genreMovie->genres->name ?? __('language.admin.movies.noData') }}
+                                                                        @if (!$loop->last)
+                                                                            ,
+                                                                        @endif
+                                                                    </li>
+                                                                @endforeach
+                                                            @else
+                                                                <b>{{ __('language.admin.movies.noData') }}</b>
+                                                            @endif
+                                                        </ul>
+                                                    </td>
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($movie->premiere_date)->format('d/m/Y') }}
+                                                    </td>
+                                                    @can('changeActive', \App\Models\Movie::class)
                                                         <td>
                                                             <button
                                                                 class="toggle-active-btn btn btn-xs {{ $movie->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
@@ -246,7 +269,13 @@
                                                                 {{ $movie->active == 1 ? __('language.admin.movies.show') : __('language.admin.movies.hidden') }}
                                                             </button>
                                                         </td>
-
+                                                    @else
+                                                        <td>
+                                                            <span
+                                                                class="badge light badge-{{ $movie->active == 1 ? 'success' : 'danger' }}">{{ $movie->active == 1 ? __('language.admin.movies.show') : __('language.admin.movies.hidden') }}</span>
+                                                        </td>
+                                                    @endcan
+                                                    @can('changeHot', \App\Models\Movie::class)
                                                         <td>
                                                             <button
                                                                 class="toggle-hot-btn btn btn-xs {{ $movie->hot == 1 ? 'btn-success' : 'btn-danger' }} text-white"
@@ -256,140 +285,225 @@
                                                                 {{ $movie->hot == 1 ? __('language.admin.movies.hot') : __('language.admin.movies.noHot') }}
                                                             </button>
                                                         </td>
+                                                    @else
+                                                        <td>
+                                                            <span
+                                                                class="badge light badge-{{ $movie->hot == 1 ? 'success' : 'danger' }}">{{ $movie->hot == 1 ? __('language.admin.movies.show') : __('language.admin.movies.hidden') }}</span>
+                                                        </td>
+                                                    @endcan
+
+                                                    @can('changeOrder', \App\Models\Movie::class)
                                                         <td>
                                                             <input type="number" min="0" name="order"
-                                                                value="{{ $movie->order }}"
-                                                                data-id="{{ $movie->id }}"
+                                                                value="{{ $movie->order }}" data-id="{{ $movie->id }}"
                                                                 data-url="{{ route('admin.movies.changeOrder') }}"
                                                                 class="form-control changeOrder" style="width: 67px;">
                                                         </td>
+                                                    @else
+                                                        <td>
+                                                            <span class="">{{ $movie->order }}</span>
+                                                        </td>
+                                                    @endcan
+
+                                                    @if (Auth()->user()->can('detail', \App\Models\Movie::class) ||
+                                                            Auth()->user()->can('update', \App\Models\Movie::class) ||
+                                                            Auth()->user()->can('delete', \App\Models\Movie::class))
                                                         <td>
                                                             <div
                                                                 style="padding-right: 20px; display: flex; justify-content: end">
+                                                                @can('detail', \App\Models\Movie::class)
+                                                                    <button data-bs-toggle="modal"
+                                                                        data-bs-target="#showModal_{{ $movie->id }}"
+                                                                        class="btn btn-success shadow btn-xs sharp me-1 show-order">
+                                                                        <i class="fa fa-eye"></i>
+                                                                    </button>
+                                                                @endcan
+
+                                                                @can('update', \App\Models\Movie::class)
+                                                                    <a href="{{ route('admin.movies.edit', $movie->id) }}"
+                                                                        class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                        <i class="fa fa-pencil"></i>
+                                                                    </a>
+                                                                @endcan
+
+                                                                @can('delete', \App\Models\Movie::class)
+                                                                    <form
+                                                                        action="{{ route('admin.movies.delete', $movie->id) }}"
+                                                                        class="formDelete" method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button
+                                                                            class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                            data-type="DELETE" href="">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                @endcan
                                                                 <button data-bs-toggle="modal"
-                                                                    data-bs-target="#showModal_{{ $movie->id }}"
-                                                                    class="btn btn-success shadow btn-xs sharp me-1 show-order">
-                                                                    <i class="fa fa-eye"></i>
+                                                                    data-bs-target="#showModalMovieInTheaters_{{ $movie->id }}"
+                                                                    class="btn btn-info shadow btn-xs sharp me-1 show-order">
+                                                                    <i class="fa-solid fa-film"></i>
                                                                 </button>
 
-                                                                <a href="{{ route('admin.movies.edit', $movie->id) }}"
-                                                                    class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                    <i class="fa fa-pencil"></i>
-                                                                </a>
-
-                                                                <form
-                                                                    action="{{ route('admin.movies.delete', $movie->id) }}"
-                                                                    class="formDelete" method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button
-                                                                        class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
-                                                                        data-type="DELETE" href="">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </form>
-
                                                             </div>
                                                         </td>
-                                                        <td>
-                                                            <div class="modal fade" id="showModal_{{ $movie->id }}"
-                                                                tabindex="-1"
-                                                                aria-labelledby="showModalLabel_{{ $movie->id }}"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog modal-lg custom-modal">
-                                                                    <!-- Thêm lớp custom-modal -->
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h3 class="modal-title text-white"
-                                                                                id="exampleModalLabel">
-                                                                                {{ __('language.admin.movies.movieDetail') }}
-                                                                            </h3>
-                                                                            <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="{{ __('language.admin.movies.close') }}"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                        
-                                                                                <img style="height:300px"
-                                                                                    src="{{ $movie->banner_movie ?? '' }}"
-                                                                                    alt="Banner"> 
-                                                                            <p><strong>{{ __('language.admin.movies.description') }}
-                                                                                    :
-                                                                                </strong>{{ $movie->description }}</p>
-                                                                            <p> <strong>{{ __('language.admin.movies.director') }}
-                                                                                    :
-                                                                                </strong>{{ $movie->director }}</p>
-                                                                            <p> <strong>{{ __('language.admin.movies.trailer_url') }}
-                                                                                    :
-                                                                                </strong>{{ $movie->trailer_url }}
-                                                                            </p>
-                                                                            <p><strong>{{ __('language.admin.movies.format') }}
-                                                                                    :
-                                                                                </strong>{{ $movie->format }}</p>
-                                                                            <p> <strong>{{ __('language.admin.movies.age') }}
-                                                                                    : </strong>
-                                                                                {{ $movie->age }}
-                                                                            </p>
-                                                                            <p> <strong>{{ __('language.admin.movies.release_date') }}
-                                                                                    : </strong>
-                                                                                {{ $movie->release_date }}
-                                                                            </p>
-                                                                            <p> <strong>{{ __('language.admin.movies.premiere_date') }}
-                                                                                    : </strong>
-                                                                                {{ $movie->premiere_date }}</p>
-                                                                            <p> <strong>{{ __('language.admin.movies.country') }}
-                                                                                    : </strong>
-                                                                                {{ $movie->country }}</p>
-                                                                            <p> <strong>{{ __('language.admin.movies.Subtitles') }}
-                                                                                    : </strong>
-                                                                                {{ $movie->language }}</p>
-                                                                            <div class="actor-movie-detail">
-                                                                                <h4>{{ __('language.admin.movies.actor') }}
-                                                                                </h4>
-                                                                                @if ($movie->actors->isNotEmpty())
-                                                                                    <div class="list-actor_detail">
-                                                                                        <div class="swiper-container">
-                                                                                            <div class="swiper-wrapper">
+                                                    @endif
+                                                    {{-- Modal chi tiết phim --}}
+                                                    <div class="modal fade" id="showModal_{{ $movie->id }}"
+                                                        tabindex="-1"
+                                                        aria-labelledby="showModalLabel_{{ $movie->id }}"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg custom-modal">
+                                                            <!-- Thêm lớp custom-modal -->
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title" id="exampleModalLabel">
+                                                                        {{ __('language.admin.movies.movieDetail') }}
+                                                                    </h4>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="{{ __('language.admin.movies.close') }}"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <img style="height:300px"
+                                                                        src="{{ $movie->banner_movie ?? '' }}"
+                                                                        alt="Banner">
+                                                                    <p><strong>{{ __('language.admin.movies.description') }}
+                                                                            :
+                                                                        </strong>{{ $movie->description }}</p>
+                                                                    <p> <strong>{{ __('language.admin.movies.director') }}
+                                                                            :
+                                                                        </strong>{{ $movie->director }}</p>
+                                                                    <p> <strong>{{ __('language.admin.movies.trailer_url') }}
+                                                                            :
+                                                                        </strong>{{ $movie->trailer_url }}
+                                                                    </p>
+                                                                    <p><strong>{{ __('language.admin.movies.format') }}
+                                                                            :
+                                                                        </strong>{{ $movie->format }}</p>
+                                                                    <p> <strong>{{ __('language.admin.movies.age') }}
+                                                                            : </strong>
+                                                                        {{ $movie->age }}
+                                                                    </p>
+                                                                    <p> <strong>{{ __('language.admin.movies.release_date') }}
+                                                                            : </strong>
+                                                                        {{ $movie->release_date }}
+                                                                    </p>
+                                                                    <p> <strong>{{ __('language.admin.movies.premiere_date') }}
+                                                                            : </strong>
+                                                                        {{ $movie->premiere_date }}</p>
+                                                                    <p> <strong>{{ __('language.admin.movies.country') }}
+                                                                            : </strong>
+                                                                        {{ $movie->country }}</p>
+                                                                    <p> <strong>{{ __('language.admin.movies.Subtitles') }}
+                                                                            : </strong>
+                                                                        {{ $movie->language }}</p>
+                                                                    <div class="actor-movie-detail">
+                                                                        <p>{{ __('language.admin.movies.actor') }}
+                                                                        </p>
+                                                                        @if ($movie->actors->isNotEmpty())
+                                                                            <div class="list-actor_detail">
+                                                                                <div class="swiper-container">
+                                                                                    <div class="swiper-wrapper">
 
 
-                                                                                                @foreach ($movie->actors as $actor)
-                                                                                                    <div
-                                                                                                        class="swiper-slide actor-slide">
-                                                                                                        <img src="{{ $actor->image }}"
-                                                                                                            alt="">
-                                                                                                        <p>{{ $actor->name }}
-                                                                                                        </p>
-                                                                                                    </div>
-                                                                                                @endforeach
-                                                                                                <div
-                                                                                                    class="swiper-button-prev">
-                                                                                                </div>
-                                                                                                <div
-                                                                                                    class="swiper-button-next">
-                                                                                                </div>
+                                                                                        @foreach ($movie->actors as $actor)
+                                                                                            <div
+                                                                                                class="swiper-slide actor-slide">
+                                                                                                <img src="{{ $actor->image }}"
+                                                                                                    alt="">
+                                                                                                <p>{{ $actor->name }}
+                                                                                                </p>
                                                                                             </div>
+                                                                                        @endforeach
+                                                                                        <div class="swiper-button-prev">
+                                                                                        </div>
+                                                                                        <div class="swiper-button-next">
                                                                                         </div>
                                                                                     </div>
-                                                                                @else
-                                                                                    <div class="text-center">
-                                                                                        <h4 class="text-center">Chưa có dữ
-                                                                                            liệu</h4>
-
-                                                                                    </div>
-                                                                                @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="text-center">
+                                                                                <p class="text-center">Chưa có dữ
+                                                                                    liệu</p>
 
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal">{{ __('language.admin.movies.close') }}</button>
-                                                                        </div>
+                                                                        @endif
+
                                                                     </div>
                                                                 </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">{{ __('language.admin.movies.close') }}</button>
+                                                                </div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- Đóng modal chi tiết phim --}}
 
-                                                        </td>
+
+
+                                                    {{-- Modal phim thuộc rạp  --}}
+                                                    <div class="modal fade"
+                                                        id="showModalMovieInTheaters_{{ $movie->id }}" tabindex="-1"
+                                                        aria-labelledby="showModalLabel_{{ $movie->id }}"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg custom-modal"
+                                                            style="max-width: 800px; margin: 1.75rem auto;">
+                                                            <div class="modal-content"
+                                                                style="max-height: 80vh; overflow-y: auto; overflow-x: hidden;">
+                                                                <div class="modal-header"
+                                                                    style="position: sticky; top: 0; background-color: white; z-index: 10; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                                                                    <h4 class="modal-title" id="exampleModalLabel">
+                                                                        Phim đang chiếu tại
+                                                                        {{ count($movie->cinemas) ?? 0 }} rạp
+                                                                    </h4>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Đóng"></button>
+                                                                </div>
+                                                                <div class="modal-body"
+                                                                    style="padding: 20px; overflow-y: auto; max-height: calc(80vh - 120px);">
+                                                                    @if ($movie->cinemas->isNotEmpty())
+                                                                        @foreach ($movie->cinemas as $cinema)
+                                                                            <div
+                                                                                style="display: flex; align-items: center; gap: 50px; margin-bottom: 15px;">
+                                                                                <div class="img-cinema">
+                                                                                    <img style="width: unset; height: 120px;"
+                                                                                        src="{{ $cinema->image }}"
+                                                                                        alt="">
+                                                                                </div>
+                                                                                <div>
+                                                                                    <p>Rạp: {{ $cinema->name }}</p>
+                                                                                    <p>Địa chỉ: {{ $cinema->address }}</p>
+                                                                                    <p>Hotline:
+                                                                                        012345678{{ $cinema->phone }}</p>
+                                                                                    <p>Email: {{ $cinema->email }}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    @else
+                                                                        <p class="text-center">Phim đang không được chiếu ở
+                                                                            rạp nào!</p>
+                                                                    @endif
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Đóng</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    {{-- Đóng modal phim thuộc rạp --}}
+
+
+
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -420,5 +534,5 @@
 @endsection
 
 @section('js')
-    <script></script>
+    <script src="{{ asset('js/admin/commons/movies/index.js') }}"></script>
 @endsection

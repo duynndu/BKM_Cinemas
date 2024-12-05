@@ -239,4 +239,10 @@ class VoucherController extends Controller
             ], 500);
         }
     }
+    public function changeActive(Request $request)
+    {
+        $item = $this->voucherService->changeActive($request);
+
+        return response()->json(['newStatus' => $item->active]);
+    }
 }

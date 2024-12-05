@@ -47,6 +47,16 @@ class MoviePolicy
         return $user->hasPermission('create-movie');
     }
 
+    public function detail(User $user)
+    {
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('view-detail-movie');
+    }
+
+
     /**
      * Determine whether the user can update the model.
      */
@@ -87,5 +97,23 @@ class MoviePolicy
         }
 
         return $user->hasPermission('change-active-movie');
+    }
+
+    public function changeHot(User $user)
+    {
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('change-hot-movie');
+    }
+
+    public function changeOrder(User $user)
+    {
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('change-order-movie');
     }
 }

@@ -65,7 +65,7 @@
                 </li>
             @endcan
 
-            @if (auth()->user()->can('viewAny', App\Models\Menu::class) ||
+            {{-- @if (auth()->user()->can('viewAny', App\Models\Menu::class) ||
                     auth()->user()->can('viewAny', App\Models\Page::class) ||
                     auth()->user()->can('viewAny', App\Models\Block::class))
                 <li>
@@ -94,7 +94,7 @@
                         @endcan
                     </ul>
                 </li>
-            @endif
+            @endif --}}
 
             @if (auth()->user()->can('viewAny', App\Models\CategoryPost::class) ||
                     auth()->user()->can('viewAny', App\Models\Post::class) ||
@@ -145,14 +145,11 @@
                         <li>
                             <a href="{{ route('admin.orders.index') }}">Đơn hàng</a>
                         </li>
-                        <li>
-                            <a href="#">Báo cáo</a>
-                        </li>
                     </ul>
                 </li>
             @endif
 
-            @if (auth()->user()->can('viewAny', App\Models\Movie::class))
+            @if (auth()->user()->can('viewAny', App\Models\Movie::class) || auth()->user()->can('viewAny', App\Models\Genre::class))
                 <li
                     class="{{ request()->segment(2) == 'movies' || request()->segment(2) == 'actors' || request()->segment(2) == 'genres-movie' ? 'mm-active' : '' }}">
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
@@ -160,15 +157,21 @@
                         <span class="nav-text">Phim</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li class="{{ request()->segment(2) == 'genres-movie' ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.genres.index') }}" aria-expanded="false">Thể loại phim</a>
-                        </li>
-                        <li class="{{ request()->segment(2) == 'movies' ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.movies.index') }}" aria-expanded="false">Phim</a>
-                        </li>
-                        <li class="{{ request()->segment(2) == 'actors' ? 'mm-active' : '' }}">
-                            <a href="{{ route('admin.actors.index') }}" aria-expanded="false">Diễn viên</a>
-                        </li>
+                        @can('viewAny', App\Models\Genre::class)
+                            <li class="{{ request()->segment(2) == 'genres-movie' ? 'mm-active' : '' }}">
+                                <a href="{{ route('admin.genres.index') }}" aria-expanded="false">Thể loại phim</a>
+                            </li>
+                        @endcan
+                        @can('viewAny', App\Models\Movie::class)
+                            <li class="{{ request()->segment(2) == 'movies' ? 'mm-active' : '' }}">
+                                <a href="{{ route('admin.movies.index') }}" aria-expanded="false">Phim</a>
+                            </li>
+                        @endcan
+                        @can('viewAny', App\Models\Actor::class)
+                            <li class="{{ request()->segment(2) == 'actors' ? 'mm-active' : '' }}">
+                                <a href="{{ route('admin.actors.index') }}" aria-expanded="false">Diễn viên</a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endif
@@ -201,33 +204,23 @@
                 </li>
             @endif
 
-            <li>
-                <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
-                    <i class="material-icons">card_giftcard</i>
-                    <span class="nav-text">Sự kiện</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li>
-                        <a href="{{ route('admin.redeemRewards.index') }}" aria-expanded="false">Đổi thưởng</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.vouchers.index') }}" aria-expanded="false">Voucher</a>
-                    </li>
-                </ul>
-            </li>
-
-            {{-- @if (auth()->user()->can('viewAny', App\Models\Voucher::class) ||
-                    auth()->user()->can('viewAny', App\Models\Reward::class))
+            @if (auth()->user()->can('viewAny', App\Models\RedeemReward::class) ||
+                    auth()->user()->can('viewAny', App\Models\Reward::class) ||
+                    auth()->user()->can('viewAny', App\Models\Voucher::class))
                 <li>
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
                         <i class="material-icons">card_giftcard</i>
                         <span class="nav-text">Sự kiện</span>
                     </a>
                     <ul aria-expanded="false">
-                        @if (auth()->user()->can('viewAny', App\Models\Voucher::class))
+                        @if (auth()->user()->can('viewAny', App\Models\UserReward::class))
+                            <li>
+                                <a href="{{ route('admin.redeemRewards.index') }}" aria-expanded="false">Đổi
+                                    thưởng</a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->can('viewAny', App\Models\Reward::class))
                             <li>
                                 <a href="{{ route('admin.rewards.index') }}" aria-expanded="false">Quà tặng</a>
                             </li>
@@ -240,7 +233,7 @@
                         @endif
                     </ul>
                 </li>
-            @endif --}}
+            @endif
 
             @if (auth()->user()->can('viewAny', App\Models\Payment::class))
                 <li>
@@ -288,18 +281,28 @@
                                 <a href="{{ route('admin.foods.index') }}" aria-expanded="false">Đồ ăn</a>
                             </li>
                         @endcan
+
+                        @if (auth()->user()->can('viewAny', App\Models\FoodCombo::class))
+                            <li>
+                                <a href="{{ route('admin.food-combos.index') }}" aria-expanded="false">Combo</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endif
-            <li>
-                <a class="" href="{{ route('admin.contacts.index') }}" aria-expanded="false">
-                    <i class="material-icons">contacts</i>
-                    <span class="nav-text">Liên hệ</span>
-                </a>
-            </li>
+            @if (auth()->user()->can('viewAny', App\Models\Contact::class))
+                <li>
+                    <a class="" href="{{ route('admin.contacts.index') }}" aria-expanded="false">
+                        <i class="material-icons">contacts</i>
+                        <span class="nav-text">Liên hệ</span>
+                    </a>
+                </li>
+            @endif
+
             @if (auth()->user()->can('viewAny', App\Models\User::class) ||
                     auth()->user()->can('viewAny', App\Models\Role::class) ||
-                    auth()->user()->can('viewAny', App\Models\Module::class))
+                    auth()->user()->can('viewAny', App\Models\Module::class) ||
+                    auth()->user()->can('viewAny', App\Models\Notification::class))
                 <li
                     class="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.modules.*') ? 'mm-active' : '' }}">
                     <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
@@ -319,7 +322,7 @@
                                     aria-expanded="false">{{ __('language.admin.members.roles.title') }}</a>
                             </li>
                         @endcan
-                        @can('viewAny', App\Models\Permission::class)
+                        @can('viewAny', App\Models\Module::class)
                             <li>
                                 <a href="{{ route('admin.modules.index') }}"
                                     aria-expanded="false">{{ __('language.admin.members.modules.title') }}</a>
@@ -327,11 +330,12 @@
                         @endcan
 
 
-                        <li>
-                            <a href="{{ route('admin.notifications.index') }}"
-                                aria-expanded="false">Thông báo</a>
-                        </li>
-
+                        @if (auth()->user()->can('viewAny', App\Models\Notification::class))
+                            <li>
+                                <a href="{{ route('admin.notifications.index') }}" aria-expanded="false">Thông
+                                    báo</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endif

@@ -26,6 +26,7 @@ class RoleRepository extends BaseRepository implements RoleInterface
                 });
             }
         }
+
         return $query->paginate(self::PAGINATION);
     }
 

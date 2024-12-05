@@ -174,6 +174,12 @@ class VoucherRepository extends BaseRepository implements VoucherInterface
             ]);
         }
         $voucher = Voucher::find($request->voucherId);
+        if($voucher -> active == 0){
+            return response()->json([
+                'status' => 'faile',
+                'message' => 'Voucher không hợp lệ!'
+            ]);
+        }
         if (!empty($request->userIds)) {
 
             $userVoucher = VoucherUser::where('voucher_id', $voucher->id)->get();  // Lấy các người dùng đã tặng voucher
@@ -219,5 +225,15 @@ class VoucherRepository extends BaseRepository implements VoucherInterface
                 'message' => 'Thành công'
             ]);
         }
+    }
+    public function changeActive($id)
+    {
+        $result = $this->model->find($id)->first();
+        if ($result) {
+            $result->active ^= 1;
+            $result->save();
+            return $result;
+        }
+        return false;
     }
 }
