@@ -235,14 +235,14 @@
                 </li>
             @endif
 
-            @if (auth()->user()->can('viewAny', App\Models\Payment::class))
+            {{-- @if (auth()->user()->can('viewAny', App\Models\Payment::class))
                 <li>
                     <a href="{{ route('admin.payments.index') }}">
                         <i class="material-icons">payment</i>
                         <span class="nav-text">Phương thức thanh toán</span>
                     </a>
                 </li>
-            @endif
+            @endif --}}
             @if (auth()->user()->can('viewAny', App\Models\City::class) || auth()->user()->can('viewAny', App\Models\Area::class))
                 <li>
                     <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">

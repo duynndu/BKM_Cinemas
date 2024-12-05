@@ -3,6 +3,11 @@
 @section('title', Auth::check() ? 'Thông tin tài khoản' : 'Đăng ký - Đăng nhập | BKM Cinemas')
 
 @section('css')
+<style>
+    .text-white {
+        color: #fff !important;
+    }
+</style>
 @endsection
 
 @vite(['resources/js/app.js', 'resources/css/app.css'])
@@ -834,19 +839,6 @@
                             </div>
                         </div>
 
-                        <div id="uudaichung" class="mbox tab-pane fade">
-                            <div class="title">
-                                <h2>Ưu đãi chung</h2>
-                            </div>
-                            <div class="box-body">
-                                <div class="row flex">
-                                    <div class="col-md-12 col-sm-12">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div id="vedadat" class="mbox tab-pane fade">
                             <div class="title">
                                 <h2>Lịch sử mua vé</h2>
@@ -901,55 +893,61 @@
                                 </div>
                                 <div class="row flex">
                                     <div class="col-md-12 col-sm-12">
-                                        <div class="transaction-deposit">
-                                            <div class="transaction-main">
-                                                @php
-                                                    $lastDate = null;
-                                                @endphp
-                                                @foreach ($data['transactions'] as $key => $transaction)
+                                        @if ($data['transactions']->isNotEmpty())
+                                            <div class="transaction-deposit">
+                                                <div class="transaction-main">
                                                     @php
-                                                        $transactionDate = date(
-                                                            'd/m/Y',
-                                                            strtotime($transaction->created_at),
-                                                        );
+                                                        $lastDate = null;
                                                     @endphp
-                                                    <div class="border-box">
-                                                        @if ($transactionDate != $lastDate)
-                                                            <div class="transaction-date">
-                                                                {{ $transactionDate }}
-                                                            </div>
-                                                            @php
-                                                                $lastDate = $transactionDate;
-                                                            @endphp
-                                                        @endif
-                                                        <div class="transaction-list"
-                                                            style="border-bottom: {{ $loop->last ? '1px solid #91b5d7' : 'none' }}">
-                                                            <div class="transaction-content">
-                                                                <h4>Thông báo giao dịch</h4>
-                                                                <ul>
-                                                                    <li>{{ !empty($transaction->description) ? $transaction->description : '' }}
-                                                                    </li>
-                                                                    <li>
-                                                                        Giao dịch:
-                                                                        @if ($transaction->status == 'completed')
-                                                                            +
-                                                                        @endif
-                                                                        {{ number_format($transaction->amount, 0, '.', ',') }}
-                                                                        đ |
-                                                                        {{ date('d/m/Y H:i:s', strtotime($transaction->created_at)) }}
-                                                                        |
-                                                                        Số
-                                                                        dư:
-                                                                        {{ number_format($transaction->balance_after, 0, '.', ',') }}
-                                                                        đ
-                                                                    </li>
-                                                                </ul>
+                                                    @foreach ($data['transactions'] as $key => $transaction)
+                                                        @php
+                                                            $transactionDate = date(
+                                                                'd/m/Y',
+                                                                strtotime($transaction->created_at),
+                                                            );
+                                                        @endphp
+                                                        <div class="border-box">
+                                                            @if ($transactionDate != $lastDate)
+                                                                <div class="transaction-date">
+                                                                    {{ $transactionDate }}
+                                                                </div>
+                                                                @php
+                                                                    $lastDate = $transactionDate;
+                                                                @endphp
+                                                            @endif
+                                                            <div class="transaction-list"
+                                                                style="border-bottom: {{ $loop->last ? '1px solid #91b5d7' : 'none' }}">
+                                                                <div class="transaction-content">
+                                                                    <h4>Thông báo giao dịch</h4>
+                                                                    <ul>
+                                                                        <li>{{ !empty($transaction->description) ? $transaction->description : '' }}
+                                                                        </li>
+                                                                        <li>
+                                                                            Giao dịch:
+                                                                            @if ($transaction->status == 'completed')
+                                                                                +
+                                                                            @endif
+                                                                            {{ number_format($transaction->amount, 0, '.', ',') }}
+                                                                            đ |
+                                                                            {{ date('d/m/Y H:i:s', strtotime($transaction->created_at)) }}
+                                                                            |
+                                                                            Số
+                                                                            dư:
+                                                                            {{ number_format($transaction->balance_after, 0, '.', ',') }}
+                                                                            đ
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                @endforeach
+                                                    @endforeach
+                                                </div>
                                             </div>
-                                        </div>
+                                        @else
+                                            <div class="d-flex justify-content-center align-items-center p-5 no-ticket">
+                                                Bạn chưa có giao dịch nào.
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
