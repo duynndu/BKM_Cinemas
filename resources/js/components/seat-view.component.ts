@@ -155,17 +155,21 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
           icon: 'warning',
           title: 'Cảnh báo',
           text: 'Lỗi giao dịch hoặc không đủ số dư vui nạp thêm tiền vào tài khoản!',
+        }).then(()=>{
+          redirect().to('/')
         });
       }
-      Swal.fire({
-        title: 'Giao dịch thành công.',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      }).then(() => {
-        redirect().to('/thanh-cong', {
-          'code': res.code
+      if(res.status == Status.COMPLETED){
+        Swal.fire({
+          title: 'Giao dịch thành công.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          redirect().to('/thanh-cong', {
+            'code': res.code
+          });
         });
-      });
+      }
 
     }
 
@@ -200,7 +204,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
         title: 'Cảnh báo',
         text: 'Bạn phải đăng nhập để đặt vé!',
       });
-      redirect().to('/account');
+      redirect().to('/tai-khoan');
     } else {
       $("#seatingArea").removeClass("event-none");
       $("#login").addClass("tw-hidden");

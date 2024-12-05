@@ -28,10 +28,10 @@
             <div class="top-button">
                 <div class="row">
                     <div class="col-md-8 col-sm-7">
-                        {{-- <a class="buy-ticket" href="#"><img class="img-responsive"
-                                src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a> --}}
-                        {{-- <a class="flags" href="#"><img class="img-responsive"
-                                src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a> --}}
+                         <a class="buy-ticket" href="#"><img class="img-responsive"
+                                src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
+                         <a class="flags" href="#"><img class="img-responsive"
+                                src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a>
                         <a class="hidden-lg btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
                         <form action="{{ route('search') }}" class="form-search visible-lg" method="get">
                             <div class="input-group">
@@ -153,10 +153,25 @@
                                     Thành viên
                                 </a>
                             </li>
-                            <li class="">
-                                <a href="{{ route('post.list', 'khuyen-mai') }}">
+                            <li class="dropdown ">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="true" aria-expanded="false">
                                     Ưu đãi - Sự kiện
                                 </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a
+                                            href="{{ route('post.list', 'khuyen-mai') }}">
+                                            Khuyến mãi
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ route('post.list', 'qua-tang') }}">
+                                            Quà tặng
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="">
                                 <a href="{{ route('post.list', 'danh-gia-phim') }}">

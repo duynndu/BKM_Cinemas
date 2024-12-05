@@ -28,6 +28,7 @@ class NotificationRepository extends BaseRepository implements NotificationInter
     public function filter($request)
     {
         $data = $this->model->newQuery();
+        $data = $data->where('type', '!=', 'refund');
         $data = $this->filterByName($data);
         $data = $data->paginate(self::PAGINATION);
         return $data->appends([

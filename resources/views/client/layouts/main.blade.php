@@ -183,12 +183,12 @@
         </div>
     </div>
 
-    <div id="venom-popup" style="display: none;">
-        <div class="venom-content">
-            <button type="button" id="fragmentClose">close</button>
-            <img src="{{ asset("client/images/V3_Popcorn-min.gif") }}" />
+        <div id="venom-popup" style="display: none;">
+            <div class="venom-content">
+                <button type="button" id="fragmentClose">close</button>
+                <img src="{{ asset("client/images/V3_Popcorn-min.gif") }}" />
+            </div>
         </div>
-    </div>
 
     <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>

@@ -457,8 +457,7 @@
                                                                 <div class="modal-header"
                                                                     style="position: sticky; top: 0; background-color: white; z-index: 10; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
                                                                     <h4 class="modal-title" id="exampleModalLabel">
-                                                                        Phim đang chiếu tại
-                                                                        {{ count($movie->cinemas) ?? 0 }} rạp
+                                                                        Phim đang chiếu tại rạp ({{ count($movie->cinemas) ?? 0 }})
                                                                     </h4>
                                                                     <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal"

@@ -43,10 +43,9 @@ class PostRepository implements PostInterface
                 })
                 ->select('name', 'slug', 'description', 'content', 'avatar', 'created_at')
                 ->first();
-    
+
         return $post;
     }
-
 
     public function getPostRelated($slugCate, $slug)
     {

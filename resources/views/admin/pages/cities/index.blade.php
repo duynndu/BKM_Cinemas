@@ -58,13 +58,15 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Danh Sách Thành Phố</h4>
-                                <div class="compose-btn">
-                                    <a href="{{ route('admin.cities.create') }}">
-                                        <button class="btn btn-secondary btn-sm light">
-                                            + Thêm Mới
-                                        </button>
-                                    </a>
-                                </div>
+                                @can('create', App\Models\city::class)
+                                    <div class="compose-btn">
+                                        <a href="{{ route('admin.cities.create') }}">
+                                            <button class="btn btn-secondary btn-sm light">
+                                                + Thêm Mới
+                                            </button>
+                                        </a>
+                                    </div>
+                                @endcan
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -89,16 +91,21 @@
                                                     </td>
                                                     <td>
                                                         <div style="display: flex; justify-content: end">
-                                                            <a href="{{ route('admin.cities.edit', $city->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </a>
-                                                            <form action="{{ route('admin.cities.delete', $city->id) }}" class="formDelete" method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button class="btn btn-danger shadow btn-xs sharp me-1 btn-remove" data-type="DELETE" href="">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </button>
-                                                            </form>
+                                                            @can('update', $city)
+                                                                <a href="{{ route('admin.cities.edit', $city->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('delete', $city)
+                                                                <form action="{{ route('admin.cities.delete', $city->id) }}" class="formDelete" method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="btn btn-danger shadow btn-xs sharp me-1 btn-remove" data-type="DELETE" href="">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                            @endcan
+
                                                         </div>
                                                     </td>
                                                 </tr>

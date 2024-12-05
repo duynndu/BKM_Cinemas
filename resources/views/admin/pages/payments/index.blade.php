@@ -79,11 +79,13 @@
                             <div class="card-header">
                                 <h4 class="card-title">Danh sách phương thức thanh toán</h4>
                                 <div class="compose-btn">
-                                    <a href="{{ route('admin.payments.create') }}">
-                                        <button class="btn btn-secondary btn-sm light">
-                                            + Thêm mới
-                                        </button>
-                                    </a>
+                                    @can('create', \App\Models\Payment::class)
+                                        <a href="{{ route('admin.payments.create') }}">
+                                            <button class="btn btn-secondary btn-sm light">
+                                                + Thêm mới
+                                            </button>
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
                             <div class="card-body">
@@ -123,33 +125,42 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <button
-                                                                class="toggle-active-btn btn btn-xs {{ $payment->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
-                                                                data-id="{{ $payment->id }}"
-                                                                data-status="{{ $payment->active }}"
-                                                                data-url="{{ route('admin.payments.changeActive') }}">
-                                                                {{ $payment->active == 1 ? 'Hiển thị' : 'Ẩn' }}
-                                                            </button>
+                                                            @can('changeActive', \App\Models\Payment::class)
+                                                                <button
+                                                                    class="toggle-active-btn btn btn-xs {{ $payment->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                    data-id="{{ $payment->id }}"
+                                                                    data-status="{{ $payment->active }}"
+                                                                    data-url="{{ route('admin.payments.changeActive') }}">
+                                                                    {{ $payment->active == 1 ? 'Hiển thị' : 'Ẩn' }}
+                                                                </button>
+                                                            @else
+                                                                <span class="badge light badge-{{ $payment->active == 1 ? 'success' : 'danger' }}">
+                                                                    {{ $payment->active == 1 ? 'Hiện' : 'Ẩn' }}
+                                                                </span>
+                                                            @endcan
                                                         </td>
-
                                                         <td>
                                                             <div
                                                                 style="padding-right: 20px; display: flex; justify-content: end">
-                                                                <a href="{{ route('admin.payments.edit', $payment->id) }}"
-                                                                    class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                    <i class="fa fa-pencil"></i>
-                                                                </a>
-                                                                <form
-                                                                    action="{{ route('admin.payments.delete', $payment->id) }}"
-                                                                    class="formDelete" method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button
-                                                                        class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
-                                                                        data-type="DELETE" href="">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </form>
+                                                                @can('update', \App\Models\Payment::class)
+                                                                    <a href="{{ route('admin.payments.edit', $payment->id) }}"
+                                                                        class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                        <i class="fa fa-pencil"></i>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('delete', \App\Models\Payment::class)
+                                                                    <form
+                                                                        action="{{ route('admin.payments.delete', $payment->id) }}"
+                                                                        class="formDelete" method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button
+                                                                            class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                            data-type="DELETE" href="">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                @endcan
                                                             </div>
                                                         </td>
                                                     </tr>

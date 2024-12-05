@@ -202,8 +202,8 @@
                                                                {{ $food->type->name ?? 'Chưa có' }}
                                                            </b>
                                                         </td>
-                                                        @can('changeActive', \App\Models\Food::class)
-                                                            <td>
+                                                        <td>
+                                                            @can('changeActive', \App\Models\Food::class)
                                                                 <button
                                                                     class="toggle-active-btn btn btn-xs {{ $food->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
                                                                     data-id="{{ $food->id }}"
@@ -211,17 +211,25 @@
                                                                     data-url="{{ route('admin.foods.changeActive') }}">
                                                                     {{ $food->active == 1 ? 'Hiện' : 'Ẩn' }}
                                                                 </button>
-                                                            </td>
-                                                        @endcan
-                                                        @can('changeOrder', \App\Models\Food::class)
-                                                            <td>
+                                                            @else
+                                                                <span class="badge light badge-{{ $food->active == 1 ? 'success' : 'danger' }}">
+                                                                    {{ $food->active == 1 ? 'Hiện' : 'Ẩn' }}
+                                                                </span>
+                                                            @endcan
+                                                        </td>
+                                                        <td>
+                                                            @can('changeOrder', \App\Models\Food::class)
                                                                 <input type="number" min="0" name="order"
                                                                     value="{{ $food->order }}"
                                                                     data-id="{{ $food->id }}"
                                                                     data-url="{{ route('admin.foods.changeOrder') }}"
                                                                     class="form-control changeOrder" style="width: 67px;">
-                                                            </td>
-                                                        @endcan
+                                                            @else
+                                                                <b>
+                                                                    {{ $food->order }}
+                                                                </b>
+                                                            @endcan
+                                                        </td>
 
                                                         <td>
                                                             <div

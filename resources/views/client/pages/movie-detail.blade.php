@@ -158,26 +158,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 col-sm-4">
-            <div class="related-movie">
-                <h2>Phim đang chiếu</h2>
-                <div class="list">
-                    @foreach($movies as $movie)
-                    <a href="{{ url('phim/' . $movie->slug) }}">
-                        <div class="poster"
-                            style="background-image: url('{{ asset($movie->image)}}')">
-                        </div>
-                    </a>
-                    @endforeach
-                </div>
-                <div class="view-more">
-                    <a href="/phim">
-                        <div class="text">xem thêm</div>
-                        <div class="arrow-down"></div>
-                    </a>
-                </div>
-            </div>
-        </div>
+        @include('client.components.movie-showing-sidebar')
     </div>
     <div class="modal fade in" id="modal-trailer" style="display: none;">
         <div class="modal-dialog">

@@ -140,17 +140,19 @@
                                                                     data-content="{{ $contact->content }}">
                                                                     <i class="fa fa-eye"></i>
                                                                 </a>
-                                                                <form
-                                                                    action="{{ route('admin.contacts.delete', $contact->id) }}"
-                                                                    class="formDelete" method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button
-                                                                        class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
-                                                                        data-type="DELETE" href="">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </form>
+                                                                @can('delete', \App\Models\Contact::class)
+                                                                    <form
+                                                                        action="{{ route('admin.contacts.delete', $contact->id) }}"
+                                                                        class="formDelete" method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button
+                                                                            class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                            data-type="DELETE" href="">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                @endcan
                                                             </div>
                                                         </td>
                                                     </tr>

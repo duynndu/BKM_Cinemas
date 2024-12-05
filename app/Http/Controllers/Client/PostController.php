@@ -58,13 +58,10 @@ class PostController extends Controller
             return view('error.client.404');
         }
         $postRelated = $this->postService->getPostRelated($cateSlug, $slug);
-        $movieIsShowing = $this->movieService->movieIsShowing();
-
         $data = [
             'post' => $post,
             'postRelated' => $postRelated,
-            'movieIsShowing' => $movieIsShowing,
-            'cateSlug' => $cateSlug
+            'cateSlug' => $cateSlug,
         ];
         return view('client.pages.post-detail', $data);
     }
