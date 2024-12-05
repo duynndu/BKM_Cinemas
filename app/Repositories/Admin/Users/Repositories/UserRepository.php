@@ -20,13 +20,15 @@ class UserRepository extends BaseRepository implements UserInterface
     public function filter($request)
     {
         $data = $this->model->newQuery();
-
-        $data = $data->select('id', 'name', 'first_name', 'last_name', 'email', 'image', 'role_id', 'status')
+        $data = $data->select('id', 'name', 'cinema_id', 'first_name', 'type','last_name', 'email', 'image', 'role_id', 'status')
             ->with('role');
 
         if ($request->name) {
             $data->whereRaw("concat(first_name, ' ', last_name) like ?", ['%' . $request->name . '%']);
             $data->orWhere('email', 'like', '%' . $request->name . '%');
+        }
+        if ($request->type) {
+            $data->where("type", $request->type);
         }
 
         if (auth()->user()->cinema_id) {
@@ -34,7 +36,6 @@ class UserRepository extends BaseRepository implements UserInterface
         }
 
         $data = $data->paginate(self::PAGINATION);
-
         return $data->appends([
             'name' => $request->name,
         ]);

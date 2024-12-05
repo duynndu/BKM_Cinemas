@@ -152,7 +152,7 @@
 
         <section class="mt-3">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 home-banner-imager">
                     <img src="{{ asset('client/images/mery-banner.jpg') }}" alt="">
                 </div>
             </div>
@@ -162,7 +162,7 @@
     <section id="home-news">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
                     @if (isset($postPromotion) && !$postPromotion->isEmpty())
                         <div id="promotion">
                             <div class="title">
