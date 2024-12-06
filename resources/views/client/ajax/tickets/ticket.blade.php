@@ -125,7 +125,8 @@
                                                                                     </div>
                                                                                     <div class="total">
                                                                                         Tổng tiền:
-                                                                                        <span>{{ number_format($ticket->total_price, 0, ',', '.') }}đ</span>
+                                                                                        <span>{{ number_format($ticket->final_price, 0, ',', '.') }}đ</span> 
+                                                                                        (<del>{{ number_format($ticket->total_price, 0, ',', '.') }}đ</del>)
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
