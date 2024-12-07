@@ -509,7 +509,7 @@ $(document).ready(function () {
         }
 
     }
-    
+
     exp();
     change_avatar();
     payment_alert();
@@ -519,3 +519,26 @@ $(document).ready(function () {
 })
 
 
+//modal trailer
+document.addEventListener('DOMContentLoaded', function() {
+    // Lưu lại src gốc của các iframe
+    const iframes = document.querySelectorAll('iframe[id^="iframe-trailer-"]');
+    iframes.forEach((iframe) => {
+        iframe.dataset.originalSrc = iframe.src; // Lưu src gốc vào data attribute
+    });
+
+    // Lắng nghe sự kiện đóng modal
+    const modals = document.querySelectorAll('div[id^="modal-trailer-"]');
+    modals.forEach((modal) => {
+        $(modal).on('hidden.bs.modal', function() {
+            // Lấy iframe bên trong modal này
+            const iframe = modal.querySelector('iframe');
+            if (iframe) {
+                iframe.src = ''; // Xóa src để dừng video
+                setTimeout(() => {
+                    iframe.src = iframe.dataset.originalSrc; // Khôi phục src
+                }, 100); // Đợi 100ms trước khi khôi phục src
+            }
+        });
+    });
+});

@@ -80,12 +80,12 @@
                 <div class="modal-dialog modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" title="Đóng" aria-hidden="true">×
+                            <button type="button" class="close" onclick="closeModal({{ $item->id }})" data-dismiss="modal" title="Đóng" aria-hidden="true">×
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="video-container video-trailer--home">
-                                <iframe src="{{ $item->trailer_url }}" frameborder="0"></iframe>
+                                <iframe id="iframe-trailer-{{ $item->id }}" src="{{ $item->trailer_url }}" frameborder="0"></iframe>
                             </div>
                         </div>
                     </div>

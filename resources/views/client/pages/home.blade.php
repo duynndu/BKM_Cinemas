@@ -322,4 +322,27 @@
 @endsection
 
 @section('js')
+    <script>
+        $(document).ready(function () {
+            const locationKey = "selectedCinemaLocation";
+            function checkLocation() {
+                const selectedLocation = sessionStorage.getItem(locationKey);
+                if (!selectedLocation) {
+                    $(".mfp-wrap").fadeIn();
+                    $(".mfp-bg").fadeIn();
+                }
+            }
+            checkLocation();
+            $(".location-select-button").on("click", function (e) {
+                e.preventDefault();
+                const location = $(this).data("location");
+                if (location) {
+                    sessionStorage.setItem(locationKey, location);
+                    $(".mfp-wrap").fadeOut();
+                    $(".mfp-bg").fadeOut();
+                }
+            });
+        });
+
+    </script>
 @endsection
