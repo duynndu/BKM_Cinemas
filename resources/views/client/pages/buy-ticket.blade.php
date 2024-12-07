@@ -98,7 +98,7 @@
                                         <span class="price"><span id="totalPriceSeat" x-text="price(totalPriceSeats)"></span></span>
                                     </div>
                                     <div class="select combo">
-                                        <a href="javascript:;" style="text-decoration: none; color:#ea0a85;" @click="toggleCombo($event)">
+                                        <a href="javascript:;" style="text-decoration: none; color:#ea0a85;" @click="showTabCombo = !showTabCombo">
                                             <span class="glyphicon glyphicon-star tada animated infinite"></span>
                                             Chọn Combo </a>
                                         <span class="price"><span id="totalPriceCombo" x-text="price(totalPriceFoods)"></span></span>
@@ -128,20 +128,25 @@
                             </a>
                         </div>
                     </div>
-                    <div style="overflow-y: auto;" id="tab-combo">
-                        <div class="tw-mt-16">
+                    <div @click="showTabCombo = false" x-show="showTabCombo" class="tw-fixed tw-top-0 tw-left-0 tw-w-full tw-h-full"></div>
+                    <div style="overflow-y: auto;" id="tab-combo"
+                    :class="{
+                        'slide': showTabCombo
+                    }">
+                        <div class="tw-mt-16 tw-pl-3">
                             <template x-for="foodType in foodTypes" :key="foodType.id">
                                 <div class="tw-w-full tw-border-b tw-gap-2">
                                     <div class="tw-text-left tw-font-bold tw-mb-2 tw-pt-2 tw-border tw-border-solid tw-border-gray-200 tw-border-x-0 tw-p-4" x-text="foodType.name"></div>
                                     <template x-for="food in foodType.foods" :key="food.id">
                                         <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-items-center tw-p-4">
                                             <div class="tw-bg-cover tw-bg-center tw-col-span-2">
-                                                <img class="tw-block tw-w-[60px] tw-aspect-square tw-object-cover tw-rounded-full tw-border-2 tw-border-solid tw-border-pink-500 tw-overflow-hidden" src="https://touchcinema.com/medias/hinh-san-pham/cb-pepsibapngot-1696227008-poster.png" alt="Pepsi + Bắp Ngọt">
+                                                <img class="tw-block tw-w-[60px] tw-aspect-square tw-object-cover tw-rounded-full tw-border-2 tw-border-solid tw-border-pink-500 tw-overflow-hidden" 
+                                                :src="food.image">
                                             </div>
                                             <div class="tw-flex-1 tw-col-span-7">
                                                 <div class="tw-font-semibold" x-text="food.name"></div>
                                                 <small class="tw-text-gray-500" x-html="food.description ?? '&nbsp;'"></small>
-                                                <div class="tw-text-[#44c020] tw-font-normal" x-text="food.price"></div>
+                                                <div class="tw-text-[#44c020] tw-font-normal" x-text="price(food.price)"></div>
                                             </div>
                                             <div class="text-center comb-qty tw-flex tw-gap-2">
                                                 <button class="giamItem" data-forcombo="1000000" @click="food.quantity > 0 && food.quantity--;calculateTotalPrice()">-</button>
@@ -233,13 +238,13 @@
                                     <div id="current-select">
                                         <div class="select">
                                             Tổng cộng:<span class="price" style="font-size: 30px">
-                                                <span id="totalPrice" x-text="price(totalPriceSeats + totalPriceFoods + discountPrice)"></span>
+                                                <span id="totalPrice" x-text="price((totalPriceSeats + totalPriceFoods - discountPrice) < 0 ? 0 : (totalPriceSeats + totalPriceFoods + discountPrice))"></span>
                                             </span>
                                             <span id="decrease"></span>
                                         </div>
                                         <div class="select">
                                             voucher:<span class="price">
-                                                <span id="price_seat" x-text="price(discountPrice)"></span>
+                                                -<span id="price_seat" x-text="price(discountPrice >= (totalPriceSeats + totalPriceFoods) ? (totalPriceSeats + totalPriceFoods) : discountPrice)"></span>
                                             </span>
                                         </div>
                                         <div class="select">
@@ -340,9 +345,9 @@
             </div>
 
             <!-- Thông báo lỗi nếu mã giảm giá không hợp lệ -->
-            <div x-show="voucherNotFound" class="error-message">
+            <!-- <div x-show="voucherNotFound" class="error-message">
                 <p class="tw-text-red-500">Mã giảm giá không hợp lệ</p>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

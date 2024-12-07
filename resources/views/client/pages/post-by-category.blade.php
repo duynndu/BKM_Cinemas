@@ -41,9 +41,10 @@
                         {{ $posts->links('vendor.pagination.bootstrap-4') }}
                     </div>
                 @else
-                    <h3 class="text-white">Không có bài viết nào trong danh mục này!</h3>
+                    <h3 class="text-white text-yellow-bkm text-center bg-white padding-5">Không có bài viết nào trong danh mục này!</h3>
                 @endif
             </div>
+            @include('client.components.movie-showing-sidebar')
         </div>
     </div>
 @endsection

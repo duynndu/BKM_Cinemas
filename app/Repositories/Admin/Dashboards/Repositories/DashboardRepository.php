@@ -449,20 +449,24 @@ class DashboardRepository extends BaseRepository implements DashboardInterface
 
     public function getTop5Cinemas()
     {
+        $conditions = function ($query) {
+            $query->whereNotNull('code')
+                ->whereIn('status', ['completed', 'rejected'])
+                ->where('payment_status', 'completed');
+        };
+
         $top5Cinemas = Cinema::withCount([
-            'bookings as total_tickets' => function ($query) {
-                $query->whereNotNull('code')
-                    ->whereIn('status', ['completed', 'rejected'])
-                    ->where('payment_status', 'completed');
-            },
+            'bookings as total_tickets' => $conditions,
         ])
-            ->withSum('bookings as total_revenue', 'total_price')
-            ->having('total_tickets', '>', 0) 
-            ->having('total_revenue', '>', 0)
-            ->orderByDesc('total_revenue')
-            ->orderByDesc('total_tickets')
-            ->take(5) 
-            ->get(['id', 'name']); 
+        ->withSum([
+            'bookings as total_revenue' => $conditions,
+        ], 'final_price')
+        ->having('total_tickets', '>', 0)
+        ->having('total_revenue', '>', 0)
+        ->orderByDesc('total_revenue')
+        ->orderByDesc('total_tickets')
+        ->take(5)
+        ->get(['id', 'name']);
 
         return $top5Cinemas;
     }

@@ -52,33 +52,31 @@ class PaymentController extends Controller
                 ->where('payload', 'LIKE', '%' . $booking->showtime_id . '%')
                 ->where('payload', 'LIKE', '%' . $booking->user_id . '%')
                 ->delete();
-            ResetSeatStatus::dispatch($booking->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT')->delay(now()->addSeconds(300));
+            $second = $request->payment == 'zalopay' ? 900 : ($request->payment == 'momo' ? 600 : 300);
+            ResetSeatStatus::dispatch($booking->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT')->delay(now()->addSeconds($second));
             $amount = $booking->totalPrice();
             $discountPrice = $this->calculatorVoucherPrice($amount, $request->voucher_id);
+            $finalPrice = $amount - $discountPrice;
             $booking->update([
                 'code' => $orderCode,
                 'payment_status' => Status::PENDING,
                 'discount_price' => $discountPrice,
-                'final_price' => $amount - $discountPrice,
+                'final_price' => $finalPrice,
                 'voucher_id' => $request->voucher_id,
                 'payment_method' => $request->payment
             ]);
-            if ($request->payment == 'vnpay') {
-                $vnpayUrl = $this->vnpay_payment($orderCode, $amount);
+            if ($request->payment == 'customer' || $finalPrice == 0) {
+                $customerResponse = $this->customer_payment($finalPrice, $booking);
+                return response()->json($customerResponse);
+            } else if ($request->payment == 'vnpay') {
+                $vnpayUrl = $this->vnpay_payment($orderCode, $finalPrice);
                 return response()->json($vnpayUrl);
             } elseif ($request->payment == 'momo') {
-
-                $momoUrl = $this->momo_payment($orderCode, $amount);
-
+                $momoUrl = $this->momo_payment($orderCode, $finalPrice);
                 return response()->json($momoUrl);
             } elseif ($request->payment == 'zalopay') {
-
-                $zaloPayUrl = $this->zaloPay_payment($amount);
-
+                $zaloPayUrl = $this->zaloPay_payment($finalPrice);
                 return response()->json($zaloPayUrl);
-            } elseif ($request->payment == 'customer') {
-                $customerResponse = $this->customer_payment($amount, $booking);
-                return response()->json($customerResponse);
             }
         }
     }
@@ -171,7 +169,7 @@ class PaymentController extends Controller
                 'user_id' => $booking->user_id,
                 'payment_method' => 'vnpay',
                 'amount' => $inputData['vnp_Amount'] / 100,
-                'type' => 'deposit',
+                'type' => 'booking',
                 'description' => 'Giao dịch thành công - Đặt vé',
                 'balance_after' => Auth::user()->balance,
                 'status' => Status::COMPLETED
@@ -202,14 +200,17 @@ class PaymentController extends Controller
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
-            $booking->update([
-                'payment_status' => $dataTransaction['status'],
-                'status' => $dataTransaction['status']
-            ]);
             if ($dataTransaction['status'] == Status::COMPLETED) {
+                $booking->update([
+                    'payment_status' => Status::COMPLETED,
+                    'status' => Status::COMPLETED
+                ]);
                 return redirect()->route('thanh-cong', [
                     'code' => $booking->code
                 ]);
+            } else {
+                $booking->forceDelete();
+                return redirect()->route('that-bai');
             }
         }
     }
@@ -266,15 +267,15 @@ class PaymentController extends Controller
 
         $partnerSignature = hash_hmac("sha256", $rawHash, config('payment.momo.momo_SecretKey'));
         if ($partnerSignature == $request->signature) {
-            $booking = Booking::where('code', $orderCode)->first();
+            $booking = Booking::where('code', '=', $orderCode)->first();
             if ($booking == null) {
                 Log::warning('Booking not found: ' . $orderCode);
             }
             $dataTransaction = [
                 'user_id' => $booking->user_id,
                 'payment_method' => 'vnpay',
-                'amount' => $request->amount / 100,
-                'type' => 'deposit',
+                'amount' => $request->amount,
+                'type' => 'booking',
                 'description' => 'Giao dịch thành công - Đặt vé',
                 'balance_after' => Auth::user()->balance,
                 'status' => Status::COMPLETED
@@ -289,7 +290,7 @@ class PaymentController extends Controller
                         'value' => SeatStatus::AVAILABLE
                     ]);
                 } else {
-                    // $this->updatePoints($booking->total_price);
+                    $this->updatePoints($booking->total_price);
                     auth()->user()->vouchers()->updateExistingPivot($booking->voucher_id, ['deleted_at' => now()]);
                 }
                 $this->transactionService->create($dataTransaction);
@@ -305,14 +306,17 @@ class PaymentController extends Controller
                     'value' => SeatStatus::AVAILABLE
                 ]);
             }
-            $booking->update([
-                'payment_status' => $dataTransaction['status'],
-                'status' => $dataTransaction['status']
-            ]);
             if ($dataTransaction['status'] == Status::COMPLETED) {
-                redirect()->route('thanh-cong', [
+                $booking->update([
+                    'payment_status' => Status::COMPLETED,
+                    'status' => Status::COMPLETED
+                ]);
+                return redirect()->route('thanh-cong', [
                     'code' => $booking->code
                 ]);
+            } else {
+                $booking->forceDelete();
+                return redirect()->route('that-bai');
             }
         }
     }
@@ -370,6 +374,7 @@ class PaymentController extends Controller
 
     public function zaloPayReturn(Request $request)
     {
+        dd($request->all());
         $orderCode = '';
         $return_code = $request->input('return_code');
         $app_trans_id = $request->input('app_trans_id');
@@ -384,7 +389,7 @@ class PaymentController extends Controller
             'user_id' => $booking->user_id,
             'payment_method' => 'vnpay',
             'amount' => $request->amount / 100,
-            'type' => 'deposit',
+            'type' => 'booking',
             'description' => 'Giao dịch thành công - Đặt vé',
             'balance_after' => Auth::user()->balance,
             'status' => Status::COMPLETED
@@ -419,9 +424,16 @@ class PaymentController extends Controller
             'status' => $dataTransaction['status']
         ]);
         if ($dataTransaction['status'] == Status::COMPLETED) {
+            $booking->update([
+                'payment_status' => Status::COMPLETED,
+                'status' => Status::COMPLETED
+            ]);
             return redirect()->route('thanh-cong', [
                 'code' => $booking->code
             ]);
+        } else {
+            $booking->forceDelete();
+            return redirect()->route('that-bai');
         }
     }
 
@@ -433,7 +445,7 @@ class PaymentController extends Controller
             'user_id' => $booking->user_id,
             'payment_method' => 'customer',
             'amount' => $amount,
-            'type' => 'deposit',
+            'type' => 'booking',
             'description' => 'Giao dịch thành công - Đặt vé',
             'balance_after' => $balance_after,
             'status' => Status::COMPLETED
@@ -470,11 +482,14 @@ class PaymentController extends Controller
                 'value' => SeatStatus::AVAILABLE
             ]);
         }
-        $booking->update([
-            'payment_status' => $dataTransaction['status'],
-            'status' => $dataTransaction['status']
-        ]);
-
+        if ($dataTransaction['status'] == Status::COMPLETED) {
+            $booking->update([
+                'payment_status' => Status::COMPLETED,
+                'status' => Status::COMPLETED
+            ]);
+        } else {
+            $booking->forceDelete();
+        }
         return $dataTransaction;
     }
 
@@ -506,14 +521,17 @@ class PaymentController extends Controller
     private function calculatorVoucherPrice($amount, $voucherId)
     {
         $voucher = Voucher::find($voucherId);
+        $discountPrice = 0;
         if ($voucher) {
             if ($voucher->discount_type == 'money') {
-                return $voucher->discount_value;
+                $discountPrice = $voucher->discount_value;
             }
             if ($voucher->discount_type == 'percentage') {
-                return ($amount * $voucher->discount_value) / 100;
+                $discountPrice = ($amount * $voucher->discount_value) / 100;
             }
         }
-        return 0;
+        if ($discountPrice >= $amount) $discountPrice = $amount;
+
+        return $discountPrice;
     }
 }

@@ -28,10 +28,10 @@
             <div class="top-button">
                 <div class="row">
                     <div class="col-md-8 col-sm-7">
-                        {{-- <a class="buy-ticket" href="#"><img class="img-responsive"
-                                src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a> --}}
-                        {{-- <a class="flags" href="#"><img class="img-responsive"
-                                src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a> --}}
+                         <a class="buy-ticket" href="#"><img class="img-responsive"
+                                src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
+                         <a class="flags" href="#"><img class="img-responsive"
+                                src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a>
                         <a class="hidden-lg btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
                         <form action="{{ route('search') }}" class="form-search visible-lg" method="get">
                             <div class="input-group">
@@ -153,10 +153,25 @@
                                     Thành viên
                                 </a>
                             </li>
-                            <li class="">
-                                <a href="{{ route('post.list', 'khuyen-mai') }}">
+                            <li class="dropdown ">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="true" aria-expanded="false">
                                     Ưu đãi - Sự kiện
                                 </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a
+                                            href="{{ route('post.list', 'khuyen-mai') }}">
+                                            Khuyến mãi
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ route('post.list', 'qua-tang') }}">
+                                            Quà tặng
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="">
                                 <a href="{{ route('post.list', 'danh-gia-phim') }}">
@@ -183,7 +198,7 @@
                                     <li>
                                         <a
                                             href="{{ route('post.detail', ['cate_slug' => 'dich-vu', 'slug' => 'bkm-voucher']) }}">
-                                            Touch Voucher
+                                            BKM Voucher
                                         </a>
                                     </li>
                                 </ul>
@@ -270,8 +285,8 @@
 
                 <ul>
                     <li class="menu-item ">
-                        <a href="phim.html">Phim <i class="fa-solid fa-angle-down menu-icon-right"></i></a>
-                        <ul class="submenu">
+                        <a href="{{ route('movie') }}">Phim <i class="fa-solid fa-angle-down menu-icon-right"></i></a>
+                        {{-- <ul class="submenu">
                             <li>
                                 <a href="phim/nha-ba-nu.html">Nhà Bà Nú</a>
                             </li>
@@ -281,44 +296,43 @@
                             <li>
                                 <a href="phim/black-adam.html">Black Adam</a>
                             </li>
-                        </ul>
+                        </ul> --}}
                     </li>
                     <li>
-                        <a href="lich-chieu.html">Lịch chiếu</a>
-
+                        <a href="{{ route('ticket-price') }}">Giá vé</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('post.list', 'thanh-vien') }}">Thành viên</a>
                     </li>
                     <li class="menu-item">
-                        <a href="phim.html">Phim 123 <i class="fa-solid fa-angle-down menu-icon-right"></i></a>
+                        <a href="#">Ưu đãi - sự kiện <i class="fa-solid fa-angle-down menu-icon-right"></i></a>
 
                         <ul class="submenu">
                             <li>
-                                <a href="phim/nha-ba-nu.html">Nhà Bà Nú</a>
+                                <a href="{{ route('post.list', 'khuyen-mai') }}">Khuyến mãi</a>
                             </li>
                             <li>
-                                <a href="phim/avatar-dong-chay-cua-nuoc.html">Avatar 2</a>
-                            </li>
-                            <li>
-                                <a href="phim/black-adam.html">Black Adam</a>
+                                <a href="{{ route('post.list', 'qua-tang') }}">Quà tặng</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="gia-ve.html">giá vé</a>
+                        <a href="{{ route('post.list', 'danh-gia-phim') }}">Đánh giá phim</a>
                     </li>
                     <li>
-                        <a href="thanh-vien.html">Thành viên</a>
+                        <a href="{{ route('about') }}">Giới thiệu</a>
                     </li>
-                    <li>
-                        <a href="khuyen-mai.html">Ưu khôngi - Sự kiện</a>
-                    </li>
-                    <li>
-                        <a href="danh-gia-phim.html">Đánh giá phim</a>
-                    </li>
-                    <li>
-                        <a href="{{ request()->routeIs('about') ? 'active' : '' }}">Giới thiệu</a>
-                    </li>
-                    <li>
-                        <a href="lien-he.html">Lien hệ</a>
+                    <li class="menu-item">
+                        <a href="#">Dịch vụ <i class="fa-solid fa-angle-down menu-icon-right"></i></a>
+
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('post.detail', ['cate_slug' => 'dich-vu', 'slug' => 'quang-cao-su-kien']) }}">Dịch vụ quảng cáo - sự kiện</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('post.detail', ['cate_slug' => 'dich-vu', 'slug' => 'bkm-voucher']) }}">BKM Voucher</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

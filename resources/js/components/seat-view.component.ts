@@ -147,7 +147,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
         voucher_id: this.voucherSelected?.id
       }) as unknown as any;
 
-      if (this.paymentMethod != 'customer') {
+      if (res.payment_url) {
         window.location.href = res.payment_url;
       }
       if (res.status == Status.FAILED) {
@@ -155,17 +155,21 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
           icon: 'warning',
           title: 'Cảnh báo',
           text: 'Lỗi giao dịch hoặc không đủ số dư vui nạp thêm tiền vào tài khoản!',
+        }).then(() => {
+          redirect().to('/')
         });
       }
-      Swal.fire({
-        title: 'Giao dịch thành công.',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      }).then(() => {
-        redirect().to('/thanh-cong', {
-          'code': res.code
+      if (res.status == Status.COMPLETED) {
+        Swal.fire({
+          title: 'Giao dịch thành công.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          redirect().to('/thanh-cong', {
+            'code': res.code
+          });
         });
-      });
+      }
 
     }
 
@@ -200,7 +204,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
         title: 'Cảnh báo',
         text: 'Bạn phải đăng nhập để đặt vé!',
       });
-      redirect().to('/account');
+      redirect().to('/tai-khoan');
     } else {
       $("#seatingArea").removeClass("event-none");
       $("#login").addClass("tw-hidden");
@@ -257,9 +261,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
       });
     }
   },
-  toggleCombo() {
-    $("#tab-combo").toggleClass("slide");
-  },
+  showTabCombo: false,
   countdownTimer(et: string) {
     if (this.interval) {
       clearInterval(this.interval);
@@ -303,7 +305,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   },
   voucherSelected: {} as IVoucher,
   voucherCode: '' as string,
-  voucherNotFound: false,
+  // voucherNotFound: false,
   discountPrice: 0,
   async getVouchers() {
     if (this.vouchers.length > 0) return;
@@ -312,14 +314,16 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   choseVoucher(voucher: IVoucher) {
     if (voucher.id === this.voucherSelected.id) {
       this.voucherSelected = {} as IVoucher;
+      this.discountPrice = 0;
+    } else {
+      this.voucherSelected = { ...voucher };
+      this.discountPrice = this.calculatorVoucherPrice()[this.voucherSelected.discount_type]?.() ?? 0;
     }
-    this.voucherSelected = { ...voucher };
-    this.voucherNotFound = !this.voucherSelected?.name;
-    this.discountPrice = - this.calculatorVoucherPrice()[this.voucherSelected.discount_type]?.() ?? 0;
+    // this.voucherNotFound = !this.voucherSelected?.name;
   },
   async applyVoucher() {
-    this.voucherSelected = await voucherService.getVoucherByCode(this.voucherCode);
-    this.voucherNotFound = !this.voucherSelected?.name;
+    this.voucherSelected = await voucherService.getVoucherByCode(this.voucherCode.toString());
+    // this.voucherNotFound = !this.voucherSelected?.name;
   },
   calculatorVoucherPrice() {
     return {

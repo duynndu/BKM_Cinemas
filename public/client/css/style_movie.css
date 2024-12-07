@@ -8176,7 +8176,7 @@ label:hover:before {
 }
 
 #header .primary-menu .top-button .form-search {
-    width: 200px;
+    width: 284px;
     margin-right: 18px;
     display: inline-block;
     float: right;
@@ -8235,7 +8235,8 @@ label:hover:before {
     width: 34px;
     height: 34px;
     float: none;
-    border-radius: 50%
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 #header .primary-menu .top-button .account ul li a span {
@@ -12654,4 +12655,53 @@ body {
 .col-lg-4.col-md-4.col-sm-4.sidebar {
     position: sticky;
     top: 8%;
+}
+
+
+.text-pink {
+    color: #ff00ba;
+}
+
+.w-65 {
+    width: 65px !important;
+}
+
+.text-yellow-bkm {
+    color: #f29438;
+}
+
+.bg-white {
+    background: #fff !important;
+}
+
+.padding-5 {
+    padding: 80px !important;
+}
+
+.mt-3 {
+    margin-top: 30px !important;
+}
+
+.mt-4 {
+    margin-top: 40px !important;
+}
+
+.mt-5 {
+    margin-top: 50px !important;
+}
+
+.mb-3 {
+    margin-bottom: 30px !important;
+}
+
+.mb-4 {
+    margin-bottom: 40px !important;
+}
+
+.mb-5 {
+    margin-bottom: 50px !important;
+}
+
+.home-banner-imager {
+    width: 100% !important;
 }

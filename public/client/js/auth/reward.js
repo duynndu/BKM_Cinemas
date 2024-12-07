@@ -40,7 +40,7 @@ $(document).ready(function() {
                             $('.reward-tab-tichluydiem').text(response.points + ' điểm');
                             $('.reward-tab-thanhvien').text(response.points + ' điểm');
                             $('.rewardsUser-count').text(response.userRewardsCount);
-
+                            $('.reward-no-item').css('display','none');
                             let bodyModalQuaTang = $('.reward-options-tab-quatang');
                             let html = `
                                 <div class="reward-item">

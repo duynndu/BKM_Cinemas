@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\Admin\LoginRequest;
+use App\Models\User;
 use App\Services\Auth\Admin\Logins\Interfaces\LoginServiceInterface;
 use App\Services\Auth\Admin\Logins\LoginService;
 use Illuminate\Support\Facades\Auth;
@@ -49,9 +50,15 @@ class LoginController extends Controller
                 $request->session()->regenerate();
 
                 if (Auth::user()->isAdminGuard()) {
-                    return redirect()->route('admin.dashboard')->with([
-                        'status_succeed' => 'Xin chào ' . Auth::user()->name . ' đến với hệ thống quản trị'
-                    ]);
+                    if (Auth::user()->type == User::TYPE_STAFF) {
+                        return redirect()->route('admin.orders.index')->with([
+                            'status_succeed' => 'Xin chào ' . Auth::user()->name . ' đến với hệ thống quản trị'
+                        ]);
+                    } else {
+                        return redirect()->route('admin.dashboard')->with([
+                            'status_succeed' => 'Xin chào ' . Auth::user()->name . ' đến với hệ thống quản trị'
+                        ]);
+                    }
                 }
             }
 

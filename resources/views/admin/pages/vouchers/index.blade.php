@@ -137,6 +137,7 @@
                                                     <th>Áp dụng</th>
                                                     <th>Hình ảnh</th>
                                                     <th>Hiệu lực</th>
+                                                    <th>Trạng thái</th>
                                                     <th>Ngày đăng</th>
                                                     <th>Hành động</th>
                                                 </tr>
@@ -228,10 +229,19 @@
                                                                 <p class="text-warning">Chờ phát hành</p>
                                                             </td>
                                                         @else
-                                                            <td>
-                                                                <p class="text-warning">Chờ phát hành</p>
-                                                            </td>
+                                                        <td>
+                                                            <p class="text-warning">Chờ phát hành</p>
+                                                        </td>
                                                         @endif
+                                                        <td>
+                                                            <button
+                                                                class="toggle-active-btn btn btn-xs {{ $voucher->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                data-id="{{ $voucher->id }}"
+                                                                data-status="{{ $voucher->active }}"
+                                                                data-url="{{ route('admin.vouchers.changeActive') }}">
+                                                                {{ $voucher->active == 1 ? 'Hiển thị' : 'Ẩn' }}
+                                                            </button>
+                                                        </td>
 
                                                         <td>
                                                             {{ \Carbon\Carbon::parse($voucher->created_at)->format('d-m-Y') }}

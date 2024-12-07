@@ -86,7 +86,8 @@ export const redirect = (url?: string) => {
   }
 }
 
-export const price = (price: number, currency: string = 'VND') => {
+export const price = (price: any, currency: string = 'VND') => {
+  price = parseInt(price);
   return new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: currency,

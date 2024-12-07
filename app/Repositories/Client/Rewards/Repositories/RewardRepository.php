@@ -30,6 +30,11 @@ class RewardRepository extends BaseRepository implements RewardInterface
         return $this->userRewards->create($request);
     }
 
+    public function getAll()
+    {
+        return $this->model->where('active', 1)->get();
+    }
+
     public function getRewardsByUserId($userId)
     {
         return $this->userRewards->with('reward', 'user')->where('user_id', $userId)->get();

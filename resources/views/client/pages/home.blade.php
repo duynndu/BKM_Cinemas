@@ -3,7 +3,7 @@
 @section('title', 'BKM Cinemas - Rạp chiếu phim 3D công nghệ hàng đầu.')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('client/css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('client/css/home.css') }}">
 @endsection
 
 @section('content')
@@ -149,12 +149,20 @@
                 </div>
             </div>
         </div>
+
+        <section class="mt-3">
+            <div class="row">
+                <div class="col-12 home-banner-imager">
+                    <img src="{{ asset('client/images/mery-banner.jpg') }}" alt="">
+                </div>
+            </div>
+        </section>
     </section>
 
     <section id="home-news">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
                     @if (isset($postPromotion) && !$postPromotion->isEmpty())
                         <div id="promotion">
                             <div class="title">
@@ -164,13 +172,15 @@
                                 @foreach ($postPromotion as $item)
                                     <div class="post-item">
                                         <div class="post-thumbnail">
-                                            <a href="{{ route('post.detail', ['cate_slug' => 'khuyen-mai', 'slug' => $item->slug]) }}">
+                                            <a
+                                                href="{{ route('post.detail', ['cate_slug' => 'khuyen-mai', 'slug' => $item->slug]) }}">
                                                 <img class="img-responsive" src="{{ asset($item->avatar) }}"
                                                     alt="{{ $item->name }}">
                                             </a>
                                         </div>
                                         <h3>
-                                            <a href="{{ route('post.detail', ['cate_slug' => 'khuyen-mai', 'slug' => $item->slug]) }}">
+                                            <a
+                                                href="{{ route('post.detail', ['cate_slug' => 'khuyen-mai', 'slug' => $item->slug]) }}">
                                                 {{ $item->name }}
                                             </a>
                                         </h3>
@@ -226,6 +236,42 @@
                         </div>
                     @endif
                 </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 sidebar">
+                    @if ($postRewards)
+                        <div class="widget-ticket">
+                            <h2>
+                                <img class="w-65" src="{{ asset('client/images/qua-tang.png') }}" alt="Quà tặng">
+                                <span>Quà tặng</span>
+                                <div class="border"></div>
+                            </h2>
+                        </div>
+                        <div class="list">
+                            @foreach ($postRewards->posts as $item)
+                                <a href="{{ route('post.detail', ['cate_slug' => 'qua-tang', 'slug' => $item->slug]) }}">
+                                    <div class="poster">
+                                        <img style="height: 200px;width: 100%;object-fit: cover;" src="{{ asset($item->avatar) }}" alt="">
+                                        <h5 class="text">{{ $item->name }}</h5>
+                                    </div>
+                                </a>
+                                <span style="font-size: 13px;" class="date"><i class="fa-regular fa-clock"></i> {{ $item->created_at->format('d/m/Y') }}</span>
+                                @if ($loop->index == 3)
+                                    @break
+                                @endif
+                            @endforeach
+                        </div>
+                        <div class="related-movie">
+                            @if ($postRewards->count() > 4)
+                                <div class="view-more">
+                                    <a href="{{ route('movie') }}">
+                                        <div class="text-pink">xem thêm</div>
+                                        <div class="arrow-down"></div>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+
             </div>
         </div>
     </section>
@@ -272,8 +318,6 @@
             </div>
         @endforeach
     @endif
-
-
 @endsection
 
 @section('js')

@@ -1,11 +1,11 @@
 @extends('client.layouts.main')
-@section('title', request()->q ?? '')
+@section('title', 'Kết quả Tìm kiếm: ' . request()->k ?? '')
 @section('css')
 @endsection
 
 @section('content')
     <div class="container page-search">
-        <h1>Kết quả Tìm kiếm </h1>
+        <h1>Kết quả Tìm kiếm: {{ request()->k ?? '' }}</h1>
         <section class="page-list-movie">
             <h2 class="title">Phim</h2>
             <div class="tab-content">
