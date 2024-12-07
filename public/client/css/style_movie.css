@@ -8101,7 +8101,7 @@ label:hover:before {
     top: -20px;
     z-index: 9;
     border: 2px solid red;
-    border-radius: 50px;
+    border-radius: 50px !important;
     width: 35px;
     height: 35px;
     margin-top: 0;

@@ -107,7 +107,7 @@
     margin-bottom: 1em;
 }
 
-button:not(.icon), .button:not(.icon) {
+.location-select-button.button {
     border-radius: 9px !important;
 }
 
