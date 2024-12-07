@@ -285,7 +285,7 @@
 
                 <ul>
                     <li class="menu-item ">
-                        <a href="{{ route('movie') }}">Phim <i class="fa-solid fa-angle-down menu-icon-right"></i></a>
+                        <a href="{{ route('movie') }}">Phim</a>
                         {{-- <ul class="submenu">
                             <li>
                                 <a href="phim/nha-ba-nu.html">Nhà Bà Nú</a>

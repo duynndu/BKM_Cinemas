@@ -153,7 +153,7 @@
         <section class="mt-3">
             <div class="row">
                 <div class="col-12 home-banner-imager">
-                    <img src="{{ asset('client/images/mery-banner.jpg') }}" alt="">
+                    <img width="100%" src="{{ asset('client/images/mery-banner.jpg') }}" alt="">
                 </div>
             </div>
         </section>
