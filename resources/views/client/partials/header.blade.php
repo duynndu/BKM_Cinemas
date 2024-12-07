@@ -10,22 +10,11 @@
         <div class="primary-menu">
             <div class="top-button">
                 <div class="row">
-                    <div class="col-md-8 col-sm-7 position-relative">
-                        <div class="select-province">
-                            <div class="dropdown">
-                                <button class="dropdown-btn">Vị trí của bạn <span class="arrow-down"></span></button>
-                                <div class="dropdown-content">
-                                    <a href="#" data-location="ha-noi">HÀ NỘI</a>
-                                    <a href="#" data-location="tp-hue">TP. HUẾ</a>
-                                    <a href="#" data-location="tp-ho-chi-minh">TP. HỒ CHÍ MINH</a>
-                                    <a href="#" data-location="dong-nai">LONG KHÁNH</a>
-                                    <a href="#" data-location="vung-tau">PHÚ MỸ</a>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="flags" href="#">
-                            <img class="img-responsive" src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" />
-                        </a>
+                    <div class="col-md-8 col-sm-7">
+                         <a class="buy-ticket" href="#"><img class="img-responsive"
+                                src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
+                         <a class="flags" href="#"><img class="img-responsive"
+                                src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a>
                         <a class="hidden-lg btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
                         <form action="{{ route('search') }}" class="form-search visible-lg" method="get">
                             <div class="input-group">
@@ -34,7 +23,6 @@
                                 <button type="submit" class="submit"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
-
                     </div>
 
                     <div class="col-md-4 col-sm-5 account">
