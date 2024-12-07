@@ -60,10 +60,10 @@
                         <strong>Độ tuổi:</strong>
                         <span class="age_restricted_wrap">
                             <span class="age age-"></span>
-                            <span class="age_restricted_label" x-text="movie?.age"></span>
+                            <span class="age_restricted_label" x-text="'T'+movie?.age"></span>
                         </span>
                     </p>
-                    <div class="age_restricted"><span x-text="movie?.age"></span></div>
+                    <div class="age_restricted"><span x-text="'T'+movie?.age"></span></div>
                     <div class="group-buton">
                         <a href="#showtime" id="dat-ve"><img src="https://touchcinema.com/images/icons/icon-dat-ve.png"
                                 alt="Đặt vé"> Đặt vé</a>
