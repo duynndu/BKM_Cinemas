@@ -83,8 +83,7 @@
                                         <div class="info">
                                             <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
                                                 Chi tiết
-                                            </a>
-
+                              `              </a>
                                             <a class="button ticket video-play-button" data-toggle="modal"
                                                 href="#modal-trailer-{{ $item->id }}">
                                                 Trailer <img src="https://cdn-icons-png.flaticon.com/512/777/777242.png"
@@ -381,6 +380,6 @@
         });
     });
 
-    
+
 </script>
 @endsection
