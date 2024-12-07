@@ -23,41 +23,141 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Bộ lọc -->
-                @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="card d-flex justify-content-center p-4" style="position: relative; z-index: 99; padding-right: 0;">
-                                <div class="d-flex justify-content-center flex-column">
-                                    <div class="row">
-                                        <h4 class="title text-uppercase mb-3 text-black text-center">Chọn thành phố, khu vực</h4>
-                                    </div>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="d-flex align-items-center">
-                                            <div style="width: 255px;">
-                                                @if($data['cities']->isNotEmpty())
-                                                    <select data-url="{{ route('admin.dashboards.getAreaByCity') }}" class="select2-with-label-multiple w-100" name="city_id" id="city_id">
-                                                        <option value="">-- Chọn thành phố --</option>
-                                                        @foreach($data['cities'] as $key => $city)
-                                                            <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                                        @endforeach
+                <form id="revenueAndTicketForm"
+                  action="{{ route('admin.dashboards.getRevenueAndTicketData') }}"
+                  method="post">
+                    @csrf
+                    <!-- Bộ lọc -->
+                    @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="card d-flex justify-content-center p-4" style="position: relative; z-index: 99; padding-right: 0;">
+                                    <div class="d-flex justify-content-center flex-column">
+                                        <div class="row">
+                                            <h4 class="title text-uppercase mb-3 text-black text-center">Chọn thành phố, khu vực</h4>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="d-flex align-items-center">
+                                                <div style="width: 255px;">
+                                                    @if($data['cities']->isNotEmpty())
+                                                        <select data-url="{{ route('admin.dashboards.getAreaByCity') }}" class="select2-with-label-multiple w-100" name="city_id" id="city_id">
+                                                            <option value="">-- Chọn thành phố --</option>
+                                                            @foreach($data['cities'] as $key => $city)
+                                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    @endif
+                                                </div>
+                                                <div style="width: 255px;margin-left: 20px;">
+                                                    <select data-url="{{ route('admin.dashboards.getCinemaByArea') }}" class="select2-with-label-multiple" name="area_id" id="area_id">
+                                                        <option value="">-- Chọn khu vực --</option>
                                                     </select>
-                                                @endif
-                                            </div>
-                                            <div style="width: 255px;margin-left: 20px;">
-                                                <select data-url="{{ route('admin.dashboards.getCinemaByArea') }}" class="select2-with-label-multiple" name="area_id" id="area_id">
-                                                    <option value="">-- Chọn khu vực --</option>
-                                                </select>
+                                                </div>
+                                                <div class="row">
+                                                    @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
+                                                        <div class="col" style="margin-left: 20px;width: 255px;">
+                                                            <select class="select2-with-label-multiple" name="cinema_id" id="cinema_id">
+                                                                <option value="">-- Chọn rạp --</option>
+                                                            </select>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endif
+                    @endif
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="page-titles" style="position: relative; z-index: 99;">
+                                <div class="card-header pb-0 border-0 flex-wrap">
+                                    <div class="d-flex align-items-center mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="row">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <select class="select2" name="filter" id="filter">
+                                                                    <option value="">-- Tất cả --</option>
+                                                                    <option value="day">Thống kê theo ngày</option>
+                                                                    <option value="month">Thống kê theo tháng</option>
+                                                                    <option value="year">Thống kê theo năm</option>
+                                                                    <option value="range">Thống kê theo khoảng thời gian</option>
+                                                                </select>
+                                                            </div>
 
+                                                            <!-- Lọc theo ngày cụ thể -->
+                                                            <div class="col" id="dayFilter" style="display: none;">
+                                                                <input type="date" id="dateFilter" name="date" class="form-control" max="{{ \Carbon\Carbon::today()->toDateString() }}">
+                                                            </div>
+
+                                                            <div class="col" id="monthFilter" style="display: none;">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div style="margin-right: 20px;">
+                                                                        <select id="monthSelect" class="select2"
+                                                                                name="month">
+                                                                            <option value="">-- Chọn tháng --</option>
+                                                                            @for ($i = 1; $i <= 12; $i++)
+                                                                                <option value="{{ $i }}">Tháng
+                                                                                    {{ $i }}</option>
+                                                                            @endfor
+                                                                        </select>
+                                                                    </div>
+                                                                    <div>
+                                                                        <select id="yearSelect" class="select2"
+                                                                                name="yearMonth">
+                                                                            <option value="">-- Chọn năm --</option>
+                                                                            @for ($i = \Carbon\Carbon::now()->year; $i >= 2000; $i--)
+                                                                                <option value="{{ $i }}">
+                                                                                    {{ $i }}
+                                                                                </option>
+                                                                            @endfor
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Lọc theo năm -->
+                                                            <div class="col" id="yearFilter" style="display: none;">
+                                                                <select id="yearSelect2" class="select2" name="year_filter">
+                                                                    <option value="">-- Chọn Năm --</option>
+                                                                    @for ($i = \Carbon\Carbon::now()->year; $i >= 2000; $i--)
+                                                                        <option value="{{ $i }}">
+                                                                            {{ $i }}
+                                                                        </option>
+                                                                    @endfor
+                                                                </select>
+                                                            </div>
+
+
+                                                            <!-- Lọc theo khoảng thời gian -->
+                                                            <div class="col" id="rangeFilter" style="display: none;">
+                                                                <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="start_date" class="form-control"
+                                                                       id="start_date">
+                                                            </div>
+
+                                                            <div class="col" id="rangeFilterEnd" style="display: none;">
+                                                                <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="end_date" class="form-control"
+                                                                       id="end_date">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" style="margin-left: 20px">
+                                                    <div class="col text-end">
+                                                        <button type="button" class="btn btn-primary"
+                                                                id="btnFilter">Lọc</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
                 <div class="row">
                     <div class="col-6">
                         <div class="swiper-slide">
@@ -85,9 +185,9 @@
                                             <i class="la la-film"></i>
                                         </span>
                                         <div class="media-body text-white">
-                                            <p class="mb-1 text-white">TOP 1 bộ phim có doanh thu cao nhất</p>
+                                            <p class="mb-1 text-white">Bộ phim có doanh thu và số vé cao nhất</p>
                                             <div style="max-width: 550px">
-                                                <h4 class="text-white total-revenue">{{ !empty($data['top1Movie']->total_tickets) ? $data['top1Movie']->title : 'Chưa có dữ liệu' }}</h4>
+                                                <h4 class="text-white total-revenue" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: inline-block;width: 400px;">{{ !empty($data['top1Movie']->total_tickets) ? $data['top1Movie']->title : 'Chưa có dữ liệu' }}</h4>
                                             </div>
                                             <h5 class="text-white">Doanh thu: {{ !empty($data['top1Movie']->total_revenue) ? number_format($data['top1Movie']->total_revenue, 0, ',', '.') : 0 }} VNĐ | Số vé: {{ !empty($data['top1Movie']->total_tickets) ? $data['top1Movie']->total_tickets : 0 }}</h5>
                                         </div>
@@ -288,107 +388,6 @@
                                             </p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="page-titles" style="position: relative; z-index: 2;">
-                            <div class="card-header pb-0 border-0 flex-wrap">
-                                <div class="d-flex align-items-center mb-3">
-                                    <form id="revenueAndTicketForm"
-                                          action="{{ route('admin.dashboards.getRevenueAndTicketData') }}"
-                                          method="post">
-                                        @csrf
-                                        <div class="d-flex align-items-center">
-                                            <div class="row">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <select class="select2" name="filter" id="filter">
-                                                                <option value="">-- Tất cả --</option>
-                                                                <option value="day">Thống kê theo ngày</option>
-                                                                <option value="month">Thống kê theo tháng</option>
-                                                                <option value="year">Thống kê theo năm</option>
-                                                                <option value="range">Thống kê theo khoảng thời gian</option>
-                                                            </select>
-                                                        </div>
-
-                                                        <!-- Lọc theo ngày cụ thể -->
-                                                        <div class="col" id="dayFilter" style="display: none;">
-                                                            <input type="date" id="dateFilter" name="date" class="form-control" max="{{ \Carbon\Carbon::today()->toDateString() }}">
-                                                        </div>
-
-                                                        <div class="col" id="monthFilter" style="display: none;">
-                                                            <div class="d-flex align-items-center">
-                                                                <div style="margin-right: 20px;">
-                                                                    <select id="monthSelect" class="select2"
-                                                                            name="month">
-                                                                        <option value="">-- Chọn tháng --</option>
-                                                                        @for ($i = 1; $i <= 12; $i++)
-                                                                            <option value="{{ $i }}">Tháng
-                                                                                {{ $i }}</option>
-                                                                        @endfor
-                                                                    </select>
-                                                                </div>
-                                                                <div>
-                                                                    <select id="yearSelect" class="select2"
-                                                                            name="yearMonth">
-                                                                        <option value="">-- Chọn năm --</option>
-                                                                        @for ($i = 2000; $i <= \Carbon\Carbon::now()->year; $i++)
-                                                                            <option value="{{ $i }}">
-                                                                                {{ $i }}</option>
-                                                                        @endfor
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Lọc theo năm -->
-                                                        <div class="col" id="yearFilter" style="display: none;">
-                                                            <select id="yearSelect2" class="select2" name="year_filter">
-                                                                <option value="">-- Chọn Năm --</option>
-                                                                @for ($i = 2000; $i <= \Carbon\Carbon::now()->year; $i++)
-                                                                    <option value="{{ $i }}">
-                                                                        {{ $i }}</option>
-                                                                @endfor
-                                                            </select>
-                                                        </div>
-
-                                                        <!-- Lọc theo khoảng thời gian -->
-                                                        <div class="col" id="rangeFilter" style="display: none;">
-                                                            <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="start_date" class="form-control"
-                                                                   id="start_date">
-                                                        </div>
-
-                                                        <div class="col" id="rangeFilterEnd" style="display: none;">
-                                                            <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="end_date" class="form-control"
-                                                                   id="end_date">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
-                                                            <div class="col" style="margin-left: 20px;width: 255px;">
-                                                                <select class="select2-with-label-multiple" name="cinema_id" id="cinema_id">
-                                                                    <option value="">-- Chọn rạp --</option>
-                                                                </select>
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row" style="margin-left: 20px">
-                                                <div class="col text-end">
-                                                    <button type="button" class="btn btn-primary"
-                                                            id="btnFilter">Lọc</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
