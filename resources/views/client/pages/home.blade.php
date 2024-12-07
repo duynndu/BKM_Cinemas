@@ -19,19 +19,15 @@
                         <a href="#" data-location="ha-noi" class="button secondary location-select-button">
                             <span>BKM Cinema<br>Hà Nội</span>
                         </a>
-                        <a href="#" data-location="tp-hue"
-                            class="button secondary location-select-button">
+                        <a href="#" data-location="tp-hue" class="button secondary location-select-button">
                             <span>BKM Cinema<br>TP. Huế</span>
                         </a>
-                        <a href="#"
-                               data-location="tp-ho-chi-minh" class="button secondary location-select-button">
+                        <a href="#" data-location="tp-ho-chi-minh" class="button secondary location-select-button">
                             <span>BKM Cinema<br>TP. Hồ Chí Minh</span>
                         </a>
-                        <a href="#" data-location="dong-nai"
-                               class="button secondary location-select-button">
+                        <a href="#" data-location="dong-nai" class="button secondary location-select-button">
                             <span>BKM Cinema<br>Long Khánh</span> </a>
-                        <a href="#" data-location="vung-tau"
-                            class="button secondary location-select-button">
+                        <a href="#" data-location="vung-tau" class="button secondary location-select-button">
                             <span>BKM Cinema<br>Phú Mỹ</span>
                         </a>
                     </div>
@@ -82,17 +78,16 @@
                                     <div class="poster">
                                         <a href="{{ route('movie.detail', $item->slug) }}">
                                             <img class="img-responsive" src="{{ asset($item->image) }}"
-                                                 alt="{{ $item->title }}">
+                                                alt="{{ $item->title }}">
                                         </a>
                                         <div class="info">
                                             <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
                                                 Chi tiết
-                                            </a>
-
+                              `              </a>
                                             <a class="button ticket video-play-button" data-toggle="modal"
-                                               href="#modal-trailer-{{ $item->id }}">
+                                                href="#modal-trailer-{{ $item->id }}">
                                                 Trailer <img src="https://cdn-icons-png.flaticon.com/512/777/777242.png"
-                                                             alt="Trailer">
+                                                    alt="Trailer">
                                             </a>
                                             <p class="button duration">
                                                 <b>Thời lượng: </b>
@@ -135,7 +130,7 @@
                                     <div class="poster">
                                         <a href="{{ route('movie.detail', $item->slug) }}">
                                             <img class="img-responsive" src="{{ asset($item->image) }}"
-                                                 alt="{{ $item->title }}">
+                                                alt="{{ $item->title }}">
                                         </a>
                                         <div class="info">
                                             <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
@@ -143,9 +138,9 @@
                                             </a>
 
                                             <a class="button ticket video-play-button" data-toggle="modal"
-                                               href="#modal-trailer-{{ $item->id }}">
+                                                href="#modal-trailer-{{ $item->id }}">
                                                 Trailer <img src="https://cdn-icons-png.flaticon.com/512/777/777242.png"
-                                                             alt="Trailer">
+                                                    alt="Trailer">
                                             </a>
                                             <p class="button duration">
                                                 <b>Thời lượng: </b>
@@ -208,7 +203,7 @@
                                             <a
                                                 href="{{ route('post.detail', ['cate_slug' => 'khuyen-mai', 'slug' => $item->slug]) }}">
                                                 <img class="img-responsive" src="{{ asset($item->avatar) }}"
-                                                     alt="{{ $item->name }}">
+                                                    alt="{{ $item->name }}">
                                             </a>
                                         </div>
                                         <h3>
@@ -245,8 +240,8 @@
                                                         <a
                                                             href="{{ route('post.detail', ['cate_slug' => 'danh-gia-phim', 'slug' => $childitem->slug]) }}">
                                                             <img class="img-responsive"
-                                                                 src="{{ asset($childitem->avatar) }}"
-                                                                 alt="Review phim Con lắc tà thuật – The Hypnosis">
+                                                                src="{{ asset($childitem->avatar) }}"
+                                                                alt="Review phim Con lắc tà thuật – The Hypnosis">
                                                         </a>
                                                     </div>
                                                     <div class="post-detail">
@@ -283,99 +278,108 @@
                                 <a href="{{ route('post.detail', ['cate_slug' => 'qua-tang', 'slug' => $item->slug]) }}">
                                     <div class="poster">
                                         <img style="height: 200px;width: 100%;object-fit: cover;"
-                                             src="{{ asset($item->avatar) }}" alt="">
+                                            src="{{ asset($item->avatar) }}" alt="">
                                         <h5 class="text">{{ $item->name }}</h5>
                                     </div>
                                 </a>
-                                <span style="font-size: 13px;" class="date"><i class="fa-regular fa-clock"></i> {{ $item->created_at->format('d/m/Y') }}</span>
+                                <span style="font-size: 13px;" class="date"><i class="fa-regular fa-clock"></i>
+                                    {{ $item->created_at->format('d/m/Y') }}</span>
                                 @if ($loop->index == 3)
-                                    @break
-                                @endif
-                            @endforeach
-                        </div>
-                        <div class="related-movie">
-                            @if ($postRewards->count() > 4)
-                                <div class="view-more">
-                                    <a href="{{ route('movie') }}">
-                                        <div class="text-pink">xem thêm</div>
-                                        <div class="arrow-down"></div>
-                                    </a>
-                                </div>
+                                @break
                             @endif
-                        </div>
-                    @endif
-                </div>
+                        @endforeach
+                    </div>
+                    <div class="related-movie">
+                        @if ($postRewards->count() > 4)
+                            <div class="view-more">
+                                <a href="{{ route('movie') }}">
+                                    <div class="text-pink">xem thêm</div>
+                                    <div class="arrow-down"></div>
+                                </a>
+                            </div>
+                        @endif
+                    </div>
+                @endif
+            </div>
 
+        </div>
+    </div>
+</section>
+
+{{-- modal trailer --}}
+@if (isset($movieIsShowing) && $movieIsShowing->count() > 0)
+    @foreach ($movieIsShowing as $isShowing)
+        <div class="modal fade" id="modal-trailer-{{ $isShowing->id }}" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            onclick="closeModal({{ $isShowing->id }})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="video-container">
+                            <iframe id="iframe-trailer-{{ $isShowing->id }}" src="{{ $isShowing->trailer_url }}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    @endforeach
+@endif
 
-    {{-- modal trailer --}}
-    @if (isset($movieIsShowing) && $movieIsShowing->count() > 0)
-        @foreach ($movieIsShowing as $isShowing)
-            <div class="modal fade in" id="modal-trailer-{{ $isShowing->id }}" style="display: none;">
-                <div class="modal-dialog modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" title="Đóng"
-                                    aria-hidden="true">×
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="video-container video-trailer--home">
-                                <iframe src="{{ $isShowing->trailer_url }}" frameborder="0"></iframe>
-                            </div>
+@if (isset($upComingMovie) && $upComingMovie->count() > 0)
+    @foreach ($upComingMovie as $coming)
+        <div class="modal fade in" id="modal-trailer-{{ $coming->id }}" style="display: none;">
+            <div class="modal-dialog modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="closeModal({{ $coming->id }})"
+                            data-dismiss="modal" title="Đóng" aria-hidden="true">×
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="video-container video-trailer--home">
+                            <iframe id="iframe-trailer-{{ $coming->id }}" src="{{ $coming->trailer_url }}"
+                                frameborder="0"></iframe>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
-    @endif
-
-    @if (isset($upComingMovie) && $upComingMovie->count() > 0)
-        @foreach ($upComingMovie as $coming)
-            <div class="modal fade in" id="modal-trailer-{{ $coming->id }}" style="display: none;">
-                <div class="modal-dialog modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" title="Đóng"
-                                    aria-hidden="true">×
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="video-container video-trailer--home">
-                                <iframe src="{{ $coming->trailer_url }}" frameborder="0"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endif
+        </div>
+    @endforeach
+@endif
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function () {
-            const locationKey = "selectedCinemaLocation";
-            function checkLocation() {
-                const selectedLocation = sessionStorage.getItem(locationKey);
-                if (!selectedLocation) {
-                    $(".mfp-wrap").fadeIn();
-                    $(".mfp-bg").fadeIn();
-                }
-            }
-            checkLocation();
-            $(".location-select-button").on("click", function (e) {
-                e.preventDefault();
-                const location = $(this).data("location");
-                if (location) {
-                    sessionStorage.setItem(locationKey, location);
-                    $(".mfp-wrap").fadeOut();
-                    $(".mfp-bg").fadeOut();
-                }
-            });
-        });
+<script>
+    $(document).ready(function() {
+        const locationKey = "selectedCinemaLocation";
 
-    </script>
+        function checkLocation() {
+            const selectedLocation = sessionStorage.getItem(locationKey);
+            if (!selectedLocation) {
+                $(".mfp-wrap").fadeIn();
+                $(".mfp-bg").fadeIn();
+            }
+        }
+        checkLocation();
+        $(".location-select-button").on("click", function(e) {
+            e.preventDefault();
+            const location = $(this).data("location");
+            if (location) {
+                sessionStorage.setItem(locationKey, location);
+                $(".mfp-wrap").fadeOut();
+                $(".mfp-bg").fadeOut();
+            }
+        });
+    });
+
+
+</script>
 @endsection
