@@ -4,42 +4,9 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('client/css/home.css') }}">
-    <link rel="stylesheet" href="{{ asset('client/css/modal-province.css') }}">
 @endsection
 
 @section('content')
-    <div class="mfp-bg mfp-ready"></div>
-    <div class="mfp-wrap mfp-auto-cursor mfp-ready">
-        <div class="mfp-container mfp-s-ready mfp-inline-holder">
-            <div class="mfp-content">
-                <div id="locationSelect" class="lightbox-by-id lightbox-content lightbox-white">
-                    <h2 class="text-center is-xlarge">Chào mừng quý khách đến với BKM Cinema</h2>
-                    <div id="gap-1650087948" class="gap-element clearfix"></div>
-                    <div class="text-center">
-                        <a href="#" data-location="ha-noi" class="button secondary location-select-button">
-                            <span>BKM Cinema<br>Hà Nội</span>
-                        </a>
-                        <a href="#" data-location="tp-hue"
-                            class="button secondary location-select-button">
-                            <span>BKM Cinema<br>TP. Huế</span>
-                        </a>
-                        <a href="#"
-                               data-location="tp-ho-chi-minh" class="button secondary location-select-button">
-                            <span>BKM Cinema<br>TP. Hồ Chí Minh</span>
-                        </a>
-                        <a href="#" data-location="dong-nai"
-                               class="button secondary location-select-button">
-                            <span>BKM Cinema<br>Long Khánh</span> </a>
-                        <a href="#" data-location="vung-tau"
-                            class="button secondary location-select-button">
-                            <span>BKM Cinema<br>Phú Mỹ</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="mfp-preloader">Loading...</div>
-        </div>
-    </div>
     @if (isset($sliders) && $sliders->count() > 0)
         <section>
             <div id="main-slider" class="owl-carousel">
@@ -355,27 +322,4 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function () {
-            const locationKey = "selectedCinemaLocation";
-            function checkLocation() {
-                const selectedLocation = sessionStorage.getItem(locationKey);
-                if (!selectedLocation) {
-                    $(".mfp-wrap").fadeIn();
-                    $(".mfp-bg").fadeIn();
-                }
-            }
-            checkLocation();
-            $(".location-select-button").on("click", function (e) {
-                e.preventDefault();
-                const location = $(this).data("location");
-                if (location) {
-                    sessionStorage.setItem(locationKey, location);
-                    $(".mfp-wrap").fadeOut();
-                    $(".mfp-bg").fadeOut();
-                }
-            });
-        });
-
-    </script>
 @endsection
