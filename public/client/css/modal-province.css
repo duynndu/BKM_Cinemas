@@ -107,7 +107,7 @@
     margin-bottom: 1em;
 }
 
-input[type='submit'], input[type="button"], button:not(.icon), .button:not(.icon) {
+button:not(.icon), .button:not(.icon) {
     border-radius: 9px !important;
 }
 
@@ -166,13 +166,103 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     display: none;
 }
 
-.button.secondary:not(.is-outline):hover {
-    color: #fff;
-    background: linear-gradient(45deg, #ef5454, #ff7600) !important;
-    border: 1px solid #fff;
-}
-
 .mfp-wrap,
 .mfp-bg {
     display: none;
+}
+
+.del-item-notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    font-size: 10px;
+    border-radius: 50%;
+    background-color: #EA3B82;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.del-item-notification:hover {
+    background-color: #EA3B82;
+}
+
+.select-province {
+    position: absolute;
+    z-index: 99;
+}
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Button styling */
+.dropdown-btn {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    background: transparent;
+    border: 1px solid #e03c8a;
+    color: #fff;
+}
+
+.dropdown-btn:hover {
+    background-color: #e03c8a;
+    color: #fff;
+    border: 1px solid #e03c8a;
+}
+
+.dropdown-btn .arrow-down {
+    margin-left: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 4px;
+    transform: rotate(45deg);
+}
+
+/* Dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(10, 10, 10, 0.4);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    z-index: 1;
+    min-width: 200px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Dropdown content links */
+.dropdown-content a {
+    color: #fff; /* Màu chữ */
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.dropdown-content a:hover {
+    background-color: #e03c8a;
+    color: white;
+}
+
+/* Show dropdown on button hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.button.secondary:not(.is-outline):hover {
+    background-color: #e03c8a !important;
+    color: white;
+    border: 1px solid #e03c8a;
 }
