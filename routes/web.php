@@ -141,9 +141,9 @@ Route::get('/phim/{slug}', [MovieDetailController::class, 'movieDetail'])->name(
 Route::get('/gioi-thieu', [AboutController::class, 'index'])->name('about');
 Route::get('/gia-ve', [TicketPriceController::class, 'index'])->name('ticket-price');
 
-// Route::get('/lich-chieu', function () {
-//     return view('client.pages.showtime');
-// });
+Route::get('/lich-chieu', function () {
+    return view('client.pages.showtime');
+});
 
 Route::get('/dat-ve/{showtime}', function (Showtime $showtime) {
     $userId = optional(auth()->user())->id;
