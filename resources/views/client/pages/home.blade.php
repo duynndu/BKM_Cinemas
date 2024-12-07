@@ -4,9 +4,42 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('client/css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('client/css/modal-province.css') }}">
 @endsection
 
 @section('content')
+    <div class="mfp-bg mfp-ready"></div>
+    <div class="mfp-wrap mfp-auto-cursor mfp-ready">
+        <div class="mfp-container mfp-s-ready mfp-inline-holder">
+            <div class="mfp-content">
+                <div id="locationSelect" class="lightbox-by-id lightbox-content lightbox-white">
+                    <h2 class="text-center is-xlarge">Chào mừng quý khách đến với BKM Cinema</h2>
+                    <div id="gap-1650087948" class="gap-element clearfix"></div>
+                    <div class="text-center">
+                        <a href="#" data-location="ha-noi" class="button secondary location-select-button">
+                            <span>BKM Cinema<br>Hà Nội</span>
+                        </a>
+                        <a href="#" data-location="tp-hue"
+                            class="button secondary location-select-button">
+                            <span>BKM Cinema<br>TP. Huế</span>
+                        </a>
+                        <a href="#"
+                               data-location="tp-ho-chi-minh" class="button secondary location-select-button">
+                            <span>BKM Cinema<br>TP. Hồ Chí Minh</span>
+                        </a>
+                        <a href="#" data-location="dong-nai"
+                               class="button secondary location-select-button">
+                            <span>BKM Cinema<br>Long Khánh</span> </a>
+                        <a href="#" data-location="vung-tau"
+                            class="button secondary location-select-button">
+                            <span>BKM Cinema<br>Phú Mỹ</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mfp-preloader">Loading...</div>
+        </div>
+    </div>
     @if (isset($sliders) && $sliders->count() > 0)
         <section>
             <div id="main-slider" class="owl-carousel">
@@ -49,7 +82,7 @@
                                     <div class="poster">
                                         <a href="{{ route('movie.detail', $item->slug) }}">
                                             <img class="img-responsive" src="{{ asset($item->image) }}"
-                                                alt="{{ $item->title }}">
+                                                 alt="{{ $item->title }}">
                                         </a>
                                         <div class="info">
                                             <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
@@ -57,9 +90,9 @@
                                             </a>
 
                                             <a class="button ticket video-play-button" data-toggle="modal"
-                                                href="#modal-trailer-{{ $item->id }}">
+                                               href="#modal-trailer-{{ $item->id }}">
                                                 Trailer <img src="https://cdn-icons-png.flaticon.com/512/777/777242.png"
-                                                    alt="Trailer">
+                                                             alt="Trailer">
                                             </a>
                                             <p class="button duration">
                                                 <b>Thời lượng: </b>
@@ -102,7 +135,7 @@
                                     <div class="poster">
                                         <a href="{{ route('movie.detail', $item->slug) }}">
                                             <img class="img-responsive" src="{{ asset($item->image) }}"
-                                                alt="{{ $item->title }}">
+                                                 alt="{{ $item->title }}">
                                         </a>
                                         <div class="info">
                                             <a href="{{ route('movie.detail', $item->slug) }}" class="button detail">
@@ -110,9 +143,9 @@
                                             </a>
 
                                             <a class="button ticket video-play-button" data-toggle="modal"
-                                                href="#modal-trailer-{{ $item->id }}">
+                                               href="#modal-trailer-{{ $item->id }}">
                                                 Trailer <img src="https://cdn-icons-png.flaticon.com/512/777/777242.png"
-                                                    alt="Trailer">
+                                                             alt="Trailer">
                                             </a>
                                             <p class="button duration">
                                                 <b>Thời lượng: </b>
@@ -175,7 +208,7 @@
                                             <a
                                                 href="{{ route('post.detail', ['cate_slug' => 'khuyen-mai', 'slug' => $item->slug]) }}">
                                                 <img class="img-responsive" src="{{ asset($item->avatar) }}"
-                                                    alt="{{ $item->name }}">
+                                                     alt="{{ $item->name }}">
                                             </a>
                                         </div>
                                         <h3>
@@ -212,8 +245,8 @@
                                                         <a
                                                             href="{{ route('post.detail', ['cate_slug' => 'danh-gia-phim', 'slug' => $childitem->slug]) }}">
                                                             <img class="img-responsive"
-                                                                src="{{ asset($childitem->avatar) }}"
-                                                                alt="Review phim Con lắc tà thuật – The Hypnosis">
+                                                                 src="{{ asset($childitem->avatar) }}"
+                                                                 alt="Review phim Con lắc tà thuật – The Hypnosis">
                                                         </a>
                                                     </div>
                                                     <div class="post-detail">
@@ -249,7 +282,8 @@
                             @foreach ($postRewards->posts as $item)
                                 <a href="{{ route('post.detail', ['cate_slug' => 'qua-tang', 'slug' => $item->slug]) }}">
                                     <div class="poster">
-                                        <img style="height: 200px;width: 100%;object-fit: cover;" src="{{ asset($item->avatar) }}" alt="">
+                                        <img style="height: 200px;width: 100%;object-fit: cover;"
+                                             src="{{ asset($item->avatar) }}" alt="">
                                         <h5 class="text">{{ $item->name }}</h5>
                                     </div>
                                 </a>
@@ -284,7 +318,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" title="Đóng"
-                                aria-hidden="true">×
+                                    aria-hidden="true">×
                             </button>
                         </div>
                         <div class="modal-body">
@@ -305,7 +339,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" title="Đóng"
-                                aria-hidden="true">×
+                                    aria-hidden="true">×
                             </button>
                         </div>
                         <div class="modal-body">
@@ -321,4 +355,27 @@
 @endsection
 
 @section('js')
+    <script>
+        $(document).ready(function () {
+            const locationKey = "selectedCinemaLocation";
+            function checkLocation() {
+                const selectedLocation = sessionStorage.getItem(locationKey);
+                if (!selectedLocation) {
+                    $(".mfp-wrap").fadeIn();
+                    $(".mfp-bg").fadeIn();
+                }
+            }
+            checkLocation();
+            $(".location-select-button").on("click", function (e) {
+                e.preventDefault();
+                const location = $(this).data("location");
+                if (location) {
+                    sessionStorage.setItem(locationKey, location);
+                    $(".mfp-wrap").fadeOut();
+                    $(".mfp-bg").fadeOut();
+                }
+            });
+        });
+
+    </script>
 @endsection
