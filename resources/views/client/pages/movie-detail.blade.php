@@ -167,7 +167,7 @@
         </div>
         <div class="modal fade in" id="modal-trailer" style="display: none;">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content" style="width: 100%;">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" title="Đóng"
                             aria-hidden="true">×</button>
