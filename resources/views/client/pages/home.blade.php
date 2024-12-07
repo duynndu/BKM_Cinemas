@@ -319,6 +319,7 @@
             </div>
         @endforeach
     @endif
+
 @endsection
 
 @section('js')
@@ -343,6 +344,5 @@
                 }
             });
         });
-
     </script>
 @endsection
