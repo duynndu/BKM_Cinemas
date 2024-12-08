@@ -42,9 +42,9 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-3 col-sm-6">
-                                    <label class="form-label">Tên chức năng</label>
+                                    <label class="form-label">Tên người dùng</label>
                                     <input id="name" value="{{ request()->name }}" name="name" type="text"
-                                        class="form-control mb-xl-0 mb-3" placeholder="Nhập tên chức năng">
+                                        class="form-control mb-xl-0 mb-3" placeholder="Nhập tên người dùng">
                                 </div>
 
                                 @if (auth()->user()->type == \App\Models\User::TYPE_ADMIN)
@@ -119,7 +119,11 @@
                                                     @if (!empty($user->cinema->name))
                                                         <b>Rạp: {{ $user->cinema->name ?? '' }}</b>
                                                     @else
-                                                        <p>{{ $user->type == 'admin' ? 'Super Admin' : '' }}</p>
+                                                        <p>
+                                                            @if ($user->type == 'admin')
+                                                                Quản trị hệ thống
+                                                            @endif
+                                                        </p>
                                                     @endif
                                                 </div>
                                             </div>

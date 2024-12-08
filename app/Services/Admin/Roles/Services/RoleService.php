@@ -35,6 +35,7 @@ class RoleService extends BaseService implements RoleServiceInterface
             'type' => $data['role']['type'],
             'description' => $data['role']['description'],
             'user_id' => $user->id,
+            'image' => $data['role']['image'] ?: null
         ];
 
         $role = $this->repository->create($dataCreate);
@@ -60,6 +61,8 @@ class RoleService extends BaseService implements RoleServiceInterface
             }
             $uploadData = $this->uploadFile($data['role']['image'], 'public/roles');
             $data['role']['image'] = $uploadData['path'];
+        } else {
+            $data['role']['image'] = $role->image;
         }
 
         $user = auth()->user();
@@ -69,6 +72,7 @@ class RoleService extends BaseService implements RoleServiceInterface
                 'type' => $data['role']['type'],
                 'description' => $data['role']['description'],
                 'user_id' => $user->id,
+                'image' => $data['role']['image']
             ];
         } else {
             $dataUpdate = [
@@ -76,12 +80,13 @@ class RoleService extends BaseService implements RoleServiceInterface
                 'type' => $data['role']['type'],
                 'description' => $data['role']['description'],
                 'user_id' => null,
+                'image' => $data['role']['image']
             ];
         }
 
         $this->repository->update($id, $dataUpdate);
 
-        if (is_array($data['permissions'])) {
+        if (!empty($data['permissions']) && is_array($data['permissions'])) {
             $currentPermissions = $role->permissions->pluck('id')->toArray();
 
             $newPermissions = $data['permissions'];

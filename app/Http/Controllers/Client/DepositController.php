@@ -145,7 +145,7 @@ class DepositController extends Controller
 
                     $membershipLevel = Auth::user()->membership_level;
 
-                    if ($amount >= 50000 && Auth::user()->is_new_member === 1) {
+                    if ($amount == 50000 && Auth::user()->is_new_member === 1) {
                         $expIncrement = 150;
                         $data['is_new_member'] = 0;
                     } else {
@@ -325,7 +325,7 @@ class DepositController extends Controller
 
                     $membershipLevel = Auth::user()->membership_level;
 
-                    if ($amount >= 50000 && Auth::user()->is_new_member === 1) {
+                    if ($amount == 50000 && Auth::user()->is_new_member === 1) {
                         $expIncrement = 150;
                         $data['is_new_member'] = 0;
                     } else {
@@ -512,7 +512,7 @@ class DepositController extends Controller
 
                 $membershipLevel = Auth::user()->membership_level;
 
-                if ($amount >= 50000 && Auth::user()->is_new_member === 1) {
+                if ($amount == 50000 && Auth::user()->is_new_member === 1) {
                     $expIncrement = 150;
                     $data['is_new_member'] = 0;
                 } else {

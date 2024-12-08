@@ -14,6 +14,10 @@ class MovieDetailController extends Controller
     public function __construct() {}
     public function movieDetail($slug)
     {
+        if (!$this->movieService->findMovieByslug($slug)) {
+            return view('error.client.404');
+        }
+        
         $now = Carbon::now();
         $movies = Movie::where('active', 1)
             ->where('release_date', '>=', $now)
