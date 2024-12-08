@@ -18,7 +18,7 @@
                 }">
                 <div class="overlay"></div>
                 <div class="trailer">
-                    <a class="video-play-button" data-toggle="modal" href="#modal-trailer"><span></span></a>
+                    <a @click="controlVideo(true)" class="video-play-button" data-toggle="modal" href="#modal-trailer"><span></span></a>
                 </div>
             </div>
             <div class="movie-detail">
@@ -27,7 +27,7 @@
                 </div>
                 <div class="movie-info">
                     <div class="movie-name">
-                        <a href="https://touchcinema.com/phim/con-cam">
+                        <a href="#">
                             <h1 x-text="movie?.title"></h1>
                         </a>
                         <h2></h2>
@@ -60,10 +60,10 @@
                         <strong>Độ tuổi:</strong>
                         <span class="age_restricted_wrap">
                             <span class="age age-"></span>
-                            <span class="age_restricted_label" x-text="movie?.age"></span>
+                            <span class="age_restricted_label" x-text="'T'+movie?.age"></span>
                         </span>
                     </p>
-                    <div class="age_restricted"><span x-text="movie?.age"></span></div>
+                    <div class="age_restricted"><span x-text="'T'+movie?.age"></span></div>
                     <div class="group-buton">
                         <a href="#showtime" id="dat-ve"><img src="https://touchcinema.com/images/icons/icon-dat-ve.png"
                                 alt="Đặt vé"> Đặt vé</a>
@@ -165,16 +165,16 @@
             </div>
             @include('client.components.movie-showing-sidebar')
         </div>
-        <div class="modal fade in" id="modal-trailer" style="display: none;">
+        <div @click="controlVideo(false)" class="modal fade in" id="modal-trailer" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content" style="width: 100%;">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" title="Đóng"
+                        <button @click="controlVideo(false)" type="button" class="close" data-dismiss="modal" title="Đóng"
                             aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body">
                         <div class="video-container video-trailer--home">
-                            <iframe x-bind:src="movie?.trailer_url" frameborder="0"></iframe>
+                            <iframe id="youtubeIframe" x-bind:src="movie?.trailer_url" x-bind:data-src="movie?.trailer_url" frameborder="0"></iframe>
                         </div>
                     </div x-text=movie?.trailer_url>
                 </div>
