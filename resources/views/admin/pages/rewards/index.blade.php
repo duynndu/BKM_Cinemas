@@ -119,8 +119,10 @@
                                                     <th>Tên</th>
                                                     <th>Điểm</th>
                                                     <th>Hình ảnh</th>
-                                                    <th>Trạng thái</th>
-                                                    <th>Hành động</th>
+                                                    <th class="text-center">Trạng thái</th>
+                                                    @if (auth()->user()->can('update', \App\Models\Reward::class) || auth()->user()->can('delete', \App\Models\Reward::class))
+                                                        <th>Hành động</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -157,17 +159,20 @@
                                                                     style="width:80px; height:100px; object-fit:cover">
                                                             @endif
                                                         </td>
-                                                        <td>
-                                                            <button
-                                                                class="toggle-active-btn btn btn-xs {{ $reward->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
-                                                                data-id="{{ $reward->id }}"
-                                                                data-status="{{ $reward->active }}"
-                                                                data-url="{{ route('admin.rewards.changeActive') }}">
-                                                                {{ $reward->active == 1 ? 'Hiển thị' : 'Ẩn' }}
-                                                            </button>
+                                                        <td class="text-center">
+                                                            @can('changeActive', App\Models\Reward::class)
+                                                                <button
+                                                                    class="toggle-active-btn btn btn-xs {{ $reward->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                    data-id="{{ $reward->id }}"
+                                                                    data-status="{{ $reward->active }}"
+                                                                    data-url="{{ route('admin.rewards.changeActive') }}">
+                                                                    {{ $reward->active == 1 ? 'Hiển thị' : 'Ẩn' }}
+                                                                </button>
+                                                            @else
+                                                                <span
+                                                                    class="badge light badge-{{ $reward->active == 1 ? 'success' : 'danger' }}">{{ $reward->active == 1 ? 'Hiển thị' : 'Ẩn' }}</span>
+                                                            @endcan
                                                         </td>
-
-
 
                                                         <td>
                                                             <div

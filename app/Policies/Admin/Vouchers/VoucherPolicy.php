@@ -99,6 +99,15 @@ class VoucherPolicy
         return $user->hasPermission('gift-voucher');
     }
 
+    public function changeActive(User $user)
+    {
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('change-active-voucher');
+    }
+
     /**
      * Determine whether the user can permanently delete the model.
      */

@@ -154,9 +154,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
         Swal.fire({
           icon: 'warning',
           title: 'Cảnh báo',
-          text: 'Lỗi giao dịch hoặc không đủ số dư vui nạp thêm tiền vào tài khoản!',
-        }).then(() => {
-          redirect().to('/')
+          text: 'Lỗi giao dịch hoặc không đủ số dư vui lòng nạp thêm tiền vào tài khoản!',
         });
       }
       if (res.status == Status.COMPLETED) {
@@ -170,10 +168,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
           });
         });
       }
-
     }
-
-
   },
   renderSeatLayout() {
     if (this.room) {
