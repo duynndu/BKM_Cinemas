@@ -23,8 +23,8 @@ $(".btn-email-subscribe").click(function () {
           timer: 1500,
         }).then(() => {
           $("#modal-subscribe").modal("hide");
+          $('#email-subscribe').val('');
         });
-
       } else if (response.result.original.status === "faile") {
         Swal.fire({
           position: "top-center",
