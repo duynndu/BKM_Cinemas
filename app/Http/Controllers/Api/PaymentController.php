@@ -453,13 +453,14 @@ class PaymentController extends Controller
         DB::beginTransaction();
         try {
             if ($balance_after < 0) {
-                $dataTransaction['status'] = Status::FAILED;
+                $dataTransaction['status'] = Status::LOW;
                 $dataTransaction['description'] = 'Số dư không đủ để đặt vé';
                 $dataTransaction['balance_after'] = $userPoints;
                 BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                     'action' => 'set',
                     'value' => SeatStatus::AVAILABLE
                 ]);
+                return $dataTransaction;
             } else {
                 auth()->user()->update(['balance' => $balance_after]);
                 // $this->updatePoints($booking->total_price);
