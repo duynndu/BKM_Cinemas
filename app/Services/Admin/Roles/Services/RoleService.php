@@ -26,16 +26,19 @@ class RoleService extends BaseService implements RoleServiceInterface
     public function create(&$data)
     {
         if (!empty($data['role']['image'])) {
-            $uploadData = $this->uploadFile($data['image']['role'], 'public/roles');
+            $uploadData = $this->uploadFile($data['role']['image'], 'public/roles');
             $data['role']['image'] = $uploadData['path'];
+        } else {
+            $data['role']['image'] = null;
         }
+
         $user = auth()->user();
         $dataCreate = [
             'name' => $data['role']['name'],
             'type' => $data['role']['type'],
             'description' => $data['role']['description'],
             'user_id' => $user->id,
-            'image' => $data['role']['image'] ?: null
+            'image' => $data['role']['image']
         ];
 
         $role = $this->repository->create($dataCreate);
