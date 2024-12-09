@@ -167,11 +167,6 @@
                                 <a href="{{ route('admin.movies.index') }}" aria-expanded="false">Phim</a>
                             </li>
                         @endcan
-                        @can('viewAny', App\Models\Actor::class)
-                            <li class="{{ request()->segment(2) == 'actors' ? 'mm-active' : '' }}">
-                                <a href="{{ route('admin.actors.index') }}" aria-expanded="false">Diễn viên</a>
-                            </li>
-                        @endcan
                     </ul>
                 </li>
             @endif

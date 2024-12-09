@@ -139,7 +139,9 @@
                                                     <th>Hiệu lực</th>
                                                     <th>Trạng thái</th>
                                                     <th>Ngày đăng</th>
-                                                    <th>Hành động</th>
+                                                    @if (auth()->user()->can('update', \App\Models\Voucher::class) || auth()->user()->can('delete', \App\Models\Voucher::class))
+                                                        <th>Hành động</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -202,7 +204,6 @@
                                                             @endif
                                                         </td>
                                                         <td>
-
                                                             @if (!empty($voucher->image) && file_exists(public_path($voucher->image)))
                                                                 <img src="{{ asset($voucher->image) }}"
                                                                     style="width:80px; height:100px; object-fit:cover">
@@ -234,13 +235,18 @@
                                                         </td>
                                                         @endif
                                                         <td>
-                                                            <button
-                                                                class="toggle-active-btn btn btn-xs {{ $voucher->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
-                                                                data-id="{{ $voucher->id }}"
-                                                                data-status="{{ $voucher->active }}"
-                                                                data-url="{{ route('admin.vouchers.changeActive') }}">
-                                                                {{ $voucher->active == 1 ? 'Hiển thị' : 'Ẩn' }}
-                                                            </button>
+                                                            @can('changeActive', App\Models\Voucher::class)
+                                                                <button
+                                                                    class="toggle-active-btn btn btn-xs {{ $voucher->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                    data-id="{{ $voucher->id }}"
+                                                                    data-status="{{ $voucher->active }}"
+                                                                    data-url="{{ route('admin.vouchers.changeActive') }}">
+                                                                    {{ $voucher->active == 1 ? 'Hiển thị' : 'Ẩn' }}
+                                                                </button>
+                                                            @else
+                                                                <span
+                                                                    class="badge light badge-{{ $voucher->active == 1 ? 'success' : 'danger' }}">{{ $voucher->active == 1 ? 'Hiển thị' : 'Ẩn' }}</span>
+                                                            @endcan
                                                         </td>
 
                                                         <td>

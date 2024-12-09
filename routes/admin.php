@@ -498,7 +498,7 @@ Route::prefix('admin')
 
                         Route::post('/store', 'store')
                             ->name('store')
-                            ->middleware('authorizeAction:store,App\Models\Genre');
+                            ->middleware('authorizeAction:create,App\Models\Genre');
 
                         Route::get('/{id}/edit', 'edit')
                             ->name('edit')
@@ -1030,14 +1030,11 @@ Route::prefix('admin')
                             ->name('index')
                             ->middleware('authorizeAction:viewAny,App\Models\Booking');
                         Route::post('/{id}/change-status', 'changeStatus')
-                            ->name('changeStatus')
-                            ->middleware('authorizeAction:changeStatus,App\Models\Booking');
+                            ->name('changeStatus');
                         Route::post('/{id}/change-refund-status', 'changeRefundStatus')
-                            ->name('changeRefundStatus')
-                            ->middleware('authorizeAction:changeRefundStatus,App\Models\Booking');
+                            ->name('changeRefundStatus');
                         Route::post('/{id}/change-get-ticket', 'changeGetTickets')
-                            ->name('changeGetTickets')
-                            ->middleware('authorizeAction:getTickets,App\Models\Booking');
+                            ->name('changeGetTickets');
                     });
 
                 Route::prefix('notifications')
