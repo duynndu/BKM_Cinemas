@@ -1,20 +1,3 @@
-<style>
-    .del-item-notification {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        font-size: 10px;
-        border-radius: 50%;
-        background-color: #EA3B82;
-        color: white;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-    .del-item-notification:hover{
-        background-color: #b8366a;
-    }
-</style>
 <div id="header">
     <div class="container">
         <div class="logo">
@@ -36,7 +19,7 @@
                         <form action="{{ route('search') }}" class="form-search visible-lg" method="get">
                             <div class="input-group">
                                 <input class="form-control" name="k" required value="{{ request()->get('k') }}"
-                                    type="search" placeholder="Tìm kiếm">
+                                       type="search" placeholder="Tìm kiếm">
                                 <button type="submit" class="submit"><i class="fa fa-search"></i></button>
                             </div>
                         </form>

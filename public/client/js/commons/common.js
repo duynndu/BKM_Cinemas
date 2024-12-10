@@ -472,14 +472,13 @@ $(document).ready(function () {
         });
     }
 
-    function exp()
-    {
+    function exp() {
         const exp = parseInt($('.expData').attr('data-exp')) || 0; // Chuyển giá trị EXP thành số
         const thresholds = [0, 4000000, 8000000]; // Các mốc EXP
         const $progress = $('.progress');
         const $progressText = $('.progress-text');
 
-// Xác định mốc hiện tại và tính % EXP
+        // Xác định mốc hiện tại và tính % EXP
         let percentage = 0; // Phần trăm tiến trình
         let nextRankExp = 0; // Mốc EXP tiếp theo
         let currentRankExp = 0; // Mốc EXP hiện tại
@@ -507,9 +506,8 @@ $(document).ready(function () {
         if (percentage === 100) {
             $progress.css('background', '#ff5722'); // Đổi màu nếu đạt tối đa
         }
-
     }
-    
+
     exp();
     change_avatar();
     payment_alert();
@@ -518,4 +516,56 @@ $(document).ready(function () {
     modal_deposit();
 })
 
+// //modal trailer
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Lưu lại src gốc của các iframe
+//     const iframes = document.querySelectorAll('iframe[id^="iframe-trailer-"]');
+//     iframes.forEach((iframe) => {
+//         iframe.dataset.originalSrc = iframe.src; // Lưu src gốc vào data attribute
+//     });
+
+//     var trailer_url = "";
+//     // Lắng nghe sự kiện đóng modal
+//     const modals = document.querySelectorAll('div[id^="modal-trailer-"]');
+//     modals.forEach((modal) => {
+//         $(modal).on('hidden.bs.modal', function () {
+//             // Lấy iframe bên trong modal này
+//             const iframe = modal.querySelector('iframe');
+
+//             if (iframe) {
+//                 iframe.src = ''; // Xóa src để dừng video
+//                 setTimeout(() => {
+//                     iframe.src = iframe.dataset.originalSrc; // Khôi phục src
+//                 }, 100); // Đợi 100ms trước khi khôi phục src
+//             }
+//         });
+//     });
+// });
+
+
+// Modal trailer
+// Modal trailer
+document.addEventListener('DOMContentLoaded', function () {
+    // Lắng nghe sự kiện đóng modal
+    const modals = document.querySelectorAll('div[id^="modal-trailer-"]');
+    modals.forEach((modal) => {
+        $(modal).on('hidden.bs.modal', function () {
+            // Lấy iframe bên trong modal này
+            const iframe = modal.querySelector('iframe');
+
+            if (iframe) {
+                // Lưu src gốc vào biến tạm
+                const originalSrc = iframe.src;
+
+                // Xóa src để dừng video
+                iframe.src = '';
+
+                // Khôi phục src sau khi xóa
+                setTimeout(() => {
+                    iframe.src = originalSrc;
+                }, 100); // Đợi 100ms trước khi gán lại
+            }
+        });
+    });
+});
 

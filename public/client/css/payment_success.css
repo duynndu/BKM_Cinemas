@@ -1,5 +1,4 @@
 .success-container {
-    max-width: 1200px;
     margin: 0 auto;
     color: white;
     text-align: center;
@@ -43,7 +42,6 @@
     cursor: pointer;
     text-decoration: none;
     font-weight: bold;
-
 }
 
 .button:hover {

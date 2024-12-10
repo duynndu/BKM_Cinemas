@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin\Movies\Repositories;
 
 use App\Models\Movie;
+use App\Models\MovieActor;
 use App\Models\MovieGenre;
 use App\Repositories\Admin\Movies\Interfaces\MovieInterface;
 use App\Repositories\Base\BaseRepository;
@@ -19,10 +20,10 @@ class MovieRepository extends BaseRepository implements MovieInterface
     {
         $data = $this->model->newQuery();
         if(!empty($request->cinema_id)){
-          $data = $this->filterMoviesByCinemaId($request->cinema_id); 
-          
+          $data = $this->filterMoviesByCinemaId($request->cinema_id);
+
         }
-      
+
         $data = $this->filterByTitle($data, $request);
         $data = $this->filterByStatus($data, $request);
         $data = $this->applyOrdering($data, $request);
@@ -103,12 +104,12 @@ class MovieRepository extends BaseRepository implements MovieInterface
 
     public function deleteGenre($record, $data)
     {
-        return $record->movieGenre()->whereIn('genre_id', $data)->delete();
+        return $record->movieGenre()->whereIn('genre_id', $data)->forceDelete();
     }
 
     public function deleteActor($record, $data)
     {
-        return $record->movieActor()->whereIn('actor_id', $data)->delete();
+        return $record->movieActor()->whereIn('actor_id', $data)->forceDelete();
     }
 
     public function delete($id)
@@ -127,8 +128,8 @@ class MovieRepository extends BaseRepository implements MovieInterface
     public function deleteMultiple(array $ids)
     {
         collect($ids)->chunk(1000)->each(function ($chunk) {
-            \App\Models\MovieGenre::whereIn('movie_id', $chunk)->forceDelete();
-            \App\Models\MovieActor::whereIn('movie_id', $chunk)->forceDelete();
+            MovieGenre::whereIn('movie_id', $chunk)->forceDelete();
+            MovieActor::whereIn('movie_id', $chunk)->forceDelete();
             $this->model->whereIn('id', $chunk)->delete();
         });
         return true;

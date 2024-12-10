@@ -106,7 +106,7 @@
                                                     <th>{{ __('language.admin.genres.position') }}</th>
                                                     <th>{{ __('language.admin.genres.order') }}</th>
                                                     @if (Auth()->user()->can('update', \App\Models\Genre::class) || Auth()->user()->can('delete', \App\Models\Genre::class))
-                                                    <th>{{ __('language.admin.genres.action') }}</th>
+                                                        <th>{{ __('language.admin.genres.action') }}</th>
                                                     @endif
                                                 </tr>
                                             </thead>

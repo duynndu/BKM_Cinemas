@@ -58,7 +58,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Danh Sách Thành Phố</h4>
-                                @can('create', App\Models\city::class)
+                                @can('create', App\Models\City::class)
                                     <div class="compose-btn">
                                         <a href="{{ route('admin.cities.create') }}">
                                             <button class="btn btn-secondary btn-sm light">
@@ -76,7 +76,9 @@
                                                 <tr>
                                                     <th style="width:80px;">STT</th>
                                                     <th>Tên Thành Phố</th>
-                                                    <th>Hành Động</th>
+                                                    @if (Auth()->user()->can('update', \App\Models\City::class) || Auth()->user()->can('delete', \App\Models\City::class))
+                                                        <th>Hành Động</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -89,25 +91,26 @@
                                                     <td>
                                                         <b>{{ $city->name }}</b>
                                                     </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: end">
-                                                            @can('update', $city)
-                                                                <a href="{{ route('admin.cities.edit', $city->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                    <i class="fa fa-pencil"></i>
-                                                                </a>
-                                                            @endcan
-                                                            @can('delete', $city)
-                                                                <form action="{{ route('admin.cities.delete', $city->id) }}" class="formDelete" method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button class="btn btn-danger shadow btn-xs sharp me-1 btn-remove" data-type="DELETE" href="">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </form>
-                                                            @endcan
-
-                                                        </div>
-                                                    </td>
+                                                    @if (Auth()->user()->can('update', \App\Models\City::class) || Auth()->user()->can('delete', \App\Models\City::class))
+                                                        <td>
+                                                            <div style="display: flex; justify-content: end">
+                                                                @can('update', \App\Models\City::class)
+                                                                    <a href="{{ route('admin.cities.edit', $city->id) }}" class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                        <i class="fa fa-pencil"></i>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('delete', \App\Models\City::class)
+                                                                    <form action="{{ route('admin.cities.delete', $city->id) }}" class="formDelete" method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button class="btn btn-danger shadow btn-xs sharp me-1 btn-remove" data-type="DELETE" href="">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                @endcan
+                                                            </div>
+                                                        </td>
+                                                    @endif
                                                 </tr>
                                                 @endforeach
                                             </tbody>

@@ -8,4 +8,5 @@ class Status
   public const COMPLETED = 'completed';
   public const FAILED = 'failed';
   public const CANCELED = 'cancelled';
+  public const LOW = 'low';
 }

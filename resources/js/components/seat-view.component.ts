@@ -150,14 +150,13 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
       if (res.payment_url) {
         window.location.href = res.payment_url;
       }
-      if (res.status == Status.FAILED) {
+      if (res.status == Status.LOW) {
         Swal.fire({
           icon: 'warning',
           title: 'Cảnh báo',
-          text: 'Lỗi giao dịch hoặc không đủ số dư vui nạp thêm tiền vào tài khoản!',
-        }).then(() => {
-          redirect().to('/')
+          text: 'Lỗi giao dịch hoặc không đủ số dư vui lòng nạp thêm tiền vào tài khoản!',
         });
+        return;
       }
       if (res.status == Status.COMPLETED) {
         Swal.fire({
@@ -170,10 +169,7 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
           });
         });
       }
-
     }
-
-
   },
   renderSeatLayout() {
     if (this.room) {

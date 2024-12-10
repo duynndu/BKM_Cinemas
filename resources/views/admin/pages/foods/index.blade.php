@@ -159,8 +159,9 @@
                                                     <th>Loại đồ ăn</th>
                                                     <th>Trạng thái</th>
                                                     <th>Số thứ tự</th>
-                                                    <th>Hành động</th>
-
+                                                    @if (Auth()->user()->can('update', \App\Models\Food::class) || Auth()->user()->can('delete', \App\Models\Food::class))
+                                                        <th>Hành động</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -230,31 +231,32 @@
                                                                 </b>
                                                             @endcan
                                                         </td>
-
-                                                        <td>
-                                                            <div
-                                                                style="padding-right: 20px; display: flex; justify-content: end">
-                                                                @can('update', \App\Models\Food::class)
-                                                                    <a href="{{ route('admin.foods.edit', $food->id) }}"
-                                                                        class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                        <i class="fa fa-pencil"></i>
-                                                                    </a>
-                                                                @endcan
-                                                                @can('delete', \App\Models\Food::class)
-                                                                    <form
-                                                                        action="{{ route('admin.foods.delete', $food->id) }}"
-                                                                        class="formDelete" method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button
-                                                                            class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
-                                                                            data-type="DELETE" href="">
-                                                                            <i class="fa fa-trash"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                @endcan
-                                                            </div>
-                                                        </td>
+                                                        @if (Auth()->user()->can('update', \App\Models\Food::class) || Auth()->user()->can('delete', \App\Models\Food::class))
+                                                            <td>
+                                                                <div
+                                                                    style="padding-right: 20px; display: flex; justify-content: end">
+                                                                    @can('update', \App\Models\Food::class)
+                                                                        <a href="{{ route('admin.foods.edit', $food->id) }}"
+                                                                            class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </a>
+                                                                    @endcan
+                                                                    @can('delete', \App\Models\Food::class)
+                                                                        <form
+                                                                            action="{{ route('admin.foods.delete', $food->id) }}"
+                                                                            class="formDelete" method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button
+                                                                                class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                                data-type="DELETE" href="">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    @endcan
+                                                                </div>
+                                                            </td>
+                                                        @endif
                                                     </tr>
                                                 @endforeach
                                             </tbody>

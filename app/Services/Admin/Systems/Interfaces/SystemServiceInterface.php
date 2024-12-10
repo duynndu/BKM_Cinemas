@@ -10,4 +10,5 @@ interface SystemServiceInterface extends BaseServiceInterface
     public function changeActive($request);
     public function getAllSystemBySystemId($request);
     public function getAllSystemByType0($request);
+    public function deleteMultipleChecked($request);
 }

@@ -107,7 +107,9 @@
                                                     <th>{{ __('language.admin.categoryPosts.filterName') }}</th>
                                                     <th>{{ __('language.admin.categoryPosts.position') }}</th>
                                                     <th>{{ __('language.admin.categoryPosts.order') }}</th>
-                                                    <th>{{ __('language.admin.categoryPosts.action') }}</th>
+                                                    @if (Auth()->user()->can('update', \App\Models\CategoryPost::class) || Auth()->user()->can('delete', \App\Models\CategoryPost::class))
+                                                        <th>{{ __('language.admin.categoryPosts.action') }}</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -138,7 +140,6 @@
                                                                 </a>
                                                             </b>
                                                         </td>
-
                                                         <td>
                                                             @can('changePosition', App\Models\CategoryPost::class)
                                                                 <input type="number" min="0" name="position"
@@ -166,30 +167,32 @@
                                                                 </b>
                                                             @endcan
                                                         </td>
-                                                        <td>
-                                                            <div
-                                                                style="padding-right: 20px; display: flex; justify-content: end">
-                                                                @can('update', App\Models\CategoryPost::class)
-                                                                    <a href="{{ route('admin.categoryPosts.edit', $categoryPost->id) }}"
-                                                                        class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                        <i class="fa fa-pencil"></i>
-                                                                    </a>
-                                                                @endcan
-                                                                @can('delete', App\Models\CategoryPost::class)
-                                                                    <form
-                                                                        action="{{ route('admin.categoryPosts.delete', $categoryPost->id) }}"
-                                                                        class="formDelete" method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button
-                                                                            class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
-                                                                            data-type="DELETE" href="">
-                                                                            <i class="fa fa-trash"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                @endcan
-                                                            </div>
-                                                        </td>
+                                                        @if (Auth()->user()->can('update', \App\Models\CategoryPost::class) || Auth()->user()->can('delete', \App\Models\CategoryPost::class))
+                                                            <td>
+                                                                <div
+                                                                    style="padding-right: 20px; display: flex; justify-content: end">
+                                                                    @can('update', App\Models\CategoryPost::class)
+                                                                        <a href="{{ route('admin.categoryPosts.edit', $categoryPost->id) }}"
+                                                                            class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </a>
+                                                                    @endcan
+                                                                    @can('delete', App\Models\CategoryPost::class)
+                                                                        <form
+                                                                            action="{{ route('admin.categoryPosts.delete', $categoryPost->id) }}"
+                                                                            class="formDelete" method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button
+                                                                                class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                                data-type="DELETE" href="">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    @endcan
+                                                                </div>
+                                                            </td>
+                                                        @endif
                                                     </tr>
                                                 @endforeach
                                             </tbody>

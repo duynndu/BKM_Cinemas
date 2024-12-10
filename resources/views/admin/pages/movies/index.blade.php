@@ -112,8 +112,8 @@
                                                 </select>
                                             </div>
                                             <div class="col-xl-3 mt-3">
-                                                <select data-url="{{ route('admin.dashboards.getAreaByCity') }}" class="select2-with-label-multiple w-100"
-                                                    name="city_id" id="city_id">
+                                                <select data-url="{{ route('admin.dashboards.getAreaByCity') }}"
+                                                    class="select2-with-label-multiple w-100" name="city_id" id="city_id">
                                                     <option value="">-- Chọn thành phố --</option>
 
                                                     @foreach ($cities as $key => $city)
@@ -123,8 +123,8 @@
                                                 </select>
                                             </div>
                                             <div class="col-xl-3 mt-3">
-                                                <select data-url="{{ route('admin.dashboards.getCinemaByArea') }}" class="select2-with-label-multiple" name="area_id"
-                                                    id="area_id">
+                                                <select data-url="{{ route('admin.dashboards.getCinemaByArea') }}"
+                                                    class="select2-with-label-multiple" name="area_id" id="area_id">
                                                     <option value="">-- Chọn khu vực --</option>
                                                 </select>
                                             </div>
@@ -406,8 +406,6 @@
                                                                             <div class="list-actor_detail">
                                                                                 <div class="swiper-container">
                                                                                     <div class="swiper-wrapper">
-
-
                                                                                         @foreach ($movie->actors as $actor)
                                                                                             <div
                                                                                                 class="swiper-slide actor-slide">
@@ -431,7 +429,6 @@
 
                                                                             </div>
                                                                         @endif
-
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -441,11 +438,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {{-- Đóng modal chi tiết phim --}}
-
-
-
-                                                    {{-- Modal phim thuộc rạp  --}}
                                                     <div class="modal fade"
                                                         id="showModalMovieInTheaters_{{ $movie->id }}" tabindex="-1"
                                                         aria-labelledby="showModalLabel_{{ $movie->id }}"
@@ -457,7 +449,8 @@
                                                                 <div class="modal-header"
                                                                     style="position: sticky; top: 0; background-color: white; z-index: 10; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
                                                                     <h4 class="modal-title" id="exampleModalLabel">
-                                                                        Phim đang chiếu tại rạp ({{ count($movie->cinemas) ?? 0 }})
+                                                                        Phim đang chiếu tại rạp
+                                                                        ({{ count($movie->cinemas) ?? 0 }})
                                                                     </h4>
                                                                     <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal"
@@ -484,10 +477,10 @@
                                                                             </div>
                                                                         @endforeach
                                                                     @else
-                                                                        <p class="text-center">Phim đang không được chiếu ở
-                                                                            rạp nào!</p>
+                                                                        <p class="text-center">
+                                                                            Phim đang không được chiếu ở rạp nào!
+                                                                        </p>
                                                                     @endif
-
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
@@ -496,13 +489,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
-                                                    {{-- Đóng modal phim thuộc rạp --}}
-
-
-
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -512,7 +498,6 @@
                                                 {{ $data->links('pagination::bootstrap-4') }}
                                             </div>
                                         </div>
-
                                     </div>
                                 @else
                                     <div class="d-flex justify-content-center align-items-center p-5">

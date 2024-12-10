@@ -139,7 +139,11 @@
                                                     <th>Hiệu lực</th>
                                                     <th>Trạng thái</th>
                                                     <th>Ngày đăng</th>
-                                                    <th>Hành động</th>
+                                                    @if (auth()->user()->can('update', \App\Models\Voucher::class) ||
+                                                            auth()->user()->can('delete', \App\Models\Voucher::class) ||
+                                                            auth()->user()->can('giftVoucher', \App\Models\Voucher::class))
+                                                        <th>Hành động</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -202,7 +206,6 @@
                                                             @endif
                                                         </td>
                                                         <td>
-
                                                             @if (!empty($voucher->image) && file_exists(public_path($voucher->image)))
                                                                 <img src="{{ asset($voucher->image) }}"
                                                                     style="width:80px; height:100px; object-fit:cover">
@@ -229,111 +232,123 @@
                                                                 <p class="text-warning">Chờ phát hành</p>
                                                             </td>
                                                         @else
-                                                        <td>
-                                                            <p class="text-warning">Chờ phát hành</p>
-                                                        </td>
+                                                            <td>
+                                                                <p class="text-warning">Chờ phát hành</p>
+                                                            </td>
                                                         @endif
                                                         <td>
-                                                            <button
-                                                                class="toggle-active-btn btn btn-xs {{ $voucher->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
-                                                                data-id="{{ $voucher->id }}"
-                                                                data-status="{{ $voucher->active }}"
-                                                                data-url="{{ route('admin.vouchers.changeActive') }}">
-                                                                {{ $voucher->active == 1 ? 'Hiển thị' : 'Ẩn' }}
-                                                            </button>
+                                                            @can('changeActive', App\Models\Voucher::class)
+                                                                <button
+                                                                    class="toggle-active-btn btn btn-xs {{ $voucher->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
+                                                                    data-id="{{ $voucher->id }}"
+                                                                    data-status="{{ $voucher->active }}"
+                                                                    data-url="{{ route('admin.vouchers.changeActive') }}">
+                                                                    {{ $voucher->active == 1 ? 'Hiển thị' : 'Ẩn' }}
+                                                                </button>
+                                                            @else
+                                                                <span
+                                                                    class="badge light badge-{{ $voucher->active == 1 ? 'success' : 'danger' }}">{{ $voucher->active == 1 ? 'Hiển thị' : 'Ẩn' }}</span>
+                                                            @endcan
                                                         </td>
 
                                                         <td>
                                                             {{ \Carbon\Carbon::parse($voucher->created_at)->format('d-m-Y') }}
                                                         </td>
-                                                        <td>
-                                                            <div
-                                                                style="padding-right: 20px; display: flex; justify-content: end">
-                                                                @can('update', App\Models\Voucher::class)
-                                                                    <a href="{{ route('admin.vouchers.edit', $voucher->id) }}"
-                                                                        class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                        <i class="fa fa-pencil"></i>
-                                                                    </a>
-                                                                @endcan
-                                                                @can('delete', App\Models\Voucher::class)
-                                                                    <form
-                                                                        action="{{ route('admin.vouchers.delete', $voucher->id) }}"
-                                                                        class="formDelete" method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button
-                                                                            class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
-                                                                            data-type="DELETE" href="">
-                                                                            <i class="fa fa-trash"></i>
+                                                        @if (auth()->user()->can('update', \App\Models\Voucher::class) ||
+                                                                auth()->user()->can('delete', \App\Models\Voucher::class)||
+                                                                auth()->user()->can('giftVoucher', \App\Models\Voucher::class))
+                                                            <td>
+                                                                <div
+                                                                    style="padding-right: 20px; display: flex; justify-content: end">
+                                                                    @can('update', App\Models\Voucher::class)
+                                                                        <a href="{{ route('admin.vouchers.edit', $voucher->id) }}"
+                                                                            class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </a>
+                                                                    @endcan
+                                                                    @can('delete', App\Models\Voucher::class)
+                                                                        <form
+                                                                            action="{{ route('admin.vouchers.delete', $voucher->id) }}"
+                                                                            class="formDelete" method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button
+                                                                                class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                                data-type="DELETE" href="">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    @endcan
+                                                                    @can('giftVoucher', App\Models\Voucher::class)
+                                                                        <button type="button" id="show_modal"
+                                                                            class="btn btn-success mb-2 shadow btn-xs sharp me-1 giftButton"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#basicModal_{{ $voucher->id }}"
+                                                                            data-voucher-id="{{ $voucher->id }}"
+                                                                            data-url="{{ route('admin.vouchers.getAccountByVoucher') }}">
+                                                                            <i class="fa-solid fa-gift"></i>
                                                                         </button>
-                                                                    </form>
-                                                                @endcan
-                                                                @can('giftVoucher', App\Models\Voucher::class)
-                                                                    <button type="button" id="show_modal"
-                                                                        class="btn btn-success mb-2 shadow btn-xs sharp me-1 giftButton"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#basicModal_{{ $voucher->id }}"
-                                                                        data-voucher-id="{{ $voucher->id }}"
-                                                                        data-url="{{ route('admin.vouchers.getAccountByVoucher') }}">
-                                                                        <i class="fa-solid fa-gift"></i>
-                                                                    </button>
-                                                                @endcan
-                                                                <div class="modal fade modal_voucher"
-                                                                    id="basicModal_{{ $voucher->id }}" aria-modal="true"
-                                                                    role="dialog">
+                                                                        <div class="modal fade modal_voucher"
+                                                                            id="basicModal_{{ $voucher->id }}"
+                                                                            aria-modal="true" role="dialog">
 
-                                                                    <div class="modal-dialog modal-lg" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title">Tặng voucher</h5>
-                                                                                <button type="button"
-                                                                                    class="btn-close close-modal"
-                                                                                    data-bs-dismiss="modal">
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body text-start">
-                                                                                <div
-                                                                                    class="d-flex justify-content-between align-items-center mb-4">
-                                                                                    <div class="form-check">
-                                                                                        <input class="form-check-input"
-                                                                                            type="checkbox" value="all"
-                                                                                            id="checked_all_account">
-                                                                                        <label class="form-check-label"
-                                                                                            for="flexCheckDefault">
-                                                                                            Chọn tất cả
-                                                                                        </label>
+                                                                            <div class="modal-dialog modal-lg"
+                                                                                role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title">Tặng voucher
+                                                                                        </h5>
+                                                                                        <button type="button"
+                                                                                            class="btn-close close-modal"
+                                                                                            data-bs-dismiss="modal">
+                                                                                        </button>
                                                                                     </div>
+                                                                                    <div class="modal-body text-start">
+                                                                                        <div
+                                                                                            class="d-flex justify-content-between align-items-center mb-4">
+                                                                                            <div class="form-check">
+                                                                                                <input class="form-check-input"
+                                                                                                    type="checkbox"
+                                                                                                    value="all"
+                                                                                                    id="checked_all_account">
+                                                                                                <label class="form-check-label"
+                                                                                                    for="flexCheckDefault">
+                                                                                                    Chọn tất cả
+                                                                                                </label>
+                                                                                            </div>
 
-                                                                                    <input style="width:330px;"
-                                                                                        id="searchUserInput_{{ $voucher->id }}"
-                                                                                        data-url="{{ route('admin.vouchers.searchUser') }}"
-                                                                                        placeholder="Tên người dùng hoặc email ..."
-                                                                                        type="text"
-                                                                                        class="form-control">
+                                                                                            <input style="width:330px;"
+                                                                                                id="searchUserInput_{{ $voucher->id }}"
+                                                                                                data-url="{{ route('admin.vouchers.searchUser') }}"
+                                                                                                placeholder="Tên người dùng hoặc email ..."
+                                                                                                type="text"
+                                                                                                class="form-control">
+                                                                                        </div>
+
+
+                                                                                        <div class="d-flex flex-wrap overflow-auto"
+                                                                                            style="max-height: 200px;gap:7px 15px;">
+                                                                                            {{-- hiển thi tài khoản ở đây --}}
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-danger light close-modal"
+                                                                                            data-bs-dismiss="modal">Hủy</button>
+                                                                                        <button type="button"
+                                                                                            data-url="{{ route('admin.vouchers.giftVoucherAccount') }}"
+                                                                                            class="btn btn-primary giftVoucher">Lưu
+                                                                                            thay
+                                                                                            đổi</button>
+                                                                                    </div>
                                                                                 </div>
-
-
-                                                                                <div class="d-flex flex-wrap overflow-auto"
-                                                                                    style="max-height: 200px;gap:7px 15px;">
-                                                                                    {{-- hiển thi tài khoản ở đây --}}
-                                                                                </div>
-
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button"
-                                                                                    class="btn btn-danger light close-modal"
-                                                                                    data-bs-dismiss="modal">Hủy</button>
-                                                                                <button type="button"
-                                                                                    data-url="{{ route('admin.vouchers.giftVoucherAccount') }}"
-                                                                                    class="btn btn-primary giftVoucher">Lưu
-                                                                                    thay
-                                                                                    đổi</button>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    @endcan
                                                                 </div>
-                                                            </div>
-                                                        </td>
+                                                            </td>
+                                                        @endif
                                                     </tr>
                                                 @endforeach
                                             </tbody>

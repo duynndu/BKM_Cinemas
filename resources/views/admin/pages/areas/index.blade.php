@@ -92,7 +92,9 @@
                                             <th style="width:80px;">STT</th>
                                             <th>Tên Khu Vực</th>
                                             <th>Tên Thành Phố</th>
-                                            <th>Hành Động</th>
+                                            @if (Auth()->user()->can('update', \App\Models\Area::class) || Auth()->user()->can('delete', \App\Models\Area::class))
+                                                <th>Hành Động</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,28 +110,30 @@
                                                 <td>
                                                     <b>{{ $area->city->name ?? 'Không có thành phố' }}</b>
                                                 </td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: end">
-                                                        @can('update', App\Models\Area::class)
-                                                            <a href="{{ route('admin.areas.edit', $area->id) }}"
-                                                                class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </a>
-                                                        @endcan
-                                                        @can('delete', App\Models\Area::class)
-                                                            <form action="{{ route('admin.areas.delete', $area->id) }}"
-                                                                class="formDelete" method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button
-                                                                    class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
-                                                                    data-type="DELETE" href="">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </button>
-                                                            </form>
-                                                        @endcan
-                                                    </div>
-                                                </td>
+                                                @if (Auth()->user()->can('update', \App\Models\Area::class) || Auth()->user()->can('delete', \App\Models\Area::class))
+                                                    <td>
+                                                        <div style="display: flex; justify-content: end">
+                                                            @can('update', App\Models\Area::class)
+                                                                <a href="{{ route('admin.areas.edit', $area->id) }}"
+                                                                    class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('delete', App\Models\Area::class)
+                                                                <form action="{{ route('admin.areas.delete', $area->id) }}"
+                                                                    class="formDelete" method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button
+                                                                        class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
+                                                                        data-type="DELETE" href="">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                            @endcan
+                                                        </div>
+                                                    </td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     </tbody>

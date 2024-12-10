@@ -377,8 +377,11 @@ Route::prefix('admin')
                         Route::get('/', 'index')
                             ->name('index')
                             ->middleware('authorizeAction:viewAny,App\Models\Post');
+                            
                         Route::post('/send-promotion', 'sendPromotion')
-                            ->name('sendPromotion');
+                            ->name('sendPromotion')
+                            ->middleware('authorizeAction:sendPromotion,App\Models\Post');
+
                         Route::get('/create', 'create')
                             ->name('create')
                             ->middleware('authorizeAction:create,App\Models\Post');
@@ -1030,14 +1033,11 @@ Route::prefix('admin')
                             ->name('index')
                             ->middleware('authorizeAction:viewAny,App\Models\Booking');
                         Route::post('/{id}/change-status', 'changeStatus')
-                            ->name('changeStatus')
-                            ->middleware('authorizeAction:changeStatus,App\Models\Booking');
+                            ->name('changeStatus');
                         Route::post('/{id}/change-refund-status', 'changeRefundStatus')
-                            ->name('changeRefundStatus')
-                            ->middleware('authorizeAction:changeRefundStatus,App\Models\Booking');
+                            ->name('changeRefundStatus');
                         Route::post('/{id}/change-get-ticket', 'changeGetTickets')
-                            ->name('changeGetTickets')
-                            ->middleware('authorizeAction:getTickets,App\Models\Booking');
+                            ->name('changeGetTickets');
                     });
 
                 Route::prefix('notifications')

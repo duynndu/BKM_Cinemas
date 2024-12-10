@@ -67,15 +67,6 @@ class RewardPolicy
         return $user->hasPermission('delete-reward');
     }
 
-    public function changeStatus(User $user)
-    {
-        if($user->type == User::TYPE_ADMIN) {
-            return true;
-        }
-
-        return $user->hasPermission('change-status-reward');
-    }
-
     public function deleteMultiple(User $user)
     {
         if($user->type == User::TYPE_ADMIN) {
@@ -83,5 +74,14 @@ class RewardPolicy
         }
 
         return $user->hasPermission('delete-multiple-reward');
+    }
+
+    public function changeActive(User $user)
+    {
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('change-active-reward');
     }
 }

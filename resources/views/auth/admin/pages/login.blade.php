@@ -54,15 +54,6 @@
                         @enderror
                         <span class="text-red errorFormPassword position-absolute"></span>
                     </div>
-
-                    <div class="form-row d-flex justify-content-between mt-4 mb-2">
-                        <div class="mb-4">
-                            <div class="form-check custom-checkbox mb-3">
-                                <input type="checkbox" class="form-check-input" id="customCheckBox1">
-                                <label class="form-check-label" for="customCheckBox1">{{  __('language.admin.remember')}}</label>
-                            </div>
-                        </div>
-                    </div>
                     <div class="text-center mb-4">
                         <button type="submit" class="btn btn-primary btn-block btn-login">{{  __('language.admin.login')}}</button>
                     </div>

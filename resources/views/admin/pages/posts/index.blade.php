@@ -120,7 +120,6 @@
                                                         type="submit"><i
                                                             class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('language.admin.posts.search') }}
                                                     </button>
-
                                                     <button type="reset" class="btn btn-danger light"
                                                         title="Click here to remove filter">{{ __('language.admin.posts.removeValue') }}</button>
                                                 </div>
@@ -152,10 +151,10 @@
                                             <input type="hidden" id="value-item-id" value="">
                                             <thead>
                                                 <tr>
-                                                    <th>
-                                                        <div class="box-delete-item">
-                                                            <input type="checkbox" id="item-all-checked">
-                                                            @can('deleteMultiple', \App\Models\Post::class)
+                                                    @can('deleteMultiple', \App\Models\Post::class)
+                                                        <th>
+                                                            <div class="box-delete-item">
+                                                                <input type="checkbox" id="item-all-checked">
                                                                 <button id="btn-delete-all"
                                                                     data-url="{{ route('admin.posts.deleteItemMultipleChecked') }}"
                                                                     class="btn btn-sm btn-danger btn-delete-multiple_item">
@@ -167,29 +166,22 @@
                                                                             d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z" />
                                                                     </svg>
                                                                 </button>
-                                                            @endcan
-                                                        </div>
-                                                    </th>
-
+                                                            </div>
+                                                        </th>
+                                                    @endcan
                                                     <th>#</th>
                                                     <th class="white-space-nowrap">
                                                         {{ __('language.admin.posts.filterName') }}</th>
                                                     <th>{{ __('language.admin.posts.image') }}</th>
-                                                    @can('changeActive', \App\Models\Post::class)
-                                                        <th>{{ __('language.admin.posts.active') }}</th>
-                                                    @endcan
-                                                    @can('changeHot', \App\Models\Post::class)
-                                                        <th>{{ __('language.admin.posts.hot') }}</th>
-                                                    @endcan
-
-
-                                                    <th style="text-align: start">{{ __('language.admin.posts.category') }}
+                                                    <th>{{ __('language.admin.posts.active') }}</th>
+                                                    <th>{{ __('language.admin.posts.hot') }}</th>
+                                                    <th style="text-align: start">
+                                                        {{ __('language.admin.posts.category') }}
                                                     </th>
-                                                    @can('changeOrder', \App\Models\Post::class)
-                                                        <th>{{ __('language.admin.posts.order') }}</th>
-                                                    @endcan
+                                                    <th>{{ __('language.admin.posts.order') }}</th>
                                                     @if (Auth()->user()->can('update', \App\Models\Post::class) ||
-                                                            Auth()->user()->can('delete', \App\Models\Post::class))
+                                                            Auth()->user()->can('delete', \App\Models\Post::class)||
+                                                            Auth()->user()->can('sendPromotion', \App\Models\Post::class))
                                                         <th>{{ __('language.admin.posts.action') }}</th>
                                                     @endif
                                                 </tr>
@@ -219,9 +211,8 @@
                                                                     style="width:80px; height:100px; object-fit:cover">
                                                             @endif
                                                         </td>
-
-                                                        @can('changeActive', \App\Models\Post::class)
-                                                            <td>
+                                                        <td>
+                                                            @can('changeActive', \App\Models\Post::class)
                                                                 <button
                                                                     class="toggle-active-btn btn btn-xs {{ $post->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
                                                                     data-id="{{ $post->id }}"
@@ -229,11 +220,14 @@
                                                                     data-url="{{ route('admin.posts.changeActive') }}">
                                                                     {{ $post->active == 1 ? __('language.admin.posts.show') : __('language.admin.posts.hidden') }}
                                                                 </button>
-                                                            </td>
-                                                        @endcan
-
-                                                        @can('changeHot', \App\Models\Post::class)
-                                                            <td>
+                                                            @else
+                                                                <span class="badge light badge-{{ $post->active == 1 ? 'success' : 'danger' }}">
+                                                                    {{ $post->active == 1 ? 'Hiện' : 'Ẩn' }}
+                                                                </span>
+                                                            @endcan
+                                                        </td>
+                                                        <td>
+                                                            @can('changeHot', \App\Models\Post::class)
                                                                 <button
                                                                     class="toggle-hot-btn btn btn-xs {{ $post->hot == 1 ? 'btn-success' : 'btn-danger' }} text-white"
                                                                     data-id="{{ $post->id }}"
@@ -241,9 +235,12 @@
                                                                     data-url="{{ route('admin.posts.changeHot') }}">
                                                                     {{ $post->hot == 1 ? __('language.admin.posts.hot') : __('language.admin.posts.noHot') }}
                                                                 </button>
-                                                            </td>
-                                                        @endcan
-
+                                                            @else
+                                                                <span class="badge light badge-{{ $post->active == 1 ? 'success' : 'danger' }}">
+                                                                    {{ $post->hot == 1 ? __('language.admin.posts.hot') : __('language.admin.posts.noHot') }}
+                                                                </span>
+                                                            @endcan
+                                                        </td>
                                                         <td style="text-align: start">
                                                             <ul>
                                                                 @if ($post->postCategories->isNotEmpty())
@@ -258,18 +255,20 @@
                                                             </ul>
                                                         </td>
 
-                                                        @can('changeOrder', \App\Models\Post::class)
-                                                            <td>
+                                                        <td>
+                                                            @can('changeOrder', \App\Models\Post::class)
                                                                 <input type="number" min="0" name="order"
                                                                     value="{{ $post->order }}"
                                                                     data-id="{{ $post->id }}"
                                                                     data-url="{{ route('admin.posts.changeOrder') }}"
                                                                     class="form-control changeOrder" style="width: 67px;">
-                                                            </td>
-                                                        @endcan
-                                                        @if (Auth()->user()->can('copy', \App\Models\Post::class) ||
-                                                                Auth()->user()->can('update', \App\Models\Post::class) ||
-                                                                Auth()->user()->can('delete', \App\Models\Post::class))
+                                                            @else
+                                                                <b>{{ $post->order }}</b>
+                                                            @endcan
+                                                        </td>
+                                                        @if (Auth()->user()->can('update', \App\Models\Post::class) ||
+                                                            Auth()->user()->can('delete', \App\Models\Post::class) ||
+                                                            Auth()->user()->can('sendPromotion', \App\Models\Post::class))
                                                             <td>
                                                                 <div
                                                                     style="padding-right: 20px; display: flex; justify-content: end">
@@ -279,7 +278,6 @@
                                                                             <i class="fa fa-pencil"></i>
                                                                         </a>
                                                                     @endcan
-
                                                                     @can('delete', \App\Models\Post::class)
                                                                         <form
                                                                             action="{{ route('admin.posts.delete', $post->id) }}"
@@ -293,14 +291,16 @@
                                                                             </button>
                                                                         </form>
                                                                     @endcan
-                                                                    @if ($post->active == 1 && $post->promotion == 1)
-                                                                        <button data-id="{{ $post->id }}"
-                                                                            data-url="{{ route('admin.posts.sendPromotion') }}"
-                                                                            class="btn btn-success shadow btn-xs sharp me-1 call-ajax send-promotion"
-                                                                            data-type="DELETE">
-                                                                            <i class="fa-solid fa-paper-plane"></i>
-                                                                        </button>
-                                                                    @endif
+                                                                    @can('sendPromotion', \App\Models\Post::class)
+                                                                        @if ($post->active == 1 && $post->promotion == 1)
+                                                                            <button data-id="{{ $post->id }}"
+                                                                                data-url="{{ route('admin.posts.sendPromotion') }}"
+                                                                                class="btn btn-success shadow btn-xs sharp me-1 call-ajax send-promotion"
+                                                                                data-type="DELETE">
+                                                                                <i class="fa-solid fa-paper-plane"></i>
+                                                                            </button>
+                                                                        @endif
+                                                                    @endcan
                                                                 </div>
                                                             </td>
                                                         @endif
