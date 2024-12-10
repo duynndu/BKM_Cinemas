@@ -498,7 +498,7 @@ Route::prefix('admin')
 
                         Route::post('/store', 'store')
                             ->name('store')
-                            ->middleware('authorizeAction:store,App\Models\Genre');
+                            ->middleware('authorizeAction:create,App\Models\Genre');
 
                         Route::get('/{id}/edit', 'edit')
                             ->name('edit')
