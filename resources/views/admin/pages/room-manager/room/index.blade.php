@@ -45,50 +45,7 @@
                                             @endif
                                         </tr>
                                     </thead>
-                                    <tbody class="fs-4">
-                                        @foreach ($rooms as $index => $room)
-                                            <tr>
-                                                <td>
-                                                    <strong
-                                                        class="text-black">{{ ($rooms->currentPage() - 1) * $rooms->perPage() + $index + 1 }}
-                                                    </strong>
-                                                </td>
-                                                <td>
-                                                    <a class="fw-bolder " href="{{ route('admin.rooms.edit', $room->id) }}">
-                                                        {{ $room->room_name }}
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    @if ($room->image)
-                                                        <img width="100" src="{{ Storage::url($room->image) }}"
-                                                            alt="{{ $room->room_name }}">
-                                                    @else
-                                                        Không có hình ảnh
-                                                    @endif
-                                                </td>
-                                                <td>{{ number_format($room->base_price, 0, ',', '.') }} VNĐ</td>
-                                                <td>{{ $room->col_count }}</td>
-                                                <td>{{ $room->row_count }}</td>
-                                                @if (auth()->user()->can('update', \App\Models\Room::class) ||
-                                                        auth()->user()->can('delete', \App\Models\Room::class))
-                                                    <td>
-                                                        <div>
-                                                            @can('update', App\Models\Room::class)
-                                                                <a href="{{ route('admin.rooms.edit', $room->id) }}"
-                                                                    class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                    <i class="fa fa-pencil"></i>
-                                                                </a>
-                                                            @endcan
-                                                            @can('delete', App\Models\Room::class)
-                                                                <x-destroy-button route="admin.rooms.destroy"
-                                                                    id="{{ $room->id }}" />
-                                                            @endcan
-                                                        </div>
-                                                    </td>
-                                                @endif
-                                            </tr>
-                                        @endforeach
-                                    </thead>
+
                                     <tbody class="fs-4">
                                         @foreach ($rooms as $index => $room)
                                             <tr>

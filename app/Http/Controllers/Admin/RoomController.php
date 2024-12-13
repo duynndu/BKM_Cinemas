@@ -19,6 +19,7 @@ class RoomController extends Controller
                 $query->where('cinema_id', $cinemaId);
             })
             ->paginate(10);
+
         return view('admin.pages.room-manager.room.index', compact('rooms'));
     }
 
