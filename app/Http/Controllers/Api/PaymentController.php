@@ -273,7 +273,7 @@ class PaymentController extends Controller
             }
             $dataTransaction = [
                 'user_id' => $booking->user_id,
-                'payment_method' => 'vnpay',
+                'payment_method' => 'momo',
                 'amount' => $request->amount,
                 'type' => 'booking',
                 'description' => 'Giao dịch thành công - Đặt vé',
@@ -386,8 +386,8 @@ class PaymentController extends Controller
         }
         $dataTransaction = [
             'user_id' => $booking->user_id,
-            'payment_method' => 'vnpay',
-            'amount' => $request->amount / 100,
+            'payment_method' => 'zalopay',
+            'amount' => $request->amount,
             'type' => 'booking',
             'description' => 'Giao dịch thành công - Đặt vé',
             'balance_after' => Auth::user()->balance,
