@@ -75,7 +75,7 @@ class PaymentController extends Controller
                 $momoUrl = $this->momo_payment($orderCode, $finalPrice);
                 return response()->json($momoUrl);
             } elseif ($request->payment == 'zalopay') {
-                $zaloPayUrl = $this->zaloPay_payment($finalPrice);
+                $zaloPayUrl = $this->zaloPay_payment($orderCode, $finalPrice);
                 return response()->json($zaloPayUrl);
             }
         }
@@ -321,12 +321,12 @@ class PaymentController extends Controller
         }
     }
 
-    public function zaloPay_payment($amountTotal)
+    public function zaloPay_payment($orderCode, $amountTotal)
     {
         $config = config('payment.zalopay');
         $amount = $amountTotal;
         $app_time = round(microtime(true) * 1000);
-        $app_trans_id = date("ymd") . "_" . uniqid();
+        $app_trans_id = date(format: "ymd") . "_" . $orderCode;
         $app_user = 'demo';
         $bank_code = '';
         $description = "Nạp tiền vào ví thành viên - BKM Cinemas";
@@ -374,12 +374,11 @@ class PaymentController extends Controller
 
     public function zaloPayReturn(Request $request)
     {
-        dd($request->all());
-        $orderCode = '';
         $return_code = $request->input('return_code');
-        $app_trans_id = $request->input('app_trans_id');
+        $app_trans_id = $request->input('apptransid');
         $amount = $request->input('amount');
         $order_info = $request->input('order_info');
+        $orderCode = explode('_', $app_trans_id)[1];
 
         $booking = Booking::where('code', $orderCode)->first();
         if ($booking == null) {
