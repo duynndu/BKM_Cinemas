@@ -924,10 +924,8 @@
                                                                         </li>
                                                                         <li>
                                                                             Giao dịch:
-                                                                            @if ($transaction->status == 'completed')
-                                                                                +
-                                                                            @endif
-                                                                            {{ number_format($transaction->amount, 0, '.', ',') }}
+                                                                            @if ($transaction->status == 'completed' && $transaction->type == 'deposit')+
+                                                                            @endif{{ number_format($transaction->amount, 0, '.', ',') }}
                                                                             đ |
                                                                             {{ date('d/m/Y H:i:s', strtotime($transaction->created_at)) }}
                                                                             |
@@ -1174,8 +1172,7 @@
                             <li>Thành viên phải đăng ký tài khoản và tài khoản <strong>Đang hoạt động</strong> không bị
                                 khóa.</li>
                             <li>Tài khoản cần có đủ số điểm thưởng tối thiểu để đổi thưởng.</li>
-                            <li>Điểm thưởng tối thiểu được sử dụng cho mỗi giao dịch là 20 điểm trở lên.</li>
-                            <li>Không vi phạm bất kỳ quy định hoặc điều khoản nào của hệ thống CGV.</li>
+                            <li>Không vi phạm bất kỳ quy định hoặc điều khoản nào của hệ thống BKM.</li>
                         </ul>
 
                         <h4>2. Cách làm tròn điểm thưởng</h4>
@@ -1191,14 +1188,11 @@
 
                         <h4>3. Thời gian xử lý yêu cầu</h4>
                         <ul>
-                            <li>Thời gian xử lý: <strong>24-48 giờ</strong> kể từ khi gửi yêu cầu.</li>
                             <li>Trường hợp bảo trì, hệ thống sẽ thông báo thời gian xử lý qua email hoặc tin nhắn.</li>
                         </ul>
 
                         <h4>4. Quy định bổ sung</h4>
                         <ul>
-                            <li>Mỗi tài khoản được đổi tối đa <strong>10 giao dịch/ngày</strong>.</li>
-                            <li>Điểm thưởng tối thiểu cho mỗi giao dịch: <strong>20 điểm</strong>.</li>
                             <li>Hệ thống có quyền thu hồi thưởng khi phát hiện gian lận.</li>
                             <li>BKM Việt Nam sẽ không hoàn và/hoặc giải quyết đối với điểm thưởng đã được sử dụng nếu Khách
                                 Hàng không chứng minh được Khách Hàng không phải là người sử dụng điểm thưởng và quyết định
