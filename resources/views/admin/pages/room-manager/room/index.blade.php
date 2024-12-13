@@ -87,7 +87,8 @@
                                                     </td>
                                                 @endif
                                             </tr>
-                                            </thead>
+                                        @endforeach
+                                    </thead>
                                     <tbody class="fs-4">
                                         @foreach ($rooms as $index => $room)
                                             <tr>
