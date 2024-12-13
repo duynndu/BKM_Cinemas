@@ -48,10 +48,10 @@
                                 </div>
 
                                 @if (auth()->user()->type == \App\Models\User::TYPE_ADMIN)
-                                    <div class="col-xl-5">
+                                    <div class="col-xl-3">
                                         <label
                                             class="form-label mb-2">{{ __('language.admin.members.roles.type') }}</label><br>
-                                        <select name="type" class="form-control w-50 selectRoles" id="">
+                                        <select name="type" class="form-control selectRoles" id="">
                                             <option value="">-- {{ __('language.admin.members.roles.select') }} --
                                             </option>
                                             <option value="{{ \App\Models\User::TYPE_ADMIN }}"
@@ -70,6 +70,33 @@
                                                 {{ request()->type == \App\Models\User::TYPE_MEMBER ? 'selected' : '' }}>
                                                 {{ __('language.admin.members.roles.member') }}
                                             </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <label class="form-label mb-2">Thành phố</label>
+                                        <select data-url="{{ route('admin.dashboards.getAreaByCity') }}"
+                                            class="select2-with-label-multiple" name="city_id" id="city_id">
+                                            <option value="">-- Chọn thành phố --</option>
+                                            @foreach ($cities as $key => $city)
+                                                <option value="{{ $city->id }}">
+                                                    {{ $city->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <label class="form-label mb-2">Thành khu vực</label>
+                                        <select data-url="{{ route('admin.dashboards.getCinemaByArea') }}"
+                                            class="select2-with-label-multiple" name="area_id" id="area_id">
+                                            <option value="">-- Chọn khu vực --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-6 mt-3">
+                                        <select class="select2-with-label-multiple" name="cinema_id" id="cinema_id">
+                                            <option value="">-- Chọn rạp --</option>
+                                            @foreach ($cinemas as $item)
+                                                <option value="{{ $item->id }}" @selected(request()->cinema_id == $item->id)>
+                                                    {{ $item->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 @endif
@@ -91,7 +118,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             @if (!empty($data['users']))
                 <div class="col-xl-12">
@@ -231,7 +258,9 @@
             @else
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="p-5">
-                        <h4>{{ __('language.admin.members.roles.notData') }}</h4>
+                        <h3 class="text-center">
+                            {{ request()->name ? 'Không có kết quả với từ khóa:' . request()->name : 'Không có dữ liệu' }}
+                        </h3>
                     </div>
                 </div>
             @endif
@@ -245,4 +274,5 @@
 @endsection
 
 @section('js')
+    <script src="{{ asset('js/admin/commons/users/index.js') }}"></script>
 @endsection

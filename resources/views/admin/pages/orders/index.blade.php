@@ -142,18 +142,18 @@
             height: 100%;
         }
 
-        .order-view-container .order-view-content > .row {
+        .order-view-container .order-view-content>.row {
             height: 100%;
         }
 
-        .row-collapse > .col,
-        .row-collapse > .flickity-viewport > .flickity-slider > .col {
+        .row-collapse>.col,
+        .row-collapse>.flickity-viewport>.flickity-slider>.col {
             padding: 0 !important;
         }
 
         .small-12,
-        .small-columns-1 .flickity-slider > .col,
-        .small-columns-1 > .col {
+        .small-columns-1 .flickity-slider>.col,
+        .small-columns-1>.col {
             flex-basis: 100%;
             max-width: 100%;
         }
@@ -186,7 +186,7 @@
             }
         }
 
-        .order-view-container .order-view-content > .row > .col.content-col > .col-inner {
+        .order-view-container .order-view-content>.row>.col.content-col>.col-inner {
             position: relative;
             background-color: #f4f5f6;
             border-radius: 20px;
@@ -200,8 +200,8 @@
             max-width: 1300px;
         }
 
-        .row-collapse > .col,
-        .row-collapse > .flickity-viewport > .flickity-slider > .col {
+        .row-collapse>.col,
+        .row-collapse>.flickity-viewport>.flickity-slider>.col {
             padding: 0 !important;
         }
 
@@ -216,7 +216,7 @@
             width: 100%;
         }
 
-        .order-details-row > .col > .col-inner {
+        .order-details-row>.col>.col-inner {
             padding: 20px;
         }
 
@@ -232,18 +232,18 @@
         .text-center .is-divider,
         .text-center .is-star-rating,
         .text-center .star-rating,
-        .text-center > div,
-        .text-center > div > div {
+        .text-center>div,
+        .text-center>div>div {
             margin-left: auto;
             margin-right: auto;
         }
 
-        .order-details-row .qrcode-image > div {
+        .order-details-row .qrcode-image>div {
             line-height: 1.2em;
             margin-bottom: 7px;
         }
 
-        .order-details-row .qrcode-image > div:last-child {
+        .order-details-row .qrcode-image>div:last-child {
             margin-bottom: 0px;
         }
 
@@ -252,12 +252,12 @@
             font-weight: bold;
         }
 
-        .row-collapse > .col,
-        .row-collapse > .flickity-viewport > .flickity-slider > .col {
+        .row-collapse>.col,
+        .row-collapse>.flickity-viewport>.flickity-slider>.col {
             padding: 0 !important;
         }
 
-        .order-view-container .row-divided > .col + .col:not(.large-12) {
+        .order-view-container .row-divided>.col+.col:not(.large-12) {
             border-left-style: dashed;
             border-left-color: rgb(0 0 0 / 30%);
         }
@@ -273,7 +273,7 @@
             width: 100%;
         }
 
-        .order-details-row > .col > .col-inner {
+        .order-details-row>.col>.col-inner {
             padding: 20px;
         }
 
@@ -312,7 +312,7 @@
             flex: 1 1 0px;
         }
 
-        .icon-box-left .icon-box-img + .icon-box-text {
+        .icon-box-left .icon-box-img+.icon-box-text {
             padding-left: 1em;
         }
 
@@ -413,8 +413,8 @@
             margin-right: -10px;
         }
 
-        .row-small > .col,
-        .row-small > .flickity-viewport > .flickity-slider > .col {
+        .row-small>.col,
+        .row-small>.flickity-viewport>.flickity-slider>.col {
             margin-bottom: 0;
             padding: 0 9.8px 19.6px;
         }
@@ -583,7 +583,7 @@
                                                             </option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-xl-5 col-sm-5 align-self-end">
+                                                    <div class="col-xl-5 col-sm-5 align-self-end mt-3">
                                                         <div class="">
                                                             <button class="btn btn-primary me-2"
                                                                 title="Click here to Search" type="submit"><i
@@ -606,6 +606,9 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Danh sách đơn hàng</h4>
+                                <button type="button" data-url="{{ route('admin.orders.changeManyTickets') }}" class="btn btn-success" id="change-many-tickets">
+                                    Cập nhật nhiều vé
+                                </button>
                             </div>
                             <div class="card-body">
                                 @if ($data->count() > 0)
@@ -647,7 +650,11 @@
                                                             {{ $order->user->name ?? $order->user->email }}
                                                         </td>
                                                         <td>
-                                                            @if ($order->status == 'cancelled' || $order->status == null || $order->status == 'completed' || $order->status == 'rejected')
+                                                            @if (
+                                                                $order->status == 'cancelled' ||
+                                                                    $order->status == null ||
+                                                                    $order->status == 'completed' ||
+                                                                    $order->status == 'rejected')
                                                                 <b id="status-{{ $order->id }}">
                                                                     @switch($order->status)
                                                                         @case('completed')
@@ -722,7 +729,8 @@
                                                                     <option value="pending" @selected($order->refund_status == 'pending')>
                                                                         Chờ hoàn tiền
                                                                     </option>
-                                                                    <option value="completed" @selected($order->refund_status == 'completed')>
+                                                                    <option value="completed"
+                                                                        @selected($order->refund_status == 'completed')>
                                                                         Hoàn tiền
                                                                     </option>
                                                                 </select>
@@ -748,77 +756,109 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a href="javascript:void(0)"
-                                                               data-bs-toggle="modal" data-bs-target="#modalTickets_{{ $order->id }}"
+                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                                data-bs-target="#modalTickets_{{ $order->id }}"
                                                                 class="btn btn-primary shadow btn-xs sharp me-1">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
                                                         </td>
                                                     </tr>
-                                                    <div class="modal fade" id="modalTickets_{{ $order->id }}" aria-modal="true" role="dialog">
+                                                    <div class="modal fade" id="modalTickets_{{ $order->id }}"
+                                                        aria-modal="true" role="dialog">
                                                         <div class="modal-dialog modal-xl" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title">{{ __('language.admin.members.roles.information') }}</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                                    <h5 class="modal-title">
+                                                                        {{ __('language.admin.members.roles.information') }}
+                                                                    </h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal">
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="col-inner">
                                                                         <div class="order-view-container">
                                                                             <div class="order-view-content">
-                                                                                <div class="row align-center align-middle row-collapse">
-                                                                                    <div class="col content-col medium-12 small-12 large-12">
+                                                                                <div
+                                                                                    class="row align-center align-middle row-collapse">
+                                                                                    <div
+                                                                                        class="col content-col medium-12 small-12 large-12">
                                                                                         <div class="col-inner">
                                                                                             <div
                                                                                                 class="row d-flex align-middle row-divided order-details-row row-collapse">
                                                                                                 <div class="col-3">
-                                                                                                    <div class="col-inner p-3">
-                                                                                                        <div class="qrcode-image text-center">
-                                                                                                            <div>Thông tin vé</div>
+                                                                                                    <div
+                                                                                                        class="col-inner p-3">
+                                                                                                        <div
+                                                                                                            class="qrcode-image text-center">
+                                                                                                            <div>Thông tin
+                                                                                                                vé</div>
                                                                                                             <div>
-                                                                                                                <img src="{{ asset('client/images/offline-ticket.jpg') }}">
+                                                                                                                <img
+                                                                                                                    src="{{ asset('client/images/offline-ticket.jpg') }}">
                                                                                                             </div>
-                                                                                                            <div><span class="code">Vé đặt online</span>
+                                                                                                            <div><span
+                                                                                                                    class="code">Vé
+                                                                                                                    đặt
+                                                                                                                    online</span>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
 
                                                                                                 <div class="col-9">
-                                                                                                    <div class="col-inner p-3">
+                                                                                                    <div
+                                                                                                        class="col-inner p-3">
                                                                                                         <div
                                                                                                             class="icon-box icon-box-left align-middle text-left order-film-box">
-                                                                                                            <div class="icon-box-img">
-                                                                                                                <img src="{{ $order->movie->image }}">
+                                                                                                            <div
+                                                                                                                class="icon-box-img">
+                                                                                                                <img
+                                                                                                                    src="{{ $order->movie->image }}">
                                                                                                             </div>
-                                                                                                            <div class="icon-box-text p-last-0">
-                                                                                                                <h4 class="fw-700">{{ $order->movie->title }}</h4>
-                                                                                                                <div class="metas">
+                                                                                                            <div
+                                                                                                                class="icon-box-text p-last-0">
+                                                                                                                <h4
+                                                                                                                    class="fw-700">
+                                                                                                                    {{ $order->movie->title }}
+                                                                                                                </h4>
+                                                                                                                <div
+                                                                                                                    class="metas">
                                                                                                                     <ul>
                                                                                                                         <li>
-                                                                                                                            <img src="{{ asset('client/images/helpIcon.png') }}">
-                                                                                                                            <span>Phụ đề, {{ $order->movie->format }}</span>
+                                                                                                                            <img
+                                                                                                                                src="{{ asset('client/images/helpIcon.png') }}">
+                                                                                                                            <span>Phụ
+                                                                                                                                đề,
+                                                                                                                                {{ $order->movie->format }}</span>
                                                                                                                         </li>
                                                                                                                         <li>
-                                                                                                                            <img src="{{ asset('client/images/calendarIcon.png') }}">
+                                                                                                                            <img
+                                                                                                                                src="{{ asset('client/images/calendarIcon.png') }}">
                                                                                                                             <span>{{ date('d/m/Y', strtotime($order->showtime->start_time)) }}</span>
                                                                                                                         </li>
                                                                                                                         <li>
-                                                                                                                            <img src="{{ asset('client/images/clockIcon.png') }}">
-                                                                                                                            Suất chiếu:
+                                                                                                                            <img
+                                                                                                                                src="{{ asset('client/images/clockIcon.png') }}">
+                                                                                                                            Suất
+                                                                                                                            chiếu:
                                                                                                                             <span>{{ date('H:i', strtotime($order->showtime->start_time)) }}</span>
                                                                                                                         </li>
                                                                                                                         <li>
-                                                                                                                            <img src="{{ asset('client/images/locationIcon.png') }}">
+                                                                                                                            <img
+                                                                                                                                src="{{ asset('client/images/locationIcon.png') }}">
                                                                                                                             <span>{{ $order->cinema->name }}</span>
                                                                                                                         </li>
                                                                                                                     </ul>
                                                                                                                 </div>
-                                                                                                                <div class="row d-flex row-small ticket-row row-divided">
-                                                                                                                    <div class="col medium-12 small-12 large-3">
-                                                                                                                        <div class="col-inner text-center">
-                                                                                                                            <p>Ghế</p>
+                                                                                                                <div
+                                                                                                                    class="row d-flex row-small ticket-row row-divided">
+                                                                                                                    <div
+                                                                                                                        class="col medium-12 small-12 large-3">
+                                                                                                                        <div
+                                                                                                                            class="col-inner text-center">
+                                                                                                                            <p>Ghế
+                                                                                                                            </p>
                                                                                                                             <div>
                                                                                                                                 @if ($order->seatsBooking && $order->seatsBooking->count())
                                                                                                                                     @foreach ($order->seatsBooking as $seatBooking)
@@ -828,20 +868,31 @@
                                                                                                                                         @endif
                                                                                                                                     @endforeach
                                                                                                                                 @else
-                                                                                                                                    <span>Không có ghế</span>
+                                                                                                                                    <span>Không
+                                                                                                                                        có
+                                                                                                                                        ghế</span>
                                                                                                                                 @endif
                                                                                                                             </div>
                                                                                                                         </div>
                                                                                                                     </div>
-                                                                                                                    <div class="col medium-12 small-12 large-3">
-                                                                                                                        <div class="col-inner text-center">
-                                                                                                                            <p>Phòng chiếu</p>
-                                                                                                                            <div>{{ $order->showtime->room->room_name ?? '' }}</div>
+                                                                                                                    <div
+                                                                                                                        class="col medium-12 small-12 large-3">
+                                                                                                                        <div
+                                                                                                                            class="col-inner text-center">
+                                                                                                                            <p>Phòng
+                                                                                                                                chiếu
+                                                                                                                            </p>
+                                                                                                                            <div>
+                                                                                                                                {{ $order->showtime->room->room_name ?? '' }}
+                                                                                                                            </div>
                                                                                                                         </div>
                                                                                                                     </div>
                                                                                                                 </div>
-                                                                                                                <div class="total">
-                                                                                                                    Tổng tiền: <span>{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
+                                                                                                                <div
+                                                                                                                    class="total">
+                                                                                                                    Tổng
+                                                                                                                    tiền:
+                                                                                                                    <span>{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                         </div>
@@ -856,7 +907,8 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">{{ __('language.admin.members.roles.close') }}</button>
+                                                                    <button type="button" class="btn btn-danger light"
+                                                                        data-bs-dismiss="modal">{{ __('language.admin.members.roles.close') }}</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -874,7 +926,7 @@
                                     <div class="d-flex justify-content-center align-items-center p-5">
                                         <div>
                                             <h3 class="text-center">
-                                                Không tìm thấy: {{ request()->name }}
+                                                {{ request()->name ? 'Không có kết quả với từ khóa:' . request()->name : 'Không có dữ liệu' }}
                                             </h3>
                                         </div>
                                     </div>

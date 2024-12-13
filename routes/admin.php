@@ -377,7 +377,7 @@ Route::prefix('admin')
                         Route::get('/', 'index')
                             ->name('index')
                             ->middleware('authorizeAction:viewAny,App\Models\Post');
-                            
+
                         Route::post('/send-promotion', 'sendPromotion')
                             ->name('sendPromotion')
                             ->middleware('authorizeAction:sendPromotion,App\Models\Post');
@@ -1038,6 +1038,8 @@ Route::prefix('admin')
                             ->name('changeRefundStatus');
                         Route::post('/{id}/change-get-ticket', 'changeGetTickets')
                             ->name('changeGetTickets');
+                        Route::post('/change-many-tickets', 'changeManyTickets')
+                            ->name('changeManyTickets');
                     });
 
                 Route::prefix('notifications')

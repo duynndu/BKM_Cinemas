@@ -178,3 +178,31 @@ echo.private('change_status_order.' + cinema_id)
         }
     });
 
+    $(document).on('click', '#change-many-tickets', function() {
+        const url = $(this).data('url');
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                '_token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công!',
+                    timer: 1000,
+                    showConfirmButton: false
+                }).then(() => {
+                    // window.location.reload();
+                });
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: xhr.responseJSON.message,
+                    timer: 1000,
+                    showConfirmButton: false
+                });
+            }
+        });
+    });

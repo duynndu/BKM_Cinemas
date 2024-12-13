@@ -319,7 +319,7 @@
                                     <div class="d-flex justify-content-center align-items-center p-5">
                                         <div>
                                             <h3 class="text-center">
-                                                {{ request()->name ? __('language.admin.posts.noDataSearch') . request()->name : __('language.admin.posts.noData') }}
+                                                {{ request()->name ? 'Không có kết quả với từ khóa:' . request()->name : 'Không có dữ liệu' }}
                                             </h3>
                                         </div>
                                     </div>

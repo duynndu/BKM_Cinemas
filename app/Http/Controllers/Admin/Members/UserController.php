@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Admin\Members;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\UserRequest;
-use App\Models\Cinema;
-use App\Models\City;
 use App\Models\User;
 use App\Services\Admin\Cinemas\Interfaces\CinemaServiceInterface;
-use App\Services\Admin\Cinemas\Services\CinemaService;
+use App\Services\Admin\Cities\Interfaces\CityServiceInterface;
 use App\Services\Admin\Roles\Interfaces\RoleServiceInterface;
 use App\Services\Admin\Users\Interfaces\UserServiceInterface;
 use App\Traits\RemoveImageTrait;
@@ -20,20 +18,21 @@ class UserController extends Controller
 {
     use RemoveImageTrait;
     protected $userService;
-
     protected $roleService;
-
     protected $cinemaService;
+    protected $cityService;
 
     public function __construct(
         UserServiceInterface    $userService,
         RoleServiceInterface    $roleService,
-        CinemaServiceInterface  $cinemaService
+        CinemaServiceInterface  $cinemaService,
+        CityServiceInterface  $cityService
     )
     {
         $this->userService = $userService;
         $this->roleService = $roleService;
         $this->cinemaService = $cinemaService;
+        $this->cityService = $cityService;
     }
 
     public function index(Request $request)
@@ -47,8 +46,10 @@ class UserController extends Controller
         ]);
 
         $data['users'] = $this->userService->filter($request);
+        $cities = $this->cityService->getAll();
+        $cinemas = $this->cinemaService->getAllActive();
 
-        return view('admin.pages.members.users.index', compact('data'));
+        return view('admin.pages.members.users.index', compact('data', 'cities', 'cinemas'));
     }
 
     public function create()

@@ -22,4 +22,9 @@ class OrderService extends BaseService implements OrderServiceInterface
     {
         return $this->repository->filter($request);
     }
+
+    public function changeManyTickets()
+    {
+        return $this->repository->changeManyTickets();
+    }
 }
