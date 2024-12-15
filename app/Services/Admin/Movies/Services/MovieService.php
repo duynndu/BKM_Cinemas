@@ -27,7 +27,7 @@ class MovieService extends BaseService implements MovieServiceInterface
     {
         return $this->repository->filter($request);
     }
-    
+
     public function create(&$data)
     {
         $data['movie_actors'] = $data['movie_actors'] ?? [];
@@ -86,6 +86,11 @@ class MovieService extends BaseService implements MovieServiceInterface
 
         if (!empty($data['movie_actors'])) {
             $filteredActorsCreate = $this->updateActors($record, $data['movie_actors']);
+        }else{
+            $currentActors = $record->movieActor()->pluck('actor_id')->toArray();
+            if (!empty($currentActors)) {
+                $this->repository->deleteActor($record, $currentActors);
+            }
         }
 
         if (!empty($data['actors'])) {
@@ -163,6 +168,11 @@ class MovieService extends BaseService implements MovieServiceInterface
         }
     }
 
+    private function createNewActors($actors, $role)
+    {
+        return $this->actorRepository->createMany($actors, $role);
+    }
+
     private function updateActors($record, $movieActors)
     {
         $currentActors = $record->movieActor()->pluck('actor_id')->toArray();
@@ -182,12 +192,6 @@ class MovieService extends BaseService implements MovieServiceInterface
 
         return $filteredActorsCreate;
     }
-
-    private function createNewActors($actors, $role)
-    {
-        return $this->actorRepository->createMany($actors, $role);
-    }
-
 
     private function uploadFile($data, $folderName)
     {

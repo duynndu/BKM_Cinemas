@@ -62,7 +62,16 @@ Alpine.data('MoviePageComponent', (identifier: string) => ({
     this.showModelCity = false;
     this.searchCity = '';
     console.log(this.formFilter);
-    
+
     this.showtimesDetail = await showtimeService.getShowtimeDetailForMovie(this.formFilter);
+  },
+  controlVideo(play: boolean) {
+    const iframe = $('#youtubeIframe');
+    const src = iframe.data('src');
+    if (play && !iframe.attr('src')) {
+      iframe.attr('src', src);
+    } else if (!play && iframe.attr('src')) {
+      iframe.removeAttr('src');
+    }
   }
 }));

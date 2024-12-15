@@ -101,10 +101,10 @@
                                                 <input type="hidden" id="value-item-id" value="">
                                                 <thead>
                                                     <tr>
-                                                        <th>
-                                                            <div class="box-delete-item">
-                                                                <input type="checkbox" id="item-all-checked">
-                                                                @can('deleteMultiple', \App\Models\System::class)
+                                                        @can('deleteMultiple', \App\Models\System::class)
+                                                            <th>
+                                                                <div class="box-delete-item">
+                                                                    <input type="checkbox" id="item-all-checked">
                                                                     <button
                                                                         data-url="{{ route('admin.systems.deleteItemMultipleChecked') }}"
                                                                         id="btn-delete-all"
@@ -117,9 +117,9 @@
                                                                                 d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z" />
                                                                         </svg>
                                                                     </button>
-                                                                @endcan
-                                                            </div>
-                                                        </th>
+                                                                </div>
+                                                            </th>
+                                                        @endcan
                                                         <th style="width:80px;">#</th>
                                                         <th>{{ __('language.admin.systems.folder') }}</th>
                                                         <th>{{ __('language.admin.systems.nameSystem') }}</th>
@@ -140,10 +140,12 @@
                                                 <tbody>
                                                     @foreach ($systemBySystemId as $key => $system)
                                                         <tr>
-                                                            <td>
-                                                                <input type="checkbox" data-id="{{ $system->id }}"
-                                                                    class="item-checked">
-                                                            </td>
+                                                            @can('deleteMultiple', \App\Models\System::class)
+                                                                <td>
+                                                                    <input type="checkbox" data-id="{{ $system->id }}"
+                                                                        class="item-checked">
+                                                                </td>
+                                                            @endcan
                                                             <td>
                                                                 <strong
                                                                     class="text-black">{{ ($systemBySystemId->currentPage() - 1) * $systemBySystemId->perPage() + $key + 1 }}
@@ -165,17 +167,19 @@
                                                             <td>
                                                                 {{ $system->description }}
                                                             </td>
-                                                            @can('changeOrder', App\Models\System::class)
-                                                                <td>
+                                                            <td>
+                                                                @can('changeOrder', App\Models\System::class)
                                                                     <input type="number" min="0" name="order"
                                                                         value="{{ $system->order }}"
                                                                         data-id="{{ $system->id }}"
                                                                         data-url="{{ route('admin.systems.changeOrder') }}"
                                                                         class="form-control changeOrder" style="width: 67px;">
-                                                                </td>
-                                                            @endcan
-                                                            @can('changeActive', App\Models\System::class)
-                                                                <td>
+                                                                @else
+                                                                    <b>{{ $system->order }}</b>
+                                                                @endcan
+                                                            </td>
+                                                            <td>
+                                                                @can('changeActive', App\Models\System::class)
                                                                     <button
                                                                         class="toggle-active-btn btn btn-xs {{ $system->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
                                                                         data-id="{{ $system->id }}"
@@ -183,8 +187,13 @@
                                                                         data-url="{{ route('admin.systems.changeActive') }}">
                                                                         {{ $system->active == 1 ? __('language.admin.systems.show') : __('language.admin.systems.hidden') }}
                                                                     </button>
-                                                                </td>
-                                                            @endcan
+                                                                @else
+                                                                    <span
+                                                                        class="badge light badge-{{ $system->active == 1 ? 'success' : 'danger' }}">
+                                                                        {{ $system->active == 1 ? __('language.admin.systems.show') : __('language.admin.systems.hidden') }}
+                                                                    </span>
+                                                                @endcan
+                                                            </td>
 
                                                             @if (auth()->user()->can('update', \App\Models\System::class) ||
                                                                     auth()->user()->can('delete', \App\Models\System::class))
@@ -346,7 +355,7 @@
                                             <div class="d-flex justify-content-center align-items-center p-5">
                                                 <div>
                                                     <h3 class="text-center">
-                                                        {{ request()->name ? __('language.admin.systems.noDataSearch') . request()->name : __('language.admin.systems.noData') }}
+                                                        {{ request()->name ? 'Không có kết quả với từ khóa:' . request()->name : 'Không có dữ liệu' }}
                                                     </h3>
                                                 </div>
                                             </div>

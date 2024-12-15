@@ -183,10 +183,10 @@
                                                         {{ old('voucher.discount_type') == 'money' ? 'selected' : '' }}>
                                                         Số tiền ( Vnđ )
                                                     </option>
-                                                    <option @selected($data->discount_type == 'percent') value="percent"
+                                                    {{-- <option @selected($data->discount_type == 'percent') value="percent"
                                                         {{ old('voucher.discount_type') == 'percent' ? 'selected' : '' }}>
                                                         Phần trăm ( % )
-                                                    </option>
+                                                    </option> --}}
                                                 </select>
                                             </div>
                                             <div class="mt-3">

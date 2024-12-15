@@ -37,7 +37,9 @@
                                         <th>Mã</th>
                                         <th>Giá tiền thêm</th>
                                         <th>Nút hành động</th>
-                                        <th>Hành động</th>
+                                        @if (auth()->user()->can('update', \App\Models\SeatType::class) || auth()->user()->can('delete', \App\Models\SeatType::class))
+                                            <th>Hành động</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody class="fs-4" x-data="{
@@ -73,20 +75,22 @@
                                                     <div class="tw-text-white">{{ $seatType->text }}</div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div @click="'{{ $seatType->is_system }}' ? editSeatType($event) : ''">
-                                                    @can('update', App\Models\SeatType::class)
-                                                        <a href="{{ route('admin.seat-types.edit', $seatType->id) }}"
-                                                            class="btn btn-primary shadow btn-xs sharp me-1">
-                                                            <i class="fa fa-pencil"></i>
-                                                        </a>
-                                                    @endcan
-                                                    @can('delete', App\Models\SeatType::class)
-                                                        <x-destroy-button route="admin.seat-types.destroy"
-                                                            id="{{ $seatType->id }}" />
-                                                    @endcan
-                                                </div>
-                                            </td>
+                                            @if (auth()->user()->can('update', \App\Models\SeatType::class) || auth()->user()->can('delete', \App\Models\SeatType::class))
+                                                <td>
+                                                    <div @click="'{{ $seatType->is_system }}' ? editSeatType($event) : ''">
+                                                        @can('update', App\Models\SeatType::class)
+                                                            <a href="{{ route('admin.seat-types.edit', $seatType->id) }}"
+                                                                class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        @endcan
+                                                        @can('delete', App\Models\SeatType::class)
+                                                            <x-destroy-button route="admin.seat-types.destroy"
+                                                                id="{{ $seatType->id }}" />
+                                                        @endcan
+                                                    </div>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>

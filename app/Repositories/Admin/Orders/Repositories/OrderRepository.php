@@ -17,37 +17,37 @@ class OrderRepository extends BaseRepository implements OrderInterface
     public function getAll()
     {
         return $this->model
-                ->where('code' , '!=', null)
-                ->where('status' , '!=', null)
-                ->when(auth()->user()->cinema_id, function ($query, $cinemaId) {
-                    $query->where('cinema_id', $cinemaId);
-                })
-                ->with([
-                    'user:id,name',
-                    'cinema:id,name',
-                    'movie:id,title',
-                    'showtime:id,start_time,room_id',
-                    'showtime.room:id,room_name',
-                ])
-                ->orderBy('id', 'desc')
-                ->get();
+            ->where('code', '!=', null)
+            ->where('status', '!=', null)
+            ->when(auth()->user()->cinema_id, function ($query, $cinemaId) {
+                $query->where('cinema_id', $cinemaId);
+            })
+            ->with([
+                'user:id,name',
+                'cinema:id,name',
+                'movie:id,title',
+                'showtime:id,start_time,room_id',
+                'showtime.room:id,room_name',
+            ])
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     public function filter($request)
     {
         $data = $this->model->newQuery();
-        $data = $data->where('code' , '!=', null)
-        ->where('status' , '!=', null)
-        ->when(auth()->user()->cinema_id, function ($query, $cinemaId) {
-            $query->where('cinema_id', $cinemaId);
-        })
-        ->with([
-            'user:id,name',
-            'cinema:id,name',
-            'movie:id,title,image',
-            'showtime:id,start_time,room_id',
-            'showtime.room:id,room_name',
-        ]);
+        $data = $data->where('code', '!=', null)
+            ->where('status', '!=', null)
+            ->when(auth()->user()->cinema_id, function ($query, $cinemaId) {
+                $query->where('cinema_id', $cinemaId);
+            })
+            ->with([
+                'user:id,name',
+                'cinema:id,name',
+                'movie:id,title,image',
+                'showtime:id,start_time,room_id',
+                'showtime.room:id,room_name',
+            ]);
         $data = $this->filterByCode($data, $request);
         $data = $this->filterByStatus($data, $request);
         $data = $this->filterByPaymentStatus($data, $request);
@@ -67,7 +67,7 @@ class OrderRepository extends BaseRepository implements OrderInterface
     {
         $order = $this->model->find($id);
         if (
-            $order->status == 'completed'
+            ($order->status == 'completed'|| $order->status == 'rejected')
             && $order->payment_status == 'completed'
             && is_null($order->refund_status)
             && $order->get_tickets == 0
@@ -83,17 +83,8 @@ class OrderRepository extends BaseRepository implements OrderInterface
             if (isset($rateMap[$memberLevel])) {
                 $point = $user->points;
                 $calculatedPoints = $order->total_price * $rateMap[$memberLevel];
+                $calculatedPoints = ($calculatedPoints - floor($calculatedPoints) >= 0.5) ? ceil($calculatedPoints) : floor($calculatedPoints);
 
-                $fractionalPart = $calculatedPoints - floor($calculatedPoints);
-                if ($fractionalPart >= 0.5) {
-                    $calculatedPoints = ceil($calculatedPoints); // Làm tròn lên
-                } elseif ($fractionalPart >= 0.1 && $fractionalPart < 0.5) {
-                    $calculatedPoints = floor($calculatedPoints); // Làm tròn xuống
-                } else {
-                    $calculatedPoints = 0; // Không cộng điểm nếu nhỏ hơn 0.1
-                }
-
-                // Cộng điểm vào tài khoản nếu điểm được làm tròn > 0
                 if ($calculatedPoints > 0) {
                     $point += $calculatedPoints;
                     $user->update([
@@ -110,6 +101,55 @@ class OrderRepository extends BaseRepository implements OrderInterface
         return false;
     }
 
+    public function changeManyTickets()
+    {
+        $orders = $this->model
+            ->whereHas('showtime', function ($query) {
+                $query->where('start_time', '<', now());
+            })
+            ->where('cinema_id', auth()->user()->cinema_id)
+            ->where('get_tickets', '!=', 1)
+            ->whereIn('status', ['completed', 'rejected'])
+            ->where('payment_status', 'completed')
+            ->whereNull('refund_status')
+            ->with('user')
+            ->get();
+
+        if ($orders->isEmpty()) {
+            return false;
+        }
+
+        $this->model
+            ->whereIn('id', $orders->pluck('id'))
+            ->update(['get_tickets' => 1]);
+
+        foreach ($orders as $order) {
+            $user = $order->user;
+
+            if ($user) {
+                $memberLevel = $user->membership_level;
+                $rateMap = [
+                    MemberLevel::MEMBER => 0.00005,
+                    MemberLevel::VIP    => 0.00007,
+                    MemberLevel::VVIP   => 0.00010,
+                ];
+
+                if (isset($rateMap[$memberLevel])) {
+                    $point = $user->points;
+                    $calculatedPoints = $order->total_price * $rateMap[$memberLevel];
+                    $calculatedPoints = ($calculatedPoints - floor($calculatedPoints) >= 0.5) ? ceil($calculatedPoints) : floor($calculatedPoints);
+
+                    if ($calculatedPoints > 0) {
+                        $point += $calculatedPoints;
+                        $user->update([
+                            'points' => $point,
+                        ]);
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
     private function filterByCode($query, $request)
     {

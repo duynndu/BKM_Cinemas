@@ -75,7 +75,7 @@ class PaymentController extends Controller
                 $momoUrl = $this->momo_payment($orderCode, $finalPrice);
                 return response()->json($momoUrl);
             } elseif ($request->payment == 'zalopay') {
-                $zaloPayUrl = $this->zaloPay_payment($finalPrice);
+                $zaloPayUrl = $this->zaloPay_payment($orderCode, $finalPrice);
                 return response()->json($zaloPayUrl);
             }
         }
@@ -273,7 +273,7 @@ class PaymentController extends Controller
             }
             $dataTransaction = [
                 'user_id' => $booking->user_id,
-                'payment_method' => 'vnpay',
+                'payment_method' => 'momo',
                 'amount' => $request->amount,
                 'type' => 'booking',
                 'description' => 'Giao dịch thành công - Đặt vé',
@@ -321,12 +321,12 @@ class PaymentController extends Controller
         }
     }
 
-    public function zaloPay_payment($amountTotal)
+    public function zaloPay_payment($orderCode, $amountTotal)
     {
         $config = config('payment.zalopay');
         $amount = $amountTotal;
         $app_time = round(microtime(true) * 1000);
-        $app_trans_id = date("ymd") . "_" . uniqid();
+        $app_trans_id = date(format: "ymd") . "_" . $orderCode;
         $app_user = 'demo';
         $bank_code = '';
         $description = "Nạp tiền vào ví thành viên - BKM Cinemas";
@@ -374,12 +374,11 @@ class PaymentController extends Controller
 
     public function zaloPayReturn(Request $request)
     {
-        dd($request->all());
-        $orderCode = '';
         $return_code = $request->input('return_code');
-        $app_trans_id = $request->input('app_trans_id');
+        $app_trans_id = $request->input('apptransid');
         $amount = $request->input('amount');
         $order_info = $request->input('order_info');
+        $orderCode = explode('_', $app_trans_id)[1];
 
         $booking = Booking::where('code', $orderCode)->first();
         if ($booking == null) {
@@ -387,8 +386,8 @@ class PaymentController extends Controller
         }
         $dataTransaction = [
             'user_id' => $booking->user_id,
-            'payment_method' => 'vnpay',
-            'amount' => $request->amount / 100,
+            'payment_method' => 'zalopay',
+            'amount' => $request->amount,
             'type' => 'booking',
             'description' => 'Giao dịch thành công - Đặt vé',
             'balance_after' => Auth::user()->balance,
@@ -453,13 +452,14 @@ class PaymentController extends Controller
         DB::beginTransaction();
         try {
             if ($balance_after < 0) {
-                $dataTransaction['status'] = Status::FAILED;
+                $dataTransaction['status'] = Status::LOW;
                 $dataTransaction['description'] = 'Số dư không đủ để đặt vé';
                 $dataTransaction['balance_after'] = $userPoints;
                 BookSeat::dispatch($booking->showtime_id, $booking->seatsBooking->pluck('seat.seat_number'), [
                     'action' => 'set',
                     'value' => SeatStatus::AVAILABLE
                 ]);
+                return $dataTransaction;
             } else {
                 auth()->user()->update(['balance' => $balance_after]);
                 // $this->updatePoints($booking->total_price);

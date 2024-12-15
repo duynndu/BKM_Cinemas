@@ -106,7 +106,7 @@
                                                     <th>{{ __('language.admin.genres.position') }}</th>
                                                     <th>{{ __('language.admin.genres.order') }}</th>
                                                     @if (Auth()->user()->can('update', \App\Models\Genre::class) || Auth()->user()->can('delete', \App\Models\Genre::class))
-                                                    <th>{{ __('language.admin.genres.action') }}</th>
+                                                        <th>{{ __('language.admin.genres.action') }}</th>
                                                     @endif
                                                 </tr>
                                             </thead>
@@ -207,7 +207,7 @@
                                     <div class="d-flex justify-content-center align-items-center p-5">
                                         <div>
                                             <h3 class="text-center">
-                                                {{ request()->name ? __('language.admin.genres.noDataSearch') . request()->name : __('language.admin.genres.noData') }}
+                                                {{ request()->name ? 'Không có kết quả với từ khóa:' . request()->name : 'Không có dữ liệu' }}
                                             </h3>
                                         </div>
                                     </div>

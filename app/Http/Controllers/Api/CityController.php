@@ -13,8 +13,10 @@ class CityController extends Controller
      */
     public function index()
     {
-        $cities = City::all();
-        return response()->json($cities);
+        $citiesWithCinemas = City::with('areas.cinemas')
+            ->whereHas('areas.cinemas')
+            ->get();
+        return response()->json($citiesWithCinemas);
     }
 
     /**

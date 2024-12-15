@@ -39,7 +39,9 @@
                                         <th>Số cột</th>
                                         <th>Số hàng</th>
                                         <th>Ghế</th>
-                                        <th>Hành động</th>
+                                        @if (auth()->user()->can('update', \App\Models\SeatLayout::class) || auth()->user()->can('delete', \App\Models\SeatLayout::class))
+                                            <th>Hành động</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,20 +67,22 @@
                                                 <i class="fa fa-chair"></i>
                                                 {{ $seatLayout->col_count * $seatLayout->row_count }} ghế
                                             </td>
-                                            <td>
-                                                <div>
-                                                    @can('update', App\Models\SeatLayout::class)
-                                                        <a href="{{ route('admin.seat-layouts.edit', $seatLayout->id) }}"
-                                                            class="btn btn-primary shadow btn-xs sharp me-1">
-                                                            <i class="fa fa-pencil"></i>
-                                                        </a>
-                                                    @endcan
-                                                    @can('delete', App\Models\SeatLayout::class)
-                                                        <x-destroy-button route="admin.seat-layouts.destroy"
-                                                            id="{{ $seatLayout->id }}" />
-                                                    @endcan
-                                                </div>
-                                            </td>
+                                            @if (auth()->user()->can('update', \App\Models\SeatLayout::class) || auth()->user()->can('delete', \App\Models\SeatLayout::class))
+                                                <td>
+                                                    <div>
+                                                        @can('update', App\Models\SeatLayout::class)
+                                                            <a href="{{ route('admin.seat-layouts.edit', $seatLayout->id) }}"
+                                                                class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        @endcan
+                                                        @can('delete', App\Models\SeatLayout::class)
+                                                            <x-destroy-button route="admin.seat-layouts.destroy"
+                                                                id="{{ $seatLayout->id }}" />
+                                                        @endcan
+                                                    </div>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>

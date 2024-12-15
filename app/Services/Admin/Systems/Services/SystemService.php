@@ -94,5 +94,13 @@ class SystemService extends BaseService implements SystemServiceInterface
         return $this->repository->changeOrder($request->id, $request->order);
     }
 
-
+    public function deleteMultipleChecked($request)
+    {
+        if (count($request->selectedIds) > 0) {
+            foreach ($request->selectedIds as $id) {
+                $this->repository->delete($id);
+            }
+            return true;
+        }
+    }
 }

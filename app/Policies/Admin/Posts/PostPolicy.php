@@ -17,7 +17,7 @@ class PostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('view-post');
     }
 
@@ -29,7 +29,7 @@ class PostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('view-post');
     }
 
@@ -41,7 +41,7 @@ class PostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('create-post');
     }
 
@@ -50,7 +50,7 @@ class PostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('copy-post');
     }
 
@@ -62,7 +62,7 @@ class PostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('update-post');
     }
 
@@ -74,7 +74,7 @@ class PostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('delete-post');
     }
 
@@ -83,7 +83,7 @@ class PostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('delete-multiple-post');
     }
 
@@ -92,7 +92,7 @@ class PostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('change-order-post');
     }
 
@@ -101,7 +101,7 @@ class PostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('change-active-post');
     }
 
@@ -110,25 +110,29 @@ class PostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('change-hot-post');
     }
-    
+
     public function changeStatus(User $user)
     {
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('change-status-post');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Post $post)
+    public function sendPromotion(User $user)
     {
-        //
+        if($user->type == User::TYPE_ADMIN) {
+            return true;
+        }
+
+        return $user->hasPermission('send-promotion-post');
     }
 
     /**

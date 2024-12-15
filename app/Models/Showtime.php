@@ -32,4 +32,15 @@ class Showtime extends Model
     {
         return $this->belongsTo(Cinema::class);
     }
+
+    public function getCanCancelAttribute()
+    {
+        $now = \Carbon\Carbon::now();
+
+        $startTime = \Carbon\Carbon::parse($this->start_time);
+
+        $timeDifferenceInMinutes = $now->diffInMinutes($startTime, false);
+
+        return $timeDifferenceInMinutes >= 120;
+    }
 }

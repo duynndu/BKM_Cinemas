@@ -8,4 +8,6 @@ interface OrderServiceInterface extends BaseServiceInterface
 {
     public function changeGetTickets($id);
     public function filter($request);
+    public function changeManyTickets();
+
 }

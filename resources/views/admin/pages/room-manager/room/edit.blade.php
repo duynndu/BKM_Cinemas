@@ -77,7 +77,7 @@
 										</div>
 										<div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-mt-3">
 											<div class="tw-col-span-7" id="selectedTime"></div>
-											<div style="border: 1px solid; min-height: 276px; border-radius: 4px;" class="tw-col-span-5 tw-flex tw-relative">
+											<div style="border: 1px solid #ccc; min-height: 276px; border-radius: 4px;" class="tw-col-span-5 tw-flex tw-relative">
 												<div x-show="showtimeSelected" class="tw-absolute tw-top-0 tw-right-0 tw-p-2"><i @click="deleteShowtime()" class="fa-solid fa-trash-can hover:tw-text-red-500 tw-cursor-pointer tw-text-xl"></i></div>
 												<div class="tw-flex tw-justify-center tw-items-center tw-flex-col tw-w-full" x-show="showtimeSelected && !showtimeSelected?.movie_id" x-cloak>
 													<div>Xuất chiếu chưa có phim</div>
@@ -88,13 +88,13 @@
 														<div class="tw-col-span-5">
 														<img class="tw-block tw-w-full tw-h-full tw-rounded tw-object-cover" :src="showtimeSelected?.movie?.image" alt="Movie Image" class="movie-image">
 														</div>
-														<div class="tw-col-span-7">
+														<div class="tw-col-span-7 p-3">
 															<h3 x-text="showtimeSelected?.movie?.title"></h3>
-															<p><strong>Director:</strong> <span x-text="showtimeSelected?.movie?.director"></span></p>
-															<p><strong>Duration:</strong> <span x-text="showtimeSelected?.movie?.duration"></span> phút</p>
-															<p><strong>Release Date:</strong> <span x-text="showtimeSelected?.movie?.release_date"></span></p>
-															<p><strong>Language:</strong> <span x-text="showtimeSelected?.movie?.language"></span></p>
-															<p><strong>Description:</strong> <span x-text="showtimeSelected?.movie?.description"></span></p>
+															<p><strong>Đạo diễn:</strong> <span x-text="showtimeSelected?.movie?.director"></span></p>
+															<p><strong>Thời lượng:</strong> <span x-text="showtimeSelected?.movie?.duration"></span> phút</p>
+															<p><strong>Ngày phát hành:</strong> <span x-text="showtimeSelected?.movie?.release_date"></span></p>
+															<p><strong>Ngôn ngữ:</strong> <span x-text="showtimeSelected?.movie?.language"></span></p>
+															<p style="text-align: justify"><strong>Mô tả:</strong> <span x-text="showtimeSelected?.movie?.description"></span></p>
 															<button type="button" class="btn btn-sm btn-danger" @click="clearShowtimeMovie()">Gỡ phim</button>
 														</div>
 													</div>

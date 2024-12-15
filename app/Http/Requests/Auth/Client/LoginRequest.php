@@ -45,6 +45,8 @@ class LoginRequest extends FormRequest
                 $validator->errors()->add('emailOrPhone', $loginType === 'email' 
                     ? 'Email này chưa được đăng ký.' 
                     : 'Số điện thoại này chưa được đăng ký.');
+            } elseif ($user->status == 0) {
+                $validator->errors()->add('emailOrPhone', 'Tài khoản của bạn đã bị khóa.');
             } 
             // Nếu tìm thấy người dùng nhưng mật khẩu không khớp
             elseif (!Hash::check($this->password, $user->password)) {

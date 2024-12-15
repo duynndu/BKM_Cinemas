@@ -24,12 +24,6 @@ class OrderController extends Controller
         return view('admin.pages.orders.index', compact('data'));
     }
 
-    public function detail($id)
-    {
-        $data = $this->orderService->find($id);
-        dd($data);
-    }
-
     public function changeGetTickets($id)
     {
         try {
@@ -39,10 +33,29 @@ class OrderController extends Controller
             if (!$data) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Có lỗi xảy ra!'
+                    'message' => 'Không đủ điều kiện!'
                 ], 400);
             }
             return response()->json(['success' => 'Thành công!', 'id' => $id], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra!',
+            ], 500);
+        }
+    }
+
+    public function changeManyTickets()
+    {
+        try {
+            DB::beginTransaction();
+            if (!$this->orderService->changeManyTickets()){
+                return response()->json(['message' => 'Không có dữ liệu!'], 400);
+            };
+            DB::commit();
+            return response()->json(['message' => 'Thành công!'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());

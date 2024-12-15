@@ -38,9 +38,6 @@ class MovieController extends Controller
         CityServiceInterface     $cityService,
         AreaServiceInterface     $areaService,
         CinemaServiceInterface   $cinemaService
-
-
-
     ) {
         $this->movieService = $movieService;
         $this->genreService = $genreService;
@@ -48,8 +45,6 @@ class MovieController extends Controller
         $this->cityService = $cityService;
         $this->areaService = $areaService;
         $this->cinemaService = $cinemaService;
-
-
     }
 
 
@@ -57,9 +52,7 @@ class MovieController extends Controller
     {
         $listGenre = $this->genreService->getAll();
         $data = $this->movieService->filter($request);
-        
         $cities = $this->cityService->getAll();
-
         return view('admin.pages.movies.index', compact('data','listGenre','cities'));
     }
 
@@ -74,7 +67,6 @@ class MovieController extends Controller
     public function store(MovieRequest $request)
     {
         $data = $request->all();
-        // dd($data);
         try {
             DB::beginTransaction();
 

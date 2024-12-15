@@ -30,10 +30,11 @@ class UserRepository extends BaseRepository implements UserInterface
         if ($request->type) {
             $data->where("type", $request->type);
         }
-        
-
         if (auth()->user()->cinema_id) {
             $data->where('cinema_id', auth()->user()->cinema_id);
+        }
+        if (!empty($request->cinema_id)) {
+            $data->where('cinema_id', $request->cinema_id);
         }
 
         $data = $data->paginate(self::PAGINATION);

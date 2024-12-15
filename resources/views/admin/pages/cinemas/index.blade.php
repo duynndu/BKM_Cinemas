@@ -166,7 +166,9 @@
                                                     <th>Email</th>
                                                     <th>Map</th>
                                                     <th>Trạng thái</th>
-                                                    <th>Hành động</th>
+                                                    @if (Auth()->user()->can('update', \App\Models\Cinema::class) || Auth()->user()->can('delete', \App\Models\Cinema::class))
+                                                        <th>Hành động</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -237,30 +239,32 @@
                                                                 </span>
                                                             @endcan
                                                         </td>
-                                                        <td>
-                                                            <div
-                                                                style="padding-right: 20px; display: flex; justify-content: end">
-                                                                @can('update', \App\Models\Cinema::class)
-                                                                    <a href="{{ route('admin.cinemas.edit', $cinema->id) }}"
-                                                                        class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                        <i class="fa fa-pencil"></i>
-                                                                    </a>
-                                                                @endcan
-                                                                @can('delete', \App\Models\Cinema::class)
-                                                                    <form
-                                                                        action="{{ route('admin.cinemas.delete', $cinema->id) }}"
-                                                                        class="formDelete" method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button
-                                                                            class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
-                                                                            data-type="DELETE" href="">
-                                                                            <i class="fa fa-trash"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                @endcan
-                                                            </div>
-                                                        </td>
+                                                        @if (Auth()->user()->can('update', \App\Models\Cinema::class) || Auth()->user()->can('delete', \App\Models\Cinema::class))
+                                                            <td>
+                                                                <div
+                                                                    style="padding-right: 20px; display: flex; justify-content: end">
+                                                                    @can('update', \App\Models\Cinema::class)
+                                                                        <a href="{{ route('admin.cinemas.edit', $cinema->id) }}"
+                                                                            class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </a>
+                                                                    @endcan
+                                                                    @can('delete', \App\Models\Cinema::class)
+                                                                        <form
+                                                                            action="{{ route('admin.cinemas.delete', $cinema->id) }}"
+                                                                            class="formDelete" method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button
+                                                                                class="btn btn-danger shadow btn-xs sharp me-1 call-ajax btn-remove btnDelete"
+                                                                                data-type="DELETE" href="">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    @endcan
+                                                                </div>
+                                                            </td>
+                                                        @endif
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -275,7 +279,7 @@
                                     <div class="d-flex justify-content-center align-items-center p-5">
                                         <div>
                                             <h3 class="text-center">
-                                                Không tìm thấy: {{ request()->name }}
+                                                {{ request()->name ? 'Không có kết quả với từ khóa:' . request()->name : 'Không có dữ liệu' }}
                                             </h3>
                                         </div>
                                     </div>
