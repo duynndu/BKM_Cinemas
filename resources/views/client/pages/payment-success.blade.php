@@ -26,6 +26,7 @@
     </div>
     <div class="button-group ">
         <a href="{{ route('home') }}" class="button">Về Trang Chủ</a>
+        <a style="margin-left: 20px;" href="{{ route('account', ['tab' => 'vedadat']) }}" class="button btn-ticket-view">Thông tin đặt vé</a>
     </div>
 </div>
 @endsection
@@ -36,6 +37,18 @@
     QRCode.toCanvas(document.getElementById('qrcode'), '{{$code}}', function(error) {
         if (error) console.error(error);
         console.log('Success!');
+    });
+
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tab = urlParams.get('tab');
+
+        if (tab) {
+            $('.nav-tabs li').removeClass('active');
+            $(`.nav-tabs a[href="#${tab}"]`).closest('li').addClass('active');
+            $(`.tab-pane`).removeClass('in active');
+            $(`#${tab}`).addClass('in active');
+        }
     });
 </script>
 @endsection

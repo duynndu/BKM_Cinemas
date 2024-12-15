@@ -23,7 +23,7 @@ class OrderRepository extends BaseRepository implements OrderInterface
                 $query->where('cinema_id', $cinemaId);
             })
             ->with([
-                'user:id,name',
+                'user:id,name,email',
                 'cinema:id,name',
                 'movie:id,title',
                 'showtime:id,start_time,room_id',
@@ -42,7 +42,7 @@ class OrderRepository extends BaseRepository implements OrderInterface
                 $query->where('cinema_id', $cinemaId);
             })
             ->with([
-                'user:id,name',
+                'user:id,name,email',
                 'cinema:id,name',
                 'movie:id,title,image',
                 'showtime:id,start_time,room_id',

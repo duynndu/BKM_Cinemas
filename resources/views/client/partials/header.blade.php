@@ -11,7 +11,7 @@
             <div class="top-button">
                 <div class="row">
                     <div class="col-md-8 col-sm-7">
-                         <a class="buy-ticket" href="#"><img class="img-responsive"
+                         <a class=""><img class=""
                                 src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
                          <a class="flags" href="#"><img class="img-responsive"
                                 src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a>
