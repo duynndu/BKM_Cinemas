@@ -68,7 +68,7 @@
                             <li>Xem các đơn hàng trước đây</li>
                             <li>Thực hiện thay đổi thông tin tài khoản của bạn</li>
                             <li>Thay đổi mật khẩu của bạn</li>
-                            <li>Lưu trữ địa chỉ thay thế (để giao hàng cho nhiều thành viên gia đình và bạn bè!)</li>
+                            <li>Đổi quà tặng, nhận voucher miễn phí.</li>
                         </ul>
                     </div>
                 </div>
