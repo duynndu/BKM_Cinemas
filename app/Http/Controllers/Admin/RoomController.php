@@ -77,6 +77,7 @@ class RoomController extends Controller
             Storage::disk('public')->delete($room->image);
         }
         $room->showtimes()->delete();
+        $room->seats()->delete();
         $room->movies()->detach();
         $room->delete();
         return redirect()->route('rooms.index')->with('message', 'Xóa phòng thành công');
