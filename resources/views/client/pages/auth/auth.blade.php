@@ -1152,18 +1152,6 @@
                                         <td>7 Điểm</td>
                                         <td>10 Điểm</td>
                                     </tr>
-                                    <tr>
-                                        <td>Quầy Bắp Nước</td>
-                                        <td>3%</td>
-                                        <td>4%</td>
-                                        <td>5%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="highlight">VD: 100.000 đ</td>
-                                        <td>3 Điểm</td>
-                                        <td>4 Điểm</td>
-                                        <td>5 Điểm</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>

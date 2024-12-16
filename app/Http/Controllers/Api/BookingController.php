@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\ResetSeatStatus;
 use App\Models\Booking;
 use App\Models\Notification;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\Admin\Orders\Interfaces\OrderServiceInterface;
@@ -228,6 +229,16 @@ class BookingController extends Controller
             $record->refund_status = $validated['status'];
             $record->save();
 
+            Transaction::create([
+                'user_id' => $record->user_id,
+                'payment_method' => 'customer',
+                'amount'   => $record->final_price,
+                'type'    => 'refund',
+                'description'    => 'Hoàn tiền thành công!',
+                'status'    => 'completed',
+                'balance_after'    => $user->balance,
+            ]);
+
             broadcast(new OrderStatusUpdated([
                 'id' => $id,
                 'refund' => true,
@@ -240,13 +251,6 @@ class BookingController extends Controller
                 'code' => $record->code,
                 'total_price' => $record->total_price,
             ], $record->user));
-
-            OrderRefundStatusUpdated::dispatch([
-                'id' => $id,
-                'status' => $record->status,
-                'code' => $record->code,
-                'total_price' => $record->total_price,
-            ], $record->user);
 
             return response()->json(['success' => 'Thành công!', 'id' => $id], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {

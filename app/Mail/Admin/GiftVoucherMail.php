@@ -45,7 +45,7 @@ class GiftVoucherMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Bạn vừa nhận được voucher:' . $this->voucher->name,
+            subject: 'Bạn vừa nhận được voucher: ' . $this->voucher->name,
         );
     }
 

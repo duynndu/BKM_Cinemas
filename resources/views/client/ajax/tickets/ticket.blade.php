@@ -88,7 +88,7 @@
                                                                                             <li>
                                                                                                 <img
                                                                                                     src="{{ asset('client/images/locationIcon.png') }}">
-                                                                                                <span>{{ $ticket->cinema->name }}</span>
+                                                                                                <span>{{ $ticket->cinema->name }} ({{ $ticket->cinema->area->name }}, {{ $ticket->cinema->area->city->name }})</span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
@@ -148,7 +148,7 @@
                             </div>
                         </td>
                         <td>{{ $ticket->cinema->name }}</td>
-                        <td>{{ number_format($ticket->total_price, 0, ',', '.') }}đ</td>
+                        <td>{{ number_format($ticket->final_price, 0, ',', '.') }}đ</td>
                         <td>
                             <span class="text-danger">
                                 {{ $ticket->get_tickets == 0 ? 'Chưa nhận' : 'Đã nhận' }}</td>

@@ -2,39 +2,51 @@ let isSubmitting = false;
 const cinema_id = $('meta[name="cinema_id"]').attr('content');
 
 function changeOrder(e) {
-    if (isSubmitting) return;
-    isSubmitting = true;
-    const select = $(e.target);
-    const status = select.val();
-    const url = select.attr('data-url');
-
-    if (!url) {
-        isSubmitting = false;
-        return;
-    }
-
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: {
-            _token: $('meta[name="csrf-token"]').attr('content'),
-            status: status
-        },
-        success: (response) => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Thành công!',
-                text: response.message,
-                timer: 2000,
-                showConfirmButton: false
-            }).then(() => (isSubmitting = false));
-        },
-        error: (xhr) => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi!',
-                text: xhr.responseJSON?.message || 'Đã xảy ra lỗi. Vui lòng thử lại.',
-            }).then(() => (isSubmitting = false));
+    Swal.fire({
+        title: 'Bạn muốn thay đổi trạng thái vé?',
+        text: "Yêu cầu của bạn sẽ không được hoàn tác!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy',
+        showLoaderOnConfirm: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (isSubmitting) return;
+            isSubmitting = true;
+            const select = $(e.target);
+            const status = select.val();
+            const url = select.attr('data-url');
+        
+            if (!url) {
+                isSubmitting = false;
+                return;
+            }
+        
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    status: status
+                },
+                success: (response) => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => (isSubmitting = false));
+                },
+                error: (xhr) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: xhr.responseJSON?.message || 'Đã xảy ra lỗi. Vui lòng thử lại.',
+                    }).then(() => (isSubmitting = false));
+                }
+            });
         }
     });
 }

@@ -846,7 +846,7 @@
                                                                                                                     <li>
                                                                                                                         <img
                                                                                                                             src="{{ asset('client/images/locationIcon.png') }}">
-                                                                                                                        <span>{{ $order->cinema->name }}</span>
+                                                                                                                            <span>{{ $order->cinema->name }}</span>
                                                                                                                     </li>
                                                                                                                 </ul>
                                                                                                             </div>
