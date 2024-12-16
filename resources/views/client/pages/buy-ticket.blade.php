@@ -238,7 +238,7 @@
                                     <div id="current-select">
                                         <div class="select">
                                             Tổng cộng:<span class="price" style="font-size: 30px">
-                                                <span id="totalPrice" x-text="price((totalPriceSeats + totalPriceFoods - discountPrice) < 0 ? 0 : (totalPriceSeats + totalPriceFoods + discountPrice))"></span>
+                                                <span id="totalPrice" x-text="price((totalPriceSeats + totalPriceFoods - discountPrice) < 0 ? 0 : (totalPriceSeats + totalPriceFoods - discountPrice))"></span>
                                             </span>
                                             <span id="decrease"></span>
                                         </div>
