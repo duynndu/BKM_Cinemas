@@ -7,6 +7,16 @@
     .text-white {
         color: #fff !important;
     }
+
+    .mb-10 {
+        margin-bottom: 10px !important;
+    }
+
+    .gr-ticket {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        width: 200px;
+    }
 </style>
 @endsection
 

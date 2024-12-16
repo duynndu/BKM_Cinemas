@@ -95,6 +95,10 @@
             fill: currentcolor;
         }
 
+        .mb-10 {
+            margin-bottom: 10px !important;
+        }
+
         .btn-cancelled-ticket {
             padding: 5px 10px;
             background-color: #eb1689;
@@ -102,6 +106,12 @@
             box-shadow: -2px 0 4px #000;
             border-radius: 0;
             font-size: 12px;
+        }
+
+        .gr-ticket {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            width: 200px;
         }
 
         .transaction-reward th {
@@ -856,6 +866,26 @@
                                                                                                                     class="col medium-12 small-12 large-3">
                                                                                                                     <div
                                                                                                                         class="col-inner text-center">
+                                                                                                                        <p>Đồ ăn</p>
+                                                                                                                        <div>
+                                                                                                                            @if ($order->foodsBooking && $order->foodsBooking->count())
+                                                                                                                                @foreach ($order->foodsBooking as $foodBooking)
+                                                                                                                                    <span>{{ $foodBooking->food->name ?? '' }} x{{ $foodBooking->quantity }}</span>
+                                                                                                                                    @if (!$loop->last)
+                                                                                                                                        |
+                                                                                                                                    @endif
+                                                                                                                                @endforeach
+                                                                                                                            @else
+                                                                                                                                <span>Không có
+                                                                                                                                    đồ ăn</span>
+                                                                                                                            @endif
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div
+                                                                                                                    class="col medium-12 small-12 large-3">
+                                                                                                                    <div
+                                                                                                                        class="col-inner text-center">
                                                                                                                         <p>Ghế
                                                                                                                         </p>
                                                                                                                         <div>
@@ -887,11 +917,50 @@
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                             </div>
-                                                                                                            <div
-                                                                                                                class="total">
-                                                                                                                Tổng
-                                                                                                                tiền:
-                                                                                                                <span>{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
+                                                                                                            @if ($order->totalFoodsPrice() > 0)
+                                                                                                                <div class="total mb-10 gr-ticket">
+                                                                                                                    <div>
+                                                                                                                        Tiền vé:
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span>{{ number_format($order->totalSeatsPrice(), 0, ',', '.') }}đ</span> 
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="total mb-10 gr-ticket">
+                                                                                                                    <div>
+                                                                                                                        Tiền đồ ăn:
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span>{{ number_format($order->totalFoodsPrice(), 0, ',', '.') }}đ</span> 
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            @else
+                                                                                                                <div class="total mb-10 gr-ticket">
+                                                                                                                    <div>
+                                                                                                                        Tiền vé:
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span>{{ number_format($order->totalSeatsPrice(), 0, ',', '.') }}đ</span> 
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            @endif
+                                                                                                            @if ($order->discount_price > 0)
+                                                                                                                <div class="total mb-10 gr-ticket">
+                                                                                                                    <div>
+                                                                                                                        Voucher:
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span>-{{ number_format($order->discount_price, 0, ',', '.') }}đ</span> 
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            @endif
+                                                                                                            <div class="total mb-10 gr-ticket">
+                                                                                                                <div>
+                                                                                                                    Tổng tiền:
+                                                                                                                </div>
+                                                                                                                <div>
+                                                                                                                    <span>{{ number_format($order->final_price, 0, ',', '.') }}đ</span> 
+                                                                                                                </div>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
