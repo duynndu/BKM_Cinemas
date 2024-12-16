@@ -612,97 +612,56 @@
                             </div>
                             <div class="card-body">
                                 @if ($data->count() > 0)
-                                    <div class="table-responsive">
-                                        <table class="table table-responsive-md" id="data-table">
-                                            <thead>
+                                    <table class="table table-responsive-md" id="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Mã đơn</th>
+                                                <th>Phim</th>
+                                                <th>Rạp phim</th>
+                                                <th>Người đặt</th>
+                                                <th>Trạng thái</th>
+                                                <th>Trạng thái thanh toán</th>
+                                                <th>Trạng thái hoàn tiền</th>
+                                                <th>Nhận vé</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data as $key => $order)
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>Mã đơn</th>
-                                                    <th>Phim</th>
-                                                    <th>Rạp phim</th>
-                                                    <th>Người đặt</th>
-                                                    <th>Trạng thái</th>
-                                                    <th>Trạng thái thanh toán</th>
-                                                    <th>Trạng thái hoàn tiền</th>
-                                                    <th>Nhận vé</th>
-                                                    <th>Hành động</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($data as $key => $order)
-                                                    <tr>
-                                                        <td>
-                                                            <strong
-                                                                class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
-                                                        </td>
-                                                        <td>
-                                                            <b class="text-black">
-                                                                {{ $order->code }}
-                                                            </b>
-                                                        </td>
-                                                        <td>
-                                                            {{ $order->movie->title }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $order->cinema->name }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $order->user->name ?? $order->user->email }}
-                                                        </td>
-                                                        <td>
-                                                            @if (
-                                                                $order->status == 'cancelled' ||
-                                                                    $order->status == null ||
-                                                                    $order->status == 'completed' ||
-                                                                    $order->status == 'rejected')
-                                                                <b id="status-{{ $order->id }}">
-                                                                    @switch($order->status)
-                                                                        @case('completed')
-                                                                            Hoàn thành
-                                                                        @break
-
-                                                                        @case('rejected')
-                                                                            Từ chối hủy
-                                                                        @break
-
-                                                                        @case('cancelled')
-                                                                            Hủy
-                                                                        @break
-
-                                                                        @default
-                                                                            Không xác định
-                                                                    @endswitch
-                                                                </b>
-                                                            @else
-                                                                <select name="status" id="status-{{ $order->id }}"
-                                                                    class="form-control order_status"
-                                                                    data-url="{{ route('api.orders.changeStatus', $order->id) }}">
-                                                                    <option value="cancelled" @selected($order->status == 'cancelled')>
-                                                                        Hủy
-                                                                    </option>
-                                                                    <option value="waiting_for_cancellation"
-                                                                        @selected($order->status == 'waiting_for_cancellation')>
-                                                                        Chờ hủy
-                                                                    </option>
-                                                                    <option value="rejected" @selected($order->status == 'rejected')>
-                                                                        Từ chối hủy
-                                                                    </option>
-                                                                </select>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <b id="payment_status-{{ $order->id }}">
-                                                                @switch($order->payment_status)
-                                                                    @case('pending')
-                                                                        Chờ xác nhận
-                                                                    @break
-
+                                                    <td>
+                                                        <strong
+                                                            class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
+                                                    </td>
+                                                    <td>
+                                                        <b class="text-black">
+                                                            {{ $order->code }}
+                                                        </b>
+                                                    </td>
+                                                    <td>
+                                                        {{ $order->movie->title }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $order->cinema->name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $order->user->name ?? $order->user->email }}
+                                                    </td>
+                                                    <td>
+                                                        @if (
+                                                            $order->status == 'cancelled' ||
+                                                                $order->status == null ||
+                                                                $order->status == 'completed' ||
+                                                                $order->status == 'rejected')
+                                                            <b id="status-{{ $order->id }}">
+                                                                @switch($order->status)
                                                                     @case('completed')
                                                                         Hoàn thành
                                                                     @break
 
-                                                                    @case('failed')
-                                                                        Lỗi
+                                                                    @case('rejected')
+                                                                        Từ chối hủy
                                                                     @break
 
                                                                     @case('cancelled')
@@ -713,187 +672,226 @@
                                                                         Không xác định
                                                                 @endswitch
                                                             </b>
-                                                        </td>
-                                                        <td>
-                                                            @if (is_null($order->refund_status))
-                                                                <b id="refund_status-{{ $order->id }}">Không có</b>
-                                                            @elseif ($order->refund_status == 'completed')
-                                                                <b id="refund_status-{{ $order->id }}">
-                                                                    Hoàn tiền thành công
-                                                                </b>
-                                                            @else
-                                                                <select name="refund_status"
-                                                                    data-url="{{ route('api.orders.changeRefundStatus', $order->id) }}"
-                                                                    class="form-control refund_status"
-                                                                    id="refund_status-{{ $order->id }}">
-                                                                    <option value="pending" @selected($order->refund_status == 'pending')>
-                                                                        Chờ hoàn tiền
-                                                                    </option>
-                                                                    <option value="completed"
-                                                                        @selected($order->refund_status == 'completed')>
-                                                                        Hoàn tiền
-                                                                    </option>
-                                                                </select>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if (
-                                                                $order->refund_status != null ||
-                                                                    $order->status == 'cancelled' ||
-                                                                    $order->payment_status != 'completed' ||
-                                                                    $order->status == 'waiting_for_cancellation' ||
-                                                                    $order->get_tickets == 1)
-                                                                <b id="get_tickets-{{ $order->id }}">
-                                                                    {{ $order->get_tickets == 1 ? 'Đã nhận' : 'Chưa nhận' }}
-                                                                </b>
-                                                            @else
-                                                                <button id="get_tickets-{{ $order->id }}"
-                                                                    class="get_tickets btn btn-xs btn-success text-white"
-                                                                    data-id="{{ $order->id }}"
-                                                                    data-url="{{ route('admin.orders.changeGetTickets', $order->id) }}">
-                                                                    Nhận vé
+                                                        @else
+                                                            <select name="status" id="status-{{ $order->id }}"
+                                                                class="form-control order_status"
+                                                                data-url="{{ route('api.orders.changeStatus', $order->id) }}">
+                                                                <option value="cancelled" @selected($order->status == 'cancelled')>
+                                                                    Hủy
+                                                                </option>
+                                                                <option value="waiting_for_cancellation"
+                                                                    @selected($order->status == 'waiting_for_cancellation')>
+                                                                    Chờ hủy
+                                                                </option>
+                                                                <option value="rejected" @selected($order->status == 'rejected')>
+                                                                    Từ chối hủy
+                                                                </option>
+                                                            </select>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <b id="payment_status-{{ $order->id }}">
+                                                            @switch($order->payment_status)
+                                                                @case('pending')
+                                                                    Chờ xác nhận
+                                                                @break
+
+                                                                @case('completed')
+                                                                    Hoàn thành
+                                                                @break
+
+                                                                @case('failed')
+                                                                    Lỗi
+                                                                @break
+
+                                                                @case('cancelled')
+                                                                    Hủy
+                                                                @break
+
+                                                                @default
+                                                                    Không xác định
+                                                            @endswitch
+                                                        </b>
+                                                    </td>
+                                                    <td>
+                                                        @if (is_null($order->refund_status))
+                                                            <b id="refund_status-{{ $order->id }}">Không có</b>
+                                                        @elseif ($order->refund_status == 'completed')
+                                                            <b id="refund_status-{{ $order->id }}">
+                                                                Hoàn tiền thành công
+                                                            </b>
+                                                        @else
+                                                            <select name="refund_status"
+                                                                data-url="{{ route('api.orders.changeRefundStatus', $order->id) }}"
+                                                                class="form-control refund_status"
+                                                                id="refund_status-{{ $order->id }}">
+                                                                <option value="pending" @selected($order->refund_status == 'pending')>
+                                                                    Chờ hoàn tiền
+                                                                </option>
+                                                                <option value="completed"
+                                                                    @selected($order->refund_status == 'completed')>
+                                                                    Hoàn tiền
+                                                                </option>
+                                                            </select>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if (
+                                                            $order->refund_status != null ||
+                                                                $order->status == 'cancelled' ||
+                                                                $order->payment_status != 'completed' ||
+                                                                $order->status == 'waiting_for_cancellation' ||
+                                                                $order->get_tickets == 1)
+                                                            <b id="get_tickets-{{ $order->id }}">
+                                                                {{ $order->get_tickets == 1 ? 'Đã nhận' : 'Chưa nhận' }}
+                                                            </b>
+                                                        @else
+                                                            <button id="get_tickets-{{ $order->id }}"
+                                                                class="get_tickets btn btn-xs btn-success text-white"
+                                                                data-id="{{ $order->id }}"
+                                                                data-url="{{ route('admin.orders.changeGetTickets', $order->id) }}">
+                                                                Nhận vé
+                                                            </button>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                            data-bs-target="#modalTickets_{{ $order->id }}"
+                                                            class="btn btn-primary shadow btn-xs sharp me-1">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <div class="modal fade" id="modalTickets_{{ $order->id }}"
+                                                    aria-modal="true" role="dialog">
+                                                    <div class="modal-dialog modal-xl" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">
+                                                                    {{ __('language.admin.members.roles.information') }}
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal">
                                                                 </button>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                data-bs-target="#modalTickets_{{ $order->id }}"
-                                                                class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <div class="modal fade" id="modalTickets_{{ $order->id }}"
-                                                        aria-modal="true" role="dialog">
-                                                        <div class="modal-dialog modal-xl" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title">
-                                                                        {{ __('language.admin.members.roles.information') }}
-                                                                    </h5>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal">
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="col-inner">
-                                                                        <div class="order-view-container">
-                                                                            <div class="order-view-content">
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="col-inner">
+                                                                    <div class="order-view-container">
+                                                                        <div class="order-view-content">
+                                                                            <div
+                                                                                class="row align-center align-middle row-collapse">
                                                                                 <div
-                                                                                    class="row align-center align-middle row-collapse">
-                                                                                    <div
-                                                                                        class="col content-col medium-12 small-12 large-12">
-                                                                                        <div class="col-inner">
-                                                                                            <div
-                                                                                                class="row d-flex align-middle row-divided order-details-row row-collapse">
-                                                                                                <div class="col-3">
+                                                                                    class="col content-col medium-12 small-12 large-12">
+                                                                                    <div class="col-inner">
+                                                                                        <div
+                                                                                            class="row d-flex align-middle row-divided order-details-row row-collapse">
+                                                                                            <div class="col-3">
+                                                                                                <div
+                                                                                                    class="col-inner p-3">
                                                                                                     <div
-                                                                                                        class="col-inner p-3">
-                                                                                                        <div
-                                                                                                            class="qrcode-image text-center">
-                                                                                                            <div>Thông tin
-                                                                                                                vé</div>
-                                                                                                            <div>
-                                                                                                                <img
-                                                                                                                    src="{{ asset('client/images/offline-ticket.jpg') }}">
-                                                                                                            </div>
-                                                                                                            <div><span
-                                                                                                                    class="code">Vé
-                                                                                                                    đặt
-                                                                                                                    online</span>
-                                                                                                            </div>
+                                                                                                        class="qrcode-image text-center">
+                                                                                                        <div>Thông tin
+                                                                                                            vé</div>
+                                                                                                        <div>
+                                                                                                            <img
+                                                                                                                src="{{ asset('client/images/offline-ticket.jpg') }}">
+                                                                                                        </div>
+                                                                                                        <div><span
+                                                                                                                class="code">Vé
+                                                                                                                đặt
+                                                                                                                online</span>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
+                                                                                            </div>
 
-                                                                                                <div class="col-9">
+                                                                                            <div class="col-9">
+                                                                                                <div
+                                                                                                    class="col-inner p-3">
                                                                                                     <div
-                                                                                                        class="col-inner p-3">
+                                                                                                        class="icon-box icon-box-left align-middle text-left order-film-box">
                                                                                                         <div
-                                                                                                            class="icon-box icon-box-left align-middle text-left order-film-box">
+                                                                                                            class="icon-box-img">
+                                                                                                            <img
+                                                                                                                src="{{ $order->movie->image }}">
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="icon-box-text p-last-0">
+                                                                                                            <h4
+                                                                                                                class="fw-700">
+                                                                                                                {{ $order->movie->title }}
+                                                                                                            </h4>
                                                                                                             <div
-                                                                                                                class="icon-box-img">
-                                                                                                                <img
-                                                                                                                    src="{{ $order->movie->image }}">
+                                                                                                                class="metas">
+                                                                                                                <ul>
+                                                                                                                    <li>
+                                                                                                                        <img
+                                                                                                                            src="{{ asset('client/images/helpIcon.png') }}">
+                                                                                                                        <span>Phụ
+                                                                                                                            đề,
+                                                                                                                            {{ $order->movie->format }}</span>
+                                                                                                                    </li>
+                                                                                                                    <li>
+                                                                                                                        <img
+                                                                                                                            src="{{ asset('client/images/calendarIcon.png') }}">
+                                                                                                                        <span>{{ date('d/m/Y', strtotime($order->showtime->start_time)) }}</span>
+                                                                                                                    </li>
+                                                                                                                    <li>
+                                                                                                                        <img
+                                                                                                                            src="{{ asset('client/images/clockIcon.png') }}">
+                                                                                                                        Suất
+                                                                                                                        chiếu:
+                                                                                                                        <span>{{ date('H:i', strtotime($order->showtime->start_time)) }}</span>
+                                                                                                                    </li>
+                                                                                                                    <li>
+                                                                                                                        <img
+                                                                                                                            src="{{ asset('client/images/locationIcon.png') }}">
+                                                                                                                        <span>{{ $order->cinema->name }}</span>
+                                                                                                                    </li>
+                                                                                                                </ul>
                                                                                                             </div>
                                                                                                             <div
-                                                                                                                class="icon-box-text p-last-0">
-                                                                                                                <h4
-                                                                                                                    class="fw-700">
-                                                                                                                    {{ $order->movie->title }}
-                                                                                                                </h4>
+                                                                                                                class="row d-flex row-small ticket-row row-divided">
                                                                                                                 <div
-                                                                                                                    class="metas">
-                                                                                                                    <ul>
-                                                                                                                        <li>
-                                                                                                                            <img
-                                                                                                                                src="{{ asset('client/images/helpIcon.png') }}">
-                                                                                                                            <span>Phụ
-                                                                                                                                đề,
-                                                                                                                                {{ $order->movie->format }}</span>
-                                                                                                                        </li>
-                                                                                                                        <li>
-                                                                                                                            <img
-                                                                                                                                src="{{ asset('client/images/calendarIcon.png') }}">
-                                                                                                                            <span>{{ date('d/m/Y', strtotime($order->showtime->start_time)) }}</span>
-                                                                                                                        </li>
-                                                                                                                        <li>
-                                                                                                                            <img
-                                                                                                                                src="{{ asset('client/images/clockIcon.png') }}">
-                                                                                                                            Suất
-                                                                                                                            chiếu:
-                                                                                                                            <span>{{ date('H:i', strtotime($order->showtime->start_time)) }}</span>
-                                                                                                                        </li>
-                                                                                                                        <li>
-                                                                                                                            <img
-                                                                                                                                src="{{ asset('client/images/locationIcon.png') }}">
-                                                                                                                            <span>{{ $order->cinema->name }}</span>
-                                                                                                                        </li>
-                                                                                                                    </ul>
-                                                                                                                </div>
-                                                                                                                <div
-                                                                                                                    class="row d-flex row-small ticket-row row-divided">
+                                                                                                                    class="col medium-12 small-12 large-3">
                                                                                                                     <div
-                                                                                                                        class="col medium-12 small-12 large-3">
-                                                                                                                        <div
-                                                                                                                            class="col-inner text-center">
-                                                                                                                            <p>Ghế
-                                                                                                                            </p>
-                                                                                                                            <div>
-                                                                                                                                @if ($order->seatsBooking && $order->seatsBooking->count())
-                                                                                                                                    @foreach ($order->seatsBooking as $seatBooking)
-                                                                                                                                        <span>{{ $seatBooking->seat->seat_number ?? '' }}</span>
-                                                                                                                                        @if (!$loop->last)
-                                                                                                                                            ,
-                                                                                                                                        @endif
-                                                                                                                                    @endforeach
-                                                                                                                                @else
-                                                                                                                                    <span>Không
-                                                                                                                                        có
-                                                                                                                                        ghế</span>
-                                                                                                                                @endif
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                    <div
-                                                                                                                        class="col medium-12 small-12 large-3">
-                                                                                                                        <div
-                                                                                                                            class="col-inner text-center">
-                                                                                                                            <p>Phòng
-                                                                                                                                chiếu
-                                                                                                                            </p>
-                                                                                                                            <div>
-                                                                                                                                {{ $order->showtime->room->room_name ?? '' }}
-                                                                                                                            </div>
+                                                                                                                        class="col-inner text-center">
+                                                                                                                        <p>Ghế
+                                                                                                                        </p>
+                                                                                                                        <div>
+                                                                                                                            @if ($order->seatsBooking && $order->seatsBooking->count())
+                                                                                                                                @foreach ($order->seatsBooking as $seatBooking)
+                                                                                                                                    <span>{{ $seatBooking->seat->seat_number ?? '' }}</span>
+                                                                                                                                    @if (!$loop->last)
+                                                                                                                                        ,
+                                                                                                                                    @endif
+                                                                                                                                @endforeach
+                                                                                                                            @else
+                                                                                                                                <span>Không
+                                                                                                                                    có
+                                                                                                                                    ghế</span>
+                                                                                                                            @endif
                                                                                                                         </div>
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div
-                                                                                                                    class="total">
-                                                                                                                    Tổng
-                                                                                                                    tiền:
-                                                                                                                    <span>{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
+                                                                                                                    class="col medium-12 small-12 large-3">
+                                                                                                                    <div
+                                                                                                                        class="col-inner text-center">
+                                                                                                                        <p>Phòng
+                                                                                                                            chiếu
+                                                                                                                        </p>
+                                                                                                                        <div>
+                                                                                                                            {{ $order->showtime->room->room_name ?? '' }}
+                                                                                                                        </div>
+                                                                                                                    </div>
                                                                                                                 </div>
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                class="total">
+                                                                                                                Tổng
+                                                                                                                tiền:
+                                                                                                                <span>{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
@@ -906,20 +904,20 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-danger light"
-                                                                        data-bs-dismiss="modal">{{ __('language.admin.members.roles.close') }}</button>
-                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger light"
+                                                                    data-bs-dismiss="modal">{{ __('language.admin.members.roles.close') }}</button>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        <div class="row">
-                                            <div class="col-12 d-flex justify-content-center">
-                                                {{ $data->links('pagination::bootstrap-4') }}
-                                            </div>
+                                                </div>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            {{ $data->links('pagination::bootstrap-4') }}
                                         </div>
                                     </div>
                                 @else

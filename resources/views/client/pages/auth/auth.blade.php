@@ -291,7 +291,7 @@
                             </div>
                         </div>
                     @else
-                        <div id="thanhvien" class="mbox tab-pane fade active in">
+                        <div id="thanhvien" class="mbox tab-pane fade {{ request('tab') === 'thanhvien' || !request('tab') ? 'in active' : '' }}">
                             <div class="mbox mbox-2">
                                 <div class="title">
                                     <h2>Thông tin tài khoản</h2>
@@ -599,7 +599,7 @@
                                             action="{{ route('updateProfile') }}" method="POST">
                                             @csrf
                                             <div class="form-group">
-                                                <label for="name">Nickname</label>
+                                                <label for="name">Tên đăng nhập</label>
                                                 <input id="name" type="name" class="form-control name"
                                                     name="name" value="{{ old('name', Auth::user()->name) }}">
                                                 <div class="name_error"></div>
@@ -660,9 +660,9 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <label for="birthday">Ngày sinh</label>
                                                     <input id="date_birth"
-                                                        value="{{ old('date_birth', date('d/m/Y', strtotime(Auth::user()->date_birth))) }}"
+                                                        value="{{ old('date_birth', date('d-m-Y', strtotime(Auth::user()->date_birth))) }}"
                                                         placeholder="-- Ngày Sinh --" type="text"
-                                                        class="form-control datepicker" name="date_birth">
+                                                        class="form-control datepickerProfile" name="date_birth">
                                                     <div class="date_birth_error"></div>
                                                 </div>
 
@@ -839,7 +839,7 @@
                             </div>
                         </div>
 
-                        <div id="vedadat" class="mbox tab-pane fade">
+                        <div id="vedadat" class="mbox tab-pane fade {{ request('tab') === 'vedadat' ? 'in active' : '' }}">
                             <div class="title">
                                 <h2>Lịch sử mua vé</h2>
                             </div>
