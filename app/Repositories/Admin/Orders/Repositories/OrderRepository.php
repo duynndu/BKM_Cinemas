@@ -17,8 +17,8 @@ class OrderRepository extends BaseRepository implements OrderInterface
     public function getAll()
     {
         return $this->model
-            ->where('code', '!=', null)
-            ->where('status', '!=', null)
+            ->whereNotNull('code') 
+            ->whereNotNull('status')
             ->when(auth()->user()->cinema_id, function ($query, $cinemaId) {
                 $query->where('cinema_id', $cinemaId);
             })
@@ -29,9 +29,11 @@ class OrderRepository extends BaseRepository implements OrderInterface
                 'showtime:id,start_time,room_id',
                 'showtime.room:id,room_name',
             ])
+            ->whereHas('cinema.area.city') 
             ->orderBy('id', 'desc')
             ->get();
     }
+
 
     public function filter($request)
     {

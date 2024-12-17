@@ -45,7 +45,7 @@ class NotificationPostMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Thông báo khuyến mãi:' . $this->post->name,
+            subject: 'Thông báo khuyến mãi: ' . $this->post->name,
         );
     }
 

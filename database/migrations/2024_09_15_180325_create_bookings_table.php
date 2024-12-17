@@ -26,9 +26,9 @@ return new class extends Migration
                 'customer'
             ]); // id hình thức thanh toán
             $table->bigInteger('voucher_id')->nullable();
-            $table->decimal('total_price', 10, 2)->default(0); // Tổng tiền
-            $table->decimal('final_price', 10, 2)->nullable(); // Giá sau khi áp dụng voucher
-            $table->decimal('discount_price', 10, 2)->nullable(); // Giá trị giảm giá
+            $table->decimal('total_price', 30, 2)->default(0); // Tổng tiền
+            $table->decimal('final_price', 30, 2)->nullable(); // Giá sau khi áp dụng voucher
+            $table->decimal('discount_price', 30, 2)->nullable(); // Giá trị giảm giá
             $table->enum('status', [
                 'completed',
                 'cancelled',

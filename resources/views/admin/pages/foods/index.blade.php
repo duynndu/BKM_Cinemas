@@ -157,8 +157,8 @@
                                                     <th>Ảnh</th>
                                                     <th>Giá</th>
                                                     <th>Loại đồ ăn</th>
-                                                    <th>Trạng thái</th>
-                                                    <th>Số thứ tự</th>
+                                                    <th class="text-center">Trạng thái</th>
+                                                    <th class="text-center">Số thứ tự</th>
                                                     @if (Auth()->user()->can('update', \App\Models\Food::class) || Auth()->user()->can('delete', \App\Models\Food::class))
                                                         <th>Hành động</th>
                                                     @endif
@@ -203,7 +203,7 @@
                                                                {{ $food->type->name ?? 'Chưa có' }}
                                                            </b>
                                                         </td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             @can('changeActive', \App\Models\Food::class)
                                                                 <button
                                                                     class="toggle-active-btn btn btn-xs {{ $food->active == 1 ? 'btn-success' : 'btn-danger' }} text-white"
@@ -218,7 +218,7 @@
                                                                 </span>
                                                             @endcan
                                                         </td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             @can('changeOrder', \App\Models\Food::class)
                                                                 <input type="number" min="0" name="order"
                                                                     value="{{ $food->order }}"
