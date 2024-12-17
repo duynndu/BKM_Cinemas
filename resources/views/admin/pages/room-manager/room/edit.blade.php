@@ -21,67 +21,81 @@
 								<div class="row mb-4">
 									<div class="mb-3">
 										<label class="me-sm-2 form-label mb-2">Tên phòng</label>
-										<input type="text" x-model="formData.room_name" class="form-control"
+										<input type="text" {{ Auth::user()->type == 'staff' ? 'disabled' : '' }} x-model="formData.room_name" class="form-control"
 											placeholder="Nhập tên phòng">
 										<span class="text-danger" x-text="errors.room_name"></span>
 									</div>
 									<div class="col-6 mb-3">
 										<label class="form-label mb-2">Số cột</label>
-										<input type="number" x-model="formData.col_count" @input="renderSeatLayout; formData.seats = []"
+										<input type="number" {{ Auth::user()->type == 'staff' ? 'disabled' : '' }} x-model="formData.col_count" @input="renderSeatLayout; formData.seats = []"
 											@change="formData.seats = []" class="form-control"
 											placeholder="Nhập số cột">
 										<span class="text-danger" x-text="errors.col_count"></span>
 									</div>
 									<div class="col-6 mb-3">
 										<label class="form-label mb-2">Số hàng</label>
-										<input type="number" x-model="formData.row_count" @input="renderSeatLayout; formData.seats = []"
+										<input type="number" {{ Auth::user()->type == 'staff' ? 'disabled' : '' }} x-model="formData.row_count" @input="renderSeatLayout; formData.seats = []"
 											@change="formData.seats = []" class="form-control"
 											placeholder="Nhập số hàng">
 										<span class="text-danger" x-text="errors.row_count"></span>
 									</div>
 									<div class="mb-3">
 										<label class="me-sm-2 form-label mb-2">Giá ghế cơ bản</label>
-										<input type="text" x-model="formData.base_price" @input="renderSeatLayout;"
+										<input type="text" {{ Auth::user()->type == 'staff' ? 'disabled' : '' }} x-model="formData.base_price" @input="renderSeatLayout;"
 											class=" form-control"
 											placeholder="Nhập giá ghế cơ bản">
 										<span class="text-danger" x-text="errors.base_price"></span>
 									</div>
-									<div id="seatingArea" class="tw-inline-flex tw-items-center tw-mb-3 tw-text-white"></div>
-									<div class="mb-3">
-										<button type="button" @click="toggleModal()" class="btn btn-sm btn-primary">Chọn
-											từ sơ đồ ghế có sẵn</button>
-									</div>
+									
+									
+									@if (Auth::user()->type == 'manage')
+										<div id="seatingArea" class="tw-inline-flex tw-items-center tw-mb-3 tw-text-white"></div>
+										<div class="mb-3">
+											<button type="button" @click="toggleModal()" class="btn btn-sm btn-primary">Chọn
+												từ sơ đồ ghế có sẵn</button>
+										</div>
+									@else
+										<div class="tw-inline-flex tw-items-center tw-mb-3 tw-text-white">
+											<img src="{{ asset('storage/' . $room->image) }}" alt="">
+										</div>
+									@endif
 									<div class="mb-3">
 										<div class="tw-text-sm tw-font-medium tw-mb-2">Ngày chiếu</div>
 										<div class="tw-mb-3">
 											<div id="selectDay"></div>
 										</div>
-										<div class="row tw-items-end">
-											<div class="col-6">
-												<div class="row">
-													<div class="col">
-														<label for="start_time" class="form-label">Thời gian bắt đầu</label>
-														<input id="start_time" data-inputmask="'alias': 'datetime', 'inputFormat': 'HH:MM'" placeholder="HH:MM" class="form-control" />
-													</div>
-													<div class="col">
-														<label for="end_time" class="form-label">Thời gian kết thúc</label>
-														<input id="end_time" data-inputmask="'alias': 'datetime', 'inputFormat': 'HH:MM'" placeholder="HH:MM" class="form-control" />
-													</div>
-													<div class="col tw-flex tw-justify-start tw-items-end">
-														<div>
-															<button type="button" @click="addShowtime()" class="btn btn-sm btn-primary">Thêm</button>
+										@if (Auth::user()->type == 'manage')
+											<div class="row tw-items-end">
+												<div class="col-6">
+													<div class="row">
+														<div class="col">
+															<label for="start_time" class="form-label">Thời gian bắt đầu</label>
+															<input id="start_time" data-inputmask="'alias': 'datetime', 'inputFormat': 'HH:MM'" placeholder="HH:MM" class="form-control" />
+														</div>
+														<div class="col">
+															<label for="end_time" class="form-label">Thời gian kết thúc</label>
+															<input id="end_time" data-inputmask="'alias': 'datetime', 'inputFormat': 'HH:MM'" placeholder="HH:MM" class="form-control" />
+														</div>
+														<div class="col tw-flex tw-justify-start tw-items-end">
+															<div>
+																<button type="button" @click="addShowtime()" class="btn btn-sm btn-primary">Thêm</button>
+															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>
+										@endif
 										<div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-mt-3">
 											<div class="tw-col-span-7" id="selectedTime"></div>
 											<div style="border: 1px solid #ccc; min-height: 276px; border-radius: 4px;" class="tw-col-span-5 tw-flex tw-relative">
-												<div x-show="showtimeSelected" class="tw-absolute tw-top-0 tw-right-0 tw-p-2"><i @click="deleteShowtime()" class="fa-solid fa-trash-can hover:tw-text-red-500 tw-cursor-pointer tw-text-xl"></i></div>
+												@if (Auth::user()->type == 'manage')
+													<div x-show="showtimeSelected" class="tw-absolute tw-top-0 tw-right-0 tw-p-2"><i @click="deleteShowtime()" class="fa-solid fa-trash-can hover:tw-text-red-500 tw-cursor-pointer tw-text-xl"></i></div>
+												@endif
 												<div class="tw-flex tw-justify-center tw-items-center tw-flex-col tw-w-full" x-show="showtimeSelected && !showtimeSelected?.movie_id" x-cloak>
 													<div>Xuất chiếu chưa có phim</div>
-													<button type="button" class="btn btn-sm btn-primary" @click="showModalMovie = true">Chọn phim</button>
+													@if (Auth::user()->type == 'manage')
+														<button type="button" class="btn btn-sm btn-primary" @click="showModalMovie = true">Chọn phim</button>
+													@endif
 												</div>
 												<div x-show="showtimeSelected?.movie_id" x-cloak>
 													<div class="movie-info tw-grid tw-grid-cols-12 tw-gap-2">
@@ -95,16 +109,20 @@
 															<p><strong>Ngày phát hành:</strong> <span x-text="showtimeSelected?.movie?.release_date"></span></p>
 															<p><strong>Ngôn ngữ:</strong> <span x-text="showtimeSelected?.movie?.language"></span></p>
 															<p style="text-align: justify"><strong>Mô tả:</strong> <span x-text="showtimeSelected?.movie?.description"></span></p>
-															<button type="button" class="btn btn-sm btn-danger" @click="clearShowtimeMovie()">Gỡ phim</button>
+															@if (Auth::user()->type == 'manage')
+																<button type="button" class="btn btn-sm btn-danger" @click="clearShowtimeMovie()">Gỡ phim</button>
+															@endif
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="tw-flex tw-justify-end">
-										<button class="btn btn-md btn-success">Cập nhật</button>
-									</div>
+									@if (Auth::user()->type == 'manage')
+										<div class="tw-flex tw-justify-end">
+											<button class="btn btn-md btn-success">Cập nhật</button>
+										</div>
+									@endif
 								</div>
 							</div>
 						</div>

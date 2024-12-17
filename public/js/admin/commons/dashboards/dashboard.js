@@ -119,7 +119,7 @@ $(document).ready(function() {
                     ticks: {
                         callback: function(value, index, values) {
                             const label = this.getLabelForValue(value);
-                            return label.length > 15 ? label.substring(0, 30) + "..." : label;
+                            return label.length > 15 ? label.substring(0, 25) + "..." : label;
                         }
                     }
                 },

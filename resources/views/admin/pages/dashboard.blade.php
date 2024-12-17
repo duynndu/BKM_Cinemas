@@ -31,7 +31,7 @@
                     @if(\Illuminate\Support\Facades\Auth::user()->type == 'admin')
                         <div class="row">
                             <div class="col-xl-12">
-                                <div class="card d-flex justify-content-center p-4" style="position: relative; z-index: 99; padding-right: 0;">
+                                <div class="card d-flex justify-content-center p-4" style="position: relative;padding-right: 0;">
                                     <div class="d-flex justify-content-center flex-column">
                                         <div class="row">
                                             <h4 class="title text-uppercase mb-3 text-black text-center">Chọn thành phố, khu vực</h4>

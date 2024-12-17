@@ -37,8 +37,8 @@
                                             <th>Tên phòng</th>
                                             <th>Hình ảnh</th>
                                             <th>Giá cơ bản</th>
-                                            <th>Số cột</th>
-                                            <th>Số hàng</th>
+                                            <th class="text-center">Số cột</th>
+                                            <th class="text-center">Số hàng</th>
                                             @if (auth()->user()->can('update', \App\Models\Room::class) ||
                                                     auth()->user()->can('delete', \App\Models\Room::class))
                                                 <th>Hành động</th>
@@ -69,15 +69,22 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ number_format($room->base_price, 0, ',', '.') }} VNĐ</td>
-                                                <td>{{ $room->col_count }}</td>
-                                                <td>{{ $room->row_count }}</td>
+                                                <td class="text-center">{{ $room->col_count }}</td>
+                                                <td class="text-center">{{ $room->row_count }}</td>
                                                 <td>
                                                     <div>
                                                         @can('update', App\Models\Room::class)
-                                                            <a href="{{ route('admin.rooms.edit', $room->id) }}"
-                                                                class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </a>
+                                                            @if (Auth::user()->type == 'manage')
+                                                                <a href="{{ route('admin.rooms.edit', $room->id) }}"
+                                                                    class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                            @else
+                                                                <a href="{{ route('admin.rooms.edit', $room->id) }}"
+                                                                    class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </a>
+                                                            @endif
                                                         @endcan
                                                         @can('delete', App\Models\Room::class)
                                                             <x-destroy-button route="admin.rooms.destroy"
