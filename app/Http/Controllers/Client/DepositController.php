@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Client;
 
 use App\Events\Client\DepositSucceeded;
 use App\Http\Controllers\Controller;
+use App\Models\Voucher;
+use App\Models\VoucherUser;
 use App\Services\Client\Deposits\Interfaces\DepositServiceInterface;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use Illuminate\Http\Request;
@@ -170,8 +172,26 @@ class DepositController extends Controller
                     $newExp = Auth::user()->exp + $expIncrement;
 
                     if ($newExp >= 8000000) {
+                        if(Auth::user()->membership_level === 'vip') {
+                            $voucher = Voucher::where('level_type', 'vvip')->where('active', 1)->first();
+                            if ($voucher) {
+                                VoucherUser::create([
+                                    'user_id' => Auth::user()->id,
+                                    'voucher_id' => $voucher->id
+                                ]);
+                            }
+                        }
                         $membershipLevel = 'vvip';
                     } elseif ($newExp >= 4000000) {
+                        if(Auth::user()->membership_level === 'member') {
+                            $voucher = Voucher::where('level_type', 'vip')->where('active', 1)->first();
+                            if ($voucher) {
+                                VoucherUser::create([
+                                    'user_id' => Auth::user()->id,
+                                    'voucher_id' => $voucher->id
+                                ]);
+                            }
+                        }
                         $membershipLevel = 'vip';
                     } elseif ($newExp >= 2000000) {
                         $membershipLevel = 'member';

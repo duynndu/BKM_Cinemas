@@ -616,9 +616,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Danh sách đơn hàng</h4>
-                                <button type="button" data-url="{{ route('admin.orders.changeManyTickets') }}" class="btn btn-success" id="change-many-tickets">
-                                    Cập nhật nhiều vé
-                                </button>
+                                @if ($data->count() > 0)
+                                    <button type="button" data-url="{{ route('admin.orders.changeManyTickets') }}" class="btn btn-success" id="change-many-tickets">
+                                        Cập nhật nhiều vé
+                                    </button>
+                                @endif
                             </div>
                             <div class="card-body">
                                 @if ($data->count() > 0)

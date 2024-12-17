@@ -9,6 +9,7 @@ function changeOrder(e) {
         showCancelButton: true,
         confirmButtonText: 'Đồng ý',
         cancelButtonText: 'Hủy',
+        width: '600px',
         showLoaderOnConfirm: true
     }).then((result) => {
         if (result.isConfirmed) {
@@ -52,43 +53,56 @@ function changeOrder(e) {
 }
 
 function changeGetTickets(e) {
-    if (isSubmitting) return;
-    isSubmitting = true;
-    const element = $(e.target);
-    const url = element.attr('data-url');
-    if (!url) {
-        isSubmitting = false;
-        return;
-    }
-
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: {
-            _token: $('meta[name="csrf-token"]').attr('content'),
-        },
-        success: (response) => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Thành công!',
-                text: response.message,
-                timer: 2000,
-                showConfirmButton: false
-            }).then(() => {
-                $(`#get_tickets-${response.id}`).replaceWith(`
-                    <b id="get_tickets-${response.id}">
-                        Đã nhận
-                    </b>
-                `);
+    Swal.fire({
+        title: 'Bạn muốn nhận vé?',
+        text: "Yêu cầu của bạn sẽ không được hoàn tác!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy',
+        width: '600px',
+        showLoaderOnConfirm: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (isSubmitting) return;
+            isSubmitting = true;
+            const element = $(e.target);
+            const url = element.attr('data-url');
+            if (!url) {
                 isSubmitting = false;
+                return;
+            }
+        
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: (response) => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        $(`#get_tickets-${response.id}`).replaceWith(`
+                            <b id="get_tickets-${response.id}">
+                                Đã nhận
+                            </b>
+                        `);
+                        isSubmitting = false;
+                    });
+                },
+                error: (xhr) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: xhr.responseJSON?.message || 'Đã xảy ra lỗi. Vui lòng thử lại.',
+                    }).then(() => (isSubmitting = false));
+                }
             });
-        },
-        error: (xhr) => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi!',
-                text: xhr.responseJSON?.message || 'Đã xảy ra lỗi. Vui lòng thử lại.',
-            }).then(() => (isSubmitting = false));
         }
     });
 }
@@ -191,29 +205,42 @@ echo.private('change_status_order.' + cinema_id)
     });
 
     $(document).on('click', '#change-many-tickets', function() {
-        const url = $(this).data('url');
-        $.ajax({
-            url: url,
-            method: 'POST',
-            data: {
-                '_token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Thành công!',
-                    timer: 1000,
-                    showConfirmButton: false
-                }).then(() => {
-                    // window.location.reload();
-                });
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: xhr.responseJSON.message,
-                    timer: 1000,
-                    showConfirmButton: false
+        Swal.fire({
+            title: 'Bạn muốn cập nhật nhiều vé?',
+            text: "Yêu cầu của bạn sẽ không được hoàn tác!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy',
+            width: '600px',
+            showLoaderOnConfirm: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const url = $(this).data('url');
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {
+                        '_token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            timer: 1000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            // window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: xhr.responseJSON.message,
+                            confirmButtonText: 'OK',
+                            showConfirmButton: true
+                        });
+                    }
                 });
             }
         });
