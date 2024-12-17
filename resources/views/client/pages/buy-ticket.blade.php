@@ -130,7 +130,7 @@
                     </div>
                     <div @click="showTabCombo = false" x-show="showTabCombo" class="tw-fixed tw-top-0 tw-left-0 tw-w-full tw-h-full"></div>
                     <div style="overflow-y: auto;" id="tab-combo"
-                    :class="{
+                        :class="{
                         'slide': showTabCombo
                     }">
                         <div class="tw-mt-16 tw-pl-3">
@@ -140,8 +140,8 @@
                                     <template x-for="food in foodType.foods" :key="food.id">
                                         <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-items-center tw-p-4">
                                             <div class="tw-bg-cover tw-bg-center tw-col-span-2">
-                                                <img class="tw-block tw-w-[60px] tw-aspect-square tw-object-cover tw-rounded-full tw-border-2 tw-border-solid tw-border-pink-500 tw-overflow-hidden" 
-                                                :src="food.image">
+                                                <img class="tw-block tw-w-[60px] tw-aspect-square tw-object-cover tw-rounded-full tw-border-2 tw-border-solid tw-border-pink-500 tw-overflow-hidden"
+                                                    :src="food.image">
                                             </div>
                                             <div class="tw-flex-1 tw-col-span-7">
                                                 <div class="tw-font-semibold" x-text="food.name"></div>
@@ -231,7 +231,7 @@
                                                 <i class="fa fa-gift " aria-hidden="true"></i> Sử dụng voucher
                                             </button>
                                             <div style="padding: 0 15px;" x-show="voucherSelected?.name" class="applied-voucher">
-                                                <p>VOUCHER: <strong x-text="voucherSelected?.code"></strong> | <strong x-text="voucherSelected.name"></strong></p>
+                                                <div class="tw-flex tw-justify-center tw-items-center">VOUCHER: <strong x-text="voucherSelected?.code"></strong> | <strong x-text="voucherSelected.name"></strong></div>
                                             </div>
                                         </div>
                                     </div>
@@ -334,20 +334,18 @@
                 </template>
             </div>
 
-            <!-- <div class="coupon-input">
+            <div class="coupon-input">
                 <input x-model="voucherCode" type="text" placeholder="Nhập mã giảm giá">
                 <button id="apply-coupon" @click="applyVoucher()">Áp dụng</button>
-            </div> -->
-            <div style="height: 26px;">
-                <div x-show="voucherSelected?.name" class="applied-voucher">
-                    <p>VOUCHER: <strong x-text="voucherSelected?.code"></strong> | <strong x-text="voucherSelected.name"></strong></p>
-                </div>
+            </div>
+            <div style="height: 26px;" x-show="voucherSelected?.name" class="applied-voucher" x-cloak>
+                <div class="tw-flex tw-items-center tw-justify-center">VOUCHER: <strong x-text="voucherSelected?.code"></strong> | <strong x-text="voucherSelected.name"></strong></div>
             </div>
 
             <!-- Thông báo lỗi nếu mã giảm giá không hợp lệ -->
-            <!-- <div x-show="voucherNotFound" class="error-message">
+            <div x-show="voucherNotFound" class="error-message">
                 <p class="tw-text-red-500">Mã giảm giá không hợp lệ</p>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>

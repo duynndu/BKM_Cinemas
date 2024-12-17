@@ -304,9 +304,12 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
   // voucherNotFound: false,
   discountPrice: 0,
   async getVouchers() {
+    console.log(this.vouchers);
     if (this.vouchers.length > 0) return;
     this.vouchers = await voucherService.getUserVouchers();
+
   },
+  voucherNotFound: false,
   choseVoucher(voucher: IVoucher) {
     if (voucher.id === this.voucherSelected.id) {
       this.voucherSelected = {} as IVoucher;
@@ -315,11 +318,22 @@ Alpine.data('SeatViewComponent', (showtimeId: string, endTime: string) => ({
       this.voucherSelected = { ...voucher };
       this.discountPrice = this.calculatorVoucherPrice()[this.voucherSelected.discount_type]?.() ?? 0;
     }
-    // this.voucherNotFound = !this.voucherSelected?.name;
+    this.voucherNotFound = !this.voucherSelected?.name;
   },
   async applyVoucher() {
-    this.voucherSelected = await voucherService.getVoucherByCode(this.voucherCode.toString());
-    // this.voucherNotFound = !this.voucherSelected?.name;
+    try {
+      this.voucherSelected = await voucherService.getVoucherByCode(this.voucherCode.toString());
+      this.voucherNotFound = !this.voucherSelected?.name;
+      this.discountPrice = this.calculatorVoucherPrice()[this.voucherSelected.discount_type]?.() ?? 0;
+    } catch (error: any) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: error?.response?.data?.error || error?.message,
+      });
+      this.voucherNotFound = true;
+    }
+
   },
   calculatorVoucherPrice() {
     return {

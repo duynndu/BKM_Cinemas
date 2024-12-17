@@ -16,12 +16,6 @@
         <p><strong>Ghế:</strong> {{implode(', ', $seatsBooking)}}</p>
     </div>
     <div class="qr-code">
-        <div style="display: flex; justify-content: center;">
-            <div style="position: relative;">
-                <canvas id="qrcode"></canvas>
-                <img style="position: absolute;width: 50px;right: -30px;top: -15px;" src="https://touchcinema.com/images/icons/icon-dat-ve.png" alt="QR Code">
-            </div>
-        </div>
         <p>Mã vé: {{$code}}</p>
     </div>
     <div class="button-group ">
@@ -32,23 +26,4 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-<script>
-    QRCode.toCanvas(document.getElementById('qrcode'), '{{$code}}', function(error) {
-        if (error) console.error(error);
-        console.log('Success!');
-    });
-
-    $(document).ready(function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const tab = urlParams.get('tab');
-
-        if (tab) {
-            $('.nav-tabs li').removeClass('active');
-            $(`.nav-tabs a[href="#${tab}"]`).closest('li').addClass('active');
-            $(`.tab-pane`).removeClass('in active');
-            $(`#${tab}`).addClass('in active');
-        }
-    });
-</script>
 @endsection
