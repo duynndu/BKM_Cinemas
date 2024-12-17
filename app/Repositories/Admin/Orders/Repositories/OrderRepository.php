@@ -6,6 +6,7 @@ use App\Constants\MemberLevel;
 use App\Models\Booking;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Admin\Orders\Interfaces\OrderInterface;
+use Carbon\Carbon;
 
 class OrderRepository extends BaseRepository implements OrderInterface
 {
@@ -105,6 +106,10 @@ class OrderRepository extends BaseRepository implements OrderInterface
 
     public function changeManyTickets()
     {
+        if (now()->lessThan(Carbon::today()->setHour(22))) {
+            return "not_time_yet";
+        }
+        
         $orders = $this->model
             ->whereHas('showtime', function ($query) {
                 $query->where('start_time', '<', now());

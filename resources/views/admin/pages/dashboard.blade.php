@@ -69,94 +69,96 @@
                             </div>
                         </div>
                     @endif
+                    
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="page-titles" style="position: relative; z-index: 99;">
                                 <div class="card-header pb-0 border-0 flex-wrap">
                                     <div class="d-flex align-items-center mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <div class="row">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <select class="select2" name="filter" id="filter">
-                                                                    <option value="">-- Tất cả --</option>
-                                                                    <option value="day">Thống kê theo ngày</option>
-                                                                    <option value="month">Thống kê theo tháng</option>
-                                                                    <option value="year">Thống kê theo năm</option>
-                                                                    <option value="range">Thống kê theo khoảng thời gian</option>
-                                                                </select>
-                                                            </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="row">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <select class="select2" name="filter" id="filter">
+                                                                <option value="">-- Tất cả --</option>
+                                                                <option value="day">Thống kê theo ngày</option>
+                                                                <option value="month">Thống kê theo tháng</option>
+                                                                <option value="year">Thống kê theo năm</option>
+                                                                <option value="range">Thống kê theo khoảng thời gian</option>
+                                                            </select>
+                                                        </div>
 
-                                                            <!-- Lọc theo ngày cụ thể -->
-                                                            <div class="col" id="dayFilter" style="display: none;">
-                                                                <input type="date" id="dateFilter" name="date" class="form-control" max="{{ \Carbon\Carbon::today()->toDateString() }}">
-                                                            </div>
+                                                        <!-- Lọc theo ngày cụ thể -->
+                                                        <div class="col" id="dayFilter" style="display: none;">
+                                                            <input type="date" id="dateFilter" name="date" class="form-control" max="{{ \Carbon\Carbon::today()->toDateString() }}">
+                                                        </div>
 
-                                                            <div class="col" id="monthFilter" style="display: none;">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div style="margin-right: 20px;">
-                                                                        <select id="monthSelect" class="select2"
-                                                                                name="month">
-                                                                            <option value="">-- Chọn tháng --</option>
-                                                                            @for ($i = 1; $i <= 12; $i++)
-                                                                                <option value="{{ $i }}">Tháng
-                                                                                    {{ $i }}</option>
-                                                                            @endfor
-                                                                        </select>
-                                                                    </div>
-                                                                    <div>
-                                                                        <select id="yearSelect" class="select2"
-                                                                                name="yearMonth">
-                                                                            <option value="">-- Chọn năm --</option>
-                                                                            @for ($i = \Carbon\Carbon::now()->year; $i >= 2000; $i--)
-                                                                                <option value="{{ $i }}">
-                                                                                    {{ $i }}
-                                                                                </option>
-                                                                            @endfor
-                                                                        </select>
-                                                                    </div>
+                                                        <div class="col" id="monthFilter" style="display: none;">
+                                                            <div class="d-flex align-items-center">
+                                                                <div style="margin-right: 20px;">
+                                                                    <select id="monthSelect" class="select2"
+                                                                            name="month">
+                                                                        <option value="">-- Chọn tháng --</option>
+                                                                        @for ($i = 1; $i <= 12; $i++)
+                                                                            <option value="{{ $i }}">Tháng
+                                                                                {{ $i }}</option>
+                                                                        @endfor
+                                                                    </select>
+                                                                </div>
+                                                                <div>
+                                                                    <select id="yearSelect" class="select2"
+                                                                            name="yearMonth">
+                                                                        <option value="">-- Chọn năm --</option>
+                                                                        @for ($i = \Carbon\Carbon::now()->year; $i >= 2000; $i--)
+                                                                            <option value="{{ $i }}">
+                                                                                {{ $i }}
+                                                                            </option>
+                                                                        @endfor
+                                                                    </select>
                                                                 </div>
                                                             </div>
+                                                        </div>
 
-                                                            <!-- Lọc theo năm -->
-                                                            <div class="col" id="yearFilter" style="display: none;">
-                                                                <select id="yearSelect2" class="select2" name="year_filter">
-                                                                    <option value="">-- Chọn Năm --</option>
-                                                                    @for ($i = \Carbon\Carbon::now()->year; $i >= 2000; $i--)
-                                                                        <option value="{{ $i }}">
-                                                                            {{ $i }}
-                                                                        </option>
-                                                                    @endfor
-                                                                </select>
-                                                            </div>
+                                                        <!-- Lọc theo năm -->
+                                                        <div class="col" id="yearFilter" style="display: none;">
+                                                            <select id="yearSelect2" class="select2" name="year_filter">
+                                                                <option value="">-- Chọn Năm --</option>
+                                                                @for ($i = \Carbon\Carbon::now()->year; $i >= 2000; $i--)
+                                                                    <option value="{{ $i }}">
+                                                                        {{ $i }}
+                                                                    </option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
 
 
-                                                            <!-- Lọc theo khoảng thời gian -->
-                                                            <div class="col" id="rangeFilter" style="display: none;">
-                                                                <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="start_date" class="form-control"
-                                                                       id="start_date">
-                                                            </div>
+                                                        <!-- Lọc theo khoảng thời gian -->
+                                                        <div class="col" id="rangeFilter" style="display: none;">
+                                                            <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="start_date" class="form-control"
+                                                                    id="start_date">
+                                                        </div>
 
-                                                            <div class="col" id="rangeFilterEnd" style="display: none;">
-                                                                <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="end_date" class="form-control"
-                                                                       id="end_date">
-                                                            </div>
+                                                        <div class="col" id="rangeFilterEnd" style="display: none;">
+                                                            <input type="date" max="{{ \Carbon\Carbon::today()->toDateString() }}" name="end_date" class="form-control"
+                                                                    id="end_date">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row" style="margin-left: 20px">
-                                                    <div class="col text-end">
-                                                        <button type="button" class="btn btn-primary"
-                                                                id="btnFilter">Lọc</button>
-                                                    </div>
+                                            </div>
+                                            <div class="row" style="margin-left: 20px">
+                                                <div class="col text-end">
+                                                    <button type="button" class="btn btn-primary"
+                                                            id="btnFilter">Lọc</button>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                 </form>
                 <div class="row">
                     <div class="col-6">

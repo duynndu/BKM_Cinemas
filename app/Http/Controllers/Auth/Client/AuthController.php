@@ -49,7 +49,6 @@ class AuthController extends Controller
     protected $voucherService;
     protected $bookingService;
     
-
     public function __construct(
         CityServiceInterface            $cityService,
         RegisterServiceInterface        $registerService,
@@ -127,6 +126,14 @@ class AuthController extends Controller
             if (Auth::attempt($credentials, $remember)) {
                 $user = Auth::user();
                 $token = $user->createToken('AuthToken')->plainTextToken;
+
+                if ($user->created_at > now()->subDays(7)) {
+                    $user->is_new_member = 1; 
+                } else {
+                    $user->is_new_member = 0;
+                }
+
+                $user->save();
 
                 return response()->json([
                     'status' => true,
