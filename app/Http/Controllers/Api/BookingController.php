@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\ResetSeatStatus;
 use App\Models\Booking;
 use App\Models\Notification;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\Admin\Orders\Interfaces\OrderServiceInterface;
@@ -227,6 +228,15 @@ class BookingController extends Controller
 
             $record->refund_status = $validated['status'];
             $record->save();
+
+            Transaction::create([
+                'user_id' => $record->user_id,
+                'payment_method' => 'customer',
+                'amount'   => $record->final_price,
+                'type'    => 'refund',
+                'description'    => 'Hoàn tiền thành công!',
+                'status'    => 'completed',
+            ]);
 
             broadcast(new OrderStatusUpdated([
                 'id' => $id,

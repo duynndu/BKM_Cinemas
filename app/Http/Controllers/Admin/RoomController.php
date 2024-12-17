@@ -77,6 +77,6 @@ class RoomController extends Controller
             Storage::disk('public')->delete($room->image);
         }
         $room->delete();
-        return redirect()->route('rooms.index')->with('message', 'Xóa phòng thành công');
+        return redirect()->route('admin.rooms.index')->with('message', 'Xóa phòng thành công');
     }
 }
