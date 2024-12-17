@@ -16,6 +16,7 @@ class Room extends Model
 
     protected $casts = [
         'room_seats' => 'json',
+        'base_price' => 'float',
     ];
 
     public function seats()
@@ -36,5 +37,10 @@ class Room extends Model
     public function movies()
     {
         return $this->belongsToMany(Movie::class, 'showtimes');
+    }
+
+    public function getBasePriceAttribute($value)
+    {
+        return rtrim(rtrim(number_format((float)$value, 2, '.', ''), '0'), '.');
     }
 }
