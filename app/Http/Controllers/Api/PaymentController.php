@@ -13,6 +13,7 @@ use App\Jobs\ResetSeatStatus;
 use App\Mail\Client\BookingMail;
 use App\Models\Booking;
 use App\Models\Voucher;
+use App\Models\VoucherUser;
 use App\Services\Client\Deposits\Interfaces\DepositServiceInterface;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use Carbon\Carbon;
@@ -165,6 +166,69 @@ class PaymentController extends Controller
             if ($booking == null) {
                 Log::warning('Booking not found: ' . $orderCode);
             }
+
+            $amount = $inputData['vnp_Amount'] / 100;
+
+            $expIncrement = 0;
+
+            $membershipLevel = Auth::user()->membership_level;
+
+            $baseExpPer1000 = 2;
+            $membershipLevel = Auth::user()->membership_level;
+
+            switch ($membershipLevel) {
+                case 'member':
+                    $expIncrement = round(floor($amount / 1000) * $baseExpPer1000);
+                    break;
+                case 'vip':
+                    $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.75));
+                    break;
+                case 'vvip':
+                    $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.5));
+                    break;
+                default:
+                    $expIncrement = 0;
+            }
+
+            $newExp = Auth::user()->exp + $expIncrement;
+
+            if ($newExp >= 8000000) {
+                if(Auth::user()->membership_level === 'vip' && $newExp == 8000000) {
+                    $voucher = Voucher::where('level_type', 'vvip')->where('active', 1)->first();
+                    if ($voucher) {
+                        VoucherUser::create([
+                            'user_id' => Auth::user()->id,
+                            'voucher_id' => $voucher->id
+                        ]);
+                    }
+                }
+                $membershipLevel = 'vvip';
+            } elseif ($newExp >= 4000000) {
+                if(Auth::user()->membership_level === 'member' && $newExp == 4000000) {
+                    $voucher = Voucher::where('level_type', 'vip')->where('active', 1)->first();
+                    if ($voucher) {
+                        VoucherUser::create([
+                            'user_id' => Auth::user()->id,
+                            'voucher_id' => $voucher->id
+                        ]);
+                    }
+                }
+                $membershipLevel = 'vip';
+            } elseif ($newExp >= 2000000) {
+                $membershipLevel = 'member';
+            }
+
+            // Cập nhật dữ liệu thành viên
+            $data = [
+                'vnp_Amount' => $amount,
+                'exp' => $newExp,
+                'membership_level' => $membershipLevel ?? Auth::user()->membership_level,
+                'is_new_member' => $data['is_new_member'] ?? Auth::user()->is_new_member,
+            ];
+
+            // Cập nhật thông tin vào database
+            $this->depositService->updatePayment($data, Auth::user()->id);
+
             $dataTransaction = [
                 'user_id' => $booking->user_id,
                 'payment_method' => 'vnpay',
@@ -271,6 +335,69 @@ class PaymentController extends Controller
             if ($booking == null) {
                 Log::warning('Booking not found: ' . $orderCode);
             }
+
+            $amount = $request->amount;
+
+            $expIncrement = 0;
+
+            $membershipLevel = Auth::user()->membership_level;
+
+            $baseExpPer1000 = 2;
+            $membershipLevel = Auth::user()->membership_level;
+
+            switch ($membershipLevel) {
+                case 'member':
+                    $expIncrement = round(floor($amount / 1000) * $baseExpPer1000);
+                    break;
+                case 'vip':
+                    $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.75));
+                    break;
+                case 'vvip':
+                    $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.5));
+                    break;
+                default:
+                    $expIncrement = 0;
+            }
+
+            $newExp = Auth::user()->exp + $expIncrement;
+
+            if ($newExp >= 8000000) {
+                if(Auth::user()->membership_level === 'vip' && $newExp == 8000000) {
+                    $voucher = Voucher::where('level_type', 'vvip')->where('active', 1)->first();
+                    if ($voucher) {
+                        VoucherUser::create([
+                            'user_id' => Auth::user()->id,
+                            'voucher_id' => $voucher->id
+                        ]);
+                    }
+                }
+                $membershipLevel = 'vvip';
+            } elseif ($newExp >= 4000000) {
+                if(Auth::user()->membership_level === 'member' && $newExp == 4000000) {
+                    $voucher = Voucher::where('level_type', 'vip')->where('active', 1)->first();
+                    if ($voucher) {
+                        VoucherUser::create([
+                            'user_id' => Auth::user()->id,
+                            'voucher_id' => $voucher->id
+                        ]);
+                    }
+                }
+                $membershipLevel = 'vip';
+            } elseif ($newExp >= 2000000) {
+                $membershipLevel = 'member';
+            }
+
+            // Cập nhật dữ liệu thành viên
+            $data = [
+                'vnp_Amount' => $amount,
+                'exp' => $newExp,
+                'membership_level' => $membershipLevel ?? Auth::user()->membership_level,
+                'is_new_member' => $data['is_new_member'] ?? Auth::user()->is_new_member,
+            ];
+
+            // Cập nhật thông tin vào database
+            $this->depositService->updatePayment($data, Auth::user()->id);
+
             $dataTransaction = [
                 'user_id' => $booking->user_id,
                 'payment_method' => 'momo',
@@ -384,6 +511,69 @@ class PaymentController extends Controller
         if ($booking == null) {
             Log::warning('Booking not found: ' . $orderCode);
         }
+
+        $amount = $request->amount;
+
+        $expIncrement = 0;
+
+        $membershipLevel = Auth::user()->membership_level;
+
+        $baseExpPer1000 = 2;
+        $membershipLevel = Auth::user()->membership_level;
+
+        switch ($membershipLevel) {
+            case 'member':
+                $expIncrement = round(floor($amount / 1000) * $baseExpPer1000);
+                break;
+            case 'vip':
+                $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.75));
+                break;
+            case 'vvip':
+                $expIncrement = round(floor($amount / 1000) * ($baseExpPer1000 * 0.5));
+                break;
+            default:
+                $expIncrement = 0;
+        }
+
+        $newExp = Auth::user()->exp + $expIncrement;
+
+        if ($newExp >= 8000000) {
+            if(Auth::user()->membership_level === 'vip' && $newExp == 8000000) {
+                $voucher = Voucher::where('level_type', 'vvip')->where('active', 1)->first();
+                if ($voucher) {
+                    VoucherUser::create([
+                        'user_id' => Auth::user()->id,
+                        'voucher_id' => $voucher->id
+                    ]);
+                }
+            }
+            $membershipLevel = 'vvip';
+        } elseif ($newExp >= 4000000) {
+            if(Auth::user()->membership_level === 'member' && $newExp == 4000000) {
+                $voucher = Voucher::where('level_type', 'vip')->where('active', 1)->first();
+                if ($voucher) {
+                    VoucherUser::create([
+                        'user_id' => Auth::user()->id,
+                        'voucher_id' => $voucher->id
+                    ]);
+                }
+            }
+            $membershipLevel = 'vip';
+        } elseif ($newExp >= 2000000) {
+            $membershipLevel = 'member';
+        }
+
+        // Cập nhật dữ liệu thành viên
+        $data = [
+            'vnp_Amount' => $amount,
+            'exp' => $newExp,
+            'membership_level' => $membershipLevel ?? Auth::user()->membership_level,
+            'is_new_member' => $data['is_new_member'] ?? Auth::user()->is_new_member,
+        ];
+
+        // Cập nhật thông tin vào database
+        $this->depositService->updatePayment($data, Auth::user()->id);
+
         $dataTransaction = [
             'user_id' => $booking->user_id,
             'payment_method' => 'zalopay',

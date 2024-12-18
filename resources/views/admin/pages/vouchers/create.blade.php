@@ -32,17 +32,14 @@
                                             <label class="form-label mb-2">Tên voucher</label>
                                             <input type="text" id="name" name="voucher[name]" class="form-control"
                                                 placeholder="Nhập tên voucher" value="{{ old('voucher.name') }}">
-                                            @error('voucher.name')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
+                                            <div class="name_error text-danger mt-2"></div>
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label mb-2">Mã code</label>
                                             <input type="text" class="form-control" id="code" name="voucher[code]"
                                                 placeholder="Nhập mã code" value="{{ old('voucher.code') }}">
-                                            @error('voucher.code')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
+                                            <div class="code_error text-danger mt-2"></div>
+
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -84,29 +81,28 @@
 
 
                                     <div class="row mb-4">
-                                        <div class="col-6">
+                                        <div class="col-6" id="quantity_voucher">
                                             <label class="form-label mb-2">Số lượng:</label>
                                             <input type="number" min="1" max="1000" class="form-control"
-                                                name="voucher[quantity]" value="{{ old('voucher.quantity', 1) }}">
-                                            @error('voucher.quantity')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
+                                                name="voucher[quantity]" value="{{ old('voucher.quantity') }}">
+                                            <div class="quantity_error text-danger mt-2"></div>
                                         </div>
                                         <div class="col-6">
                                             <div class="p-3">
-                                                <label
-                                                    class="form-label">Trạng thái</label><br>
+                                                <label class="form-label">Trạng thái</label><br>
                                                 <div class="row mt-2">
                                                     <div class="col-sm-6">
-                                                        <input class="form-check-input" type="radio"
-                                                            id="active" name="voucher[active]" value="1" @checked(old('voucher.active', 1) == 1)>
+                                                        <input class="form-check-input" type="radio" id="active"
+                                                            name="voucher[active]" value="1"
+                                                            @checked(old('voucher.active', 1) == 1)>
                                                         <label class="form-check-label" for="active">
-                                                         Hiển thị
+                                                            Hiển thị
                                                         </label>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <input class="form-check-input" value="0"
-                                                            type="radio" id="active" name="voucher[active]" @checked(old('voucher.active', 1) == 0)>
+                                                        <input class="form-check-input" value="0" type="radio"
+                                                            id="active" name="voucher[active]"
+                                                            @checked(old('voucher.active', 1) == 0)>
                                                         <label class="form-check-label" for="active">
                                                             Ẩn
                                                         </label>
@@ -116,22 +112,19 @@
                                         </div>
 
                                     </div>
-                                    <div class="row mb-4">
+                                    <div class="row mb-4" id="time_voucher">
                                         <div class="col-6">
                                             <label class="form-label mb-2">Ngày bắt đầu:</label>
                                             <input type="datetime-local" name="voucher[start_date]" class="form-control"
                                                 value="{{ old('voucher.start_date') }}">
-                                            @error('voucher.start_date')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
+                                            <div class="start_date_error text-danger mt-2"></div>
+
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label mb-2">Ngày kết thúc</label>
                                             <input type="datetime-local" class="form-control" name="voucher[end_date]"
                                                 value="{{ old('voucher.end_date') }}">
-                                            @error('voucher.end_date')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
+                                            <div class="end_date_error text-danger mt-2"></div>
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -334,8 +327,73 @@
                 }
             });
 
-            // Khởi tạo: Đảm bảo trường ban đầu hoạt động đúng
             $("#discount_value").trigger("change");
+
+            $(document).ready(function() {
+                $('#voucher-form').on('submit', function(event) {
+                    event.preventDefault();
+                    $('.text-danger').text('');
+                    var formData = new FormData(this);
+
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                timer: 1000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                window.location.href = response.route;
+                            });
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 422) {
+                                var errors = xhr.responseJSON.errors;
+
+                                $.each(errors, function(field, messages) {
+                                    if (field === 'voucher.name') {
+                                        $('.name_error').text(messages.join(
+                                            ', '));
+                                    }
+                                    if (field === 'voucher.quantity') {
+                                        $('.quantity_error').text(messages.join(
+                                            ', '));
+                                    }
+                                    if (field === 'voucher.code') {
+                                        $('.code_error').text(messages.join(
+                                            ', '));
+                                    }
+                                    if (field === 'voucher.start_date') {
+                                        $('.start_date_error').text(messages
+                                            .join(', '));
+                                    }
+                                    if (field === 'voucher.end_date') {
+                                        $('.end_date_error').text(messages.join(
+                                            ', '));
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: xhr.responseJSON.message,
+                                    timer: 1000,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    window.location.href = xhr.responseJSON
+                                        .route;
+                                });
+                            }
+                        }
+                    });
+                });
+            });
+
         });
     </script>
+
 @endsection

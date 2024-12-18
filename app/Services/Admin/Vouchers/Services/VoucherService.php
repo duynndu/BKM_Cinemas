@@ -29,6 +29,11 @@ class VoucherService extends BaseService implements VoucherServiceInterface
             $uploadData = $this->uploadFile($data['image'], 'public/vouchers');
             $data['image'] = $uploadData['path'];
         }
+        if ($data['discount_condition'] == 'condition') {
+            $data['start_date'] = null;
+            $data['end_date'] = null;
+            $data['quantity'] = null;
+        }
 
         return $this->repository->create($data);
     }
@@ -45,6 +50,11 @@ class VoucherService extends BaseService implements VoucherServiceInterface
             }
             $uploadData = $this->uploadFile($data['image'], 'public/vouchers');
             $data['image'] = $uploadData['path'];
+        }
+        if ($data['discount_condition'] == 'condition') {
+            $data['start_date'] = null;
+            $data['end_date'] = null;
+            $data['quantity'] = null;
         }
         return $this->repository->update($id, $data);
     }
@@ -76,19 +86,20 @@ class VoucherService extends BaseService implements VoucherServiceInterface
             'path' => Storage::url($path),
         ];
     }
-    public function getAccountByVoucher($request){
+    public function getAccountByVoucher($request)
+    {
         return $this->repository->getAccountByVoucher($request);
     }
-    public function  getAccountByKeyword($request){
+    public function  getAccountByKeyword($request)
+    {
         return $this->repository->getAccountByKeyword($request);
     }
-    public function giftVoucherToAccount($request){
+    public function giftVoucherToAccount($request)
+    {
         return $this->repository->giftVoucherToAccount($request);
-
     }
-    public function changeActive($request){
+    public function changeActive($request)
+    {
         return $this->repository->changeActive($request);
     }
-    
-
 }

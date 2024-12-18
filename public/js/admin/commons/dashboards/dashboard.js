@@ -246,7 +246,8 @@ $(document).ready(function() {
         dataType: 'json',
         success: function(response) {
             const chartData = response.chart;
-
+            const topMovies = response.topMovies; 
+            
             const revenuaData = $('.revenuaData');
             let totalRevenue = 0;
 
@@ -256,9 +257,9 @@ $(document).ready(function() {
 
             revenuaData.text(totalRevenue.toLocaleString('vi-VN') + ' VNĐ');
 
-            const labels = chartData.map(item => item.movie_name_and_date);
-            const revenues = chartData.map(item => item.total_revenue);
-            const movieCounts = chartData.map(item => item.movie_count);
+            const labels = topMovies.map(item => item.movie_name);
+            const revenues = topMovies.map(item => item.total_revenue);
+            const movieCounts = topMovies.map(item => item.total_tickets);
 
             myChart.data.labels = labels;
             myChart.data.datasets[0].data = revenues;

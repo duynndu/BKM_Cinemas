@@ -12,4 +12,9 @@ class DepositRepository extends BaseRepository implements DepositInterface
     {
         return User::class;
     }
+
+    public function updatePayment(&$data, $id)
+    {
+        return $this->update($data, $id);
+    }
 }

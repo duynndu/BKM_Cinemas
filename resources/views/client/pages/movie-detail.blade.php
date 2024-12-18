@@ -125,15 +125,15 @@
                                         x-for="showtime in showtimeDetail.showtimes.sort((a, b) => moment(a.start_time).isBefore(moment(b.start_time)) ? -1 : 1)">
                                         <a align="center"
                                             :class="{
-                                                'active': moment().isBefore(moment(showtime.start_time).subtract(2,
+                                                'active': moment().isBefore(moment(showtime.start_time).subtract(0,
                                                     'hours')),
                                                 'tw-cursor-not-allowed': moment().isAfter(moment(showtime.start_time)
-                                                    .subtract(2, 'hours'))
+                                                    .subtract(0, 'hours'))
                                             }"
-                                            :href="moment().isBefore(moment(showtime.start_time).subtract(2, 'hours')) ?
+                                            :href="moment().isBefore(moment(showtime.start_time).subtract(0, 'hours')) ?
                                                 `{{ url('dat-ve') }}/${showtime.id}` : '#'"
                                             x-text="moment(showtime.start_time).format('HH:mm')"
-                                            :disabled="moment().isAfter(moment(showtime.start_time).subtract(2, 'hours'))">
+                                            :disabled="moment().isAfter(moment(showtime.start_time).subtract(0, 'hours'))">
                                         </a>
                                     </template>
                                 </div>

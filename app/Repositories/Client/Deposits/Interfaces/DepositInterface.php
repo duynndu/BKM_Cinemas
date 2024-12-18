@@ -6,4 +6,5 @@ use App\Repositories\Base\RepositoryInterface;
 
 interface DepositInterface extends RepositoryInterface
 {
+    public function updatePayment(&$data, $id);
 }

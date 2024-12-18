@@ -338,7 +338,7 @@
                 <input x-model="voucherCode" type="text" placeholder="Nhập mã giảm giá">
                 <button id="apply-coupon" @click="applyVoucher()">Áp dụng</button>
             </div>
-            <div style="height: 26px;" x-show="voucherSelected?.name" class="applied-voucher" x-cloak>
+            <div x-show="voucherSelected?.name" class="applied-voucher" x-cloak>
                 <div class="tw-flex tw-items-center tw-justify-center">VOUCHER: <strong x-text="voucherSelected?.code"></strong> | <strong x-text="voucherSelected.name"></strong></div>
             </div>
 

@@ -54,7 +54,6 @@ class VoucherController extends Controller
     public function getVoucherByCode(string $code)
     {
         DB::beginTransaction();
-
         try {
             $voucher = Voucher::where('code', $code)->first();
             if (!$voucher) {
@@ -69,14 +68,12 @@ class VoucherController extends Controller
                 throw ValidationException::withMessages(['Voucher này không còn sử dụng được']);
             }
             $userVoucher = auth()->user()->vouchers()->where('code', $code)->first();
-            $voucher = null;
+            
             if (!$userVoucher) {
-                if ($voucher) {
-                    $voucher->update([
-                        'quantity' => $voucher->quantity - 1
-                    ]);
-                    auth()->user()->vouchers()->attach($voucher->id);
-                }
+                $voucher->update([
+                    'quantity' => $voucher->quantity - 1
+                ]);
+                auth()->user()->vouchers()->attach($voucher->id);
             }
             DB::commit();
             return response()->json($voucher);
@@ -90,11 +87,19 @@ class VoucherController extends Controller
     public function getUserVouchers()
     {
         $user = auth()->user();
-        return response()->json(
-            $user->vouchers()->get()
-                ->where('active', '=', 1)
-                ->where('start_date', '<=', Carbon::now())
-                ->where('end_date', '>=', Carbon::now())
-        );
+
+        $vouchers = $user->vouchers()
+            ->where('active', 1)
+            ->where(function ($query) {
+                $query->where('start_date', '<=', Carbon::now())
+                    ->where('end_date', '>=', Carbon::now())
+                    ->orWhere(function ($subQuery) {
+                        $subQuery->whereNull('start_date')
+                                ->whereNull('end_date');
+                    });
+            })
+            ->get();
+
+        return response()->json($vouchers);
     }
 }

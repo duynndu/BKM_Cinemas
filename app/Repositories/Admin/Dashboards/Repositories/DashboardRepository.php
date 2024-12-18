@@ -199,7 +199,7 @@ class DashboardRepository extends BaseRepository implements DashboardInterface
             ->map(function ($bookings, $movieNameAndDate) {
                 return [
                     'movie_name_and_date' => $movieNameAndDate,
-                    'total_revenue' => $bookings->sum('total_price'),
+                    'total_revenue' => $bookings->sum('final_price'),
                     'movie_count' => $bookings->count(),
                 ];
             })
@@ -248,33 +248,32 @@ class DashboardRepository extends BaseRepository implements DashboardInterface
 
     public function getTopMovies($bookings, $requestedCinemaId, $userCinemaId, $userType)
     {
-        if ($requestedCinemaId || ($userType !== 'admin' && $userCinemaId)) {
-            $cinemaId = $requestedCinemaId ?: $userCinemaId;
-
-            $groupedByMovie = $bookings->where('cinema_id', $cinemaId)
-                ->groupBy('movie.id')
-                ->map(function ($movieBookings) {
-                    return [
-                        'movie_name' => $movieBookings->first()->movie->title,
-                        'total_revenue' => $movieBookings->sum('total_price'),
-                        'total_tickets' => $movieBookings->count(),
-                    ];
-                });
-
-            return $groupedByMovie->sortByDesc('total_revenue')->take(5)->values();
-        } else {
+        if ($userType !== 'admin' && !$requestedCinemaId && !$userCinemaId) {
             $groupedByMovie = $bookings->groupBy('movie.id')
                 ->map(function ($movieBookings) {
                     return [
                         'movie_name' => $movieBookings->first()->movie->title,
-                        'total_revenue' => $movieBookings->sum('total_price'),
+                        'total_revenue' => $movieBookings->sum('final_price'),
                         'total_tickets' => $movieBookings->count(),
                     ];
-                });
+                }); 
 
             return $groupedByMovie->sortByDesc('total_revenue')->take(5)->values();
         }
+
+        $groupedByMovie = $bookings->groupBy('movie.id')
+            ->map(function ($movieBookings) {
+                return [
+                    'movie_name' => $movieBookings->first()->movie->title,
+                    'total_revenue' => $movieBookings->sum('final_price'),
+                    'total_tickets' => $movieBookings->count(),
+                ];
+            });
+        $groupedByMovie = $groupedByMovie->sortByDesc('total_revenue')->take(5)->values();
+
+        return $groupedByMovie;
     }
+
 
     public function getTop5MoviesByViewCount()
     {
@@ -337,7 +336,7 @@ class DashboardRepository extends BaseRepository implements DashboardInterface
                             $query->where('cinema_id', Auth::user()->cinema_id);
                         }
                     }
-                ], 'total_price')
+                ], 'final_price')
             ->orderByDesc('total_revenue')
             ->orderByDesc('total_tickets')
             ->limit(1)

@@ -114,16 +114,14 @@
                                                     </option>
                                                 </select>
                                             </div>
-                                            <div class="col-xl-3 col-sm-6 align-self-end">
-                                                <div>
-                                                    <button class="btn btn-primary me-2" title="Click here to Search"
-                                                        type="submit"><i
-                                                            class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('language.admin.posts.search') }}
-                                                    </button>
-                                                    <button type="reset" class="btn btn-danger light"
-                                                        title="Click here to remove filter">{{ __('language.admin.posts.removeValue') }}</button>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <div class="mt-2 d-flex align-items-center">
+                                            <button class="btn btn-primary me-2" title="Click here to Search"
+                                                type="submit"><i
+                                                    class="fa-sharp fa-solid fa-filter me-2"></i>{{ __('language.admin.posts.search') }}
+                                            </button>
+                                            <button type="reset" class="btn btn-danger light"
+                                                    title="Click here to remove filter">{{ __('language.admin.posts.removeValue') }}</button>
                                         </div>
                                     </div>
                                 </form>
@@ -198,7 +196,7 @@
                                                                 class="text-black">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</strong>
                                                         </td>
                                                         <td style="max-width: 155px !important;">
-                                                            <b class="text-style">
+                                                            <b class="text-style" style="width: 140px !important;">
                                                                 {{ $post->name }}
                                                             </b>
                                                         </td>
