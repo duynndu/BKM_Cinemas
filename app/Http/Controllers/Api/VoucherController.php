@@ -87,11 +87,19 @@ class VoucherController extends Controller
     public function getUserVouchers()
     {
         $user = auth()->user();
-        return response()->json(
-            $user->vouchers()->get()
-                ->where('active', '=', 1)
-                ->where('start_date', '<=', Carbon::now())
-                ->where('end_date', '>=', Carbon::now())
-        );
+
+        $vouchers = $user->vouchers()
+            ->where('active', 1)
+            ->where(function ($query) {
+                $query->where('start_date', '<=', Carbon::now())
+                    ->where('end_date', '>=', Carbon::now())
+                    ->orWhere(function ($subQuery) {
+                        $subQuery->whereNull('start_date')
+                                ->whereNull('end_date');
+                    });
+            })
+            ->get();
+
+        return response()->json($vouchers);
     }
 }
