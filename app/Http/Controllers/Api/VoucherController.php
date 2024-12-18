@@ -54,7 +54,6 @@ class VoucherController extends Controller
     public function getVoucherByCode(string $code)
     {
         DB::beginTransaction();
-
         try {
             $voucher = Voucher::where('code', $code)->first();
             if (!$voucher) {
@@ -69,14 +68,12 @@ class VoucherController extends Controller
                 throw ValidationException::withMessages(['Voucher này không còn sử dụng được']);
             }
             $userVoucher = auth()->user()->vouchers()->where('code', $code)->first();
-            $voucher = null;
+            
             if (!$userVoucher) {
-                if ($voucher) {
-                    $voucher->update([
-                        'quantity' => $voucher->quantity - 1
-                    ]);
-                    auth()->user()->vouchers()->attach($voucher->id);
-                }
+                $voucher->update([
+                    'quantity' => $voucher->quantity - 1
+                ]);
+                auth()->user()->vouchers()->attach($voucher->id);
             }
             DB::commit();
             return response()->json($voucher);

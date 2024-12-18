@@ -776,7 +776,7 @@
                                                 </tr>
                                                 <div class="modal fade" id="modalTickets_{{ $order->id }}"
                                                     aria-modal="true" role="dialog">
-                                                    <div class="modal-dialog modal-xl" role="document">
+                                                    <div class="modal-dialog modal-xl" style="max-width: 1200px !important;" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title">
@@ -962,6 +962,22 @@
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span>{{ number_format($order->final_price, 0, ',', '.') }}đ</span> 
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="total mb-10 gr-ticket">
+                                                                                                                <div>
+                                                                                                                    Thanh toán:
+                                                                                                                </div>
+                                                                                                                <div>
+                                                                                                                    @if ($order->payment_method == 'vnpay')
+                                                                                                                        Ví <span style="color: #ed1c24;">VN</span><span style="color: #005baa;">PAY</span>
+                                                                                                                    @elseif ($order->payment_method == 'momo')
+                                                                                                                        Ví <span style="color: rgb(212, 42, 135);">MOMO</span>
+                                                                                                                    @elseif ($order->payment_method == 'zalopay')
+                                                                                                                        Ví <span style="color: rgb(0, 51, 201);">ZALO</span><span style="color: rgb(0, 207, 106);">PAY</span>
+                                                                                                                    @else
+                                                                                                                        Ví thành viên
+                                                                                                                    @endif
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                         </div>

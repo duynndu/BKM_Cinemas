@@ -32,7 +32,7 @@ class RewardRepository extends BaseRepository implements RewardInterface
 
     public function getAll()
     {
-        return $this->model->where('active', 1)->get();
+        return $this->model->where('active', 1)->orderBy('id', 'desc')->get();
     }
 
     public function getRewardsByUserId($userId)

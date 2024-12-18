@@ -24,7 +24,9 @@ class CategoryPostRepository implements CategoryPostInterface
 
     public function getCategoryPostBySlug($slug)
     {
-        $categoryPostsBySlug = $this->categoryPost
+        $categoryPostsBySlug = $this->categoryPost->with(['posts' => function ($query) {
+            $query->where('active', 1)->orderBy('id', 'DESC');
+        }])
             ->where('slug', $slug)
             ->select('id', 'name', 'slug')
             ->first();

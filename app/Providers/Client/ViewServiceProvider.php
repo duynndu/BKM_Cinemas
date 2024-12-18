@@ -25,7 +25,6 @@ class ViewServiceProvider extends ServiceProvider
             $rightFooter   = $this->viewDataService->getSytemBySlug('right-footer');
             $view->with([
                 'notifications' => $notifications,
-
                 'customerCare' => $customerCare,
                 'connectWithUs' => $connectWithUs,
                 'rightFooter' => $rightFooter,
