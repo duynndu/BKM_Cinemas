@@ -30,11 +30,14 @@ $(document).ready(function () {
 
   $("#discountCondition").change(function () {
     var condition = $(this).val();
-
     if (condition === "condition") {
+      $("#time_voucher").attr("hidden", true);
+      $("#quantity_voucher").attr("hidden", true);
       fullConditionType.removeClass("d-none");
       $("#conditionType").val("");
     } else if (condition === "all") {
+      $("#time_voucher").attr("hidden", false);
+      $("#quantity_voucher").attr("hidden", false);
       fullConditionType.addClass("d-none");
       fullLevelType.addClass("d-none");
     }
@@ -42,46 +45,45 @@ $(document).ready(function () {
 
   $("#conditionType").change(function () {
     var conditionType = $(this).val();
-
     if (conditionType === "level_up") {
       fullLevelType.removeClass("d-none");
       $("#levelType").val("");
+      
     } else if (conditionType === "new_member") {
       fullLevelType.addClass("d-none");
     }
   });
-});
-function validateVoucherConditions() {
-  var discountCondition = $("#discountCondition").val();
-  var conditionType = $("#conditionType").val();
-  var levelType = $("#levelType").val();
-  var errorMessage = "";
 
-  $(".validation-error").remove();
+  function validateVoucherConditions() {
+    var discountCondition = $("#discountCondition").val();
+    var conditionType = $("#conditionType").val();
+    var levelType = $("#levelType").val();
+    var errorMessage = "";
 
-  if (discountCondition === "condition" && !conditionType) {
-    $(
-      "<p class='text-danger validation-error'>Bạn phải chọn loại điều kiện.</p>",
-    ).appendTo("#full-conditionType");
+    $(".validation-error").remove();
+
+    if (discountCondition === "condition" && !conditionType) {
+      $(
+        "<p class='text-danger validation-error'>Bạn phải chọn loại điều kiện.</p>",
+      ).appendTo("#full-conditionType");
+    }
+
+    if (conditionType === "level_up" && !levelType) {
+      $(
+        "<p class='text-danger validation-error'>Bạn phải chọn loại hạng.</p>",
+      ).appendTo("#full-levelType");
+    }
+
+    if (
+      (discountCondition === "condition" && !conditionType) ||
+      (conditionType === "level_up" && !levelType)
+    ) {
+      return false;
+    }
+
+    return true;
   }
 
-  if (conditionType === "level_up" && !levelType) {
-    $(
-      "<p class='text-danger validation-error'>Bạn phải chọn loại hạng.</p>",
-    ).appendTo("#full-levelType");
-  }
-
-  if (
-    (discountCondition === "condition" && !conditionType) ||
-    (conditionType === "level_up" && !levelType)
-  ) {
-    return false;
-  }
-
-  return true;
-}
-
-$(document).ready(function () {
   $("#discountCondition").change(function () {
     if ($(this).val() === "all") {
       $("#conditionType").val("");
@@ -103,10 +105,9 @@ $(document).ready(function () {
   });
 
   // xử lý chỗ chọn phần % thì hiện input nhập %, chọn tiền thì hiện input nhập tiền
-  var discount_value = $('.discount_value').data('value');
-  var discount_type = $('.discount_type').data('value');
+  var discount_value = $(".discount_value").data("value");
+  var discount_type = $(".discount_type").data("value");
   console.log(discount_type);
-
 
   if (discount_type == "money") {
     $("#discount_value_money").val(discount_value); //

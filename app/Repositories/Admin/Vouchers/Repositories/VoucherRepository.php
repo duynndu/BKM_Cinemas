@@ -180,10 +180,9 @@ class VoucherRepository extends BaseRepository implements VoucherInterface
                 'message' => 'Voucher không hợp lệ!'
             ]);
         }
+        
         if (!empty($request->userIds)) {
-
             $userVoucher = VoucherUser::where('voucher_id', $voucher->id)->get();  // Lấy các người dùng đã tặng voucher
-
             // Kiểm tra số lượng voucher có đủ không (voucher còn lại tính từ tổng - số người đã được tặng)
             if ($voucher->quantity < (count($request->userIds) - count($userVoucher))) {
                 return response()->json([

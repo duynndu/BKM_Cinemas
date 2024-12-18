@@ -25,7 +25,6 @@ function getMaxIndex() {
     return maxIndex + 1;
 }
 
-
 let foodIds = [];
 let index = getMaxIndex();
 let isSubmit = true;
