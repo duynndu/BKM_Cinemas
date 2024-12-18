@@ -70,77 +70,79 @@
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Danh sách khu vực</h4>
-                        @can('create', App\Models\Area::class)
-                            <div class="compose-btn">
-                                <a href="{{ route('admin.areas.create') }}">
-                                    <button class="btn btn-secondary btn-sm light">
-                                        + Thêm Mới
-                                    </button>
-                                </a>
-                            </div>
-                        @endcan
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Danh sách khu vực</h4>
+                            @can('create', App\Models\Area::class)
+                                <div class="compose-btn">
+                                    <a href="{{ route('admin.areas.create') }}">
+                                        <button class="btn btn-secondary btn-sm light">
+                                            + Thêm Mới
+                                        </button>
+                                    </a>
+                                </div>
+                            @endcan
+                        </div>
+                        <div class="card-body">
                             @if (!$areas->isEmpty())
-                                <table class="table table-responsive-md" id="data-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:80px;">STT</th>
-                                            <th>Tên Khu Vực</th>
-                                            <th>Tên Thành Phố</th>
-                                            @if (Auth()->user()->can('update', \App\Models\Area::class) || Auth()->user()->can('delete', \App\Models\Area::class))
-                                                <th>Hành Động</th>
-                                            @endif
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($areas as $key => $area)
+                                <div class="table-responsive">
+                                    <table class="table table-responsive-md" id="data-table">
+                                        <thead>
                                             <tr>
-                                                <td>
-                                                    <strong
-                                                        class="text-black">{{ ($areas->currentPage() - 1) * $areas->perPage() + $key + 1 }}</strong>
-                                                </td>
-                                                <td>
-                                                    <b>{{ $area->name }}</b>
-                                                </td>
-                                                <td>
-                                                    <b>{{ $area->city->name ?? 'Không có thành phố' }}</b>
-                                                </td>
+                                                <th style="width:80px;">STT</th>
+                                                <th>Tên Khu Vực</th>
+                                                <th>Tên Thành Phố</th>
                                                 @if (Auth()->user()->can('update', \App\Models\Area::class) || Auth()->user()->can('delete', \App\Models\Area::class))
-                                                    <td>
-                                                        <div style="display: flex; justify-content: end">
-                                                            @can('update', App\Models\Area::class)
-                                                                <a href="{{ route('admin.areas.edit', $area->id) }}"
-                                                                    class="btn btn-primary shadow btn-xs sharp me-1">
-                                                                    <i class="fa fa-pencil"></i>
-                                                                </a>
-                                                            @endcan
-                                                            @can('delete', App\Models\Area::class)
-                                                                <form action="{{ route('admin.areas.delete', $area->id) }}"
-                                                                    class="formDelete" method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button
-                                                                        class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
-                                                                        data-type="DELETE" href="">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </form>
-                                                            @endcan
-                                                        </div>
-                                                    </td>
+                                                    <th>Hành Động</th>
                                                 @endif
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                <div class="row">
-                                    <div class="col-12 d-flex justify-content-center">
-                                        {{ $areas->links('pagination::bootstrap-4') }}
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($areas as $key => $area)
+                                                <tr>
+                                                    <td>
+                                                        <strong
+                                                            class="text-black">{{ ($areas->currentPage() - 1) * $areas->perPage() + $key + 1 }}</strong>
+                                                    </td>
+                                                    <td>
+                                                        <b>{{ $area->name }}</b>
+                                                    </td>
+                                                    <td>
+                                                        <b>{{ $area->city->name ?? 'Không có thành phố' }}</b>
+                                                    </td>
+                                                    @if (Auth()->user()->can('update', \App\Models\Area::class) || Auth()->user()->can('delete', \App\Models\Area::class))
+                                                        <td>
+                                                            <div style="display: flex; justify-content: end">
+                                                                @can('update', App\Models\Area::class)
+                                                                    <a href="{{ route('admin.areas.edit', $area->id) }}"
+                                                                        class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                        <i class="fa fa-pencil"></i>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('delete', App\Models\Area::class)
+                                                                    <form action="{{ route('admin.areas.delete', $area->id) }}"
+                                                                        class="formDelete" method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button
+                                                                            class="btn btn-danger shadow btn-xs sharp me-1 btn-remove"
+                                                                            data-type="DELETE" href="">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                @endcan
+                                                            </div>
+                                                        </td>
+                                                    @endif
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            {{ $areas->links('pagination::bootstrap-4') }}
+                                        </div>
                                     </div>
                                 </div>
                             @else
@@ -161,5 +163,4 @@
 @endsection
 
 @section('js')
-
 @endsection

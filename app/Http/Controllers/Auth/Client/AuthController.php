@@ -22,6 +22,7 @@ use App\Services\Client\Cities\Interfaces\CityServiceInterface;
 use App\Services\Client\Transactions\Interfaces\TransactionServiceInterface;
 use App\Services\Client\Users\Interfaces\UserServiceInterface;
 use App\Services\Client\Vouchers\Interfaces\VoucherServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,6 @@ class AuthController extends Controller
     protected $voucherService;
     protected $bookingService;
     
-
     public function __construct(
         CityServiceInterface            $cityService,
         RegisterServiceInterface        $registerService,
@@ -126,6 +126,14 @@ class AuthController extends Controller
             if (Auth::attempt($credentials, $remember)) {
                 $user = Auth::user();
                 $token = $user->createToken('AuthToken')->plainTextToken;
+
+                if ($user->created_at > now()->subDays(7)) {
+                    $user->is_new_member = 1; 
+                } else {
+                    $user->is_new_member = 0;
+                }
+
+                $user->save();
 
                 return response()->json([
                     'status' => true,
@@ -348,7 +356,7 @@ class AuthController extends Controller
                 'email' => Auth::user()->email ?? null,
                 'phone' => Auth::user()->phone ?? null,
                 'gender' => $request->gender,
-                'date_birth' => $request->date_birth,
+                'date_birth' => Carbon::createFromFormat('d-m-Y', $request->date_birth)->format('Y-m-d'),
                 'city_id' => $request->city_id,
             ];
 

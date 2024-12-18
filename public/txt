@@ -15,3 +15,9 @@ Ngân hàng: NCB
 NGUYEN VAN A
 07/15
 123456
+
+*
+!.gitignore
+
+
+!schemas/**

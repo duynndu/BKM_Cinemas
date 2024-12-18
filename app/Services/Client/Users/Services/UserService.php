@@ -47,8 +47,6 @@ class UserService extends BaseService implements UserServiceInterface
             return false;
         }
 
-        $data['date_birth'] = Carbon::createFromFormat('d/m/Y', $data['date_birth'])->format('Y-m-d');
-
         return $this->repository->update($id, $data);
     }
 

@@ -51,9 +51,18 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
-            if (!$this->orderService->changeManyTickets()){
-                return response()->json(['message' => 'Không có dữ liệu!'], 400);
-            };
+            $data = $this->orderService->changeManyTickets();
+            if($data == "not_time_yet"){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Chỉ cập nhật sau 10h tối!'
+                ], 400);
+            }elseif (!$data) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Không đủ điều kiện!'
+                ], 400);
+            }
             DB::commit();
             return response()->json(['message' => 'Thành công!'], 200);
         } catch (\Exception $e) {

@@ -307,6 +307,12 @@ $(document).ready(function () {
         todayHighlight: true   // Nổi bật ngày hôm nay
     });
 
+    $('.datepickerProfile').datepicker({
+        format: 'dd-mm-yyyy', // Định dạng ngày
+        autoclose: true,      // Tự động đóng khi chọn ngày
+        todayHighlight: true   // Nổi bật ngày hôm nay
+    });
+
     $('.date-filter').datepicker({
         format: 'mm/yyyy',
         minViewMode: 1,

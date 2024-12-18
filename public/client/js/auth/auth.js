@@ -39,15 +39,14 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('submit','#updateAvatarForm', function (e) {
+    $(document).on('submit', '#updateAvatarForm', function (e) {
         e.preventDefault();
-
+    
         let form = $(this);
         let url = form.attr('action');
         let data = new FormData(this);
-        let image = form.attr('data-image');
         let imageSuccess = form.attr('data-success');
-
+    
         $.ajax({
             url: url,
             type: 'POST',
@@ -68,13 +67,34 @@ $(document).ready(function () {
                         timer: 1500,
                     }).then(() => {
                         $('#modalAvatarImage').hide();
-                        $('#current-avatar img').attr('src', response.imageUrl);
-                        $('#current-avatar img').css('display', 'block');
-                        $('.avatar-placeholder').css('display', 'none');
-                        $('.input-box-image').css('background-image', 'url(' + image + ')');
+
+                        if (response.imageUrl) {
+                            $('#current-avatar img').attr('src', response.imageUrl).css('display', 'block');
+                            $('.avatar-placeholder').css('display', 'none');
+                            $('.input-box-image').css('background-image', 'url(' + response.imageUrl + ')');
+                            $('.account-header .avatar').attr('src', response.imageUrl).show();
+                            $('.account-header .avatar-placeholder-header').hide();
+                            $('.avatar-placeholder-header').replaceWith(`
+                                <img class="avatar" src="${response.imageUrl}" alt="Avatar">
+                            `);
+                        } else {
+                            let firstLetter = response.firstLetter || 'A';
+                            let backgroundColor = response.backgroundColor || '#FF5733';
+                            $('.avatar-placeholder').css({
+                                display: 'block',
+                                'background-color': backgroundColor,
+                            }).text(firstLetter);
+                            $('#current-avatar img').css('display', 'none');
+                            $('.account-header .avatar-placeholder-header').css({
+                                display: 'block',
+                                'background-color': backgroundColor,
+                            }).text(firstLetter);
+                            $('.account-header .avatar').hide();
+                        }
+    
                         $('#avatarInput').val('');
                         $('#avatar').val('');
-                    })
+                    });
                 }
             },
             error: function (error) {

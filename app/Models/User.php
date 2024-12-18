@@ -118,6 +118,13 @@ class User extends Authenticatable
             ->withPivot('deleted_at')
             ->wherePivotNull('deleted_at');
     }
+    public function vouchersTrashed()
+    {
+        return $this->belongsToMany(Voucher::class, 'user_vouchers', 'user_id', 'voucher_id')
+            ->withTimestamps()
+            ->withPivot('deleted_at')
+            ->wherePivotNotNull('deleted_at');
+    }
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_vouchers')

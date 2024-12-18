@@ -88,12 +88,32 @@
                                                                                             <li>
                                                                                                 <img
                                                                                                     src="{{ asset('client/images/locationIcon.png') }}">
-                                                                                                <span>{{ $ticket->cinema->name }}</span>
+                                                                                                <span>{{ $ticket->cinema->name }} ({{ $ticket->cinema->area->name }}, {{ $ticket->cinema->area->city->name }})</span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
                                                                                     <div
                                                                                         class="row d-flex row-small ticket-row row-divided">
+                                                                                        <div
+                                                                                            class="col medium-12 small-12 large-3">
+                                                                                            <div
+                                                                                                class="col-inner text-center">
+                                                                                                <p>Đồ ăn</p>
+                                                                                                <div>
+                                                                                                    @if ($ticket->foodsBooking && $ticket->foodsBooking->count())
+                                                                                                        @foreach ($ticket->foodsBooking as $foodBooking)
+                                                                                                            <span>{{ $foodBooking->food->name ?? '' }} x{{ $foodBooking->quantity }}</span>
+                                                                                                            @if (!$loop->last)
+                                                                                                                |
+                                                                                                            @endif
+                                                                                                        @endforeach
+                                                                                                    @else
+                                                                                                        <span>Không có
+                                                                                                            đồ ăn</span>
+                                                                                                    @endif
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                         <div
                                                                                             class="col medium-12 small-12 large-3">
                                                                                             <div
@@ -123,10 +143,50 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="total">
-                                                                                        Tổng tiền:
-                                                                                        <span>{{ number_format($ticket->final_price, 0, ',', '.') }}đ</span> 
-                                                                                        (<del>{{ number_format($ticket->total_price, 0, ',', '.') }}đ</del>)
+                                                                                    @if ($ticket->totalFoodsPrice() > 0)
+                                                                                        <div class="total mb-10 gr-ticket">
+                                                                                            <div>
+                                                                                                Tiền vé:
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <span>{{ number_format($ticket->totalSeatsPrice(), 0, ',', '.') }}đ</span> 
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="total mb-10 gr-ticket">
+                                                                                            <div>
+                                                                                                Tiền đồ ăn:
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <span>{{ number_format($ticket->totalFoodsPrice(), 0, ',', '.') }}đ</span> 
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    @else
+                                                                                        <div class="total mb-10 gr-ticket">
+                                                                                            <div>
+                                                                                                Tiền vé:
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <span>{{ number_format($ticket->totalSeatsPrice(), 0, ',', '.') }}đ</span> 
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    @endif
+                                                                                    @if ($ticket->discount_price > 0)
+                                                                                        <div class="total mb-10 gr-ticket">
+                                                                                            <div>
+                                                                                                Voucher:
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <span>-{{ number_format($ticket->discount_price, 0, ',', '.') }}đ</span> 
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    @endif
+                                                                                    <div class="total mb-10 gr-ticket">
+                                                                                        <div>
+                                                                                            Tổng tiền:
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <span>{{ number_format($ticket->final_price, 0, ',', '.') }}đ</span> 
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -149,7 +209,7 @@
                             </div>
                         </td>
                         <td>{{ $ticket->cinema->name }}</td>
-                        <td>{{ number_format($ticket->total_price, 0, ',', '.') }}đ</td>
+                        <td>{{ number_format($ticket->final_price, 0, ',', '.') }}đ</td>
                         <td>
                             <span class="text-danger">
                                 {{ $ticket->get_tickets == 0 ? 'Chưa nhận' : 'Đã nhận' }}</td>

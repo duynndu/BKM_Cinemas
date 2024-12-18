@@ -23,6 +23,6 @@ class VoucherRepository  implements VoucherInterface
 
     public function getAllVoucherByUserId($userId)
     {
-        return $this->userVoucher->with('voucher', 'user')->where('user_id', $userId)->get();
+        return $this->userVoucher->with('voucher', 'user')->where('user_id', $userId)->where('deleted_at', null)->orderBy('created_at', 'DESC')->get();
     }
 }

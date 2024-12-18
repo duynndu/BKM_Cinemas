@@ -16,7 +16,8 @@ class BookingRepository extends BaseRepository
     {
         $query = $this->model->with([
             'user',
-            'cinema',
+            'cinema.area',
+            'cinema.area.city',
             'movie',
             'showtime',
             'showtime.room',

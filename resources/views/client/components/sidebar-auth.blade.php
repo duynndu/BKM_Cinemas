@@ -10,7 +10,7 @@
             <a data-toggle="tab" href="#quen-mat-khau" aria-expanded="false">Quên mật khẩu</a>
         </li>
     @else
-        <li class="active">
+        <li class="{{ request('tab') === 'thanhvien' || !request('tab') ? 'active' : '' }}">
             <a data-toggle="tab" href="#thanhvien" aria-expanded="true">Thành viên</a>
         </li>
         <li class="">
@@ -22,7 +22,7 @@
         <li class="">
             <a data-toggle="tab" href="#tichluydiem" aria-expanded="false">Tích lũy & đổi thưởng</a>
         </li>
-        <li class="">
+        <li class="{{ request('tab') === 'vedadat' ? 'active' : '' }}">
             <a data-toggle="tab" href="#vedadat" aria-expanded="false">Vé đã đặt</a>
         </li>
         <li class="">

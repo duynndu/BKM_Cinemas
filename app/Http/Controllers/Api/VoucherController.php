@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class VoucherController extends Controller
 {
@@ -51,14 +53,46 @@ class VoucherController extends Controller
 
     public function getVoucherByCode(string $code)
     {
-        return response()->json(Voucher::where('code', $code)->first());
+        DB::beginTransaction();
+
+        try {
+            $voucher = Voucher::where('code', $code)->first();
+            if (!$voucher) {
+                throw ValidationException::withMessages(['Voucher này không còn sử dụng được']);
+            }
+            if ($voucher->quantity <= 0) {
+                throw ValidationException::withMessages(['Voucher này đã được sử dụng hết']);
+            }
+            $deletedVoucher = auth()->user()->vouchersTrashed()->wherePivotNotNull('deleted_at')->first();
+            if ($deletedVoucher) {
+                DB::rollBack();
+                throw ValidationException::withMessages(['Voucher này không còn sử dụng được']);
+            }
+            $userVoucher = auth()->user()->vouchers()->where('code', $code)->first();
+            $voucher = null;
+            if (!$userVoucher) {
+                if ($voucher) {
+                    $voucher->update([
+                        'quantity' => $voucher->quantity - 1
+                    ]);
+                    auth()->user()->vouchers()->attach($voucher->id);
+                }
+            }
+            DB::commit();
+            return response()->json($voucher);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
+
 
     public function getUserVouchers()
     {
         $user = auth()->user();
         return response()->json(
             $user->vouchers()->get()
+                ->where('active', '=', 1)
                 ->where('start_date', '<=', Carbon::now())
                 ->where('end_date', '>=', Carbon::now())
         );

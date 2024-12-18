@@ -236,6 +236,7 @@ class BookingController extends Controller
                 'type'    => 'refund',
                 'description'    => 'Hoàn tiền thành công!',
                 'status'    => 'completed',
+                'balance_after'    => $user->balance,
             ]);
 
             broadcast(new OrderStatusUpdated([
@@ -250,13 +251,6 @@ class BookingController extends Controller
                 'code' => $record->code,
                 'total_price' => $record->total_price,
             ], $record->user));
-
-            OrderRefundStatusUpdated::dispatch([
-                'id' => $id,
-                'status' => $record->status,
-                'code' => $record->code,
-                'total_price' => $record->total_price,
-            ], $record->user);
 
             return response()->json(['success' => 'Thành công!', 'id' => $id], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {

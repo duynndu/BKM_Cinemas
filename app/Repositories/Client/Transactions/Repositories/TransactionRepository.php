@@ -24,7 +24,13 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
     {
         $year = $request->year;
 
-        // Tính tổng chi tiêu của năm được chọn
+        $totalMoneyRefund = $this->model
+            ->where('type', 'refund')
+            ->where('status', 'completed')
+            ->whereYear('created_at', $year)
+            ->where('user_id', Auth::user()->id)
+            ->sum('amount');
+
         $totalMoney = $this->model
             ->where('type', 'booking')
             ->where('status', 'completed')
@@ -33,29 +39,36 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
             ->sum('amount');
 
         return response()->json([
-            'totalMoney' => $totalMoney,
-            'totalMoneyFormatted' => number_format($totalMoney, 0, ',', '.')
+            'totalMoney' => $totalMoney - $totalMoneyRefund,
+            'totalMoneyFormatted' => number_format($totalMoney - $totalMoneyRefund, 0, ',', '.')
         ], 200);
     }
+
     public function getTotalMoneyByMonth($request)
     {
-        $month = $request->month; // Ví dụ: "12/2024"
+        $month = $request->month;
     
-        // Tách tháng và năm từ chuỗi "12/2024"
         [$selectedMonth, $selectedYear] = explode('/', $month);
-    
-        // Tính tổng chi tiêu của tháng và năm được chọn
+        
+        $totalMoneyRefund = $this->model
+        ->where('type', 'refund')
+        ->where('status', 'completed')
+        ->whereYear('created_at', $selectedYear) 
+        ->whereMonth('created_at', $selectedMonth) 
+        ->where('user_id', Auth::user()->id)
+        ->sum('amount');
+
         $totalMoney = $this->model
             ->where('type', 'booking')
             ->where('status', 'completed')
-            ->whereYear('created_at', $selectedYear) // Lọc theo năm
-            ->whereMonth('created_at', $selectedMonth) // Lọc theo tháng
+            ->whereYear('created_at', $selectedYear) 
+            ->whereMonth('created_at', $selectedMonth) 
             ->where('user_id', Auth::user()->id)
             ->sum('amount');
     
         return response()->json([
-            'totalMoney' => $totalMoney,
-            'totalMoneyFormatted' => number_format($totalMoney, 0, ',', '.')
+            'totalMoney' => $totalMoney - $totalMoneyRefund,
+            'totalMoneyFormatted' => number_format($totalMoney - $totalMoneyRefund, 0, ',', '.')
         ], 200);
     }
     

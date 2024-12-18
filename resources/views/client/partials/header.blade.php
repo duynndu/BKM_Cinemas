@@ -11,7 +11,7 @@
             <div class="top-button">
                 <div class="row">
                     <div class="col-md-8 col-sm-7">
-                         <a class="buy-ticket" href="#"><img class="img-responsive"
+                         <a class=""><img class=""
                                 src="{{ asset('client/images/icons/dat-ve-ngay.png') }}" alt="Mua vé" /></a>
                          <a class="flags" href="#"><img class="img-responsive"
                                 src="{{ asset('client/images/vn.png') }}" alt="Ngôn ngữ" /></a>
@@ -126,17 +126,17 @@
                                     Phim
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="{{ request()->routeIs('ticket-price') ? 'active' : '' }}">
                                 <a href="{{ route('ticket-price') }}">
                                     giá vé
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="{{ request()->routeIs('post.list') && request()->route('slug') == 'thanh-vien' ? 'active' : '' }}">
                                 <a href="{{ route('post.list', 'thanh-vien') }}">
                                     Thành viên
                                 </a>
                             </li>
-                            <li class="dropdown ">
+                            <li class="dropdown {{ request()->routeIs('post.list') && (request()->route('slug') == 'khuyen-mai' || request()->route('slug') == 'qua-tang') ? 'active' : '' }}">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                                    aria-haspopup="true" aria-expanded="false">
                                     Ưu đãi - Sự kiện
@@ -156,7 +156,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="">
+                            <li class="{{ request()->routeIs('post.list') && request()->route('slug') == 'danh-gia-phim' ? 'active' : '' }}">
                                 <a href="{{ route('post.list', 'danh-gia-phim') }}">
                                     Đánh giá phim
                                 </a>
@@ -166,7 +166,7 @@
                                     Giới thiệu
                                 </a>
                             </li>
-                            <li class="dropdown ">
+                            <li class="dropdown {{ request()->routeIs('post.detail') && (request()->route('slug') == 'quang-cao-su-kien' || request()->route('slug') == 'bkm-voucher') ? 'active' : '' }}">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                                     aria-haspopup="true" aria-expanded="false">
                                     Dịch vụ

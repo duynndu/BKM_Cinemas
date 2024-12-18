@@ -6,6 +6,7 @@ use App\Constants\MemberLevel;
 use App\Models\Booking;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Admin\Orders\Interfaces\OrderInterface;
+use Carbon\Carbon;
 
 class OrderRepository extends BaseRepository implements OrderInterface
 {
@@ -17,21 +18,23 @@ class OrderRepository extends BaseRepository implements OrderInterface
     public function getAll()
     {
         return $this->model
-            ->where('code', '!=', null)
-            ->where('status', '!=', null)
+            ->whereNotNull('code') 
+            ->whereNotNull('status')
             ->when(auth()->user()->cinema_id, function ($query, $cinemaId) {
                 $query->where('cinema_id', $cinemaId);
             })
             ->with([
-                'user:id,name',
+                'user:id,name,email',
                 'cinema:id,name',
                 'movie:id,title',
                 'showtime:id,start_time,room_id',
                 'showtime.room:id,room_name',
             ])
+            ->whereHas('cinema.area.city') 
             ->orderBy('id', 'desc')
             ->get();
     }
+
 
     public function filter($request)
     {
@@ -42,7 +45,7 @@ class OrderRepository extends BaseRepository implements OrderInterface
                 $query->where('cinema_id', $cinemaId);
             })
             ->with([
-                'user:id,name',
+                'user:id,name,email',
                 'cinema:id,name',
                 'movie:id,title,image',
                 'showtime:id,start_time,room_id',
@@ -103,6 +106,10 @@ class OrderRepository extends BaseRepository implements OrderInterface
 
     public function changeManyTickets()
     {
+        if (now()->lessThan(Carbon::today()->setHour(22))) {
+            return "not_time_yet";
+        }
+        
         $orders = $this->model
             ->whereHas('showtime', function ($query) {
                 $query->where('start_time', '<', now());

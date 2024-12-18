@@ -15,7 +15,7 @@ class CategoryPostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('view-category-post');
     }
 
@@ -27,7 +27,7 @@ class CategoryPostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('view-category-post');
     }
 
@@ -39,7 +39,7 @@ class CategoryPostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('create-category-post');
     }
 
@@ -63,7 +63,7 @@ class CategoryPostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('delete-category-post');
     }
 
@@ -72,7 +72,7 @@ class CategoryPostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('delete-multiple-category-post');
     }
 
@@ -81,7 +81,7 @@ class CategoryPostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('change-order-category-post');
     }
 
@@ -90,7 +90,7 @@ class CategoryPostPolicy
         if($user->type == User::TYPE_ADMIN) {
             return true;
         }
-        
+
         return $user->hasPermission('change-position-category-post');
     }
 
