@@ -192,7 +192,7 @@
                                                         </td>
                                                         <td>
                                                             <b>
-                                                                {{ $cinema->area->name }}
+                                                                {{ $cinema->area->name ?? '' }}
                                                             </b>
                                                         </td>
                                                         <td>

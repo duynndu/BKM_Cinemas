@@ -286,7 +286,7 @@
                                                                             </button>
                                                                         </form>
                                                                     @endcan
-                                                                    @if ($voucher->discount_condition == 'condition')
+                                                                    @if ($voucher->discount_condition != 'condition')
                                                                         @can('giftVoucher', App\Models\Voucher::class)
                                                                             <button type="button" id="show_modal"
                                                                                 class="btn btn-success mb-2 shadow btn-xs sharp me-1 giftButton"
