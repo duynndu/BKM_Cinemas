@@ -88,4 +88,9 @@ class Booking extends Model
 
         return $timeDifferenceInMinutes >= 120;
     }
+
+    public function userVoucher()
+    {
+        return $this->hasMany(UserVoucher::class, 'voucher_id');
+    }
 }

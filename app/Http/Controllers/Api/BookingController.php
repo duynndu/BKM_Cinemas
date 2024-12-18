@@ -13,6 +13,7 @@ use App\Jobs\ResetSeatStatus;
 use App\Models\Booking;
 use App\Models\Notification;
 use App\Models\Transaction;
+use App\Models\UserVoucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\Admin\Orders\Interfaces\OrderServiceInterface;
@@ -153,9 +154,9 @@ class BookingController extends Controller
 
             if ($validated['status'] == 'cancelled') {
                 $record->refund_status = 'pending';
-                if ($record->voucher_id != null) {
-                    $record->user->usersvouchers()->detach($record->voucher_id);
-                }
+                UserVoucher::where('voucher_id', $record->voucher_id)->update([
+                    'deleted_at' => null
+                ]);
                 ResetSeatStatus::dispatch($record->showtime_id, auth()->id(), 'SEAT_WAITING_PAYMENT');
             }
 
