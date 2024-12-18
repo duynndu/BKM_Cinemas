@@ -7,6 +7,8 @@ use App\Http\Requests\Vouchers\VoucherRequest;
 use App\Models\Voucher;
 use App\Services\Admin\Vouchers\Interfaces\VoucherServiceInterface;
 use App\Traits\RemoveImageTrait;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -47,7 +49,7 @@ class VoucherController extends Controller
      */
     public function store(VoucherRequest $request)
     {
-        
+
         $data = $request->voucher;
         try {
             DB::beginTransaction();
@@ -56,7 +58,10 @@ class VoucherController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.vouchers.index')->with('status_succeed', "Thêm voucher thành công");
+            return response()->json([
+                'route' => route('admin.vouchers.index'),
+                'message' => 'Thành công'
+            ], 201);
         } catch (\Exception $e) {
             if (!empty($data['image'])) {
                 $path = "public/vouchers/" . basename($data['image']);
@@ -67,7 +72,11 @@ class VoucherController extends Controller
             DB::rollBack();
             Log::error('Message: ' . $e->getMessage() . ' ---Line: ' . $e->getLine());
 
-            return back()->with(['status_failed' => 'Đã xảy ra lỗi, vui lòng thử lại sau.']);
+          $response = response()->json([
+                'message' => 'Có lỗi xảy ra, vui lòng thử lại!',
+                'route'     => route('admin.vouchers.index'),
+            ], 500);
+            throw new HttpResponseException($response);
         }
     }
 
@@ -101,11 +110,17 @@ class VoucherController extends Controller
         try {
             DB::beginTransaction();
             if (!$this->voucherService->update($data, $id)) {
-                return redirect()->route('admin.vouchers.index')->with(['status_failed' => 'Không tìm thấy!']);
+                return response()->json([
+                    'route' => route('admin.vouchers.index'),
+                    'message' => 'Thât bại!'
+                ], 400);
             }
             DB::commit();
-            return redirect()->route('admin.vouchers.index')->with('status_succeed', "Cập nhật voucher thành công");
-        } catch (\Throwable $e) {
+            return response()->json([
+                'route' => route('admin.vouchers.index'),
+                'message' => 'Thành công'
+            ], 200);
+        } catch (\Exception $e) {
             if (!empty($data['image'])) {
                 $path = "public/vouchers/" . basename($data['image']);
                 if (Storage::exists($path)) {
@@ -114,7 +129,11 @@ class VoucherController extends Controller
             }
             DB::rollBack();
             Log::error("Error updating voucher: {$e->getMessage()} at line {$e->getLine()}");
-            return back()->with(['status_failed' => 'Đã xảy ra lỗi, vui lòng thử lại sau.']);
+            $response = response()->json([
+                'message' => 'Có lỗi xảy ra, vui lòng thử lại!',
+                'route'     => route('admin.vouchers.index'),
+            ], 500);
+            throw new HttpResponseException($response);
         }
     }
 
