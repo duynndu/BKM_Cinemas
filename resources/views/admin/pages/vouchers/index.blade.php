@@ -215,25 +215,32 @@
                                                             @endif
                                                         </td>
 
-                                                        @php
-                                                            $startDate = \Carbon\Carbon::parse($voucher->start_date);
-                                                            $endDate = \Carbon\Carbon::parse($voucher->end_date);
-                                                            $now = \Carbon\Carbon::now();
-                                                            $timeLeft = $endDate->diffForHumans($now, true);
-                                                        @endphp
-
-                                                        @if ($startDate->isSameDay($now))
-                                                            <td class="time-left text-success"
-                                                                id="time-left-{{ $voucher->id }}">
-                                                                Còn {{ $timeLeft }}
-                                                            </td>
-                                                        @elseif ($startDate->gt($now))
+                                                        @if ($voucher->discount_condition == 'condition')
                                                             <td>
-                                                                <p class="text-warning">Chờ phát hành</p>
+                                                                <p>                                                      
+                                                                    Không có
+                                                                </p>
                                                             </td>
                                                         @else
-                                                            <td>
-                                                                <p class="text-warning">Chờ phát hành</p>
+                                                            @php
+                                                                $startDate = \Carbon\Carbon::parse(
+                                                                    $voucher->start_date,
+                                                                );
+                                                                $endDate = \Carbon\Carbon::parse($voucher->end_date);
+                                                                $now = \Carbon\Carbon::now();
+                                                                $timeLeft = $endDate->diffForHumans($now, true);
+                                                            @endphp
+                                                            <td
+                                                                @if ($startDate->isSameDay($now)) class="time-left text-success" id="time-left-{{ $voucher->id }}" @endif>
+
+
+                                                                @if ($startDate->isSameDay($now))
+                                                                    Còn {{ $timeLeft }}
+                                                                @elseif ($startDate->gt($now))
+                                                                    <p class="text-warning">Chờ phát hành</p>
+                                                                @else
+                                                                    <p class="text-warning">Chờ phát hành</p>
+                                                                @endif
                                                             </td>
                                                         @endif
                                                         <td>
@@ -255,7 +262,7 @@
                                                             {{ \Carbon\Carbon::parse($voucher->created_at)->format('d-m-Y') }}
                                                         </td>
                                                         @if (auth()->user()->can('update', \App\Models\Voucher::class) ||
-                                                                auth()->user()->can('delete', \App\Models\Voucher::class)||
+                                                                auth()->user()->can('delete', \App\Models\Voucher::class) ||
                                                                 auth()->user()->can('giftVoucher', \App\Models\Voucher::class))
                                                             <td>
                                                                 <div
@@ -279,73 +286,79 @@
                                                                             </button>
                                                                         </form>
                                                                     @endcan
-                                                                    @can('giftVoucher', App\Models\Voucher::class)
-                                                                        <button type="button" id="show_modal"
-                                                                            class="btn btn-success mb-2 shadow btn-xs sharp me-1 giftButton"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#basicModal_{{ $voucher->id }}"
-                                                                            data-voucher-id="{{ $voucher->id }}"
-                                                                            data-url="{{ route('admin.vouchers.getAccountByVoucher') }}">
-                                                                            <i class="fa-solid fa-gift"></i>
-                                                                        </button>
-                                                                        <div class="modal fade modal_voucher"
-                                                                            id="basicModal_{{ $voucher->id }}"
-                                                                            aria-modal="true" role="dialog">
+                                                                    @if ($voucher->discount_condition == 'condition')
+                                                                        @can('giftVoucher', App\Models\Voucher::class)
+                                                                            <button type="button" id="show_modal"
+                                                                                class="btn btn-success mb-2 shadow btn-xs sharp me-1 giftButton"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#basicModal_{{ $voucher->id }}"
+                                                                                data-voucher-id="{{ $voucher->id }}"
+                                                                                data-url="{{ route('admin.vouchers.getAccountByVoucher') }}">
+                                                                                <i class="fa-solid fa-gift"></i>
+                                                                            </button>
+                                                                            <div class="modal fade modal_voucher"
+                                                                                id="basicModal_{{ $voucher->id }}"
+                                                                                aria-modal="true" role="dialog">
 
-                                                                            <div class="modal-dialog modal-lg"
-                                                                                role="document">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title">Tặng voucher
-                                                                                        </h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close close-modal"
-                                                                                            data-bs-dismiss="modal">
-                                                                                        </button>
-                                                                                    </div>
-                                                                                    <div class="modal-body text-start">
-                                                                                        <div
-                                                                                            class="d-flex justify-content-between align-items-center mb-4">
-                                                                                            <div class="form-check">
-                                                                                                <input class="form-check-input"
-                                                                                                    type="checkbox"
-                                                                                                    value="all"
-                                                                                                    id="checked_all_account">
-                                                                                                <label class="form-check-label"
-                                                                                                    for="flexCheckDefault">
-                                                                                                    Chọn tất cả
-                                                                                                </label>
+                                                                                <div class="modal-dialog modal-lg"
+                                                                                    role="document">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h5 class="modal-title">Tặng
+                                                                                                voucher
+                                                                                            </h5>
+                                                                                            <button type="button"
+                                                                                                class="btn-close close-modal"
+                                                                                                data-bs-dismiss="modal">
+                                                                                            </button>
+                                                                                        </div>
+                                                                                        <div class="modal-body text-start">
+                                                                                            <div
+                                                                                                class="d-flex justify-content-between align-items-center mb-4">
+                                                                                                <div class="form-check">
+                                                                                                    <input
+                                                                                                        class="form-check-input"
+                                                                                                        type="checkbox"
+                                                                                                        value="all"
+                                                                                                        id="checked_all_account">
+                                                                                                    <label
+                                                                                                        class="form-check-label"
+                                                                                                        for="flexCheckDefault">
+                                                                                                        Chọn tất cả
+                                                                                                    </label>
+                                                                                                </div>
+
+                                                                                                <input style="width:330px;"
+                                                                                                    id="searchUserInput_{{ $voucher->id }}"
+                                                                                                    data-url="{{ route('admin.vouchers.searchUser') }}"
+                                                                                                    placeholder="Tên người dùng hoặc email ..."
+                                                                                                    type="text"
+                                                                                                    class="form-control">
                                                                                             </div>
 
-                                                                                            <input style="width:330px;"
-                                                                                                id="searchUserInput_{{ $voucher->id }}"
-                                                                                                data-url="{{ route('admin.vouchers.searchUser') }}"
-                                                                                                placeholder="Tên người dùng hoặc email ..."
-                                                                                                type="text"
-                                                                                                class="form-control">
+
+                                                                                            <div class="d-flex flex-wrap overflow-auto"
+                                                                                                style="max-height: 200px;gap:7px 15px;">
+                                                                                                {{-- hiển thi tài khoản ở đây --}}
+                                                                                            </div>
+
                                                                                         </div>
-
-
-                                                                                        <div class="d-flex flex-wrap overflow-auto"
-                                                                                            style="max-height: 200px;gap:7px 15px;">
-                                                                                            {{-- hiển thi tài khoản ở đây --}}
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="button"
+                                                                                                class="btn btn-danger light close-modal"
+                                                                                                data-bs-dismiss="modal">Hủy</button>
+                                                                                            <button type="button"
+                                                                                                data-url="{{ route('admin.vouchers.giftVoucherAccount') }}"
+                                                                                                class="btn btn-primary giftVoucher">Lưu
+                                                                                                thay
+                                                                                                đổi</button>
                                                                                         </div>
-
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-danger light close-modal"
-                                                                                            data-bs-dismiss="modal">Hủy</button>
-                                                                                        <button type="button"
-                                                                                            data-url="{{ route('admin.vouchers.giftVoucherAccount') }}"
-                                                                                            class="btn btn-primary giftVoucher">Lưu
-                                                                                            thay
-                                                                                            đổi</button>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                    @endcan
+                                                                        @endcan
+                                                                    @endif
+
                                                                 </div>
                                                             </td>
                                                         @endif

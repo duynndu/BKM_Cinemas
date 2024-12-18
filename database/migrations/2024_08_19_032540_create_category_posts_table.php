@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('category_posts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('parent_id')->default(0);
             $table->string('name');
             $table->string('slug');
             $table->string('avatar')->nullable();
@@ -20,7 +21,6 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->integer('order')->default(0);
             $table->integer('position')->default(0);
-            $table->bigInteger('parent_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
